@@ -1,0 +1,418 @@
+\documentclass[12pt]{article}
+
+\usepackage{../discrete}
+
+\heading{Math 228}{}{Logic 2: Quantifiers and Sets Notes }
+
+
+
+\begin{document}
+\section*{Quantifiers and Sets}
+
+So far we have seen how statements can be combined with logical symbols.  This is helpful when trying to understand a complicated mathematical statement - you can determine under which conditions the complicated statement is true.  Additionally, we have been able to analyze the logical form of arguments to decide which arguments are valid and which are not.  However, the types of statements we have been able to make so far has be sorely limited.  For example, consider a classic argument:
+
+\begin{center}
+ All men are mortal.\\ Socrates is a man. \\
+ Therefore, Socrates is mortal.
+\end{center}
+
+This is clearly a valid argument - it is an example of a {\em syllogism}.  Historically, the study of logic began with Aristotle who worked out all possible forms of syllogisms and decided which were valid and which were not.  We will not do that here.  However, this is an important example because it highlights a limitation of the propositional logic we have studied so far.  Can we use propositional logic to analyze the argument?  
+
+The trouble is that we don't have a way to translate ``all men are mortal.''  It looks like an implication - being a man implies you are mortal.  So maybe it is $P \imp Q$.  But what is $P$?  We could rephrase: ``if Socrates is a man, then Socrates is mortal.''  Now we have a valid argument form we have seen before.  But it is not quite the same.  (What if the argument was: All men are mortal, all mortals have hair, therefore all men have hair - also valid and Socrates has nothing to do with it.)  Or perhaps we could go with, ``for every thing there is, if the thing is a man, then the thing is mortal.''  Looks promising, but we still can't let $P$ be ``the thing is a man'' - that is not a statement because ``thing'' is a variable.
+
+One way to sort this mess out is to introduce a new sort of logic called {\em predicate} logic.  This is the logic of properties.  Doing so will allow us to discuss how properties of various things are related.  Above, if a thing has the property of being a man, then it has the property of being mortal.  We can then {\em quantify} over what things we talk about.  The the example above, {\em all} things.  
+
+Another way to accomplish much of the same goal is to use set theory.  This will also be useful in solving other types of problems later on.  The idea here is that we want talk about collections of things - for example, the collection of all men, and the collection of all mortal things.  We can then express ``all men are mortal'' by saying that the set of men is a subset of the set of mortals.  Then we claim that Socrates is a member of the set of men, so therefore is also a member of the set of mortals.
+
+One last example to highlight these two different approaches before delving into the details of each.  We all agree that all squares are rectangles.  The set theory approach would be to consider the set of squares and the set of rectangles, and point out that one is a subset of the other (the squares are a subset of the rectangles).  The predicate logic approach would be to consider the properties of ``being a square'' and of ``being a rectangle'' and assign these to predicates - say $S$ and $R$.  We would then say $\forall x (S(x) \imp R(x))$ - for all things, if the thing is a square, then it is a rectangle.  So having the property of being a square implies having the property of being a rectangle.
+
+Now some details.
+
+
+
+
+\section{Quantifiers and Predicate Logic}
+
+Consider the statement ``for all integers $a$ and $b$, if $ab$ is even, then $a$ is even or $b$ is even.''  If we use propositional logic to analyze this statement, what should $P$ be?  
+
+You might want to say $P$ is ``$ab$ is even'' so $Q$ can be ``$a$ is even'' and $R$ can be ``$b$ is even'' and say that the whole statement is therefore of the form $P \imp (Q \vee R)$.  This does not work!  One reason is that ``$ab$ is even'' is not a statement - it contains free variables, so it is not true or false (until the variables have values).  Another reason is that we have just lost the ``for all integers $a$ and $b$'' from our statement.  We can remedy both these problems using {\em Predicate Logic}.
+
+\subsection{Predicates}
+
+We can think of predicates as properties of objects.  For example, consider the predicate $E$ which we will use to mean ``is even.''  Being even is a property of some numbers, so $E$ needs to be applied to something.  We will adopt the notation $E(x)$ to mean $x$ is even.  (Some books would write $Ex$ instead.)  Notice that if we put a number in for $x$, then this becomes a statement - and as such can be true or false.  So $E(2)$ is true, and $E(3)$ is false.  On the other hand $E(x)$ is not true or false, since we don't know what $x$ is.  If we have a variable floating around like that, we say the expression is merely a formula, and not a statement.
+
+Since $E(2)$ is a statement (a proposition), we can apply propositional logic to it.  Consider 
+\[E(2) \wedge \neg E(3)\]
+which is a true statement, because it is both the case that 2 is even and that 3 is not even.  What we have done here is capture the logical form (using connectives) of the statement ``2 is even and 3 is not'' as well as the mathematical content (using predicates).
+
+Notice that we can only assert even-ness of a single number at a time.  That is to say, $E$ is a {\em one-place} predicate.  There are also predicates which assert a property of two or more numbers (or other objects) at the same time.  Consider the {\em two-place} predicate ``is less than.''  Perhaps we will use the variable $L$.  Now we can say $L(2,3)$, which is true because 2 is less than 3.  Of course we are already have a symbol for this: $2 < 3$.  However, what about ``divides evenly into'' as a predicate?  We can say $D(2,10)$ is true because 2 divides evenly into 10, while $D(3, 10)$ is false since there is a remainder when you divide 10 by 3.  Incidentally, there is a standard mathematical symbol for this: $2 | 10$ is read ``2 divides 10.''  
+
+Predicates can be as complicated and have as many places as we want or need.  For example, we could $R(x,y,z,u,v,w)$ be the predicate asserting that $x$, $y$, $z$ are distinct natural numbers whose only common factor is $u$, the difference between $x$ and $y$ is $v$ and the difference between $y$ and $z$ is $w$.  This is a silly and most likely useless example, but it is an example of a predicate.  It is true of some ordered lists of six numbers (6-tuples), and false of others.  Additionally, predicates need not have anything to do with numbers: we could let $F(a,b,c,d)$ be the predicate that asserts that $a$ and $b$ are the only two children of mother $c$ and father $d$.
+
+\subsection{Quantifiers}
+
+Perhaps the most important reason to use predicate logic is that doing so allows for quantification.  We can now express statements like ``ever natural number is either even or odd,'' and ``there is a natural number such that no number is less than it.''  Think back to Calculus and the Mean Value Theorem.  It states that for every function $f$ and every interval $(a, b)$, if $f$ is continuous on the interval $[a,b]$ and differentiable on the interval $(a,b)$, then there exists a number $c$ such that $a \le c \le b$ and $f'(c)(b - a) = f(b) - f(a)$.  Using the correct predicates and quantifiers, we could express this statement entirely in symbols.  
+
+There are two quantifiers we will be interested in: existential and universal.  
+
+\begin{defbox}{Quantifiers}
+  \begin{itemize}
+    \item The existential quantifier is $\exists$ and is read ``there exists'' or ``there is.''  For example,
+\[\exists x (x < 0)\]
+asserts that there is a number less than 0.
+\item The universal quantifier is $\forall$ and is read ``for all'' or ``every.''  For example,
+\[\forall x (x \ge 0)\]
+asserts that every number is greater than or equal to 0.
+  \end{itemize}    
+\end{defbox}
+
+  Are these statements true?  Well, first notice that they cannot both be true.  In fact, they assert exactly the opposite of each other.  (Note that $x < y \iff \neg(x \ge y)$ -- although you might wonder what $x$ and $y$ are here, so it might be better to say $\forall x \forall y\left(x < y \iff \neg(x \ge y)\right)$.)  Which one is it though?  The answer depends entirely on our domain of discourse - the universe over which we quantify.  Usually, this universe is clear from the context.  If we are only discussing the natural numbers, then $\forall x \ldots$ means ``for every natural number $x \ldots$.''  On the other hand, in calculus we care about the real numbers, so it would mean ``for every real number $x \ldots$.''  If the context is not clear, we might right $\forall x \in \N\ldots$ to mean ``for every natural number $x\ldots$.''  Of course, for the two statements above, the second is true of the natural numbers, the first is true for any larger universe.\footnote{In this class we take the natural 
+numbers to be 0, 1, 2, 3, \ldots}
+
+Some more examples: to say ``every natural number is either even or odd,'' we would write, using $E$ and $O$ as the predicates for even and odd respectively:
+\[\forall x (E(x) \vee O(x))\]
+To say ``there is a number such that no number is less than it'' we would write:
+\[ \exists x \forall y (y \ge x)\]
+Actually, I did a little translation before I wrote that down.  The above statement would be literally read ``there is a number such that every number is greater than or equal to it.''  This of course amounts to the same thing.  However, if I wanted to be exact, I could have also written:
+\[ \exists x \neg \exists y (y < x).\]
+Notice also that say that there is a number for which no number is smaller is equivalent to saying that it is not the case that for every number there is a number smaller than it:
+\[\neg \forall x \exists y (y < x).\]
+That these three statements are equivalent is no coincidence.  To understand what is going on, we will need to better understand how quantification interacts with the logical connectives, specifically negation.
+
+\subsection{Quantifiers and Connectives}
+
+What does it mean to say that it is false that there is something that has a certain property?  Well, it means that everything does not have that property.  What does it mean for it to be false that everything has a certain property?  It means that there is something that doesn't have the property.  So in symbols, we have the following
+
+\begin{defbox}{Quantifiers and Negation}
+\[\neg \forall x P(x) \mbox{ is equivalent to } \exists x \neg P(x)\]
+and
+\[\neg \exists x P(x)\mbox{ is equivalent to } \forall x \neg P(x).\]
+\end{defbox}
+
+In other words, to move a negation symbol past a quantifier, you must switch the quantifier. This can be done multiple times:
+\[\neg \exists x \forall y \exists z P(x,y,z) \mbox{ is equivalent to } \forall x \exists y \forall z \neg P(x,y,z).\]
+Now we also know how to move negation symbols through other connectives (using De Morgan's Laws) so it is always possible to rewrite a statement so that the only negation symbols that appear are right in front of a predicate.  This hints at the possibility of having a standard form for all predicate statements.  However, to get this we must also understand how to move quantifiers through connectives.
+
+Before we get too excited, note that we only need to worry about two connectives: $\wedge$ and $\vee$.  This is because we can rewrite $p \imp q$ as $\neg p \vee q$ (they are logically equivalent) and $p \iff q$ as $(p \wedge q) \vee (\neg p \wedge \neg q)$ (also logically equivalent).  
+
+Let us consider an example to see what can happen.
+
+\begin{example} 
+  Let $E$ be the predicate for being even, and $O$ for being odd.  Consider:
+\[\exists x E(x) \wedge \exists x O(x),\]
+which says that there is a number which is even and a number which is odd.  This is of course true.  However there is no number which is both even and odd, so 
+\[\exists x (E(x) \wedge O(x))\]
+is false.  Note also that
+\[\exists x (E(x) \vee O(x))\]
+while true, is not really the same thing -- if $O$ is instead the predicate for ``is less than 0'' then the original statement is false, but this new one is true (of the natural numbers).  Changing the quantifier also doesn't help:
+\[\forall x (E(x) \wedge O(x))\]
+is false.  So what can we do?
+
+The problem is that in the original sentence, the variable $x$ is doing double duty.  We want to express the fact that there is an even number and an odd number.  But that even number is in no way related to that odd number.  So we might as well have said
+\[ \exists x E(x) \wedge \exists y O(y).\]
+Now we can move the quantifiers out:
+\[\exists x \exists y (E(x) \wedge O(y)).\]
+\end{example}
+
+The same thing works with $\vee$ and for $\forall$ with either connective.  As long as there is no repeat in quantified variables we can move the quantifiers outside of conjunctions and disjunctions.  
+
+A warning though: you cannot do this for $\imp$, at least not directly.\footnote{We must be similarly careful with $\iff$}  Let's see what happens.  
+
+\begin{example}
+Consider
+\[ \forall x P(x) \imp \exists y Q(y)\]
+for some predicates $P$ and $Q$.  This sentence is {\bf not} the same as
+\[ \forall x \exists y (P(x) \imp Q(y)).\]
+Remember that $p \imp q$ is the same as $\neg p \vee q$.  So the original sentence is really
+\[\neg \forall x P(x) \vee \exists y Q(y).\]
+Before we move the quantifiers out, we must move the $\forall x$ past the negation sign, which switches it to a $\exists x$:
+\[\exists x \neg P(x) \vee \exists y Q(y).\]
+Then we can finish by writing,
+\[\exists x \exists y (\neg P(x) \vee Q(y))\]
+or equivalently
+\[\exists x \exists y (P(x) \imp Q(y)).\]
+\end{example}
+
+
+
+\section{Sets and Set Notation}
+For us, a set will simply be an unordered collection of objects.  For example, we could consider the set of all students enrolled at UNC this semester.  Or the set of natural numbers between 1 and 10 inclusive.  In the first case, each student here is a element (or member) of the set, while Barack Obama, among many others, is not an element of the set.  Also, the two example are of different sets.  Two sets are equal exactly if they contain the exact same elements.
+
+Because we will want to consider many examples, we should have some notation to make talking about sets easier.  Consider,
+\[ A = \{1, 2, 3\}.\]
+This is read, ``$A$ is the set containing the elements 1, 2 and 3.''  We use curly braces ``$\{,~~ \}$'' to enclose elements of a set.  Some more notation:
+\[ a \in \{a, b, c\}. \]
+The symbol ``$\in$'' is read ``is in'' or ``is an element of.''  Thus the above means that $a$ is an element of the set containing the letters $a$, $b$, and $c$.  Note that this is a true statement.  It would also be true to say that $d$ is not in that set:
+\[ d \not\in \{a, b, c\}.\]
+Be warned: we say ``$x \in A$'' when we wish to express that ``one of the elements of the set $A$ is $x$.''  For example, consider the set,
+\[A = \{1, b, \{x, y, z\}, \emptyset\}\]
+This is a strange set, to be sure. It contains four elements: the number 1, the letter b, the set $\{x,y,z\}$ and the empty set ($\emptyset = \{ \}$, the set containing no elements).  Is $x$ in $A$?  The answer is no.  None of the four elements in $A$ are the letter $x$, so we must conclude that $x \notin A$.  Similarly, if we considered the set $B = \{1,b\}$, then again $B \notin A$ - even though the elements of $B$ are also elements of $A$, we cannot say that the thing $B$ is one of the things in the collection $A$. 
+
+If a set is {\em finite}, then we can describe it by simply listing the elements.  Infinite sets exists though, so we need to be able to describe them as well.  For instance, if we want $A$ to be the set of all even natural numbers, would could write,
+\[ A = \{2, 4, 6, \ldots\}\]
+but this is a little imprecise.  Better would be
+\[ A = \{x \in \N \st \exists n\in \N ( x = 2 n)\}.\]
+Breaking that down: $x \in \N$ means $x$ is in the set $\N$ (the set of natural numbers), $\st$ is read ``such that'' and $\exists n (x = 2n)$ is read ``there exists an $n$ in the natural numbers for which $x$ is two times $n$'' (in other words, $x$ is even).  Slightly easier might be,
+\[ A = \{x \st \mbox{ $x$ is even }\}. \]
+
+Note: sometime people use $|$ for the ``such that'' symbol instead of $:$.
+
+
+\begin{defbox}{Set Theory Notation}
+
+\noindent  \begin{tabular}{l p{1.5in} p{3.5in}}
+    Symbol: & Read: & Example: \\ \hline \\[1ex]
+    $\{$, $\}$ & braces & $\{1,2,3\}$.  The braces enclose the elements of a set.  This is the set which contains the numbers 1, 2 and 3.\\[1ex]
+    $\st$ & such that & $\{x \st x > 2\}$ is the set of all $x$ such that $x$ is greater than 2.\\[1ex]
+    $\in$ & is an element of & $2 \in \{1,2,3\}$ asserts that 2 is one of the elements in the set $\{1,2,3\}$.  However, $4 \notin\{1,2,3\}$.\\[1ex]
+    $\subseteq$ & is a subset of & $A \subseteq B$ asserts that every element of $A$ is also an element of $B$.\\[1ex]
+    $\subset$ &is a proper subset of & $A \subset B$ asserts that every element of $A$ is also an element of $B$, but $A \ne B$.\\[1ex]
+    $\cap$ & intersection & $A \cap B$ is the {\em set} of all elements which are elements of both $A$ and $B$.\\[1ex]
+    $\cup$ & union & $A \cup B$ is the {\em set} of all elements which are elements of $A$ or $B$ or both.\\[1ex]
+    $\setminus$ & set difference & $A \setminus B$ is the {\em set} of all elements of $A$ which are not elements of $B$.\\[1ex]
+    $\bar A$ & compliment (of $A$) & $\bar A$ is the set of everything which is not an element of $A$.  The $A$ can be any set here.\\[1ex]
+    $|A|$ & cardinality (of $A$)& $|\{4,5,6\}| = 3$ because there are 3 elements in the set.  Sometimes we say $|A|$ is the {\em size} of $A$.\\[1ex]
+    
+  \end{tabular}
+
+\noindent{\bf Special sets}
+
+\begin{tabular}{l p{5in}}
+  $\emptyset$ & The {\em empty set} is the set which contains no elements.\\[1ex]
+  $\U$ & The {\em universe set} is the set of all elements.\\[1ex]
+$\N$ & The set of natural numbers. That is, $\N = \{0, 1, 2, 3\ldots\}$ \\[1ex]
+$\Z$ & The set of integers.  $\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}$\\[1ex]
+$\Q$ & The set of rational numbers.\\[1ex]
+$\R$ & The set of real numbers.\\[1ex]
+$\pow(A)$ & The {\em power set} of any set $A$ is the set of all subsets of $A$.
+\end{tabular}
+\end{defbox}
+
+
+\subsection{Relationships between sets}
+
+We have already said what it means for two sets to be equal: they have exactly the same elements.  Thus, for example,
+\[ \{1, 2, 3\} = \{2, 1, 3\}.\]
+(Remember, the order the elements are written down in does not matter.)  Also,
+\[ \{1, 2, 3\} = \{I, II, III\}.\]
+Now what about the sets $A = \{1, 2, 3\}$ and $B = \{1, 2, 3, 4\}$?  Clearly $A \ne B$.  However, we can notice that every element of $A$ is also an element of $B$.  Because of this, we say that $A$ is a subset of $B$, or in symbols $A \subset B$ or $A \subseteq B$.  (Both symbols are read ``is a subset of.'' The difference is that sometimes we want to say that $A$ is either equal to or a subset of $B$, in which case we use $\subseteq$.  Compare the difference between $<$ and $\le$.)
+
+\begin{example}
+ Let $A = \{1, 2, 3, 4, 5, 6\}$, $B = \{2, 4, 6\}$, $C = \{1, 2, 3\}$ and $D = \{7, 8, 9\}$.  Determine which of the following are true, false, or meaningless.
+\begin{multicols}{3}
+\begin{enumerate}
+\item $A \subset B$
+\item $B \subset A$
+\item $B \in C$
+\item $\emptyset \in A$
+\item $\emptyset \subset A$
+\item $A < D$
+\item $3 \in C$
+\item $3 \subset C$.
+\item $\{3\} \subset C$
+\end{enumerate}
+\end{multicols}
+\begin{solution}
+ \begin{enumerate}
+  \item False.
+\item True: every element in $B$ is an element in $A$.
+\item False: the elements in $C$ are 1, 2, and 3.  The {\em set} $B$ is not equal to 1, 2, or 3.
+\item False: $A$ has exactly 6 elements, and none of them are the empty set.
+\item True: Everything in the empty set (nothing) is also an element of $A$.  Notice that the empty set is a subset of every set.
+\item Meaningless.  A set cannot be less that another set.
+\item True.
+\item Meaningless.  $3$ is not a set, so it cannot be a subset of another set.
+\item True.  $3$ is the only element of the set $\{3\}$, and is an element of $C$, so every element in $\{3\}$ is an element of $C$.
+ \end{enumerate}
+\end{solution}
+\end{example}
+
+In the example above, $B$ is a subset of $A$.  You might wonder what other sets are subsets of $A$.  If you collect all these subsets of $A$, they themselves for a set - a set of sets.  We call the set of all subsets of $A$ the {\em power set} of $A$, and write it $\pow(A)$.  
+
+\begin{example}
+  Let $A = \{1,2,3\}$.  Find $\pow(A)$.
+  \begin{solution}
+    $\pow(A)$ is a set of sets - all of which are subsets of $A$.  So
+    \[\pow(A) = \{ \emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1, 3\}, \{2,3\}, \{1,2,3\}\}\]
+    Notice that while $2 \in A$, it is wrong to write $2 \in \pow(A)$ - none of the elements in $\pow(A)$ are numbers!.  On the other hand we do have $\{2\} \in \pow(A)$ because $\{2\} \subseteq A$.  
+    
+    What does a subset of $\pow(A)$ look like?  Notice that $\{2\} \not\subseteq \pow(A)$ because not everything in $\{2\}$ is in $\pow(A)$.  But we do have $\{ \{2\} \} \subseteq \pow(A)$.  The only element of $\{\{2\}\}$ is the set $\{2\}$ which is also an element of $\pow(A)$.  We could take the collection of all subsets of $\pow(A)$ and call that $\pow(\pow(A))$.  Or even the power set of that set of sets of sets. 
+  \end{solution}
+
+\end{example}
+
+
+Another way to compare sets is by their size.  Notice that in the example above, $A$ has 6 elements, $B$, $C$, and $D$ all have 3 elements.  The size of a set is called the set's cardinality.  We would write $|A| = 6$, $|B| = 3$ and so on.  For sets that have a finite number of elements, the cardinality of the set is simply the number of elements in the set.  Note that the cardinality of $\{ 1, 2, 3, 2, 1\}$ is 3 -- we do not count repeats (in fact, $\{1, 2, 3, 2, 1\}$ is exactly the same set as $\{1, 2, 3\}$).  There are sets with infinite cardinality, such as $\N$, the set of rational numbers (written $\mathbb Q$), the set of even natural numbers, the set of real number ($\mathbb R$).  It is possible to distinguish between different infinite cardinalities, but that is beyond the scope of these notes.  For us, a set will either be infinite, or finite, and if it is finite, we can determine it's cardinality by counting elements.
+
+\begin{example}
+ Find the cardinality of $\{23, 24, \ldots, 37, 38\}$.  
+\begin{solution}
+ Since $38 - 23 = 15$, we can conclude that the cardinality of the set is 16 (you need to add one since 23 is included).
+\end{solution}
+\end{example}
+
+\subsection{Operations on sets}
+
+Is it possible to add two sets?  Not really, however there is something similar.  If we want to combine two sets -- to get the collection of objects that are in either set, then we can take the {\em union} of the two sets.  Symbolically,
+\[ C = A \cup B\]
+means $C$ is the union of $A$ and $B$.  Every element of $C$ is either an element of $A$ or an element of $B$ (or an element of both).  For example, if $A = \{1, 2, 3\}$ and $B = \{2, 3, 4\}$, then $A \cup B = \{1, 2, 3, 4\}$.
+
+The other common operation on sets is {\em intersection}.  We write,
+\[ C = A \cap B\]
+to mean that $C$ is the intersection of $A$ and $B$; everything in $C$ is in both $A$ and in $B$.  So if $A = \{1, 2, 3\}$ and $B = \{2, 3, 4\}$, then $A \cap B = \{2, 3\}$.  
+
+Often when dealing with sets, we will have some understanding as to what ``everything'' is.  Perhaps we are only concerned with natural numbers.  We would say that our {\em universe} is $\N$.  Sometimes we call denote this universe by $\U$.  Given this context, we might wish to speak of all the elements which are {\em not} in a particular set.  We call this the {\em compliment} of the set, and write,
+\[ B = \bar A\]
+when $B$ contains every element not contained in $A$.  So if our universe is $\{1, 2,\ldots, 9, 10\}$, and $A = \{2, 3, 5, 7\}$, then $\bar A = \{1, 4, 6, 8, 9,10\}$.
+
+Of course we can perform more than one operation at a time.  Fore example, consider
+\[A \cap \bar B\]
+This is the set of all element which are both elements of $A$ and not elements of $B$.  What have we done?  We've started with $A$ and removed all of the elements which were in $B$.  Another way to write this is the {\em set difference}:
+\[A \cap \bar B = A \setminus B\]
+
+It is important to remember that these operations (union, intersection, compliment and difference) on sets produce other sets.  Don't confuse these with the symbols from the previous section (element of and subset of).  $A \cap B$ is a set, while $A \subseteq B$ is true or false.  This is the same difference as between $3 + 2$ (which is a number) and $3 \le 2$ (which is in this case false).
+
+\begin{example}
+ Let $A = \{1, 2, 3, 4, 5, 6\}$, $B = \{2, 4, 6\}$, $C = \{1, 2, 3\}$ and $D = \{7, 8, 9\}$.  The universe is $\U = \{1, 2, \ldots, 10\}$.  Find:
+\begin{multicols}{3}
+ \begin{enumerate}
+  \item $A \cup B$
+\item $A \cap B$
+\item $B \cap C$
+\item $A \cap D$
+\item $\bar{B \cup C}$
+\item $A \cap \bar B$
+\item $(D \cap \bar C) \cup \bar{A \cap B}$
+\item $\emptyset \cup C$
+\item $\emptyset \cap C$
+ \end{enumerate}
+\end{multicols}
+\begin{solution}
+  \begin{enumerate}
+  \item $A \cup B = \{1, 2, 3, 4, 5, 6\} = A$ since everything in $B$ is already in $A$.
+\item $A \cap B = \{2, 4, 6\} = B$ since everything in $B$ is in $A$.
+\item $B \cap C = \{2\}$ - the only element of both $B$ and $C$ is 2.
+\item $A \cap D = \emptyset$ since $A$ and $D$ have no common elements
+\item $\bar{B \cup C} = \{5, 7, 8, 9, 10\}$.  First we find that $B \cup C = \{1, 2, 3, 4, 6\}$, then we take everything not in that set.
+\item $A \cap \bar B = \{1, 3, 5\}$.  Everything that is in $A$ which is not in $B$.  This is the same as $A \setminus B$.
+\item $(D \cap \bar C) \cup \bar{A \cap B} = \{1, 3, 5, 7, 8, 9\}.$ The set contains all elements that are either in $D$ but not in $C$ or not in both $A$ and $B$.
+\item $\emptyset \cup C = C$ - nothing is added by the emptyset.
+\item $\emptyset \cap C = \emptyset$ - nothing can be both in a set and in the emptyset.
+ \end{enumerate}
+\end{solution}
+\end{example}
+
+You might notice that the symbols for union and intersection slightly resemble the logic symbols for ``or'' and ``and.''  This is no accident.  What does it mean for $x$ to be an element of $A\cup B$?  It means that $x$ is an element of $A$ or $x$ is an element of $B$ (or both).  That is,
+\[x \in A \cup B \qquad \Iff \qquad x \in A \vee x \in B.\]
+Similarly,
+\[x \in A \cap B \qquad \Iff \qquad x \in A \wedge x \in B.\]
+Also,
+\[x \in \bar A \qquad \Iff \qquad \neg (x \in  A)\]
+which says $x$ is an element of the compliment of $A$ if $x$ is not an element of $A$.
+
+Given all this, you should not be surprised to find out that there is a version of De Morgan's laws for sets:
+
+\begin{defbox}{De Morgan's Laws (for sets)}
+  For any sets $A$ and $B$ in some universe $\U$:
+  \[\bar{A \cap B} = \bar A \cup \bar B\]
+  \[\bar{A \cup B} = \bar A \cap \bar B\]
+\end{defbox}
+
+Do you believe these equations?  To check De Morgan's laws in logic we could just make a truth table for each statement.  We don't have truth tables for sets, but we do have\ldots.
+
+\subsection{Venn Diagrams}
+Union, intersection, compliment, set difference - operations can get complicated (see part 7 in the above example).  Luckily, there is a very nice visual tool we can use to clarify things.  Venn diagrams represent sets as intersecting circles.  We can shade the region we are talking about when we carry out an operation.  We can also represent cardinality of a particular set by putting the number in the corresponding region.\\
+
+\begin{center}
+\begin{tikzpicture}[fill=gray!50]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture} \hspace{2in}
+\begin{tikzpicture}[scale=.75, fill=gray!50]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}\\
+\end{center}
+
+%\includegraphics[width=2in]{images/venn2blank.png} \hfill \includegraphics[width=2in]{images/venn3blank.png}\\
+
+Each circle represents a set.  The rectangle containing the circles represents the universe.  To represent combinations of these sets, we shade the corresponding region.  For example, we could draw $A \cap B$ as:
+
+\begin{center}
+\begin{tikzpicture}[fill=gray!50]
+	\begin{scope}
+	\clip \circleA;
+	\fill \circleB;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+
+%  \includegraphics[width=2in]{images/venn2AcapB.png} 
+\end{center}
+
+Here is a representation of $A \cap \bar B$, or equivalently $A \setminus B$:
+
+\begin{center}
+\begin{tikzpicture}[fill=gray!50]
+	\begin{scope}
+	\clip \twosetbox \circleB;
+	\fill \circleA;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+
+% \includegraphics[width=2in]{images/venn2AcapbarB.png}
+\end{center}
+
+
+
+A more complicated example is $(B \cap C) \cup (C \cap \bar A)$, as seen below.
+
+\begin{center}
+\begin{tikzpicture}[fill=gray!50]
+	\fill \circleC;
+	\begin{scope}
+	    \clip \circleC;
+	    \fill[white] \circleA \circleB;
+	  \end{scope}
+	  \begin{scope}
+	  	\clip \circleC;
+	  	\fill \circleB;
+	  \end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+
+% \includegraphics[width=2in]{images/venn3complex.png}
+\end{center}
+
+Notice that the shaded regions above could also be arrived at in another way.  We could have started with all of $C$, then excluded the region where $C$ and $A$ overlap (without $B$).  That region is $(A \cap B) \cap \bar B$.  So the above Venn diagram also represents $C \cap \left(\bar{(A\cap B)\cap \bar B}\right).$  So using just the picture, we have determined that
+\[ (B \cap C) \cup (C \cap \bar A) = C \cap \left(\bar{(A\cap B)\cap \bar B}\right).\]
+
+
+
+\section{Logic or Set Theory?  Yes.}
+
+Understanding predicate logic (including quantifiers) and set theory is useful throughout mathematics.  Certainly we will return to sets when we study combinatorics (counting) and elsewhere - sets are one of the basic building blocks of mathematics.  That said, our primary focus at the moment is to use logic and set theory for the purpose of communicating mathematics: how to read and write.  It is often useful to have multiple ways of expressing ideas.  Predicate logic and set theory give us two such ways.  Sometimes switching viewpoints is all it takes to get the insight needed to solve a problem.
+
+The truth is, everything you can express using sets, you can also express using predicates, and {\em visa versa}.  This is because ``being an element of the set $A$'' {\em is} a predicate.  On the other hand, if we start with a predicate $P(x)$, we can consider the set of all $x$ such that $P(x)$ holds.  
+
+We saw above that there is a parallel between conjunctions and disjunctions in logic and intersections and unions in set theory.  Is there something similar we can do for $\imp$?  In fact there is.  Recall $A \subseteq B$ means that every element of $A$ is also an element of $B$.  In other words, if $x \in A$, then $x \in B$.  In symbols, we would write this as $x \in A \imp x \in B$.  Of course if we had $x \in A \iff x \in B$, then we could conclude $A = B$.
+
+\begin{example}
+Explain the relationship between even integers and multiples of 4 using both predicate logic and set theory.
+
+\begin{solution}
+ In English, you might say that while every multiple of 4 is even, not every even number is a multiple of 4.  Using predicate logic, we could use $E(x)$ to say $x$ is even, and $F(x)$ to say $x$ is a multiple of $4$.  We then translate the English sentences as follows:
+ \[\forall x (F(x) \imp E(x))\]
+ and \[\exists x (E(x) \wedge \neg F(x)).\]
+ (The second sentence could also have been $\neg \forall x (E(x) \imp F(x))$.  Do you see why this is equivalent?)
+ 
+ Alternatively, let $E$ be the set of all even numbers, and $F$ be the set of all multiples of 4.  Since the set of all multiples of 4 is a proper subset of the set of all even numbers, we have $F \subset E$.  We use $\subset$ and not $\subseteq$ to represent the fact that $E \ne F$.  We can also express the fact that there are even numbers which are not multiples of 4 by saying that the set difference of $E$ and $F$ is non-empty.  So $E \setminus F \ne \emptyset$, or alternatively $E \cap \bar F \ne \emptyset$.  In fact, we have $E \cap F = F$.
+\end{solution}
+\end{example}
+
+
+
+
+
+
+
+\end{document}

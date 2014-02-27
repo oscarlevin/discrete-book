@@ -1,0 +1,93 @@
+%This is relations.tex.  In this chapter we consider relations, equivalence and otherwise.
+
+
+
+\subsection{Equivalence Relations}
+
+We consider a variety of types of relations, including equivalence relations and partial orders.
+
+\begin{definition}
+ A {\em relation} $R$ on a set $A$ is a subset of $A \times A$.  If $(a,b) \in R$, we write $aRb$.
+\end{definition}
+
+Relations can be {\em any} subset of $A \times A$.  I can make sense (for example, on $\Z$ say $aRb$ holds precisely when $a^2 = b$) or be completely arbitrary (on $\Z$, for each pair $(a,b)$, flip a coin, say $aRb$ if you get heads).  Some common relations: $=$, $\le$, and $\equiv \pmod d$.
+
+\subsubsection*{Properties of Relations}
+
+There are four important properties which a relation may possess.  Here we consider a relation $R$ on a set $A$.
+\begin{enumerate}
+ \item $R$ is {\em reflexive} if $aRa$ for all $a \in A$.
+ \item $R$ is {\em symmetric} if for all $a, b \in A$, if $aRb$, then $bRa$.
+ \item $R$ is {\em transitive} if for all $a, b, c$ in $A$, if $aRb$ and $bRa$, then $aRc$.
+ \item $R$ is {\em antisymmetric} if for all $a, b$ in $A$, if $aRb$ and $bRa$, then $a=b$.
+\end{enumerate}
+
+\begin{example}
+ Define $R$ on $\Z$ by $aRb$ if $|a-b| \le \min{a,b}$.  Which of the properties of relations holds for $R$?
+ 
+ Define $R$ on $\Z$ by $aRb$ if $a = nb$ for some $n \in \Z$. Which of the properties of relations hold for $R$?
+ 
+ Define $R$ on $\R$ by $aRb$ if $a < |b|$. Which properties hold?
+\end{example}
+
+\begin{definition}
+ A relation $R$ on a set $A$ is called an {\em equivalence relation} if it is reflexive, symmetric and transitive.
+\end{definition}
+
+Note that none of the examples above are equivalence relations.  Here are some that are:
+\begin{example}
+ Let $R$ on $\R$ be defined by $aRb$ if $a = b$. 
+ 
+ Let $R$ on $\Z$ be defined by $aRb$ if $a$ and $b$ have the same parity. 
+ 
+ Let $R$ on $\Z$ be defined by $aRb$ if $a \equiv b \pmod 7$  (i.e., $a$ and $b$ have the same remainder when divided by 7).
+\end{example}
+
+\subsubsection*{Equivalence Classes}
+
+We will often write $a \sim b$ instead of $aRb$.
+
+\begin{definition}
+ If $R$ is an equivalence relation on $A$, and $a \in A$, the set $[a] = \{x \in A \st x \sim a\}$ is called the {\em equivalence class} of $a$.  
+\end{definition}
+
+For the examples above, what are the equivalence classes $[1]$?  What about $[8]$?
+
+Can any element of $A$ belong to more than one equivalence class?  Can any belong to no equivalence class?  Are there any empty equivalence classes?  In other words we are asking whether the following is true:
+
+\begin{theorem}
+ If $R$ is an equivalence relation on a nonempty set $A$, then the set of equivalence classes of $R$ forms a partition of $A$.
+\end{theorem}
+
+It's true!
+\begin{proof}
+ We must show that the set of equivalence classes is of all nonempty, pairwise-disjoint sets whose union is $A$.  Clearly no equivalence class is empty: $a \in [a]$ since $R$ is reflexive, so $a \sim a$.  This also shows that the union of all the equivalence classes equals $A$: each element of $A$ is in at least one equivalence class.
+ 
+ The only thing left to check is that no element of $A$ is in more than one equivalence class.  We must show that if $[a]\cap[b] \ne \emptyset$ then $[a] = [b]$.  So suppose there is an element $x \in [a] \cap [b]$.  Then $x \sim a$ so $a \sim x$ (symmetry).  Also, $x \sim b$. Thus $a \sim b$ (by transitivity).  Now we want to show that $[a] = [b]$.  This requires showing that $[a] \subseteq [b]$ and $[b]\subseteq [a]$.  So first let $y \in [a]$.  Then $y \sim a$, and since $a \sim b$ we have $y \sim b$.  So $y \in [b]$ and therefore $[a]\subseteq [b]$.  Similarly, we can show $[b] \subseteq [a]$.  This completes the proof.
+\end{proof}
+
+So every equivalence relation gives rise to a partition of $A$.  Is the reverse true?
+
+\begin{theorem}
+ Let $\mathcal{P}$ is a partition on a nonempty set $A$.  Define a relation $R$ on $A$ by $aRb$ if $a$ and $b$ are in the same element of the partition.  Then $R$ is an equivalence relation.
+\end{theorem}
+
+\begin{proof}
+ We must show that $R$ is reflexive, symmetric and transitive.  For every element $a \in A$, we have $a \in X$ for some $X \in \mathcal{P}$.  So $a R a$.  Now suppose $a R b$.  Then there is some set $X \in \mathcal{P}$ for which $a \in X$ and $b \in X$.  So $b R a$ as well.  Finally, if $aR b$ and $b R c$, then there is some set $X \in \mathcal{P}$ such that $a, b \in X$, and a set $Y \in \mathcal{P}$ such that $b, c \in Y$.  But then $b \in X \cap Y$ so $X \cap Y \ne \emptyset$, so $X = Y$.  So in fact, $a, c \in X$.  Thus $a R c$.
+\end{proof}
+
+\subsubsection*{Partial and Linear Orders}
+
+Equivalence relations can be thought of as generalized equality.  Partial orders then would be generalized inequality.
+
+\begin{definition}
+ A relation $R$ on a set $A$ is called a {\em partial ordering} on $A$ if $R$ is reflexive, transitive and antisymmetric.  Then we say that $A$ is is {\em partially ordered set}.
+\end{definition}
+
+\begin{example}
+ $\le$ is a partial ordering on $\R$.  However, $<$ is not (why?).
+ 
+ $\subseteq$ is partial ordering on $\P(A)$.
+\end{example}
+
+Note that it is possible for there to be elements $a$ and $b$ for which neither $aRb$ nor $bRa$ to hold.  If we require at least one of these to hold for each pair of elements, then the relation is called a {\em linear order}.  

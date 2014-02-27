@@ -1,0 +1,169 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
+\usepackage{tikz}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+\def\={\equiv}
+\def\var{\mbox{var}}
+\def\mod{\mbox{Mod}}
+\def\Th{\mbox{Th}}
+\def\sat{\mbox{Sat}}
+\def\con{\mbox{Con}}
+\def\bmodels{=\joinrel\mathrel|}
+\def\iffmodels{\bmodels\models}
+\def\dbland{\bigwedge \!\!\bigwedge}
+\def\dom{\mbox{dom}}
+\def\rng{\mbox{range}}
+\DeclareMathOperator{\wgt}{wgt}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{pts-bns}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 5 Solutions}{February 29, 2012}
+
+
+\begin{document}
+
+
+
+
+\begin{questions}
+\question[4] Solve the recurrence relation $a_n = a_{n-1} + 3$ using telescoping or iteration.  Show your work.
+\begin{solution}
+  Both telescoping and iteration work.  For telescoping:
+  \begin{align*}
+    a_1 - a_0 & = 3\\
+    a_2 - a_1 & = 3 \\
+    a_3 - a_2 & = 3 \\
+    \vdots & ~~ \vdots \\
+    \underline{ + a_n - a_{n-1}} & \underline{ = 3}\\
+    a_n - a_0 & = 3n
+  \end{align*}
+  Thus the solution is $a_n = 3n + a_0$.
+\end{solution}
+
+
+\question[6] Let $a_n$ be the number of  $1 \times n$ tile designs can you make using $1 \times 1$ tiles available in 4 colors and $1 \times 2$ tiles available in 5 colors.
+\begin{parts}
+  \part First, find a recurrence relation to describe the problem. 
+  \begin{solution}
+    $a_n = 4a_{n-1} + 5a_{n-2}$
+  \end{solution}
+
+  \part Write out the first 6 terms of the sequence $a_1, a_2, \ldots$.
+  \begin{solution}
+    4, 21, 104, 521, 2604, 13021
+  \end{solution}
+
+  \part Solve the recurrence relation.  That is, find a closed formula for $a_n$.
+  \begin{solution}
+    The characteristic equation is $x^2 - 4x - 5 = 0$ so the characteristic roots are $x = 5$ and $x = -1$.  Therefore the general solution is 
+    \[a_n = a 5^n + b (-1)^n\]
+    We solve for $a$ and $b$ using the fact that $a_1 = 4$ and $a_2 = 21$.  We get $a = \frac{5}{6}$ and $b = \frac{1}{6}$.  Therefore the solution is
+    \[a_n = \frac{5}{6} 5^n + \frac{1}{6}(-1)^n\]
+  \end{solution}
+
+\end{parts}
+
+
+\question[5] Consider the recurrence relation $a_n = 4a_{n-1} - 4a_{n-2}$.
+\begin{parts}
+  \part Find the general solution to the recurrence relation (beware the repeated root).
+  \begin{solution}
+    The characteristic polynomial is $x^2 - 4x + 4$ which factors as $(x -2)^2$, so the only characteristic root is $x = 2$.  Thus the general solution is
+    \[a_n = a2^n + bn2^n\]
+  \end{solution}
+
+  \part Find the solution when $a_0 = 1$ and $a_1 = 2$.
+  \begin{solution}
+    Since $1 = a2^0 + b\cdot 0 \cdot 2^0$ have have $a = 1$.  Then $2 = 2^1 + b 2^1$ so $b = 0$.  We have the solution 
+    \[a_n = 2^n\]
+  \end{solution}
+
+  \part Find the solution when $a_0 = 1$ and $a_1 = 8$.
+  \begin{solution}
+    Again, we have $a = 1$.  Now when we plug in $n = 1$ we bet $8 = 2 + 2b$ so $b = 3$.  The solution:
+    \[a_n = 2^n + 3n2^n\]
+  \end{solution}
+
+\end{parts}
+
+\question[5] Prove, by mathematical induction, that $F_0 + F_1 + F_2 + \cdots + F_{n} = F_{n+2} - 1$, where $F_n$ is the $n$th Fibonacci number ($F_0 = 0$, $F_1 = 1$ and $F_n = F_{n-1} + F_{n-2}$).
+\begin{solution}
+  \begin{proof}
+    Let $P(n)$ be the statement $F_0 + F_1 + F_2 + \cdots + F_n = F_{n+2} - 1$.  We will prove that $P(n)$ is true for all $n \ge 0$.  
+    
+    Base case: $P(0)$ states that $F_0 = F_2 - 1$, which is true because $F_0 = 0$ and $F_2 = 1$.
+    
+    Inductive case:  Assume $P(k)$ is true for an arbitrary fixed $k \ge 0$.  That is, \[F_0 + F_1 + F_2 + \cdots + F_k = F_{k+2} - 1\]
+    We must prove that $P(k+1)$ is true as well (i.e. that $F_0 + F_1 + \cdots +F_{k+1} = F_{k+3} - 1$).  Start with the left hand side:
+    \begin{align*}
+      F_0 + F_1 + F_2 + \cdots + F_k + F_{k+1} & = F_{k+2} - 1 + F_{k+1} & \mbox{ by the inductive hypothesis}\\
+      & = F_{k+3} - 1 & \mbox{ by the definition of the Fibonacci numbers}
+    \end{align*}
+    Thus $P(k+1)$ is true.
+    
+    Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.
+  \end{proof}
+
+\end{solution}
+
+\end{questions}
+
+
+
+
+\end{document}
+
+

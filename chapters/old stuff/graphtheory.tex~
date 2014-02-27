@@ -1,0 +1,112 @@
+% This is graphtheory.tex.  In this chapter we will do all the graph theory, including trees.
+
+Graph Theory is a relatively new area of mathematics, first studied by the super famous mathematician Leonhard Euler in 1735.  Since then it has blossomed in to a powerful tool used in nearly every branch of science and is currently an active area of mathematics research.  We will begin our study with the problem that started it all: The Seven Bridges of K\"onigsberg.
+
+\section{K\"onigsberg Bridge Problem} In the time of Euler, in the town of K\"onigsberg in Prussia, there was a river containing two islands.  The islands were connected to the banks of the river by seven bridges (as seen below).  The bridges were very beautiful, and on their days off, townspeople would spend time walking over the bridges.  As time passed, a question arose: was it possible to plan a walk so that you cross each bridge once and only once?  Euler was able to answer this question.  Are you?
+\vfill
+\centerline{\includegraphics[width=6in]{pictures/7bridges.png}}
+\vfill
+
+Here is another problem:  below is a drawing of four dots connected by some lines.  Is it possible to trace over each line once and only once (without lifting up your pencil)?  You must start and end on one of the dots.
+\vskip 2em
+\centerline{\includegraphics[width=1.4in]{pictures/7bridgesgraph.png}}
+\vskip 2em
+
+
+Is there a connection between problems 1 and 2?  If so, what is it?
+
+
+Pictures like the one above are called {\em graphs}.  Graphs are made up of a collection of dots (called {\em vertices}) and lines connecting those dots (called {\em edges}).  If we start at a vertex and trace along edges to get to other vertices, we create a {\em path} on the graph.  If the path travels along every edge exactly once, then the path is called an {\em Eulerian path}.  If in addition, the starting and ending vertices are the same (so you trace along every edge exactly once and end up where you started) then the path is called an {\em Eulerian circuit}.  Which of the graphs below contain an Eulerian path?  Which contain an Eulerian circuit?
+\vskip 2em
+\centerline{\includegraphics[width=4in]{pictures/pathgraphs.png}}
+
+
+Now what if I gave you a really big graph?  Is there a quick way to check whether or not it contains an Eulerian path or circuit?  Make a conjecture, then test it out by drawing some graphs yourself.
+
+\section*{Graph Theory}
+\subsection*{Euler paths and circuits}
+\begin{itemize}
+  \item Start with the K\"onigsberg bridge problem.  Spend some time in groups trying to find a path.
+  \item Come together and discuss how to model the key aspects of the problem - with a ``graph.''
+  \item Introduce the terminology of graph theory - vertices, edges, path, circuit.
+  \item What sort of path or circuit do we want for the bridge problem?  We want to travel over each edge exactly once.
+  \item We call such paths and circuits {\em Eulerian}.  Or an Euler path/circuit.
+  \item Now work in groups starting on pages 146 - 149.
+  \item For next time, think about what a reasonable rule is for whether a graph is Eulerian.  What about Hamiltonian? 
+\end{itemize}
+
+
+\todayis{October 24, 2011}
+\subsection*{Euler paths and circuits revealed}
+\begin{itemize}
+  \item Last time we started investigating how to quickly determine whether a given graph has an Euler path or circuit.  What were some observations we made?
+  \item It has something to do with the degree of the vertices.
+  \item Draw an example graph on the board (with two degree 3 vertices, the rest even).  Does the graph have an Euler path?
+  \item Yes.  But could you start that path from the degree 2 vertex?  No.
+  \item What goes wrong?  You will need to end there as well.  So what?
+  \item What happens with the degree 3 vertices?  You will get stuck.
+  \item Here's the rule: A graph has an Euler path if and only if there are no more than 2 vertices with odd degree.  A graph has an Euler circuit if and only if every vertex has even degree.
+  \item Why?  First, what goes wrong if there are too many odd degree vertices?
+  \item Think of each vertex as having some of it's edges as incoming and others as departing.  If you have a circuit, each vertex must have the same number of incoming and departing edges.  So the degree must be even.
+  \item If there is an odd degree vertex, you will need to start or stop the path there.  If you start at such a vertex, there will be one more departing edge than incoming edge.  
+  \item Now, how do you know that if you have the correct degrees, you will be able to find an Euler path/circuit?
+  \item The idea (for circuits) is this: start making a circuit, get back to the starting vertex.  Now if you have not used all the edges, you can ``splice'' in another loop.  Is it obvious that the unused edges are connected to the current proposed circuit?  Remember, this will only work for {\em connected} graphs.
+  \item What happens if you have a graph with exactly one vertex with odd degree?  What happens if you try to make a path?
+  \item It turns out there are NO graphs with just one odd degree vertex.  In fact, the number of vertices with odd degree must be even.  
+  \item To see this, compare the sum of all the degrees to the number of edges - each edge is counted twice in the sum of the degrees, so the number of edges is half of the sum of the degrees.  
+  \item Thus the sum of all the degrees must be an even number.  This cannot happen if there are an odd number of odd degree vertices.
+\end{itemize}
+\subsubsection*{Intro to Planar Graphs}
+\begin{itemize}
+  \item Can you connect three houses to each of three utilities without the lines crossing?  
+  \item If you can draw a graph without any of the edges crossing, then the graph is called {\em planar}.
+  \item Note that we can draw planar graphs with edges crossing - but you should be able to redraw them to illustrate the planarity.
+  \item Now when a graph is drawn without edges crossing, then the plane is divided into regions.  Call each region of ``face.''
+  \item Using the activities on pages 150 and 151, try to find a relationship between the number of vertices, edges, and faces in any planar graph.
+\end{itemize}
+
+\todayis{October 28, 2011}
+
+\subsection*{Euler's Formula and Planar Graphs}
+\begin{itemize}
+\item The complete graph on 5 vertices is called $K_5$.  The graph from the houses and utilities problem is called $K_{3,3}$.
+\item We would like to argue that $K_5$ and $K_{3,3}$ are {\em not} planar.  This seems hard - we must say that it is impossible to draw them without lines crossing.
+ \item To help with this, let's see if we can deduce any relationship between the number of vertices $V$, number of edges $E$ and number of faces $F$.  Note that the ``outside'' counts as a face.
+ \item For a variety of planar graphs, compute these numbers.  Any relationship?
+ \item It turns out that for any planar graph, $V - E + F = 2$.
+ \item Why?  Build the graph up from something very simple.  How does this quantity change?
+ \item Side-note: this also works for 3 dimensional solids, like the cube, tetrahedron, dodecahedron, etc.  Why?  We can represent those solids as planar graphs.
+\end{itemize}
+
+\subsubsection*{Why $K_5$ is not planar}
+\begin{itemize}
+  \item What could we say if $K_5$ was planer?  How many faces would it have?
+  \item $K_5$ has five vertices and 10 edges, so $5 - 10 + F = 2$, so $F = 7$.
+  \item Each face is bounded by some number of edges.
+ \item Let $B$ be the number of boundaries.  So $B = 2E$.
+ \item Also, each face is bounded by {\em at least} 3 boundaries.  So $3F \le B$.
+ \item Thus $3F \le 2E$, so $F \le \frac{2}{3}E$.
+ \item But $E = 10$.  So we must have $F \le \frac{20}{3} < 7$.  This is a contradiction.
+\end{itemize}
+
+\subsubsection*{Why is $K_{3,3}$ not planar?}
+\begin{itemize}
+\item Now you try it.  Work in groups on the proof, then we will compare notes.
+ \item If we try the same trick again, we get $6 - 9 + F = 2$, so $F = 5$.  
+ \item But $5 \le \frac{18}{3}$.  So what's the problem.
+ \item Look at what a face would look like here.  It {\em must} have 4 boundaries.
+ \item So in fact, we get $4F \le 2E$, so $F \le \frac{1}{2}E$.  And $5 \not\le \frac{9}{2}$.
+\end{itemize}
+
+\subsection*{Coloring graphs}
+\begin{itemize}
+  \item Map coloring problem: you want to color a land-map so that no adjacent countries have the same color.  How many colors do you need?
+  \item We can restate this question in terms of graph theory: put a vertex in the center of each country.  Connect vertices by edges if their countries share a border.
+  \item Now we want to color the vertices of this graph in such a way that no adjacent vertices share a color.  We call such a coloring a {\em proper} (vertex) coloring.
+  \item Note that you will always get a planar graph.  So what is the maximum number of colors you need when properly coloring a planar graph?
+  \item You will need at least 2, obviously.  Can you draw a graph which requires 3 colors?
+  \item Can you draw a planar graph which requires 4 colors?  Try it.
+  \item Can you draw a planar graph which requires 5 colors? You cannot.
+  \item The {\em Four Color Theorem} states that every planar graph has a proper vertex coloring with at most 4 colors.
+  \item This theorem is very hard to prove.  In fact, no simple proof has been found.  The current best proof still relies on a computer to check thousands of individual cases.  So we are relying on our trust in the computer to know this theorem is true.
+\end{itemize}

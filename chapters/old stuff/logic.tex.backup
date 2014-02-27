@@ -1,0 +1,308 @@
+%This is logic.tex.  In this chapter we both develop logic as well as some basic set theory.
+
+
+\section{Logic}
+
+\subsection{Motivation}
+
+One of the many fine reasons to study logic is to become better at reading and writing proofs.  Let's start by looking at the proof from the introduction a little more carefully:
+
+\begin{theorem}
+ There are infinitely many primes.
+\end{theorem}
+
+\begin{proof}
+ Suppose this were not the case - that there are only finitely many primes.  Then there must be a last, largest prime, call it $p$. Consider the number 
+ \[N = p! + 1 = (p \cdot (p-1) \cdot \cdots 3\cdot 2 \cdot 1) + 1.\]
+ Now $N$ is certainly larger than $p$.  Also, $N$ is not divisible by any number less than or equal to $p$, since every number less than or equal to $p$ divides $p!$.  Thus the prime factorization of $N$ contains prime numbers (possibly just $N$ itself) all greater than $p$.  Therefor $p$ is not the largest prime, a contradiction.  Therefore there are infinitely many primes.
+\end{proof}
+
+This proof is an example of a {\em proof by contradiction} - one of the standard styles of mathematical proof.  First and foremost, the proof is an argument - a sequence of statements, the last of which is the {\em conclusion} which follows from the previous statements.  The argument is valid - the conclusion must be true if the premises are true.  Let's go through the proof line by line.
+
+\begin{enumerate}
+ \item Suppose there are only finitely many primes.
+
+\hfill{\em this is a premise - note the use of ``suppose''}
+\item  There must be a largest prime, call it $p$. 
+
+\hfill{\em follows from line 1, by the definition of ``finitely many''}
+\item Let $N = p! + 1$.
+
+\hfill {\em basically just notation, although looking at $p! + 1$ is the key insight to the problem}
+\item $N$ is larger than $p$
+
+\hfill {\em by the definition of $p!$}
+\item $N$ is not divisible by any number less than or equal to $p$ 
+
+\hfill {\em by the definition of $p!$, $p!$ is divisible by each number less than or equal to $p$, so $p! + 1$ is not}
+\item The prime factorization of $N$ contains prime numbers greater than $p$ 
+
+\hfill {\em since $N$ is divisible by each prime number in the prime factorization of $N$, and by line 5.}
+\item Therefore $p$ is not the largest prime.
+
+\hfill {\em by line 6 - $N$ is divisible by a prime larger than $p$}
+\item This is a contradiction.
+
+\hfill {\em from line 2 and line 7: the largest prime is $p$ and there is a prime larger than $p$}
+\item Therefore there are infinitely many primes
+
+\hfill {\em from line 1 and line 8: our only premise lead to a contradiction, so the premise is false}
+\end{enumerate}
+
+Let's say a bit more about the last line.  Up through line 8, we have a valid argument with the premise ``there are only finitely many primes'' and the conclusion ``there is a prime larger than the largest prime.''  This is a valid argument - each line follows from previous lines - so if the premises are true, then the conclusion {\em must} be true.  However, the conclusion is {\bf NOT} true - it is a contradiction, so necessarily false.  The only way out: the premise must be false.  
+
+
+Here is another example.
+
+\begin{theorem}
+ For all integers $m$ and $n$, if $m\cdot n$ is even, then $m$ is even or $n$ is even.
+\end{theorem}
+
+\begin{proof}
+ Let $m$ and $n$ be integers, and assume $m$ and $n$ are odd.  Then $m = 2k +1$ for some integer $k$ and $n = 2l+1$ for some integer $l$.  Thus $m \cdot n = (2k+1)(2l+1) = 4kl+2k + 2l + 1$, which is odd.  Thus if $m \cdot n$ is even, then $m$ is even or $n$ is even.
+\end{proof}
+
+Now here is a line-by-line analysis of the proof.  
+
+\begin{enumerate}
+ \item Let $m$ and $n$ be integers. \hfill{\em define variables}
+\item Assume $m$ and $n$ are odd. \hfill{\em premise}
+\item Then $m = 2k+1$ and $n = 2l+1$ for integers $k$ and $l$ \hfill{\em by definition of ``odd''}
+\item Thus $m \cdot n = (2k+1)(2l+1) = 4kl+2k + 2l + 1$. \hfill{\em by line 3 and arithmetic}
+\item So $m\cdot n$ is odd. \hfill{\em by line 4, $m \cdot n = 2(2kl + k + l) + 1$, which is odd}
+\item Thus if $m$ and $n$ are odd, then $m\cdot n$ is odd. \hfill{\em by lines 1 and 5}
+\item Therefore if $m\cdot n$ is even, then $m$ is even or $n$ is even. \hfill{\em by line 6}
+\end{enumerate}
+
+Do you see why line 7 follows from line 6?  It has nothing to do with properties of integers, being even or odd, or any sort of normal mathematics.  It is purely logic.  Line 7 is what we call the {\em contrapositive} of line 6.  Logically, a statement is true if and only if its contrapositive is true. 
+
+Notice how the proofs above contain mathematical content as well as logical content.  When reading or writing proofs, it is helpful to identify which steps are logic-based and which are mathematics based.  The math can be very complicated, so it is important to have a firm grasp on the logic of a proof.  This is one reason we are starting with a study of logic.
+
+
+\subsubsection*{Propositional Logic}
+A proposition is another word of a statement.  Propositional logic studies the ways statements can interact with each other.  It is important to remember that propositional logic does not really care about the content of the statements.  For example, from a propositional logic statement point, the claims, ``if the moon is made of cheese then basketballs are round,'' and, ``if spiders have eight legs then Sam walks with a limp'' are exactly the same.  They are both statements of the form, ``if <something> then <something else>.''
+
+Here's a question: is it true that when playing Monopoly, if you get more doubles than any other player you will lose, or that if you lose you must have bought the most properties?  We will answer this question, and won't need to know anything about Monopoly.  Instead we will look at the logical form of the statement.  First though, let's back up and make sure we are very clear on some basics.
+
+\begin{definition}
+	A {\em statement} is any declarative sentence which is either true or false.
+\end{definition}
+\begin{example} These are statements:
+	\begin{itemize}
+		\item Telephone numbers in the USA have 10 digits.
+		\item The moon is made of cheese.
+		\item 42 is a perfect square.
+		\item Every even number greater than 2 can be expressed as the sum of two primes.
+	\end{itemize}
+	And these are not:
+	\begin{itemize}
+	\begin{multicols}{2}
+		\item Would you like some cake?
+		\item The sum of two squares.
+		\item Go to your room!
+		\item This sentence is false.\footnote{This is a tricky one.  Remember, a sentence is only a statement if it is either true or false.  Here, the sentence is not false, for if it were, it would be true.  It is not true, for that would make it false.}
+		\item That's what she said.
+		\end{multicols}
+	\end{itemize}
+\end{example}
+
+The reason the last sentence is not a statement is because it contains variables (``that'' and ``she'').  Unless those are specified, the sentence cannot be true or false, and as such not a statement.  Other examples of this: $x + 3 = 7$.  Depending on $x$, this is either true or false, but as it stands it it neither.
+
+You can build more complicated statements out of simpler ones using {\em logical connectives}.  For example, this is a statement: Telephone numbers in the USA have 10 digits and 42 is a perfect square.  Note that we can break this down into two smaller statements.  The two shorter statements are {\em connected} by an ``and''.  We will consider 5 connectives: ``and'' (Sam is a man and Chris is a woman), ``or'' (Sam is a man or Chris is a woman), ``if\ldots then\ldots'' (if Sam is a man, then Chris is a woman), ``if and only if'' (Sam is a man if and only if Chris is a woman), and ``not'' (Sam is not a man).
+
+Since we rarely care about the content of the individual statements, we can replace them with variables.  We use capital letters in the middle of the alphebet for these {\em propositional} (or {\em sentential}) variables: $P, Q, R, S\ldots$.  We also have symbols for the logical connectives: $\wedge$, $\vee$, $\imp$, $\iff$, $\neg$.
+
+\begin{itemize}
+ \item $P \wedge Q$ means  $P$ and $Q$, called a {\em conjunction}.
+\item $P \vee Q$ means $P$ or $Q$, called a {\em disjunction}.
+\item $P \imp Q$ means if $P$ then $Q$, called an {\em implication} or {\em conditional}.
+\item $P \iff Q$ means $P$ if and only if $Q$, called a {\em biconditional}.
+\item $\neg P$ means not $P$, called a {\em negation}.
+\end{itemize}
+
+The logical connectives allow us to construct longer statements out of simpler statements.  But the result is still a statement - it is either true or false.  Which it is can be determined by the truth or falsity of the parts, depending on the connectives.  
+
+\begin{itemize}
+ \item $P \wedge Q$ is true when both $P$ and $Q$ are true
+\item $P \vee Q$ is true when $P$ or $Q$ or both are true.\footnote{For us, ``or'' is the {\em inclusive or} so is always true when both $P$ and $Q$ are true}
+\item $P \imp Q$ is true when $P$ is false or $Q$ is true or both.
+\item $P \iff Q$ is true when $P$ and $Q$ are both true, or both false.
+\item $\neg P$ is true when $P$ is false. 
+\end{itemize}
+
+I think all of these are obvious, except for $P \imp Q$.  Consider the statement, ``If Bob gets a 90 on the final, then Bob will pass the class.''  This is definitely an implication: $P$ is the statement ``Bob gets a 90 on the final'' and $Q$ is the statement ``Bob will pass the class.'' Suppose I said that to you - in what circumstances would it be fair to call me a liar?  What if Bob really did get a 90 on the final, and he did pass the class?  Then I have not lied to you, so my statement is true.  But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false.  The tricky case is this: what if Bob did not get a 90 on the final?  Maybe he passes the class, maybe he doesn't - did I lie in either case?  I think not.  In these last two cases, $P$ was false, and so was the statement $P \imp Q$.  In the first case, $Q$ was true, and so was $P \imp Q$.  So $P \imp Q$ is true when either $P$ is false or $Q$ is true.  Perhaps an easier way to look at it is this: $P \imp Q$ is {\em false} in only one case: if $P$ is true and $Q$ is false.  Otherwise, $P \imp Q$ is true.  Admittedly, there are times in English when this is not how ``if\ldots, then\ldots'' works.  However, in mathematics, we {\em define} the implication to work this way.
+
+
+\subsubsection*{Truth Tables}
+
+When is the statement $(P \imp Q) \vee (Q \imp R)$ true?  Using the rules above, we see that either $P \imp Q$ is true or $Q \imp R$ is true (or both).  Those are true if either $P$ is false or $Q$ is true (in the first case) and $Q$ is false or $R$ is true (in the second case).  So... yeah, it gets kind of messy.  Luckily, we can make a chart to keep track of all the possibilities.  Enter truth tables.  The idea is this: on each row, we list a possible combination of T's and F's (standing of course, for true and false) for each of the sentential variables, and then mark down whether the statement in question is true or false in that case.  We do this for every possible combination of T's and F's.  Then we can clearly see in which cases the statement is true or false.  For complicated statements, we will first fill in values for each part of the statement, as a way of breaking up our task into smaller, more manageable pieces.
+
+All you really need to know is the truth tables for each of the logical connectives.  Here they are:
+
+\vskip 1ex
+\begin{tabular}{c|c|c}
+ $P$ & $Q$ & $P\wedge Q$ \\ \hline
+ T & T & T\\
+ T & F & F\\
+ F & T & F\\
+ F & F & F
+\end{tabular}\hfill
+\begin{tabular}{c|c|c}
+ $P$ & $Q$ & $P\vee Q$ \\ \hline
+ T & T & T\\
+ T & F & T\\
+ F & T & T\\
+ F & F & F
+\end{tabular}\hfill
+\begin{tabular}{c|c|c}
+ $P$ & $Q$ & $P\imp Q$ \\ \hline
+ T & T & T\\
+ T & F & F\\
+ F & T & T\\
+ F & F & T
+\end{tabular}\hfill
+\begin{tabular}{c|c|c}
+ $P$ & $Q$ & $P\iff Q$ \\ \hline
+ T & T & T\\
+ T & F & F\\
+ F & T & F\\
+ F & F & T
+\end{tabular}
+\vskip 1ex
+
+The truth table for negation looks like this:
+
+\vskip 1ex
+\centerline{
+\begin{tabular}{c|c}
+ $P$ & $\neg P$ \\ \hline
+ T & F \\
+ F & T\\
+\end{tabular}
+}
+\vskip 1ex
+
+\begin{itemize}
+	\item Now, make a truth table for $\neg p \vee q$.  When are statements of this form true?  Notice this is equivalent to $p \imp q$.
+	\item How about a truth table for our original statement about Monopoly?  First, what are the statements involved, and how are they connected?
+	\item How many rows will you need to account for all three statements? (8)
+	\item Notice that the truth table for the statement, $(p \imp q) \vee (q \imp r)$ is true in all eight cases.  It is an example of a {\em tautology} - a statement which is true on the basis of its logical form alone.
+	\item So while our statement about Monopoly is true, it is not really a statement {\em about} Monopoly.  It is true in exactly the same way as ``If the moon is made of cheese, then Elvis is still alive, or if Elvis is still alive, then unicorns have 5 legs.''
+\end{itemize}
+
+
+
+
+
+ Start by working on the worksheet from last time on drawing conclusions.  Discuss problem 2.  This leads nicely into \ldots
+
+
+\subsubsection*{Negation}
+\begin{itemize}
+ \item What does it take for a sentence to be false.  That is, when is the negation true?
+ \item We can rewrite $\neg(\neg p)$ as just $p$.  So if $\neg p$ is false, then $p$ is true.
+ \item What if $p \wedge q$ is false: so then we have $\neg(p\wedge q)$ which is equivalent to $\neg p \vee \neg q$.
+ \item Similarly, $\neg(p \vee q)$ is the same as $\neg p \wedge \neg q$.
+ \item What about implications.  The only way for $p \imp q$ to be false is for $p$ to be true and $q$ to be false.  Just look at the truth table.
+\end{itemize}
+
+\subsubsection*{Converse and Contrapositive}
+\begin{itemize}
+	\item There are many ways to use an implication in English.  Consider, if I stand on one leg, then I will fall down.  This is the same as, I will fall down if I stand on one leg.  Also the same as, I will either stand on both legs or fall down.  Also, if I didn't fall down, I must have been standing on two legs.
+	\item In symbols, this means all of the following are equivalent:
+	\[p \imp q \quad \neg p \vee q \quad \neg q \imp \neg p\]
+	\item However, this is not the same as, if I fall down, then I must have stood on one leg.  That is, $p \imp q$ is NOT equivalent to $q \imp p$. 
+	\item This means also that $p \imp q$ is DIFFERENT from $\neg p \imp \neg q$ (since the second is the same as $q \imp p$).
+	\item We call $\neg q \imp \neg p$ the {\em contrapositive} of $p \imp q$, and $q \imp p$ the {\em converse}. $\neg p \imp \neg q$ is sometimes called the {\em inverse}. So implications are equivalent to their contrapositive, but not their converse (or inverse).
+\end{itemize}
+
+Now go back and discuss problem 3 from the worksheet.
+
+\subsubsection*{Proofs}
+\begin{itemize}
+  \item Let's try to prove the statement, ``if $n$ is even, then $n^2$ is even.''
+  \begin{proof}
+    Suppose $n$ is even.  Then $n = 2k$ for some integer $k$.  Now $n^2 = (2k)^2 = 4k^2 = 2(2k^2)$.  Since $2k^2$ is an integer, $n^2$ is even.
+  \end{proof}
+  \item This is an example of a {\em direct} proof.  When proving an implication directly, you assume (suppose) the ``if...'' part (the hypothesis) and proceed to prove the ``then...'' part (the conclusion).
+  \item Now, what is the contrapositive of our statement?  It is, ``if $n^2$ is not even, then $n$ is not even.''  Is this true?  Yes - but we don't need a new proof - the contrapositive of a true statement is always true.
+  \item What is the converse of our original statement?  It is, ``if $n^2$ is even, then $n$ is even.''  Is this true?  Maybe, maybe not.  In this case it is.
+  \item We now give a proof of the converse.  Our proof will be by contrapositive.
+  \begin{proof}
+    We will prove the contrapositive: if $n$ is odd, then $n^2$ is odd.  Suppose that $n$ is odd.  Then $n= 2k+1$ for some integer $k$.  Now $n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$.  Since $2k^2 + 2k$ is an integer, we see that $n^2$ is odd.  This completes the proof.
+  \end{proof}
+  \item Notice we have now proved that if $n$ is even, then $n^2$ is even, as well as its converse, if $n^2$ is even then $n$ is even.  Thus we have actually proved that $n$ is even if and only if $n^2$ is even.
+  \item This gives us a guide for how to prove biconditionals: prove both implications separately.
+\end{itemize}
+
+
+\subsection*{More Proofs}
+\begin{itemize}
+  \item Here is another example of how you might prove an implication:
+  
+  \ex For all integers $a$ and $b$, if $a + b$ is odd, then $a$ is odd or $b$ is odd.  Prove the contrapositive.  What is the converse?  Is it true?
+  
+
+  \item We have seen how to prove some statements in the form of implications: either directly or by contrapositive.  Some statements aren't written as implications to begin with.
+  
+  \item Consider the statement, for every prime number $p$, either $p = 2$ or $p$ is odd.
+  
+  \item We can rephrase this: for every prime number $p$, if $p \ne 2$, then $p$ is odd.  Now try to prove it.
+  
+%   \item For example, let's try to prove that every prime number greater than 3 is either one more or one less than a multiple of 6.
+%   
+%   \item Even though it doesn't look like it, this is really an implication: for every number $n > 3$, if $n$ is a prime, then either $n = 6k + 1$ or $n = 6k-1$ for some $k$.
+%   
+%   \item How should we prove this?  First, let's think a bit why it might be true?
+%   
+%   \item Let's try to prove the contrapositive.  That is, for every number $n$, if it is not the case that $n = 6k+1$ or $n = 6k-1$ for some $k$, then $n$ is not prime. 
+%   
+%   \item Simplifying further: for every number $n$, if $n \ne 6k+1$ and $n \ne 6k-1$ for any $k$, then $n$ is composite.
+%   
+%   \begin{proof}
+%     Let $n$ be an integer greater than 3, and assume $n \ne 6k+1$ and $n \ne 6k-1$ for any integer $k$.  Then for some integer $k$, $n = 6k+2$, $n = 6k+3$ or $n = 6k+4$.  
+%     
+%     Case 1: $n = 6k+2$.  Then $n$ is even, so not prime.
+%     
+%     Case 2: $n = 6k+3$.  Then $n$ is a multiple of 3, so not prime.
+%     
+%     Case 3: $n = 6k+4$.  Then $n$ is even, so not prime.
+%     
+%     So in any case, $n$ is not prime.
+%   \end{proof}
+
+  \item There might be statements which really cannot be rephrased as implications.  For example, ``$\sqrt 2$ is irrational.''  In this case, it is hard to know where to start. What can we assume? 
+  
+  \item Say we want to prove the statement $p$.  Now what if we could prove that $\neg p \imp q$ where $q$ was false?  If this implication is true, and $q$ is false, what can we say about $\neg p$?  
+  
+  \item This is why ``proof'' by contradiction works.  If we can prove that $\neg p$ leads to a contradiction, then the only conclusion is that $\neg p$ is false, so $p$ is true.  That's what we wanted to prove.
+  
+  \item Here are a couple examples of proofs by contradiction.
+  
+  \ex $\sqrt{2}$ is irrational.
+  
+  \begin{proof}
+	Suppose not.  Then $\sqrt 2$ is equal to a fraction $\frac{a}{b}$.  Without loss of generality, assume $\frac{a}{b}$ is in lowest terms.  So,
+	\[2 = \frac{a^2}{b^2}\]
+	\[2b^2 = a^2\]
+	Thus $a^2$ is even, and as such $a$ is even.  So $a = 2k$ for some integer $k$, and $a^2 = 4k^2$.  We then have,
+	\[2b^2 = 4k^2\]
+	\[b^2 = 2k^2\]
+	Thus $b^2$ is even, and as such $b$ is even.  Since $a$ is also even, we see that $\frac{a}{b}$ is not in lowest terms, a contradiction.  Thus $\sqrt 2$ is irrational.
+\end{proof}
+ 
+    \ex There are no integers $x$ and $y$ such that $x^2  = 4y + 2$. 
+\begin{proof}
+	We proceed by contradiction.  So suppose there {\em are} integers $x$ and $y$ such that $x^2 = 4y + 2 = 2(2y + 1)$.  So $x^2$ is even.  We have seen that this implies that $x$ is even.  So $x = 2k$ for some integer $k$.  Then $x^2 = 4k^2$.  This in turn gives
+	$2k^2 = (2y + 1)$.  But $2k^2$ is even, and $2y + 1$ is odd, so these cannot be equal.  Thus we have a contradiction, so there must not be any integers $x$ and $y$ such that $x^2 = 4y + 2$.
+\end{proof}
+
+  \ex There are infinitely many primes.
+  
+  \begin{proof}
+ Assume, contrary to stipulation, that there are finitely many primes.  Then there must be a last, largest prime, call it $p$. Consider the number 
+ \[N = p! + 1 = (p \cdot (p-1) \cdot \cdots 3\cdot 2 \cdot 1) + 1.\]
+ Now $N$ is certainly larger than $p$.  Also, $N$ is not divisible by any number less than or equal to $p$, since every number less than or equal to $p$ divides $p!$.  Thus the prime factorization of $N$ contains prime numbers (possibly just $N$ itself) all greater than $p$.  Therefor $p$ is not the largest prime, a contradiction. 
+\end{proof}
+
+\end{itemize}

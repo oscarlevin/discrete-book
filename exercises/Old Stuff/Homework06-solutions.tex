@@ -1,0 +1,191 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
+\usepackage{tikz}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+\def\={\equiv}
+\def\var{\mbox{var}}
+\def\mod{\mbox{Mod}}
+\def\Th{\mbox{Th}}
+\def\sat{\mbox{Sat}}
+\def\con{\mbox{Con}}
+\def\bmodels{=\joinrel\mathrel|}
+\def\iffmodels{\bmodels\models}
+\def\dbland{\bigwedge \!\!\bigwedge}
+\def\dom{\mbox{dom}}
+\def\rng{\mbox{range}}
+\DeclareMathOperator{\wgt}{wgt}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{pts-bns}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 6 Solutions}{March 7, 2012}
+
+
+\begin{document}
+
+
+
+\begin{questions}
+\question[4] Zombie Euler and Zombie Cauchy - two famous zombie mathematicians - have just signed up for Twitter accounts.  After one day, Zombie Cauchy has more followers than Zombie Euler.  Each day after that, the number of new followers of Zombie Cauchy is exactly the same as the number of new followers of Zombie Euler (and neither lose any followers).  Prove, by mathematical induction that on every day after the first day, Zombie Cauchy will have more followers than Zombie Euler.
+
+\begin{solution}
+  The idea here is that because we know Zombie Cauchy starts ahead, and each day increases by the same amount as Zombie Euler, he will always be ahead.
+  
+  \begin{proof}
+    Let $P(n)$ be the statement ``Zombie Cauchy has more followers than Zombie Euler on the $n$th day.''  We will show $P(n)$ is true for all $n \ge 1$.
+    
+    Base case: $P(1)$ is true because it is given that on day 1, Zombie Euler has more followers than Zombie Cauchy.
+    
+    Inductive case: Assume $P(k)$ is true.  That is, on the $k$th day, Zombie Cauchy has more followers than Zombie Euler.  On the next day (day $k+1$), both zombies receive the same number of new followers, so by the end of the $k+1$st day, Zombie Cauchy will still have more followers than Zombie Euler.  Therefore $P(k+1)$ is true.
+    
+    Thus by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+  \end{proof}
+
+\end{solution}
+
+
+\question[4] Find the largest number of points which a football team cannot get exactly using just 3-point field goals and 7-point touch downs (ignore the possibility of safeties, missed extra points, and two point conversions).  Prove your answer is correct by mathematical induction.
+
+\begin{solution}
+  First note that is is impossible to make 11 points - if only field goals are made, the points must be a multiple of 3, if 1 touchdown is made, the possible point totals are 7, 10, 13, \ldots and two touchdowns are already too much.
+  
+  We will prove that 11 is the largest number of points which cannot be made.  In other words, any number of points greater than or equal to 12 can be made.
+  
+  \begin{proof}
+    Let $P(n)$ be the statement ``it is possible to make $n$ points using touchdowns and field goals.''  We will prove $P(n)$ is true for all $n \ge 12$.
+    
+    First the base case: You can make 12 points with 4 field goals, so $P(12)$ is true.
+    
+    Now the inductive case: Assume $P(k)$ is true for some fixed $k \ge 12$.  That is, it is possible to make $k$ points.  Since $k \ge 12$, we must have made the $k$ points using either at least 2 field goals or at least 2 touchdowns, or both (because if we used just one of each we would have only 10 points).  Now if the $k$ points were accomplished with 2 (or more) field goals, then replace 2 field goals with 1 touchdown.  This increases to point total by 1, giving $k + 1$ points.  On the other hand, if the $k$ points were accomplished with $2$ (or more) touchdowns, replace 2 touchdowns with 5 field goals, again increasing the point total by 1, giving $k+1$ points.  Using one of these two substitutions, we can make $k+1$ points, so $P(k+1)$ is true, establishing the inductive case.
+    
+    Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 12$.
+  \end{proof}
+
+\end{solution}
+
+
+\question[4] Write down first 6 or so terms of the sequences generated by each of the following generating functions, using the fact that $\frac{1}{1-x}$ generates $1,1,1,1,\ldots$.  No explanation or work required.
+\begin{parts}
+  \part $\d\frac{5}{1-x}$
+  \begin{solution}
+    $5,5,5,5,5,5,\ldots$
+  \end{solution}
+
+  \part $\dfrac{1}{1+2x}$
+  \begin{solution}
+    $1, -2, 4, -8, 16, -32,\ldots$
+  \end{solution}
+
+  \part $\d\frac{1}{(1-x^2)^2}$
+  \begin{solution}
+    $1, 0, 2, 0, 3, 0, 4, 0, 5, \ldots$
+  \end{solution}
+
+  \part$\d\frac{1}{(1-x^2)^2}+\frac{5}{1-x}$
+  \begin{solution}
+    $6, 5, 7, 5, 8, 5, 9, 5, 10, \ldots$
+  \end{solution}
+
+\end{parts}
+
+
+\question[4] Find the generating function for the sequence $1, 4, 11, 34, 101, 304, \ldots$ using the fact that the sequence is recursively defined by $a_n = 2 a_{n-1} + 3a_{n-2}$ with $a_0 = 1$ and $a_1 = 4$.  
+
+\begin{solution}
+  \begin{align*}
+    A & = 1 + 4x + 11x^2 + 34x^3 + \cdots \\
+    2xA & = ~~~~~ 2x + 8x^2 + 22x^3 + \cdots \\
+    \underline{- ~~ 3x^2A } & \underline{ = ~~~~~~~~~~~~~3x^2 + 12x^3 + \cdots} \\
+    (1-2x-3x^2)A & = 1 + 2x
+  \end{align*}
+(The other terms will all equal 0 by the recurrence relation.)  Thus
+\[A = \frac{1+2x}{1-2x-3x^2}\]
+\end{solution}
+
+
+\question[4] Find a generating function for the sequence $3, 4, 6, 10, 18, 34, 66, \ldots$.  Hint: find the generating function for the difference between terms. Explain why your answer is correct.
+\begin{solution}
+We use differencing:
+  \begin{align*}
+    A & = 3 + 4x + 6x^2 + 10x^3 + 18x^4 + \cdots \\
+    \underline{ - ~~xA } & \underline{ = ~~~~~~ 3x + 4x^2 + 6x^3 + 10x^4 + \cdots }\\
+    (1-x)A & = 3 + x + 2x^2 + 4x^3 + 8x^4 + \cdots
+  \end{align*}
+  Since the generating function for $x + 2x^2 + 4x^3 + 8x^4 + \cdots$ is $\dfrac{x}{1-2x}$ we have
+  \[A = \frac{3}{1-x} + \frac{x}{(1-2x)(1-x)}\]
+\end{solution}
+
+
+\bonusquestion[4] Bonus: Use the generating function for the sequence in question 5 to find a closed formula for that sequence.
+\begin{solution}
+  The generating function is $\d\frac{3}{1-x} + \frac{x}{(1-2x)(1-x)}$.  We can write the second fraction in the form 
+  \[\frac{x}{(1-2x)(1-x)} = \frac{A}{1-2x} + \frac{B}{1-x}\]
+  for constants $A$ and $B$.  Then solve for $A$ and $B$:
+  \[\frac{x}{(1-2x)(1-x)} = \frac{A(1-x) + B(1-2x)}{(1-2x)(1-x)}\]
+  so $x = A - Ax + B - 2Bx$ or equivalently $x = (A+B) +(-A -2B)x$.  Therefore $A + B = 0$ and $-A -2B = 1$.  Solving this system for $A$ and $B$ gives $A = 1$ and $B = -1$.  
+  
+  Now back to the generating function.  We can rewrite it as 
+  \[\frac{3}{1-x} + \frac{1}{1-2x} + \frac{-1}{1-x}\]
+  Therefore $a_n = 3 + 2^n - 1$ or $a_n = 2^n + 2$.
+\end{solution}
+
+\end{questions}
+
+
+
+
+\end{document}
+
+

@@ -1,0 +1,129 @@
+%%%  This is discretebook.sty
+%%%  It is an attempt at designing a package to be used in my discrete course notes.  It will load amsmath, amsthm, etc and all the definitions I like.
+
+\ProvidesPackage{discretebook}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{changepage} % for adding extra indents in environments
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{textcomp}
+\usepackage{docmute}
+\usepackage{answers}
+\usepackage{pdfpages}
+%\usepackage[titletoc]{appendix}
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+%\usepackage{bookmark}
+\usepackage{titlesec} % to create better chapter header layout
+\usepackage{booktabs}
+
+\pagestyle{fancy}
+
+%headers and footers:
+%\setlength{\headheight}{15.2pt}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection. #1}{}}
+\lhead{\footnotesize\leftmark}
+\chead{}
+\rhead{\footnotesize\rightmark}
+\newcommand{\heading}[3]{{\lhead{\footnotesize #1} \chead{\bf #2} \rhead{\footnotesize #3}}}
+%\newcommand{\cleanpage}{\cfoot{}}
+%\makeatletter
+\renewcommand\tableofcontents{%
+    \chapter*{\contentsname
+        \@mkboth{}{\contentsname}}%
+%           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}% DELETED
+           %\MakeUppercase\contentsname}{}}% ADDED
+    \@starttoc{toc}%
+    } 
+%\makeatother
+
+%Chapters don't have pagebreak:
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\huge\bfseries}{\centering\partname\ \thepart}{20pt}{\Huge\centering}
+\titlespacing*{\part}{0pt}{50pt}{40pt}
+\titleclass{\chapter}{top}
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{1ex}{\huge}
+\titlespacing*{\chapter} {0pt}{0pt}{3ex}
+
+%new list environments
+\newcounter{question}
+\newcounter{pcounter}
+\newcounter{spcounter}
+\newenvironment{questions}{\WriteAnsFileStart\begin{list}{\hyperlink{ans.\thechapter.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
+
+\newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thechapter.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
+
+\newcommand{\question}[1]{\item\hypertarget{ques.\thechapter.\Currentlabel.}{} #1}
+
+\newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
+
+\renewcommand{\part}[1]{\item #1}
+
+\newenvironment{subparts}{\begin{list}{(\alph{spcounter})~}{\usecounter{spcounter}}}{\end{list}}
+
+\newcommand{\subpart}[1]{\item #1}
+
+%\newcounter{answer}
+%\newenvironment{answers}{\begin{list}{\hyperref[ques.\thesection.\Currentlabel.]{\arabic{answer}.~}}{\usecounter{answer}}}{\end{list}}
+
+\newenvironment{ans}[1]{\item[\hyperlink{ques.#1}{#1}]\hypertarget{ans.#1}{}}{}
+
+\newcommand{\ansparams}{{\thechapter.\Currentlabel.}}
+
+\def\WriteAnsFileStart{%
+	\Writetofile{\ansfilename}{\protect\clearpage \protect\noindent{\bf Solutions for Chapter \thechapter}
+	\protect\heading{}{}{Chapter \thechapter\ Solutions} 
+	\protect\begin{itemize}}
+	\section*{Exercises\markright{Exercises}}\addcontentsline{toc}{section}{Exercises}
+	}
+	
+\def\WriteAnsFileStartAlt{%
+	\Writetofile{\ansfilename}{\protect\clearpage \protect\noindent{\bf Solutions for Chapter \thesection}
+	\protect\heading{}{}{Chapter \thesection\ Solutions} 
+	\protect\begin{itemize}}
+	\subsection{Sample Questions\markright{Sample Questions}}\addcontentsline{toc}{subsection}{Sample Questions}
+	}
+	
+\def\WriteAnsFileStop{%
+	\Writetofile{\ansfilename}{\protect\end{itemize}}
+	}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem*{conjecture}{Conjecture}
+%\newtheorem{answer}{Answer}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+%\newtheorem{example}{Example}
+\newtheorem{probfact}{Probability Fact}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+%\newtheorem*{solution}{Solution}
+
+%Create indented ``example'' environment:
+\newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}{\bf Example}: }{\end{adjustwidth}\vskip 1em}
+%Create ``solution'' environment:
+\newenvironment{solution}{\vskip 1ex \noindent {\em Solution}:}{}
+%Create ``defbox'' environment to highlight important definitions
+\newenvironment{defbox}[1]{\vskip 1em \begin{framed}\noindent{\bf #1\\{}}}{\end{framed}}
+
+\newcommand{\ex}{\noindent{\bf Ex: }}
+
+
+\renewcommand{\qedsymbol}{\small QED}
+
+
+\input{macros-discrete}
+
+\endinput
+
+%%% End of File.
