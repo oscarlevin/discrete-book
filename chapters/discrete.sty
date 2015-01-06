@@ -1,0 +1,80 @@
+%%%  This is discrete.sty
+%%%  It is an attempt at designing a package to be used in my discrete course notes.  It will load amsmath, amsthm, etc and all the definitions I like.
+
+\ProvidesPackage{discrete}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{changepage} % for adding extra indents in environments
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{ifthen}
+\usepackage{everypage}
+
+\pagestyle{fancy}
+
+
+\AddEverypageHook{%
+  \ifthenelse{\value{page}=1}%
+    {\renewcommand{\headrulewidth}{0.0pt}}%
+    {\renewcommand{\headrulewidth}{0.4pt}}%
+}
+%\makeatletter\let\thetitle\@title\makeatother
+%headers and footers:
+\renewcommand{\headrulewidth}{0.1pt}
+%\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\lhead{\ifthenelse{\value{page}=1}{}{\footnotesize \lefthead}}
+\chead{\ifthenelse{\value{page}=1}{\textbf{\Large \thetitle}}{}}
+\rhead{\ifthenelse{\value{page}=1}{}{\footnotesize \righthead}}
+\newcommand{\heading}[3]{\clearpage{\lhead{\footnotesize #1} \chead{\bf #2} \rhead{\footnotesize #3}}}
+%\chead{\title}
+%\newcommand{\cleanpage}{\cfoot{}}
+
+
+
+%new list environments
+\newcounter{qcounter}
+\newcounter{pcounter}
+\newenvironment{questions}{\begin{list}{\arabic{qcounter}.~}{\usecounter{qcounter}}}{\end{list}}
+\newcommand{\question}[1]{\item #1}
+\newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
+\renewcommand{\part}[1]{\item #1}
+
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem*{conjecture}{Conjecture}
+%\newtheorem{answer}{Answer}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+%\newtheorem{example}{Example}
+\newtheorem{probfact}{Probability Fact}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+%\newtheorem*{solution}{Solution}
+
+%Create indented ``example'' environment:
+\newenvironment{example}{\vskip 2em \begin{adjustwidth}{3em}{3em}{\bf Example}: }{\end{adjustwidth}\vskip 2em}
+%Create ``solution'' environment:
+\newenvironment{solution}{\vskip 1ex \noindent {\em Solution}:}{}
+%Create ``defbox'' environment to highlight important definitions
+\newenvironment{defbox}[1]{\vskip 1em \begin{framed}\noindent{\bf #1\\}}{\end{framed}}
+
+\newcommand{\ex}{\noindent{\bf Ex: }}
+
+
+\renewcommand{\qedsymbol}{\small QED}
+
+
+\input{../macros-discrete}
+
+\endinput
+
+%%% End of File.
