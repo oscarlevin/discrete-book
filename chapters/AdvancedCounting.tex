@@ -105,267 +105,267 @@ Stars and bars can be used in counting problems other than kids and cookies.  He
 
 Have we now discovered all the rules needed in counting?  Probably not.  To see what we can do and what we still must figure out, let's shift focus and think about counting in another way.  Consider again the problem if giving cookies to kids.  One way to think about this problem is to say that we are {\em assigning} each cookie to a kid.  Now in the case we have looked at so far, the cookies were identical, so it did not matter which cookie went to which kid.  But what if it did?  Suppose we have 7 different cookies and 4 different kids - how many ways are there to give out the cookies?
 
-Perhaps you already have a solution in mind.  However, for the time being, we will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  It is.  To help us completely characterize counting problems, we should look at them as problems about how to count functions.  Before we proceed, here is a quick review of functions.
+Perhaps you already have a solution in mind.  However, for the time being, we will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  It is.  To help us completely characterize counting problems, we should look at them as problems about how to count functions.  %Before we proceed, here is a quick review of functions.
 
-A function is simply a rule that assigns each input exactly one output.  The set of all inputs for a function is called the {\em domain}.  The set of all allowable outputs is called the codomain.  For example, a function might assign each natural number a natural number from 1 to 5.  In that case, the domain is the natural numbers and the codomain is the set of natural numbers from 1 to 5. Now it could be that this particular function we are thinking about assigns each even natural number to the number 2 and each odd natural number to the number 1.  In this case, not all of the codomain is actually used.  We would say that the set $\{1,2\}$ is the {\em range} of the function - these are the element in the codomain (allowable outputs) which are actually outputs for some input. 
-
-The key thing that makes a rule assigning inputs to outputs a {\em function} is that there is {\em only one} output for an input.  In other words, it is important that the rule be a good rule.  What output do we assign to the input 7?  There can only be one answer for a particular function - otherwise where does 7 go to?  
-
-To specify the name of the function, as well as the domain and codomain, we write $f:X \to Y$.  The function is called $f$, the domain is the set $X$ and the codomain is the set $Y$.  This however does not describe the rule.  To do that, we say something like this:
-
-\begin{quote}
-  The function $f:X \to Y$ is defined by $f(x) = x^2 + 3$.
-\end{quote}
-
-In this case, the function takes an input $x$ and computes the output by squaring $x$ and then adding 3.  In this case, you better hope that $X$ is a set of numbers and $Y$ is a set of number which can be 3 more than squares of numbers from $X$.  It would not work for $Y$ to be negative numbers here - that would not be a valid function.
-
-The description of the rule can vary greatly.  If $X$ is a finite set, we might just give a list of each output for each input.  You could also describe the function with at able or a graph or in words.
-
-\begin{example}
-  The following are all examples of functions:
-  \begin{enumerate}
-    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  The domain and codomain are both the set of integers.  However, the range is only the set of integer multiples of 3.
-    \item $f: \{1,2,3\} \to \{a,b,c\}$ defined by $f(1) = c$, $f(2) = a$ and $f(3) = a$.  The domain is the set $\{1,2,3\}$, the codomain is the set $\{a,b,c\}$ and the range is the set $\{a,c\}$.  Note that $f(2)$ and $f(3)$ are the same element of codomain.  This is not a problem - each element in the domain still has only one output (although each output does not have a unique input).
-    \item $f:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
-    \begin{center}
-      \begin{tikzpicture}
-        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
-        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
-        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
-      \end{tikzpicture}
-
-    \end{center}
-
-  \end{enumerate}
-
-\end{example}
-
-The arrow diagram used to define the function above can be very helpful in visualizing functions.  We will often be working with functions on finite sets so this kind of picture is often more useful than a traditional graph of a function.  A graph of the function in example 3 above would look like this:
-
-\begin{center}
-  \begin{tikzpicture}
-    %axis:
-    \draw[thin, gray!50] (0,0) grid (3.5, 3.5);
-    \draw[->, thick] (0,0) -- (0,3.5);
-   \draw[->, thick] (0,0) -- (3.5,0);
-   %points:
-   \fill (1,2) circle (5pt) (2,1) circle (5pt) (3,3) circle (5pt);
-  \end{tikzpicture}
-
-\end{center}
-
-It is important to know how to recognize a function from a rule which is not a function.  The arrow diagram can help.
-
-\begin{example}
-Which of the following diagrams represent a function.  Let $X = \{1,2,3,4\}$ and $Y = \{a,b,c,d\}$
-  \begin{multicols}{3}
-    \begin{center}
-      $f:X \to Y$
-      \begin{tikzpicture}
-        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {$d$};
-        \draw[->] (-.5,1) node[above] {2} -- (-1.5,0) node[below] {$a$};
-        \draw[->] (.5,1) node[above] {3} -- (.5, 0) node[below] {$c$};
-        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
-      \end{tikzpicture}
-      \columnbreak
-      
-      $g:X \to Y$
-	\begin{tikzpicture}
-        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {$d$};
-        \draw[->] (-.5,1) node[above] {2} -- (-1.6,0) node[below] {$a$};
-        \draw[->] (.5,1) node[above] {3} -- (-1.4, 0);
-        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
-        \draw (.5,0) node[below] {$c$};
-      \end{tikzpicture}
-      
-      \columnbreak
-      
-      $h:X \to Y$
-      	\begin{tikzpicture}
-        \draw (-1.5,1) node[above] {1};
-        \draw[->] (-.5,1) node[above] {2} (-.6,1) -- (-1.5,0) node[below] {$a$};
-        \draw[->] (-.4,1) -- (.5,0);
-        \draw[->] (.5,1) node[above] {3} -- (1.5, 0) node[below] {$d$};
-        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
-        \draw (.5,0) node[below] {$c$};
-      \end{tikzpicture}
-    \end{center}
-
-  \end{multicols}
-\begin{solution}
-  $f$ is a function.  So is $g$.  There is no problem with an element of the codomain not being the output for any input, and there is no problem with $a$ from the codomain being the output of both 2 and 3 from the input.  
-  
-  However, $h$ is {\bf not} a function - in fact, for two reasons.  First, the element 1 from the domain has not been mapped to any element from the codomain.  Second, the element 2 from the domain has been mapped to more than one element from the codomain ($a$ and $c$).  Note that either one of these problems is enough to make a rule not a function.  Neither of these mappings are functions:
-  \begin{center}
-    \begin{multicols}{2}
-      \begin{tikzpicture}
-        \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
-        \draw[->] (-1, 1) -- (-.5,0);
-        \draw[->] (1,1) -- (.5, 0);
-        \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
-      \end{tikzpicture}
-       
-       \begin{tikzpicture}
-         \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
-         \draw[->] (-1.1, 1) -- (-1.5, 0);
-         \draw[->] (-.9, 1) -- (-.5, 0);
-         \draw[->] (0,1) -- (.5,0);
-         \draw[->] (1,1) -- (1.5, 0);
-         \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
-       \end{tikzpicture}
-
-    \end{multicols}
-  Not functions.
-  \end{center}
-
-\end{solution}
-
-\end{example}
-
-\subsection{Surjections, Injections, and Bijections}
-
-We now turn to investigating special properties functions might or might not possess.  
-
-In the examples above, you may have noticed that sometimes there are elements of the codomain which are not in the range - which are not actual outputs for any input.  When this sort of the thing {\em does not} happen, (that is, when everything in the codomain is in the range) we say the function is {\em onto} or that the function maps the domain {\em onto} the codomain.  This terminology should make sense: the function puts the domain (entirely) on top the codomain.  The fancy math term for an onto function is a {\em surjection}, and we say that an onto function is a {\em surjective} function.
-
-In pictures:
-
-\begin{multicols}{2}
-  \begin{center}
-          \begin{tikzpicture}
-        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
-        \draw[->] (-1.5, 1) -- (-1,0);
-        \draw[->] (-.5,1) -- (0, 0);
-        \draw[->] (.5, 1) -- (.9,0);
-        \draw[->] (1.5,1) -- (1.1,0);
-        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
-      \end{tikzpicture}
-      
-      Surjective
-      
-      \columnbreak
-      
-                \begin{tikzpicture}
-        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
-        \draw[->] (-1.5, 1) -- (-1.1,0);
-        \draw[->] (-.5,1) -- (-.9, 0);
-        \draw[->] (.5, 1) -- (.9,0);
-        \draw[->] (1.5,1) -- (1.1,0);
-        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
-      \end{tikzpicture}
-      
-      Not surjective
-  \end{center}
-
-\end{multicols}
-
-\begin{example}
-  Which functions are surjective (i.e., onto)?
-    \begin{enumerate}
-    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  
-    \item $g: \{1,2,3\} \to \{a,b,c\}$ defined by $g(1) = c$, $g(2) = a$ and $g(3) = a$.  
-    \item $h:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
-    \begin{center}
-      \begin{tikzpicture}
-        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
-        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
-        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
-      \end{tikzpicture}
-    \end{center}
-  \end{enumerate}
-  \begin{solution}
-    \begin{enumerate}
-      \item $f$ is not surjective.  There are elements in the codomain which are not in the range.  For example, no $n \in \Z$ gets mapped to the number 1 (the rule would say that $\frac{1}{3}$ would be sent to 1, but $\frac{1}{3}$ is not in the domain).  In fact, the range of the function is $3\Z$ (the integer multiples of 3), which is not equal to $\Z$.
-      \item $g$ is not surjective.  There is no $x \in \{1,2,3\}$ (the domain) for which $g(x) = b$.  So $b$, which is in the codomain, is not in the range, so once again the function is not onto.
-      \item $h$ is surjective.  Every element of the codomain is also in the range.  Nothing is missed.
-    \end{enumerate}
-
-  \end{solution}
-
-\end{example}
-
-
-To be a function, a map cannot assign a single element of the domain to two or more different elements of the codomain.  However, we have seen that the reverse is permissible.  That is, a function might assign the same element of the codomain to two or more different elements of the domain.  When this {\em does not} occur - that is, when each element of the codomain is assigned to at most one element of the domain - then we say the function is {\em one-to-one}.  Again, this terminology makes sense: we are sending at most one element from the domain to one element from the codomain.  One input to one output. The fancy math term for a one-to-one function is a {\em injection}.  We call one-to-one functions {\em injective} functions.
-
-In pictures:
-
-\begin{multicols}{2}
-  \begin{center}
-          \begin{tikzpicture}
-        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
-        \draw[->] (-1.5, 1) -- (-2,0);
-        \draw[->] (-.5,1) -- (-1, 0);
-        \draw[->] (.5, 1) -- (1,0);
-        \draw[->] (1.5,1) -- (2,0);
-        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
-      \end{tikzpicture}
-      
-      Injective
-      
-      \columnbreak
-      
-                \begin{tikzpicture}
-        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
-        \draw[->] (-1.5, 1) -- (-2,0);
-        \draw[->] (-.5,1) -- (-1, 0);
-        \draw[->] (.5, 1) -- (.9,0);
-        \draw[->] (1.5,1) -- (1.1,0);
-        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
-      \end{tikzpicture}
-      
-      Not injective
-  \end{center}
-
-\end{multicols}
-
-
-\begin{example}
-  Which functions are injective (i.e., one-to-one)?
-    \begin{enumerate}
-    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  
-    \item $g: \{1,2,3\} \to \{a,b,c\}$ defined by $g(1) = c$, $g(2) = a$ and $g(3) = a$.  
-    \item $h:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
-    \begin{center}
-      \begin{tikzpicture}
-        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
-        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
-        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
-      \end{tikzpicture}
-    \end{center}
-  \end{enumerate}
-  \begin{solution}
-    \begin{enumerate}
-      \item $f$ is injective.  Each element in the codomain is assigned to at {\em most} one element from the domain - if $x$ is a multiple of three, then only $x/3$ is mapped to $x$.  If $x$ is not a multiple of 3, then there is no input corresponding to the output $x$.
-      \item $g$ is not injective.  Both inputs $2$ and $3$ are assigned the output $a$.
-      \item $h$ is injective.  Each output is only an output once.
-    \end{enumerate}
-
-  \end{solution}
-
-\end{example}
-
-
-
-From the examples above, it should be clear that there are functions which are surjective, injective, both or neither.  In the case when a function is both one-to-one and onto (a injection and surjection) we say the function is a {\em bijection}, or that the function is a {\em bijective} function.  
-
-\begin{defbox}{Function Definitions}
-\vspace{-2em}
-\begin{itemize}
-  \item A {\em function} is a rule that assigns each element of a set, called the {\em domain}, to exactly one element of a second set, called the {\em codomain}.
-  \item Notation: $f:X \to Y$ is our way of saying that the function is called $f$, the domain is the set $X$ and the codomain is the set $Y$.
-  \item $f(x) = y$ means the element $x$ of the domain (input) is assigned to the element $y$ of the codomain.  We say $y$ is an output.  Alternatively, we call $y$ the {\em image of $x$ under $f$}.
-  \item The {\em range} is a subset of the codomain.  It is the set of all elements which are assigned to at least one element of the domain by the function.  That is, the range is the set of all outputs.
-  \item A function is {\em one-to-one} (also called an {\em injection}) if every element of the codomain is the output for \textbf{at most} one element from the domain.
-  \item A function is {\em onto} (also called a {\em surjection}) if every element of the codomain is the output of \textbf{at least} one element of the domain.
-  \item A {\em bijection} is a function which is both an injection and surjection - so one-to-one and onto.
-%  \item The {\em complete inverse image} of an element in the codomain, written $f\inv(y)$ is the {\bf set} of all element in the domain which are assigned to $y$ by the function.  
-\end{itemize}
-
-\end{defbox}
+%A function is simply a rule that assigns each input exactly one output.  The set of all inputs for a function is called the {\em domain}.  The set of all allowable outputs is called the codomain.  For example, a function might assign each natural number a natural number from 1 to 5.  In that case, the domain is the natural numbers and the codomain is the set of natural numbers from 1 to 5. Now it could be that this particular function we are thinking about assigns each even natural number to the number 2 and each odd natural number to the number 1.  In this case, not all of the codomain is actually used.  We would say that the set $\{1,2\}$ is the {\em range} of the function - these are the element in the codomain (allowable outputs) which are actually outputs for some input. 
+%
+%The key thing that makes a rule assigning inputs to outputs a {\em function} is that there is {\em only one} output for an input.  In other words, it is important that the rule be a good rule.  What output do we assign to the input 7?  There can only be one answer for a particular function - otherwise where does 7 go to?  
+%
+%To specify the name of the function, as well as the domain and codomain, we write $f:X \to Y$.  The function is called $f$, the domain is the set $X$ and the codomain is the set $Y$.  This however does not describe the rule.  To do that, we say something like this:
+%
+%\begin{quote}
+%  The function $f:X \to Y$ is defined by $f(x) = x^2 + 3$.
+%\end{quote}
+%
+%In this case, the function takes an input $x$ and computes the output by squaring $x$ and then adding 3.  In this case, you better hope that $X$ is a set of numbers and $Y$ is a set of number which can be 3 more than squares of numbers from $X$.  It would not work for $Y$ to be negative numbers here - that would not be a valid function.
+%
+%The description of the rule can vary greatly.  If $X$ is a finite set, we might just give a list of each output for each input.  You could also describe the function with at able or a graph or in words.
+%
+%\begin{example}
+%  The following are all examples of functions:
+%  \begin{enumerate}
+%    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  The domain and codomain are both the set of integers.  However, the range is only the set of integer multiples of 3.
+%    \item $f: \{1,2,3\} \to \{a,b,c\}$ defined by $f(1) = c$, $f(2) = a$ and $f(3) = a$.  The domain is the set $\{1,2,3\}$, the codomain is the set $\{a,b,c\}$ and the range is the set $\{a,c\}$.  Note that $f(2)$ and $f(3)$ are the same element of codomain.  This is not a problem - each element in the domain still has only one output (although each output does not have a unique input).
+%    \item $f:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
+%    \begin{center}
+%      \begin{tikzpicture}
+%        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+%        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+%        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+%      \end{tikzpicture}
+%
+%    \end{center}
+%
+%  \end{enumerate}
+%
+%\end{example}
+%
+%The arrow diagram used to define the function above can be very helpful in visualizing functions.  We will often be working with functions on finite sets so this kind of picture is often more useful than a traditional graph of a function.  A graph of the function in example 3 above would look like this:
+%
+%\begin{center}
+%  \begin{tikzpicture}
+%    %axis:
+%    \draw[thin, gray!50] (0,0) grid (3.5, 3.5);
+%    \draw[->, thick] (0,0) -- (0,3.5);
+%   \draw[->, thick] (0,0) -- (3.5,0);
+%   %points:
+%   \fill (1,2) circle (5pt) (2,1) circle (5pt) (3,3) circle (5pt);
+%  \end{tikzpicture}
+%
+%\end{center}
+%
+%It is important to know how to recognize a function from a rule which is not a function.  The arrow diagram can help.
+%
+%\begin{example}
+%Which of the following diagrams represent a function.  Let $X = \{1,2,3,4\}$ and $Y = \{a,b,c,d\}$
+%  \begin{multicols}{3}
+%    \begin{center}
+%      $f:X \to Y$
+%      \begin{tikzpicture}
+%        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {$d$};
+%        \draw[->] (-.5,1) node[above] {2} -- (-1.5,0) node[below] {$a$};
+%        \draw[->] (.5,1) node[above] {3} -- (.5, 0) node[below] {$c$};
+%        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
+%      \end{tikzpicture}
+%      \columnbreak
+%      
+%      $g:X \to Y$
+%	\begin{tikzpicture}
+%        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {$d$};
+%        \draw[->] (-.5,1) node[above] {2} -- (-1.6,0) node[below] {$a$};
+%        \draw[->] (.5,1) node[above] {3} -- (-1.4, 0);
+%        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
+%        \draw (.5,0) node[below] {$c$};
+%      \end{tikzpicture}
+%      
+%      \columnbreak
+%      
+%      $h:X \to Y$
+%      	\begin{tikzpicture}
+%        \draw (-1.5,1) node[above] {1};
+%        \draw[->] (-.5,1) node[above] {2} (-.6,1) -- (-1.5,0) node[below] {$a$};
+%        \draw[->] (-.4,1) -- (.5,0);
+%        \draw[->] (.5,1) node[above] {3} -- (1.5, 0) node[below] {$d$};
+%        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
+%        \draw (.5,0) node[below] {$c$};
+%      \end{tikzpicture}
+%    \end{center}
+%
+%  \end{multicols}
+%\begin{solution}
+%  $f$ is a function.  So is $g$.  There is no problem with an element of the codomain not being the output for any input, and there is no problem with $a$ from the codomain being the output of both 2 and 3 from the input.  
+%  
+%  However, $h$ is {\bf not} a function - in fact, for two reasons.  First, the element 1 from the domain has not been mapped to any element from the codomain.  Second, the element 2 from the domain has been mapped to more than one element from the codomain ($a$ and $c$).  Note that either one of these problems is enough to make a rule not a function.  Neither of these mappings are functions:
+%  \begin{center}
+%    \begin{multicols}{2}
+%      \begin{tikzpicture}
+%        \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
+%        \draw[->] (-1, 1) -- (-.5,0);
+%        \draw[->] (1,1) -- (.5, 0);
+%        \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
+%      \end{tikzpicture}
+%       
+%       \begin{tikzpicture}
+%         \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
+%         \draw[->] (-1.1, 1) -- (-1.5, 0);
+%         \draw[->] (-.9, 1) -- (-.5, 0);
+%         \draw[->] (0,1) -- (.5,0);
+%         \draw[->] (1,1) -- (1.5, 0);
+%         \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
+%       \end{tikzpicture}
+%
+%    \end{multicols}
+%  Not functions.
+%  \end{center}
+%
+%\end{solution}
+%
+%\end{example}
+%
+%\subsection{Surjections, Injections, and Bijections}
+%
+%We now turn to investigating special properties functions might or might not possess.  
+%
+%In the examples above, you may have noticed that sometimes there are elements of the codomain which are not in the range - which are not actual outputs for any input.  When this sort of the thing {\em does not} happen, (that is, when everything in the codomain is in the range) we say the function is {\em onto} or that the function maps the domain {\em onto} the codomain.  This terminology should make sense: the function puts the domain (entirely) on top the codomain.  The fancy math term for an onto function is a {\em surjection}, and we say that an onto function is a {\em surjective} function.
+%
+%In pictures:
+%
+%\begin{multicols}{2}
+%  \begin{center}
+%          \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-1,0);
+%        \draw[->] (-.5,1) -- (0, 0);
+%        \draw[->] (.5, 1) -- (.9,0);
+%        \draw[->] (1.5,1) -- (1.1,0);
+%        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Surjective
+%      
+%      \columnbreak
+%      
+%                \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-1.1,0);
+%        \draw[->] (-.5,1) -- (-.9, 0);
+%        \draw[->] (.5, 1) -- (.9,0);
+%        \draw[->] (1.5,1) -- (1.1,0);
+%        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Not surjective
+%  \end{center}
+%
+%\end{multicols}
+%
+%\begin{example}
+%  Which functions are surjective (i.e., onto)?
+%    \begin{enumerate}
+%    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  
+%    \item $g: \{1,2,3\} \to \{a,b,c\}$ defined by $g(1) = c$, $g(2) = a$ and $g(3) = a$.  
+%    \item $h:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
+%    \begin{center}
+%      \begin{tikzpicture}
+%        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+%        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+%        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+%      \end{tikzpicture}
+%    \end{center}
+%  \end{enumerate}
+%  \begin{solution}
+%    \begin{enumerate}
+%      \item $f$ is not surjective.  There are elements in the codomain which are not in the range.  For example, no $n \in \Z$ gets mapped to the number 1 (the rule would say that $\frac{1}{3}$ would be sent to 1, but $\frac{1}{3}$ is not in the domain).  In fact, the range of the function is $3\Z$ (the integer multiples of 3), which is not equal to $\Z$.
+%      \item $g$ is not surjective.  There is no $x \in \{1,2,3\}$ (the domain) for which $g(x) = b$.  So $b$, which is in the codomain, is not in the range, so once again the function is not onto.
+%      \item $h$ is surjective.  Every element of the codomain is also in the range.  Nothing is missed.
+%    \end{enumerate}
+%
+%  \end{solution}
+%
+%\end{example}
+%
+%
+%To be a function, a map cannot assign a single element of the domain to two or more different elements of the codomain.  However, we have seen that the reverse is permissible.  That is, a function might assign the same element of the codomain to two or more different elements of the domain.  When this {\em does not} occur - that is, when each element of the codomain is assigned to at most one element of the domain - then we say the function is {\em one-to-one}.  Again, this terminology makes sense: we are sending at most one element from the domain to one element from the codomain.  One input to one output. The fancy math term for a one-to-one function is a {\em injection}.  We call one-to-one functions {\em injective} functions.
+%
+%In pictures:
+%
+%\begin{multicols}{2}
+%  \begin{center}
+%          \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-2,0);
+%        \draw[->] (-.5,1) -- (-1, 0);
+%        \draw[->] (.5, 1) -- (1,0);
+%        \draw[->] (1.5,1) -- (2,0);
+%        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Injective
+%      
+%      \columnbreak
+%      
+%                \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-2,0);
+%        \draw[->] (-.5,1) -- (-1, 0);
+%        \draw[->] (.5, 1) -- (.9,0);
+%        \draw[->] (1.5,1) -- (1.1,0);
+%        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Not injective
+%  \end{center}
+%
+%\end{multicols}
+%
+%
+%\begin{example}
+%  Which functions are injective (i.e., one-to-one)?
+%    \begin{enumerate}
+%    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  
+%    \item $g: \{1,2,3\} \to \{a,b,c\}$ defined by $g(1) = c$, $g(2) = a$ and $g(3) = a$.  
+%    \item $h:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
+%    \begin{center}
+%      \begin{tikzpicture}
+%        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+%        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+%        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+%      \end{tikzpicture}
+%    \end{center}
+%  \end{enumerate}
+%  \begin{solution}
+%    \begin{enumerate}
+%      \item $f$ is injective.  Each element in the codomain is assigned to at {\em most} one element from the domain - if $x$ is a multiple of three, then only $x/3$ is mapped to $x$.  If $x$ is not a multiple of 3, then there is no input corresponding to the output $x$.
+%      \item $g$ is not injective.  Both inputs $2$ and $3$ are assigned the output $a$.
+%      \item $h$ is injective.  Each output is only an output once.
+%    \end{enumerate}
+%
+%  \end{solution}
+%
+%\end{example}
+%
+%
+%
+%From the examples above, it should be clear that there are functions which are surjective, injective, both or neither.  In the case when a function is both one-to-one and onto (a injection and surjection) we say the function is a {\em bijection}, or that the function is a {\em bijective} function.  
+%
+%\begin{defbox}{Function Definitions}
+%\vspace{-2em}
+%\begin{itemize}
+%  \item A {\em function} is a rule that assigns each element of a set, called the {\em domain}, to exactly one element of a second set, called the {\em codomain}.
+%  \item Notation: $f:X \to Y$ is our way of saying that the function is called $f$, the domain is the set $X$ and the codomain is the set $Y$.
+%  \item $f(x) = y$ means the element $x$ of the domain (input) is assigned to the element $y$ of the codomain.  We say $y$ is an output.  Alternatively, we call $y$ the {\em image of $x$ under $f$}.
+%  \item The {\em range} is a subset of the codomain.  It is the set of all elements which are assigned to at least one element of the domain by the function.  That is, the range is the set of all outputs.
+%  \item A function is {\em one-to-one} (also called an {\em injection}) if every element of the codomain is the output for \textbf{at most} one element from the domain.
+%  \item A function is {\em onto} (also called a {\em surjection}) if every element of the codomain is the output of \textbf{at least} one element of the domain.
+%  \item A {\em bijection} is a function which is both an injection and surjection - so one-to-one and onto.
+%%  \item The {\em complete inverse image} of an element in the codomain, written $f\inv(y)$ is the {\bf set} of all element in the domain which are assigned to $y$ by the function.  
+%\end{itemize}
+%
+%\end{defbox}
 
 \subsection{Counting Functions}
 
-Now back to counting.  Suppose (yet again) that you have 7 cookies to give to 4 kids.  Now the cookies are all different, so which cookie goes to which kid matters.  How many ways are there to do this?  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
+Suppose (yet again) that you have 7 cookies to give to 4 kids.  Now the cookies are all different, so which cookie goes to which kid matters.  How many ways are there to do this?  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
 
 \begin{example}
  How many functions are there $f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}$?
