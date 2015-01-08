@@ -252,23 +252,51 @@ In pictures:
 
 From the examples above, it should be clear that there are functions which are surjective, injective, both or neither.  In the case when a function is both one-to-one and onto (a injection and surjection) we say the function is a {\em bijection}, or that the function is a {\em bijective} function.  
 
-\subsection{Inverses}
+\subsection{Inverse Image}
 
-You might be familiar with the {\em inverse} of a function from algebra or calculus.  Perhaps you want to say something like the inverse of $f(x) = x^3$ is $f\inv(x) = \sqrt[3]{x}$.  You wouldn't be wrong.  The inverse of $f$ is another function $f\inv$ which takes each output of $f$ as an input, and outputs the corresponding input from $f$.  So if $f(3) = 7$, the $f\inv(7) = 3$.  
+When discussing functions, we have notation for talking about an element of the domain (say $x$) and its corresponding element in the codomain (we write $f(x)$).  It would also be nice to start with some element of the codomain (say $y$) and talk about which element or elements (if any) from the domain get sent to it.  We could write ``those $x$ in the domain such that $f(x) = y$,'' but this is a lot of writing.  So here is some notation to make our lives easier.
 
-Can we always find the inverse of a function?  The answer is no.  What could go wrong?  Consider a function $f:X \to Y$.  We want another function $f\inv:Y \to X$.  For $f\inv$ to be a function, we need every element of $Y$ to get mapped to exactly one element of $X$ (in fact, the element of $X$ which $f$ sends to that element of $Y$).  But what if $f$ is not surjective?  Then there are elements of $Y$ which never get hit, so we have nothing to send them back to.  What if $f$ is not injective?  Then there are elements of $Y$ which have two corresponding inputs from $X$, so we would have to send the element of $Y$ to {\em two} elements of $X$ at once.  
+Suppose $f:X \to Y$ is a function.  For $y \in Y$ (an element of the codomain), we write $f\inv(y)$ to represent the {\em set} of all elements in the domain $X$ which get sent to $y$.  That is, $f\inv(y) = \{x \in X \st f(x) = y\}$.
 
-As you can see, unless a function is both surjective and injective (i.e., unless it is bijective), there is no hope of finding an inverse function.  Yet it is still useful to be able to talk about the elements of the domain that get sent to particular elements of the codomain.  This is the same sort of thing that an inverse function does, we just ignore that it might not be a function.
-
-Actually, we define $f\inv(y)$ to be a {\em set}!  It is exactly the set of elements of $X$ for which $f(x) = y$.  In symbols, given $f:X \to Y$, we have $f\inv(y) = \{x \in X \st f(x) = y\}$.  We call $f\inv(y)$ the {\em complete inverse image of $y$ under $f$}, or simply the {\em pre-image of $y$ under $f$}
+\vskip 1em
+\noindent{\bf WARNING: $f\inv(y)$ is not an inverse function!!!!  Inverse functions only exist for bijections, but $f\inv(y)$ is defined for any function $f$.  The point: $f\inv(y)$ is a \underline{set}, not an element of the domain.}
+\vskip 1em
 
 \begin{example}
-Let $f:\{1,2,3\} \to \{1,2,3,4\}$ be given by $f(1) = 4$, $f(2) = 4$ and $f(3) = 2$.  Find $f\inv(y)$ for each $y \in \{1,2,3,4\}$.
-
-\begin{solution}
-$f\inv(1) = \emptyset$ and $f\inv(3) = \emptyset$ since there is nothing that gets sent to 1 or 3 under $f$. Next, $f\inv(2) = \{3\}$.  This is not the same as saying $f\inv(2) = 3$ (which is wrong).  Remember, we are looking for sets here. Finally, $f\inv(4) = \{1,2\}$.
-\end{solution}
+ Consider the function $f:\{1,2,3,4,5,6\} \to \{a,b,c,d\}$ given by $f(1) = a$, $f(2) = a$, $f(3) = b$, $f(4) = c$, $f(5) = c$ and $f(6) = c$.  Find the complete inverse image of each element in the codomain.
+ \begin{solution}
+  Remember, we are looking for sets.
+  $f\inv(a) = \{1,2\}$\\
+  $f\inv(b) = \{3\}$ \\
+  $f\inv(c) = \{4,5,6\}$\\
+  $f\inv(d) = \emptyset$.
+ \end{solution}
 \end{example}
+
+\begin{example} Consider the function $g:\Z \to \Z$ defined by $g(n) = n^2 + 1$.  Find $g\inv(1)$, $g\inv(2)$, $g\inv(3)$ and $g\inv(10)$.
+ \begin{solution}
+  To find $g\inv(1)$, we need to find all integers $n$ such that $n^2 + 1 = 1$.  Clearly only 0 works, so $g\inv(1) = \{0\}$ (note that even though there is only one element, we still write it as a set with one element in it).  
+  
+  To find $g\inv(2)$, we need to find all $n$ such that $n^2 + 1 = 2$.  We see $g\inv(2) = \{-1,1\}$.  
+  
+  If $n^2 + 1 = 3$, then we are looking for an $n$ such that $n^2 = 2$.  There are no such integers so $g\inv(3) = \emptyset$. 
+  
+  Finally, $g\inv(10) = \{-3, 3\}$ because $g(-3) = 10$ and $g(3) = 10$.
+ \end{solution}
+
+\end{example}
+
+Since $f\inv(y)$ is a set, it makes sense to ask for $|f\inv(y)|$ - the number of elements in the domain which map to $y$.
+
+\begin{example}
+ Find a function $f:\{1,2,3,4,5\} \to \N$ such that $|f\inv(7)| = 5$.  
+ \begin{solution}
+ There is only one such function.  We need five elements of the domain to map to the number $7 \in \N$.  Since there are only five elements in the domain, all of them must map to 7.  So $f(1) = 7$, $f(2) = 7$, $f(3) = 7$, $f(4) = 7$ and $f(5) = 7$.
+ \end{solution}
+\end{example}
+
+
+
 
 
 \begin{defbox}{Function Definitions}
