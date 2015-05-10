@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Sequences} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{\thetitle} % will be put in the right header
+
+\begin{document}
+\section{Arithmetic and Geometric Sequences}
+We now turn to the question of finding closed formulas for particular types of sequences.
+
+
+\begin{defbox}{Arithmetic Sequences}
+  If the terms of a sequence differ by a constant, we say the sequence is {\em arithmetic}.
+  
+  If the first term ($a_1$) of the sequence is $a$ and the common difference is $d$, then we have,
+  
+  Recursive definition: $a_n = a_{n-1} + d$ with $a_1 = a$.
+  
+  Closed formula: $a_n = a + d(n-1)$.
+\end{defbox}
+
+How do we know this? For the recursive definition, we need to specify $a_1$.  Then we need to express $a_n$ in terms of $a_{n-1}$.  If we call the first term $a$, then $a_1 = a$.  For the recurrence relation, by the definition of an arithmetic sequence, the difference between successive terms is some constant, say $d$.  So $a_n - a_{n-1} = d$, or in other words, \[ a_1 = a \qquad a_n=a_{n-1}+d\]
+
+To find a closed formula, first try writing out the first write out the sequence using the recursive definition without simplifying:
+\[a, a+d, a+d+d, a+d+d+d, \ldots\]
+
+We see that to find the $n$th term, we need to start with $a$ and then add $d$ a bunch of times. In fact, add it $n-1$ times.  Thus $a_n = a+d(n-1)$.  
+
+\begin{example}
+  Find recursive definitions and closed formulas for the sequences:
+  \begin{enumerate}
+  \item $2, 5, 8, 11, 14, \ldots$.
+    \item $50, 43, 36, 29, \ldots$.
+    
+  \end{enumerate}
+  \begin{solution}
+  First we should check that these sequences really are arithmetic.  Doing so will reveal the common difference $d$.
+    \begin{enumerate}
+      \item $5-2 = 3$, $8-5 = 3$, etc.  To get from each term to the next, we add three, so $d = 3$.  The recursive definition is therefore $a_n = a_{n-1} + 3$ with $a_1 = 2$.  The closed formula is $a_n = 2 + 3(n-1)$.
+      \item Here the common difference is $-7$, since we add $-7$ to 50 to get 43, and so on.  Thus we have a recursive definition of $a_n = a_{n-1} - 7$ with $a_1 = 50$.  The closed formula is $a_n = 50 - 7(n-1)$.
+    \end{enumerate}
+
+  \end{solution}
+
+\end{example}
+
+
+What about sequences like $2, 6, 18, 54, \ldots$?  This is not arithmetic, because the difference between terms is not constant.  However, the {\em ratio} between successive terms is constant.  We call such sequences {\em geometric}.
+
+The recursive definition for the geometric progression with first term $a$ and common ratio $r$ is 
+\[a_1 = a \qquad a_n = a_{n-1}\cdot r \]
+This makes sense.  To get the next term we multiply the previous term by $r$.  We can find the closed formula like we did for the arithmetic progression.  Write $a_1 = a$, $a_2 = a\cdot r$, $a_3 = a_2 \cdot r = a\cdot r \cdot r$ and so on.  We must multiply the first term $a$ by $r$ a number of times - $n -1$ to be precise.  We get $a_n = a\cdot r^{n-1}$.
+
+\begin{defbox}{Geometric Sequences}
+  A sequence is called {\em geometric} if the ratio between successive terms is constant.
+  Suppose the first term $a_1$ is $a$ and the common ratio is $r$.  Then we have,
+  
+  Recursive definition: $a_n = ra_{n-1}$ with $a_1 = a$.
+  
+  Closed formula: $a_n = a\cdot r^{n-1}$.
+\end{defbox}
+
+
+\begin{example}
+  Find the recursive and closed formula for the sequences:
+  \begin{enumerate}
+    \item $3, 6, 12, 24, 48, \ldots$
+    \item $27, 9, 3, 1, 1/3, \ldots$
+  \end{enumerate}
+  \begin{solution}
+    Again, we should first check that these sequences really are geometric - but doing so will tell us what $r$ is.
+    \begin{enumerate}
+      \item $6/3 = 2$, $12/6 = 2$, $24/12 = 2$, etc.  Yes, to get from any term to the next, we multiply by $r = 2$.  So the recursive definition is $a_n = 2a_{n-1}$ with $a_1 = 3$.  The closed formula is $a_n = 3\cdot 2^{n-1}$.
+      \item $9/27 = 1/3$ and $3/9 = 1/3$ and so on.  The common ratio is $r = 1/3$.  So the sequence has recursive definition $a_n = \frac{1}{3}a_{n-1}$ with $a_1 = 27$ and closed formula $a_n = 27\cdot \frac{1}{3}^{n-1}$.
+    \end{enumerate}
+  \end{solution}
+\end{example}
+
+
+
+
+
+\subsection{Sums of Arithmetic and Geometric Sequences}
+
+Look at the sequence $1, 3, 6, 10, 15,\ldots$.  We have a formula for this already (they are the triangular numbers) but let's see if we can derive the formula anew.  First, is this sequence arithmetic?  No, since $3-1 = 2$ and $6-3 = 3 \ne 2$, so there is no common difference.  Is the sequence geometric?  No.  $3/1 = 3$ but $6/3 = 2$, so there is no common ratio.  What to do?  
+
+Notice thought that the differences between terms are a arithmetic sequence: $2, 3, 4, 5, 6,\ldots$.  This says that the $n$th term of the sequence $1,3,5,10,15,\ldots$ is the {\em sum} of the first $n$ terms in the sequence $1,2,3,4,5,\ldots$.  We say that the first sequence is the {\em sequence of partial sums} of the second sequence (partial sums because we are not taking the sum of all infinitely many terms - this might be familiar from second semester calculus). If we know how to add up the terms of an arithmetic sequence, we could use this to find a closed formula for a sequence whose differences are the terms of that arithmetic sequence.  In fact, this is how we found the formula $\frac{n(n+1)}{2}$ for the triangular numbers.
+
+We could use a similar technique to find a closed formula for the sequence $2, 3, 5, 9, 17, \ldots$ - the differences are $1, 2, 4, 8, \ldots$, a geometric sequence.  If we had a method for summing geometric sequences, we could get a formula for sequences with geometric differences.
+
+\subsubsection*{Summing Arithmetic Sequences: Reverse and Add}
+Here is a trick that allows us to quickly find the sum of an arithmetic sequence. 
+
+\begin{example}
+  Find the sum:  $2 + 5 + 8 + 11 + 14 + \cdots + 470$.
+  
+  \begin{solution}
+    The idea is to mimic the trick we used to find the formula for triangular numbers.  If we add the first and last, we get 472.  The second term and second-to-last term also add up to 472.  To make this clearer, we might express this as follows.  Call the sum $S$.  Then,
+    
+    \begin{center}
+    \begin{tabular}{rccccccccc}
+      $S  =  $& $2 $&$ + $& $5$ & $ + $ & $8$ & $+ \cdots + $ & $467$ &$ + $ & 470 \\
+     $+ \quad S  = $& $470$ & $+ $ & $467$ & $ + $ & $464$& $+ \cdots + $&$ 5$ & $+$ & 2 \\ \hline
+     $2S  = $& $472$ & $+ $ & $472$ & $ + $ & $472$& $+ \cdots + $&$472$ & $+$ & $472$ \\
+    \end{tabular}
+    \end{center}
+    
+    To find $2S$ then we add 472 to itself a number of times.  What number?  We need to decide how many terms (summands) are in the sum.  The $n$th term in the sum can be expressed as $2 + 3(n-1)$ - this is an arithmetic sequence after all.  We want to find $n$ when $2 + 3(n-1) = 470$.  Solving for $n$ gives $n = 157$.  So $n$ ranges from 1 to 157, giving 157 terms in the sum.  This is the number of 472's in the sum for $2S$.  Thus
+    \[2S = 157\cdot 472 = 74104\]
+    It is now easy to find $S$:
+    \[S = 74104/2 = 37052\]
+  \end{solution}
+\end{example}
+
+This will work in general, for any sum of {\em arithmetic} sequences.  Call the sum $S$.  Reverse and add.  This produces a single number added to itself many times.  Find the number of times.  Multiply.  Divided by 2.  Done.
+
+\begin{example} 
+  Find a closed formula for $6 + 10 + 14 + \cdots + (4n - 2)$.
+  \begin{solution}
+    Again, we have a sum of an arithmetic sequence.  We need to know how many terms are in the sequence.  Clearly each term in the sequence has the form $4k -2$ (as evidenced by the last term).  For which values of $k$ though?  To get 6, $k = 2$.  To get $4n-2$ take $k = n$.  So to find the number of terms, we need to know how many integers are in the range $2,3,\ldots, n$.  The answer is $n-1$.  (There are $n$ numbers from 1 to $n$, so one less if we start with 2.)
+    
+    Now use the reverse and add trick:
+    
+        \begin{center}
+    \begin{tabular}{rccccccccc}
+      $S  =  $& $6 $&$ + $& $10$ & $ + $ & $14$ & $+ \cdots + $ & $4n-6$ &$ + $ & $4n-2$ \\
+     $+ \quad S  = $& $4n-2$ & $+ $ & $4n-6$ & $ + $ & $4n-10$& $+ \cdots + $& $10$ & $+$ & 6 \\ \hline
+     $2S  = $& $4n+4$ & $+ $ & $4n+4$ & $ + $ & $4n+4$& $+ \cdots + $&$4n+4$ & $+$ & $4n+4$ \\
+    \end{tabular}
+    \end{center}
+    
+    Since there are $n-2$ terms, we get
+    \[2S = (n-2)(4n+4)\qquad \mbox{ so }\qquad S = \frac{(n-2)(4n+4)}{2}\]
+  \end{solution}
+
+\end{example}
+
+
+\subsubsection*{Summing Geometric Sequences: Multiply, Shift and Subtract}
+
+To find the sum of a geometric sequence, we cannot use the previous trick.  Do you see why?  The reason we got the same term added to itself many times is because there was a constant difference.  So as we added that difference in one direction, we subtracted the difference going the other way, leaving a constant total.  For geometric sums, we have a different trick.
+
+\begin{example} What is $3 + 6 + 12 + 24 + \cdots + 12288$? 
+\begin{solution}
+  Multiply each term by the common ratio (2).  You get $2S = 6 + 12 + 24 + \cdots + 24576$.   Now subtract: $2S - S = -3 + 24576 = 24573$.  Since $2S - S = S$, we have our answer. 
+  \end{solution}
+\end{example} 
+
+To see what happened in the above example, try writing it this way:
+
+\begin{center}
+\begin{tabular}{rl}
+  $S $& $= 3 + 6 + 12 + 24 + \cdots + 12288$ \\
+ $-~~2S$ & $= ~~~~~~6 + 12 + 24 + \cdots + 12288 + 24576 $\\ \hline
+ $-S$ &$ = 3 + 0 ~+~ 0 ~+~ 0 ~ +  \cdots + ~~0 ~~ - 24576$
+\end{tabular}
+\end{center}
+
+Then divide both sides by $-1$ and we have the same result for $S$.  The idea is, by multiplying the sum by the common ratio, each term becomes the next term.  We shift over the sum to get the subtraction to mostly cancel out, leaving just the first term and new last term.
+
+\begin{example}
+  Find a closed formula for $S(n) = 2 + 10 + 50 + \cdots + 2\cdot 5^n$.
+  \begin{solution}
+    The common ratio is 5.  So we have
+    
+    \begin{center}
+\begin{tabular}{rl}
+  $S $& $= 2 + 10 + 50 + \cdots + 2\cdot 5^n$ \\
+ $-~~5S$ & $= ~~~~~~10 + 50 + \cdots + 2\cdot 5^n + 2\cdot5^{n+1} $\\ \hline
+ $-4S$ &$ = 2  - 2\cdot5^{n+1}$
+\end{tabular}
+\end{center}
+
+Thus $S = \dfrac{2-2\cdot 5^{n+1}}{-4}$
+  \end{solution}
+\end{example}
+
+Even though this might seem like a new technique, you have probably used it before.  
+
+\begin{example}
+  Express $0.464646\ldots$ as a fraction.
+  
+  \begin{solution}
+    Let $N = 0.46464646\ldots$.  Consider $100N$.  We get:
+    
+    \begin{center}
+    \begin{tabular}{rl}
+     $N$ &$ = 0.4646464\ldots$\\
+     $-0.01N$ &$ = 0.00464646\ldots$\\ \hline
+     $0.99N$ & $ = 0.46$
+    \end{tabular}
+    \end{center}
+    So $N = \frac{46}{99}$.  What have we done?  We viewed the repeating decimal $0.464646\ldots$ as a sum of the geometric sequence $0.46, 0.0046, 0.000046, \ldots$  The common ratio is $.01$.  The only real difference is that we are now computing an {\em infinite} geometric sum, we we do not have the extra term on the end to consider.
+  \end{solution}
+
+\end{example}
+
+
+\subsubsection*{$\sum$ and $\prod$ notation}
+
+To simplify writing out sums, we will use notation like $\d\sum_{k=1}^n a_k$.  This means add up the $a_k$s where $k$ changes from 1 to $n$.
+
+\begin{example}
+  Use $\sum$ notation to rewrite the sums:
+  \begin{enumerate}
+    \item $1 + 2 + 3 + 4 + \cdots + 100$
+    \item $1 + 2 + 4 + 8 + \cdots + 2^{50}$
+    \item $6 + 10 + 14 + \cdots + (4n - 2)$.
+  \end{enumerate}
+  \begin{solution}
+  \begin{multicols}{3}
+    \begin{enumerate}
+      \item $\d\sum_{k=1}^{100} k$
+      \item $\d\sum_{k=0}^{50} 2^k$
+      \item $\d\sum_{k=2}^{n} (4k -2)$
+    \end{enumerate}
+    \end{multicols}
+  \end{solution}
+\end{example}
+
+
+If we want to multiply the $a_k$ instead, we would write $\d\prod_{k=1}^n a_k$.  For example, $\d\prod_{k=1}^n k = n!$.
+
+
+
+\end{document}
