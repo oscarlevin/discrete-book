@@ -1,0 +1,502 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Mathematical Logic} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{Logic} % will be put in the right header
+
+
+\begin{document}
+
+
+
+\section{Quantifiers and Predicate Logic}
+
+So far we have seen how statements can be combined with logical symbols.  This is helpful when trying to understand a complicated mathematical statement - you can determine under which conditions the complicated statement is true.  Additionally, we have been able to analyze the logical form of arguments to decide which arguments are valid and which are not.  However, the types of statements we have been able to make so far has be sorely limited.  For example, consider a classic argument:
+
+\begin{center}
+ All men are mortal.\\ Socrates is a man. \\
+ Therefore, Socrates is mortal.
+\end{center}
+
+This is clearly a valid argument - it is an example of a {\em syllogism}.  Historically, the study of logic began with Aristotle who worked out all possible forms of syllogisms and decided which were valid and which were not.  We will not do that here.  However, this is an important example because it highlights a limitation of the propositional logic we have studied so far.  Can we use propositional logic to analyze the argument?  
+
+The trouble is that we don't have a way to translate ``all men are mortal.''  It looks like an implication - being a man implies you are mortal.  So maybe it is $P \imp Q$.  But what is $P$?  We could rephrase: ``if Socrates is a man, then Socrates is mortal.''  Now we have a valid argument form we have seen before.  But it is not quite the same.  (What if the argument was: All men are mortal, all mortals have hair, therefore all men have hair - also valid and Socrates has nothing to do with it.)  Or perhaps we could go with, ``for every thing there is, if the thing is a man, then the thing is mortal.''  Looks promising, but we still can't let $P$ be ``the thing is a man'' - that is not a statement because ``thing'' is a variable.
+
+One way to sort this mess out is to introduce a new sort of logic called {\em predicate} logic.  This is the logic of properties.  Doing so will allow us to discuss how properties of various things are related.  Above, if a thing has the property of being a man, then it has the property of being mortal.  We can then {\em quantify} over what things we talk about.  The the example above, {\em all} things.  
+
+Another way to accomplish much of the same goal is to use set theory. The idea here is that we want talk about collections of things - for example, the collection of all men, and the collection of all mortal things.  We can then express ``all men are mortal'' by saying that the set of men is a subset of the set of mortals.  Then we claim that Socrates is a member of the set of men, so therefore is also a member of the set of mortals.
+
+One last example to highlight these two different approaches before delving into details.  We all agree that all squares are rectangles.  The set theory approach would be to consider the set of squares and the set of rectangles, and point out that one is a subset of the other (the squares are a subset of the rectangles).  The predicate logic approach would be to consider the properties of ``being a square'' and of ``being a rectangle'' and assign these to predicates - say $S$ and $R$.  We would then say $\forall x (S(x) \imp R(x))$ - for all things, if the thing is a square, then it is a rectangle.  So having the property of being a square implies having the property of being a rectangle.
+
+Now some details.
+
+
+
+
+
+
+Consider the statement ``for all integers $a$ and $b$, if $ab$ is even, then $a$ is even or $b$ is even.''  If we use propositional logic to analyze this statement, what should $P$ be?  
+
+You might want to say $P$ is ``$ab$ is even'' so $Q$ can be ``$a$ is even'' and $R$ can be ``$b$ is even'' and say that the whole statement is therefore of the form $P \imp (Q \vee R)$.  This does not work!  One reason is that ``$ab$ is even'' is not a statement - it contains free variables, so it is not true or false (until the variables have values).  Another reason is that we have just lost the ``for all integers $a$ and $b$'' from our statement.  We can remedy both these problems using {\em Predicate Logic}.
+
+\subsection{Predicates}
+
+We can think of predicates as properties of objects.  For example, consider the predicate $E$ which we will use to mean ``is even.''  Being even is a property of some numbers, so $E$ needs to be applied to something.  We will adopt the notation $E(x)$ to mean $x$ is even.  (Some books would write $Ex$ instead.)  Notice that if we put a number in for $x$, then this becomes a statement - and as such can be true or false.  So $E(2)$ is true, and $E(3)$ is false.  A predicate is like a function with codomain equal to the set of truth values $\{T, F\}$.  On the other hand $E(x)$ is not true or false, since we don't know what $x$ is.  If we have a variable floating around like that, we say the expression is merely a formula, and not a statement.
+
+Since $E(2)$ is a statement (a proposition), we can apply propositional logic to it.  Consider 
+\[E(2) \wedge \neg E(3)\]
+which is a true statement, because it is both the case that 2 is even and that 3 is not even.  What we have done here is capture the logical form (using connectives) of the statement ``2 is even and 3 is not'' as well as the mathematical content (using predicates).
+
+Notice that we can only assert even-ness of a single number at a time.  That is to say, $E$ is a {\em one-place} predicate.  There are also predicates which assert a property of two or more numbers (or other objects) at the same time.  Consider the {\em two-place} predicate ``is less than.''  Perhaps we will use the variable $L$.  Now we can say $L(2,3)$, which is true because 2 is less than 3.  Of course we are already have a symbol for this: $2 < 3$.  However, what about ``divides evenly into'' as a predicate?  We can say $D(2,10)$ is true because 2 divides evenly into 10, while $D(3, 10)$ is false since there is a remainder when you divide 10 by 3.  Incidentally, there is a standard mathematical symbol for this: $2 | 10$ is read ``2 divides 10.''  
+
+Predicates can be as complicated and have as many places as we want or need.  For example, we could $R(x,y,z,u,v,w)$ be the predicate asserting that $x$, $y$, $z$ are distinct natural numbers whose only common factor is $u$, the difference between $x$ and $y$ is $v$ and the difference between $y$ and $z$ is $w$.  This is a silly and most likely useless example, but it is an example of a predicate.  It is true of some ordered lists of six numbers (6-tuples), and false of others.  Additionally, predicates need not have anything to do with numbers: we could let $F(a,b,c,d)$ be the predicate that asserts that $a$ and $b$ are the only two children of mother $c$ and father $d$.
+
+\subsection{Quantifiers}
+
+Perhaps the most important reason to use predicate logic is that doing so allows for quantification.  We can now express statements like ``ever natural number is either even or odd,'' and ``there is a natural number such that no number is less than it.''  Think back to Calculus and the Mean Value Theorem.  It states that for every function $f$ and every interval $(a, b)$, if $f$ is continuous on the interval $[a,b]$ and differentiable on the interval $(a,b)$, then there exists a number $c$ such that $a \le c \le b$ and $f'(c)(b - a) = f(b) - f(a)$.  Using the correct predicates and quantifiers, we could express this statement entirely in symbols.  
+
+There are two quantifiers we will be interested in: existential and universal.  
+
+\begin{defbox}{Quantifiers}
+  \begin{itemize}
+    \item The existential quantifier is $\exists$ and is read ``there exists'' or ``there is.''  For example,
+\[\exists x (x < 0)\]
+asserts that there is a number less than 0.
+\item The universal quantifier is $\forall$ and is read ``for all'' or ``every.''  For example,
+\[\forall x (x \ge 0)\]
+asserts that every number is greater than or equal to 0.
+  \end{itemize}    
+\end{defbox}
+
+  Are these statements true?  Well, first notice that they cannot both be true.  In fact, they assert exactly the opposite of each other.  (Note that $x < y \iff \neg(x \ge y)$ -- although you might wonder what $x$ and $y$ are here, so it might be better to say $\forall x \forall y\left(x < y \iff \neg(x \ge y)\right)$.)  Which one is it though?  The answer depends entirely on our domain of discourse - the universe over which we quantify.  Usually, this universe is clear from the context.  If we are only discussing the natural numbers, then $\forall x \ldots$ means ``for every natural number $x \ldots$.''  On the other hand, in calculus we care about the real numbers, so it would mean ``for every real number $x \ldots$.''  If the context is not clear, we might right $\forall x \in \N\ldots$ to mean ``for every natural number $x\ldots$.''  Of course, for the two statements above, the second is true of the natural numbers, the first is true for any larger universe.\footnote{Remember, we take the natural 
+numbers to be 0, 1, 2, 3, \ldots}
+
+Some more examples: to say ``every natural number is either even or odd,'' we would write, using $E$ and $O$ as the predicates for even and odd respectively:
+\[\forall x (E(x) \vee O(x))\]
+To say ``there is a number such that no number is less than it'' we would write:
+\[ \exists x \forall y (y \ge x)\]
+Actually, I did a little translation before I wrote that down.  The above statement would be literally read ``there is a number such that every number is greater than or equal to it.''  This of course amounts to the same thing.  However, if I wanted to be exact, I could have also written:
+\[ \exists x \neg \exists y (y < x).\]
+Notice also that say that there is a number for which no number is smaller is equivalent to saying that it is not the case that for every number there is a number smaller than it:
+\[\neg \forall x \exists y (y < x).\]
+That these three statements are equivalent is no coincidence.  To understand what is going on, we will need to better understand how quantification interacts with the logical connectives, specifically negation.
+
+\subsection{Quantifiers and Connectives}
+
+What does it mean to say that it is false that there is something that has a certain property?  Well, it means that everything does not have that property.  What does it mean for it to be false that everything has a certain property?  It means that there is something that doesn't have the property.  So in symbols, we have the following
+
+\begin{defbox}{Quantifiers and Negation}
+\[\neg \forall x P(x) \mbox{ is equivalent to } \exists x \neg P(x)\]
+and
+\[\neg \exists x P(x)\mbox{ is equivalent to } \forall x \neg P(x).\]
+\end{defbox}
+
+In other words, to move a negation symbol past a quantifier, you must switch the quantifier. This can be done multiple times:
+\[\neg \exists x \forall y \exists z P(x,y,z) \mbox{ is equivalent to } \forall x \exists y \forall z \neg P(x,y,z).\]
+Now we also know how to move negation symbols through other connectives (using De Morgan's Laws) so it is always possible to rewrite a statement so that the only negation symbols that appear are right in front of a predicate.  This hints at the possibility of having a standard form for all predicate statements.  However, to get this we must also understand how to move quantifiers through connectives.
+
+Before we get too excited, note that we only need to worry about two connectives: $\wedge$ and $\vee$.  This is because we can rewrite $p \imp q$ as $\neg p \vee q$ (they are logically equivalent) and $p \iff q$ as $(p \wedge q) \vee (\neg p \wedge \neg q)$ (also logically equivalent).  
+
+Let us consider an example to see what can happen.
+
+\begin{example} 
+  Let $E$ be the predicate for being even, and $O$ for being odd.  Consider:
+\[\exists x E(x) \wedge \exists x O(x),\]
+which says that there is a number which is even and a number which is odd.  This is of course true.  However there is no number which is both even and odd, so 
+\[\exists x (E(x) \wedge O(x))\]
+is false.  Note also that
+\[\exists x (E(x) \vee O(x))\]
+while true, is not really the same thing -- if $O$ is instead the predicate for ``is less than 0'' then the original statement is false, but this new one is true (of the natural numbers).  Changing the quantifier also doesn't help:
+\[\forall x (E(x) \wedge O(x))\]
+is false.  So what can we do?
+
+The problem is that in the original sentence, the variable $x$ is doing double duty.  We want to express the fact that there is an even number and an odd number.  But that even number is in no way related to that odd number.  So we might as well have said
+\[ \exists x E(x) \wedge \exists y O(y).\]
+Now we can move the quantifiers out:
+\[\exists x \exists y (E(x) \wedge O(y)).\]
+\end{example}
+
+The same thing works with $\vee$ and for $\forall$ with either connective.  As long as there is no repeat in quantified variables we can move the quantifiers outside of conjunctions and disjunctions.  
+
+A warning though: you cannot do this for $\imp$, at least not directly.\footnote{We must be similarly careful with $\iff$}  Let's see what happens.  
+
+\begin{example}
+Consider
+\[ \forall x P(x) \imp \exists y Q(y)\]
+for some predicates $P$ and $Q$.  This sentence is {\bf not} the same as
+\[ \forall x \exists y (P(x) \imp Q(y)).\]
+Remember that $P \imp Q$ is the same as $\neg P \vee Q$.  So the original sentence is really
+\[\neg \forall x P(x) \vee \exists y Q(y).\]
+Before we move the quantifiers out, we must move the $\forall x$ past the negation sign, which switches it to a $\exists x$:
+\[\exists x \neg P(x) \vee \exists y Q(y).\]
+Then we can finish by writing,
+\[\exists x \exists y (\neg P(x) \vee Q(y))\]
+or equivalently
+\[\exists x \exists y (P(x) \imp Q(y)).\]
+\end{example}
+
+
+
+
+
+% \section{Quantifiers and Predicate Logic}
+% 
+% So far we have seen how statements can be combined with logical symbols.  This is helpful when trying to understand a complicated mathematical statement - you can determine under which conditions the complicated statement is true.  However, we often want to do more.  For example, we started our investigation of logic by considering a proof of the statement ``for all integers $a$ and $b$, if $ab$ is even, then $a$ is even or $b$ is even.''  If we use propositional logic to analyze this statement, what should $P$ be?  
+% 
+% You might want to say $P$ is ``$ab$ is even'' so $Q$ can be ``$a$ is even'' and $R$ can be ``$b$ is even'' and say that the whole statement is therefore of the form $P \imp (Q \vee R)$.  This does not work!  One reason is that ``$ab$ is even'' is not a statement - it contains free variables, so it is not true or false (until the variables have values).  Another reason is that we have just lost the ``for all integers $a$ and $b$'' from our statement.  We can remedy both these problems using {\em Predicate Logic}.
+% 
+% \subsection{Predicates}
+% 
+% We can think of predicates as properties of objects.  For example, consider the predicate $E$ which we will use to mean ``is even.''  Being even is a property of some numbers, so $E$ needs to be applied to something.  We will adopt the notation $E(x)$ to mean $x$ is even.  (Some books would write $Ex$ instead.)  Notice that if we put a number in for $x$, then this becomes a statement - and as such can be true or false.  So $E(2)$ is true, and $E(3)$ is false.  On the other hand $E(x)$ is not true or false, since we don't know what $x$ is.  If we have a variable floating around like that, we say the expression is merely a formula, and not a statement.
+% 
+% Since $E(2)$ is a statement (a proposition), we can apply propositional logic to it.  Consider 
+% \[E(2) \wedge \neg E(3)\]
+% which is a true statement, because it is both the case that 2 is even and that 3 is not even.  What we have done here is capture the logical form (using connectives) of the statement ``2 is even and 3 is not'' as well as the mathematical content (using predicates).
+% 
+% Notice that we can only assert even-ness of a single number at a time.  That is to say, $E$ is a {\em one-place} predicate.  There are also predicates which assert a property of two or more numbers (or other objects) at the same time.  Consider the {\em two-place} predicate ``is less than.''  Perhaps we will use the variable $L$.  Now we can say $L(2,3)$, which is true because 2 is less than 3.  Of course we are already have a symbol for this: $2 < 3$.  However, what about ``divides evenly into'' as a predicate?  We can say $D(2,10)$ is true because 2 divides evenly into 10, while $D(3, 10)$ is false since there is a remainder when you divide 10 by 3.  Incidentally, there is a standard mathematical symbol for this: $2 | 10$ is read ``2 divides 10.''  
+% 
+% Predicates can be as complicated and have as many places as we want or need.  For example, we could $R(x,y,z,u,v,w)$ be the predicate asserting that $x$, $y$, $z$ are distinct natural numbers whose only common factor is $u$, the difference between $x$ and $y$ is $v$ and the difference between $y$ and $z$ is $w$.  This is a silly and most likely useless example, but it is an example of a predicate.  It is true of some ordered lists of six numbers (6-tuples), and false of others.  Additionally, predicates need not have anything to do with numbers: we could let $F(a,b,c,d)$ be the predicate that asserts that $a$ and $b$ are the only two children of mother $c$ and father $d$.
+% 
+% \subsection*{Quantifiers}
+% 
+% Perhaps the most important reason to use predicate logic is that doing so allows for quantification.  We can now express statements like ``ever natural number is either even or odd,'' and ``there is a natural number such that no number is less than it.''  Think back to Calculus and the Mean Value Theorem.  It states that for every function $f$ and every interval $(a, b)$, if $f$ is continuous on the interval $[a,b]$ and differentiable on the interval $(a,b)$, then there exists a number $c$ such that $a \le c \le b$ and $f'(c)(b - a) = f(b) - f(a)$.  Using the correct predicates and quantifiers, we could express this statement entirely in symbols.  
+% 
+% There are two quantifiers we will be interested in: existential and universal.  
+% 
+% \begin{defbox}{Quantifiers}
+%   \begin{itemize}
+%     \item The existential quantifier is $\exists$ and is read ``there exists'' or ``there is.''  For example,
+% \[\exists x (x < 0)\]
+% asserts that there is a number less than 0.
+% \item The universal quantifier is $\forall$ and is read ``for all'' or ``every.''  For example,
+% \[\forall x (x \ge 0)\]
+% asserts that every number is greater than or equal to 0.
+%   \end{itemize}    
+% \end{defbox}
+% 
+%   Are these statements true?  Well, first notice that they cannot both be true.  In fact, they assert exactly the opposite of each other.  (Note that $x < y \iff \neg(x \ge y)$ -- although you might wonder what $x$ and $y$ are here, so it might be better to say $\forall x \forall y\left(x < y \iff \neg(x \ge y)\right)$.)  Which one is it though?  The answer depends entirely on our domain of discourse - the universe over which we quantify.  Usually, this universe is clear from the context.  If we are only discussing the natural numbers, then $\forall x \ldots$ means ``for every natural number $x \ldots$.''  On the other hand, in calculus we care about the real numbers, so it would mean ``for every real number $x \ldots$.''  If the context is not clear, we might right $\forall x \in \N\ldots$ to mean ``for every natural number $x\ldots$.''  Of course, for the two statements above, the second is true of the natural numbers, the first is true for any larger universe.\footnote{In this class we take the natural 
+% numbers to be 0, 1, 2, 3, \ldots}
+% 
+% Some more examples: to say ``every natural number is either even or odd,'' we would write, using $E$ and $O$ as the predicates for even and odd respectively:
+% \[\forall x (E(x) \vee O(x))\]
+% To say ``there is a number such that no number is less than it'' we would write:
+% \[ \exists x \forall y (y \ge x)\]
+% Actually, I did a little translation before I wrote that down.  The above statement would be literally read ``there is a number such that every number is greater than or equal to it.''  This of course amounts to the same thing.  However, if I wanted to be exact, I could have also written:
+% \[ \exists x \neg \exists y (y < x).\]
+% Notice also that say that there is a number for which no number is smaller is equivalent to saying that it is not the case that for every number there is a number smaller than it:
+% \[\neg \forall x \exists y (y < x).\]
+% That these three statements are equivalent is no coincidence.  To understand what is going on, we will need to better understand how quantification interacts with the logical connectives, specifically negation.
+% 
+% \subsection{Quantifiers and Connectives}
+% 
+% What does it mean to say that it is false that there is something that has a certain property?  Well, it means that everything does not have that property.  What does it mean for it to be false that everything has a certain property?  It means that there is something that doesn't have the property.  So in symbols, we have the following
+% 
+% \begin{defbox}{Quantifiers and Negation}
+% \[\neg \forall x P(x) \mbox{ is equivalent to } \exists x \neg P(x)\]
+% and
+% \[\neg \exists x P(x)\mbox{ is equivalent to } \forall x \neg P(x).\]
+% \end{defbox}
+% 
+% In other words, to move a negation symbol past a quantifier, you must switch the quantifier. This can be done multiple times:
+% \[\neg \exists x \forall y \exists z P(x,y,z) \mbox{ is equivalent to } \forall x \exists y \forall z \neg P(x,y,z).\]
+% Now we also know how to move negation symbols through other connectives (using De Morgan's Laws) so it is always possible to rewrite a statement so that the only negation symbols that appear are right in front of a predicate.  This hints at the possibility of having a standard form for all predicate statements.  However, to get this we must also understand how to move quantifiers through connectives.
+% 
+% Before we get too excited, let us note that we only need to worry about two connectives: $\wedge$ and $\vee$.  This is because we can rewrite $p \imp q$ as $\neg p \vee q$ (they are logically equivalent) and $p \iff q$ as $(p \wedge q) \vee (\neg p \wedge \neg q)$ (also logically equivalent).  
+% 
+% Let us consider an example to see what can happen.
+% 
+% \begin{example} 
+%   Let $E$ be the predicate for being even, and $O$ for being odd.  Consider:
+% \[\exists x E(x) \wedge \exists x O(x),\]
+% which says that there is a number which is even and a number which is odd.  This is of course true.  However there is no number which is both even and odd, so 
+% \[\exists x (E(x) \wedge O(x))\]
+% is false.  Note also that
+% \[\exists x (E(x) \vee O(x))\]
+% while true, is not really the same thing -- if $O$ is instead the predicate for ``is less than 0'' then the original statement is false, but this new one is true (of the natural numbers).  Changing the quantifier also doesn't help:
+% \[\forall x (E(x) \wedge O(x)\]
+% is false.  So what can we do?
+% 
+% The problem is that in the original sentence, the variable $x$ is doing double duty.  We want to express the fact that there is an even number and an odd number.  But that even number is in no way related to that odd number.  So we might as well have said
+% \[ \exists x E(x) \wedge \exists y O(y).\]
+% Now we can move the quantifiers out:
+% \[\exists x \exists y (E(x) \wedge O(y)).\]
+% \end{example}
+% 
+% The same thing works with $\vee$ and for both $\forall$ with either connective.  As long as there is no repeat in quantified variables we can move the quantifiers outside of conjunctions and disjunctions.  
+% 
+% A warning though: you cannot do this for $\imp$, at least not directly.\footnote{We must be similarly careful with $\iff$}  Let's see what happens.  
+% 
+% \begin{example}
+% Consider
+% \[ \forall x P(x) \imp \exists y Q(y)\]
+% for some predicates $P$ and $Q$.  This sentence is {\bf not} the same as
+% \[ \forall x \exists y (P(x) \imp Q(y)).\]
+% Remember that $p \imp q$ is the same as $\neg p \vee q$.  So the original sentence is really
+% \[\neg \forall x P(x) \vee \exists y Q(y).\]
+% Before we move the quantifiers out, we must move the $\forall x$ past the negation sign, which switches it to a $\exists x$:
+% \[\exists x \neg P(x) \vee \exists y Q(y).\]
+% Then we can finish by writing,
+% \[\exists x \exists y (\neg P(x) \vee Q(y))\]
+% or equivalently
+% \[\exists x \exists y (P(x) \imp Q(y)).\]
+% \end{example}
+% 
+%  
+
+
+% 
+% \subsection*{Practice}
+% \begin{questions}
+% \question Translate into symbols:
+%  \begin{parts}
+%   \part No number is both even and odd.
+% \vfill
+% \part One more than any even number is an odd number.
+% \vfill
+% \part There is prime number that is even.
+% \vfill
+% \part Between any two numbers there is a third number.
+% \vfill
+% \part There is no number between a number and one more than that number.
+% \vfill
+%  \end{parts}
+% 
+% \question Translate into English:
+% \begin{parts}
+%  \part $\forall x (E(x) \imp E(x +2))$
+% \vfill
+% \part $\forall x \exists y (\sin(x) = y)$
+% \vfill
+% 
+% \part $\forall y \exists x (\sin(x) = y)$
+% \vfill
+% \part $\forall x \forall y (x^3 = y^3 \imp x = y)$
+% \vfill
+% \end{parts}
+% 
+% \end{questions}
+% 
+% \newpage
+% \subsection*{Homework}
+% \begin{questions}
+%  \question Translate the following sentences into symbols.  You can use the predicates used above, or new ones, but say what they mean.
+%  \begin{parts}
+%   \part For any number, if it is not even, then it is odd.
+% \part Every number is prime or composite.
+% \part No even number greater than 2 is prime.
+% \part There is a number which is greater than all other numbers.
+% \part There is a least prime number.
+%  \end{parts}
+%  
+%  
+% \question Translate the following into English sentences.  The predicate $P(x)$ asserts that $x$ is prime.
+% \begin{parts}
+%  \part $\exists x (P(x) \wedge E(x))$
+% \part $\forall x (P(x) \imp \neg P(2x))$
+% \part $\forall x  (x = 1 \vee \exists y (P(y) \wedge y \le x))$
+%  \part $\forall x \exists y (P(x) \imp (P(y) \wedge x < y))$
+% \part $\forall x (E(x) \imp \exists y \exists z (P(y) \wedge P(z) \wedge x = y + z))$ (Bonus: is this true or false?)
+% \end{parts}
+% 
+% 
+% 
+% \question \textbf{Order of Quantifiers:} Does the order of quantifiers matter?  Sometimes it does.  Find a formula $\varphi$ such that $\forall x \exists y \varphi$ is true, but $\exists y \forall x \varphi$ is false.  Then find another formula $\psi$ such that $\forall x \exists y \psi$ is false, but $\exists y \forall x \psi$ is true.  (These {\em formulas} can be any predicate or multiple predicates combined with the logical connectives, containing the free variables $x$ and $y$.  An equation or inequality might work, and you might want to think about the English version of these before writing them down in symbols.)
+% 
+% \question \textbf{Disorder of Quantifiers:} Although you cannot change the order of two quantifiers when one is universal and the other is existential, is there still a problem if both quantifiers are of the same type?  Explain why or why not.
+% 
+% \end{questions}
+
+% \section{From Proofs to Logic}
+% 
+% One of the many fine reasons to study logic is to become better at reading and writing proofs.  Let's start by looking at a proof of a famous theorem a little more carefully:
+% 
+% \begin{theorem}
+%  There are infinitely many primes.
+% \end{theorem}
+% 
+% \begin{proof}
+%  Suppose this were not the case - that there are only finitely many primes.  Then there must be a last, largest prime, call it $p$. Consider the number 
+%  \[N = p! + 1 = (p \cdot (p-1) \cdot \cdots 3\cdot 2 \cdot 1) + 1.\]
+%  Now $N$ is certainly larger than $p$.  Also, $N$ is not divisible by any number less than or equal to $p$, since every number less than or equal to $p$ divides $p!$.  Thus the prime factorization of $N$ contains prime numbers (possibly just $N$ itself) all greater than $p$.  Therefor $p$ is not the largest prime, a contradiction.  Therefore there are infinitely many primes.
+% \end{proof}
+% 
+% This proof is an example of a {\em proof by contradiction} - one of the standard styles of mathematical proof.  First and foremost, the proof is an argument - a sequence of statements, the last of which is the {\em conclusion} which follows from the previous statements.  The argument is valid - the conclusion must be true if the premises are true.  Let's go through the proof line by line.
+% 
+% \begin{enumerate}
+%  \item Suppose there are only finitely many primes.
+% 
+% \hfill{\em this is a premise - note the use of ``suppose''}
+% \item  There must be a largest prime, call it $p$. 
+% 
+% \hfill{\em follows from line 1, by the definition of ``finitely many''}
+% \item Let $N = p! + 1$.
+% 
+% \hfill {\em basically just notation, although looking at $p! + 1$ is the key insight to the problem}
+% \item $N$ is larger than $p$
+% 
+% \hfill {\em by the definition of $p!$}
+% \item $N$ is not divisible by any number less than or equal to $p$ 
+% 
+% \hfill {\em by the definition of $p!$, $p!$ is divisible by each number less than or equal to $p$, so $p! + 1$ is not}
+% \item The prime factorization of $N$ contains prime numbers greater than $p$ 
+% 
+% \hfill {\em since $N$ is divisible by each prime number in the prime factorization of $N$, and by line 5.}
+% \item Therefore $p$ is not the largest prime.
+% 
+% \hfill {\em by line 6 - $N$ is divisible by a prime larger than $p$}
+% \item This is a contradiction.
+% 
+% \hfill {\em from line 2 and line 7: the largest prime is $p$ and there is a prime larger than $p$}
+% \item Therefore there are infinitely many primes
+% 
+% \hfill {\em from line 1 and line 8: our only premise lead to a contradiction, so the premise is false}
+% \end{enumerate}
+% 
+% We should say a bit more about the last line.  Up through line 8, we have a valid argument with the premise ``there are only finitely many primes'' and the conclusion ``there is a prime larger than the largest prime.''  This is a valid argument - each line follows from previous lines - so if the premises are true, then the conclusion {\em must} be true.  However, the conclusion is {\bf NOT} true - it is a contradiction, so necessarily false.  The only way out: the premise must be false.  
+% 
+% 
+% Here is another example.
+% 
+% \begin{theorem}
+%  For all integers $m$ and $n$, if $m\cdot n$ is even, then $m$ is even or $n$ is even.
+% \end{theorem}
+% 
+% \begin{proof}
+%  Let $m$ and $n$ be integers, and assume $m$ and $n$ are odd.  Then $m = 2k +1$ for some integer $k$ and $n = 2l+1$ for some integer $l$.  Thus $m \cdot n = (2k+1)(2l+1) = 4kl+2k + 2l + 1$, which is odd.  Thus if $m \cdot n$ is even, then $m$ is even or $n$ is even.
+% \end{proof}
+% 
+% Now here is a line-by-line analysis of the proof.  
+% 
+% \begin{enumerate}
+%  \item Let $m$ and $n$ be integers. \hfill{\em define variables}
+% \item Assume $m$ and $n$ are odd. \hfill{\em premise}
+% \item Then $m = 2k+1$ and $n = 2l+1$ for integers $k$ and $l$ \hfill{\em by definition of ``odd''}
+% \item Thus $m \cdot n = (2k+1)(2l+1) = 4kl+2k + 2l + 1$. \hfill{\em by line 3 and arithmetic}
+% \item So $m\cdot n$ is odd. \hfill{\em by line 4, $m \cdot n = 2(2kl + k + l) + 1$, which is odd}
+% \item Thus if $m$ and $n$ are odd, then $m\cdot n$ is odd. \hfill{\em by lines 1 and 5}
+% \item Therefore if $m\cdot n$ is even, then $m$ is even or $n$ is even. \hfill{\em by line 6}
+% \end{enumerate}
+% 
+% Do you see why line 7 follows from line 6?  It has nothing to do with properties of integers, being even or odd, or any sort of normal mathematics.  It is purely logic.  Line 7 is what we call the {\em contrapositive} of line 6.  Logically, a statement is true if and only if its contrapositive is true. 
+% 
+% Notice how the proofs above contain mathematical content as well as logical content.  When reading or writing proofs, it is helpful to identify which steps are logic-based and which are mathematics based.  The math can be very complicated, so it is important to have a firm grasp on the logic of a proof.  This is one reason we are starting with a study of logic.
+% 
+% 
+% \section{From Logic to Proofs}
+% 
+% Now we return to proofs.  Since part of a mathematical proof is the logical structure, the hope is that our study of logic will make at least that side easier.  Here are some examples.
+% 
+% \begin{example} Prove: For all integers $n$, if $n$ is even, then $n^2$ is even.
+%   \begin{proof}
+%     Let $n$ be an arbitrary integer.  Suppose $n$ is even.  Then $n = 2k$ for some integer $k$.  Now $n^2 = (2k)^2 = 4k^2 = 2(2k^2)$.  Since $2k^2$ is an integer, $n^2$ is even.
+%   \end{proof}
+%   This is an example of a {\em direct} proof.  When proving an implication directly, you assume (suppose) the ``if...'' part (the hypothesis) and proceed to prove the ``then...'' part (the conclusion).  The statement is also a universal statement ($\forall n\ldots$).  We dealt with that by fixing an {\em arbitrary} integer.  
+% \end{example}
+% Now, what is the contrapositive of our statement?  It is, ``for all integers $n$, if $n^2$ is not even, then $n$ is not even.''  Is this true?  Yes - but we don't need a new proof - the contrapositive of a true statement is always true.
+% 
+% What about the converse?
+% 
+% \begin{example}
+%   Is the statement ``for all integers $n$, if $n^2$ is even, then $n$ is even'' true?  
+%   \begin{solution}
+%     While the converse of a true statement need not be true, in this case it is.
+%     \begin{proof}
+%       We will prove the contrapositive: for all integers $n$ if $n$ is odd, then $n^2$ is odd.  Let $n$ be an arbitrary integers.  Suppose that $n$ is odd.  Then $n= 2k+1$ for some integer $k$.  Now $n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$.  Since $2k^2 + 2k$ is an integer, we see that $n^2$ is odd.  This completes the proof.
+%     \end{proof}
+% 
+%   \end{solution}
+% 
+% \end{example}
+% 
+% Notice we have now proved that if $n$ is even, then $n^2$ is even, as well as its converse, if $n^2$ is even then $n$ is even.  Thus we have actually proved that $n$ is even if and only if $n^2$ is even. This gives us a guide for how to prove biconditionals: prove both implications separately.
+% 
+% 
+% Here is another example of how you might prove an implication:
+%   
+%   \begin{example} 
+%   Prove: for all integers $a$ and $b$, if $a + b$ is odd, then $a$ is odd or $b$ is odd.   What is the converse?  Is it true?
+%   \begin{solution}
+%     First we prove the original implication by proving its contrapositive.
+%     \begin{proof}
+%       Let $a$ and $b$ be integers.  Assume that $a$ and $b$ are even.  Then $a = 2k$ and $b = 2l$ for some integers $k$ and $l$.  Now $a + b = 2k + 2l = 2(k+1)$.  Since $k + l$ is an integer, we see that $a + b$ is even, completing the proof.
+%     \end{proof}
+%     Note that we really did prove the contrapositive - we assumed that ``$a$ is odd or $b$ is odd'' was false, which is to say $a$ and $b$ are even.  Then we derived $a + b$ is even, which is to say that it is false that $a + b$ is odd.
+%     
+%     The converse is the statement, ``for all integers $a$ and $b$, if $a$ is odd or $b$ is odd, then $a + b$ is odd.''  This is false!  How do we prove it is false?  We need to prove the negation of the converse.  Let's look at the symbols.  The converse is
+%     \[\forall a \forall b ((O(a) \vee O(b)) \imp O(a+b))\]
+%     We want to prove the negation:
+%     \[\neg \forall a \forall b ((O(a) \vee O(b)) \imp O(a+b))\]
+%     Simplify using the rules from the previous sections:
+%     \[\exists a \exists b ((O(a) \vee O(b)) \wedge \neg O(a+b))\]
+%     As the negation passed by the quantifiers, they changed from $\forall$ to $\exists$.  We then needed to take the negation of an implication, which is equivalent to asserting the if part and not the then part.  
+%     
+%     Now we know what to do.  To prove that the converse is false we need to find two integers $a$ and $b$ so that $a$ is odd or $b$ is odd, but $a+b$ is not odd (so even).  That's easy: 1 and 3.  (remember, or means one or the other or both).
+%   \end{solution}
+% \end{example}
+% 
+%  We have seen how to prove some statements in the form of implications: either directly or by contrapositive.  Some statements aren't written as implications to begin with.
+%   
+%  \begin{example}
+%    Consider the statement, for every prime number $p$, either $p = 2$ or $p$ is odd.  We can rephrase this: for every prime number $p$, if $p \ne 2$, then $p$ is odd.  Now try to prove it.
+%    
+%    \begin{proof}
+%     Let $p$ be an arbitrary prime number.  Assume $p$ is not odd.  So $p$ is divisible by 2.  Since $p$ is prime, it must have exactly two divisors, and it has 2 as a divisor, so $p$ must be divisible by only 1 and 2.  Therefore $p = 2$.  This completes the proof (by contrapositive). 
+%    \end{proof}
+% 
+%  \end{example}
+% 
+% 
+%   
+% %   \item For example, let's try to prove that every prime number greater than 3 is either one more or one less than a multiple of 6.
+% %   
+% %   \item Even though it doesn't look like it, this is really an implication: for every number $n > 3$, if $n$ is a prime, then either $n = 6k + 1$ or $n = 6k-1$ for some $k$.
+% %   
+% %   \item How should we prove this?  First, let's think a bit why it might be true?
+% %   
+% %   \item Let's try to prove the contrapositive.  That is, for every number $n$, if it is not the case that $n = 6k+1$ or $n = 6k-1$ for some $k$, then $n$ is not prime. 
+% %   
+% %   \item Simplifying further: for every number $n$, if $n \ne 6k+1$ and $n \ne 6k-1$ for any $k$, then $n$ is composite.
+% %   
+% %   \begin{proof}
+% %     Let $n$ be an integer greater than 3, and assume $n \ne 6k+1$ and $n \ne 6k-1$ for any integer $k$.  Then for some integer $k$, $n = 6k+2$, $n = 6k+3$ or $n = 6k+4$.  
+% %     
+% %     Case 1: $n = 6k+2$.  Then $n$ is even, so not prime.
+% %     
+% %     Case 2: $n = 6k+3$.  Then $n$ is a multiple of 3, so not prime.
+% %     
+% %     Case 3: $n = 6k+4$.  Then $n$ is even, so not prime.
+% %     
+% %     So in any case, $n$ is not prime.
+% %   \end{proof}
+% 
+% There might be statements which really cannot be rephrased as implications.  For example, ``$\sqrt 2$ is irrational.''  In this case, it is hard to know where to start. What can we assume? Well, say we want to prove the statement $p$.  Now what if we could prove that $\neg p \imp q$ where $q$ was false?  If this implication is true, and $q$ is false, what can we say about $\neg p$?  It must be false as well - which makes $p$ true!  
+%   
+% This is why ``proof'' by contradiction works.  If we can prove that $\neg p$ leads to a contradiction, then the only conclusion is that $\neg p$ is false, so $p$ is true.  That's what we wanted to prove.
+% 
+% Here are a couple examples of proofs by contradiction.
+%   
+%   \begin{example}Prove that $\sqrt{2}$ is irrational.
+%   
+%   \begin{proof}
+% 	Suppose not.  Then $\sqrt 2$ is equal to a fraction $\frac{a}{b}$.  Without loss of generality, assume $\frac{a}{b}$ is in lowest terms.  So,
+% 	\[2 = \frac{a^2}{b^2}\]
+% 	\[2b^2 = a^2\]
+% 	Thus $a^2$ is even, and as such $a$ is even.  So $a = 2k$ for some integer $k$, and $a^2 = 4k^2$.  We then have,
+% 	\[2b^2 = 4k^2\]
+% 	\[b^2 = 2k^2\]
+% 	Thus $b^2$ is even, and as such $b$ is even.  Since $a$ is also even, we see that $\frac{a}{b}$ is not in lowest terms, a contradiction.  Thus $\sqrt 2$ is irrational.
+% \end{proof}
+%  \end{example}
+%  
+%  \begin{example} Prove: there are no integers $x$ and $y$ such that $x^2  = 4y + 2$. 
+% \begin{proof}
+% 	We proceed by contradiction.  So suppose there {\em are} integers $x$ and $y$ such that $x^2 = 4y + 2 = 2(2y + 1)$.  So $x^2$ is even.  We have seen that this implies that $x$ is even.  So $x = 2k$ for some integer $k$.  Then $x^2 = 4k^2$.  This in turn gives
+% 	$2k^2 = (2y + 1)$.  But $2k^2$ is even, and $2y + 1$ is odd, so these cannot be equal.  Thus we have a contradiction, so there must not be any integers $x$ and $y$ such that $x^2 = 4y + 2$.
+% \end{proof}
+% \end{example}
+% 
+
+
+\end{document}
