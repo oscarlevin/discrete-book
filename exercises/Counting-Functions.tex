@@ -1,0 +1,363 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Advanced Counting} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{\thetitle} % will be put in the right header
+
+
+
+
+\begin{document}
+
+
+
+\section{Functions}
+
+Have we now discovered all the rules needed in counting?  Probably not.  To see what we can do and what we still must figure out, let's shift focus and think about counting in another way.  Consider again the problem if giving cookies to kids.  One way to think about this problem is to say that we are {\em assigning} each cookie to a kid.  Now in the case we have looked at so far, the cookies were identical, so it did not matter which cookie went to which kid.  But what if it did?  Suppose we have 7 different cookies and 4 different kids - how many ways are there to give out the cookies?
+
+Perhaps you already have a solution in mind.  However, for the time being, we will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  It is.  To help us completely characterize counting problems, we should look at them as problems about how to count functions.  %Before we proceed, here is a quick review of functions.
+
+%A function is simply a rule that assigns each input exactly one output.  The set of all inputs for a function is called the {\em domain}.  The set of all allowable outputs is called the codomain.  For example, a function might assign each natural number a natural number from 1 to 5.  In that case, the domain is the natural numbers and the codomain is the set of natural numbers from 1 to 5. Now it could be that this particular function we are thinking about assigns each even natural number to the number 2 and each odd natural number to the number 1.  In this case, not all of the codomain is actually used.  We would say that the set $\{1,2\}$ is the {\em range} of the function - these are the element in the codomain (allowable outputs) which are actually outputs for some input. 
+%
+%The key thing that makes a rule assigning inputs to outputs a {\em function} is that there is {\em only one} output for an input.  In other words, it is important that the rule be a good rule.  What output do we assign to the input 7?  There can only be one answer for a particular function - otherwise where does 7 go to?  
+%
+%To specify the name of the function, as well as the domain and codomain, we write $f:X \to Y$.  The function is called $f$, the domain is the set $X$ and the codomain is the set $Y$.  This however does not describe the rule.  To do that, we say something like this:
+%
+%\begin{quote}
+%  The function $f:X \to Y$ is defined by $f(x) = x^2 + 3$.
+%\end{quote}
+%
+%In this case, the function takes an input $x$ and computes the output by squaring $x$ and then adding 3.  In this case, you better hope that $X$ is a set of numbers and $Y$ is a set of number which can be 3 more than squares of numbers from $X$.  It would not work for $Y$ to be negative numbers here - that would not be a valid function.
+%
+%The description of the rule can vary greatly.  If $X$ is a finite set, we might just give a list of each output for each input.  You could also describe the function with at able or a graph or in words.
+%
+%\begin{example}
+%  The following are all examples of functions:
+%  \begin{enumerate}
+%    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  The domain and codomain are both the set of integers.  However, the range is only the set of integer multiples of 3.
+%    \item $f: \{1,2,3\} \to \{a,b,c\}$ defined by $f(1) = c$, $f(2) = a$ and $f(3) = a$.  The domain is the set $\{1,2,3\}$, the codomain is the set $\{a,b,c\}$ and the range is the set $\{a,c\}$.  Note that $f(2)$ and $f(3)$ are the same element of codomain.  This is not a problem - each element in the domain still has only one output (although each output does not have a unique input).
+%    \item $f:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
+%    \begin{center}
+%      \begin{tikzpicture}
+%        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+%        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+%        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+%      \end{tikzpicture}
+%
+%    \end{center}
+%
+%  \end{enumerate}
+%
+%\end{example}
+%
+%The arrow diagram used to define the function above can be very helpful in visualizing functions.  We will often be working with functions on finite sets so this kind of picture is often more useful than a traditional graph of a function.  A graph of the function in example 3 above would look like this:
+%
+%\begin{center}
+%  \begin{tikzpicture}
+%    %axis:
+%    \draw[thin, gray!50] (0,0) grid (3.5, 3.5);
+%    \draw[->, thick] (0,0) -- (0,3.5);
+%   \draw[->, thick] (0,0) -- (3.5,0);
+%   %points:
+%   \fill (1,2) circle (5pt) (2,1) circle (5pt) (3,3) circle (5pt);
+%  \end{tikzpicture}
+%
+%\end{center}
+%
+%It is important to know how to recognize a function from a rule which is not a function.  The arrow diagram can help.
+%
+%\begin{example}
+%Which of the following diagrams represent a function.  Let $X = \{1,2,3,4\}$ and $Y = \{a,b,c,d\}$
+%  \begin{multicols}{3}
+%    \begin{center}
+%      $f:X \to Y$
+%      \begin{tikzpicture}
+%        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {$d$};
+%        \draw[->] (-.5,1) node[above] {2} -- (-1.5,0) node[below] {$a$};
+%        \draw[->] (.5,1) node[above] {3} -- (.5, 0) node[below] {$c$};
+%        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
+%      \end{tikzpicture}
+%      \columnbreak
+%      
+%      $g:X \to Y$
+%	\begin{tikzpicture}
+%        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {$d$};
+%        \draw[->] (-.5,1) node[above] {2} -- (-1.6,0) node[below] {$a$};
+%        \draw[->] (.5,1) node[above] {3} -- (-1.4, 0);
+%        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
+%        \draw (.5,0) node[below] {$c$};
+%      \end{tikzpicture}
+%      
+%      \columnbreak
+%      
+%      $h:X \to Y$
+%      	\begin{tikzpicture}
+%        \draw (-1.5,1) node[above] {1};
+%        \draw[->] (-.5,1) node[above] {2} (-.6,1) -- (-1.5,0) node[below] {$a$};
+%        \draw[->] (-.4,1) -- (.5,0);
+%        \draw[->] (.5,1) node[above] {3} -- (1.5, 0) node[below] {$d$};
+%        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {$b$};
+%        \draw (.5,0) node[below] {$c$};
+%      \end{tikzpicture}
+%    \end{center}
+%
+%  \end{multicols}
+%\begin{solution}
+%  $f$ is a function.  So is $g$.  There is no problem with an element of the codomain not being the output for any input, and there is no problem with $a$ from the codomain being the output of both 2 and 3 from the input.  
+%  
+%  However, $h$ is {\bf not} a function - in fact, for two reasons.  First, the element 1 from the domain has not been mapped to any element from the codomain.  Second, the element 2 from the domain has been mapped to more than one element from the codomain ($a$ and $c$).  Note that either one of these problems is enough to make a rule not a function.  Neither of these mappings are functions:
+%  \begin{center}
+%    \begin{multicols}{2}
+%      \begin{tikzpicture}
+%        \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
+%        \draw[->] (-1, 1) -- (-.5,0);
+%        \draw[->] (1,1) -- (.5, 0);
+%        \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
+%      \end{tikzpicture}
+%       
+%       \begin{tikzpicture}
+%         \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
+%         \draw[->] (-1.1, 1) -- (-1.5, 0);
+%         \draw[->] (-.9, 1) -- (-.5, 0);
+%         \draw[->] (0,1) -- (.5,0);
+%         \draw[->] (1,1) -- (1.5, 0);
+%         \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
+%       \end{tikzpicture}
+%
+%    \end{multicols}
+%  Not functions.
+%  \end{center}
+%
+%\end{solution}
+%
+%\end{example}
+%
+%\subsection{Surjections, Injections, and Bijections}
+%
+%We now turn to investigating special properties functions might or might not possess.  
+%
+%In the examples above, you may have noticed that sometimes there are elements of the codomain which are not in the range - which are not actual outputs for any input.  When this sort of the thing {\em does not} happen, (that is, when everything in the codomain is in the range) we say the function is {\em onto} or that the function maps the domain {\em onto} the codomain.  This terminology should make sense: the function puts the domain (entirely) on top the codomain.  The fancy math term for an onto function is a {\em surjection}, and we say that an onto function is a {\em surjective} function.
+%
+%In pictures:
+%
+%\begin{multicols}{2}
+%  \begin{center}
+%          \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-1,0);
+%        \draw[->] (-.5,1) -- (0, 0);
+%        \draw[->] (.5, 1) -- (.9,0);
+%        \draw[->] (1.5,1) -- (1.1,0);
+%        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Surjective
+%      
+%      \columnbreak
+%      
+%                \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-1.1,0);
+%        \draw[->] (-.5,1) -- (-.9, 0);
+%        \draw[->] (.5, 1) -- (.9,0);
+%        \draw[->] (1.5,1) -- (1.1,0);
+%        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Not surjective
+%  \end{center}
+%
+%\end{multicols}
+%
+%\begin{example}
+%  Which functions are surjective (i.e., onto)?
+%    \begin{enumerate}
+%    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  
+%    \item $g: \{1,2,3\} \to \{a,b,c\}$ defined by $g(1) = c$, $g(2) = a$ and $g(3) = a$.  
+%    \item $h:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
+%    \begin{center}
+%      \begin{tikzpicture}
+%        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+%        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+%        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+%      \end{tikzpicture}
+%    \end{center}
+%  \end{enumerate}
+%  \begin{solution}
+%    \begin{enumerate}
+%      \item $f$ is not surjective.  There are elements in the codomain which are not in the range.  For example, no $n \in \Z$ gets mapped to the number 1 (the rule would say that $\frac{1}{3}$ would be sent to 1, but $\frac{1}{3}$ is not in the domain).  In fact, the range of the function is $3\Z$ (the integer multiples of 3), which is not equal to $\Z$.
+%      \item $g$ is not surjective.  There is no $x \in \{1,2,3\}$ (the domain) for which $g(x) = b$.  So $b$, which is in the codomain, is not in the range, so once again the function is not onto.
+%      \item $h$ is surjective.  Every element of the codomain is also in the range.  Nothing is missed.
+%    \end{enumerate}
+%
+%  \end{solution}
+%
+%\end{example}
+%
+%
+%To be a function, a map cannot assign a single element of the domain to two or more different elements of the codomain.  However, we have seen that the reverse is permissible.  That is, a function might assign the same element of the codomain to two or more different elements of the domain.  When this {\em does not} occur - that is, when each element of the codomain is assigned to at most one element of the domain - then we say the function is {\em one-to-one}.  Again, this terminology makes sense: we are sending at most one element from the domain to one element from the codomain.  One input to one output. The fancy math term for a one-to-one function is a {\em injection}.  We call one-to-one functions {\em injective} functions.
+%
+%In pictures:
+%
+%\begin{multicols}{2}
+%  \begin{center}
+%          \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-2,0);
+%        \draw[->] (-.5,1) -- (-1, 0);
+%        \draw[->] (.5, 1) -- (1,0);
+%        \draw[->] (1.5,1) -- (2,0);
+%        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Injective
+%      
+%      \columnbreak
+%      
+%                \begin{tikzpicture}
+%        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+%        \draw[->] (-1.5, 1) -- (-2,0);
+%        \draw[->] (-.5,1) -- (-1, 0);
+%        \draw[->] (.5, 1) -- (.9,0);
+%        \draw[->] (1.5,1) -- (1.1,0);
+%        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
+%      \end{tikzpicture}
+%      
+%      Not injective
+%  \end{center}
+%
+%\end{multicols}
+%
+%
+%\begin{example}
+%  Which functions are injective (i.e., one-to-one)?
+%    \begin{enumerate}
+%    \item $f:\Z \to \Z$ defined by $f(n) = 3n$.  
+%    \item $g: \{1,2,3\} \to \{a,b,c\}$ defined by $g(1) = c$, $g(2) = a$ and $g(3) = a$.  
+%    \item $h:\{1,2,3\} \to \{1,2,3\}$ defined as follows:
+%    \begin{center}
+%      \begin{tikzpicture}
+%        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+%        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+%        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+%      \end{tikzpicture}
+%    \end{center}
+%  \end{enumerate}
+%  \begin{solution}
+%    \begin{enumerate}
+%      \item $f$ is injective.  Each element in the codomain is assigned to at {\em most} one element from the domain - if $x$ is a multiple of three, then only $x/3$ is mapped to $x$.  If $x$ is not a multiple of 3, then there is no input corresponding to the output $x$.
+%      \item $g$ is not injective.  Both inputs $2$ and $3$ are assigned the output $a$.
+%      \item $h$ is injective.  Each output is only an output once.
+%    \end{enumerate}
+%
+%  \end{solution}
+%
+%\end{example}
+%
+%
+%
+%From the examples above, it should be clear that there are functions which are surjective, injective, both or neither.  In the case when a function is both one-to-one and onto (a injection and surjection) we say the function is a {\em bijection}, or that the function is a {\em bijective} function.  
+%
+%\begin{defbox}{Function Definitions}
+%\vspace{-2em}
+%\begin{itemize}
+%  \item A {\em function} is a rule that assigns each element of a set, called the {\em domain}, to exactly one element of a second set, called the {\em codomain}.
+%  \item Notation: $f:X \to Y$ is our way of saying that the function is called $f$, the domain is the set $X$ and the codomain is the set $Y$.
+%  \item $f(x) = y$ means the element $x$ of the domain (input) is assigned to the element $y$ of the codomain.  We say $y$ is an output.  Alternatively, we call $y$ the {\em image of $x$ under $f$}.
+%  \item The {\em range} is a subset of the codomain.  It is the set of all elements which are assigned to at least one element of the domain by the function.  That is, the range is the set of all outputs.
+%  \item A function is {\em one-to-one} (also called an {\em injection}) if every element of the codomain is the output for \textbf{at most} one element from the domain.
+%  \item A function is {\em onto} (also called a {\em surjection}) if every element of the codomain is the output of \textbf{at least} one element of the domain.
+%  \item A {\em bijection} is a function which is both an injection and surjection - so one-to-one and onto.
+%%  \item The {\em complete inverse image} of an element in the codomain, written $f\inv(y)$ is the {\bf set} of all element in the domain which are assigned to $y$ by the function.  
+%\end{itemize}
+%
+%\end{defbox}
+
+\subsection{Counting Functions}
+
+Suppose (yet again) that you have 7 cookies to give to 4 kids.  Now the cookies are all different, so which cookie goes to which kid matters.  How many ways are there to do this?  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
+
+\begin{example}
+ How many functions are there $f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}$?
+ \begin{solution}
+ 	We must assign $f(x)$ for each $x$ in the domain.  We have four choices for $f(1)$ - we could have $f(1) = a$, $f(1) = b$, $f(1) = c$ or $f(1) = d$.  Similarly, we have four choices for $f(2)$, and four choices for $f(3)$ and so on.  In fact, for each of the seven elements of the domain, we have four choices, so the number of functions here is $4^7$.  
+ \end{solution}
+\end{example}
+
+We might also wonder how many of those functions are injective and how many are surjective.  What would these mean in terms of cookies?  The function would be injective if each kid got no more than one cookie.  There is no way to do this, because we have more cookies than kids.  The number of injective functions with this domain and codomain is 0.  What if we switch the domain and codomain?  So now we are mapping kids to cookies.  Note that this is not the same, although it is a perfectly fine counting question (the answer is $P(7,4)$, do you see why?). 
+
+On the other hand, a surjective function would be one in which each kid got at least one cookie.  Can we count those? It turns out that counting surjective functions is hard.  We will do it, but first back up and consider another simpler example.
+
+\begin{example}
+  How many functions are there $f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}$?  How many of those functions are injective? 
+  \begin{solution}
+    First we count all the functions with domain $\{1,2,3,4,5\}$ and codomain $\{a,b,c,d,e\}$.  For $f$ to be a function, it must assign each element of the domain to exactly one element of the codomain.  In other words, we need to assign one of the elements of $\{a,b,c,d,e\}$ to $f(1)$.  There are 5 choices for this.  Similarly, there are five choices for $f(2)$.  In fact, there are 5 choices for $f(x)$ for all five possible values of $x \in \{1,2,3,4,5\}$.  Thus the total number of function is $5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 = 5^5$.
+    
+    What about the injective (one-to-one) functions?  Again, we have 5 choices for $f(1)$.  However, once we assign a value to $f(1)$, we cannot assign that value to $f(2)$, or any other $f(x)$.\footnote{Remember, a function is injective if and only if different elements from the domain go to {\em different} elements of the codomain.} So for each of the 5 choices for $f(1)$, we only have 4 choices for $f(2)$, and then only 3 choices for $f(3)$ and only 2 choices for $f(4)$, leaving only 1 choice (the last element of the codomain) for $f(5)$.  Therefore the number of one-to-one functions is $5!$.
+  \end{solution}
+
+\end{example}
+
+Using the same counting techniques, you should be able to count the total number of functions from any finite size domain to any finite size codomain, and also count the one-to-one functions (as long as the size of the codomain is at least as large as the domain, otherwise there would be no one-to-one functions).
+
+So what about surjective functions?  Well in the previous example, there are exactly $5! = 120$ surjections.  We know this because whenever the domain and codomain of a function are the same finite size, a function is injective if and only if it is surjective.  In general, if the domain and codomain both contain $n$ elements, then the number of surjective functions is $n!$, since this is the number of injective functions.  Also, if the codomain is strictly larger than the domain, then the surjective functions are easy to count - there are 0 of them (since there will always be elements of the codomain left out of the range).  But what if the size of the codomain is smaller than the size of the domain?
+
+The idea is to count the functions which are {\em not} surjective, and them subtract that from the total number of functions.  This works very well when the codomain has two elements in it.
+
+\begin{example}
+  How many functions $f: \{1,2,3,4,5\} \to \{a,b\}$ are surjective?
+  \begin{solution}
+    There are $2^5$ functions all together - there are two choices for where to send each of the 5 elements of the domain.  Now of these, the functions which are {\em not} surjective must exclude one or more elements of the codomain from the range.  So first, consider functions for which $a$ is not in the range.  This can only happen one way - everything gets sent to $b$.  Alternatively, we could exclude $b$ from the range.  Then everything gets sent to $a$, so there is only one function like this.  These are the only ways in which a function could not be onto (no function excludes both $a$ and $b$ from the range) so there are exactly $2^5 - 2$ surjective functions.
+  \end{solution}
+\end{example}
+
+When there are three elements in the codomain, there are now three choices for a single element to exclude from the range.  Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these.
+
+\begin{example}
+  How many functions $f: \{1,2,3,4,5\} \to \{a,b,c\}$ are surjective?
+  \begin{solution}
+   Again start with the total number of functions: $3^5$ (as each of the five elements of the domain can go to any of three elements of the codomain).  Now we count the functions which are {\em not} surjective.
+   
+   Start by excluding $a$ from the range.  Then we have two choices ($b$ or $c$) for where to send each of the five elements of the domain.  Thus there are $2^5$ functions which exclude $a$ from the range.  Similarly, there are $2^5$ functions which exclude $b$, and another $2^5$ which exclude $c$.  Now have we counted all functions which are not surjective?  Yes, but in fact, we have counted some multiple times.  For example, the function which sends everything to $c$ was one of the $2^5$ functions we counted when we excluded $a$ from the range, and also one of the $2^5$ functions we counted when we excluded $b$ from the range.  We must subtract out all the functions which specifically exclude two elements from the range.  There is 1 function when we exclude $a$ and $b$, one function when we exclude $a$ and $c$, and one function when we exclude $b$ and $c$.  
+   
+   We are using PIE: to count the functions which are not surjective, we added up the functions which exclude $a$, $b$, and $c$ separately, then subtracted the functions which exclude pairs of elements.  We would then add back in the functions which exclude groups of three elements, except that there are no such functions.  We find that the number of functions which are {\em not} surjective is
+   \[2^5 + 2^5 + 2^5 - 1 - 1 - 1 + 0\]
+   Perhaps a more descriptive way to write this is
+   \[{3 \choose 1}2^5 - {3 \choose 2}1^5 + {3 \choose 3}0^5\]
+   since each of the $2^5$'s was the result of choosing 1 of the 3 elements of the codomain to exclude from the range, each of the three $1^5$'s was the result of choosing 2 of the 3 elements of the codomain to exclude.  Writing $1^5$ instead of 1 makes sense too: we have 1 choice of were to send each of the 5 elements of the domain.
+   
+   Now we can finally count the number of surjective functions:
+   \[3^5 - \left[{3 \choose 1}2^5 - {3 \choose 2}1^5\right] = 150\]
+  \end{solution}
+
+\end{example}
+
+You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious - we need to use PIE but with more than 3 sets the formula for PIE is very long.  However, we have lucked out.  As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded.  Similarly, the number of functions which exclude a pair of elements will be the same for every pair.  With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded.  So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are.  Here's what happens with $4$ and $5$ elements in the codomain.
+
+\begin{example}
+  \begin{enumerate}
+    \item How many functions $f: \{1,2,3,4,5\} \to \{a,b,c,d\}$ are surjective?
+    \item How many functions $f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}$ are surjective?
+  \end{enumerate}
+\begin{solution}
+  \begin{enumerate}
+    \item There are $4^5$ functions all together - we will subtract the functions which are not surjective.  We could exclude any one of the four elements of the codomain, and doing so will leave us with $3^5$ functions.  This counts too many so we subtract the functions which exclude two of the four elements of the codomain, each pair giving $2^5$ functions.  But this excludes too many, so we add back in the functions which exclude three of the four elements of the codomain, each triple giving $1^5$ function.  There are ${4 \choose 1}$ groups of functions excluding a single element, ${4 \choose 2}$ groups of functions excluding a pair of elements, and ${4 \choose 3}$ groups of functions excluding a triple of elements.  This means that the number of functions which are {\em not} surjective is:
+    \[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\]
+    We can now say that the number of functions which are surjective is:
+    \[4^5 - \left[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\right]\]
+    
+    \item The number of surjective functions is:
+    \[5^5 - \left[{5 \choose 1}4^5 - {5 \choose 2}3^5 + {5 \choose 3}2^5 - {5 \choose 4}1^5\right]\]
+    We took the total number of functions $5^5$ and subtracted all that were not surjective.  There were ${5 \choose 1}$ ways to select a single element from the codomain to exclude from the range, and for each there were $4^5$ functions.  But this double counts, so we use PIE and subtract functions excluding two elements from the range: there are ${5 \choose 2}$ choices for the two elements to exclude, and for each pair, $3^5$ functions.  This takes out too many functions, so we add back in functions which exclude 3 elements from the range: ${5 \choose 3}$ choices for which three to exclude, and then $2^5$ functions for each choice of elements.  Finally we take back out the 1 function which excludes 4 elements for each of the ${5 \choose 4}$ choices of 4 elements.
+  \end{enumerate}
+
+\end{solution}
+
+\end{example}
+
+
+\end{document}
+
+

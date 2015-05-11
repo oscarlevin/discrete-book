@@ -1,0 +1,147 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Introduction to Graph Theory} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{\thetitle} % will be put in the right header
+
+
+
+\begin{document}
+
+
+
+\section{Planar Graphs}
+
+When is it possible to draw a graph so that none of the edges cross, except for at vertices? If this is possible, we say the graph is {\em planar} (since you can draw it on the {\em plane}).  
+
+Notice that the definition of planar includes the phrase ``it is possible to.''  This means that even if a graph does not look like it is planar, it still might be.  Perhaps you can redraw it in a way in which no edges cross.  For example, this is a planar graph:
+
+\begin{center}
+
+    \begin{tikzpicture}[scale=.7, xscale=1.5]
+ \draw[thick] (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
+  \end{tikzpicture}
+\end{center}
+
+That is because we can redraw it like this:
+
+\begin{center}
+    \begin{tikzpicture}[scale=.7, xscale=1.5]
+     \draw[thick] (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (1.5, -1) \v -- (1,0) \v -- (-.5,2) (1.5,-1) -- (-1,0);
+  \end{tikzpicture}
+\end{center}
+
+The graphs are the same graph, so if one is planar, the other must be too.  The original drawing of the graph was not a {\em planar representation} of the graph.
+
+Now when a planar graph is drawn without edges crossing, the graph divides the plane into regions.  We will call each region a {\em face}.  The graph above has 3 faces (yes, we {\bf do} include the ``outside'' region as a face).  The number of faces does not change no matter how you draw the graph (as long as you do so without the edges crossing), so it makes sense to ascribe the number of faces as a property of the planar graph.
+
+A warning: you can only count faces when the graph is drawn in a planar way.  For example, consider these two representations of the same graph:
+
+\begin{center}
+ ~ \hfill
+  \begin{tikzpicture}
+    \draw[thick] (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1) (135:1) -- (315:1);
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}
+    \draw[thick] (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1); 
+    \draw[thick] (135:1) .. controls (70:2) and (20:2) .. (315:1);
+  \end{tikzpicture}
+  \hfill ~
+\end{center}
+
+If you try to count faces using the graph on the left, you might say there are 5 faces (including the outside).  But drawing the graph with a planar representation shows that in fact there are only 4 faces.
+
+There is a connection between the number of vertices ($V$), the number of edges ($E$) and the number of faces ($F$) in any connected planar graph.  This relationship is called Euler's Formula.
+
+\begin{defbox}{Euler's Formula for Planar Graphs}
+For any (connected) planar graph with $V$ vertices, $E$ edges and $F$ faces, we have
+\[V-E + F = 2\]
+\end{defbox}
+
+Why is Euler's formula true?  One way to convince yourself of its validity is to draw a planar graph step by step.  Start with the graph $P_2$:
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw[thick] (-.5,-.5) \v -- (.5,.5)\v;
+  \end{tikzpicture}
+\end{center}
+
+Any connected graph (besides just a single isolated vertex) must contain this subgraph.  Now build up to your graph by adding edges and vertices.  Each step will consist of either adding a new vertex connected by a new edge to part of your graph (so creating a new ``spike'') or by connecting two vertices already in the graph with a new edge (completing a circuit).
+
+\begin{center}
+  ~ \hfill
+  \begin{tikzpicture}
+    \draw[thick] (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
+    \draw[dashed,thick] (1,2) -- (2,1) \v;
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}
+    \draw[thick] (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
+    \draw[dashed,thick] (1,0) -- (-1,0);
+  \end{tikzpicture}  
+  \hfill ~
+\end{center}
+
+What do these ``moves'' do?  When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same.  But this means that $V - E + F$ does not change.  Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same.  So again, $V - E + F$ does not change.  
+
+Since we can build any graph using a combination of these two moves, and doing so never changes the quantity $V - E + F$, that quantity will be the same for all graphs.  But notice that our starting graph $P_2$ has $V = 2$, $E = 1$ and $F = 1$, so $V - E + F = 2$.
+
+\subsection*{Non-planar graphs}
+
+Not all graphs are planar.  If there are too many edges and too few vertices, then some of the edges will need to intersect.  The first time this happens is in $K_5$.
+
+\begin{center}
+  \begin{tikzpicture} % K_5
+    \foreach \x in {0,...,4}
+    \draw[thick] (\x*72+18:1) \v -- (\x*72+90:1) -- (\x*72-54:1);
+  \end{tikzpicture}
+\end{center}
+
+If you try to redraw this without edges crossing, you quickly get into trouble.  There seems to be one edge too many.  In fact, we can prove that no matter how you draw it, $K_5$ will always have edges crossing.
+
+\begin{theorem}
+  $K_5$ is not planar.
+\end{theorem}
+
+\begin{proof}
+  The proof is by contradiction.  So assume that $K_5$ were planar.  Then the graph would satisfy Euler's formula for planar graphs.  $K_5$ has 5 vertices and 10 edges, so we get 
+  \[5 - 10 + F = 2\]
+  which says that if the graph were drawn without any edges crossing, there would be $F = 7$ faces.
+  
+  Now consider how many edges surround each face.  Each face must be surrounded by at least 3 edges (since $K_5$ is simple - it contains no double edges or loops).  Let $B$ be the total number of {\em boundaries} around all the faces in the graph.  Thus we have that $B \ge 3F$.  But also $B = 2E$, since each edge is used as a boundary exactly twice.  Putting this together we get
+  \[3F \le 2E\]
+  But this is impossible, since we have already determined that $F = 7$ and $E = 10$, and $21 \not\le 20$.  This is a contradiction so in fact $K_5$ is not planar.
+\end{proof}
+
+The other simplest graph which is not planar is $K_{3,3}$
+    \begin{center}
+      \begin{tikzpicture}[yscale=1.2]
+        \draw[thick] (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
+      \end{tikzpicture}
+    \end{center}
+    
+Proving that $K_{3,3}$ is not planar answers the houses and utilities puzzle - it is not possible to connect each of three houses to each of three utilities without the lines crossing.
+
+\begin{theorem}
+  $K_{3,3}$ is not planar.
+\end{theorem}
+
+\begin{proof}
+  Again, we proceed by contradiction.  Suppose $K_{3,3}$ were planar.  Then by Euler's formula there will be 5 faces, since $V = 6$, $E = 9$, and $6 - 9 + F = 2$.
+  
+  How many boundaries surround these 5 faces?  Let $B$ be this number.  Since each edge is used as a boundary twice, we have $B = 2E$.  Also, $B \ge 4F$ since each face is surrounded by 4 or more boundaries.  We know this is true because the graph is simple (so there are no faces surrounded by 1 or 2 boundaries) and because $K_{3,3}$ is bipartite, so does not contain any 3-edge cycles.  Thus
+  \[4F \le 2E\]
+  But this would say that $20 \le 18$, which is clearly false.  Thus $K_{3,3}$ is not planar.
+\end{proof}
+
+Note the similarities and differences in these proofs.  Both are proofs by contradiction, and both start with using Euler's formula to derive the (supposed) number of faces in the graph.  Then we find a relationship between the number of faces and the number of edges based on how many edges surround each face.  This is the part that changes - in the proof for $K_5$, we got $3F \le 2E$ and for $K_{3,3}$ we go $4F \le 2E$.  The coefficient of $F$ is the key.  It is the smallest number of edges which could surround any face.  If some number of edges surround a face, then these edges form a circuit.  So that number is the size of the smallest circuit in the graph.
+
+In general, if we let $g$ be the size of the smallest cycle in a graph ($g$ stands for {\em girth}, which is the technical term for this) then for any planar graph we have $gF \le 2E$.  When this disagrees with Euler's formula, we know for sure that the graph cannot be planar.
+
+
+\end{document}
+
+
