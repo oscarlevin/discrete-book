@@ -1,257 +1,281 @@
-\documentclass[12pt]{article}
+\begin{questions}
 
-\usepackage{discrete}
+\question Use induction to prove for all $n \in \N$ that $\d\sum_{k=0}^n 2^k = 2^{n+1} - 1$.
 
-\def\thetitle{Sequences} % will be put in the center header on the first page only.
-\def\lefthead{Math 228 Notes} % will be put in the left header
-\def\righthead{\thetitle} % will be put in the right header
-
-\begin{document}
-\section{Induction}
-
-Mathematical induction is a proof technique, not unlike direct proof or proof by contradiction or combinatorial proof.\footnote{You might or might not be familiar with these yet, but you will be soon.}  In other words, induction is a style of argument we use to convince ourselves and others that a mathematical statement is always true.  Many mathematical statements can be proven by simply explaining what they mean.  Others are very difficult to prove -- in fact, there are relatively simple mathematical statements which nobody yet knows how to prove.  To facilitate the discovery of proofs, it is important to be familiar with some standard styles of arguments.  Induction is one such style.  Let's start with an example.
-
-\subsection{Stamps}
-
-Here is a question about making different amounts of postage:
-
-\begin{quote}
-  You need to mail a package, but don't yet know how much postage you will need. You have
-a large supply of 8-cent stamps and 5-cent stamps. Which amounts of postage can you make
-exactly using these stamps? Which amounts are impossible to make?
-\end{quote}
-
-Try this problem on your own first.  Perhaps in investigating the problem you picked some amounts of postage, and then figured out whether you could make that amount using just 8-cent and 5-cent stamps.  Perhaps you did this in order - can you make 1 cents of postage?  Can you make 2 cents?  3 cents? And so on.  If this is what you did, you were actually answering a {\em sequence} of questions.  We have methods for dealing with sequences.  Let's see if that helps.
-
-Actually, we will not make a sequence of questions, but rather a sequence of statements.  Let $P(n)$ be the statement ``you can make $n$ cents of postage using just 8-cent and 5-cent stamps.''  Since each $P(n)$ is a statement, it is either true or false.  So if we form the sequence of statements
-\[P(1), P(2), P(3), P(4), \ldots\]
-the sequence will consist of $T$'s (for true) and $F$'s (for false).  In our particular case the sequence starts
-\[F,F,F,F,T,F,F,T,F,F,T,F,F,T,\ldots\]
-because $P(1), P(2), P(3), P(4)$ are all false (you cannot make 1, 2, 3, or 4 cents of postage) but $P(5)$ is true (use one 5-cent stamp), and so on.  
-
-Let's think a bit about how we could find the value of $P(n)$ for some specific value of $n$ (the ``value'' will be either $T$ or $F$).  How did we find the value of the $n$th term of a sequence of numbers? How did we find $a_n$?  There were two ways we could do this: either there was a closed formula for $a_n$, so we could plug in $n$ into the formula and get our output value, or we had a recursive definition for the sequence, so we could use the previous terms of the sequence to compute the $n$th term.  When dealing with sequences of statements, we could use either of these techniques as well.  Maybe there is a way to use $n$ itself to determine whether we can make $n$ cents of postage.  That would be something like a closed formula.  Or instead we could use the previous terms in the sequence (of statements) to determine whether we can make $n$ cents of postage.  That is, if we know the value of $P(n-1)$, can we get from that to the value of $P(n)$?  That would be something like a recursive definition for the sequence.  Remember, finding recursive definitions for sequences was often easier than finding closed formulas.  The same is true here.
-
-Suppose I told you that $P(43)$ was true (it is).  Can you determine from this fact the value of $P(44)$ (whether it true or false)?  Yes you can. Even if we don't know how exactly we made 43 cents out of the 5-cent and 8-cent stamps, we do know that there was some way to do it.  What if that way used at least three 5-cent stamps  (making 15 cents)?  We could replace those three 5-cent stamps with two 8-cent stamps (making 16 cents).  The total postage has gone up by 1, so we have a way to make 44 cents, so $P(44)$ is true.  Of course, we assumed that we had at least three 5-cent stamps.  What if we didn't? Then we must have at least three 8-cent stamps (making 24 cents).  If we replace those three 8-cent stamps with five 5-cent stamps (making 25 cents) then again we have bumped up our total by 1 cent so we can make 44 cents, so $P(44)$ is true.  
-
-Notice that we have not said how to make 44 cents, just that we can, on the basis that we can make 43 cents.  How do we know we can make 43 cents?  Perhaps because we know we can make 42 cents, which we know we can do because we know we can make 41 cents, and so on.  It's a recursion!  As with a recursive definition of a numerical sequence, we must specify our initial value.  In this case, the initial value is ``$P(1)$ is false.''  That's not good, since our recurrence relation just says that $P(k+1)$ is true {\em if} $P(k)$ is also true.  We need to start the process with a true $P(k)$.  So instead, we might want to use ``$P(31)$ is true'' as the initial condition.
-
-Putting this all together we arrive at the following fact: it is possible to (exactly) make any amount of postage greater than 27 cents using just 5-cent and 8-cent stamps.\footnote{This is not claiming that there are no amounts less than 27 cents which can also be made - there are.}  In other words, $P(k)$ is true for any $k \ge 28$.  To prove this, we could do the following: 
-
-\begin{enumerate}
-  \item Demonstrate that $P(28)$ is true.
-  \item Prove that if $P(k)$ is true, then $P(k+1)$ is true (for any $k \ge 28$).
-\end{enumerate}
-  
-Suppose we have done this.  Then we know that the 28th term of the sequence above is a $T$ (using (1) - the initial condition or {\em base case}), and that every term after the 28th is $T$ also (using (2) - the recursive part or {\em inductive case}).  Here is what the proof would actually look like.
-
-\begin{proof}
-  Let $P(n)$ be the statement ``it is possible to make exactly $n$ cents of postage using 5-cent and 8-cent stamps.''  We will show $P(n)$ is true for all $n \ge 28$.
-  
-  First, we show that $P(28)$ is true: $28 =  4 \cdot 5+ 1\cdot 8$, so we can make $28$ cents using four 5-cent stamps and one 8-cent stamp.  
-  
-  Now suppose $P(k)$ is true for some arbitrary $k \ge 28$.  Then it is possible to make $k$ cents using 5-cent and 8-cent stamps.  Note that since $k \ge 28$, it cannot be that we use less than three 5-cent stamps {\em and} less than three 8-cent stamps: using two of each would give only 26 cents.  Now if we have made $k$ cents using at least three 5-cent stamps, replace three 5-cent stamps by two 8-cent stamps.  This replaces 15 cents of postage with 16 cents, moving from a total of $k$ cents to $k+1$ cents - so $P(k+1)$ is true.  On the other hand, if we have made $k$ cents using at least three 8-cent stamps, then we can replace three 8-cent stamps with five 5-cent stamps, moving from 24 cents to 25 cents, giving a total of $k+1$ cents of postage.  So in this case as well $P(k+1)$ is true.  
-  
-  Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 28$.
-\end{proof}
-
-
-\subsection{Formalizing proofs}
-
-What we did in the stamp example above works for many types of problems.  Proof by induction is useful when trying to prove statements about all natural numbers, or all natural numbers greater than some fixed first case (like 28 in the example above), and in some other situations besides.  In particular, induction should be used when there is some way to go from one case to the next - when you can see how to always ``do one more.''
-
-This is a big idea.  Thinking about a problem {\em inductively} can give new insight into the problem.  For example, to really understand the stamp problem, you should think about how any amount of postage (greater than 28 cents) can be made (this in non-inductive reasoning) and also how the ways in which postage can be made {\em changes} as the amount increases (inductive reasoning).  When you are asked to provide a proof by induction, you are being asked to think about the problem {\em dynamically}; how does increasing $n$ change the problem?  
-
-But there is another side to proofs by induction as well.  In mathematics, it is not enough to understand a problem, you must also be able to communicate the problem to others.  Like any discipline, mathematics has standard language and style, allowing mathematicians to share their ideas efficiently.  Proofs by induction have a certain formal style, and being able to write in this style is important.  It allows us to keep our ideas organized and might even help us with formulating a proof.
-
-Here is the general structure of a proof by mathematical induction:
-
-\begin{defbox}{Induction Proof Structure}
-Start by saying what the statement is which you want to prove: ``Let $P(n)$ be the statement\ldots''
-To prove that $P(n)$ is true for all $n \ge 0$, you must prove two facts:
-
-\begin{enumerate}
-  \item Base case: Prove that $P(0)$ is true.  You do this directly.  This is often easy.
-  \item Inductive case: Prove that $P(k) \imp P(k+1)$ for all $k \ge 0$.  That is, prove that for any $k \ge 0$ if $P(k)$ is true, then $P(k+1)$ is true as well.  This is the proof of an if\ldots then\ldots statement, so you can assume $P(k)$ is true ($P(k)$ is called the {\em inductive hypothesis}).  You must then explain why $P(k+1)$ is also true, given that assumption.  
-\end{enumerate}
-
-Assuming you are successful on both parts above, you can conclude, ``Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.''
-\end{defbox}
-
-Sometimes the statement $P(n)$ will only be true for values of $n \ge 4$, for example, or some other value.  In such cases, replace all the 0's above with 4's (or the other value).
-
-The other advantage of formalizing inductive proofs is it allows us to verify that the logic behind this style of argument is valid.  Why does induction work?  Think of a row of dominoes set up standing on their edges.  We want to argue that in a minute, all the dominoes will have fallen down.  For this to happen, you will need to push the first domino - that is the base case.  It will also have to be that the dominoes are close enough together that when any particular domino falls, it will cause the next domino to fall - that is the inductive case.  If both of these conditions are met - you push the first domino over and each domino will cause the next to fall, then all the dominoes will fall.
-
-Induction is powerful!  Think how much easier it is to knock over dominoes when you don't have to push over each domino yourself.  You just start the chain reaction, and the rely on the relative nearness of the dominoes to take care of the rest.  
-
-Think about our study of sequences.  It is easier to find recursive definitions for sequences than closed formulas - going from one case to the next is easier than going directly to a particular case.  That is what is so great about induction.  Instead of going directly to the (arbitrary) case for $n$, we just need to say how to get from one case to the next.  
-
-When you are asked to prove a statement by mathematical induction, you should first think about {\em why} the statement is true, using inductive reasoning.  Explain why induction is the right thing to do, and roughly why the inductive case will work.  Then, sit down and write out a careful, formal proof using the structure above.
-
-\subsection{Examples}
-
-Here are some examples of proof my mathematical induction.
-
-\begin{example}
-  Prove for each natural number $n \ge 1$ that $1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}$.
-  
-  \begin{solution}
-	First, let's think inductively about this equation.  In fact, we know this is true for other reasons (reverse and add comes to mind).  But why might induction be applicable?  The left hand side is adding up the numbers from 1 to $n$.  If we know how to do that, adding just one more term ($n+1$) would not be that hard.  For example, if $n = 100$, suppose we know that the sum of the first 100 numbers is $5050$ (so $1 + 2 + 3 + \cdots + 100 = 5050$, which is true).  Now to find the sum of the first 101 numbers, it makes more sense to just add 101 to 5050, instead of computing the entire sum again.  We would have $1 + 2 + 3 + \cdots + 100 + 101 = 5050 + 101 = 5151$.  In fact, it would always be easy to add just one more term.  This is why we should use induction.  
-	
-	Now the formal proof.
-  \begin{proof}
-    Let $P(n)$ be the statement $1 + 2 + 3 + \cdots + n = \frac{n(n+2)}{2}$.  We will show that $P(n)$ is true for all natural numbers $n \ge 1$.
-    
-    Base case: $P(1)$ is the statement $1 = \frac{1(1+1)}{2}$ which is clearly true.
-    
-    Inductive case: Let $k \ge 1$ be a natural number.  Assume (for induction) that $P(k)$ is true.  That means $1 + 2 + 3 + \cdots + k = \frac{k(k+1)}{2}$.  We will prove that $P(k+1)$ is true as well.  That is, we must prove that $1 + 2 + 3 + \cdots + k + (k+1) = \frac{(k+1)(k+2)}{2}$.  To prove this equation, start with the left hand side:
-    \[1 + 2 + 3 + \cdots + k + (k+1) = \frac{k(k+1)}{2} + (k+1)\]
-    by the induction hypothesis.  Now simplifying:
-    \[\frac{k(k+1)}{2} + k+1 = \frac{k(k+1)}{2} + \frac{2(k+1)}{2} = \frac{k(k+1) + 2(k+1)}{2} = \frac{(k+2)(k+1)}{2}\]
-    Thus $P(k+1)$ is true, so by the principle of mathematical induction $P(n)$ is true for all natural numbers $n \ge 1$.
-  \end{proof}
-  
-    \end{solution}
-\end{example}
-
- Note that in the part of the proof in which we proved $P(k+1)$ from $P(k)$, we used the equation $P(k)$ - this was the inductive hypothesis.  This is very easy to do with proving a fact about a sum like this.  Sometimes it is not as easy to see where to use the inductive hypothesis.
- 
- \begin{example}
-   Prove that for all $n \in \N$, $6^n - 1$ is a multiple of 5.
-   \begin{solution}
-   Again, start by understanding the dynamics of the problem.  What does increasing $n$ do?  Let's try with a few examples.  If $n = 1$, then yes, $6^1 - 1 = 5$ is a multiple of 5.  What does incrementing $n$ to 2 look like?  We get $6^2 - 1 = 35$, which again is a multiple of 5.  Next, $n = 3$: but instead of just finding $6^3 - 1$, what did the increase in $n$ do?  We will still subtract 1, but now we are multiplying by another 6 first.  Viewed another way, we are multiplying a number which is one more than a multiple of 5 by 6 (because $6^2 - 1$ is a multiple of 5, so $6^2$ is one more than a multiple of 5).  What do numbers which are one more than a multiple of 5 look like?  The must have last digit 1 or 6.  What happens when you multiply such a number by 6?  Depends on the number, but in any case, the last digit of the new number must be a 6.  And then if you subtract 1, you get last digit 5, so a multiple of 5.  
-   
-   The point is, every time we multiply by just one more six, we still get a number with last digit 6, so subtracting 1 gives us a multiple of 5. Now the formal proof:
-   
-   \begin{proof}
-     Let $P(n)$ be the statement, ``$6^n - 1$ is a multiple of 5.''  We will prove that $P(n)$ is true for all $n \in \N$.
-     
-     Base case: $P(0)$ is true: $6^0 -1 = 0$ which is a multiple of 5.
-     
-     Inductive case: Let $k$ be an arbitrary natural number.  Assume, for induction, that $P(k)$ is true.  That is, $6^k - 1$ is a multiple of $5$.  Then $6^k - 1 = 5j$ for some integer $j$.  This means that $6^k = 5j + 1$.  Multiply both sides by $6$: 
-     \[6^{k+1} = 6(5j+1) = 30j + 6\]
-     But we want to know about $6^{k+1} - 1$, so subtract 1 from both sides:
-     \[6^{k+1} - 1 = 30j + 5\]
-     Of course $30j+5 = 5(6j+1)$, so is a multiple of 5.
-
-     Therefore $6^{k+1} - 1$ is a multiple of 5, or in other words, $P(k+1)$ is true.  Thus, by the principle of mathematical induction $P(n)$ is true for all $n \in \N$.
-   \end{proof}
-   \end{solution}
- \end{example}
-
-We had to be a little bit clever (i.e., use some algebra) to locate the $6^k - 1$ inside of $6^{k+1} - 1$ before we could apply the inductive hypothesis.  This is what can make inductive proofs challenging.  
-
-In the two examples above, we started with $n = 1$ or $n = 0$.  We can start later if we need to.
-
-\begin{example}
-  Prove that $n^2 < 2^n$ for all integers $n \ge 5$.
-  \begin{solution}
-  	First, the idea of the argument.  What happens when we increase $n$ by 1?  On the left hand side, we increase the base of the square - we go to the next square number.  On the right hand side, we increase the power of 2.  This means we double the number.  So the question is, how does doubling a number relate to increasing to the next square?  Think about what the difference of two consecutive squares looks like.  We have $(n+1)^2 - n^2$.  This factors: \[(n+1)^2 - n^2 = (n+1-n)(n+1+n) = 2n+1\]
-  	(this should not be a surprise - we already know that the sum of consecutive odd numbers gives the perfect squares).  But doubling the right hand side increases it by $2^n$, since $2^{n+1} = 2^n + 2^n$.  Of course when $n$ is large enough, $2^n > 2n + 1$.  
-  	
-  	What we are saying here is that each time $n$ increases, the left hand side grows by less than the right hand side.  So if the left hand side starts smaller (as it does when $n = 5$), it will never catch up.  Now the formal proof:
-  
-  \begin{proof}
-    Let $P(n)$ be the statement $n^2 < 2^n$.\footnote{$P(n)$ is not the statement ``$n^2 < 2^n$ for all integers $n\ge 5$'' - you do not include the quantifier on $n$ in the statement of $P(n)$.}
-    We will prove $P(n)$ is true for all integers $n \ge 5$.
-    
-    Base case: $P(5)$ is the statement $5^2 < 2^5$.  Since $5^2 = 25$ and $2^5 = 32$, we see that $P(5)$ is indeed true.
-    
-    Inductive case: Let $k \ge 5$ be an arbitrary integer.  Assume, for induction, that $P(k)$ is true.  That is, assume $k^2 < 2^k$.  We will prove that $P(k+1)$ is true, i.e., $(k+1)^2 < 2^{k+1}$.  To prove such an inequality, start with the left hand side and work towards the right hand side:
-    \begin{align*}
-      (k+1)^2 & = k^2 + 2k + 1 &\\
-       & < 2^k + 2k + 1 &\mbox{\ldots by the inductive hypothesis}\\
-       & < 2^k + 2^k  &\mbox{\ldots since $2k + 1 < 2^k$ for $k \ge 5$}\\
-       & = 2^{k+1} &
-    \end{align*}
-    Following the equalities and inequalities through, we get $(k+1)^2 < 2^{k+1}$, in other words, $P(k+1)$.  Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 5$.
-  \end{proof}
-	\end{solution}
-\end{example}
-
-The previous example might remind you of the {\em racetrack principle} from calculus, which says that if $f(a) < g(a)$, and $f'(x) < g'(x)$ for $x > a$, then $f(x) < g(x)$ for $x > a$.  Same idea: the larger function is increasing at a faster rate than the smaller function, so the larger function will stay larger.  In discrete math, we don't have derivatives, so we look at differences - when $n$ increase by 1.  Thus induction is the way to go.
-
-\subsubsection*{Warning:}
-
-With great power, comes great responsibility.  Induction isn't magic.  It seems very powerful to be able to assume $P(k)$ is true - after all, we are trying to prove $P(n)$ is true (and the only difference is in the variable: $k$ vs. $n$).  Are we assuming that what we want to prove is true?  Not really.  We assume $P(k)$ is true only for the sake of proving that $P(k+1)$ is true.  
-
-Still you might start to believe that you can prove anything with induction. Consider this incorrect ``proof'' that every Canadian has the same eye color: Let $P(n)$ be the statement that any $n$ Canadians have the same eye color.  $P(1)$ is true, since everyone has the same eye color as themselves.  Now assume $P(k)$ is true.  That is, assume that in any group of $k$ Canadians, everyone has the same eye color.  Now consider an arbitrary group of $k+1$ Canadians.  The first $k$ of these must all have the same eye color, since $P(k)$ is true.  Also, the last $k$ of these must have the same eye color, since $P(k)$ is true.  So in fact, everyone the group must have the same eye color.  Thus $P(k+1)$ is true.  So by the principle of mathematical induction, $P(n)$ is true for all $n$.
-
-Clearly something went wrong.  The problem is that the proof that $P(k)$ implies $P(k+1)$ assumes that $k \ge 2$.  We have only shown $P(1)$ is true.  In fact, $P(2)$ is false.
-
-\subsection{Strong Induction}
-
-Consider the following classic puzzle:
-
-\begin{quote}
-	You have 9 coins which all look identical.  However, you know that one of the coins is counterfeit, and weighs slightly less than the other coins (which all have the same weight).  The weight difference is not great enough to tell by holding the coins, but luckily you have an old-fashioned balance scale (like the one held by Lady Justice).  What is the smallest number of weighings needed to find the counterfeit coin?
-\end{quote}
-
-If you have never tried to solve this puzzle, you should try now.  Don't read on until you have given it some thought.
-
-Need a hint?  The answer is 2.  Why?
-
-Here's what you do.  Put 3 coins on each side of the balance scale, leaving 3 off.  Now if the scales are balanced, then the light coin must be one of the 3 you didn't weigh.  If the scale tips, then the light coin is one of the three on the higher side.  Now you have eliminated all but 3 coins using just one weighing.  For the second weighing, put one of the three suspect coins on each side of the scales (leaving one off).  Same idea: if the scales balance, then the unweighed coin is the counterfeit.  Otherwise, the side of the scale that tipped up contains the light coin.  Neat huh?
-
-Let's generalize?  If you had more than 9 coins to start with, say you had $n$ coins, how many weighings would you need?  A reasonable guess would be that each time you weigh the coins, you can eliminate $2/3$ of them.  So using 3 weighings, you could find the counterfeit coin among up to 27 coins.  A forth weighing would be required for 28 to 81 coins.  
-
-\begin{conjecture}
-	The minimum number of weighings required to find the counterfeit coin among $n$ coins is $\log_3(n)$, rounded up.  In other words, if $x$ is the smallest integer such that $n \le 3^x$, then the minimum number of weighings is $x$. 
-\end{conjecture}
-
-How do we know this is true?  If you have $n$ coins, divide them into 3 equal piles (if this is not possible, make two piles the same size, and the third pile one more or less as needed).  Put one pile on each side of the scale, leaving one pile off (if the piles were not equal, weigh the piles with an equal number of coins against each other).  If the scales balance, the counterfeit coin is in the unweighed pile.  If the scales tip, the counterfeit coin is in the light pile.  In any event, we have now reduced the number of coins to roughly $n/3$.  
-
-What now?  Well obviously we do this again.  And again, until we find our bad coin.  Here is where induction comes in: instead of going through the process over and over again, we can just say that we have reduced the problem to an earlier case, for which we assume our conjecture holds.  For example if $n =81$, we do the weighing as described, leaving us with $n/3 = 27$ coins.  By induction, we already know how to complete the problem for $27$ coins, so we are done.
-
-This ``reducing to a simpler case'' is a type of induction.  But not exactly the same sort of induction we have encountered so far.  In ordinary induction, we assume our result holds for $k$, and prove that it holds for the next higher case: $k+1$.  There is not much difference in showing that the result holds for the case $k$ assuming that it holds for the previous case ($k-1$).  But what we are doing here, is showing that the result holds for the case $k$, assuming it works for {\em all} smaller cases.  Is this okay?  In fact, it is.  Think of the dominoes: to prove that they all fall down, it is enough to prove that the first one falls, and that if all the dominoes up to the $k$th one have fallen, then the $k$th one will fall too.
-
-The advantage is that we now have a stronger inductive hypothesis.  We can assume that $P(1)$, $P(2)$, $P(3)$,\ldots $P(k)$ is true, just to show that $P(k+1)$ is true.  Previously, we just assumed $P(k)$ for this purpose.
-
-It is slightly easier to change our variables for strong induction.  Here is what the formal proof would look like:
-
-\newpage
-\begin{defbox}{Strong Induction Proof Structure}
-	Again, start by saying what you want to prove: ``Let $P(n)$ be the statement\ldots"  Then establish two facts:
-	\begin{enumerate}
-	\item Base case: Prove that $P(0)$ is true.
-	\item Inductive case: Assume $P(k)$ is true for all $k < n$.  Prove that $P(n)$ is true.
-	\end{enumerate}
-	Conclude, ``therefore, by strong induction, $P(n)$ is true for all $n > 0$.''
-\end{defbox}
-
-Of course, it is acceptable to replace 0 with a larger base case if needed.\footnote{Technically, strong induction does not require you to prove a separate base case.  This is because when proving the inductive case, you must show that $P(0)$ is true, assuming $P(k)$ is true for all $k < 0$.  But this is not any help - so you end up proving $P(0)$ anyway.  To be on the safe side, we will always include the base case separately.}
-
-Now let's prove our conjecture about the coin weighing puzzle.
-
-\begin{proof}
-	Let $P(n)$ be the statement, ``if $x$ is the smallest natural number such that $n \le 3^x$, then it is possible to find the light coin in no more than $x$ weighings.''  
-	
-	Base case: Consider $P(2)$.  Here $x$ is 1, since $2 \le 3^1$.  It is possible to find the heavy coin using just 1 weighing - put the coins on the scale.
-	
-	Inductive case: Suppose we have $n$ coins, and assume $P(k)$ is true for all $k < n$.  Now divide the $n$ coins into three piles - equal if possible, otherwise two equal with the third either one more or one less than the other two.  Put two equal piles on each side of the scales.  If the scales balance, then the counterfeit coin is in the unweighed pile.  If the scales tip, the coin is in the pile on the lighter side of the scale.  In any event, we now know the counterfeit coin is one of $k = n/3$ or $k = n/3\pm 1$ coins.  What's more, if $x$ is the smallest number such that $n \le 3^x$, then $k \le 3^{x-1}$.  By the inductive hypothesis, it is now possible to find the counterfeit coin in $x-1$ more weighings.  Thus $P(n)$ is true.
-	
-	Therefore, by strong induction, $P(n)$ is true for all $n \ge 2$.
-\end{proof}
-
-Here is a more mathematically relevant example.
-
-\begin{example}
-	Prove that any natural number greater than 1 is either prime or can be written as the product of primes.
-	\begin{solution}
-		First, the idea: if we take some number $n$, maybe it is prime.  If so, we are done.  If not, then it is composite, so it is the product of two smaller numbers.  Each of these factors is smaller than $n$ (but at least 2), so we can repeat the argument with these numbers.  We have reduced to a smaller case.
-		
-		Now the formal proof:
+	\begin{answer}
 		\begin{proof}
-			Let $P(n)$ be the statement, ``$n$ is either prime or can be written as the product of primes.''  We will prove $P(n)$ is true for all $n \ge 2$. 
-			
-			Base case: $P(2)$ is true because $2$ is indeed prime.
-			
-			Inductive case: assume $P(k)$ is true for all $k < n$.  We want to show that $P(n)$ is true.  That is, we want to show that $n$ is either prime or is the product of primes.  If $n$ is prime, we are done.  If not, then $n$ has more than 2 divisors, so we can write $n = m_1 \cdot m_2$, with $m_1$ and $m_2$ less than $n$ (and greater than 1).  By the inductive hypothesis, $m_1$ and $m_2$ are each either prime or can be written as the product of primes.  In either case, we have that $n$ is written as the product of primes.
-			
-			Thus by the strong induction, $P(n)$ is true for all $n \ge 2$. 		
-		\end{proof} 
-	\end{solution}
-\end{example}
+		 We must prove that $1 + 2 + 2^2 + 2^3 + \cdots +2^n = 2^{n+1} - 1$ for all $n \in \N$.  Thus let $P(n)$ be the statement $1 + 2 + 2^2 + \cdots + 2^n = 2^{n+1} - 1$.  We will prove that $P(n)$ is true for all $n \in \N$.
+		 
+		 First we establish the base case, $P(0)$, which claims that $1 = 2^{0+1} -1$.  Since $2^1 - 1 = 2 - 1 = 1$, we see that $P(0)$ is true.
+		 
+		 Now for the inductive case.  Assume that $P(k)$ is true for an arbitrary $k \in \N$.  That is, $1 + 2 + 2^2 + \cdots + 2^k = 2^{k+1} - 1$.  We must show that $P(k+1)$ is true (i.e., that $1 + 2 + 2^2 + \cdots + 2^{k+1} = 2^{k+2} - 1$).  To do this, we start with the left hand side of $P(k+1)$ and work to the right hand side:
+		 \begin{align*}
+		  1 + 2 + 2^2 + \cdots + 2^k + 2^{k+1} = &~ 2^{k+1} - 1 + 2^{k+1} & \mbox{ \footnotesize by the inductive hypothesis}\\
+		   = & ~2\cdot 2^{k+1} - 1 & \\
+		   = &~ 2^{k+2} - 1 &
+		 \end{align*}
+		Thus $P(k+1)$ is true so by the principle of mathematical induction, $P(n)$ is true for all $n \in \N$.
+		\end{proof}
+	\end{answer}
+	
+	
+	
+	
+\question Prove that $7^n - 1$ is a multiple of 6 for all $n \in \N$.
+
+	\begin{answer}
+		\begin{proof}
+		 Let $P(n)$ be the statement ``$7^n - 1$ is a multiple of 6.''  We will show $P(n)$ is true for all $n \in \N$.  
+		 
+		 First we establish the base case, $P(0)$.  Since $7^0 - 1 = 0$, and $0$ is a multiple of 6, $P(0)$ is true.
+		 
+		 Now for the inductive case.  Assume $P(k)$ holds for an arbitrary $k \in \N$.  That is, $7^k - 1$ is a multiple of 6, or in other words, $7^k - 1 = 6j$ for some integer $j$.  Now consider $7^{k+1} - 1$:
+		 \begin{align*}
+		  7^{k+1} - 1 ~ & = 7^{k+1} - 7 + 6 & \mbox{ \footnotesize by cleverness: $-1 = -7 + 6$}\\
+		  & = 7(7^k - 1) + 6 & \mbox{ \footnotesize factor out a 7 from the first two terms}\\
+		  & = 7(6j) + 6 & \mbox{ \footnotesize by the inductive hypothesis}\\
+		  & = 6(7j + 1) & \mbox{ \footnotesize factor out a 6}
+		 \end{align*}
+		Therefore $7^{k+1} - 1$ is a multiple of 6, or in other words, $P(k+1)$ is true.  Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \in \N$.
+		\end{proof}
+	\end{answer}
+	
+	
+	
+
+\question Prove that $1 + 3 + 5 + \cdots + (2n-1) = n^2$ for all $n \ge 1$.
+
+	\begin{answer}
+		\begin{proof}
+		 Let $P(n)$ be the statement $1+3 +5 + \cdots + (2n-1) = n^2$.  We will prove that $P(n)$ is true for all $n \ge 1$.  
+		 
+		 First the base case, $P(1)$.  We have $ 1 = 1^2$ which is true, so $P(1)$ is established.
+		 
+		 Now the inductive case.  Assume that $P(k)$ is true for some fixed arbitrary $k \ge 1$.  That is, $1 + 3 + 5 + \cdots + (2k-1) = k^2$.  We will now prove that $P(k+1)$ is also true (i.e., that $1 + 3 + 5 + \cdots + (2k+1) = (k+1)^2$).  We start with the left hand side of $P(k+1)$ and work to the right hand side:
+		 \begin{align*}
+		  1 + 3 + 5 + \cdots + (2k-1) + (2k+1) ~ & = k^2 + (2k+1) & \mbox{ \footnotesize by the induction hypothesis}\\
+		  & = (k+1)^2 & \mbox{ \footnotesize by factoring}
+		 \end{align*}
+		Thus $P(k+1)$ holds, so by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+		\end{proof}
+	\end{answer}
+	
+	
+	
+
+\question Prove that $F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1$ where $F_n$ is the $n$th Fibonacci number.
+
+	\begin{answer}
+		\begin{proof}
+		 Let $P(n)$ be the statement $F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1$.  We will show that $P(n)$ is true for all $n \ge 0$.  First the base case is easy because $F_0 = 0$ and $F_1 = 1$ so $F_0 = F_1 - 1$.  Now consider the inductive case.  Assume $P(k)$ is true, that is, assume $F_0 + F_2 + F_4 + \cdots + F_{2k} = F_{2k+1} - 1$.  To establish $P(k+1)$ we work from left to right:
+		 \begin{align*}
+		  F_0 + F_2 + F_4 + \cdots + F_{2k} + F_{2k+2} ~ & = F_{2k+1} - 1 + F_{2k+2} & \mbox{\footnotesize by the inductive hypothesis}\\
+		  & = F_{2k+1} + F_{2k+2} - 1 & \\
+		  & = F_{2k+3} - 1 & \mbox{\footnotesize by the recursive definition of the Fibonacci numbers}
+		 \end{align*}
+		Therefore $F_0 + F_2 + F_4 + \cdots + F_{2k+2} = F_{2k+3} - 1$, which is to say $P(k+1)$ holds.  Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.
+		\end{proof}
+	\end{answer}
+	
+	
+	
+
+\question Prove that $2^n < n!$ for all $n \ge 4$.  (Recall, $n! = 1\cdot 2 \cdot 3 \cdot \cdots\cdot n$.)
+
+	\begin{answer}
+		\begin{proof}
+		 Let $P(n)$ be the statement $2^n < n!$.  We will show $P(n)$ is true for all $n \ge 4$.  First, we check the base case and see that yes, $2^4 < 4!$ (as $16 < 24$) so $P(4)$ is true.  Now for the inductive case.  Assume $P(k)$ is true for an arbitrary $k \ge 4$.  That is, $2^k < k!$.  Now consider $P(k+1)$: $2^{k+1} < (k+1)!$.  To prove this, we start with the left side and work to the right side.
+		 \begin{align*}
+		  2^{k+1}~ & = 2\cdot 2^k & \\
+		  & < 2\cdot k! & \mbox{ \footnotesize by the inductive hypothesis}\\
+		  & < (k+1) \cdot k! & \mbox{ \footnotesize since $k+1 > 2$}\\
+		  & = (k+1)! &
+		 \end{align*}
+		Therefore $2^{k+1} < (k+1)!$ so we have established $P(k+1)$.  Thus by the principle of mathematical induction $P(n)$ is true for all $n \ge 4$.
+		\end{proof}
+	\end{answer}
+	
+	
+	
+
+
+\question What is wrong with the following ``proof'' of the ``fact'' that $n+3 = n+7$ for all values of $n$ (besides of course that the thing it is claiming to prove is false)? 
+  \begin{proof}
+    Let $P(n)$ be the statement that $n + 3 = n + 7$.  We will prove that $P(n)$ is true for all $n \in \N$.  Assume, for induction that $P(k)$ is true.  That is, $k+3 = k+7$.  We must show that $P(k+1)$ is true.  Now since $k + 3 = k + 7$, add 1 to both sides.  This gives $k + 3 + 1 = k + 7 + 1$.  Regrouping $(k+1) + 3 = (k+1) + 7$.  But this is simply $P(k+1)$.  Thus by the principle of mathematical induction $P(n)$ is true for all $n \in \N$.
+  \end{proof}
+  
+  	\begin{answer}
+  		The only problem is that we never established the base case.  Of course, when $n = 0$, $0+3 \ne 0+7$.
+  	\end{answer}
+  	
+  	
+  	
+  
+
+\question The proof in the previous problem does not work.  But if we modify the ``fact,'' we can get a working proof.  Prove that $n + 3 < n + 7$ for all values of $n \in \N$.  You can do this proof with algebra (without induction), but the goal of this exercise is to write out a valid induction proof.
+
+	\begin{answer}
+		\begin{proof}
+		    Let $P(n)$ be the statement that $n + 3 < n + 7$.  We will prove that $P(n)$ is true for all $n \in \N$.  First, note that the base case holds: $0+3 < 0+7$.  Now assume for induction that $P(k)$ is true.  That is, $k+3 < k+7$.  We must show that $P(k+1)$ is true.  Now since $k + 3 < k + 7$, add 1 to both sides.  This gives $k + 3 + 1 < k + 7 + 1$.  Regrouping $(k+1) + 3 < (k+1) + 7$.  But this is simply $P(k+1)$.  Thus by the principle of mathematical induction $P(n)$ is true for all $n \in \N$.
+		\end{proof}
+	\end{answer}
+	
+	
+	
+
+  
+\question  Find the flaw in the following ``proof'' of the ``fact'' that $n < 100$ for every $n \in \N$.
+ \begin{proof}
+  Let $P(n)$ be the statement $n < 100$.  We will prove $P(n)$ is true for all $n \in \N$. First we establish the base case: when $n = 0$, $P(n)$ is true, because $0 < 100$.  Now for the inductive step, assume $P(k)$ is true.  That is, $k < 100$.  Now if $k < 100$, then $k$ is some number, like 80.  Of course $80+1 = 81$ which is still less than 100.  So $k +1 < 100$ as well.  But this is what $P(k+1)$ claims, so we have shown that $P(k) \imp P(k+1)$.  Thus by the principle of mathematical induction, $P(n)$ is true for all $n \in \N$.
+ \end{proof}
+ 
+ 	\begin{answer}
+ 		The problem here is that while $P(0)$ is true, and while $P(k) \imp P(k+1)$ for {\em some} values of $k$, there is at least one value of $k$ (namely $k = 99$) when that implication fails.  For a valid proof by induction, $P(k) \imp P(k+1)$ must be true for all values of $k$ greater than or equal to the base case.
+ 	\end{answer}
+ 	
+ 	
+ 	
+ 
+
+\question While the above proof does not work (it better not - the statement it is trying to prove is false!)  we can prove something similar.  Prove that there is a strictly increasing sequence $a_1, a_2, a_3, \ldots$ of numbers (not necessarily integers) such that $a_n < 100$ for all $n \in \N$.  (By {\em strictly increasing} we mean $a_n < a_{n+1}$ for all $n$ - so each term must be larger than the last.)
+
+	\begin{answer}
+		\begin{proof}
+		 Let $P(n)$ be the statement ``there is a strictly increasing sequence $a_1, a_2, a_3, \ldots, a_n$ with $a_n < 100$.''  We will prove $P(n)$ is true for all $n \ge 1$. First we establish the base case: $P(1)$ says there is a single number $a_1$ with $a_1 < 100$.  This is true - take $a_1 = 0$.  Now for the inductive step, assume $P(k)$ is true.  That is there exists a strictly increasing sequence $a_1, a_2, a_3, \ldots, a_k$ with $a_k < 100$.  Now consider this sequence, plus one more term, $a_{k+1}$ which is greater than $a_k$ but less than $100$.  Such a number exists - for example, the average between $a_k$ and 100.  So then $P(k+1)$ is true, so we have shown that $P(k) \imp P(k+1)$.  Thus by the principle of mathematical induction, $P(n)$ is true for all $n \in \N$.
+		\end{proof}
+		
+	\end{answer}
+	
+	
+	
 
 
 
-\end{document}
+\question What is wrong with the following ``proof'' of the ``fact'' that for all $n \in \N$, the number $n^2 + n$ is odd?
+  \begin{proof}
+    Let $P(n)$ be the statement ``$n^2 + n$ is odd.''  We will prove that $P(n)$ is true for all $n \in \N$.  Suppose for induction that $P(k)$ is true, that is, that $k^2 + k$ is odd.  Now consider the statement $P(k+1)$.  Now $(k+1)^2 + (k+1) = k^2 + 2k + 1 + k + 1 = k^2 + k + 2k + 2$.  By the inductive hypothesis, $k^2 + k$ is odd, and of course $2k + 2$ is even.  An odd plus an even is always odd, so therefore $(k+1)^2 + (k+1)$ is odd.  Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \in \N$.
+  \end{proof}
+  
+  	\begin{answer}
+  		We once again failed to establish the base case: when $n = 0$, $n^2 + n = 0$ which is even, not odd.
+  	\end{answer}
+  	
+  	
+  	
+  
+
+\question Now give a valid proof (by induction - even though you might be able to do so without using induction) of the statement, ``for all $n \in \N$, the number $n^2 + n$ is even.''
+
+	\begin{answer}
+		  \begin{proof}
+		    Let $P(n)$ be the statement ``$n^2 + n$ is even.''  We will prove that $P(n)$ is true for all $n \in \N$.  First the base case: when $n = 0$, we have $n^2 + n = 0$ which is even, so $P(0)$ is true.  Now suppose for induction that $P(k)$ is true, that is, that $k^2 + k$ is even.  Now consider the statement $P(k+1)$.  Now $(k+1)^2 + (k+1) = k^2 + 2k + 1 + k + 1 = k^2 + k + 2k + 2$.  By the inductive hypothesis, $k^2 + k$ is even, and of course $2k + 2$ is even.  An even plus an even is always even, so therefore $(k+1)^2 + (k+1)$ is even.  Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \in \N$.
+		  \end{proof}
+	\end{answer}
+	
+	
+	
+
+
+\question Prove that there is a sequence of positive real numbers $a_1, a_2, a_3, \ldots$ such that the partial sum $a_1 + a_2 + a_3 + \cdots + a_n$ is strictly less than $2$ for all $n \in \N$.  Hint: think about how you could define what $a_{k+1}$ is to make the induction argument work.
+
+	\begin{answer}
+		 Further hint: the idea is to define the sequence so that $a_n$ is less than the distance between the previous partial sum and 2.  That way when you add it into the next partial sum, the partial sum is still less than 2.  You could do this ahead of time, or use a clever $P(n)$ in the induction proof.  Let $P(n)$ be the statement, ``there is a sequence of positive real numbers $a_1, a_2, a_3, \ldots, a_n$ such that $a_1 + a_2 + a_3 + \cdots + a_n < 2$.''  The base case should be easy (just pick $a_1 < 2$).  For the inductive case, you know that $a_1 + a_2 + \cdots + a_k < 2$ so you just need to argue that you can find some $a_{k+1}$ small enough to have $a_1 + a_2 + \cdots +a_k + a_{k+1} < 2$.
+	\end{answer}
+	
+	
+\question Prove that every natural number is either a power of 2, or can be written as the sum of distinct powers of 2.
+
+	\begin{answer}
+		The base case should be easy - 0 is a power of 2.  For the inductive case, you actually want to use strong induction.  Suppose $k$ is either a power of 2 or can be written as the sum of distinct powers of 2, for any $k < n$.  Now if $n$ is a power of 2, we are done.  If not, subtract the largest power of 2 from $n$ possible.  You get $n - 2^x$, which is a smaller number, in fact smaller than both $n$ and $2^x$.  Thus $n-2^x$ is either a power of 2 or can be written as the sum of distinct powers of 2, but none of them are going to be $2^x$, so the together with $2^x$ we have written $n$ as the sum of distinct powers of 2.
+	\end{answer}	
+
+\question  Use induction to prove that if $n$ people all shake hands with each other, that the total number of handshakes is $\frac{n(n-1)}{2}$. 
+
+	\begin{answer}
+	  If $n = 2$, this should work out (so their's your base case).  If we assume it works for $k$ people (that the number of handshakes is $\frac{k(k-1)}{2}$, what happens if a $k+1$st person shows up.  How many {\em new} handshakes take place?  Now make this into a formal induction argument.
+	  
+	  Note, we have already proven this without using induction, but this is fun too.
+	\end{answer}
+
+%\question Prove that if $G$ is a connected planar graph with $V$ vertices, $E$ edges, and $F$ faces, then $V - E + F = 2$.  Hint: use induction on the number of edges in the graph.
+%
+%	\begin{answer}
+%		With just one edge, it should be easy to verify the equation.  If the equation holds with $k$ edges, what will happen to $V$, $E$, and $F$ if we add and edge?  This can be done in two ways - either adding a new vertex, or adding a new face.  Explain how this works, and what happens to the equation.
+%	\end{answer} 
+
+\question Suppose that a particular real number $x$ has the property that $x + \frac{1}{x}$ is an integer.  Prove that $x^n + \frac{1}{x^n}$ is an integer for all natural numbers $n$.
+
+	\begin{answer}
+		When $n = 0$, we get $x^0 +\frac{1}{x^0} = 2$ and when $n = 1$, $x + \frac{1}{x}$ is an integer, so the base case holds.  Now assume the result holds for all natural numbers $n < k$.  In particular, we know that $x^{k-1} + \frac{1}{x^{k-1}}$ and $x + \frac{1}{x}$ are both integers.  Thus their product is also an integer.  But,
+		\begin{align*}
+		\left(x^{k-1} + \frac{1}{x^{k-1}}\right)\left(x + \frac{1}{x}\right) & = x^k + \frac{x^{k-1}}{x} + \frac{x}{x^{k-1}} + \frac{1}{x^k}\\
+		& = x^k + \frac{1}{x^k} + x^{k-2} + \frac{1}{x^{k-2}}
+		\end{align*}
+		Note also that $x^{k-2} + \frac{1}{x^{k-2}}$ is an integer by the induction hypothesis, so we can conclude that $x^k + \frac{1}{x^k}$ is an integer.
+		
+
+	\end{answer}
+	
+
+	
+\question Use induction to prove that $\d\sum_{k=0}^n {n \choose k} = 2^n$.  That is, the sum of the $n$th row of Pascal's Triangle is $2^n$.
+
+	\begin{answer}
+		Here's the idea: since every entry in Pascal's Triangle is the sum of the two entries above it, we can get the $k+1$st row by adding up all the pairs of entry from the $k$th row.  But doing this uses each entry on the $k$th row twice.  Thus each time we drop to the next row, we double the total.  Of course, row 0 has sum $1 = 2^0$ (the base case).  Now try to make this precise with a formal induction proof.  You will use the fact that ${n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}$ for the inductive case.
+	\end{answer}
+	
+\question Use induction to prove ${4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+n \choose n} = {5+n \choose n}$.  (This is an example of the hockey stick theorem.)
+
+	\begin{answer}
+		To see why this works, try it on a copy of Pascal's triangle.  We are adding up the entries along a diagonal, starting with the 1 on the left hand side of the 4th row.  Suppose we add up the first 5 entries on this diagonal.  The claim is that the sum is the entry below and to the left of the last of these 5 entries.  Note that if this is true, and we instead add up the first 6 entries, we will need to add the entry one spot to the right of the previous sum.  But these two together give the entry below them, which is below and left of the last of the 6 entries on the diagonal.
+		
+		If you follow that, you can see what is going on.  But it is not a great proof.  A formal induction proof is needed:
+		
+		\begin{proof}
+			Let $P(n)$ be the statement ${4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+n \choose n} = {5+n \choose n}$.  For the base case, consider $n = 0$.  This says ${4 \choose 0} = {5 \choose 0}$.  Since these are both 1, the base case is true.  Now for the inductive case, suppose $P(k)$ is true.  That is, ${4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+k \choose k} = {5+k \choose k}$.  If we add ${4+k+1 \choose k+1}$ to both sides, we get \[{4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+k \choose k} + {5+k \choose k+1}= {5+k \choose k} + {5+k \choose k+1}\]
+			But ${5+k \choose k} + {5+k \choose k+1} = {5+k+1 \choose k+1}$.  In other words, we have
+			\[{4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+k \choose k} + {5+k \choose k+1} = {5+k+1 \choose k+1}\]
+			which is to say that $P(k+1)$ is true.
+			
+			Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.
+		\end{proof}
+	\end{answer}
+	
+	
+\question Use the product rule for logarithms ($\log(ab) = \log(a) + \log(b)$) to prove, by induction on $n$, that $\log(a^n) = n \log(a)$, for all natural numbers $n \ge 2$.
+
+	\begin{answer}
+		The idea here is that if we take the logarithm of $a^n$, we can increase $n$ by 1 if we multiply by another $a$ (inside the logarithm).  This results in adding 1 more $\log(a)$ to the total.
+		
+		\begin{proof}
+			Let $P(n)$ be the statement $\log(a^n) = n \log(a)$.  The base case, $P(2)$ is true, because $\log(a^2) = \log(a\cdot a) = \log(a) + \log(a) = 2\log(a)$, by the product rule for logarithms.
+			
+			Now assume, for induction, that $P(k)$ is true.  That is, $\log(a^k) = k\log(a)$.  Consider $\log(a^{k+1})$.  We have
+			\[\log(a^{k+1}) = \log(a^k\cdot a) = \log(a^k) + \log(a) = k\log(a) + \log(a)\]
+			with the last equality due to the inductive hypothesis.  But this simplifies to $(k+1) \log(a)$, establishing $P(k+1)$.
+			
+			Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 2$.	
+		\end{proof}
+	\end{answer}
+	
+	
+\question Let $f_1, f_2,\ldots, f_n$ be differentiable functions.  Prove, using induction, that
+\[(f_1 + f_2 + \cdots + f_n)' = f_1' + f_2' + \cdots + f_n'\]
+You may assume $(f+g)' = f' + g'$ for any differentiable functions $f$ and $g$.
+
+	\begin{answer}
+		Hint: You are allowed to assume the base case.  For the inductive case, group all but the last function together as one sum of functions, then apply the usual sum of derivatives rule, and then the inductive hypothesis.
+	\end{answer}
+
+
+\question Suppose $f_1, f_2, \ldots, f_n$ are differentiable functions.  Use mathematical induction to prove the generalized product rule: 
+\[(f_1 f_2 f_3 \cdots f_n)' = f_1' f_2 f_3 \cdots f_n + f_1 f_2' f_3 \cdots f_n + f_1 f_2 f_3' \cdots f_n + \cdots + f_1 f_2 f_3 \cdots f_n'\]
+You may assume the product rule for two functions is true.
+
+	\begin{answer}
+		Hint: for the inductive step, we know by the product rule for two functions that \[(f_1f_2f_3 \cdots f_k f_{k+1})' = (f_1f_2f_3\cdots f_k)'f_{k+1} + (f_1f_2f_3\cdots f_k)f_{k+1}'\]
+		Then use the inductive hypothesis on the first summand, and distribute.
+	\end{answer}
+
+
+\end{questions}
