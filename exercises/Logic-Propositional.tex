@@ -1,287 +1,136 @@
-\documentclass[12pt]{article}
+\begin{questions}
 
-\usepackage{discrete}
-
-\def\thetitle{Mathematical Logic} % will be put in the center header on the first page only.
-\def\lefthead{Math 228 Notes} % will be put in the left header
-\def\righthead{Logic} % will be put in the right header
-
-
-\begin{document}
-\section{Propositional Logic}
-A proposition is simply a statement.  Propositional logic studies the ways statements can interact with each other.  It is important to remember that propositional logic does not really care about the content of the statements.  For example, from a propositional logic statement point, the claims, ``if the moon is made of cheese then basketballs are round,'' and, ``if spiders have eight legs then Sam walks with a limp'' are exactly the same.  They are both statements of the form, ``if \textlangle something\textrangle, then \textlangle something else\textrangle.''
-
-Here's a question: is it true that when playing Monopoly, if you get more doubles than any other player you will lose, or that if you lose you must have bought the most properties?  We will answer this question, and won't need to know anything about Monopoly.  Instead we will look at the logical form of the statement.  First though, let's back up and make sure we are very clear on some basics.
-
-\begin{definition}
-	A {\em statement} is any declarative sentence which is either true or false.
-\end{definition}
-\begin{example} These are statements:
-	\begin{itemize}
-		\item Telephone numbers in the USA have 10 digits.
-		\item The moon is made of cheese.
-		\item 42 is a perfect square.
-		\item Every even number greater than 2 can be expressed as the sum of two primes.
-	\end{itemize}
-	And these are not:
-	\begin{itemize}
-	\begin{multicols}{2}
-		\item Would you like some cake?
-		\item The sum of two squares.
-		\item $1+3+5+7+\cdots+2n+1$.
-		\item Go to your room!
-		\item This sentence is false.\footnote{This is a tricky one.  Remember, a sentence is only a statement if it is either true or false.  Here, the sentence is not false, for if it were, it would be true.  It is not true, for that would make it false.}
-		\item That's what she said.
-		\end{multicols}
-	\end{itemize}
-\end{example}
-
-The reason the last sentence is not a statement is because it contains variables (``that'' and ``she'').  Unless those are specified, the sentence cannot be true or false, and as such not a statement.  Other examples of this: $x + 3 = 7$.  Depending on $x$, this is either true or false, but as it stands it it neither.
-
-You can build more complicated statements out of simpler ones using {\em logical connectives}.  For example, this is a statement: 
-\begin{quote}
-Telephone numbers in the USA have 10 digits and 42 is a perfect square.
-\end{quote}  
-Note that we can break this down into two smaller statements.  The two shorter statements are {\em connected} by an ``and.''  We will consider 5 connectives: ``and'' (Sam is a man and Chris is a woman), ``or'' (Sam is a man or Chris is a woman), ``if\ldots then\ldots'' (if Sam is a man, then Chris is a woman), ``if and only if'' (Sam is a man if and only if Chris is a woman), and ``not'' (Sam is not a man).
-
-Since we rarely care about the content of the individual statements, we can replace them with variables.  We use capital letters in the middle of the alphabet for these {\em propositional} (or {\em sentential}) variables: $P, Q, R, S\ldots$.  We also have symbols for the logical connectives: $\wedge$, $\vee$, $\imp$, $\iff$, $\neg$.
-
-\begin{defbox}{Logical Connectives}
-\begin{itemize}
- \item $P \wedge Q$ means  $P$ and $Q$, called a {\em conjunction}.
-\item $P \vee Q$ means $P$ or $Q$, called a {\em disjunction}.
-\item $P \imp Q$ means if $P$ then $Q$, called an {\em implication} or {\em conditional}.
-\item $P \iff Q$ means $P$ if and only if $Q$, called a {\em biconditional}.
-\item $\neg P$ means not $P$, called a {\em negation}.
-\end{itemize}
-\end{defbox}
-
-The logical connectives allow us to construct longer statements out of simpler statements.  But the result is still a statement - it is either true or false.  The {\em truth value} can be determined by the truth or falsity of the parts, depending on the connectives.  
-
-
-\begin{defbox}{Truth Conditions for Connectives}
-\begin{itemize}
- \item $P \wedge Q$ is true when both $P$ and $Q$ are true
-\item $P \vee Q$ is true when $P$ or $Q$ or both are true.
-\item $P \imp Q$ is true when $P$ is false or $Q$ is true or both.
-\item $P \iff Q$ is true when $P$ and $Q$ are both true, or both false.
-\item $\neg P$ is true when $P$ is false. 
-\end{itemize}
-\end{defbox}
-
-I think all of these are obvious, except for $P \imp Q$.  Consider the statement, 
-\begin{quotation}If Bob gets a 90 on the final, then Bob will pass the class.\end{quotation}  This is definitely an implication: $P$ is the statement ``Bob gets a 90 on the final'' and $Q$ is the statement ``Bob will pass the class.'' Suppose I made that statement to Bob -- in what circumstances would it be fair to call me a liar?  What if Bob really did get a 90 on the final, and he did pass the class?  Then I have not lied; my statement is true.  But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false.  The tricky case is this: what if Bob did not get a 90 on the final?  Maybe he passes the class, maybe he doesn't - did I lie in either case?  I think not.  In these last two cases, $P$ was false, and so was the statement $P \imp Q$.  In the first case, $Q$ was true, and so was $P \imp Q$.  So $P \imp Q$ is true when either $P$ is false or $Q$ is true.  Perhaps an easier way to look at it is this: $P \imp Q$ 
-is {\em false} in only one case: if $P$ is true and $Q$ is false.  Otherwise, $P \imp Q$ is true.  Admittedly, there are times in English when this is not how ``if\ldots, then\ldots'' works.  However, in mathematics, we {\em define} the implication to work this way.
-
-
-\subsection{Truth Tables}
-
-Our question about Monopoly is to determine whether the following statement is true:
-\begin{quote}
-If you get more doubles than any other player then you will lose, or if you lose then you must have bought the most properties.
-\end{quote}
-In other words, we need to decide when the statement $(P \imp Q) \vee (Q \imp R)$ is true.  Using the rules above, we see that either $P \imp Q$ is true or $Q \imp R$ is true (or both).  Those are true if either $P$ is false or $Q$ is true (in the first case) and $Q$ is false or $R$ is true (in the second case).  So... yeah, it gets kind of messy.  Luckily, we can make a chart to keep track of all the possibilities.  Enter truth tables.  The idea is this: on each row, we list a possible combination of T's and F's (standing of course, for true and false) for each of the sentential variables, and then mark down whether the statement in question is true or false in that case.  We do this for every possible combination of T's and F's.  Then we can clearly see in which cases the statement is true or false.  For complicated statements, we will first fill in values for each part of the statement, as a way of breaking up our task into smaller, more manageable pieces.
-
-All you really need to know is the truth tables for each of the logical connectives.  Here they are:
-
-\vskip 1ex
-\begin{tabular}{c|c||c}
- $P$ & $Q$ & $P\wedge Q$ \\ \hline
- T & T & T\\
- T & F & F\\
- F & T & F\\
- F & F & F
-\end{tabular}\hfill
-\begin{tabular}{c|c||c}
- $P$ & $Q$ & $P\vee Q$ \\ \hline
- T & T & T\\
- T & F & T\\
- F & T & T\\
- F & F & F
-\end{tabular}\hfill
-\begin{tabular}{c|c||c}
- $P$ & $Q$ & $P\imp Q$ \\ \hline
- T & T & T\\
- T & F & F\\
- F & T & T\\
- F & F & T
-\end{tabular}\hfill
-\begin{tabular}{c|c||c}
- $P$ & $Q$ & $P\iff Q$ \\ \hline
- T & T & T\\
- T & F & F\\
- F & T & F\\
- F & F & T
-\end{tabular}
-\vskip 1ex
-
-The truth table for negation looks like this:
-
-\vskip 1ex
-\centerline{
-\begin{tabular}{c||c}
- $P$ & $\neg P$ \\ \hline
- T & F \\
- F & T\\
-\end{tabular}
-}
-\vskip 1ex
-
-None of these truth tables should come as a surprise - they are all just restating the definitions of the connectives.  Let's try another one:
-
-
-\begin{example}
- Make a truth table for the statement $\neg P \vee Q$.
-
-\begin{solution}
-Note that this statement is not $\neg(P \vee Q)$, the negation belongs to $P$ alone.  Here is the truth table:
-
- \begin{center}
-	 \begin{tabular}{c|c||c|c}
- $P$ & $Q$ & $\neg P$ & $\neg P \vee Q$ \\ \hline
- T & T & F & T\\
- T & F & F & F\\
- F & T & T & T\\
- F & F & T & T
-\end{tabular}
-\end{center}
-
-We added a column for $\neg P$ to make filling out the last column easier.  The entries in the $\neg P$ column were determined by the entries in the $P$ column.  Then to fill in the final column, look only at the column for $Q$ and the column for $\neg P$ and use the rule for $\vee$.  
-
-You might notice that the final column is identical to the final column in the truth table for $P \imp Q$.  Since we listed the possible values for $P$ and $Q$ in the same (in fact, standard) order, this says that $\neg P \vee Q$ and $P \imp Q$ are {\em logically equivalent}
-\end{solution}
-
-\end{example}
-
-Now let's answer our question about monopoly:
-
-\begin{example}
-  Analyze the statement, ``if you get more doubles than any other player you will lose, or that if you lose you must have bought the most properties,'' using truth tables.
   
-  \begin{solution}
-    Represent the statement in symbols as $(P \imp Q) \vee (Q \imp R)$, where $P$ is the statement ``you get more doubles than any other player,'' $Q$ is the statement ``you will lose,'' and $R$ is the statement ``you must have bought the most properties.''  Now make a truth table.
-    
-    The truth table needs to contain 8 rows in order to account for every possible combination of truth and falsity among the three statements.  Here is the full truth table:
-    
-    \begin{center}
-      \begin{tabular}{c|c|c||c|c|c}
-        $P$ & $Q$ & $R$ & $P \imp Q$ & $Q \imp R$ & $(P \imp Q) \vee (Q \imp R)$ \\ \hline
-        T & T & T & T & T & T \\
-        T & T & F & T & F & T \\
-        T & F & T & F & T & T \\
-        T & F & F & F & T & T \\
-        F & T & T & T & T & T \\
-        F & T & F & T & F & T \\
-        F & F & T & T & T & T \\
-        F & F & F & T & T & T
-      \end{tabular}
-  \end{center}
-    The first three columns are simply a systematic listing of all possible combinations of T and F for the three statements (do you see how you would list the 16 possible combinations for four statements?).  The next two columns are determined by the values of $P$, $Q$, and $R$ and the definition of implication.  Then, the last column is determined by the values in the previous two columns and the definition of $\vee$.  It is this final column we care about.
-    
-    Notice that in each of the eight possible cases, the statement in question is true.  So our statement about monopoly is true (regardless of how many properties you own, how many doubles you roll, or whether you win or lose).
-  \end{solution}
-\end{example}
+\question Consider the statement about a party, ``If it's your birthday or there will be cake, then there will be cake.''
+\begin{parts}
+ \part Translate the above statement into symbols.  Clearly state which statement is $P$ and which is $Q$.
+ \part Make a truth table for the statement.
+ \part Assuming the statement is true, what (if anything) can you conclude if there will be cake?
+ \part Assuming the statement is true, what (if anything) can you conclude if there will not be cake?
+ \part Suppose you found out that the statement was a lie.  What can you conclude?
+\end{parts}
 
-The statement about monopoly is an example of a {\em tautology} - a statement which is true on the basis of its logical form alone.  Tautologies are always true but they don't tell us much about the world.  No knowledge about monopoly was required to determine that the statement was true.  In fact, it is equally true that ``If the moon is made of cheese, then Elvis is still alive, or if Elvis is still alive, then unicorns have 5 legs.''
+  \begin{answer}
+    \begin{parts}
+      \part $P$: it's your birthday; $Q$: there will be cake.  $(P \vee Q) \imp Q$
+      \part Hint: you should get three T's and one F.
+      \part Only that there will be cake.
+      \part It's NOT your birthday!
+      \part It's your birthday, but the cake is a lie.
+    \end{parts}
+  \end{answer}
 
 
-
-\subsection{Deductions}
-
-Earlier we claimed that the following was a valid argument:
-\begin{quote}
- If Edith eats her vegetables, then she can have a cookie.  Edith ate her vegetables.  Therefore Edith gets a cookie.
-\end{quote}
-
-How do we know this is valid?  Let's look at the form of the statements.  Let $P$ denote ``Edith eats her vegetables'' and $Q$ denote ``Edith can have a cookie.''  The logical form of the argument is then:
-
-\begin{center}
- \begin{tabular}{rc}
-  & $P \imp Q$ \\
-  & $P$ \\ \hline
-  $\therefore$ & $Q$
- \end{tabular}
-\end{center}
-
-This is an example of a {\em deduction rule} - a logical form of an argument which is always valid.  This one is a particularly famous rule called {\em modus ponens}.  Are you convinced that it is a valid deduction rule?  If not, consider the following truth table:
-
-\begin{center}
- \begin{tabular}{c|c||c}
-  $P$ & $Q$ & $P\imp Q$ \\ \hline
-  T & T & T \\
-  T & F & F \\
-  F & T & T \\
-  F & F & T
- \end{tabular}
-\end{center}
-
-This is just the truth table for $P \imp Q$, but what matters here is that all the lines in the deduction rule have their own column in the truth table.  Now remember that an argument is valid provided the conclusion must be true given that the premises are true.  The premises in this case are $P \imp Q$ and $P$.  Which {\em rows} of the truth table correspond to both of these being true?  $P$ is true in the first two rows, and of those, only the first row has $P \imp Q$ true as well.   And low-and-behold, in this one case, $Q$ is true as well.  So if $P\imp Q$ and $P$ are both true, we see that $Q$ must be true as well.
-
-Here are a few more examples.
-
-\begin{example}
- Show that 
- \begin{center}
-  \begin{tabular}{rc}
-   & $P \imp Q$\\
-   & $\neg P \imp Q$ \\ \hline
-   $\therefore$ & $Q$
-  \end{tabular}
- \end{center}
-is a valid deduction rule.
-
-\begin{solution}
- We make a truth table which contains all the lines of the argument form:
- \begin{center}
-  \begin{tabular}{c|c||c|c|c}
-   $P$ & $Q$ & $P\imp Q$ & $\neg P$ & $\neg P \imp Q$ \\ \hline
-   T & T & T & F & T \\ 
-   T & F & F & F & T \\
-   F & T & T & T & T \\
-   F & F & T & T & F 
-  \end{tabular}
- \end{center}
-(we include a column for $\neg P$ just as a step to help getting the column for $\neg P \imp Q$). 
-
-Now look at all the rows for which both $P \imp Q$ and $\neg P \imp Q$ are true.  This happens only in rows 1 and 3.  Hey! In those rows $Q$ is true as well, so the argument form is valid (it is a valid deduction rule).
-\end{solution}
-
-\end{example}
-
-\begin{example}
- Decide whether
- \begin{center}
-  \begin{tabular}{rc}
-   &  $(P \imp R) \vee (Q \imp R)$ \\ \hline
- $\therefore$  & $(P \vee Q) \imp R$
-  \end{tabular}
-  \end{center}
-is a valid deduction rule.
-\begin{solution}
- Let's make a truth table containing both statements. 
- 
- \begin{center}
- \begin{tabular}{c|c|c||c|c|c|c|c}
-  $P$ & $Q$ & $R$ & $P\vee Q$ & $P \imp R$ & $Q \imp R$ & $(P\vee Q) \imp R$ 	& $(P\imp R) \vee (Q \imp R)$ \\ \hline
-  T   & T   & T   & T         & T          & T  	 & T 			& T \\
-  T   & T   & F   & T         & F          & F 	 & F			& F \\
-  T   & F   & T   & T         & T 	    & T 	 & T			& T \\
-  T   & F   & F   & T		& F 	    & T 	 & F			& T \\
-  F   & T   & T   & T 		& T 	    & T          & T			& T \\  
-  F   & T   & F   & T 		& T 	    & F          & F			& T \\  
-  F   & F   & T   & F 		& T 	    & T          & T			& T \\  
-  F   & F   & F   & F 		& T 	    & T          & T			& T \\  
   
- \end{tabular}
-  \end{center}
-  
-  Look at the fourth row.  In this case, $(P \imp R) \vee (Q \imp R)$ is true, but $(P \vee Q) \imp R$ is false.  Therefore the argument form is not valid (it is not a valid deduction rule).  The truth table tells us more: our premise is true when $P$ is true and $Q$ and $R$ are both false, but the conclusion is false in this case.  The same problem occurs when $Q$ is true and $P$ and $R$ are false (row 6).  
-  
-  Notice that if we switch the premise and conclusion, then we do have a valid argument - whenever $(P\vee Q) \imp R$ is true, so is $(P \imp R) \vee (Q \imp R)$.  Another way to say this is to state that the statement
-  \[[(P \vee Q) \imp R] \imp [(P \imp R) \vee (Q \imp R)]\]
-  is a tautology.
-\end{solution}
-\end{example}
+\question Suppose $P$ and $Q$ are the statements:
+$P$: Jack passed math.
+$Q$: Jill passed math.
+\begin{parts}
+ \part Translate ``Jack and Jill both passed math'' into symbols.
+\part Translate ``If Jack passed math, then Jill did not'' into symbols.
+\part Translate ``$P \vee Q$'' into English.
+\part Translate ``$\neg(P \wedge Q) \imp Q$'' into English.
+\part Suppose you know that if Jack passed math, then so did Jill.  What can you conclude if you know that:
+\begin{subparts}
+ \subpart Jill passed math?  
+\subpart  Jill did not pass math?
+\end{subparts}
+\end{parts}
+
+  \begin{answer}
+    \begin{parts}
+      \part $P \wedge Q$
+      \part $P \imp \neg Q$
+      \part Jack passed math or Jill passed math (or both).
+      \part If Jack and Jill did not both pass math, then Jill did.
+      \part 
+	\begin{subparts}
+	  \subpart Nothing else. 
+	  \subpart  Jack did not pass math either.
+	\end{subparts}
+    \end{parts}
+  \end{answer}
 
 
-\end{document}
+
+  
+\question Geoff Poshingten is out at a fancy pizza joint, and decides to order a calzone.  When the waiter asks what he would like in it, he replies, ``I want either pepperoni or sausage, and if I have sausage, I must also include quail.  Oh, and if I have pepperoni or quail then I must also have ricotta cheese.''  
+\begin{parts}
+	\part Translate Geoff's order into logical symbols.
+	\part The waiter knows that Geoff is either a liar or a truth-teller (so either everything he says is false, or everything is true).  Which is it?
+	\part What, if anything, can the waiter conclude about the ingredients in Geoff's desired calzone?
+\end{parts}
+
+  \begin{answer}
+    \begin{parts}
+	\part Three statements: $P \vee S$, $S \imp Q$, $(P \vee Q) \imp R$.  You could also connect the first two with a $\wedge$.
+	\part He cannot be lying about all three sentences, so he is telling the truth.
+	\part No matter what, Geoff wants ricotta.  If he doesn't have quail, then he must have pepperoni but not sausage.
+    \end{parts}
+  \end{answer}
+
+
+
+
+\question Make a truth table for the statement $(P \vee Q) \imp (P \wedge Q)$. 
+
+\begin{answer}
+ \begin{tabular}{c|c|c}
+             $P$ & $Q$ & $(P \vee Q) \imp (P \wedge Q)$\\ \hline
+             T & T & T \\
+             T & F & F \\
+             F & T & F \\
+             F & F & T
+          \end{tabular}
+\end{answer}
+
+
+\question Make a truth table for the statement $\neg P \wedge (Q \imp P)$.  What can you conclude about $P$ and $Q$ if you know the statement is true?
+
+    \begin{answer}
+      \begin{tabular}{c|c|c}
+             $P$ & $Q$ & $\neg P \wedge (Q \imp P)$\\ \hline
+             T & T & F \\
+             T & F & F \\
+             F & T & F \\
+             F & F & T
+          \end{tabular}
+	If the statement is true, then both $P$ and $Q$ are false.
+    \end{answer}
+
+
+\question Make a truth table for the statement $\neg P \imp (Q \wedge R)$.
+
+  \begin{answer}
+    Hint: Like above, only now you will need 8 rows instead of just 4.
+  \end{answer}
+
+
+
+\question Determine if the following argument form is valid: \begin{tabular}{rc} & $P \vee Q$ \\ & $\neg P$ \\ \hline $\therefore$ & $Q$\end{tabular}.
+
+  \begin{answer}
+    The argument is valid.  To see this, make a truth table which contains $P \vee Q$ and $\neg P$ (and $P$ and $Q$ of course).  Look at the truth value of $Q$ in each of the rows that have $P \vee Q$ and $\neg P$ true.  
+  \end{answer}
+
+  
+  
+  
+\question Determine if the following argument form is valid: \begin{tabular}{rc} & $P \imp (Q \vee R)$ \\ & $\neg(P \imp Q)$ \\ \hline $\therefore$ & $R$\end{tabular}
+
+  \begin{answer}
+    The argument form is valid.  Again, make a truth table containing the premises and conclusion - look at the rows for which the premises are true.
+  \end{answer}
+
+
+  
+\question Determine if the following argument form is valid: \begin{tabular}{rc} & $(P \wedge Q) \imp R$ \\ & $\neg P \vee \neg Q$ \\ \hline $\therefore$ & $\neg R$\end{tabular}
+
+  \begin{answer}
+    The argument is NOT valid.  If you make a truth table containing the premises and conclusion, there will be a row with both premises true but the conclusion false.  For example, if $P$ and $Q$ are false and $R$ is true, then $P \wedge Q$ is false, so $(P \wedge Q) \imp R$ is true.  Also $\neg P$ is true, so $\neg P \vee \neg Q$ is true.  However, $\neg R$ is false.
+  \end{answer}
+
+
+
+
+\end{questions}
