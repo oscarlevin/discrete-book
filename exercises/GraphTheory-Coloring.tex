@@ -1,94 +1,59 @@
-\documentclass[12pt]{article}
-
-\usepackage{discrete}
-
-\def\thetitle{Introduction to Graph Theory} % will be put in the center header on the first page only.
-\def\lefthead{Math 228 Notes} % will be put in the left header
-\def\righthead{\thetitle} % will be put in the right header
+\begin{questions}
 
 
+\question What is the smallest number of colors you need to properly color the vertices of $K_{4,5}$.  That is, find the chromatic number of the graph.
 
-\begin{document}
+	\begin{answer}
+		2, since the graph is bipartite.  One color for the top set of vertices, another color for the bottom set of vertices.  %What is the smallest number of colors you need to properly color the vertices of $K_{4,5}$.  That is, find the chromatic number of the graph.
+	\end{answer}
+	
+	
 
 
-\section{Coloring}
 
-We move now to perhaps the most famous graph theory problem - how to color maps.  
+\question Draw a graph with chromatic number 6 (i.e., which requires 6 colors to properly color the vertices).  Could your graph be planar?  Explain.
 
-\begin{quote}
-  {\bf Question:} Given any map of countries, states, counties, etc. how many colors are needed to color each region on the map so that neighboring regions are colored differently?
-\end{quote}
+	\begin{answer}
+		For example, $K_6$.  If the chromatic number is 6, then the graph is not planar - the 4-color theorem states that all planar graphs can be colored with 4 or fewer colors. %Draw a graph with chromatic number 6 (i.e., which requires 6 colors to properly color the vertices).  Could your graph be planar?  Explain.
+	\end{answer}
+	
+	
+	
 
-Actual map makers usually use around seven colors - for one thing, they require watery regions to be a specific color, and with a lot of colors it is easier to find a permissible coloring.  But we want to know whether there is a smaller palette that will work for any map.
 
-How is this related to graph theory?  Well, if we place a vertex in the center of each region (say in the capital of each state) and then connect two vertices if their states share a border, we get a graph.  The coloring regions on the map corresponds to coloring the vertices of the graph.  Since neighboring regions cannot be colored the same, our graph cannot have vertices colored the same when those vertices are adjacent (connected by an edge).
 
-In general, given any graph, a coloring of the vertices is called (not surprisingly) a {\em vertex coloring}.  If the vertex coloring has the property that adjacent vertices are colored differently, then the coloring is called {\em proper}.  Every graph has a proper vertex coloring - for example, you could color every vertex with a different color.  But often you can do better.  The smallest number of colors needed to get a proper vertex coloring is called the {\em chromatic number} of the graph.
+\question Find the chromatic number of each of the following graphs.
 
-\begin{example}
-  Find the chromatic number of the graphs below.
-  \begin{center}
-    \hfill
-    \begin{tikzpicture}
-      \foreach \x in {0,...,6}
-      \draw[thick] (\x*60:1) \v -- (\x*60+60:1) -- (\x*60+180:1) -- cycle;
-    \end{tikzpicture}
-    \hfill
-    \begin{tikzpicture}[yscale=.8]
-      \draw[thick] (-1,0) \v -- (0,0) \v -- (1,0) \v -- (.5,1) \v -- (0,0) -- (-.5,1) \v -- (0,2) \v -- (.5,1) -- (-.5,1) -- (-1,0);
-    \end{tikzpicture}
-    \hfill
-    \begin{tikzpicture}[yscale=.8, xscale=1.5]
- \draw[thick] (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
+\begin{center}
+  \begin{tikzpicture}
+    \draw[thick] (-1,1) \v -- (0,2) \v -- (1,1) \v -- (0,0) \v -- (-1,1) -- (0,1) \v -- (1,1);
   \end{tikzpicture}
-  \hfill ~
-  \end{center}
+  \hfill
+  \begin{tikzpicture}
+    \draw[thick] (360/7:1) \v -- (2*360/7:1) \v -- (3*360/7:1) \v -- (4*360/7:1) \v -- (5*360/7:1) \v -- (6*360/7:1) \v -- (0:1) \v -- cycle;
+  \end{tikzpicture}
+  \hfill 
+  \begin{tikzpicture}
+    \draw (0,0) \v;
+    \foreach \x in {0,...,4}
+    \draw[thick] (0,0) -- (\x*360/5:1) \v -- (\x*360/5+72:1);
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}
+    \foreach \x in {0,...,4}
+    \draw[thick] (\x*72+18:1) \v -- (\x*72+90:1) -- (\x*72-54:1);
+  \end{tikzpicture}
+  \hfill
+    \begin{tikzpicture}[scale=.6]
+    \draw[thick] (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle; 
+    \draw[thick] (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+    \foreach \x in {18, 90, 162, 234, 306}
+    \draw[thick] (\x:1) \v -- (\x:2) \v;
+  \end{tikzpicture}
+\end{center}
 
-\begin{solution}
-  The graph on the left is $K_6$.  The only way to properly color the graph is to give every vertex a different color (since every vertex is adjacent to every other vertex).  Thus the chromatic number is 6.
-  
-  The middle graph can be properly colored with just 3 colors (Red, Blue, and Green).  For example:
-  
-  \begin{center}
-        \begin{tikzpicture}[yscale=.8]
-      \draw[thick] (-1,0) \vb{R} -- (0,0) \vb{B} -- (1,0) \vb{G} -- (.5,1) \vr{R} -- (0,0) -- (-.5,1) \vl{G} -- (0,2) \va{B} -- (.5,1) -- (-.5,1) -- (-1,0);
-    \end{tikzpicture}
-  \end{center}
-  
-  There is no way to color it with just two colors, since there are three vertices mutually adjacent (i.e., a triangle).  Thus the chromatic number is 3.
-  
-  The graph on the right is just $K_{2,3}$.  As with all bipartite graphs, this graph has chromatic number 2 - color the vertices in the top row red and the vertices on the bottom row blue.
-\end{solution}
+	\begin{answer}
+		The chromatic numbers are 2, 3, 4, 5, and 3 respectively from left to right. %Find the chromatic number of each of the following graphs.
+	\end{answer}
 
-\end{example}
-
-It appears that graphs can have any chromatic number.  It should not come as a surprise that $K_n$ has chromatic number $n$.  So how could there possibly be an answer to the original map coloring question?  If the chromatic number of graph can be arbitrarily large, then it seems like there would be no upper bound to the number of colors needed for any map.  But there is.
-
-The key observation is that while it is true that for any number $n$, there is a graph with chromatic number $n$, only some graphs arrive as representations of maps.  If you convert a map to a graph, the edges between vertices correspond to borders between the countries.  So you should be able to connect vertices in such a way where the edges do not cross.  In other words, the graphs representing maps are all {\em planar}!
-
-So the question is, what is the larges chromatic number of any planar graph?  The answer is one of the best know theorems of mathematics:
-
-\begin{theorem}{The Four Color Theorem}\\
-If $G$ is a planar graph, then the chromatic number of $G$ is less than or equal to 4.  Thus any map can be colored with 4 or fewer colors.
-\end{theorem}
-
-We will not prove this theorem.  Really.  Even though the theorem is easy to state and understand, the proof is not.  In fact, there is currently no ``easy'' known proof of the theorem.  The current best proof still requires powerful computers to check an {\em unavoidable set} of  633 {\em reducible configurations}.  The idea is that every graph must contain one of these reducible configurations (this fact also needs to be checked by a computer) and that reducible configurations can in fact be colored in 4 or fewer colors. 
-
-
-\subsection*{Non-planar graphs}
-
-PUT IN STUFF ABOUT COLORING IN GENERAL, INCLUDING APPLICATIONS.
-
-
-\subsection*{Other colorings}
-
-MAYBE ADD VIZINGS THEOREM??
-
-The chromatic number of a graph tells us about coloring vertices - but we could also ask about coloring edges.  What if we colored every edge of a graph either red or blue.  Can we do so without, say, creating a triangle of same like colored edges (i.e., an all red or all blue triangle - we say the triangle is {\em mono-chromatic})?  Certainly for some graphs the answer is yes - try doing so for $K_4$.  What about $K_5$?  $K_6$?  How far can we go?  
-
-The answer the above problem is known - I encourage you to try to solve it.  We could extend the question though - what if we had three colors?  What if we were trying to avoid other graphs.  The surprising fact is that very little is known about these questions.  For example, we know that you need to go up to $K_{17}$ in order to force a mono-chromatic triangle using three colors, but nobody knows how big you need to go with more colors.  Similarly, we know that using two colors $K_{18}$ is the smallest graph that forces a mono-chromatic copy of $K_4$, but the best we have to force a mono-chromatic $K_{5}$ is a range - somewhere from $K_{43}$ to $K_{49}$.
-
-
-\end{document}
-
-
+\end{questions}

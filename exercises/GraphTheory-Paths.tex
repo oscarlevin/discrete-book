@@ -1,61 +1,61 @@
-\documentclass[12pt]{article}
+\begin{questions}
 
-\usepackage{discrete}
-
-\def\thetitle{Introduction to Graph Theory} % will be put in the center header on the first page only.
-\def\lefthead{Math 228 Notes} % will be put in the left header
-\def\righthead{\thetitle} % will be put in the right header
+		
 
 
+\question You and your friends want to tour the southwest by car.  You will visit the nine states below, with the following rather odd rule: you must cross each border between neighboring states exactly once (so, for example, you must cross the Colorado-Utah border exactly once).  Can you do it?  If so, does it matter where you start your road trip?  What fact about graph theory solves this problem?
 
-\begin{document}
-
-
-\section{Euler Paths and Circuits}
-
-If we start at a vertex and trace along edges to get to other vertices, we create a {\em path} on the graph.  If the path travels along every edge exactly once, then the path is called an {\em Euler path} (or {\em Eulerian path}).  If in addition, the starting and ending vertices are the same (so you trace along every edge exactly once and end up where you started) then the path is called an {\em Euler circuit}.  Of course if a graph is not connected, there is no hope of finding such a path or circuit.  For the rest of this section, assume all graphs are connected.
-
-The bridges of K\"onigsberg problem is really a question about the existence of Euler paths.  There will be a route that crosses every bridge exactly once if and only if the graph below has an Euler path:
-
-\centerline{\begin{tikzpicture}[scale=1.5, yscale=.5]
- \draw[thick] (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
-  \draw[thick] (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
-  \end{tikzpicture}}
-
-This graph is small enough that we could actually check every possible path and in doing so convince ourselves that there is no Euler path (let alone an Euler circuit).  On small graphs which do have an Euler path, it is usually not difficult to find one.  Our goal is to find a quick way to check whether a graph has an Euler path or circuit, even if the graph is quite large.  
-
-If you have not already, be sure to try the worksheet on Euler paths.  It is quite instructive to build graphs which do and do not have Euler paths.  One way to guarantee that a graph does {\em not} have an Euler circuit is to include a ``spike'' - a vertex of degree 1.  
-
-\begin{center}
- \begin{tikzpicture}
-  \draw[thick] (-1,0) \v -- (0,1) \v -- (1,0) \v -- cycle;
-  \draw[thick] (0,1) -- (1,1) \v node[below right]{$a$};
- \end{tikzpicture}
-\end{center}
-
-The vertex $a$ has degree 1, and if you try to make an Euler circuit, you see that you will get stuck at the vertex.  It is a dead end.  That is, unless you start there.  But then there is no way to return, so there is no hope of finding an Euler circuit.  There is however an Euler path - you can start at the vertex $a$, then loop around the triangle.  You will end at the vertex of degree 3.
-
-You run into a similar problem whenever you have a vertex of odd degree.  If you start at such a vertex, you will not be able to end there (after visiting every edge exactly once).  After using one edge to leave the starting vertex, you will be left with an even number of edges emanating from the vertex.  Half of these could be used for returning to the vertex, the other half for leaving.  So you return, then leave.  Return, then leave.  The only way to use up all the edges is to use the last one by leaving the vertex.  On the other hand, if you have a vertex with odd degree that you do not start a path at, then you will eventually get stuck at that vertex.  The path will use pairs of edges connected the the vertex to arrive and leave again.  Eventually all but one of these edges will be used up, leaving only an edge to arrive by, and none to leave again.
-
-What all this says is that if a graph has an Euler path and two vertices with odd degree, then the Euler path must start at one of the odd degree vertices and end at the other.  In such a situation, every other vertex {\em must} have an even degree - since we need an equal number of edges to get to those vertices as to leave them.  How could we have an Euler circuit?  The graph could not have an odd degree vertex - an Euler path would have to start there or end there, but not both.  Thus for a graph to have an Euler circuit, all vertices must have even degree.  
-
-The converse is also true: if all the vertices of a graph have even degree, then the graph has an Euler circuit, and if there are exactly two vertices with odd degree, the graph has an Euler path.  To prove this is a little tricky, but the basic idea is that you will never get stuck because there is an ``outbound'' edge for every ``inbound'' edge at every vertex.  If you try to make an Euler path and miss some edges, you will always be able to ``splice in'' a circuit using the edges you previously missed.
-
-\begin{defbox}{Euler Paths and Circuits}
-\begin{itemize}
- \item A graph has an Euler circuit if and only if the degree of every vertex is even.
- \item A graph has an Euler path if and only if there are at most two vertices with odd degree.
-\end{itemize}
-
-\end{defbox}
-
-Since the bridges of K\"onigsberg graph has all four vertices with odd degree, there is no Euler path through the graph.
-
-\subsection*{Hamilton paths}
-
-Suppose you wanted to tour K\"onigsberg in such a way where you visit each land mass (the two islands and both banks) exactly once.  This can be done.  In graph theory terms we are asking whether there is a path which visits every vertex exactly once.  Such a path is called a {\em Hamilton path} (or Hamiltonian path).  It appears that finding Hamilton paths would be easier - graphs often have more edges than vertices, so there are fewer requirements to be met.  However, nobody knows whether this is true.  There is no known simple test for whether a graph has a Hamilton path.  For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path.  In fact, this is an example of a question which as far as we know is too difficult for computers to solve - it is an example of a problem which is NP-complete.  
+\centerline{\includegraphics[height=1in]{images/southwest_map.png}}
 
 
-\end{document}
+	\begin{answer}
+		This is a question about finding Euler paths.  Draw a graph with a vertex in each state, and connect vertices if their states share a border.  Exactly two vertices will have odd degree - the vertices for Nevada and Utah.  Thus you must start your road trip at in one of those states and end it in the other. %You and your friends want to tour the southwest by car.  You will visit the nine states below, with the following rather odd rule: you must cross each border between neighboring states exactly once (so, for example, you must cross the Colorado-Utah border exactly once).  Can you do it?  If so, does it matter where you start your road trip?  What fact about graph theory solves this problem?
+	\end{answer}
+	
+	
+	
 
 
+
+
+
+\question Which of the following graphs contain an Euler path?  Which contain an Euler circuit?
+\begin{parts}
+  \part $K_4$
+  \part $K_5$.
+  \part $K_{5,7}$
+  \part $K_{2,7}$
+  \part $C_7$
+  \part $P_7$
+\end{parts}
+
+	\begin{answer}
+		\begin{parts}
+		  \part $K_4$ does not have an Euler path or circuit.
+		  \part $K_5$ has an Euler circuit (so also an Euler path).
+		  \part $K_{5,7}$ does not have an Euler path or circuit.
+		  \part $K_{2,7}$ has an Euler path but not an Euler circuit.
+		  \part $C_7$ has an Euler circuit (it is a circuit graph!)
+		  \part $P_7$ has an Euler path but no Euler circuit.
+		\end{parts}
+	\end{answer}
+	
+
+
+\question For which $n$ does the graph $K_n$ contain an Euler circuit?  Explain.
+
+	\begin{answer}
+		When $n$ is odd, $K_n$ contains an Euler circuit.  This is because every vertex has degree $n-1$, so an odd $n$ results in all degrees being even.%For which $n$ does the graph $K_n$ contain an Euler circuit?  Explain.
+	\end{answer}
+	
+	
+	
+
+
+\question For which $m$ and $n$ does the graph $K_{m,n}$ contain an Euler path?  An Euler circuit?  Explain.
+
+	\begin{answer}
+		If both $m$ and $n$ are even, then $K_{m,n}$ has an Euler circuit.  When both are odd, there is no Euler path or circuit.  If one is 2 and the other is odd, then there is an Euler path but not an Euler circuit. %For which $m$ and $n$ does the graph $K_{m,n}$ contain an Euler path?  An Euler circuit?  Explain
+	\end{answer}
+
+\end{questions}
