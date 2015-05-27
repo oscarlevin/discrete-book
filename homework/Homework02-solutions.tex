@@ -2,9 +2,17 @@
 
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
 \usepackage{tikz}
-\usepackage[bottom=.25in, top=.75in]{geometry}
 
 \input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
 
 %\pointname{pts}
 \pointsinmargin
@@ -13,213 +21,65 @@
 \pagestyle{head}
 \printanswers
 
-\firstpageheader{Math 228}{\bf Homework 2\\ Solutions}{Spring 2013}
+\firstpageheader{Math 228}{\bf Homework 2\\Solutions}{Due: Wednesday, January 28}
 
 
 \begin{document}
-
+%\noindent \textbf{Instructions}: Complete the homework problems below on {\em separate} sheets of paper (and not all jammed up between the questions).  This is to be turned in and graded, so make sure your work is neat and easy to ready - there is nothing wrong with using a separate sheet of paper for each problem. Each solution should be accompanied with supporting work or an explanation why the solution is correct. Your work will be graded on correctness as well as the clarity of your explanations. 
 
 \begin{questions}
-\question[6] 
+
+\question[12] We usually write numbers in decimal form (or base 10), meaning numbers are composed using 10 different ``digits'' $\{0,1,\ldots, 9\}$.  Sometimes though it is useful to write numbers {\em hexadecimal} or base 16.  Now there are 16 distinct digits that can be used to form numbers: $\{0, 1, \ldots, 9, \mathrm{A, B, C, D, E, F}\}$.  So for example, a 3 digit hexadecimal number might be 3B8.
 \begin{parts}
-  \part Make a truth table for the statement $P \imp (\neg Q \vee R)$.
-  \begin{solution}
-    \begin{center}
-  \begin{tabular}{c|c|c||c|c}
-    $P$ & $Q$ & $R$ & $\neg Q \vee R$ & $P \imp (\neg Q \vee R)$\\ \hline
-    T & T & T & T & T\\
-    T & T & F & F & F \\
-    T & F & T & T & T \\
-    T & F & F & T & T \\
-    F & T & T & T & T \\
-    F & T & F & F & T \\
-    F & F & T & T & T \\
-    F & F & F & T & T
-  \end{tabular}
-\end{center}
-  \end{solution}
-
-  \part If Tommy {\bf lies} when he says, ``if I ate pizza, then either I didn't eat cucumber sandwiches or I did eat raisins,'' what can you conclude about what Tommy ate?  Explain.
-  \begin{solution}
-    The statement made is the same as the one we made a truth table for above.  If the statement is a lie, then we are in the case(s) in which the statement is false.  This turns out to be only the second case, so we see that $P$ and $Q$ are true and $R$ is false.  Therefore Tommy ate pizza a cucumber sandwiches, but not raisins.
-  \end{solution}
-
-\end{parts}
-  
-\question[6] Can you distribute conjunctions over disjunctions?  Disjunctions over conjunctions?  Let's find out.  Remember, two statements are logically equivalent if they are true in exactly the same cases.
-\begin{parts}
-  \part Are the statements $P \vee (Q \and R)$ and $(P \vee Q) \and (P \vee R)$ logically equivalent?  
-  \begin{solution}
-    Yes they are.  We prove this by showing that their truth tables are identical:
-    \begin{center}
-        \begin{tabular}{c|c|c||c||c}
-    $P$ & $Q$ & $R$ & $P \vee (Q \and R)$ & $(P \vee Q) \and (P \vee R)$\\ \hline
-    T & T & T & T & T\\
-    T & T & F & T & T \\
-    T & F & T & T & T \\
-    T & F & F & T & T \\
-    F & T & T & T & T \\
-    F & T & F & F & F \\
-    F & F & T & F & F \\
-    F & F & F & F & F
-  \end{tabular}
-    \end{center}
-  \end{solution}
-
-  \part Are the statements $P \and (Q \vee R)$ and $(P \and Q) \vee (P \and R)$ logically equivalent?
-  \begin{solution}
-    It works again.  Here are the two truth tables which prove it:
-        \begin{center}
-        \begin{tabular}{c|c|c||c||c}
-    $P$ & $Q$ & $R$ & $P \and (Q \vee R)$ & $(P \and Q) \vee (P \and R)$\\ \hline
-    T & T & T & T & T\\
-    T & T & F & T & T \\
-    T & F & T & T & T \\
-    T & F & F & F & F \\
-    F & T & T & F & F \\
-    F & T & F & F & F \\
-    F & F & T & F & F \\
-    F & F & F & F & F
-  \end{tabular}
-    \end{center}
-  \end{solution}
-
+\part How many 2-digit hexadecimals are there in which the first digit is E or F?  Explain your answer in terms of the additive principle (using either events or sets).
+	\begin{solution}
+		There are 16 hexadecimals in which the first digit is an E (one for each choice of second digit).  Similarly, there are 16 hexadecimals in which the first digit is an F.  We want the union of these two disjoint sets, so there are $16 + 16 = 32$ two digits hexadecimals in which the first digit is either an E or an F.
+	\end{solution}
+\part Explain why your answer to the previous part is correct in terms of the multiplicative principle (using either events or sets).  Why do both the additive and multiplicative principles give you the same answer?
+	\begin{solution}
+		We can first select the first digit in 2 ways.  We then select the second digit in 16 ways.  The multiplicative principle says that the number of ways to accomplish both these tasks together is $2 \cdot 16 = 32$.  Of course $2 \cdot 16 = 16 + 16$ so we get the same answer as in part (a).  There we divided the total number of outcomes into two groups of size 16, each group based on the choice we made for the first task (selecting the first digit).
+	\end{solution}
+\part How many 3-digit hexadecimals start with a letter (A-F) and end with a numeral (0-9)? Explain.
+	\begin{solution}
+		We can select the first digit in 6 ways, the second digit in 16 ways, and the third digit in 10 ways.  Thus there are $6\cdot 16 \cdot 10 = 960$ hexadecimals given these restrictions.
+	\end{solution}
+\part How many 3-digit hexadecimals start with a letter (A-F) or end with a numeral (0-9) (or both)?  Explain.
+	\begin{solution}
+		The number of 3-digit hexadecimals that start with a letter is $6 \cdot 16 \cdot 16 = 1536$.  The number of 3-hexadecimals that end with a numeral is $16 \cdot 16 \cdot 10 = 2560$.  We want all the elements from both these sets.  However, both sets include those 3-digit hexadecimals which both start with a letter and end with a numeral (found to be 960 in the previous part), so we must subtract these (once).  Thus the number of 3-digit hexadecimals starting with a letter or ending with a numeral is:
+		\[1536 + 2560 - 960 = 3136\]
+	\end{solution}
 \end{parts}
 
-\question[6] Use De Morgan's Laws, and any other logical equivalence facts you know to simplify the following statements.  Show all your steps, justifying each.  Your final statements should have negations only appear directly next to the propositional variables ($P$, $Q$, etc.), and no double negations.  
-\begin{parts}
-  \part $\neg((\neg P \and Q) \vee \neg(R \vee \neg S))$.
-  \begin{solution}
-    $\neg((\neg P \and Q) \vee \neg(R \vee \neg S))$\\
-    $\neg(\neg P \and Q) \and \neg\neg(R \vee \neg S)$ by De Morgan's law.\\
-    $\neg(\neg P \and Q) \and (R \vee \neg S)$ by double negation.\\
-    $(\neg\neg P \vee \neg Q) \and (R \vee \neg S)$ by De Morgan's law.\\
-    $(P \vee \neg Q) \and (R \vee \neg S)$ by double negation.
-  \end{solution}
 
-  \part $\neg((\neg P \imp \neg Q) \and (\neg Q \imp R))$ (careful with the implications).
-  \begin{solution}
-    We will need to convert the implications to disjunctions so we can apply De Morgan's law:
-    
-    $\neg((\neg P \imp \neg Q) \and (\neg Q \imp R))$\\
-    $\neg((\neg \neg P \vee \neg Q) \and (\neg\neg Q \vee R))$ by implication/disjunction equivalence.\\
-    $\neg((P \vee \neg Q) \and (Q \vee R))$ by double negation.\\
-    $\neg(P \vee \neg Q) \vee \neg (Q \vee R)$ by De Morgan's law.\\
-    $(\neg P \and \neg \neg Q) \vee (\neg Q \and \neg R)$ by De Morgan's law.\\
-    $(\neg P \and Q) \vee (\neg Q \and \neg R)$ by double negation.
-  \end{solution}
 
-\end{parts}
+\question[4] For how many three digit numbers (100 to 999) is the {\em sum of the digits} even? (For example, $343$ has an even sum of digits: $3+4+3 = 10$ which is even.)  Find the answer and explain why it is correct in at least two {\em different} ways.
 
-% \question[4] Find a statement which has the following truth table.  You final answer should contain only one instance of each of the variables $P$, $Q$ and $R$.
-% 
-% \begin{center}
-%   \begin{tabular}{c|c|c||c}
-%     $P$ & $Q$ & $R$ & ???\\ \hline
-%     T & T & T & F \\
-%     T & T & F & F \\
-%     T & F & T & T \\
-%     T & F & F & T \\
-%     F & T & T & T \\
-%     F & T & F & F \\
-%     F & F & T & T \\
-%     F & F & F & T
-%   \end{tabular}
-% \end{center}
-% \begin{solution}
-%   One possible statement is this: $\neg Q \vee (\neg P \and R)$.  Of course, there are many statements logically equivalent to this such as $Q \imp (\neg P \and R)$ or $Q \imp \neg(R \imp P)$.  
-%   
-%   To find the solution, you have lots of choices.  Notice that whenever $Q$ is false, the statement is true.  But also the statement is true in one case when $Q$ is true - when $P$ is false and $R$ is true.  The other case which has $P$ false and $R$ true (and $Q$ false) also results in a true statement, so we to get truth we must have either $Q$ false (so $\neg Q$ true) or $\neg P$ and $R$ both true (so $P$ is false and $R$ is true).
-%   
-%   An alternate method of arriving at the solution is to notice that the statement is false more than it is true, so first find a the negation of the statement.  This leads to $\neg ((P \and Q) \vee (\neg P \and Q \and \neg R)$.  If you simplify this, you get the same answer as above.
-% \end{solution}
-
-\question[6] Can you chain implications together?  That is, if $P \imp Q$ and $Q \imp R$, does that means the $P \imp R$?  Can you chain more implications together?  Let's find out:
-\begin{parts}
-  \part Prove that the following is a valid argument form:
-  \begin{tabular}{rc}
-    & $P \imp Q$ \\
-    & $Q \imp R$ \\ \hline
-    $\therefore$ & $P \imp R$
-  \end{tabular}
-  
-  \begin{solution}
-    Consider the truth table:
-    
-    \begin{tabular}{c|c|c||c|c|c}
-      $P$ & $Q$ & $R$ & $P\imp Q$ & $Q \imp R$ & $P \imp R$ \\ \hline
-      T   &  T  &  T  &     T     &      T     &      T \\
-      T   &  T  &  F  &     T     &      F     &      F \\
-      T   &  F  &  T  &     F     &      T     &      T \\
-      T   &  F  &  F  &     F     &      T     &      F \\
-      F   &  T  &  T  &     T     &      T     &      T \\
-      F   &  T  &  F  &     T     &      F     &      T \\
-      F   &  F  &  T  &     T     &      T     &      T \\
-      F   &  F  &  F  &     T     &      T     &      T \\
-    \end{tabular}
-    Notice that both $P \imp Q$ and $Q \imp R$ are true in rows 1, 5, 7 and 8.  In each of these rows, $P \imp R$ is also true.  So whenever the premises are true, so in the conclusion.  Thus the argument form is valid.
-  \end{solution}
-
-% \part Prove that the following is a valid argument form:
-%   \begin{tabular}{rc}
-%     & $P \imp Q$ \\
-%     & $Q \imp R$ \\
-%     & $R \imp S$ \\ \hline
-%     $\therefore$ & $P \imp S$
-%   \end{tabular}
-\part Prove that the following is a valid argument form: 
-\begin{tabular}{rc}
-  & $P_1 \imp P_2$\\
-  & $P_2 \imp P_3$ \\ 
-  & $\vdots$ \\
-  & $P_8 \imp P_9$ \\ \hline
-  $\therefore$ & $P_1 \imp P_9$.
-\end{tabular}
-I suggest you don't go through the trouble of writing out a 512 row truth table.  You should still be able to explain why this is argument form is valid (using part (a)).
 \begin{solution}
-  From the first two premises, we can conclude that $P_1 \imp P_3$, using the same reasoning as in part (a).  The next line of the argument form is $P_3 \imp P_4$.  Since we know that $P_1 \imp P_3$ is true as well, we can conclude (using part (a) again) that $P_1 \imp P_4$. And so on.  Eventually we will find that $P_1 \imp P_8$.  This combined with the last premise ($P_8 \imp P_9$) allows us to conclude that $P_1 \imp P_9$.
+  There are multiple ways to do this.
+  \begin{enumerate}
+    \item An even sum can occur in 4 ways: EEE, EOO, OEO, and OOE.  There are $4 \cdot 5 \cdot 5$ ways to build numbers of the first two types (there are only 4 choices for a starting even number - it cannot be 0) and $5 \cdot 5 \cdot 5$ ways to build the second two types.  This gives a total of 450 numbers.
+    \item To build a 3 digit number with an even sum, you can choose any of 9 digits for the first digit, any of 10 digits for the second digit.  Then the last digit must either be even (if the sum of the first two digits are even) or odd (if the sum of the first two digits are odd).  Luckily there are the same number of even last digits and odd last digits - 5.  So there are a total of $9 \cdot 10 \cdot 5 = 450$ numbers with an even sum of digits.
+    \item Start finding sums of digits from 3-digit numbers: $100 \to$ odd, $101 \to$ even, $102 \to $odd, $103 \to $ even, and so on.  So the numbers appear to alternate between even and odd sums.  However, notice that 109 has an even sum while 110 does as well.  But then 111 is odd, 112 is even, and so on.  So we can conclude that half of the numbers 100 to 109 have even sum, half of the number 110 to 119 have even sum, half from 120 to 129, and so on.  This means that overall half of the numbers will have even sum, so half of the 900 3-digit numbers will have even sum, namely 450 of them.
+  \end{enumerate}
 \end{solution}
 
-\end{parts}
 
-\question[6] Consider the statement, ``if you study logic, then you will be happy.''
-\begin{parts}
-  \part Rephrase the implication in at least 3 different ways.  At least one of the ways should use necessary/sufficient language.
-  \begin{solution}
-    The implication is equivalent to each of the following:
-    \begin{itemize}
-      \item You will be happy if you study logic.
-      \item You will study logic only if you are happy.
-      \item To be happy it is sufficient to study logic.
-      \item Being happy necessarily follows from studying logic.
-      \item If you are unhappy, then you have not studied logic.
-      \item Either you don't study logic or you are happy.
-    \end{itemize}
+\question[4] In a recent survey, 30 students reported whether they liked their potatoes Mashed, French-fried, or Twice-baked. 15 liked them mashed, 20 liked French fries, and 9 liked twice baked potatoes. Additionally, 12 students liked both mashed and fried potatoes, 5 liked French fries and twice baked potatoes, 6 liked mashed and baked, and 3 liked all three styles. How many students
+{\em hate} potatoes?  Explain why your answer is correct.
 
-  \end{solution}
+	\begin{solution}
+	  Using the principle of inclusion/exclusion, the number of students who like their potatoes in at least one of the ways described is \[15 + 20 + 9 - 12 - 5 - 6 + 3 = 24.\]  Therefore there are $30-24 = 6$ students who do not like potatoes.  You can also do this problem with a Venn diagram.
+	\end{solution}
 
-  \part State the converse of the implication, and rephrase the converse in at least 3 different ways.
-  \begin{solution}
-    The converse is, ``if you are happy, then you study logic.''  This is equivalent to each of the following:
-    \begin{itemize}
-      \item You study logic if you are happy.
-      \item You are happy only if you study logic.
-      \item To be happy it is necessary to study logic.
-      \item To study logic it is sufficient to be happy.
-      \item If you don't study logic, then you are not happy.
-      \item Either are you not happy or you do not study logic.
-    \end{itemize}
 
-  \end{solution}
 
-\end{parts}
-
+\bonusquestion[3] Bonus: The number 735000 factors as $2^3 \cdot 3 \cdot 5^4 \cdot 7^2$.  How many divisors does it have?  Explain your answer using the multiplicative principle.
+	\begin{solution}
+		If you consider the factorization of any divisor of 735000 it must have at most three 2s, at most one 3, at most four 5s and at most two 7s, with no other prime factors.  Thus to select a divisor, we just need to pick how many of these prime factors are present.  There are 4 choices for how many 2s to include (between zero and four), 2 choices for how many 3s, 5 choices for how many 5s and 3 choices for how many 7s.  Thus the number of divisors is:
+		\(4\cdot 2 \cdot 5 \cdot 3 = 120\)
+	\end{solution}
 
 \end{questions}
-
-
-
-
 \end{document}
 
 
