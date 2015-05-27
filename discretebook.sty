@@ -65,7 +65,20 @@
 
 \newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
 
-\newcommand{\question}[1]{\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}
+
+\makeatletter
+%\def\specialenvironment{itemize}
+\newcommand{\question}[1]{%
+  \ifx\@currenvir{questions}
+    \item\hypertarget{ques.\thesection.\Currentlabel.}{} #1 % Inside "questions environment"
+  \else
+    \item #1 % Not inside "questions environment"
+  \fi
+}
+\makeatother
+
+
+%\newcommand{\question}[1]{\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}
 
 \newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
 
