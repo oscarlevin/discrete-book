@@ -20,6 +20,7 @@
 %\usepackage{booktabs}
 \usepackage{import}
 \usepackage{marvosym} % to include stop-sign symbol.
+\usepackage{etoolbox} % to create toggles
 
 
 
@@ -57,39 +58,58 @@
 %  {\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{1ex}{\huge}
 %\titlespacing*{\chapter} {0pt}{0pt}{3ex}
 
+\newtoggle{includeanswers} %this toggle will change the behavior of the question environment depending on whether we want to include answers to the questions or not.  
+\def\withanswers{\toggletrue{includeanswers}} % putting \withanswers will turn on the includeanswers toggle until the end of the next questions environment.
+
+
 %new list environments
 \newcounter{question}
 \newcounter{pcounter}
 \newcounter{spcounter}
-\newenvironment{questions}{\WriteAnsFileStart\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
+\newenvironment{questions}{%
+	\iftoggle{includeanswers}{\WriteAnsFileStart}{}\begin{list}{\iftoggle{includeanswers}{\hyperlink{ans.\thesection.\Currentlabel.}}{}{\arabic{question}.~}}{
+	\usecounter{question}}
+	}{%
+	\end{list} \iftoggle{includeanswers}{\WriteAnsFileStop}{}
+	\togglefalse{includeanswers} %turns off includeanswers toggle - it must always be turned on if answers are wanted.
+	}
 
 \newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
 
 
-\makeatletter
-\def\specialenvironment{enumerate}
-\newcommand{\question}[1]{%
-  \ifx\@currenvir\specialenvironment
-    \item #1 %
-    %\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1 % Inside "questions environment"
-  \else
-    \item\hypertarget{ques.\thesection.\Currentlabel.}{} #1% inside "questions environment"
-  \fi
-}
 
-\makeatother
+
 
 %\makeatletter
+%\def\specialenvironment{list}
 %\newcommand{\question}[1]{%
-%  \ifnum\pdfstrcmp{\@currenvir}{questions}=0
-%    {\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}% Inside itemize
+%  \ifx\@currenvir\specialenvironment   
+%   \item\hypertarget{ques.\thesection.\Currentlabel.}{}  #1% inside "questions environment"  
+%    %\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1 % Inside "questions environment"
 %  \else
-%    \item #1% Not inside itemize
+%	\item #1 %
 %  \fi
 %}
+%
 %\makeatother
+%
+%%\makeatletter
+%%\newcommand{\question}[1]{%
+%%  \ifnum\pdfstrcmp{\@currenvir}{questions}=0
+%%    {\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}% Inside itemize
+%%  \else
+%%    \item #1% Not inside itemize
+%%  \fi
+%%}
+%%\makeatother
 
-%\newcommand{\question}[1]{\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}
+\newcommand{\question}{%
+	\iftoggle{includeanswers}{%
+		\item\hypertarget{ques.\thesection.\Currentlabel.}{}
+	  }{%
+		{\item}
+	  }
+	}
 
 \newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
 
