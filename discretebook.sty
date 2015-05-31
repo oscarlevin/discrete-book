@@ -67,16 +67,27 @@
 
 
 \makeatletter
-%\def\specialenvironment{itemize}
+\def\specialenvironment{enumerate}
 \newcommand{\question}[1]{%
-  \ifx\@currenvir{questions}
-    \item\hypertarget{ques.\thesection.\Currentlabel.}{} #1 % Inside "questions environment"
+  \ifx\@currenvir\specialenvironment
+    \item #1 %
+    %\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1 % Inside "questions environment"
   \else
-    \item #1 % Not inside "questions environment"
+    \item\hypertarget{ques.\thesection.\Currentlabel.}{} #1% inside "questions environment"
   \fi
 }
+
 \makeatother
 
+%\makeatletter
+%\newcommand{\question}[1]{%
+%  \ifnum\pdfstrcmp{\@currenvir}{questions}=0
+%    {\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}% Inside itemize
+%  \else
+%    \item #1% Not inside itemize
+%  \fi
+%}
+%\makeatother
 
 %\newcommand{\question}[1]{\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}
 
