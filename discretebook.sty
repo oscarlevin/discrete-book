@@ -60,6 +60,7 @@
 
 \newtoggle{includeanswers} %this toggle will change the behavior of the question environment depending on whether we want to include answers to the questions or not.  
 \def\withanswers{\toggletrue{includeanswers}} % putting \withanswers will turn on the includeanswers toggle until the end of the next questions environment.
+\def\noanswers{\togglefalse{includeanswers}}
 
 
 %new list environments
@@ -107,7 +108,7 @@
 	\iftoggle{includeanswers}{%
 		\item\hypertarget{ques.\thesection.\Currentlabel.}{}
 	  }{%
-		{\item}
+		\item
 	  }
 	}
 
@@ -127,10 +128,12 @@
 \newcommand{\ansparams}{{\thesection.\Currentlabel.}}
 
 \def\WriteAnsFileStart{%
-	\Writetofile{\ansfilename}{
+	\iftoggle{includeanswers}{ %
+	\Writetofile{\ansfilename}{ %
 		\protect\noindent{\textbf{Solutions for Section \thesection}}
 	%	\protect\heading{}{}{Section \thesection\ Solutions} 
 		\protect\begin{itemize}
+		}{}
 	}
 	\subsection*{Exercises\markright{\thesection ~ Exercises}}\addcontentsline{toc}{subsection}{Exercises}
 	}
@@ -168,7 +171,7 @@
 %Create ``defbox'' environment to highlight important definitions
 \newenvironment{defbox}[1]{\vskip 1em \begin{framed}\noindent\textbf{ #1\\{}}}{\end{framed}}
 %Create ``activity'' environment for in-text worksheet type problems:
-\newenvironment{activity}{\vskip 1em \noindent\textbf{\large Investigate!}\vskip 1ex}{\centerline{{\Huge \Stopsign} \qquad \textbf{Do not proceed until you have attempted the above problems} \qquad {\Huge \Stopsign}} \hrulefill \vskip 2em}
+\newenvironment{activity}{\noanswers \vskip 1em \noindent\textbf{\large Investigate!}\vskip 1ex}{\centerline{{\Huge \Stopsign} \qquad \textbf{Do not proceed until you have attempted the above problems} \qquad {\Huge \Stopsign}} \hrulefill \vskip 2em}
 
 
 \newcommand{\ex}{\noindent\textbf{Ex: }}
