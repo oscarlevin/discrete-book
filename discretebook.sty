@@ -13,6 +13,7 @@
 \usepackage{docmute}
 \usepackage{answers}
 \usepackage{pdfpages}
+\usepackage{comment}
 %\usepackage[titletoc]{appendix}
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 %\usepackage{bookmark}
@@ -62,6 +63,9 @@
 \def\withanswers{\toggletrue{includeanswers}} % putting \withanswers will turn on the includeanswers toggle until the end of the next questions environment.
 \def\noanswers{\togglefalse{includeanswers}}
 
+\newtoggle{showsolutions} %for hiding solutions to homework.
+\newcommand{\showsolutions}{\toggletrue{showsolutions}}
+\newcommand{\hidesolutions}{\togglefalse{showsolutions}}
 
 %new list environments
 \newcounter{question}
@@ -72,7 +76,7 @@
 	\usecounter{question}}
 	}{%
 	\end{list} \iftoggle{includeanswers}{\WriteAnsFileStop}{}
-	\togglefalse{includeanswers} %turns off includeanswers toggle - it must always be turned on if answers are wanted.
+	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
 	}
 
 \newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
@@ -111,6 +115,8 @@
 		\item
 	  }
 	}
+	
+\def\bonusquestion{\question}
 
 \newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
 
@@ -166,8 +172,10 @@
 
 %Create indented ``example'' environment:
 \newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}\textbf{Example}: }{\end{adjustwidth}\vskip 1em}
-%Create ``solution'' environment:
+
+%Create ``solution'' environment:  Note that we only show this when the toggle ``showsolutions'' is on.
 \newenvironment{solution}{\vskip 1ex \noindent {\em Solution}:}{}
+
 %Create ``defbox'' environment to highlight important definitions
 \newenvironment{defbox}[1]{\vskip 1em \begin{framed}\noindent\textbf{ #1\\{}}}{\end{framed}}
 %Create ``activity'' environment for in-text worksheet type problems:
