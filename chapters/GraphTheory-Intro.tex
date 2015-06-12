@@ -63,6 +63,155 @@ We will return to the question of finding paths through graphs later.  But first
 
 \section{Basics}
 
+
+\begin{activity}
+
+\begin{questions}
+\question Which (if any) of the graphs below are the same?
+
+
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (0,0);
+\coordinate (C) at (1,0);
+\coordinate (D) at (-.5,1);
+\coordinate (E) at (.5,1);
+
+\draw (A) -- (D) -- (B) -- (E) -- (C) -- (D)  (A) -- (E);
+\foreach \x in {(A), (B), (C), (D), (E)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (90+360/5:1);
+\coordinate (B) at (90+2*360/5:1);
+\coordinate (C) at (90+3*360/5:1);
+\coordinate (D) at (90+4*360/5:1);
+\coordinate (E) at (90:1);
+
+\draw (A) -- (B) -- (C) -- (D) -- (E) -- (A);
+\foreach \x in {(A), (B), (C), (D), (E)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (0,1);
+\coordinate (C) at (0,0);
+\coordinate (D) at (0,-1);
+\coordinate (E) at (1,0);
+
+\draw (A) -- (B) -- (E) -- (C) -- (A) -- (D) -- (E);
+\foreach \x in {(A), (B), (C), (D), (E)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (90+360/5:1);
+\coordinate (B) at (90+2*360/5:1);
+\coordinate (C) at (90+3*360/5:1);
+\coordinate (D) at (90+4*360/5:1);
+\coordinate (E) at (90:1);
+
+\draw (A) -- (C) -- (E) -- (B) -- (D) -- (A);
+\foreach \x in {(A), (B), (C), (D), (E)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (0,1);
+\coordinate (C) at (0,0);
+\coordinate (D) at (0,-1);
+\coordinate (E) at (1,0);
+
+\draw (A) -- (C) -- (B) (D) -- (C) -- (E);
+\foreach \x in {(A), (B), (C), (D), (E)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+~
+
+
+
+\question The graphs above are unlabeled.  Usually we think of a graph as having a specific set of vertices.  Which (if any) of the graphs below are the same?
+
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (-1, 1);
+\coordinate (C) at (0,0);
+\coordinate (D) at (0,1);
+\coordinate (E) at (1,0);
+\coordinate (F) at (1,1);
+
+\draw (A) node[below] {$a$} -- (B) node[above] {$b$} -- (C) node[below] {$c$} -- (D) node[above] {$d$} -- (E) node[below] {$e$} -- (F) node[above] {$f$} -- (C) (A) -- (D);
+\foreach \x in {(A), (B), (C), (D), (E), (F)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (-1, 1);
+\coordinate (C) at (0,1);
+\coordinate (D) at (0,0);
+\coordinate (E) at (1,0);
+\coordinate (F) at (1,1);
+
+\draw (A) node[below] {$a$} -- (B) node[above] {$b$} -- (C) node[above] {$c$} -- (D) node[below] {$d$} -- (E) node[below] {$e$} -- (F) node[above] {$f$} -- (C) (A) -- (D);
+\foreach \x in {(A), (B), (C), (D), (E), (F)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (-1, 1);
+\coordinate (C) at (0,0);
+\coordinate (D) at (0,1);
+\coordinate (E) at (1,0);
+\coordinate (F) at (1,1);
+
+\draw (A) node[below] {$a$} -- (B) node[above] {$c$} -- (C) node[below] {$e$} -- (D) node[above] {$b$} -- (E) node[below] {$d$} -- (F) node[above] {$f$} -- (C) (A) -- (D);
+\foreach \x in {(A), (B), (C), (D), (E), (F)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (A) at (-1,0);
+\coordinate (B) at (-1, 1);
+\coordinate (C) at (0,1);
+\coordinate (D) at (0,0);
+\coordinate (E) at (1,0);
+\coordinate (F) at (1,1);
+
+\draw (A) node[below] {$v_6$} -- (B) node[above] {$v_1$} -- (C) node[above] {$v_2$} -- (D) node[below] {$v_5$} -- (E) node[below] {$v_4$} -- (F) node[above] {$v_3$} -- (C) (A) -- (D);
+\foreach \x in {(A), (B), (C), (D), (E), (F)}{
+	\fill \x \v;
+}
+\end{tikzpicture}
+
+
+
+\question Actually, all the graphs we have seen above are just {\em drawings} of graphs.  A graph is really an abstract mathematical object consisting of two sets $V$ and $E$ where $E$ is a set of 2-element subsets of $V$.
+
+Are the graphs below the same or different?
+
+Graph 1: $V = \{a, b, c, d, e\}$, $E = \{\{a,b\}, \{a, c\}, \{a,d\}, \{a,e\}, \{b,c\}, \{d,e\}\}$.
+
+
+Graph 2: $V = \{v_1, v_2, v_3, v_4, v_5\}$, $E = \{\{v_1, v_3\}, \{v_1, v_5\}, \{v_2, v_4\}, \{v_2, v_5\}, \{v_3, v_5\}, \{v_4, v_5\}\}$.
+\end{questions}
+
+\end{activity}
+
+
 While we almost always think of graphs as pictures, these are really just visual representations of mathematical objects.  In fact, all a graph is is a set of vertices some pairs of which are ``related'' by an edge.  For example, we can describe a particular graph like this: the vertices are the letters $\{a,b,c,d\}$ and the edges are the pairs $\{(a,b), (a,c), (b,c), (b,d), (c,d)\}$.  Technically the edges are 2-elements subsets of the set of vertices, so we should write $(a,b)$ as $\{a,b\}$ but we use parentheses to ease reading.  We could have described the graph in words as follows: we have four vertices, $a$, $b$, $c$, and $d$, and $a$ is connected (by an edge) to $b$ and $c$, $b$ is connected to both $c$ and $d$, and $c$ is also connected to $d$.  One way to draw this graph is this:
 \begin{center}
   \begin{tikzpicture}[scale=0.7]
@@ -173,7 +322,21 @@ One final definition: we say a graph is {\em bipartite} if the vertices can be d
 
 \end{defbox}
 
+\begin{activity}
+For each of the following, try to give two \underline{different} unlabeled graphs with the given properties, or explain why doing so is impossible.
+\begin{questions}
+\question Two different trees with the same number of vertices and the same number of edges.
 
+\question Two different graphs with 8 vertices all of degree 2.
+
+\question Two different graphs with 5 vertices all of degree 4.
+\question Two different graphs with 5 vertices all of degree 3.
+
+
+
+
+\end{questions}
+\end{activity}
 \end{document}
 
 
