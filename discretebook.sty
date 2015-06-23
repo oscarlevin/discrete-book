@@ -31,6 +31,8 @@
 \usepackage{tikz}
 \usetikzlibrary{shadows,fadings}
 
+\usepackage[framemethod=tikz]{mdframed}
+
 %Number subsections:
 \setsecnumdepth{subsection} %It might look better to turn this off, but then I should change the headings.
 
@@ -188,14 +190,49 @@
 \newtheorem*{remark}{Remark}
 %\newtheorem*{solution}{Solution}
 
-%Create indented ``example'' environment:
-\newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}\textbf{Example}: }{\end{adjustwidth}\vskip 1em}
+%create a mdframe style for examples:
+\mdfdefinestyle{examplestyle}{%
+	skipabove=2em,
+	skipbelow=1em,
+	leftmargin=1em,
+	rightmargin=1ex,
+	roundcorner=1pt,
+	topline=false,
+	%bottomline=false,
+	rightline=false,
+    frametitleaboveskip=5pt,
+	frametitlebelowskip=0pt,
+	needspace=3em,
+	frametitle={Example:}
+}
 
-%Create ``solution'' environment:  Note that we only show this when the toggle ``showsolutions'' is on.
-\newenvironment{solution}{\vskip 1ex \noindent {\em Solution}:}{}
+%Create indented ``example'' environment:
+\newmdenv[style=examplestyle]{example}
+
+
+%\newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}\textbf{Example}: }{\end{adjustwidth}\vskip 1em}
+
+%Create ``solution'' environment:  
+\newenvironment{solution}{\vskip 1ex \noindent {\itshape\bfseries Solution}:}{}
 
 %Create ``defbox'' environment to highlight important definitions
-\newenvironment{defbox}[1]{\vskip 1em \begin{framed}\noindent\textbf{ #1\\{}}}{\end{framed}}
+
+\newenvironment{defbox}[1]{%
+\mdfsetup{%
+    frametitle={\colorbox{blue!20}{\space#1\space}},
+%	frametitle={\fbox{#1}},
+    frametitleaboveskip=-1.5ex,
+    frametitlebelowskip=0pt,
+    roundcorner=1pt,
+    leftmargin=3pt,
+    rightmargin=3pt,
+  	backgroundcolor=blue!5,
+  	linecolor=blue!75!black,
+    }
+  \begin{mdframed}%
+  }
+  {\end{mdframed}}
+
 %Create ``activity'' environment for in-text worksheet type problems:
 \newenvironment{activity}{\noanswers \vskip 1em \noindent\textbf{\large Investigate!}\vskip 1ex}{\centerline{{\LARGE \Stopsign} \quad \textbf{Do not proceed until you have attempted the above} \quad {\LARGE \Stopsign}}  \vskip 2em}
 
