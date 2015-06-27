@@ -8,7 +8,7 @@
 %\usepackage{changepage} % for adding extra indents in environments
 %\usepackage{fancyhdr}
 
-%\usepackage{framed}
+%\usepackage{comment}
 \usepackage[T1]{fontenc}
 \usepackage{bold-extra}
 \usepackage{textcomp}
@@ -50,36 +50,7 @@
 \fixpdflayout
 
 
-%headers and footers:
-%\setlength{\headheight}{15.2pt}
-%\renewcommand{\headrulewidth}{0.1pt}
-%\renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
-%\renewcommand{\sectionmark}[1]{\markright{\textsc{\thesection ~ #1}}{}}
-%\renewcommand{\subsectionmark}[1]{\markright{\textsc{\thesubsection ~ #1}}{}}
-%\lhead{\footnotesize\leftmark}
-%\chead{}
-%\rhead{\footnotesize\rightmark}
-%\newcommand{\heading}[3]{{\lhead{\footnotesize #1} \chead{\bf #2} \rhead{\footnotesize #3}}}
-%\newcommand{\cleanpage}{\cfoot{}}
-%%\makeatletter
-%\renewcommand\tableofcontents{%
-%    \chapter*{\contentsname
-%        \@mkboth{}{\contentsname}}%
-%%           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}% DELETED
-%           %\MakeUppercase\contentsname}{}}% ADDED
-%    \@starttoc{toc}%
-%    } 
-%%\makeatother
 
-%%Chapters don't have pagebreak:
-%\titleclass{\part}{top}
-%\titleformat{\part}[display]
-%  {\normalfont\huge\bfseries}{\centering\partname\ \thepart}{20pt}{\Huge\centering}
-%\titlespacing*{\part}{0pt}{50pt}{40pt}
-%\titleclass{\chapter}{top}
-%\titleformat{\chapter}[display]
-%  {\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter}{1ex}{\huge}
-%\titlespacing*{\chapter} {0pt}{0pt}{3ex}
 
 \newtoggle{includeanswers} %this toggle will change the behavior of the question environment depending on whether we want to include answers to the questions or not.  
 \def\withanswers{\toggletrue{includeanswers}} % putting \withanswers will turn on the includeanswers toggle until the end of the next questions environment.
@@ -92,6 +63,10 @@
 \newtoggle{instructoredition}
 \newcommand{\showinstnotes}{\toggletrue{instructoredition}}
 \newcommand{\hideinstnotes}{\togglefalse{instructoredition}}
+
+\newtoggle{hwsol}
+\newcommand{\starthwsol}{\toggletrue{hwsol}}
+\newcommand{\finishhwsol}{\togglefalse{hwsol}}
 
 %new list environments
 \newcounter{question}
@@ -110,29 +85,6 @@
 
 
 
-
-%\makeatletter
-%\def\specialenvironment{list}
-%\newcommand{\question}[1]{%
-%  \ifx\@currenvir\specialenvironment   
-%   \item\hypertarget{ques.\thesection.\Currentlabel.}{}  #1% inside "questions environment"  
-%    %\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1 % Inside "questions environment"
-%  \else
-%	\item #1 %
-%  \fi
-%}
-%
-%\makeatother
-%
-%%\makeatletter
-%%\newcommand{\question}[1]{%
-%%  \ifnum\pdfstrcmp{\@currenvir}{questions}=0
-%%    {\item\hypertarget{ques.\thesection.\Currentlabel.}{} #1}% Inside itemize
-%%  \else
-%%    \item #1% Not inside itemize
-%%  \fi
-%%}
-%%\makeatother
 
 \newcommand{\question}{%
 	\iftoggle{includeanswers}{%
@@ -216,8 +168,18 @@
 
 %\newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}\textbf{Example}: }{\end{adjustwidth}\vskip 1em}
 
-%Create ``solution'' environment:  
-\newenvironment{solution}{\vskip 1ex \noindent {\itshape\bfseries Solution}:}{}
+%Create ``solution'' environment:  This can be used for solutions in examples (which will always be shown) or after homework problems, which will only be shown in the instructor edition. 
+\newenvironment{solution}{%
+	\iftoggle{hwsol}{%
+		\iftoggle{instructoredition}{\color{purple!50!blue} \vskip 1ex \noindent {\itshape\bfseries Solution}: }{\comment}
+	}{%
+		\vskip 1ex \noindent {\itshape\bfseries Solution}:
+	}
+}{%
+\iftoggle{hwsol}{%
+		\iftoggle{instructoredition}{}{\endcomment}
+	}{}
+}
 
 
 %Create ``defbox'' environment to highlight important definitions
