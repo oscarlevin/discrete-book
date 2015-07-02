@@ -182,10 +182,36 @@ Another area of mathematics where you might have heard the terms ``vertex,'' ``e
 \begin{activity}
 A cube is an example of a convex polyhedron.  It contains 6 identical squares for its faces, 8 vertices, and 12 edges.  The cube is a \emph{regular polyhedron} (also known as a \emph{Platonic solid} because each face is an identical regular polygon and each vertex joins an equal number of faces.
 
-There are exactly four other regular polyhedra: the tetrahedron, octahedron, dodecahedron, and icosahedron.  How many faces, vertices and edges do each of these have?
+There are exactly four other regular polyhedra: the tetrahedron, octahedron, dodecahedron, and icosahedron with 4, 8, 12 and 20 faces respectively.  How many vertices and edges do each of these have?
 \end{activity}
 
-\todo[inline]{Finish this section, include information about how any convex polyhedron can be represented as a planar graph and how Euler's formula works, and how this can be used to deduce facts about polyhedra.}
+Notice that since $8 - 12 + 6 = 2$, the vertices, edges and faces of a cube satisfy Euler's formula for planar graphs.  This is not a coincidence.  We can represent a cube as a planar graph by projecting the vertices and edges onto the plane.  One such projection looks like this:
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \ang in {45, 135, 225, 315} {
+\draw (\ang:.5) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.5) -- (\ang+90:.5);
+}
+\end{tikzpicture}
+\end{center}
+
+In fact, \underline{every} convex polyhedron can be projected onto the plane without edges crossing.  Think of placing the polyhedron inside a sphere, with a light at the center of the sphere.  The edges and vertices of the polyhedron cast a shadow onto the interior of the sphere.  Now you can cut a hole in the sphere in the middle of one of the projected faces and ``stretch'' the sphere to lay down flat on the plane.  The face that was punctured becomes the ``outside'' face of the planar graph.
+
+The point is we can apply what we know about graphs (in particular planar graphs) to convex polyhedra.  Since every convex polyhedron can be represented as a planar graph, we see that Euler's formula for planar graphs holds for all convex polyhedra as well.  We also can apply the same sort of reasoning we use for graphs in other contexts to convex polyhedra.  For example, we know that there is no convex polyhedron with 11 vertices all of degree 3, as this would make 33/2 edges.  Here is another such example.
+
+\begin{example}
+Is there a convex polyhedron made up out of five triangles and eight pentagons?  What about five triangles, eight pentagons and three heptagon (7-sided polygon)?
+
+\begin{solution}
+How many edges would such polyhedra have?  For the first proposed polyhedron, the triangles would contribute a total of 15 edges, and the pentagons would contribute 40.  However, each edge is counted twice this way (as each edge borders exactly two faces), giving 55/2 edges, an impossibility.  There is no such polyhedron.
+
+The second polyhedron does not have this obstacle. The extra 21 edges contributed by the heptagon give 76/2 = 38 edges.  So far so good.  Now how many vertices does this supposed polyhedron have?  We can use Euler's formula.  There are 16 faces, so we have $V - 38 + 16 = 2$ or equivalently $V = 24$.  But we can count the number of vertices another way to.  Each triangle contributes 3 vertices, each pentagon 5, and each heptagon 7.  This gives a total of 76.  However, we have at least triple counted the vertices, since each vertex must have degree at least 3.  \todo{fix this - it currently does not work}
+\end{solution}
+
+
+\end{example}
+
+\todo[inline]{Finish this section - maybe prove that there are only 5 platonic solids.}
 
 
 
