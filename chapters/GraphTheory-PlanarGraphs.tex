@@ -190,7 +190,7 @@ Notice that since $8 - 12 + 6 = 2$, the vertices, edges and faces of a cube sati
 \begin{center}
 \begin{tikzpicture}
 \foreach \ang in {45, 135, 225, 315} {
-\draw (\ang:.5) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.5) -- (\ang+90:.5);
+\draw (\ang:.4) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.4) -- (\ang+90:.4);
 }
 \end{tikzpicture}
 \end{center}
@@ -200,18 +200,46 @@ In fact, \underline{every} convex polyhedron can be projected onto the plane wit
 The point is we can apply what we know about graphs (in particular planar graphs) to convex polyhedra.  Since every convex polyhedron can be represented as a planar graph, we see that Euler's formula for planar graphs holds for all convex polyhedra as well.  We also can apply the same sort of reasoning we use for graphs in other contexts to convex polyhedra.  For example, we know that there is no convex polyhedron with 11 vertices all of degree 3, as this would make 33/2 edges.  Here is another such example.
 
 \begin{example}
-Is there a convex polyhedron made up out of five triangles and eight pentagons?  What about five triangles, eight pentagons and three heptagon (7-sided polygon)?
+Is there a convex polyhedron made up out of three triangles and six pentagons?  What about three triangles, six pentagons and five heptagons (7-sided polygons)?
 
 \begin{solution}
-How many edges would such polyhedra have?  For the first proposed polyhedron, the triangles would contribute a total of 15 edges, and the pentagons would contribute 40.  However, each edge is counted twice this way (as each edge borders exactly two faces), giving 55/2 edges, an impossibility.  There is no such polyhedron.
+How many edges would such polyhedra have?  For the first proposed polyhedron, the triangles would contribute a total of 9 edges, and the pentagons would contribute 30.  However, each edge is counted twice this way (as each edge borders exactly two faces), giving 39/2 edges, an impossibility.  There is no such polyhedron.
 
-The second polyhedron does not have this obstacle. The extra 21 edges contributed by the heptagon give 76/2 = 38 edges.  So far so good.  Now how many vertices does this supposed polyhedron have?  We can use Euler's formula.  There are 16 faces, so we have $V - 38 + 16 = 2$ or equivalently $V = 24$.  But we can count the number of vertices another way to.  Each triangle contributes 3 vertices, each pentagon 5, and each heptagon 7.  This gives a total of 76.  However, we have at least triple counted the vertices, since each vertex must have degree at least 3.  \todo{fix this - it currently does not work}
+The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagon give 74/2 = 37 edges.  So far so good.  Now how many vertices does this supposed polyhedron have?  We can use Euler's formula.  There are 14 faces, so we have $V - 37 + 14 = 2$ or equivalently $V = 25$.  But now use the vertices to count the edges again.  Each vertex must have degree \emph{at least} three (that is, each vertex joins at least three faces), so the sum of the degrees is at least 75.  Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges.  Again, there is no such polyhedron.
 \end{solution}
-
-
 \end{example}
 
-\todo[inline]{Finish this section - maybe prove that there are only 5 platonic solids.}
+
+To conclude this application of planar graphs, consider the regular polyhedra.  Above we claimed there are only five.  How do we know this is true?  We can prove it using graph theory.
+
+\begin{theorem}
+There are exactly five regular polyhedra.
+\end{theorem}
+
+
+\begin{proof}
+Recall that a regular polyhedron has all of its faces identical regular polygons, and that each vertex has the same degree.   Consider the cases, broken up by what the regular polygon might be.
+
+\textbf{Case 1}: Each face is a triangle.  Let $F$ be the number of faces.  There are then $3F/2$ edges.  Using Euler's formula we have $V - 3F/2 + F = 2$ so $V = 2 + F/2$.  Now each vertex has the same degree, say $k$.  So the number of edges is also $kV/2$.  Putting this together gives \[E = \frac{3F}{2} = \frac{k(2+F/2)}{2}\] which says 
+\[k = \frac{6F}{4+F}\]
+We need $k$ and $F$ to both be positive integers.  Note that $\frac{6F}{4+F}$ is an increasing function for positive $F$, and has a horizontal asymptote at 6.  Thus the only possible values for $k$ are 3, 4, and 5.  Each of these are possible.  To get $k = 3$, we need $F = 4$ (this is the tetrahedron).  For $k = 4$ we take $F = 8$ (the octahedron).  For $k = 5$ take $F = 20$ (the icosahedron).  Thus there are exactly three regular polyhedra with triangles for faces.
+
+\textbf{Case 2}: Each face is a square.  Now we have $E = 4F/2 = 2F$.  Using Euler's formula we get $V = 2 + F$, and counting edges using the degree $k$ of each vertex gives us
+\[E = 2F = \frac{k(2+F)}{2}\]
+Solving for $k$ gives 
+\[k = \frac{4F}{2+F} = \frac{8F}{4+2F}\]
+This is again an increasing function, but this time the horizontal asymptote is at $k = 4$, so the only possible value that $k$ could take is 3.  This produces 6 faces, and we have a cube.  There is only one regular polyhedron with square faces.
+
+\textbf{Case 3}: Each face is a pentagon.  We perform the same calculation as above, this time getting $E = 5F/2$ so $V = 2 + 3F/2$.  Then
+\[E = \frac{5F}{2} = \frac{k(2+3F/2)}{2}\]
+so
+\[k = \frac{10F}{4+3F}\]
+Now the horizontal asymptote is at $\frac{10}{3}$.  This is less than 4, so we can only hope of making $k = 3$.  We can do so by using 12 pentagons, getting the dodecahedron.  This is the only regular polyhedron with pentagons as faces.
+
+\textbf{Case 4}: Each face is an $n$-gon with $n \ge 6$.  Following the same procedure as above, we deduce that
+\[k = \frac{2nF}{4+(n-2)F}\]
+which will be increasing to a horizontal asymptote of $\frac{2n}{n-2}$.  When $n = 6$, this asymptote is at $k = 3$.  Any larger value of $n$ will give an even smaller asymptote.  Therefore no regular polyhedra exist with faces larger than pentagons.\footnote{Notice that you can tile the plane with hexagons.  This is an infinite planar graph; each vertex has degree 3.  These infinitely many hexagons correspond to the limit as $F \to \infty$ to make $k = 3$.}
+\end{proof}
 
 
 
