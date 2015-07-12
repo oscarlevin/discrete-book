@@ -31,7 +31,7 @@ Here is another problem:  below is a drawing of four dots connected by some line
 There is an obvious connection between these two problems - any path through the dot and line drawing corresponds exactly to a path over the bridges of K\"onigsberg.  
 
 
-Pictures like the dot and line drawing are called {\em graphs}.\footnote{Actually, since the picture here has dots connected by more than one line, it is called a \emph{multigraph}.}  Graphs are made up of a collection of dots (called {\em vertices}) and lines connecting those dots (called \emph{edges}).  The nice thing about looking at graphs instead of pictures of rivers, islands and bridges is that we now have a mathematical object to study.  A {\em set} of vertices and a set of edges (in fact, we can take the set of edges to be a set of two element subsets from the set of vertices).  We have distilled the ``important'' parts of the bridge picture for the purposes of the problem - it does not matter how big the islands are, what the bridges are made out of, if the river contains alligators, etc.  All that matters is which land masses are connected to which other land masses, and how many times.  This was the great insight that Euler had.
+Pictures like the dot and line drawing are called {\em graphs}.\footnote{Actually, since the picture here has dots connected by more than one line, it is called a \emph{multigraph}.}  Graphs are made up of a collection of dots (called {\em vertices}) and lines connecting those dots (called \emph{edges}).  When two vertices are connected by an edge, we say they are \emph{adjacent}\index{adjacent}.  The nice thing about looking at graphs instead of pictures of rivers, islands and bridges is that we now have a mathematical object to study.  A {\em set} of vertices and a set of edges (in fact, we can take the set of edges to be a set of two element subsets from the set of vertices).  We have distilled the ``important'' parts of the bridge picture for the purposes of the problem - it does not matter how big the islands are, what the bridges are made out of, if the river contains alligators, etc.  All that matters is which land masses are connected to which other land masses, and how many times.  This was the great insight that Euler had.
 
 We will return to the question of finding paths through graphs later.  But first, here are a few other situations you can represent with graphs.
 
@@ -237,9 +237,65 @@ However we could also have drawn the graph differently.  For example either of t
   \end{tikzpicture}
 \end{center}
 
-Viewed as pictures, the graphs above are the same whether or not the vertices are labeled as they are, or at all.  In fact, two graphs are equal precisely when there is a way to label the vertices so that all the pairs of vertices which have edges in one graph also have edges in the other graph, and \textit{vice versa}.  Two vertices which are connected by an edge are called \emph{adjacent}.
+We should be careful about what it means for two graphs to be ``the same.''  Remember, as mathematical objects, graphs are just sets.  Two sets are equal if they have the exact same members.  However, even if two graphs are not \emph{equal}, they might be \emph{basically} the same.  Graphs that are \emph{basically} the same (but perhaps not equal) are called \emph{isomorphic}.  We will give a precise definition of this term after a quick example.
 
-Notice that the graph above has the property that no pair of vertices is connected more than once, and no vertex is connected to itself.  Graphs like these are sometimes called {\em simple}, although we will just call them {\em graphs}.  This is because our definition for a graph says that the edges form a set of 2-element subsets of the vertices.  Remember that it doesn't make sense to say a set contains an element more than once.  So no pair of vertices can be connected by an edge more than once.  And since each edge must be a set containing two vertices, we cannot have a single vertex connected to itself by an edge.  If we did allow either of these to happen, then our set of edges would in fact be a \emph{multiset}.  Thus graphs which contain multiple edges between a single pair of vertices are often called \emph{multigraphs}.
+\begin{example}
+Consider the graphs: $G_1 = \{V_1, E_1\}$ where $V_1 = \{a, b, c\}$ and $E_1 = \{\{a,b\}, \{a,c\}, \{b,c\}\}$; $G_2 = \{V_2, E_2\}$ where $V_2 = \{u,v,w\}$ and $E_2 = \{\{u,v\}, \{u,w\}, \{v,w\}$.  
+Are these graphs the same?
+
+\begin{solution}
+The two graphs are NOT equal.  It is enough to notice that $V_1 \ne V_2$ since $a \in V_1$ but $a \notin V_2$.  However, both of these graphs consist of three vertices with edges connecting every pair of vertices.  We can draw them as follows:
+
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (90:1) \va{$a$} -- (210:1) \vl{$b$} -- (-30:1) \vr{$c$}; -- (90:1);
+\end{tikzpicture}
+\qquad
+\begin{tikzpicture}
+\draw[thick] (90:1) \va{$u$} -- (210:1) \vl{$v$} -- (-30:1) \vr{$w$}; -- (90:1);
+\end{tikzpicture}
+\end{center}
+Clearly we want to say these graphs are basically the same, so while they are not equal, they will be \emph{isomorphic}.  The reason is we can rename the vertices of one graph and get the second graph as the result.
+\end{solution}
+\end{example}
+
+Intuitively, graphs are \emph{isomorphic}\index{isomorphic} if they are basically the same, or better yet, if they are the same except for the names of the vertices.  To make the concept of renaming vertices precise, we give the following definitions.
+
+\begin{defbox}{Isomorphic Graphs}
+An \emph{isomorphism}\index{isomorphism} between two graphs $G_1$ and $G_2$ is a bijection $f:V_1 \to V_2$ between the vertices of the graphs such that if $\{a,b\}$ is an edge in $G_1$ then $\{f(a), f(b)\}$ is an edge in $G_2$.
+
+Two graphs are \emph{isomorphic} if there is an isomorphism between them.  In this case we write $G_1 \cong G_2$.
+\end{defbox}
+
+An isomorphism is simply a function which renames the vertices.  It must be a bijection so every vertex gets a new name.  These newly named vertices must be connected by edges precisely if they were connected by edges with their old names.
+
+\begin{example}
+Decide whether the graphs $G_1 = \{V_1, E_1\}$ and $G_2 = \{V_2, E_2\}$ are equal or isomorphic.
+
+$V_1 = \{a,b,c,d\}$, $E_1 = \{\{a,b\}, \{a,c\}, \{a,d\}, \{c,d\}\}$
+
+$V_2 = \{a,b,c,d\}$, $E_2 = \{\{a,b\}, \{a,c\}, \{b,c\}, \{c,d\}\}$
+
+\begin{solution}
+The graphs are NOT equal, since $\{a,d\} \in E_1$ but $\{a,d\} \notin E_2$.  However, since both graphs contain the same number of vertices and same number of edges, they \emph{might} be isomorphic (this is not enough in most cases, but it is a good start).  
+
+We can try to build an isomorphism.  How about we say $f(a) = b$, $f(b) = c$, $f(c) = d$ and $f(d) = a$.  This is definitely a bijection, but to make sure that the function is an isomorphism, we must make sure it \emph{respects the edge relation}.  In $G_1$, vertices $a$ and $b$ are connected by an edge.  In $G_2$, $f(a) = b$ and $f(b) = c$ are connected by an edge.  So far, so good, but we must check the other three edges.  The edges $\{a,c\}$ in $G_1$ corresponds to $\{f(a), f(c)\} = \{b,d\}$, but here we have a problem.  There is no edge between $b$ and $d$ in $G_2$.  Thus $f$ is NOT an isomorphism.
+
+However, not all hope is lost.  Just because $f$ is not an isomorphism does not mean that there is no isomorphism at all.  We can try again.  At this point it might be helpful to draw the graphs to see how they should match up.  Alternatively, notice that in $G_1$, the vertex $a$ is adjacent to every other vertex.  In $G_2$, there is also a vertex with this property: $c$.  So build the bijection $g:V_1 \to V_2$ by $g(a) = c$ to start with.  Now where should we send $b$?  In $G_1$, the vertex $b$ is only adjacent to vertex $a$.  There is exactly one vertex like this in $G_2$, namely $d$.  So let $g(b) = d$.  As for the last two, in this example we have a free choice: let $g(c) = b$ and $g(d) = a$ (switching these would be fine as well).   
+
+Now we check that this really is an isomorphism.  It is definitely a bijection.  We must make sure that the edges are respected.  The four edges in $G_1$ are
+\[\{a,b\}, \{a,c\}, \{a,d\}, \{c,d\}\]
+Under the proposed isomorphism these become
+\[\{g(a), g(b)\}, \{g(a), g(c)\}, \{g(a), g(d)\}, \{g(c), g(d)\}\]
+\[ \{c,d\}, \{c,b\}, \{c,a\}, \{b,a\}\]
+which are precisely the edges in $G_2$.  Thus $g$ is an isomorphism, so $G_1 \cong G_2$
+
+\end{solution}
+\end{example}
+
+Sometimes we will talk about a graph with a special name (like $K_n$ or the \emph{Peterson graph} or perhaps draw a graph without any labels.  In this case we are really referring to \emph{all} graphs isomorphic to any labeling of that particular graph.  A collection of isomorphic graphs is often called an \emph{isomorphism class}\index{isomorphism class}.
+
+Back to some basic graph theory definitions.  Notice that the graphs above have the property that no pair of vertices is connected more than once, and no vertex is connected to itself.  Graphs like these are sometimes called {\em simple}, although we will just call them {\em graphs}.  This is because our definition for a graph says that the edges form a set of 2-element subsets of the vertices.  Remember that it doesn't make sense to say a set contains an element more than once.  So no pair of vertices can be connected by an edge more than once.  And since each edge must be a set containing two vertices, we cannot have a single vertex connected to itself by an edge.  If we did allow either of these to happen, then our set of edges would in fact be a \emph{multiset}.  Thus graphs which contain multiple edges between a single pair of vertices are often called \emph{multigraphs}.
 
 There are times we want to consider double (or more) edges and single edge loops.  For example, the ``graph'' we drew for the Bridges of K\"onigsberg problem had double edges because there really are two bridges connecting a particular island to the near shore.  We will call these objects {\em multigraphs}.  This is a good name: a multiset is a set in which we are allowed to include a single element multiple times.
 
