@@ -13,17 +13,56 @@
 \begin{activity} 
 In the time of Euler, in the town of K\"onigsberg in Prussia, there was a river containing two islands.  The islands were connected to the banks of the river by seven bridges (as seen below).  The bridges were very beautiful, and on their days off, townspeople would spend time walking over the bridges.  As time passed, a question arose: was it possible to plan a walk so that you cross each bridge once and only once?  Euler was able to answer this question.  Are you?
 
-\centerline{\includegraphics[width=5in]{images/7bridgescolor.png}}
+%\centerline{\includegraphics[width=5in]{images/7bridgescolor.png}}
 
+\begin{center}
+\begin{tikzpicture}
+\definecolor{land}{HTML}{BDC4A7}
+\definecolor{water}{HTML}{92A2FF}
+\definecolor{bridge}{HTML}{D3AC6B}
+\clip (-6,-2.5) rectangle (6,2.5);
+%River:
+%\path[fill=water]plot[smooth] coordinates {(-6,-.7) (-6,.2) (-3,.9) (-2,1.2) (0,.8) (1,1) (3,.5) (6,.2)(6,-.8) (4.5, -1)  (2.8, -1.2) (.5, -1) (-2, -1.4) (-4.5, -.6) (-6,-.7)};
+\fill[color=water] (-6,-1.3) rectangle (5.5,1.2);
+%Islands:
+\draw[thick, fill=land] plot[smooth cycle] coordinates {(0,0) (-.5, .5) (-1,.6) (-2, .7) (-3,.5) (-3.3, -.7) (-2.8, -.8) (-1,-.7) (-.3, -.5)}; 
+\draw[thick, fill=land] plot[smooth cycle] coordinates {(.5,0) (.4,.5) (1,.6) (2,.5) (2.7,0) (2.9,-.6) (2,-.8) (1,-.5) (.7,-.4)};
+%Banks:
+\shade[bottom color=land, top color=white] plot[smooth] coordinates {(-6,.2) (-4.5,.4) (-3,1) (0,.8) (1.5,1) (3,.5) (5.5,.2)} -- plot coordinates {(5.5,3) (-6,3)};
+\draw[thick] plot[smooth] coordinates {(-6,.2) (-4.5,.4) (-3,1) (0,.8) (1.5,1) (3,.5) (5.5,.2)};
+\shade[top color=land, bottom color=white] plot[smooth] coordinates {(-6,-.7) (-4.5,-.6) (-3,-1.2) (0,-1) (3,-1.1) (5,-.8) (5.5,-.7)} -- plot coordinates {(5.5,-3) (-6,-3)};
+\draw[thick] plot[smooth] coordinates {(-6,-.7) (-4.5,-.6) (-3,-1.2) (0,-1) (3,-1.1) (5,-.8) (5.5,-.7)};
+%Bridges:
+\path[fill=bridge] (-.3,.1) to[out=-10, in=190] (.8,.1) -- (.7, -.2) to[out=170, in=10] (-.35,-.2) -- cycle;
+\draw[thick] (-.3,.1) to[out=-10, in=190] (.8,.1) (.7, -.2) to[out=170, in=10] (-.35,-.2);
+\path[fill=bridge] (1.75,-1.5) to[out=100, in=260] (1.85,-.5) -- (1.55, -.4) to[out=280, in=80] (1.5,-1.4) -- cycle;
+\draw[thick] (1.75,-1.5) to[out=100, in=260] (1.85,-.5) (1.55, -.4) to[out=280, in=80] (1.5,-1.4);
 
-Try finding a path which uses each bridge exactly once.  
+\path[fill=bridge] (1.6,.35) to[out=100, in=280] (1.35,1.3) -- (1.1, 1.2) to[out=300, in=110] (1.4,.3) -- cycle;
+\draw[thick] (1.6,.35) to[out=100, in=280] (1.35,1.3) (1.1, 1.2) to[out=300, in=110] (1.4,.3);
+
+\path[fill=bridge] (-.7,.35) to[out=70, in=240] (-.3,1.1) -- (-.5, 1.2) to[out=250, in=60] (-.9,.45) -- cycle;
+\draw[thick] (-.7,.35) to[out=70, in=240] (-.3,1.1) (-.5, 1.2) to[out=250, in=60] (-.9,.45);
+
+\path[fill=bridge] (-2.05,.5) to[out=105, in=270] (-2.15,1.4) -- (-2.4, 1.35) to[out=280, in=90] (-2.3,.45) -- cycle;
+\draw[thick] (-2.05,.5) to[out=105, in=270] (-2.15,1.4) (-2.4, 1.35) to[out=280, in=90] (-2.3,.45);
+
+\path[fill=bridge] (-2.75,-1.5) to[out=85, in=250] (-2.5,-.6) -- (-2.75, -.5) to[out=260, in=75] (-3,-1.45) -- cycle;
+\draw[thick] (-2.75,-1.5) to[out=85, in=250] (-2.5,-.6) (-2.75, -.5) to[out=260, in=75] (-3,-1.45);
+
+\path[fill=bridge] (-.7,-1.5) to[out=100, in=260] (-.7,-.5) -- (-1, -.55) to[out=280, in=80] (-1,-1.45) -- cycle;
+\draw[thick] (-.7,-1.5) to[out=100, in=260] (-.7,-.5) (-1, -.55) to[out=280, in=80] (-1,-1.45);
+%\path[shade, shading=radial, inner color=green!50!gray] (-7,-4) rectangle (7,4);
+\end{tikzpicture}
+\end{center}
+
+%Try finding a path which uses each bridge exactly once.  
 \end{activity}
-\todo{recreate this image with tikz}
 Graph Theory is a relatively new area of mathematics, first studied by the super famous mathematician Leonhard Euler in 1735.  Since then it has blossomed in to a powerful tool used in nearly every branch of science and is currently an active area of mathematics research. 
 
-The problem above, known as the \emph{Seven Bridges of K\"onigsberg}, is the problem that started all of graph theory.   Now consider a ``different'' problem.  Below is a drawing of four dots connected by some lines.  Is it possible to trace over each line once and only once (without lifting up your pencil)?  You must start and end on one of the dots.
+The problem above, known as the \emph{Seven Bridges of K\"onigsberg}, is the problem that started all of graph theory.   Consider a ``different'' problem.  Below is a drawing of four dots connected by some lines.  Is it possible to trace over each line once and only once (without lifting up your pencil)?  You must start and end on one of the dots.
 
-\centerline{\begin{tikzpicture}[scale=1.5, yscale=.5]
+\centerline{\begin{tikzpicture}[scale=1, yscale=.5]
  \draw[thick] (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
   \draw[thick] (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
   \end{tikzpicture}}
@@ -40,7 +79,7 @@ We will return to the question of finding paths through graphs later.  But first
     Each person will be represented by a vertex and each friendship will be represented by an edge - that is, there will be an edge between two vertices if and only if the people represented by those vertices are friends.  We get the following graph:
     
     \begin{center}
-      \begin{tikzpicture}[scale=0.75]
+      \begin{tikzpicture}[scale=0.7]
         \draw[thick] (-1, 0) \vl{C} -- (0,1) \vb{E} -- (-1,2) \vl{A} -- (-1,0)(1,0) \vr{D} -- (0,1)  -- (1,2) \vr{B} -- (1,0);
       \end{tikzpicture}
     \end{center}
@@ -55,7 +94,7 @@ We will return to the question of finding paths through graphs later.  But first
     We will answer this question later.  For now, notice how we would ask this question in the context of graph theory.  We are really asking whether it is possible to redraw the graph below without any edges crossing (except at vertices).
     
     \begin{center}
-      \begin{tikzpicture}[yscale=1.2]
+      \begin{tikzpicture}[yscale=1]
         \draw[thick] (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
       \end{tikzpicture}
     \end{center}
@@ -215,8 +254,7 @@ Graph 2: $V = \{v_1, v_2, v_3, v_4, v_5\}$,\\ $E = \{\{v_1, v_3\}, \{v_1, v_5\},
 \end{activity}
 
 
-While we almost always think of graphs as pictures, these are really just visual representations of mathematical objects.  In fact, a graph is simply a set of vertices some pairs of which are ``related'' by an edge.  For example, we can describe a particular graph like this: the vertices are the letters $\{a,b,c,d\}$ and the edges are the pairs $\{\{a,b\}, \{a,c\}, \{b,c\}, \{b,d\}, \{c,d\}\}$.  %Technically the edges are 2-elements subsets of the set of vertices, so we should write $(a,b)$ as $\{a,b\}$ but we use parentheses to ease reading.  
-\todo{Make sure edge sets are written consistently throughout chapter}
+While we almost always think of graphs as pictures, these are really just visual representations of mathematical objects.  In fact, a graph is simply a set of vertices some pairs of which are ``related'' by an edge.  For example, we can describe a particular graph like this: the vertices are the letters $\{a,b,c,d\}$ and the edges are the pairs \[\{\{a,b\}, \{a,c\}, \{b,c\}, \{b,d\}, \{c,d\}\}.\]  %Technically the edges are 2-elements subsets of the set of vertices, so we should write $(a,b)$ as $\{a,b\}$ but we use parentheses to ease reading.  
 We could have described the graph in words as follows: we have four vertices, $a$, $b$, $c$, and $d$, and $a$ is connected (by an edge) to $b$ and $c$, $b$ is connected to both $c$ and $d$, and $c$ is also connected to $d$.  One way to draw this graph is this:
 \begin{center}
   \begin{tikzpicture}[scale=0.7]
