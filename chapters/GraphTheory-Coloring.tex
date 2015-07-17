@@ -122,30 +122,86 @@ How many different time slots are needed to teach these classes (and which shoul
 \end{activity}
 
 
-Cartography is certainly not the only application of graph coloring.  There are plenty of situations in which you might wish partition the objects in question so that related objects are not in the same partition.  In addition to scheduling problems like the one above, here are a couple of further examples.
+Cartography is certainly not the only application of graph coloring.  There are plenty of situations in which you might wish partition the objects in question so that related objects are not in the same partition.  You might wish to store chemicals safely.  To avoid explosions, certain pairs of chemicals should not be stored in the same room.  By coloring a graph (with vertices representing chemicals and edges representing potential negative interactions), you can determine the smallest number of rooms needed to store the chemicals. 
+
+Here is a further example.
 
 \begin{example}
 Radio stations broadcast their signal at certain frequencies.  However, there are a limited number of frequencies to choose from, so nationwide many stations use the same frequency.  This works because the stations are far enough apart that their signals will not interfere; no one radio could pick them up at the same time.
 
 Suppose 10 new radio stations are to be set up in a currently unpopulated (by radio stations) region.  The radio stations that are close enough to each other to cause interference are recorded in the table below.  What is the fewest number of frequencies the stations could use.
 
-
+\centerline{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|}
+ & {\tiny KQEA}&{\tiny KQEB}&{\tiny KQEC}&{\tiny KQED}&{\tiny KQEE}&{\tiny KQEF}&{\tiny KQEG}&{\tiny  KQEH}&{\tiny  KQEI}&{\tiny KQEJ } \\ \hline
+{\tiny KQEA }&      &      &   x  &      &      &   x  &   x  &      &      &  x   \\ \hline
+{\tiny KQEB }&      &      &   x  &   x  &      &      &      &      &      &      \\ \hline
+{\tiny KQEC }&   x  &      &      &      &      &   x  &   x  &      &      &  x   \\ \hline
+{\tiny KQED }&      &  x   &      &      &  x   &  x   &      &  x   &      &      \\ \hline
+{\tiny KQEE }&      &      &      &  x   &      &      &      &      &  x   &      \\ \hline
+{\tiny KQEF }&  x   &      &  x   &  x   &      &      &   x  &      &      &  x   \\ \hline
+{\tiny KQEG }&  x   &      &  x   &      &      &  x   &      &      &      &  x   \\ \hline
+{\tiny KQEH }&      &      &      &  x   &      &      &      &      &  x   &      \\ \hline
+{\tiny KQEI }&      &      &      &      &  x   &      &      &  x   &      &  x   \\ \hline
+{\tiny KQEJ }&  x   &      &  x   &      &      &  x   &   x  &      &  x   &      \\ \hline 
+\end{tabular}}
 
 \begin{solution}
+Represent the problem as a graph with vertices as the stations and edges when two stations are close enough to cause interference.  We are looking for the chromatic number of the graph.  Vertices that are colored identically represent stations that can have the same frequency.
 
+\begin{center}
+\begin{tikzpicture}[scale=.9]
+\coordinate (A) at (90:2);
+\coordinate (B) at (90-36:2);
+\coordinate (C) at (90-2*36:2);
+\coordinate (D) at (90-3*36:2);
+\coordinate (E) at (90-4*36:2);
+\coordinate (F) at (90-5*36:2);
+\coordinate (G) at (90-6*36:2);
+\coordinate (H) at (90-7*36:2);
+\coordinate (I) at (90-8*36:2);
+\coordinate (J) at (90-9*36:2);
+
+\draw (A) -- (F) -- (D) -- (H) -- (I) (G) -- (J) -- (C) -- (F) (C) -- (G) -- (A) -- (J);
+
+\draw (A) \va{\tiny KQEA} -- (C) \vr{\tiny KQEC} -- (B) \va{\tiny KQEB} -- (D) \vr{\tiny KQED} -- (E) \vb{\tiny KQEE} -- (I) \vl{\tiny KQEI} -- (J) \va{\tiny KQEJ} -- (F) \vb{\tiny KQEF} -- (G) \vl{\tiny KQEG} (H) \vl{\tiny KQEH};
+\end{tikzpicture}
+\end{center}
+
+This graph has chromatic number 5.  A proper 5-coloring is shown below.  Notice that the graph contains a copy of the complete graph $K_5$ so no fewer than 5 colors can be used.
+
+\begin{center}
+\begin{tikzpicture}[scale=.9]
+\coordinate (A) at (90:2);
+\coordinate (B) at (90-36:2);
+\coordinate (C) at (90-2*36:2);
+\coordinate (D) at (90-3*36:2);
+\coordinate (E) at (90-4*36:2);
+\coordinate (F) at (90-5*36:2);
+\coordinate (G) at (90-6*36:2);
+\coordinate (H) at (90-7*36:2);
+\coordinate (I) at (90-8*36:2);
+\coordinate (J) at (90-9*36:2);
+
+\draw (A) -- (F) -- (D) -- (H) -- (I) (G) -- (J) -- (C) -- (F) (C) -- (G) -- (A) -- (J);
+\draw[line width=1.25pt] (A) -- (C) -- (F) -- (G) -- (J) -- (A) -- (F) -- (J) -- (C) -- (G) -- (A);
+
+\draw (A) \va{\tiny R} -- (C) \vr{\tiny B} -- (B) \va{\tiny G} -- (D) \vr{\tiny B} -- (E) \vb{\tiny G} -- (I) \vl{\tiny B} -- (J) \va{\tiny P} -- (F) \vb{\tiny G} -- (G) \vl{\tiny Y} (H) \vl{\tiny R};
+\end{tikzpicture}
+
+\end{center}
 
 \end{solution}
-\end{example}\todo[inline]{create table of stations - we want chromatic number at least 5.}
-\todo[inline]{write solution}
-\begin{example}
-Your high school chemistry teacher is getting a new lab.  She will need cabinets to store various chemicals.  To avoid explosions, it is important that some pairs of chemicals are definitely not stored in the same cabinet.   What is the fewest number of cabinets the chemist can use to store these chemicals?
-
-\begin{solution}
-
-\end{solution} 
 \end{example}
-\todo{give list of conflicting chemicals} \todo[inline]{write solution}
-Notice that in the first example, the chromatic number was 5.  This is not a counter-example to the Four Color Theorem, since the graph representing the radio stations is not planar.  It would be nice to have some quick way to find the chromatic number of a (possibly non-planar) graph.  It turns out nobody knows whether an efficient algorithm for computing chromatic numbers exists.  
+
+%\begin{example}
+%Your high school chemistry teacher is getting a new lab.  She will need cabinets to store various chemicals.  To avoid explosions, it is important that some pairs of chemicals are definitely not stored in the same cabinet.   What is the fewest number of cabinets the chemist can use to store these chemicals?
+%
+%\begin{solution}
+%
+%\end{solution} 
+%\end{example}
+
+Notice that in the example, the chromatic number was 5.  This is not a counter-example to the Four Color Theorem, since the graph representing the radio stations is not planar.  It would be nice to have some quick way to find the chromatic number of a (possibly non-planar) graph.  It turns out nobody knows whether an efficient algorithm for computing chromatic numbers exists.  
 
 Not all hope is lost however.  While we might not be able to find the exact chromatic number of graph easily, we can often give a reasonable range for the chromatic number.  In other words, we can give upper and lower bounds for chromatic number.
 
@@ -190,16 +246,52 @@ The proof of this theorem is \emph{just} complicated enough that we will not pre
 %ADD GRAPHS!
 %
 %\end{activity}\todo{Replace this with a map coloring question}
-\todo[inline]{Finish up this section.  Put in some exercises about finding graphs which are not perfect.}
+
 
 
 \subsection{Coloring Edges}
 
-\todo[inline]{MAYBE ADD VIZINGS THEOREM and an application.  Then transition to Ramsey theory}
 
-The chromatic number of a graph tells us about coloring vertices - but we could also ask about coloring edges.  What if we colored every edge of a graph either red or blue.  Can we do so without, say, creating a triangle of same like colored edges (i.e., an all red or all blue triangle - we say the triangle is {\em mono-chromatic})?  Certainly for some graphs the answer is yes - try doing so for $K_4$.  What about $K_5$?  $K_6$?  How far can we go?  
+The chromatic number of a graph tells us about coloring vertices - but we could also ask about coloring edges.  Just like with vertex coloring, we might insist that edges that are adjacent must be colored differently.  Here, we are thinking of two edges as being adjacent if they are incident to the same vertex.  The least number of colors required to properly color the edges of a graph $G$ is called the \emph{chromatic index} of $G$, written $\chi'(G)$.
 
-The answer the above problem is known - I encourage you to try to solve it.  We could extend the question though - what if we had three colors?  What if we were trying to avoid other graphs.  The surprising fact is that very little is known about these questions.  For example, we know that you need to go up to $K_{17}$ in order to force a mono-chromatic triangle using three colors, but nobody knows how big you need to go with more colors.  Similarly, we know that using two colors $K_{18}$ is the smallest graph that forces a mono-chromatic copy of $K_4$, but the best we have to force a mono-chromatic $K_{5}$ is a range - somewhere from $K_{43}$ to $K_{49}$.
+\begin{example}
+Six friends decide to spend the afternoon playing chess.  Everyone will play everyone else once.  They have plenty of chess sets but nobody wants to play more than one game at a time.  Games will last an hour (thanks to their handy chess clocks).  How many hours will the tournament last?
+
+\begin{solution}
+Represent each player with a vertex and put an edge between two players if they will play each other.  In this case, we get the graph $K_6$:
+
+\begin{center}
+\begin{tikzpicture}
+\foreach \x in {0,...,5}{
+
+	\foreach \y in {1,...,5}{
+	 \draw (\x*60:1) -- (\x*60+\y*60:1);
+	} 
+\draw (\x*60:1) \v;
+}
+\end{tikzpicture}
+\end{center}
+
+We must color the edges; each color represents a different hour.  Since different edges incident to the same vertex will be colored differently, no player will be playing two different games (edges) at the same time.  Thus we need to know the chromatic index of $K_6$.
+
+Notice that for sure $\chi'(K_6) \ge 5$, since there is a vertex of degree 5. It turns out 5 colors is enough (go find such a coloring).  Thus the friends will play for 5 hours.  
+\end{solution} 
+\end{example}
+
+Interestingly, if one of the friends in the above example left, the remaining 5 chess-letes would still need 5 hours: the chromatic index of $K_5$ is also 5.  
+
+In general, what can we say about chromatic index?  Certainly $\chi'(G) \ge \Delta(G)$.  But how much higher could it be?  Only a little higher.
+
+\begin{theorem}[Vizing's Theorem]
+For any graph $G$, the chromatic index $\chi'(G)$ is either $\Delta(G)$ or $\Delta(G) + 1$.
+\end{theorem}
+
+At first this theorem makes it seem like chromatic index might not be very interesting.  However, deciding which case a graph is in is not always easy.  Graphs for which $\chi'(G) = \Delta(G)$ are called \emph{class 1}, while the others are called \emph{class 2}. Bipartite graphs always satisfy $\chi'(G) = \Delta(G)$, so are class 1 (this was proved by K\"onig in 1916, decades before Vizing proved his theorem in 1964).  In 1965 Vizing proved that all planar graphs with $\Delta(G) \ge 8$ are of class 1, but this does not hold for all planar graphs with $2 \le \Delta(G) \le 5$.  Vizing conjectured that all planar graphs with $\Delta(G) = 6$ or $\Delta(G) = 7$ are class 1; the $\Delta(G) = 7$ case was proved in 2001 by Sanders and Zhao; the $\Delta(G) = 6$ case is still open.
+
+
+There is another interesting way we might consider coloring edges, quite different from what we have discussed so far.  What if we colored every edge of a graph either red or blue.  Can we do so without, say, creating a triangle of like colored edges (i.e., an all red or all blue triangle; we say the triangle is {\em mono-chromatic})?  Certainly for some graphs the answer is yes -- try doing so for $K_4$.  What about $K_5$?  $K_6$?  How far can we go?  
+
+The answer the above problem is known -- try to solve it.  We could extend the question in a variety of ways.  What if we had three colors?  What if we were trying to avoid other graphs.  The surprising fact is that very little is known about these questions.  For example, we know that you need to go up to $K_{17}$ in order to force a mono-chromatic triangle using three colors, but nobody knows how big you need to go with more colors.  Similarly, we know that using two colors $K_{18}$ is the smallest graph that forces a mono-chromatic copy of $K_4$, but the best we have to force a mono-chromatic $K_{5}$ is a range - somewhere from $K_{43}$ to $K_{49}$.  If you are interested in these sorts of questions, this area of graph theory is called Ramsey Theory.  Check it out.
 
 
 \end{document}
