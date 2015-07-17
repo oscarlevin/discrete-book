@@ -161,9 +161,15 @@ The chromatic number of a graph $G$ is at least the clique number of $G$.
 
 There are times when the chromatic number of $G$ is \emph{equal} to the clique number.  These graphs have a special name -- they are called \emph{perfect}.  If you know that a graph is perfect, then finding the chromatic number is simply a matter of searching for the largest clique.\footnote{There are special classes of graphs which can be proved to be perfect.  One such class is the set of \emph{chordal} graphs, which have the property that every cycle in the graph contains a \emph{chord} -- an edge between two vertices in of the cycle which are not adjacent in the cycle.}  However, not all graphs are perfect.  
 
-For an upper bound, it is also possible to do better than just the number of vertices.  One reasonable guess would be to say that the chromatic number is never more than the largest degree of any vertex in the graph.  This seems reasonable, because\ldots\todo{does it?}.  This is almost true, and is a result known as Brooke's Theorem.
+For an upper bound, we can improve on ``the number of vertices'' by looking to the degrees of vertices.  Let $\Delta(G)$ be the largest degree of any vertex in the graph $G$.  One reasonable guess for an upper bound on the chromatic number is $\chi(G) \le \Delta(G) + 1$.  Why is this reasonable?  Starting with any vertex, it together with all of its neighbors can always be colored in $\Delta(G) + 1$ colors, since at most we are talking about $\Delta(G) + 1$ vertices in this set.  Now fan out!  At any point, if you consider an already colored vertex, some of its neighbors might be colored, some might not.  But no matter what, that vertex and its neighbors could all be colored distinctly, since there are at most $\Delta(G)$ neighbors, plus the one vertex being considered.
 
-\todo[inline]{state Brooke's theorem}
+In fact, there are examples of graphs for which $\chi(G) = \Delta(G) + 1$.  For any $n$, the complete graph $K_n$ has chromatic number $n$, but $\Delta(K_n) = n-1$ (since every vertex is adjacent to every \emph{other} vertex).  Additionally, any \emph{odd} will have chromatic number 3, but the degree of every vertex in a cycle is 2.  It turns out that these are the only two types of examples where we get equality, a result known as Brooks' Theorem.
+
+\begin{theorem}[Brooks' Theorem]
+Any graph $G$ with maximal degree $\Delta(G)$ satisfies $\chi(G) \le \Delta(G)$, unless $G$ is a complete graph or an odd cycle, in which case $\chi(G) = \Delta(G) + 1$.
+\end{theorem}
+
+The proof of this theorem is \emph{just} complicated enough that we will not present it here (although you are asked to prove a special case in the exercises).  The adventurous reader is encouraged to find a book on graph theory for suggestions on how to prove the theorem.
 
 
 
