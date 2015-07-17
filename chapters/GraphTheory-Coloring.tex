@@ -99,6 +99,74 @@ We will not prove this theorem.  Really.  Even though the theorem is easy to sta
 
 
 \subsection{Coloring in General}
+\begin{activity}
+The math department plans to offer 10 classes next semester.  Some classes cannot run at the same time (perhaps they are taught by the same professor, or are required for seniors).  
+
+\begin{center}
+\begin{tabular}{cl}
+\textbf{Class:} & \textbf{Conflicts with:} \\ \hline
+A & D I \\
+B & D I J \\
+C & E F I \\
+D & A B F \\
+E & H I\\
+F & I\\
+G & J \\
+H & E I J\\
+I & A B C E F H \\
+J & B G H
+\end{tabular}
+\end{center}
+
+How many different time slots are needed to teach these classes (and which should be taught at the same time)?  More importantly, how could we use graph coloring to answer this question?
+\end{activity}
+
+
+Cartography is certainly not the only application of graph coloring.  There are plenty of situations in which you might wish partition the objects in question so that related objects are not in the same partition.  In addition to scheduling problems like the one above, here are a couple of further examples.
+
+\begin{example}
+Radio stations broadcast their signal at certain frequencies.  However, there are a limited number of frequencies to choose from, so nationwide many stations use the same frequency.  This works because the stations are far enough apart that their signals will not interfere; no one radio could pick them up at the same time.
+
+Suppose 10 new radio stations are to be set up in a currently unpopulated (by radio stations) region.  The radio stations that are close enough to each other to cause interference are recorded in the table below.  What is the fewest number of frequencies the stations could use.
+
+
+
+\begin{solution}
+
+
+\end{solution}
+\end{example}\todo[inline]{create table of stations - we want chromatic number at least 5.}
+\todo[inline]{write solution}
+\begin{example}
+Your high school chemistry teacher is getting a new lab.  She will need cabinets to store various chemicals.  To avoid explosions, it is important that some pairs of chemicals are definitely not stored in the same cabinet.   What is the fewest number of cabinets the chemist can use to store these chemicals?
+
+\begin{solution}
+
+\end{solution} 
+\end{example}
+\todo{give list of conflicting chemicals} \todo[inline]{write solution}
+Notice that in the first example, the chromatic number was 5.  This is not a counter-example to the Four Color Theorem, since the graph representing the radio stations is not planar.  It would be nice to have some quick way to find the chromatic number of a (possibly non-planar) graph.  It turns out nobody knows whether an efficient algorithm for computing chromatic numbers exists.  
+
+Not all hope is lost however.  While we might not be able to find the exact chromatic number of graph easily, we can often give a reasonable range for the chromatic number.  In other words, we can give upper and lower bounds for chromatic number.
+
+This is actually not very difficult: for every graph $G$, the chromatic number of $G$ is at least 1 and at most the number of vertices of $G$.  
+
+What?  You want \emph{better} bounds on the chromatic number?  Well you are in luck.
+
+A \emph{clique} in a graph is a set of vertices all of which are pairwise adjacent.  In other words, a clique of size $n$ is just a copy of the complete graph $K_n$.  We define the \emph{clique number} of a graph to be the largest $n$ for which the graph contains a clique of size $n$.  Now any clique of size $n$ cannot be colored with fewer than $n$ colors, so we have a nice lower bound:
+
+\begin{theorem}
+The chromatic number of a graph $G$ is at least the clique number of $G$.
+\end{theorem}
+
+There are times when the chromatic number of $G$ is \emph{equal} to the clique number.  These graphs have a special name -- they are called \emph{perfect}.  If you know that a graph is perfect, then finding the chromatic number is simply a matter of searching for the largest clique.\footnote{There are special classes of graphs which can be proved to be perfect.  One such class is the set of \emph{chordal} graphs, which have the property that every cycle in the graph contains a \emph{chord} -- an edge between two vertices in of the cycle which are not adjacent in the cycle.}  However, not all graphs are perfect.  
+
+For an upper bound, it is also possible to do better than just the number of vertices.  One reasonable guess would be to say that the chromatic number is never more than the largest degree of any vertex in the graph.  This seems reasonable, because\ldots\todo{does it?}.  This is almost true, and is a result known as Brooke's Theorem.
+
+\todo[inline]{state Brooke's theorem}
+
+
+
 %\begin{activity}
 %A \emph{proper vertex coloring} of a graph is a coloring in which no two adjacent vertices are colored the same color.  The \emph{chromatic number} of a graph is the smallest number of colors needed for a proper coloring of the graph.
 %
@@ -116,7 +184,7 @@ We will not prove this theorem.  Really.  Even though the theorem is easy to sta
 %ADD GRAPHS!
 %
 %\end{activity}\todo{Replace this with a map coloring question}
-\todo[inline]{PUT IN STUFF ABOUT COLORING IN GENERAL, INCLUDING APPLICATIONS.  Include the statement of Brooke's theorem.}
+\todo[inline]{Finish up this section.  Put in some exercises about finding graphs which are not perfect.}
 
 
 \subsection{Coloring Edges}
