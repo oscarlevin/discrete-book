@@ -1511,11 +1511,35 @@
 		\foreach \ang in {45, 135, 225, 315} {
 		\draw (\ang:.4) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.4) -- (\ang+90:.4);
 		}
-		\draw (45:.4) node[above]{\footnotesize R} (135:.4) node[above]{\footnotesize B} (225:.4) node[above]{\footnotesize R} (315:.4) node[above]{\footnotesize B} (45:1) node[above]{\footnotesize B} (135:1) node[above]{\footnotesize R} (225:1) node[above]{\footnotesize B} (315:1) node[above]{\footnotesize R};
+		\draw (45:.4) node[right]{\tiny R} (135:.4) node[left]{\tiny B} (225:.4) node[left]{\tiny R} (315:.4) node[right]{\tiny B} (45:1) node[right]{\tiny B} (135:1) node[left]{\tiny R} (225:1) node[left]{\tiny B} (315:1) node[right]{\tiny R};
 		\end{tikzpicture}
 		\end{center}
 
 		Since it would be impossible to color the vertices with a single color, we see that the cube has chromatic number 2 (it is bipartite).
+	
+\end{ans}
+\begin{ans}{4.3.5.}
+		The wheel graph below has this property.  The outside of the wheel forms an odd cycle, so requires 3 colors, the center of the wheel must be different than all the outside vertices.
+
+		\begin{center}
+		\begin{tikzpicture}
+
+		\foreach \ang in {18, 90, ..., 306}{
+		\draw (0,0) -- (\ang:1) \v -- (\ang+72:1);
+		}
+		\draw (0,0) \v;
+		\end{tikzpicture}
+		\end{center}
+	
+\end{ans}
+\begin{ans}{4.3.6.}
+		\begin{proof}
+		Let $G$ be a graph with $n$ vertices, maximal degree $\Delta(G)$ and at least one vertex of degree less than $\Delta(G)$.  Assume for the sake of induction that all graphs $G'$ with fewer than $n$ vertices and a vertex of degree less than $\Delta(G')$ have chromatic number less than $\Delta(G')$.
+
+		Find a vertex of $G$ with degree less than $\Delta(G)$ and remove it.  This forms a subgraph $G'$ which has $n-1$ vertices.  Also, since we removed edges, we know that $\Delta(G') \le \Delta(G)$.  If these maximal degrees are equal, then $G'$ must also have a vertex of degree less than $\Delta(G')$, since at least one of its vertices had one more edge in $G$.  In this case, we can apply our inductive hypothesis to produce a coloring of the vertices of $G'$ using just $\Delta(G)$ colors.  If $\Delta(G') < \Delta(G)$, then we also can easily find a proper coloring of the vertices of $G'$ using just $\Delta(G)$ colors by starting with any vertex and coloring it and all of its neighbors differently, and then fanning out.  Thus $G'$ has a proper vertex coloring using just $\Delta(G)$-many colors.
+
+		Now move back to $G$.  Put the removed vertex back into the graph.  Since it is adjacent to at most $\Delta(G) - 1$ other vertices, there will be one of the $\Delta(G)$ colors that is not present among its neighbors, which we could use to color the newly inserted vertex.
+		\end{proof}
 	
 \end{ans}
 \protect \end {itemize}
