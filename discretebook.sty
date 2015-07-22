@@ -28,6 +28,7 @@
 \usepackage{makeidx}
 \usepackage[nomain]{glossaries}
 \usepackage{glossary-mcols}
+%\setglossarystyle{mcolindex}
 
 \usepackage{tikz}
 \usetikzlibrary{shadows,fadings}
@@ -236,9 +237,9 @@
 
 
 %Fix widows and orphans (single lines at top/bottom of page):
-%\clubpenalty=10000
-%\widowpenalty=10000
-%\raggedbottom
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
 
 
 
@@ -281,6 +282,31 @@
 \setsubsubsecheadstyle{\bfseries\scshape\raggedright}
 %to flush left, replace \centering with \raggedright.
 
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% % % % % Glossaries style for list of symbols % % % % % % % % % % % % % % % 
+\newglossarystyle{myglosses}{%
+    \renewenvironment{theglossary}{%
+      \setlength{\parindent}{0pt}%
+      \begin{multicols}{2}%
+    }{%
+      \end{multicols}%
+    }%
+    \renewcommand*{\glossaryheader}{}%
+    \renewcommand*{\glsgroupheading}[1]{}%
+%    \renewcommand*{\glsclearpage}{\columnbreak}%
+     % set how each entry should appear:
+      \renewcommand*{\glossentry}[2]{%
+        \parbox{.3\linewidth}{\hskip \fill\glstarget{##1}{\textsc{\glossentryname{##1}}}}%
+        \hspace{.1\linewidth}%
+        \parbox{.6\linewidth}{\glossentrydesc{##1}, \space ##2 \hskip \fill}\par%
+    }%
+    \renewcommand*{\subglossentry}[3]{%
+        \glossentry{##2}{##3}%
+    }%
+}
 
 \input{macros-discrete}
 
