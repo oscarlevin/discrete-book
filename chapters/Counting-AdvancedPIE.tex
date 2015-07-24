@@ -41,13 +41,39 @@
 
 Stars and Bars allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to $x+y+z = 10$, for example.  A relatively easy modification allows us to put a \emph{lower bound} restriction on these problems: perhaps each kid must get at least two cookies or $x,y,z \ge 2$.  This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using stars and bars.
 
-What if we wanted an \emph{upper bound} restriction?  For example, we might insist that no kid gets more than 5 cookies or that $x, y, z \le 5$.  It turns out this is considerably harder, but still possible.  The idea is to count all the distributions and then remove those that violate the condition.  In other words, we must count the number of ways to distribute 10 cookies to 3 kids in which \emph{one or more} of the kids gets more than 5 cookies.  For any particular kid, this is not a problem; we do this using stars and bars.  But how to combine the number of ways for kid A, or B or C?  We must use the PIE.  
+What if we wanted an \emph{upper bound} restriction?  For example, we might insist that no kid gets more than 3 cookies or that $x, y, z \le 3$.  It turns out this is considerably harder, but still possible.  The idea is to count all the distributions and then remove those that violate the condition.  In other words, we must count the number of ways to distribute 10 cookies to 3 kids in which \emph{one or more} of the kids gets more than 3 cookies.  For any particular kid, this is not a problem; we do this using stars and bars.  But how to combine the number of ways for kid A, or B or C?  We must use the PIE.  
 
 
-The Principle of Inclusion/Exclusion (PIE) gives a method for finding the cardinality of the union of not necessarily disjoint sets.  We saw in Section \ref{sec-addmult} how this works with three sets.  To find how many things are in {\em one or more} of the sets $A$, $B$, and $C$, we should just add up the number of things in each of these sets.  However, if there is any overlap among the sets, those elements are counted multiple times.  So we subtract the things in each intersection of a pair of sets.  But doing this removes elements which are in all three sets once too often, so we need to add it back in.
+The Principle of Inclusion/Exclusion (PIE) gives a method for finding the cardinality of the union of not necessarily disjoint sets.  We saw in Section \ref{sec-PIE} how this works with three sets.  To find how many things are in {\em one or more} of the sets $A$, $B$, and $C$, we should just add up the number of things in each of these sets.  However, if there is any overlap among the sets, those elements are counted multiple times.  So we subtract the things in each intersection of a pair of sets.  But doing this removes elements which are in all three sets once too often, so we need to add it back in.  In terms of cardinality of sets, we have
+\[|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A\cap B \cap C|\]
 
 \begin{example}
-Three kids, Alberto, Bernadette, and Carlos, decide to share 10 cookies.  They wonder how many ways they could split the cookies up provided that none of them receive more than 5 cookies (someone receiving no cookies is for some reason acceptable to these kids).
+Three kids, Alberto, Bernadette, and Carlos, decide to share 10 cookies.  They wonder how many ways they could split the cookies up provided that none of them receive more than 3 cookies (someone receiving no cookies is for some reason acceptable to these kids).
+
+\begin{solution}
+Without the ``no more than 3'' restriction, the answer would be ${12 \choose 10}$, using 10 stars and 2 bars (separating the three kids).  Now count the number of ways that one or more of the kids violates the condition, i.e., gets at least 4 cookies.
+
+Let $A$ be the set of outcomes in which Alberto gets more than 3 cookies.  Let $B$ be the set of outcomes in which Bernadette gets more than 3 cookies.  Let $C$ be the set of outcomes in which Carlos gets more than 3 cookies.  We then are looking (for the sake of subtraction) for the size of the set $A \cup B \cup C$.  Using PIE, we must find the sizes of $|A|$, $|B|$, $|C|$, $|A\cap B|$ and so on.  Here is what we find.
+
+\begin{itemize}
+\item[] $|A| = {8 \choose 6}$.  First give Alfred 4 cookies, then distribute the remaining 6 to the three kids without restrictions, using 6 stars and 2 bars.
+\item[] $|B| = {8 \choose 6}$.  Just like above, only now Bernadette gets 4 cookies at the start.
+\item[] $|C| = {8 \choose 6}$.  Carlos gets 4 cookies.
+
+\item[] $|A \cap B| = {4 \choose 2}$.  Give Alfred and Bernadette 4 cookies each, leaving 2 (stars) to distribute to the three kids (2 bars).
+
+\item[] $|A \cap C| = {4 \choose 2}$.  Alfred and Carlos get 4 cookies first.  
+
+\item[] $|B \cap C| = {4 \choose 2}$.  Bernadette and Carlos get 4 cookies first.
+
+\item[] $|A \cap B \cap C| = 0$.  It is not possible for all three kids to get 4 or more cookies.
+\end{itemize}
+
+Combining all of these we see
+\[|A \cup B \cup C| = {8 \choose 6} + {8 \choose 6} + {8 \choose 6} - {4 \choose 2} - {4 \choose 2} - {4 \choose 2} + 0 = 66\]
+
+Thus the answer to the original question is ${12 \choose 10} - 66 = 66 - 66 = 0$.  At first this might seem perplexing, but of course if 3 kids split 10 cookies, at least one of them must get more than 3 cookies (otherwise only 9 cookies have been consumed).  We could have found the answer much quicker through this observation, but the point of the example is to illustrate that PIE works!
+\end{solution}
 \end{example}
 
 
