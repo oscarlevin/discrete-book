@@ -13,14 +13,10 @@
 
 
 
-\section{Functions}
+\section{Counting Functions}
 
-Have we now discovered all the rules needed in counting?  Probably not.  To see what we can do and what we still must figure out, let's shift focus and think about counting in another way.  Consider again the problem if giving cookies to kids.  One way to think about this problem is to say that we are {\em assigning} each cookie to a kid.  Now in the case we have looked at so far, the cookies were identical, so it did not matter which cookie went to which kid.  But what if it did?  Suppose we have 7 different cookies and 4 different kids - how many ways are there to give out the cookies?
+  
 
-Perhaps you already have a solution in mind.  However, for the time being, we will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  It is.  To help us completely characterize counting problems, we should look at them as problems about how to count functions.  
-
-
-\subsection{Counting Functions}
 
 \begin{activity}
 \begin{questions}
@@ -37,15 +33,17 @@ Explain why this is correct.
 \end{questions}
 \end{activity}
 
+Let's shift focus and think about counting in another way.  Consider again the problem if giving cookies to kids.  One way to think about this problem is to say that we are {\em assigning} each cookie to a kid.  Now in the case we have looked at so far, the cookies were identical, so it did not matter which cookie went to which kid.  But what if it did?  Suppose we have 7 different cookies and 4 different kids.  How many ways are there to give out the cookies?
 
-Suppose (yet again) that you have 7 cookies to give to 4 kids.  Now the cookies are all different, so which cookie goes to which kid matters.  How many ways are there to do this?  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
+Perhaps you already have a solution in mind.  However, for the time being, we will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  And it is.  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
 
 \begin{example}
- How many functions are there $f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}$?
+ How many functions are there $f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}$?\footnotemark
  \begin{solution}
  	We must assign $f(x)$ for each $x$ in the domain.  We have four choices for $f(1)$ - we could have $f(1) = a$, $f(1) = b$, $f(1) = c$ or $f(1) = d$.  Similarly, we have four choices for $f(2)$, and four choices for $f(3)$ and so on.  In fact, for each of the seven elements of the domain, we have four choices, so the number of functions here is $4^7$.  
  \end{solution}
 \end{example}
+\footnotetext{The cookies are numbered 1 through 7, the kids are named $a$ through $d$.}
 
 We might also wonder how many of those functions are injective and how many are surjective.  What would these mean in terms of cookies?  The function would be injective if each kid got no more than one cookie.  There is no way to do this, because we have more cookies than kids.  The number of injective functions with this domain and codomain is 0.  What if we switch the domain and codomain?  So now we are mapping kids to cookies.  Note that this is not the same, although it is a perfectly fine counting question (the answer is $P(7,4)$, do you see why?). 
 
@@ -62,20 +60,20 @@ On the other hand, a surjective function would be one in which each kid got at l
 \end{example}
 \footnotetext{Remember, a function is injective if and only if different elements from the domain go to {\em different} elements of the codomain.}
 
-Using the same counting techniques, you should be able to count the total number of functions from any finite size domain to any finite size codomain, and also count the one-to-one functions (as long as the size of the codomain is at least as large as the domain, otherwise there would be no one-to-one functions).
+Using the same counting techniques, you should be able to count the total number of functions from any finite size domain to any finite size codomain, and also count the injective functions (as long as the size of the codomain is at least as large as the domain, otherwise there would be none).
 
-So what about surjective functions?  Well in the previous example, there are exactly $5! = 120$ surjections.  We know this because whenever the domain and codomain of a function are the same finite size, a function is injective if and only if it is surjective.  In general, if the domain and codomain both contain $n$ elements, then the number of surjective functions is $n!$, since this is the number of injective functions.  Also, if the codomain is strictly larger than the domain, then the surjective functions are easy to count - there are 0 of them (since there will always be elements of the codomain left out of the range).  But what if the size of the codomain is smaller than the size of the domain?
+So what about surjective functions?  Well in the previous example, there are exactly $5! = 120$ surjections.  We know this because whenever the domain and codomain of a function are the same finite size, a function is injective if and only if it is surjective.  In general, if the domain and codomain both contain $n$ elements, then the number of surjective functions is $n!$, since this is the number of injective functions.  Also, if the codomain is strictly larger than the domain, then the surjective functions are easy to count: there are 0 of them (since there will always be elements of the codomain left out of the range).  But what if the size of the codomain is smaller than the size of the domain?
 
 The idea is to count the functions which are {\em not} surjective, and them subtract that from the total number of functions.  This works very well when the codomain has two elements in it.
 
 \begin{example}
   How many functions $f: \{1,2,3,4,5\} \to \{a,b\}$ are surjective?
   \begin{solution}
-    There are $2^5$ functions all together - there are two choices for where to send each of the 5 elements of the domain.  Now of these, the functions which are {\em not} surjective must exclude one or more elements of the codomain from the range.  So first, consider functions for which $a$ is not in the range.  This can only happen one way - everything gets sent to $b$.  Alternatively, we could exclude $b$ from the range.  Then everything gets sent to $a$, so there is only one function like this.  These are the only ways in which a function could not be onto (no function excludes both $a$ and $b$ from the range) so there are exactly $2^5 - 2$ surjective functions.
+    There are $2^5$ functions all together - there are two choices for where to send each of the 5 elements of the domain.  Now of these, the functions which are {\em not} surjective must exclude one or more elements of the codomain from the range.  So first, consider functions for which $a$ is not in the range.  This can only happen one way: everything gets sent to $b$.  Alternatively, we could exclude $b$ from the range.  Then everything gets sent to $a$, so there is only one function like this.  These are the only ways in which a function could not be surjective (no function excludes both $a$ and $b$ from the range) so there are exactly $2^5 - 2$ surjective functions.
   \end{solution}
 \end{example}
 
-When there are three elements in the codomain, there are now three choices for a single element to exclude from the range.  Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these.
+When there are three elements in the codomain, there are now three choices for a single element to exclude from the range.  Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these.  If you are thinking we should use PIE, give yourself a pat on the back!
 
 \begin{example}
   How many functions $f: \{1,2,3,4,5\} \to \{a,b,c\}$ are surjective?
@@ -96,7 +94,7 @@ When there are three elements in the codomain, there are now three choices for a
 
 \end{example}
 
-You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious - we need to use PIE but with more than 3 sets the formula for PIE is very long.  However, we have lucked out.  As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded.  Similarly, the number of functions which exclude a pair of elements will be the same for every pair.  With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded.  So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are.  Here's what happens with $4$ and $5$ elements in the codomain.
+You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious - we need to use PIE but with more than 3 sets the formula for PIE is very long.  However, we have lucked out.  As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded.  Similarly, the number of functions which exclude a pair of elements will be the same for every pair.  With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded.  So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are.  This works just like it did in Section \ref{sec-advPIE}, only now the size of the various combinations of sets is different.  Here's what happens with $4$ and $5$ elements in the codomain.
 
 \begin{example}
   \begin{enumerate}
@@ -119,6 +117,50 @@ You might worry that to count surjective functions when the codomain is larger t
 
 \end{example}
 
+We have seen that counting surjective functions is another nice example of the advanced use of the Principle of Inclusion/Exclusion first introduced in Section \ref{sec-advPIE}.  Also, counting injective functions turns out to be equivalent to permutations, and counting all functions has a solution akin to those counting problems where order matters but repeats are allowed (like counting the number of words you can make from a given set of letters).  
+
+These are not just a few more examples of the techniques we have developed in this chapter.  Quite the opposite: everything we have learned in this chapter are examples of \emph{counting functions}!
+
+\begin{example}
+How many 5-letter words can you make using the eight letters $a$ through $h$?  How many contain no repeated letters?
+
+\begin{solution}
+By now it should be no surprise that there are $8^5$ words, and $P(8,5)$ words without repeated letters.  The new piece here is that we are actually counting functions.  For the first problem, we are counting all functions from $\{1,2,\ldots, 5\}$ to $\{a,b,\ldots, h\}$.  The numbers in the domain represent the \emph{position} of the letter in the word, the codomain represents the letter that could be assigned to that position.  If we ask for no repeated letters, we are asking for injective functions.
+
+If $A$ and $B$ are \emph{any} sets with $|A| = 5$ and $|B| = 8$, then the number of functions $f: A \to B$ is $8^5$ and the number of injections is $P(8,5)$.  So if you can represent your counting problem as a function counting problem, most of the work is done.
+\end{solution}
+\end{example} 
+
+
+\begin{example}
+How many subsets are there of $\{1,2,\ldots, 9\}$?  How many 9-bit strings are there (of any weight)?
+
+\begin{solution}
+We saw in Section \ref{sec-binom} that the answer to both these questions is $2^9$, as we can say yes or no (or 0 or 1) to each of the 9 elements in the set (positions in the bit-string).  But $2^9$ also looks like the answer you get from counting functions.  In fact, if you count all functions $f: A \to B$ with $|A| = 9$ and $|B| = 2$, this is exactly what you get.  
+
+This makes sense!  Let $A = \{1,2,\ldots, 9\}$ and $B = \{y, n\}$.  We are assigning each element of the set either a yes or a no.  Or in the language of bit-strings, we would take the 9 positions in the bit string as our domain and the set $\{0,1\}$ as the codomain.
+\end{solution}
+\end{example}
+ 
+So far we have not used a function as a model for binomial coefficients (combinations).  Think for a moment about the relationship between combinations and permutations, say specifically ${9 \choose 3}$ and $P(9,3)$.  We \emph{do} have a function model for $P(9,3)$.  This is the number of \emph{injective} functions from a set of size 3 (say $\{1,2,3\}$ to a set of size 9 (say $\{1,2,\ldots, 9\}$) since there are 9 choices for where to send the first element of the domain, then only 8 choices for the second, and 7 choices for the third.  For example, the function might look like this:
+\[f(1) = 5 \qquad f(2) = 8 \qquad f(3) = 4.\]
+This is a different function from: 
+\[f(1) = 4 \qquad f(2) = 5 \qquad f(3) = 8.\]
+Now $P(9,3)$ counts these as different outcomes correctly, but ${9\choose 3}$ will count these (among others) as just one outcome.  In fact, in terms of functions ${9 \choose 3}$ just counts the number of different ranges possible of injective functions.  This should not be a surprise since binomial coefficients counts subsets, and the range is a possible subset of the codomain.\footnote{A more mathematically sophisticated interpretation of combinations is that we are defining two injective functions to be \emph{equivalent} if they have the same range, and then counting the number of equivalence classes under this notion of equivalence.}
+
+While it is possible to interpret combinations as functions, perhaps the better advice is to instead use combinations (or stars and bars) when functions are not quite the right way to interpret the counting question. 
+
+\begin{example}
+You decide to give away your video game collection so to better spend your time studying advance mathematics.  You have 8 games that you will give to 5 different friends.  How many ways can you do this?  More importantly, is there a good way to model this problem using a function?
+
+\begin{solution}
+What if we did try to use a function to describe the situation?  What should the domain be?  It cannot be the 5 friends, because a single element of the domain cannot be mapped to more than one element of the codomain (and we must give away all the games).  So the domain is the set of 8 games and the codomain is the set of 5 friends.  In this interpretation, assuming that we don't need to give at least one game to each friend, we are just looking for functions, not necessarily injective functions.  So the answer would be $5^8$.
+
+But is this correct?  It is if we assume that the 8 games are distinct, or more importantly, that it matters which game goes to which friend.  As it turns out, the 8 games you have are all copies of \emph{The Legend of Zelda} (it is a great game after all).  Now it really doesn't make sense to think of this as a function, since the domain is not a set of 8 objects.  Instead we recognize this as a stars and bars problem, and deduce the answer of ${12 \choose 8}$.
+
+\end{solution}
+
+\end{example}
 
 \end{document}
 
