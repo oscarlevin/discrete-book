@@ -12,7 +12,7 @@
 \begin{document}
 
 
-
+% % It might make sense to split this chapter up.  Put the surjections at the end of the last section, the concluding remarks in the conclusion section, and mention counting all functions and injections earlier (perhaps as exercises).
 \section{Counting Functions}
 
   
@@ -35,7 +35,7 @@ Explain why this is correct.
 
 Let's shift focus and think about counting in another way.  Consider again the problem if giving cookies to kids.  One way to think about this problem is to say that we are {\em assigning} each cookie to a kid.  So far the cookies have been identical, so it did not matter which cookie went to which kid.  But what if it did?  Suppose we have 7 different cookies and 4 different kids.  How many ways are there to give out the cookies?
 
-Perhaps you already have a solution in mind.  However, for the time being, we will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  And it is.  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
+We will consider this question more generally.  What are we really doing here?  We are {\em mapping} each cookie to a kid.  This sounds like a function!  And it is.  What we really have is a function with domain the set of cookies and codomain the set of kids.  So we might as well ask:
 
 \begin{example}
  How many functions are there $f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}$?\footnotemark
@@ -47,22 +47,22 @@ Perhaps you already have a solution in mind.  However, for the time being, we wi
 
 We might also wonder how many of those functions are injective and how many are surjective.  What would these mean in terms of cookies?  The function would be injective if each kid got no more than one cookie.  There is no way to do this, because we have more cookies than kids.  The number of injective functions with this domain and codomain is 0.  
 
-On the other hand, a surjective function would be one in which each kid got at least one cookie.  Can we count those? It turns out that counting surjective functions is hard.  We will do it, but first back up and consider another simpler example.
+On the other hand, a surjective function would be one in which each kid got at least one cookie.  Can we count those? It turns out that counting surjective functions will require PIE.  First back up and consider another simpler example.
 
 \begin{example}
   How many functions are there $f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}$?  How many of those functions are injective? 
   \begin{solution}
     First we count all the functions with domain $\{1,2,3,4,5\}$ and codomain $\{a,b,c,d,e\}$.  For $f$ to be a function, it must assign each element of the domain to exactly one element of the codomain.  In other words, we need to assign one of the elements of $\{a,b,c,d,e\}$ to $f(1)$.  There are 5 choices for this.  Similarly, there are five choices for $f(2)$.  In fact, there are 5 choices for $f(x)$ for all five possible values of $x \in \{1,2,3,4,5\}$.  Thus the total number of function is $5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 = 5^5$.
     
-    What about the injective (one-to-one) functions?  Again, we have 5 choices for $f(1)$.  However, once we assign a value to $f(1)$, we cannot assign that value to $f(2)$, or any other $f(x)$.\footnotemark  So for each of the 5 choices for $f(1)$, we only have 4 choices for $f(2)$, and then only 3 choices for $f(3)$ and only 2 choices for $f(4)$, leaving only 1 choice (the last element of the codomain) for $f(5)$.  Therefore the number of one-to-one functions is $5!$.
+    What about the injective (one-to-one) functions?  Again, we have 5 choices for $f(1)$.  However, once we assign a value to $f(1)$, we cannot assign that value to $f(2)$, or any other $f(x)$.  So for each of the 5 choices for $f(1)$, we only have 4 choices for $f(2)$, and then only 3 choices for $f(3)$ and only 2 choices for $f(4)$, leaving only 1 choice (the last element of the codomain) for $f(5)$.  Therefore the number of one-to-one functions is $5!$.
   \end{solution}
 
 \end{example}
-\footnotetext{Remember, a function is injective if and only if different elements from the domain go to {\em different} elements of the codomain.}
+
 
 Using the same counting techniques, you should be able to count the total number of functions from any finite size domain to any finite size codomain, and also count the injective functions (as long as the size of the codomain is at least as large as the domain, otherwise there would be none).
 
-So what about surjective functions?  Well in the previous example, there are exactly $5! = 120$ surjections.  We know this because whenever the domain and codomain of a function are the same finite size, a function is injective if and only if it is surjective.  In general, if the domain and codomain both contain $n$ elements, then the number of surjective functions is $n!$, since this is the number of injective functions.  Also, if the codomain is strictly larger than the domain, then the surjective functions are easy to count: there are 0 of them (since there will always be elements of the codomain left out of the range).  But what if the size of the codomain is smaller than the size of the domain?
+So what about surjective functions?  In the previous example, there are exactly $5! = 120$ surjections.  We know this because whenever the domain and codomain of a function are the same finite size, a function is injective if and only if it is surjective.  In general, if the domain and codomain both contain $n$ elements, then the number of surjective functions is $n!$, since this is the number of injective functions.  Also, if the codomain is strictly larger than the domain, then the surjective functions are easy to count: there are 0 of them (since there will always be elements of the codomain left out of the range).  But what if the size of the codomain is smaller than the size of the domain?
 
 The idea is to count the functions which are {\em not} surjective, and them subtract that from the total number of functions.  This works very well when the codomain has two elements in it.
 
@@ -73,7 +73,7 @@ The idea is to count the functions which are {\em not} surjective, and them subt
   \end{solution}
 \end{example}
 
-When there are three elements in the codomain, there are now three choices for a single element to exclude from the range.  Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these.  If you are thinking we should use PIE, give yourself a pat on the back!
+When there are three elements in the codomain, there are now three choices for a single element to exclude from the range.  Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these.  It's PIE time!
 
 \begin{example}
   How many functions $f: \{1,2,3,4,5\} \to \{a,b,c\}$ are surjective?
@@ -94,7 +94,7 @@ When there are three elements in the codomain, there are now three choices for a
 
 \end{example}
 
-You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious.  We need to use PIE but with more than 3 sets the formula for PIE is very long.  However, we have lucked out.  As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded.  Similarly, the number of functions which exclude a pair of elements will be the same for every pair.  With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded.  So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are.  This works just like it did in Section \ref{sec-advPIE}, only now the size of the various combinations of sets is different.  Here's what happens with $4$ and $5$ elements in the codomain.
+You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious.  We need to use PIE but with more than 3 sets the formula for PIE is very long.  However, we have lucked out.  As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded.  Similarly, the number of functions which exclude a pair of elements will be the same for every pair.  With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded.  So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are.  This works just like it did in \autoref{sec:advPIE}, only now the size of the various combinations of sets is a number raised to a power, as opposed to a binomial coefficient or factorial.  Here's what happens with $4$ and $5$ elements in the codomain.
 
 \begin{example}
   \begin{enumerate}
@@ -104,12 +104,12 @@ You might worry that to count surjective functions when the codomain is larger t
 \begin{solution}
   \begin{enumerate}
     \item There are $4^5$ functions all together; we will subtract the functions which are not surjective.  We could exclude any one of the four elements of the codomain, and doing so will leave us with $3^5$ functions.  This counts too many so we subtract the functions which exclude two of the four elements of the codomain, each pair giving $2^5$ functions.  But this excludes too many, so we add back in the functions which exclude three of the four elements of the codomain, each triple giving $1^5$ function.  There are ${4 \choose 1}$ groups of functions excluding a single element, ${4 \choose 2}$ groups of functions excluding a pair of elements, and ${4 \choose 3}$ groups of functions excluding a triple of elements.  This means that the number of functions which are {\em not} surjective is:
-    \[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\]
+    \[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5.\]
     We can now say that the number of functions which are surjective is:
-    \[4^5 - \left[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\right]\]
+    \[4^5 - \left[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\right].\]
     
     \item The number of surjective functions is:
-    \[5^5 - \left[{5 \choose 1}4^5 - {5 \choose 2}3^5 + {5 \choose 3}2^5 - {5 \choose 4}1^5\right]\]
+    \[5^5 - \left[{5 \choose 1}4^5 - {5 \choose 2}3^5 + {5 \choose 3}2^5 - {5 \choose 4}1^5\right].\]
     We took the total number of functions $5^5$ and subtracted all that were not surjective.  There were ${5 \choose 1}$ ways to select a single element from the codomain to exclude from the range, and for each there were $4^5$ functions.  But this double counts, so we use PIE and subtract functions excluding two elements from the range: there are ${5 \choose 2}$ choices for the two elements to exclude, and for each pair, $3^5$ functions.  This takes out too many functions, so we add back in functions which exclude 3 elements from the range: ${5 \choose 3}$ choices for which three to exclude, and then $2^5$ functions for each choice of elements.  Finally we take back out the 1 function which excludes 4 elements for each of the ${5 \choose 4}$ choices of 4 elements.
   \end{enumerate}
 
