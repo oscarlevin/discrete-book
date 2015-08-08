@@ -14,7 +14,7 @@
 A standard $8 \times 8$ chessboard contains 64 squares.  Actually, this is just the number of unit squares.  How many squares of all sizes are there on a chessboard?  Start with smaller boards: $1\times 1$, $2 \times 2$, $3\times 3$, etc.  Find a formula for the total number of squares in an $n\times n$ board.
 \end{activity}
 
-So far we have seen methods for finding the closed formulas for certain types of sequences - arithmetic and geometric.  Since we know how to compute the sum of the first $n$ terms of arithmetic and geometric sequences, we can compute the closed formulas for sequences which have an arithmetic (or geometric) sequence of differences between terms.  But what if we consider a sequence which is the sum of the first $n$ terms of a sequence which is the sum of an arithmetic sequence!
+So far we have seen methods for finding the closed formulas for arithmetic and geometric sequences.  Since we know how to compute the sum of the first $n$ terms of arithmetic and geometric sequences, we can compute the closed formulas for sequences which have an arithmetic (or geometric) sequence of differences between terms.  But what if we consider a sequence which is the sum of the first $n$ terms of a sequence which is itself the sum of an arithmetic sequence?
 
 Before we get too carried away, let's consider an example: How many squares (of all sizes) are there on a chessboard?  A chessboard consists of $64$ squares, but we also want to consider squares of longer side length.  Even though we are only considering an $8 \times 8$ board, there is already a lot to count.  So instead, let us build a sequence: the first term will be the number of squares on a $1 \times 1$ board, the second term will be the number of squares on a $2 \times 2$ board, and so on.  After a little thought, we arrive at the sequence
 \[1,5,14,30, 55,\ldots\]
@@ -22,30 +22,30 @@ This sequence is not arithmetic (or geometric for that matter), but perhaps it's
 \[4, 9, 16, 25, \ldots\]
 Not a huge surprise: one way to count the number of squares in a $4 \times 4$ chessboard is to notice that there are $16$ squares with side length 1, 9 with side length 2, 4 with side length 3 and 1 with side length 4.  So the original sequence is just the sum of squares.  Now this sequence of differences is not arithmetic since it's sequence of differences (the differences of the differences of the original sequence) is not constant.  In fact, this sequence of {\em second differences} is
 \[5, 7, 9, \ldots\]
-which {\em is} an arithmetic sequence - {\em its} sequence of differences is constant (2, 2, 2,\ldots).  Notice that our original sequence had {\em third differences} (that is, differences of differences of differences of the original) constant.  We will call such a sequence $\Delta^3$.  The sequence $1, 4, 9, 16, \ldots$ has second differences constant, so it will be a $\Delta^2$ sequence. In general, we will say a sequence is a $\Delta^k$ sequence if the $k$th differences are constant.
+which {\em is} an arithmetic sequence (with constant difference 2).  Notice that our original sequence had {\em third differences} (that is, differences of differences of differences of the original) constant.  We will call such a sequence $\Delta^3$-constant.  The sequence $1, 4, 9, 16, \ldots$ has second differences constant, so it will be a $\Delta^2$-constant sequence. In general, we will say a sequence is a \emph{$\Delta^k$-constant}\index{$\Delta^k$-constant} sequence if the $k$th differences are constant.
 
-Now $\Delta^0$ sequences are constant, so a closed formula for them is easy to compute (it's just the constant). $\Delta^1$ sequences are arithmetic - we have a method for finding closed formulas for them as well.  $\Delta^2$ sequences are sums of arithmetic sequences - we can find formulas for these as well.  But notice that the format of the closed formula for a $\Delta^2$ sequence is always quadratic - the squares are $\Delta^2$ with closed formula $a_n= n^2$, the triangular numbers (also $\Delta^2$) have closed formula $a_n = \frac{n(n+1)}{2}$, which when multiplied out gives you an $n^2$ term as well.  It appears that every time we increase the complexity of the sequence - that is, increase the number of differences before we get constants - we also increase the degree of the polynomial used for the closed formula.  We go from constant to linear to quadratic.  This makes sense.  The sequence of differences between terms tells us something about the rate of growth of the sequence.  If a sequence is growing at a constant rate, then the formula for the sequence will be linear.  If the sequence is growing at a rate which itself is growing at a constant rate, then the formula is quadratic.  You have seen this elsewhere - if a function has a constant second derivative (rate of change) then the function must be quadratic.
+Now $\Delta^0$-constant sequences are themselves constant, so a closed formula for them is easy to compute (it's just the constant). The $\Delta^1$-constant sequences are arithmetic and we have a method for finding closed formulas for them as well.  Every $\Delta^2$-constant sequence is the sum of an arithmetic sequence so we can find formulas for these as well.  But notice that the format of the closed formula for a $\Delta^2$-constant sequence is always quadratic.  For example, the square numbers are $\Delta^2$-constant with closed formula $a_n= n^2$.  The triangular numbers (also $\Delta^2$-constant) have closed formula $a_n = \frac{n(n+1)}{2}$, which when multiplied out gives you an $n^2$ term as well.  It appears that every time we increase the complexity of the sequence, that is, increase the number of differences before we get constants, we also increase the degree of the polynomial used for the closed formula.  We go from constant to linear to quadratic.  This makes sense.  The sequence of differences between terms tells us something about the rate of growth of the sequence.  If a sequence is growing at a constant rate, then the formula for the sequence will be linear.  If the sequence is growing at a rate which itself is growing at a constant rate, then the formula is quadratic.  You have seen this elsewhere: if a function has a constant second derivative (rate of change) then the function must be quadratic.
 
 This works in general:
 
-\begin{defbox}{Finite Differences}
-The closed formula for a sequence will be a degree $k$ polynomial if and only if the sequence is $\Delta^k$ (i.e., the $k$th sequence of differences is constant).
+\begin{defbox}{Finite Differences\index{finite differences}}
+The closed formula for a sequence will be a degree $k$ polynomial if and only if the sequence is $\Delta^k$-constant (i.e., the $k$th sequence of differences is constant).
 \end{defbox}
 
 This tells us that the sequence $1, 5, 14, 30, 55, \ldots$ will have a cubic (degree 3 polynomial) for its closed formula.  
 
-Now once we know what format the closed formula for a sequence will take, it is much easier to actually find the closed formula.  In the case that the closed formula is a degree $k$ polynomial, we just need $k+1$ data points to ``fit'' the polynomial to the date.
+Now once we know what format the closed formula for a sequence will take, it is much easier to actually find the closed formula.  In the case that the closed formula is a degree $k$ polynomial, we just need $k+1$ data points to ``fit'' the polynomial to the data.
 
 \begin{example}
   Find a formula for the sequence $3, 7, 14, 24,\ldots$. Assume $a_1 = 3$.  
   \begin{solution}
-    First, check to see if the formula has constant differences at some level.  The sequence of first differences is $4, 7, 10, \ldots$ which is arithmetic, so the sequence of second differences is constant.  The sequence is $\Delta^2$, so the formula for $a_n$ will be a degree 2 polynomial.  That is, we know that for some constants $a$, $b$, and $c$,
+    First, check to see if the formula has constant differences at some level.  The sequence of first differences is $4, 7, 10, \ldots$ which is arithmetic, so the sequence of second differences is constant.  The sequence is $\Delta^2$-constant, so the formula for $a_n$ will be a degree 2 polynomial.  That is, we know that for some constants $a$, $b$, and $c$,
     \[a_n = an^2 + bn + c\]
     Now to find $a$, $b$, and $c$.  First, it would be nice to know what $a_0$ is, since plugging in $n = 0$ simplifies the above formula greatly.  In this case, $a_0 = 2$ (work backwards from the sequence of constant differences).  Thus
     \[a_0 = 2 = a\cdot 0^2 + b \cdot 0 + c\]
-    so $c - 2$.  Now plug in $n =1$ and $n = 2$.  We get 
+    so $c = 2$.  Now plug in $n =1$ and $n = 2$.  We get 
     \[a_1 = 3 = a + b + 2\]
-    \[a_2 = 7 = a4 + b 2 + 2.\]  At this point we have two (linear) equations and two unknowns, so we can solve the system for $a$ and $b$.  We find $a = \frac{3}{2}$ and $b = \frac{-1}{2}$, so $a_n = \frac{3}{2} n^2 - \frac{1}{2}n + 2$.
+    \[a_2 = 7 = a4 + b 2 + 2.\]  At this point we have two (linear) equations and two unknowns, so we can solve the system for $a$ and $b$ (using substitution or elimination or even matrices).  We find $a = \frac{3}{2}$ and $b = \frac{-1}{2}$, so $a_n = \frac{3}{2} n^2 - \frac{1}{2}n + 2$.
   \end{solution}
 
 \end{example}
@@ -54,20 +54,21 @@ Now once we know what format the closed formula for a sequence will take, it is 
 \begin{example}
   Find a closed formula for the number of squares on an $n \times n$ chessboard.
   \begin{solution}
-    We have seen that the sequence $1, 5, 14, 30, 55, \ldots$ is $\Delta^3$, so we are looking for a degree 3 polynomial.  That is, 
+    We have seen that the sequence $1, 5, 14, 30, 55, \ldots$ is $\Delta^3$-constant, so we are looking for a degree 3 polynomial.  That is, 
     \[a_n = an^3 + bn^2 + cn + d\]
-    We can find $d$ if we know what $a_0$ is.  Working backwards from the third differences, we find $a_0 = 0$ (which makes sense - there are no squares on a $0\times 0$ chessboard).  Thus $d = 0$.  Now plug in $n = 1$, $n =2$, and $n =3$:
+    We can find $d$ if we know what $a_0$ is.  Working backwards from the third differences, we find $a_0 = 0$ (unsurprisingly, since there are no squares on a $0\times 0$ chessboard).  Thus $d = 0$.  Now plug in $n = 1$, $n =2$, and $n =3$:
     \begin{align*}
       1 = & a + b + c \\
       5 = & 8a + 4b + 2c \\
       14 = & 27a + 9b + 3c
     \end{align*}
-    If we solve this system of equations (using elimination, or an augmented matrix, or a computer) we get $a = \frac{1}{3}$, $b = \frac{1}{2}$ and $c = \frac{1}{6}$.  Therefore the number of squares on an $n \times n$ chessboard is $a_n = \frac{1}{3}n^3 + \frac{1}{2}n^2 + \frac{1}{6}n$.
+    If we solve this system of equations we get $a = \frac{1}{3}$, $b = \frac{1}{2}$ and $c = \frac{1}{6}$.  Therefore the number of squares on an $n \times n$ chessboard is $a_n = \frac{1}{3}n^3 + \frac{1}{2}n^2 + \frac{1}{6}n$.
   \end{solution}
-  Note: since the squares on a chessboard problem really is asking for the sum of squares, we now have a nice formula for $\d\sum_{k=1}^n k^2$.
+  
+  Note: since the squares on a chessboard problem is really asking for the sum of squares, we now have a nice formula for $\d\sum_{k=1}^n k^2$.
 \end{example}
 
-Not all sequences will have polynomials as their closed formula.  That is, this process doesn't always work.
+Not all sequences will have polynomials as their closed formula.  We can use the theory of finite differences to identify these.
 
 \begin{example}
   Determine whether the following sequences can be described by a polynomial, and if so, of what degree.
@@ -78,9 +79,9 @@ Not all sequences will have polynomials as their closed formula.  That is, this 
   \end{enumerate}
 \begin{solution}
   \begin{enumerate}
-    \item The sequence of first differences is $1, 2, 4, 8, 16\ldots$.  This is identical to the original sequence, so taking any additional differences will not give anything different either.  So there is no number of differences you could take to get constants, so the sequence is not $\Delta^k$ for any $k$.  Therefore the closed formula for the sequence is not a polynomial.  (In fact, we know the closed formula is $a_n = 2^{n-1}$, not a polynomial.)
-    \item First differences: $7, 43, 133, 301, 571,\ldots$.  Second differences: $36, 90, 168, 270,\ldots$.  Third difference: $54, 78, 102,\ldots$.  Fourth differences: $24, 24, \ldots$ - constant.  Thus the sequence is $\Delta^4$, so the closed formula is a degree 4 polynomial.
-    \item This is the Fibonacci sequence.  The first differences are $0, 1, 1, 2, 3, 5, 8, \ldots$, the second differences are $1, 0, 1, 1, 2, 3,5\ldots$ - we notice that after the first few terms, we get the original sequence back.  So there will never be constant differences, so the closed formula for the Fibonacci sequence is not a polynomial.
+    \item The sequence of first differences is $1, 2, 4, 8, 16\ldots$.  This is identical to the original sequence, so taking any additional differences will not give anything different either.  So there is no number of differences you could take to get constants, so the sequence is not $\Delta^k$-constant for any $k$.  Therefore the closed formula for the sequence is not a polynomial.  (In fact, we know the closed formula is $a_n = 2^{n-1}$, not a polynomial.)
+    \item First differences: $7, 43, 133, 301, 571,\ldots$.  Second differences: $36, 90, 168, 270,\ldots$.  Third difference: $54, 78, 102,\ldots$.  Fourth differences: $24, 24, \ldots$.  As far as we can tell, this sequence of differences is constant so the sequence is $\Delta^4$-constant and as such the closed formula is a degree 4 polynomial.
+    \item This is the Fibonacci sequence.  The first differences are $0, 1, 1, 2, 3, 5, 8, \ldots$, the second differences are $1, 0, 1, 1, 2, 3,5\ldots$.  We notice that after the first few terms, we get the original sequence back.  So there will never be constant differences, so the closed formula for the Fibonacci sequence is not a polynomial.
   \end{enumerate}
 
 \end{solution}
