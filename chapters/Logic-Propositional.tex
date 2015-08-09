@@ -9,13 +9,38 @@
 
 \begin{document}
 \section{Propositional Logic}
+
+
+\begin{activity}
+After excavating for weeks, you finally arrive at the burial chamber.  The room is empty except for two large chests.  On each is carved a message (strangely in English). 
+
+\vskip 1em
+\centerline{
+\tikz{
+    \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=2cm, minimum width=4.5cm, text width=4.5cm, align=center] {\itshape If this chest is empty, then the other chest's message is true.};
+}
+\qquad\qquad
+\tikz{
+   \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=2cm, minimum width=4.5cm, text width=4.5cm, align=center] {
+        \itshape This chest is filled with treasure or the other chest contains deadly scorpions.
+        };
+}
+}
+\vskip 1em
+
+\noindent You know exactly one of these messages is true.  What should you do?
+
+\end{activity}
+
+
 A proposition is simply a statement.  Propositional logic studies the ways statements can interact with each other.  It is important to remember that propositional logic does not really care about the content of the statements.  For example, from a propositional logic statement point, the claims, ``if the moon is made of cheese then basketballs are round,'' and, ``if spiders have eight legs then Sam walks with a limp'' are exactly the same.  They are both statements of the form, ``if \textlangle something\textrangle, then \textlangle something else\textrangle.''
 
 Here's a question: is it true that when playing Monopoly, if you get more doubles than any other player you will lose, or that if you lose you must have bought the most properties?  We will answer this question, and won't need to know anything about Monopoly.  Instead we will look at the logical form of the statement.  First though, let's back up and make sure we are very clear on some basics.
 
-\begin{definition}
-	A {\em statement} is any declarative sentence which is either true or false.
-\end{definition}
+\begin{defbox}{Statements}
+	A \emph{statement}\index{statement} is any declarative sentence which is either true or false.
+\end{defbox}
+
 \begin{example} These are statements:
 	\begin{itemize}
 		\item Telephone numbers in the USA have 10 digits.
@@ -30,11 +55,13 @@ Here's a question: is it true that when playing Monopoly, if you get more double
 		\item The sum of two squares.
 		\item $1+3+5+7+\cdots+2n+1$.
 		\item Go to your room!
-		\item This sentence is false.\footnote{This is a tricky one.  Remember, a sentence is only a statement if it is either true or false.  Here, the sentence is not false, for if it were, it would be true.  It is not true, for that would make it false.}
+		\item This sentence is false.\footnotemark
 		\item That's what she said.
 		\end{multicols}
 	\end{itemize}
 \end{example}
+\footnotetext{This is a tricky one.  Remember, a sentence is only a statement if it is either true or false.  Here, the sentence is not false, for if it were, it would be true.  It is not true, for that would make it false.}
+
 
 The reason the last sentence is not a statement is because it contains variables (``that'' and ``she'').  Unless those are specified, the sentence cannot be true or false, and as such not a statement.  Other examples of this: $x + 3 = 7$.  Depending on $x$, this is either true or false, but as it stands it it neither.
 
@@ -56,7 +83,7 @@ Since we rarely care about the content of the individual statements, we can repl
 \end{itemize}
 \end{defbox}
 
-The logical connectives allow us to construct longer statements out of simpler statements.  But the result is still a statement - it is either true or false.  The {\em truth value} can be determined by the truth or falsity of the parts, depending on the connectives.  
+The logical connectives allow us to construct longer statements out of simpler statements.  But the result is still a statement since it is either true or false.  The {\em truth value} can be determined by the truth or falsity of the parts, depending on the connectives.  
 
 
 \begin{defbox}{Truth Conditions for Connectives}
@@ -70,7 +97,9 @@ The logical connectives allow us to construct longer statements out of simpler s
 \end{defbox}
 
 I think all of these are obvious, except for $P \imp Q$.  Consider the statement, 
-\begin{quotation}If Bob gets a 90 on the final, then Bob will pass the class.\end{quotation}  This is definitely an implication: $P$ is the statement ``Bob gets a 90 on the final'' and $Q$ is the statement ``Bob will pass the class.'' Suppose I made that statement to Bob -- in what circumstances would it be fair to call me a liar?  What if Bob really did get a 90 on the final, and he did pass the class?  Then I have not lied; my statement is true.  But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false.  The tricky case is this: what if Bob did not get a 90 on the final?  Maybe he passes the class, maybe he doesn't - did I lie in either case?  I think not.  In these last two cases, $P$ was false, and so was the statement $P \imp Q$.  In the first case, $Q$ was true, and so was $P \imp Q$.  So $P \imp Q$ is true when either $P$ is false or $Q$ is true.  Perhaps an easier way to look at it is this: $P \imp Q$ 
+\begin{quotation}If Bob gets a 90 on the final, then Bob will pass the class.\end{quotation}  This is definitely an implication: $P$ is the statement, ``Bob gets a 90 on the final,'' and $Q$ is the statement, ``Bob will pass the class.'' Suppose I made that statement to Bob.  In what circumstances would it be fair to call me a liar?  What if Bob really did get a 90 on the final, and he did pass the class?  Then I have not lied; my statement is true.  But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false.  The tricky case is this: what if Bob did not get a 90 on the final?  Maybe he passes the class, maybe he doesn't.  Did I lie in either case?  I think not.  In these last two cases, $P$ was false, and the statement $P \imp Q$ was true.  In the first case, $Q$ was true, and so was $P \imp Q$.  So $P \imp Q$ is true when either $P$ is false or $Q$ is true.  
+
+Perhaps an easier way to look at it is this: $P \imp Q$ 
 is {\em false} in only one case: if $P$ is true and $Q$ is false.  Otherwise, $P \imp Q$ is true.  Admittedly, there are times in English when this is not how ``if\ldots, then\ldots'' works.  However, in mathematics, we {\em define} the implication to work this way.
 
 
@@ -80,7 +109,7 @@ Our question about Monopoly is to determine whether the following statement is t
 \begin{quote}
 If you get more doubles than any other player then you will lose, or if you lose then you must have bought the most properties.
 \end{quote}
-In other words, we need to decide when the statement $(P \imp Q) \vee (Q \imp R)$ is true.  Using the rules above, we see that either $P \imp Q$ is true or $Q \imp R$ is true (or both).  Those are true if either $P$ is false or $Q$ is true (in the first case) and $Q$ is false or $R$ is true (in the second case).  So... yeah, it gets kind of messy.  Luckily, we can make a chart to keep track of all the possibilities.  Enter truth tables.  The idea is this: on each row, we list a possible combination of T's and F's (standing of course, for true and false) for each of the sentential variables, and then mark down whether the statement in question is true or false in that case.  We do this for every possible combination of T's and F's.  Then we can clearly see in which cases the statement is true or false.  For complicated statements, we will first fill in values for each part of the statement, as a way of breaking up our task into smaller, more manageable pieces.
+In other words, we need to decide when the statement $(P \imp Q) \vee (Q \imp R)$ is true.  Using the rules above, we see that for this to be true, either $P \imp Q$ must be true or $Q \imp R$ must be true (or both).  Those are true if either $P$ is false or $Q$ is true (in the first case) and $Q$ is false or $R$ is true (in the second case).  So... yeah, it gets kind of messy.  Luckily, we can make a chart to keep track of all the possibilities.  Enter truth tables.  The idea is this: on each row, we list a possible combination of T's and F's (for true and false) for each of the sentential variables, and then mark down whether the statement in question is true or false in that case.  We do this for every possible combination of T's and F's.  Then we can clearly see in which cases the statement is true or false.  For complicated statements, we will first fill in values for each part of the statement, as a way of breaking up our task into smaller, more manageable pieces.
 
 All you really need to know is the truth tables for each of the logical connectives.  Here they are:
 
@@ -127,7 +156,7 @@ The truth table for negation looks like this:
 }
 \vskip 1ex
 
-None of these truth tables should come as a surprise - they are all just restating the definitions of the connectives.  Let's try another one:
+None of these truth tables should come as a surprise; they are all just restating the definitions of the connectives.  Let's try another one.
 
 
 \begin{example}
@@ -148,10 +177,20 @@ Note that this statement is not $\neg(P \vee Q)$, the negation belongs to $P$ al
 
 We added a column for $\neg P$ to make filling out the last column easier.  The entries in the $\neg P$ column were determined by the entries in the $P$ column.  Then to fill in the final column, look only at the column for $Q$ and the column for $\neg P$ and use the rule for $\vee$.  
 
-You might notice that the final column is identical to the final column in the truth table for $P \imp Q$.  Since we listed the possible values for $P$ and $Q$ in the same (in fact, standard) order, this says that $\neg P \vee Q$ and $P \imp Q$ are {\em logically equivalent}
+
 \end{solution}
 
 \end{example}
+
+You might notice that the final column is identical to the final column in the truth table for $P \imp Q$.  Since we listed the possible values for $P$ and $Q$ in the same (in fact, standard) order, this says that $\neg P \vee Q$ and $P \imp Q$ are {\em logically equivalent}.
+
+\begin{defbox}{Logical Equivalence}
+Two (compound) statements $P$ and $Q$ are \emph{logically equivalent}\index{logical equivalence}  if $P$ is true in exactly whenever $Q$ is true.
+
+To verify that two statements are logically equivalent, you can make a truth table for each and check whether the columns for the two statements are identical.
+\end{defbox}
+
+
 
 Now let's answer our question about monopoly:
 
@@ -182,17 +221,17 @@ Now let's answer our question about monopoly:
   \end{solution}
 \end{example}
 
-The statement about monopoly is an example of a {\em tautology} - a statement which is true on the basis of its logical form alone.  Tautologies are always true but they don't tell us much about the world.  No knowledge about monopoly was required to determine that the statement was true.  In fact, it is equally true that ``If the moon is made of cheese, then Elvis is still alive, or if Elvis is still alive, then unicorns have 5 legs.''
+The statement about monopoly is an example of a {\em tautology}, a statement which is true on the basis of its logical form alone.  Tautologies are always true but they don't tell us much about the world.  No knowledge about monopoly was required to determine that the statement was true.  In fact, it is equally true that ``If the moon is made of cheese, then Elvis is still alive, or if Elvis is still alive, then unicorns have 5 legs.''
 
 
 
 \subsection{Deductions}
 
 \begin{activity}
-Holmes owns two suits: one blue and one brown.  He always wears either a blue suit or white socks.  Whenever he wears his blue suit and a blue shirt, he also wears a blue tie.  He never wears the blue suit unless he is also wearing either a blue shirt or white socks.  Whenever he wears white socks, he also wears a blue shirt.  Today, Holmes is wearing a gold tie.  What else is he wearing?\footnote{Adapted from \textit{Problem Solving Through Recreational Mathematics} by Averbach and Chein, Dover 1999.}
+Holmes owns two suits: one blue and one brown.  He always wears either a blue suit or white socks.  Whenever he wears his blue suit and a blue shirt, he also wears a blue tie.  He never wears the blue suit unless he is also wearing either a blue shirt or white socks.  Whenever he wears white socks, he also wears a blue shirt.  Today, Holmes is wearing a gold tie.  What else is he wearing?\footnotemark
 
 \end{activity}
-
+\footnotetext{Adapted from \textit{Problem Solving Through Recreational Mathematics} by Averbach and Chein, Dover 1999.}
 
 Earlier we claimed that the following was a valid argument:
 \begin{quote}
@@ -209,7 +248,7 @@ How do we know this is valid?  Let's look at the form of the statements.  Let $P
  \end{tabular}
 \end{center}
 
-This is an example of a {\em deduction rule} - a logical form of an argument which is always valid.  This one is a particularly famous rule called {\em modus ponens}.  Are you convinced that it is a valid deduction rule?  If not, consider the following truth table:
+This is an example of a {\em deduction rule}\index{deduction rule}, an argument form which is always valid.  This one is a particularly famous rule called {\em modus ponens}\index{modus ponens}.  Are you convinced that it is a valid deduction rule?  If not, consider the following truth table:
 
 \begin{center}
  \begin{tabular}{c|c||c}
@@ -221,7 +260,7 @@ This is an example of a {\em deduction rule} - a logical form of an argument whi
  \end{tabular}
 \end{center}
 
-This is just the truth table for $P \imp Q$, but what matters here is that all the lines in the deduction rule have their own column in the truth table.  Now remember that an argument is valid provided the conclusion must be true given that the premises are true.  The premises in this case are $P \imp Q$ and $P$.  Which {\em rows} of the truth table correspond to both of these being true?  $P$ is true in the first two rows, and of those, only the first row has $P \imp Q$ true as well.   And low-and-behold, in this one case, $Q$ is true as well.  So if $P\imp Q$ and $P$ are both true, we see that $Q$ must be true as well.
+This is just the truth table for $P \imp Q$, but what matters here is that all the lines in the deduction rule have their own column in the truth table.  Now remember that an argument is valid provided the conclusion must be true given that the premises are true.  The premises in this case are $P \imp Q$ and $P$.  Which {\em rows} of the truth table correspond to both of these being true?  $P$ is true in the first two rows, and of those, only the first row has $P \imp Q$ true as well.   And low-and-behold, in this one case, $Q$ is also true.  So if $P\imp Q$ and $P$ are both true, we see that $Q$ must be true as well.
 
 Here are a few more examples.
 
@@ -283,7 +322,7 @@ is a valid deduction rule.
   
   Look at the fourth row.  In this case, $(P \imp R) \vee (Q \imp R)$ is true, but $(P \vee Q) \imp R$ is false.  Therefore the argument form is not valid (it is not a valid deduction rule).  The truth table tells us more: our premise is true when $P$ is true and $Q$ and $R$ are both false, but the conclusion is false in this case.  The same problem occurs when $Q$ is true and $P$ and $R$ are false (row 6).  
   
-  Notice that if we switch the premise and conclusion, then we do have a valid argument - whenever $(P\vee Q) \imp R$ is true, so is $(P \imp R) \vee (Q \imp R)$.  Another way to say this is to state that the statement
+  Notice that if we switch the premise and conclusion, then we do have a valid argument. Whenever $(P\vee Q) \imp R$ is true, so is $(P \imp R) \vee (Q \imp R)$.  Another way to say this is to state that the statement
   \[[(P \vee Q) \imp R] \imp [(P \imp R) \vee (Q \imp R)]\]
   is a tautology.
 \end{solution}
