@@ -23,7 +23,7 @@ When a connected graph can be drawn without any edges crossing, it is called {\e
 \end{questions}
 \end{activity}
 
-When is it possible to draw a graph so that none of the edges cross, except for at vertices? If this is possible, we say the graph is {\em planar} (since you can draw it on the {\em plane}).  
+When is it possible to draw a graph so that none of the edges cross? If this \emph{is} possible, we say the graph is \emph{planar}\index{planar} (since you can draw it on the \emph{plane}).  
 
 Notice that the definition of planar includes the phrase ``it is possible to.''  This means that even if a graph does not look like it is planar, it still might be.  Perhaps you can redraw it in a way in which no edges cross.  For example, this is a planar graph:
 
@@ -42,9 +42,9 @@ That is because we can redraw it like this:
   \end{tikzpicture}
 \end{center}
 
-The graphs are the same graph, so if one is planar, the other must be too.  The original drawing of the graph was not a {\em planar representation} of the graph.
+The graphs are the same, so if one is planar, the other must be too.  The original drawing of the graph was not a {\em planar representation} of the graph.
 
-Now when a planar graph is drawn without edges crossing, the edges and vertices of the graph divide the plane into regions.  We will call each region a {\em face}.  The graph above has 3 faces (yes, we \textbf{do} include the ``outside'' region as a face).  The number of faces does not change no matter how you draw the graph (as long as you do so without the edges crossing), so it makes sense to ascribe the number of faces as a property of the planar graph.
+When a planar graph is drawn without edges crossing, the edges and vertices of the graph divide the plane into regions.  We will call each region a {\em face}.  The graph above has 3 faces (yes, we \textbf{do} include the ``outside'' region as a face).  The number of faces does not change no matter how you draw the graph (as long as you do so without the edges crossing), so it makes sense to ascribe the number of faces as a property of the planar graph.
 
 A warning: you can only count faces when the graph is drawn in a planar way.  For example, consider these two representations of the same graph:
 
@@ -65,11 +65,11 @@ If you try to count faces using the graph on the left, you might say there are 5
 
 
 
-There is a connection between the number of vertices ($V$), the number of edges ($E$) and the number of faces ($F$) in any connected planar graph.  This relationship is called Euler's Formula.
+There is a connection between the number of vertices ($v$), the number of edges ($e$) and the number of faces ($f$) in any connected planar graph.  This relationship is called Euler's formula.
 
-\begin{defbox}{Euler's Formula for Planar Graphs}
-For any (connected) planar graph with $V$ vertices, $E$ edges and $F$ faces, we have
-\[V-E + F = 2\]
+\begin{defbox}{Euler's Formula for Planar Graphs\index{Euler's formula}}
+For any (connected) planar graph with $v$ vertices, $e$ edges and $f$ faces, we have
+\[v-e + f = 2\]
 \end{defbox}
 
 Why is Euler's formula true?  One way to convince yourself of its validity is to draw a planar graph step by step.  Start with the graph $P_2$:
@@ -96,9 +96,9 @@ Any connected graph (besides just a single isolated vertex) must contain this su
   \hfill ~
 \end{center}
 
-What do these ``moves'' do?  When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same.  But this means that $V - E + F$ does not change.  Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same.  So again, $V - E + F$ does not change.  
+What do these ``moves'' do?  When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same.  But this means that $v - e + f$ does not change.  Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same.  So again, $v - e + f$ does not change.  
 
-Since we can build any graph using a combination of these two moves, and doing so never changes the quantity $V - E + F$, that quantity will be the same for all graphs.  But notice that our starting graph $P_2$ has $V = 2$, $E = 1$ and $F = 1$, so $V - E + F = 2$.
+Since we can build any graph using a combination of these two moves, and doing so never changes the quantity $v - e + f$, that quantity will be the same for all graphs.  But notice that our starting graph $P_2$ has $v = 2$, $e = 1$ and $f = 1$, so $v - e + f = 2$.  This argument is essentially a proof by induction.  A good exercises would be to rewrite it as a formal induction proof.
 
 \subsection{Non-planar graphs}
 
@@ -120,7 +120,7 @@ Since we can build any graph using a combination of these two moves, and doing s
 
 \question What about complete bipartite graphs?  How many vertices, edges, and faces (if it were planar) does $K_{7,4}$ have?
 
-\question For which values of $m$ and $n$ is $K_{m,n}$ planar?
+\question For which values of $m$ and $n$ are $K_n$ and $K_{m,n}$ planar?
 \end{questions}
 \end{activity}
 
@@ -141,13 +141,13 @@ If you try to redraw this without edges crossing, you quickly get into trouble. 
 \end{theorem}
 
 \begin{proof}
-  The proof is by contradiction.  So assume that $K_5$ were planar.  Then the graph would satisfy Euler's formula for planar graphs.  $K_5$ has 5 vertices and 10 edges, so we get 
-  \[5 - 10 + F = 2\]
-  which says that if the graph were drawn without any edges crossing, there would be $F = 7$ faces.
+  The proof is by contradiction.  So assume that $K_5$ is planar.  Then the graph must satisfy Euler's formula for planar graphs.  $K_5$ has 5 vertices and 10 edges, so we get 
+  \[5 - 10 + f = 2\]
+  which says that if the graph is drawn without any edges crossing, there would be $f = 7$ faces.
   
-  Now consider how many edges surround each face.  Each face must be surrounded by at least 3 edges (since $K_5$ is simple - it contains no double edges or loops).  Let $B$ be the total number of {\em boundaries} around all the faces in the graph.  Thus we have that $B \ge 3F$.  But also $B = 2E$, since each edge is used as a boundary exactly twice.  Putting this together we get
-  \[3F \le 2E\]
-  But this is impossible, since we have already determined that $F = 7$ and $E = 10$, and $21 \not\le 20$.  This is a contradiction so in fact $K_5$ is not planar.
+  Now consider how many edges surround each face.  Each face must be surrounded by at least 3 edges.  Let $B$ be the total number of {\em boundaries} around all the faces in the graph.  Thus we have that $B \ge 3f$.  But also $B = 2e$, since each edge is used as a boundary exactly twice.  Putting this together we get
+  \[3f \le 2e\]
+  But this is impossible, since we have already determined that $f = 7$ and $e = 10$, and $21 \not\le 20$.  This is a contradiction so in fact $K_5$ is not planar.
 \end{proof}
 
 The other simplest graph which is not planar is $K_{3,3}$
@@ -157,32 +157,32 @@ The other simplest graph which is not planar is $K_{3,3}$
       \end{tikzpicture}
     \end{center}
     
-Proving that $K_{3,3}$ is not planar answers the houses and utilities puzzle - it is not possible to connect each of three houses to each of three utilities without the lines crossing.
+Proving that $K_{3,3}$ is not planar answers the houses and utilities puzzle: it is not possible to connect each of three houses to each of three utilities without the lines crossing.
 
 \begin{theorem}
   $K_{3,3}$ is not planar.
 \end{theorem}
 
 \begin{proof}
-  Again, we proceed by contradiction.  Suppose $K_{3,3}$ were planar.  Then by Euler's formula there will be 5 faces, since $V = 6$, $E = 9$, and $6 - 9 + F = 2$.
+  Again, we proceed by contradiction.  Suppose $K_{3,3}$ were planar.  Then by Euler's formula there will be 5 faces, since $v = 6$, $e = 9$, and $6 - 9 + f = 2$.
   
-  How many boundaries surround these 5 faces?  Let $B$ be this number.  Since each edge is used as a boundary twice, we have $B = 2E$.  Also, $B \ge 4F$ since each face is surrounded by 4 or more boundaries.  We know this is true because the graph is simple (so there are no faces surrounded by 1 or 2 boundaries) and because $K_{3,3}$ is bipartite, so does not contain any 3-edge cycles.  Thus
-  \[4F \le 2E\]
+  How many boundaries surround these 5 faces?  Let $B$ be this number.  Since each edge is used as a boundary twice, we have $B = 2e$.  Also, $B \ge 4f$ since each face is surrounded by 4 or more boundaries.  We know this is true because $K_{3,3}$ is bipartite, so does not contain any 3-edge cycles.  Thus
+  \[4f \le 2e.\]
   But this would say that $20 \le 18$, which is clearly false.  Thus $K_{3,3}$ is not planar.
 \end{proof}
 
-Note the similarities and differences in these proofs.  Both are proofs by contradiction, and both start with using Euler's formula to derive the (supposed) number of faces in the graph.  Then we find a relationship between the number of faces and the number of edges based on how many edges surround each face.  This is the part that changes - in the proof for $K_5$, we got $3F \le 2E$ and for $K_{3,3}$ we go $4F \le 2E$.  The coefficient of $F$ is the key.  It is the smallest number of edges which could surround any face.  If some number of edges surround a face, then these edges form a circuit.  So that number is the size of the smallest circuit in the graph.
+Note the similarities and differences in these proofs.  Both are proofs by contradiction, and both start with using Euler's formula to derive the (supposed) number of faces in the graph.  Then we find a relationship between the number of faces and the number of edges based on how many edges surround each face.  This is the only difference.  In the proof for $K_5$, we got $3f \le 2e$ and for $K_{3,3}$ we go $4f \le 2e$.  The coefficient of $f$ is the key.  It is the smallest number of edges which could surround any face.  If some number of edges surround a face, then these edges form a cycle.  So that number is the size of the smallest cycle in the graph.
 
-In general, if we let $g$ be the size of the smallest cycle in a graph ($g$ stands for {\em girth}, which is the technical term for this) then for any planar graph we have $gF \le 2E$.  When this disagrees with Euler's formula, we know for sure that the graph cannot be planar.
+In general, if we let $g$ be the size of the smallest cycle in a graph ($g$ stands for {\em girth}\index{girth}, which is the technical term for this) then for any planar graph we have $gf \le 2e$.  When this disagrees with Euler's formula, we know for sure that the graph cannot be planar.
 
 \subsection{Polyhedra}
 \begin{activity}
-A cube is an example of a convex polyhedron.  It contains 6 identical squares for its faces, 8 vertices, and 12 edges.  The cube is a \emph{regular polyhedron} (also known as a \emph{Platonic solid} because each face is an identical regular polygon and each vertex joins an equal number of faces.
+A cube is an example of a convex polyhedron.  It contains 6 identical squares for its faces, 8 vertices, and 12 edges.  The cube is a \emph{regular polyhedron} (also known as a \emph{Platonic solid}) because each face is an identical regular polygon and each vertex joins an equal number of faces.
 
 There are exactly four other regular polyhedra: the tetrahedron, octahedron, dodecahedron, and icosahedron with 4, 8, 12 and 20 faces respectively.  How many vertices and edges do each of these have?
 \end{activity}
 
-Another area of mathematics where you might have heard the terms ``vertex,'' ``edge,'' and ``face'' is geometry.  A \emph{polyhedron} is a 3-dimensional solid made up of flat polygonal faces joined at edges and vertices.  We are especially interested in \emph{convex} polyhedra, which means that any line segment connecting two points on the interior of the polyhedron must be entirely contained inside the polyhedron.\footnote{An alternative definition for convex is that the internal angle formed by any two faces must be less than $180\deg$.}
+Another area of mathematics where you might have heard the terms ``vertex,'' ``edge,'' and ``face'' is geometry.  A \emph{polyhedron}\index{polyhedron} is a geometric solid made up of flat polygonal faces joined at edges and vertices.  We are especially interested in \emph{convex} polyhedra, which means that any line segment connecting two points on the interior of the polyhedron must be entirely contained inside the polyhedron.\footnote{An alternative definition for convex is that the internal angle formed by any two faces must be less than $180\deg$.}
 
 
 Notice that since $8 - 12 + 6 = 2$, the vertices, edges and faces of a cube satisfy Euler's formula for planar graphs.  This is not a coincidence.  We can represent a cube as a planar graph by projecting the vertices and edges onto the plane.  One such projection looks like this:
@@ -197,15 +197,15 @@ Notice that since $8 - 12 + 6 = 2$, the vertices, edges and faces of a cube sati
 
 In fact, \underline{every} convex polyhedron can be projected onto the plane without edges crossing.  Think of placing the polyhedron inside a sphere, with a light at the center of the sphere.  The edges and vertices of the polyhedron cast a shadow onto the interior of the sphere.  Now you can cut a hole in the sphere in the middle of one of the projected faces and ``stretch'' the sphere to lay down flat on the plane.  The face that was punctured becomes the ``outside'' face of the planar graph.
 
-The point is we can apply what we know about graphs (in particular planar graphs) to convex polyhedra.  Since every convex polyhedron can be represented as a planar graph, we see that Euler's formula for planar graphs holds for all convex polyhedra as well.  We also can apply the same sort of reasoning we use for graphs in other contexts to convex polyhedra.  For example, we know that there is no convex polyhedron with 11 vertices all of degree 3, as this would make 33/2 edges.  Here is another such example.
+The point is we can apply what we know about graphs (in particular planar graphs) to convex polyhedra.  Since every convex polyhedron can be represented as a planar graph, we see that Euler's formula for planar graphs holds for all convex polyhedra as well.  We also can apply the same sort of reasoning we use for graphs in other contexts to convex polyhedra.  For example, we know that there is no convex polyhedron with 11 vertices all of degree 3, as this would make 33/2 edges.
 
 \begin{example}
-Is there a convex polyhedron made up out of three triangles and six pentagons?  What about three triangles, six pentagons and five heptagons (7-sided polygons)?
+Is there a convex polyhedron consisting of three triangles and six pentagons?  What about three triangles, six pentagons and five heptagons (7-sided polygons)?
 
 \begin{solution}
-How many edges would such polyhedra have?  For the first proposed polyhedron, the triangles would contribute a total of 9 edges, and the pentagons would contribute 30.  However, each edge is counted twice this way (as each edge borders exactly two faces), giving 39/2 edges, an impossibility.  There is no such polyhedron.
+How many edges would such polyhedra have?  For the first proposed polyhedron, the triangles would contribute a total of 9 edges, and the pentagons would contribute 30.  However, this counts each edge twice (as each edge borders exactly two faces), giving 39/2 edges, an impossibility.  There is no such polyhedron.
 
-The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagon give 74/2 = 37 edges.  So far so good.  Now how many vertices does this supposed polyhedron have?  We can use Euler's formula.  There are 14 faces, so we have $V - 37 + 14 = 2$ or equivalently $V = 25$.  But now use the vertices to count the edges again.  Each vertex must have degree \emph{at least} three (that is, each vertex joins at least three faces), so the sum of the degrees is at least 75.  Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges.  Again, there is no such polyhedron.
+The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagons give a total of 74/2 = 37 edges.  So far so good.  Now how many vertices does this supposed polyhedron have?  We can use Euler's formula.  There are 14 faces, so we have $v - 37 + 14 = 2$ or equivalently $v = 25$.  But now use the vertices to count the edges again.  Each vertex must have degree \emph{at least} three (that is, each vertex joins at least three faces), so the sum of the degrees is at least 75.  Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges.  Again, there is no such polyhedron.
 \end{solution}
 \end{example}
 
@@ -220,25 +220,25 @@ There are exactly five regular polyhedra.
 \begin{proof}
 Recall that a regular polyhedron has all of its faces identical regular polygons, and that each vertex has the same degree.   Consider the cases, broken up by what the regular polygon might be.
 
-\textbf{Case 1}: Each face is a triangle.  Let $F$ be the number of faces.  There are then $3F/2$ edges.  Using Euler's formula we have $V - 3F/2 + F = 2$ so $V = 2 + F/2$.  Now each vertex has the same degree, say $k$.  So the number of edges is also $kV/2$.  Putting this together gives \[E = \frac{3F}{2} = \frac{k(2+F/2)}{2}\] which says 
-\[k = \frac{6F}{4+F}\]
-We need $k$ and $F$ to both be positive integers.  Note that $\frac{6F}{4+F}$ is an increasing function for positive $F$, and has a horizontal asymptote at 6.  Thus the only possible values for $k$ are 3, 4, and 5.  Each of these are possible.  To get $k = 3$, we need $F = 4$ (this is the tetrahedron).  For $k = 4$ we take $F = 8$ (the octahedron).  For $k = 5$ take $F = 20$ (the icosahedron).  Thus there are exactly three regular polyhedra with triangles for faces.
+\textbf{Case 1}: Each face is a triangle.  Let $f$ be the number of faces.  There are then $3f/2$ edges.  Using Euler's formula we have $v - 3f/2 + f = 2$ so $v = 2 + f/2$.  Now each vertex has the same degree, say $k$.  So the number of edges is also $kv/2$.  Putting this together gives \[e = \frac{3f}{2} = \frac{k(2+f/2)}{2}\] which says 
+\[k = \frac{6f}{4+f}\]
+We need $k$ and $f$ to both be positive integers.  Note that $\frac{6f}{4+f}$ is an increasing function for positive $f$, and has a horizontal asymptote at 6.  Thus the only possible values for $k$ are 3, 4, and 5.  Each of these are possible.  To get $k = 3$, we need $f = 4$ (this is the tetrahedron).  For $k = 4$ we take $f = 8$ (the octahedron).  For $k = 5$ take $f = 20$ (the icosahedron).  Thus there are exactly three regular polyhedra with triangles for faces.
 
-\textbf{Case 2}: Each face is a square.  Now we have $E = 4F/2 = 2F$.  Using Euler's formula we get $V = 2 + F$, and counting edges using the degree $k$ of each vertex gives us
-\[E = 2F = \frac{k(2+F)}{2}\]
+\textbf{Case 2}: Each face is a square.  Now we have $e = 4f/2 = 2f$.  Using Euler's formula we get $v = 2 + f$, and counting edges using the degree $k$ of each vertex gives us
+\[e = 2f = \frac{k(2+f)}{2}\]
 Solving for $k$ gives 
-\[k = \frac{4F}{2+F} = \frac{8F}{4+2F}\]
+\[k = \frac{4f}{2+f} = \frac{8f}{4+2f}\]
 This is again an increasing function, but this time the horizontal asymptote is at $k = 4$, so the only possible value that $k$ could take is 3.  This produces 6 faces, and we have a cube.  There is only one regular polyhedron with square faces.
 
-\textbf{Case 3}: Each face is a pentagon.  We perform the same calculation as above, this time getting $E = 5F/2$ so $V = 2 + 3F/2$.  Then
-\[E = \frac{5F}{2} = \frac{k(2+3F/2)}{2}\]
+\textbf{Case 3}: Each face is a pentagon.  We perform the same calculation as above, this time getting $e = 5f/2$ so $v = 2 + 3f/2$.  Then
+\[e = \frac{5f}{2} = \frac{k(2+3f/2)}{2}\]
 so
-\[k = \frac{10F}{4+3F}\]
+\[k = \frac{10f}{4+3f}\]
 Now the horizontal asymptote is at $\frac{10}{3}$.  This is less than 4, so we can only hope of making $k = 3$.  We can do so by using 12 pentagons, getting the dodecahedron.  This is the only regular polyhedron with pentagons as faces.
 
 \textbf{Case 4}: Each face is an $n$-gon with $n \ge 6$.  Following the same procedure as above, we deduce that
-\[k = \frac{2nF}{4+(n-2)F}\]
-which will be increasing to a horizontal asymptote of $\frac{2n}{n-2}$.  When $n = 6$, this asymptote is at $k = 3$.  Any larger value of $n$ will give an even smaller asymptote.  Therefore no regular polyhedra exist with faces larger than pentagons.\footnote{Notice that you can tile the plane with hexagons.  This is an infinite planar graph; each vertex has degree 3.  These infinitely many hexagons correspond to the limit as $F \to \infty$ to make $k = 3$.}
+\[k = \frac{2nf}{4+(n-2)f}\]
+which will be increasing to a horizontal asymptote of $\frac{2n}{n-2}$.  When $n = 6$, this asymptote is at $k = 3$.  Any larger value of $n$ will give an even smaller asymptote.  Therefore no regular polyhedra exist with faces larger than pentagons.\footnote{Notice that you can tile the plane with hexagons.  This is an infinite planar graph; each vertex has degree 3.  These infinitely many hexagons correspond to the limit as $f \to \infty$ to make $k = 3$.}
 \end{proof}
 
 
