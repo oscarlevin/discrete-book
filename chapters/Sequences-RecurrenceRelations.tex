@@ -9,20 +9,22 @@
 \begin{document}
 \section{Solving Recurrence Relations}
 
-We have seen that it is often easier to find recursive definitions than closed formulas.  Lucky for us, there are a few techniques for converting recursive definitions to closed formulas.  Doing so is called solving a {\em recurrence relation}.  Recall that the recurrence relation is the part of a recursive definition besides the initial conditions.  For example, the recurrence relation for the Fibonacci sequence is $F_n = F_{n-1} + F_{n-2}$.  (This, together with the initial conditions $F_0 = 0$ and $F_1 = 1$ give the entire recursive definition for the sequence.)  
+\todo[inline]{Add investigate activity}
+
+We have seen that it is often easier to find recursive definitions than closed formulas.  Lucky for us, there are a few techniques for converting recursive definitions to closed formulas.  Doing so is called \emph{solving a recurrence relation}.  Recall that the recurrence relation is the part of a recursive definition besides the initial conditions.  For example, the recurrence relation for the Fibonacci sequence is $F_n = F_{n-1} + F_{n-2}$.  (This, together with the initial conditions $F_0 = 0$ and $F_1 = 1$ give the entire recursive definition for the sequence.)  
  
 \begin{example}
   Find a recurrence relation and initial conditions for the sequence $1, 5, 17, 53, 161, 485\ldots$. 
   \begin{solution}
     Finding the recurrence relation would be easier if we had some context for the problem (like the Tower of Hanoi, for example).  Alas, we have only the sequence.  Remember, the recurrence relation tells you how to get from previous terms to future terms.  What is going on here?  We could look at the differences between terms: $4, 12, 36, 108, \ldots$.  Notice that these are growing by a factor of 3.  Is the original sequence as well?  $1\cdot 3 = 3$, $5 \cdot 3 = 15$, $17 \cdot 3 = 51$ and so on.  It appears that we always end up with 2 less than the next term.  Aha!  
     
-    So $a_n = 3a_{n-1} + 2$ is our recurrence relation.  The initial condition is $a_1 = 1$.
+    So $a_n = 3a_{n-1} + 2$ is our recurrence relation.  The initial condition is $a_0 = 1$.
   \end{solution}
 
 \end{example}
 
  
-We are going to try to {\em solve} the recurrence relations.  By this we mean something very similar to solving differential equations: we want to find a function of $n$ (a closed formula) which satisfies the recurrence relation, as well as the initial condition.  (Note: recurrence relations are sometimes called difference equations since they can describe the difference between terms - this highlights the relation to differential equations further.) Just like for differential equations, finding a solution might be tricky, but checking that the solution is correct is easy - just plug it in.
+We are going to try to {\em solve} these recurrence relations.  By this we mean something very similar to solving differential equations: we want to find a function of $n$ (a closed formula) which satisfies the recurrence relation, as well as the initial condition.\footnote{Recurrence relations are sometimes called difference equations since they can describe the difference between terms and this highlights the relation to differential equations further.} Just like for differential equations, finding a solution might be tricky, but checking that the solution is correct is easy.
  
  \begin{example}
     Check that $a_n = 2^n + 1$ is a solution to the recurrence relation $a_n = 2a_{n-1} - 1$ with $a_1 = 3$. 
@@ -51,7 +53,7 @@ We can use this behavior to solve recurrence relations.  Here is an example.
   Solve the recurrence relation $a_n = a_{n-1} + n$ with initial term $a_0 = 4$.  
   
   \begin{solution}
-    To get a feel for the recurrence relation, write out the first few terms of the sequence: $4, 5, 7, 10, 14, 19, \ldots$.  Look at the difference between terms.  $a_1 - a_0 = 1$ and $a_2 - a_1 = 2$ and so on.  The key thing here is that the difference between terms is $n$.  We can write this explicitly: $a_n - a_{n-1} = n$.  Of course, we could have arrived at this conclusion directly from the recurrence relation - just subtract $a_{n-1}$ from both sides.
+    To get a feel for the recurrence relation, write out the first few terms of the sequence: $4, 5, 7, 10, 14, 19, \ldots$.  Look at the difference between terms.  $a_1 - a_0 = 1$ and $a_2 - a_1 = 2$ and so on.  The key thing here is that the difference between terms is $n$.  We can write this explicitly: $a_n - a_{n-1} = n$.  Of course, we could have arrived at this conclusion directly from the recurrence relation by subtracting $a_{n-1}$ from both sides.
     
     Now use this equation over and over again, changing $n$ each time:
     
@@ -62,10 +64,10 @@ We can use this behavior to solve recurrence relations.  Here is an example.
       \vdots \quad & \quad \vdots \\
       a_n - a_{n-1} & = n
     \end{align*}
-  Now add all these equations together.  On the right hand side, we get the sum $1 + 2 + 3 + \cdots + n$.  We already know that that can be simplified to $\frac{n(n+1)}{2}$.  What happens on the left hand side?  We get 
-  \[(a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \cdots (a_{n-1} - a_{n-2})+ (a_n - a_{n-1})\]
+  Add all these equations together.  On the right hand side, we get the sum $1 + 2 + 3 + \cdots + n$.  We already know this can be simplified to $\frac{n(n+1)}{2}$.  What happens on the left hand side?  We get 
+  \[(a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \cdots (a_{n-1} - a_{n-2})+ (a_n - a_{n-1}).\]
   This sum telescopes.  We are left with only the $-a_0$ from the first equation and the $a_n$ from the last equation.  Putting this all together we have $-a_0 + a_n = \frac{n(n+1)}{2}$ or $a_n = \frac{n(n+1)}{2} + a_0$.  But we know that $a_0 = 4$.  So the solution to the recurrence relation, subject to the initial condition is
-  \[a_n = \frac{n(n+1)}{2} + 4\]
+  \[a_n = \frac{n(n+1)}{2} + 4.\]
   (Now that we know that, we should notice that yes, the sequence is indeed the result of adding 4 to each of the triangular numbers.)
   \end{solution}
 
@@ -73,12 +75,12 @@ We can use this behavior to solve recurrence relations.  Here is an example.
 
 The above example shows a way to solve recurrence relations of the form $a_n = a_{n-1} + f(n)$ where $\sum_{k = 1}^n f(k)$ has a known closed formula.  If you rewrite the recurrence relation as $a_n - a_{n-1} = f(n)$, and then add up all the different equations with $n$ ranging between 1 and $n$, the left hand side will always give you $a_n - a_0$.  The right hand side will be $\sum_{k = 1}^n f(k)$, which is why we need to know the closed formula for that sum.
 
-However, telescoping will not help us with a recursion such as $a_n = 3a_{n-1} + 2$ - the left hand side will not telescope, since you will have $-3a_{n-1}$'s but only one $a_{n-1}$.  However, we can still be clever if we use {\em iteration}.
+However, telescoping will not help us with a recursion such as $a_n = 3a_{n-1} + 2$ since the left hand side will not telescope.  You will have $-3a_{n-1}$'s but only one $a_{n-1}$.  However, we can still be clever if we use {\em iteration}.
 %We need another method for this.  
 %
 %\subsection{Iteration}
 
-We have already seen an example of iteration when we found the closed formula for arithmetic and geometric sequences.  The idea is, we {\em iterate}\index{iteration} the process of finding the next term, starting with the known initial condition, up until we have $a_n$.  Then we simplify.  In the arithmetic sequence example, we simplified by multiplying $d$ by the number of times we add it to $a$ when we get to $a_n$, to get from $a_n = a + d + d + d + \cdots + d$ to $a_n = a + d(n-1)$.
+We have already seen an example of iteration when we found the closed formula for arithmetic and geometric sequences.  The idea is, we {\em iterate}\index{iteration} the process of finding the next term, starting with the known initial condition, up until we have $a_n$.  Then we simplify.  In the arithmetic sequence example, we simplified by multiplying $d$ by the number of times we add it to $a$ when we get to $a_n$, to get from $a_n = a + d + d + d + \cdots + d$ to $a_n = a + dn$.
 
 To see how this works, let's go through the same example we used for telescoping, but this time use iteration.
 
@@ -118,30 +120,30 @@ To see how this works, let's go through the same example we used for telescoping
       a_1 &= 3a_0 + 2\\
       a_2 &= 3(a_1) + 2 = 3(3a_0 + 2) + 2 = 3^2a_0 + 2\cdot 3 + 2\\
       a_3 &= 3[a_2] + 2 = 3[3^2a_0 + 2\cdot 3 + 2] + 2 = 3^3 a_0 + 2 \cdot 3^2 + 2 \cdot 3 + 2\\
-      \vdots & \qquad \vdots \qquad \qquad \vdots \\
+      \vdots & \qquad\quad \vdots \hspace{2in} \vdots \\
       a_n &= 3(a_{n-1}) + 2 = 3(3^{n-1}a_0 + 2 \cdot 3^{n-2} + \cdots +2)+ 2\\
       & \qquad \qquad = 3^n a_0 + 2\cdot 3^{n-1} + 2 \cdot 3^{n-2} + \cdots + 2\cdot 3 + 2
      \end{align*}
-    Now we simplify.  $a_0 = 1$, so we have $3^n + (\cdots)$.  Note that every other term has a 2 in it - in fact, we have a geometric sum with first term $2$ and common ratio $3$.  We have seen how to simplify $2 + 2\cdot 3 + 2 \cdot 3^2 + \cdots + 2\cdot 3^{n-1}$.  We get $\frac{2-2\cdot 3^n}{-2}$ which simplifies to $3^n - 1$.  Putting this together with the first $3^n$ term gives our closed formula:
-    \[a_n = 2\cdot 3^n - 1\]
+    Now we simplify.  $a_0 = 1$, so we have $3^n + (\cdots)$.  Note that all the other terms have a 2 in them.  In fact, we have a geometric sum with first term $2$ and common ratio $3$.  We have seen how to simplify $2 + 2\cdot 3 + 2 \cdot 3^2 + \cdots + 2\cdot 3^{n-1}$.  We get $\frac{2-2\cdot 3^n}{-2}$ which simplifies to $3^n - 1$.  Putting this together with the first $3^n$ term gives our closed formula:
+    \[a_n = 2\cdot 3^n - 1.\]
    \end{solution}
  \end{example}
 
 
- Iteration can be messy, but when the recurrence relation only refers to one previous term (and maybe some function of $n$) it can work well.  However, trying to iterate a recurrence relation such as $a_n = 2 a_{n-1} + 3 a_{n-2}$ will be way to complicated - we would need to keep track of two sets of previous terms, each of which were expressed by two previous terms, and so on.  The length of the formula would grow exponentially (double each time, in fact).  Luckily there happens to be a method for solving recurrence relations which works very well on relations like this.
+ Iteration can be messy, but when the recurrence relation only refers to one previous term (and maybe some function of $n$) it can work well.  However, trying to iterate a recurrence relation such as $a_n = 2 a_{n-1} + 3 a_{n-2}$ will be way too complicated.  We would need to keep track of two sets of previous terms, each of which were expressed by two previous terms, and so on.  The length of the formula would grow exponentially (double each time, in fact).  Luckily there happens to be a method for solving recurrence relations which works very well on relations like this.
 
 
 
 \subsection{The Characteristic Root Technique}\index{Characteristic Roots}
 
-Suppose we want to solve a recurrence relation expressed as a combination of the two previous terms, such as $a_n = a_{n-1} + 6a_{n-2}$. In other words, we want to find a function of $n$ which satisfies $a_n - a_{n-1} - 6a_{n-2} = 0$.  Now iteration is too complicated, but think just for a second what would happen if we {\em did} iterate.  In each step, we would, among other things, multiply a previous iteration by 6.   So our closed formula would have include $6$ multiplied some number of times.  Thus it is reasonable to guess the solution will contain parts that look geometric.  So perhaps the solution will take the form $r^n$. for some constant $r$.
+Suppose we want to solve a recurrence relation expressed as a combination of the two previous terms, such as $a_n = a_{n-1} + 6a_{n-2}$. In other words, we want to find a function of $n$ which satisfies $a_n - a_{n-1} - 6a_{n-2} = 0$.  Now iteration is too complicated, but think just for a second what would happen if we {\em did} iterate.  In each step, we would, among other things, multiply a previous iteration by 6.   So our closed formula would include $6$ multiplied some number of times.  Thus it is reasonable to guess the solution will contain parts that look geometric.  Perhaps the solution will take the form $r^n$ for some constant $r$.
  
-The nice thing is, we know how to check whether a formula is actually a solution to a recurrence relation - plug it in.  What happens if we plug in $r^n$ into the recursion above? We get  \[r^n - r^{n-1} - 6r^{n-2} = 0\]  Now solve for $r$: \[r^{n-2}(r^2 - r - 6) = 0\]
-so by factoring, $r = -2$ or $r = 3$.  This tells us that $a_n = (-2)^n$ is a solution to the recurrence relation, as is $a_n = 3^n$.  Which one is correct?  They both are, unless we specify initial conditions.  Notice we could also have $a_n = (-2)^n + 3^n$.  Or $a_n = 7(-2)^n + 4\cdot 3^n$.  In fact, for any $a$ and $b$, $a_n = a(-2)^n + b 3^n$ is a solution - try plugging that into the recurrence relation.  To find the values of $a$ and $b$, use the initial conditions.
+The nice thing is, we know how to check whether a formula is actually a solution to a recurrence relation: plug it in.  What happens if we plug in $r^n$ into the recursion above? We get  \[r^n - r^{n-1} - 6r^{n-2} = 0\]  Now solve for $r$: \[r^{n-2}(r^2 - r - 6) = 0\]
+so by factoring, $r = -2$ or $r = 3$ (or $r = 0$, although this does not help us).  This tells us that $a_n = (-2)^n$ is a solution to the recurrence relation, as is $a_n = 3^n$.  Which one is correct?  They both are, unless we specify initial conditions.  Notice we could also have $a_n = (-2)^n + 3^n$.  Or $a_n = 7(-2)^n + 4\cdot 3^n$.  In fact, for any $a$ and $b$, $a_n = a(-2)^n + b 3^n$ is a solution (try plugging this into the recurrence relation).  To find the values of $a$ and $b$, use the initial conditions.
  
-The points us in the direction of a more general technique for solving recurrence relations.  Notice we will always be able to factor out the $r^{n-2}$ as we did above.  So we really only care about the other part.  We call this other part the {\em characteristic equation} for the recurrence relation.  We are interested in finding the roots of the characteristic equation, which are called (surprise) the characteristic roots.  
+The points us in the direction of a more general technique for solving recurrence relations.  Notice we will always be able to factor out the $r^{n-2}$ as we did above.  So we really only care about the other part.  We call this other part the \emph{characteristic equation}\index{characteristic equation} for the recurrence relation.  We are interested in finding the roots of the characteristic equation, which are called (surprise) the \emph{characteristic roots}.  
 
-\begin{defbox}{Characteristic Roots}
+\begin{defbox}{Characteristic Roots\index{characteristic roots}}
  Given a recurrence relation $a_n + \alpha a_{n-1} + \beta a_{n-2} = 0$, the characteristic polynomial is
  \[x^2 + \alpha x + \beta\]
  giving the {\em characteristic equation}:
@@ -151,7 +153,6 @@ The points us in the direction of a more general technique for solving recurrenc
  where $a$ and $b$ are constants determined by the initial conditions.
 \end{defbox}
 
-\newpage
 \begin{example}
   Solve the recurrence relation $a_n = 7a_{n-1} - 10 a_{n-2}$ with $a_0 = 2$ and $a_1 = 3$. 
   \begin{solution}
@@ -172,11 +173,11 @@ The points us in the direction of a more general technique for solving recurrenc
 
 \end{example}
 
-Perhaps the most famous recurrence relation is $F_n = F_{n-1} + F_{n-2}$, which together with the initial conditions $F_0 = 0$ and $F_1= 1$ defines the Fibonacci sequence.  But notice that this is precisely the type of recurrence relation on which we can use the characteristic root technique.  When you do, the only thing that changes is that the characteristic equation does not factor - you need to use the quadratic formula to find the characteristic roots.  In fact, doing so gives the third most famous irrational number - $\varphi$, the golden ratio.
+Perhaps the most famous recurrence relation is $F_n = F_{n-1} + F_{n-2}$, which together with the initial conditions $F_0 = 0$ and $F_1= 1$ defines the Fibonacci sequence.  But notice that this is precisely the type of recurrence relation on which we can use the characteristic root technique.  When you do, the only thing that changes is that the characteristic equation does not factor, so you need to use the quadratic formula to find the characteristic roots.  In fact, doing so gives the third most famous irrational number, $\varphi$, the golden ratio.
 
 Before leaving the characteristic root technique, we should think about what all might happen when you solve the characteristic equation.  Above we have an example in which the characteristic polynomial has two distinct roots.  These roots can be integers, or perhaps irrational numbers (requiring the quadratic formula to find them).  In these cases, we know what the solution to the recurrence relation looks like.  
 
-However, it is possible for the characteristic polynomial to only have one root - say the characteristic polynomial factors as $(x - r)^2$.  It is still the case that $r^n$ would be a solution to the recurrence relation, but we won't be able to find solutions for all initial conditions using the general form $a_n = ar_1^n + br_2^n$, since we can't distinguish between $r_1^n$ and $r_2^n$ - they are the same (repeated) root.  We are in luck though:
+However, it is possible for the characteristic polynomial to only have one root.  This can happen if the characteristic polynomial factors as $(x - r)^2$.  It is still the case that $r^n$ would be a solution to the recurrence relation, but we won't be able to find solutions for all initial conditions using the general form $a_n = ar_1^n + br_2^n$, since we can't distinguish between $r_1^n$ and $r_2^n$.  We are in luck though:
 
 \begin{defbox}{Characteristic Root Technique for Repeated Roots}
  Suppose the recurrence relation $a_n = \alpha a_{n-1} + \beta a_{n-2}$ has a characteristic polynomial with only one root $r$.  Then the solution to the recurrence relation is
@@ -208,7 +209,7 @@ Notice the extra $n$ in $bnr^n$.  This allows us to solve for the constants $a$ 
  
 \end{example}
 
- Although we will not consider examples more complicated than these, this characteristic root technique can be applied to much more complicated recurrence relations.  For example, $a_n = 2a_{n-1} + a_{n-2} - 3a_{n-3}$ has characteristic polynomial $x^3 - 2 x^2 - x + 3$.  Assuming you see how to factor such a degree 3 (or more) polynomial you can easily find the characteristic roots and as such solve the recurrence relation (the solution would look like $a_n = ar_1^n + br_2^n + cr_3^n$ if there were 3 distinct roots).  It is also possible to solve recurrence relations of the form $a_n = \alpha a_{n-1} + \beta a_{n-2} + C$ for some constant $C$.  Additionally, if the characteristic roots could be complex numbers - this is acceptable as well.
+ Although we will not consider examples more complicated than these, this characteristic root technique can be applied to much more complicated recurrence relations.  For example, $a_n = 2a_{n-1} + a_{n-2} - 3a_{n-3}$ has characteristic polynomial $x^3 - 2 x^2 - x + 3$.  Assuming you see how to factor such a degree 3 (or more) polynomial you can easily find the characteristic roots and as such solve the recurrence relation (the solution would look like $a_n = ar_1^n + br_2^n + cr_3^n$ if there were 3 distinct roots).  It is also possible to solve recurrence relations of the form $a_n = \alpha a_{n-1} + \beta a_{n-2} + C$ for some constant $C$.  It is also possible (and acceptable) for the characteristic roots to be complex numbers.
 
 
 
