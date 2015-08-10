@@ -81,12 +81,25 @@
 \newcounter{pcounter}
 \newcounter{spcounter}
 \newenvironment{questions}{%
-	\iftoggle{includeanswers}{\WriteAnsFileStart}{}\begin{list}{\iftoggle{includeanswers}{\hyperlink{ans.\thesection.\Currentlabel.}}{}{\arabic{question}.~}}{
-	\usecounter{question}}
+	\iftoggle{includeanswers}{\WriteAnsFileStart}{}
+	\begin{list}{\iftoggle{includeanswers}{\hyperlink{ans.\thesection.\Currentlabel.}}{ }{\arabic{question}.~}}{
+	\usecounter{question}\setlength\labelwidth{3em}}
 	}{%
 	\end{list} \iftoggle{includeanswers}{\WriteAnsFileStop}{}
 	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
 	}
+
+%\newenvironment{questions}{%
+%	\iftoggle{includeanswers}{%
+%	\WriteAnsFileStart \begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}}{\arabic{question}.~}{
+%		\usecounter{question}}
+%	}{ %else
+%	\begin{enumerate}
+%	}
+%	}{%end of environment commands:
+%	 \iftoggle{includeanswers}{\end{list}\WriteAnsFileStop}{\end{enumerate}}
+%	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
+%	}
 
 \newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
 
@@ -96,10 +109,7 @@
 
 \newcommand{\question}{%
 	\iftoggle{includeanswers}{%
-		\item\hypertarget{ques.\thesection.\Currentlabel.}{}
-	  }{%
-		\item
-	  }
+		\item\hypertarget{ques.\thesection.\Currentlabel.}{}}{\item}
 	}
 	
 \def\bonusquestion{\question}
@@ -195,6 +205,7 @@
 \mdfsetup{%
     frametitle={\colorbox{blue!20}{\space#1\space}},
 %	frametitle={\fbox{#1}},
+	frametitlealignment={\hspace*{1ex}},
     frametitleaboveskip=-1.5ex,
     frametitlebelowskip=0pt,
     roundcorner=1pt,
@@ -223,7 +234,7 @@
 	linewidth=1pt,
 	skipabove=2em,
 	skipbelow=2em,
-	roundcorner=10pt,
+	roundcorner=15pt,
 	needspace=6em,
 	splittopskip=2em,
 }
