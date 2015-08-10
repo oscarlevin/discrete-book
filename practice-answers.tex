@@ -676,16 +676,6 @@
 \end{itemize}
  \noindent{\textbf {Solutions for Section 1.6}} \begin{itemize} 
 \begin{ans}{1.6.1.}
-
- ${18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]$.  Subtract all the distributions for which one or more bins contain 7 or more balls.  %How many ways can you do this if no bin can hold more than 6 balls?
-
-	
-\end{ans}
-\begin{ans}{1.6.2.}
-	${10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)$.  We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.
-	
-\end{ans}
-\begin{ans}{1.6.3.}
   Hint: Stars and bars.
    \begin{parts}
     \part ${9 \choose 6}$
@@ -693,6 +683,36 @@
     \part ${16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]$
    \end{parts}
   
+\end{ans}
+\begin{ans}{1.6.2.}
+ ${18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]$.  Subtract all the distributions for which one or more bins contain 7 or more balls.  %How many ways can you do this if no bin can hold more than 6 balls?
+	
+\end{ans}
+\begin{ans}{1.6.3.}
+	The easiest way to solve this is to instead count the solutions to $y_1 + y_2 + y_3 + y_4 = 7$ with $0 \le y_i \le 3$.  By taking $x_i = y_i+2$, each solution to this new equation corresponds to exactly one solution to the original equation.
+
+	Now all the ways to distribute the 7 units to the four $y_i$ variables can be found using stars and bars, specifically 7 stars and 3 bars, so ${10 \choose 3}$.  But this includes the ways that one or more $y_i$ variables can be assigned more than 3 units.  So subtract, using PIE.  We get
+	\[{10 \choose 3} - {4\choose 1} {6 \choose 3}.\]
+	Note that this is the final answer because it is not possible to have two variables both get 4 units.
+	
+\end{ans}
+\begin{ans}{1.6.4.}
+		Without any restriction, there would be ${19\choose 12}$ ways to distribute the stars.  Now we must use PIE to eliminate all distributions in which one or more student gets more than one star:
+		\[{19 \choose 12} - \left[{13 \choose 1}{17 \choose 12} - {13\choose 2}{15 \choose 12} + {13\choose 3}{13 \choose 12}\right] = 1716\]
+		Interestingly enough, this number is also the value of ${13 \choose 7}$, which makes sense: if each student can have at most one star, we must just pick the 7 out of 13 students to receive them.
+	
+\end{ans}
+\begin{ans}{1.6.5.}
+	The question is, how many ways can you distribute $k$ cookies to $n$ kids so that each kid gets at most one cookie.  On one hand, the answer is just ${n \choose k}$ since you must choose $k$ kids to get a cookie.  Alternatively, we can use stars and bars with PIE, which is how we get the right hand side of the identity.  Note that lots of the terms on the right hand side will be zero, as soon as $n+k-(2j+1)$ drops below $k$.
+	
+\end{ans}
+\begin{ans}{1.6.6.}
+		The 9 derangements are: 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.
+	
+\end{ans}
+\begin{ans}{1.6.7.}
+	${10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)$.  We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.
+	
 \end{ans}
 \end{itemize}
  \noindent{\textbf {Solutions for Section 1.7}} \begin{itemize} 
@@ -893,6 +913,7 @@
 		 \part $P(10, 4) = 10 \cdot 9 \cdot 8 \cdot 7$.  You are choosing and arranging 4 out of 10 cookies.  Order matters now.  %To keep things interesting, you decide to make a different number of each type of cookie.  If again you want to select 4 cookie types, how many ways can you select the cookie types and decide for which there will be the most, second most, etc.  Explain your answer.
 		 \part ${21 \choose 9}$.  You must switch between cookie type 9 times as you make your 12 cookies.  The cookies are the stars, the switches between cookie types are the bars. %You change your mind again.  This time you decide you will make a total of 12 cookies.  Each cookie could be any one of the 10 types of cookies you know how to bake (and it's okay if you leave some types out).  How many choices do you have?  Explain.
 		 \part $10^{12}$.  You have 10 choices for the ``1'' cookie, 10 choices for the ``2'' cookie, and so on. %You realize that the previous plan did not account for presentation.  This time, you once again want to make 12 cookies, each one could be any one of the 10 types of cookies.  However, now you plan to shape the cookies into the numerals 1, 2, \ldots, 12 (and probably arrange them to make a giant clock - but you haven't decided on that yet).  How many choices do you have for which types of cookies to bake into which numerals?  Explain.
+		 \part $10^{12} - \left[{10 \choose 1}9^{12} - {10 \choose 2}8^{12} + \cdots - {10 \choose 10}0^{12}   \right]$.  We must use PIE to remove all the ways in which one or more cookie type is not selected.
 		\end{parts}
 	
 \end{ans}
@@ -901,7 +922,8 @@
 			\part You are giving your professor 4 types of cookies coming from 10 different types of cookies.  This does not lend itself well to a function interpretation.  We {\em could} say that the domain contains the 4 types you will give your professor and the codomain contains the 10 you can choose from, but then counting injections would be too much (it doesn't matter if you pick type 3 first and type 2 second, or the other way around, just that you pick those two types).
 			\part We want to consider injective functions from the set $\{\mbox{most, second most, second least, least}\}$ to the set of 10 cookie types.  We want injections because we cannot pick the same type of cookie to give most and least of (for example).
 			\part This is not a good problem to interpret as a function.  The problem is that the domain would have to be the 12 cookies you bake, but these elements are indistinguishable (there is not a first cookie, second cookie, etc.).
-			\part The domain should be the 12 shapes, the codomain the 10 types of cookies.  Since we can use the same type for different shapes, we are interested in counting all functions here.  Note that if we insisted that each type of cookie be given at least once, this would be asking for the number of surjections, which would require using PIE.
+			\part The domain should be the 12 shapes, the codomain the 10 types of cookies.  Since we can use the same type for different shapes, we are interested in counting all functions here.
+			\part Here we insist that each type of cookie be given at least once, so now we are asking for the number of surjections of those functions counted in the previous part.
 		\end{parts}
 	
 \end{ans}
@@ -925,18 +947,30 @@
 		%Give the recursive definition for the sequence.
 		  \part $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$ and $F_1 = 1$.
 		%   Write out the first few terms of the sequence of partial sums.
-		  \part  $0, 1, 2, 4, 7, 12, 20, \ldots$
+		  \part  $0, 1, 2, 4, 7, 12, 20, \ldots.$
 		  %Give a closed formula for the sequence of partial sums in terms of $F_n$  (for example, you might say $F_0 + F_1 + \cdots + F_n = 3F_{n-1}^2 + n$, although that is definitely not correct).
-		  \part $F_0 + F_1 + \cdots + F_n = F_{n+2} - 1$
+		  \part $F_0 + F_1 + \cdots + F_n = F_{n+2} - 1.$
 		\end{parts}
 	
 \end{ans}
 \begin{ans}{2.1.3.}
-		$3, 10, 24, 52, 108,\ldots$.  The recursive definition for $10, 24, 52, \ldots$ is $a_n = 2a_{n-1} + 4$ with $a_1 = 10$.
+		The sequences all have the same recurrence relation: $a_n = a_{n-1} + a_{n-2}$ (the same as the Fibonacci numbers).  The only difference is the initial conditions.
 	
 \end{ans}
 \begin{ans}{2.1.4.}
+		$3, 10, 24, 52, 108,\ldots$.  The recursive definition for $10, 24, 52, \ldots$ is $a_n = 2a_{n-1} + 4$ with $a_1 = 10$.
+	
+\end{ans}
+\begin{ans}{2.1.5.}
 		$-1, -1, 1, 5, 11, 19,\ldots$  Thus the sequence $0, 2, 6, 12, 20,\ldots$ has closed formula $a_n = (n+1)^2 - 3(n+1) + 2$.
+	
+\end{ans}
+\begin{ans}{2.1.6.}
+		Write out the first few terms of the sequence: $1, 2, 3, 4, 5, 6,\ldots$.  This is surprising at first, but note that we could write $2a_{n-1} - a_{n-2} = a_{n-1} + (a_{n-1} -a_{n-2})$, and $a_{n-1} - a_{n-2}$ is just the difference between the terms.  Initially, the difference between terms is 1, so each time we are just adding one.  So we see that $a_n = n$ is the closed formula.
+	
+\end{ans}
+\begin{ans}{2.1.7.}
+		The sequence we get is $3, 5, 7, 9, \ldots$.  One recursive definition for this is $a_n = a_{n-1} + 2$ with $a_0 = 3$.  Another option would be to take $a_n = 2a_{n-1} - a_{n-2}$ with $a_0 = 3$ and $a_1 = 5$.
 	
 \end{ans}
 \end{itemize}
@@ -979,6 +1013,10 @@
 	
 \end{ans}
 \begin{ans}{2.2.7.}
+		We have $2 = 2$, $7 = 2+5$, $15 = 2 + 5 + 8$, $26 = 2+5+8+11$, and so on.  The terms in the sums are given by the arithmetic sequence $b_n = 2+3n$.  In other words, $a_n = \sum_{k=0}^n 2+3k$.  To find this, we reverse and add.  We get $a_n = \frac{(4+3n)(n+1)}{2}$ (we have $n+1$ there because there are $n+1$ terms in the sum for $a_n$).
+	
+\end{ans}
+\begin{ans}{2.2.8.}
 		\begin{parts}
 		  \part $\d\sum_{k=1}^n 2k$		%$2 + 4 + 6 + 8 + \cdots + 2n$
 		  \part $\d\sum_{k=1}^{107} (1 + 4(k-1))$		%$1 + 5 + 9 + 13 + \cdots + 425$
@@ -988,7 +1026,7 @@
 		\end{parts}
 	
 \end{ans}
-\begin{ans}{2.2.8.}
+\begin{ans}{2.2.9.}
 		\begin{parts}
 		  \part $\d\sum_{k=1}^{100} (3+4k) = 7 + 11 + 15 + \cdots + 403$
 		  \part $\d\sum_{k=0}^n 2^k = 1 + 2 + 4 + 8 + \cdots + 2^n$
@@ -1259,32 +1297,21 @@
 	
 \end{ans}
 \begin{ans}{2.6.2.}
-		\begin{parts}
-		%Give the recursive definition for the sequence.
-		  \part $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$ and $F_1 = 1$.
-		%   Write out the first few terms of the sequence of partial sums.
-		  \part  $0, 1, 2, 4, 7, 12, 20, \ldots$
-		  %Give a closed formula for the sequence of partial sums in terms of $F_n$  (for example, you might say $F_0 + F_1 + \cdots + F_n = 3F_{n-1}^2 + n$, although that is definitely not correct).
-		  \part $F_0 + F_1 + \cdots + F_n = F_{n+2} - 1$
-		\end{parts}
-	
-\end{ans}
-\begin{ans}{2.6.3.}
 		$3, 10, 24, 52, 108,\ldots$.  The recursive definition for $10, 24, 52, \ldots$ is $a_n = 2a_{n-1} + 4$ with $a_1 = 10$.
 	
 \end{ans}
-\begin{ans}{2.6.4.}
+\begin{ans}{2.6.3.}
 		$-1, -1, 1, 5, 11, 19,\ldots$  Thus the sequence $0, 2, 6, 12, 20,\ldots$ has closed formula $a_n = (n+1)^2 - 3(n+1) + 2$.
 	
 \end{ans}
-\begin{ans}{2.6.5.}
+\begin{ans}{2.6.4.}
 		\begin{parts}
 		\part 36.  %How many terms (summands) are in the sum?
 		\part $\frac{253 \cdot 36}{2} = 4554$.  %Compute the sum.  Remember to show all your work.
 		\end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.6.}
+\begin{ans}{2.6.5.}
 		\begin{parts}
 		  \part $a_n = a_{n-1} + 4$ with $a_1 = 5$.  %Give a recursive definition for the sequence.
 		  \part $a_n = 5 + 4(n-1)$  %Give a closed formula for the $n$th term of the sequence.
@@ -1295,29 +1322,29 @@
 		\end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.7.}
+\begin{ans}{2.6.6.}
 		$a_n = n^2 + 4n - 1$
 	
 \end{ans}
-\begin{ans}{2.6.8.}
+\begin{ans}{2.6.7.}
 	 	\begin{parts}
 	 	\part $4, 6, 10, 16, 26, 42, \ldots$  %Write out the first 6 terms of the sequence.
 	 	\part No, taking differences gives the original sequence back, so the differences will never be constant.  %Could the closed formula for $a_n$ be a polynomial?  Explain.
 	 	\end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.9.}
+\begin{ans}{2.6.8.}
 		 $b_n = (n+3)n$
 	
 \end{ans}
-\begin{ans}{2.6.10.}
+\begin{ans}{2.6.9.}
 		\begin{parts}
 		 \part $1, 2, 16,68, 364, \ldots$  %Write out the first 5 terms of the sequence defined by this recurrence relation.
 		 \part $a_n = \frac{3}{7}(-2)^n + \frac{4}{7}5^n$  %Solve the recurrence relation.
 		\end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.11.}
+\begin{ans}{2.6.10.}
 		\begin{parts}
 		  \part $a_2 = 14$.  $a_3 = 52$  %Find the next two terms of the sequence ($a_2$ and $a_3$).
 		  \part $a_n = \frac{1}{6}(-2)^n + \frac{5}{6}4^n$  %Solve the recurrence relation.   That is, find a closed formula for the $n$th term of the sequence.
@@ -1325,7 +1352,7 @@
 		\end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.12.}
+\begin{ans}{2.6.11.}
 	 \begin{parts}
 	 	\part On the first day, your 2 mini bunnies become 2 large bunnies.  On day 2, your two large bunnies produce 4 mini bunnies.  On day 3, you have 4 mini bunnies (produced by your 2 large bunnies) plus 6 large bunnies (your original 2 plus the 4 newly matured bunnies).  On day 4, you will have $12$ mini bunnies (2 for each of the 6 large bunnies) plus 10 large bunnies (your previous 6 plus the 4 newly matured).  The sequence of total bunnies is $2, 2, 6, 10, 22, 42\ldots$ starting with $a_0 = 2$ and $a_1 = 2$.
 	 	\part $a_n = a_{n-1} + 2a_{n-2}$.  This is because the number of bunnies is equal to the number of bunnies you had the previous day (both mini and large) plus 2 times the number you had the day before that (since all bunnies you had 2 days ago are now large and producing 2 new bunnies each).
@@ -1333,7 +1360,7 @@
 	 \end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.13.}
+\begin{ans}{2.6.12.}
 		\begin{parts}
 		 \part Hint: $(n+1)^{n+1} > (n+1) \cdot n^{n}$.
 		 \part Hint: This should be similar to the other sum proofs - the last bit comes down to adding fractions.
@@ -1344,11 +1371,11 @@
 		\end{parts}
 	
 \end{ans}
-\begin{ans}{2.6.14.}
+\begin{ans}{2.6.13.}
 		Note that $1 = 2^0$ - this is your base case.  Now suppose $k$ can be written as the sum of distinct powers of 2 for all $1\le k \le n$.  We can then write $n$ as the sum of distinct powers of 2 as follows: subtract the largest power of 2 less than $n$ from $n$.  That is, write $n = 2^j + k$ for the largest possible $j$.  But $k$ is now less than $n$, and also less than $2^j$, so write $k$ as the sum of distinct powers of 2 (we can do so by the inductive hypothesis).  Thus $n$ can be written as the sum of distinct powers of 2 for all $n \ge 1$.
 	
 \end{ans}
-\begin{ans}{2.6.15.}
+\begin{ans}{2.6.14.}
 		Let $P(n)$ be the statement, ``every set containing $n$ elements has $2^n$ different subsets.''  We will show $P(n)$ is true for all $n \ge 1$.
 
 		\underline{Base case}: Any set with 1 element $\{a\}$ has exactly 2 subsets: the empty set and the set itself.  Thus the number of subsets is $2= 2^1$.  Thus $P(1)$ is true.
