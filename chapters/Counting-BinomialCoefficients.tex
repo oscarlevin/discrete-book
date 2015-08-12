@@ -220,7 +220,7 @@ We can use Pascal's triangle to calculate binomial coefficients.  For example, u
 \hspace*{-3em}
 \begin{tikzpicture}
 \def\r{.55}
-\newcommand{\hexagon}[3]{
+\newcommand{\hexbox}[3]{
   \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
   \def\y{-\r*#1-sin{30}*\r*#1}
   \draw (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
@@ -231,7 +231,7 @@ We can use Pascal's triangle to calculate binomial coefficients.  For example, u
 % Pascal's triangle
 %put row of 1's down left side:
   \foreach \row in {0,...,16} {
-    \hexagon{\row}{0}{\large 1}
+    \hexbox{\row}{0}{\large 1}
   }
 %fill in the rest of the triangle:
   \foreach \row in {1,...,16} {
@@ -242,13 +242,13 @@ We can use Pascal's triangle to calculate binomial coefficients.  For example, u
       \pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
       \global\let\entry=\entry
       \ifnum \entry<100
-	\hexagon{\row}{\col}{\large \entry}
+	\hexbox{\row}{\col}{\large \entry}
       \else \ifnum \entry<1000
-	\hexagon{\row}{\col}{\entry}
+	\hexbox{\row}{\col}{\entry}
       \else \ifnum \entry<10000
-	\hexagon{\row}{\col}{\footnotesize \entry}
+	\hexbox{\row}{\col}{\footnotesize \entry}
 	\else
-	\hexagon{\row}{\col}{\scriptsize \entry}
+	\hexbox{\row}{\col}{\scriptsize \entry}
 	\fi
       \fi
       \fi

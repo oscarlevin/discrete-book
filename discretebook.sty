@@ -3,6 +3,10 @@
 
 \ProvidesPackage{discretebook}
 
+\usepackage[T1]{fontenc}
+%\usepackage{stix}
+
+
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol} 
 %\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 %\usepackage{changepage} % for adding extra indents in environments
@@ -10,7 +14,6 @@
 
 %\usepackage{comment}
 \usepackage[obeyDraft]{todonotes}
-%\usepackage[T1]{fontenc}
 \usepackage{bold-extra}
 \usepackage{textcomp}
 \usepackage{docmute}
@@ -23,7 +26,7 @@
 %\usepackage{titlesec} % to create better chapter header layout
 %\usepackage{booktabs}
 \usepackage{import}
-\usepackage{marvosym} % to include stop-sign symbol.
+%\usepackage{marvosym} % to include stop-sign symbol. conflicts with stix font
 \usepackage{etoolbox} % to create toggles
 \usepackage{makeidx}
 \usepackage[nomain]{glossaries}
@@ -31,7 +34,7 @@
 %\setglossarystyle{mcolindex}
 
 \usepackage{tikz}
-\usetikzlibrary{shadows,fadings}
+\usetikzlibrary{shapes,snakes,shadows,fadings}
 
 \usepackage{svg}
 
@@ -241,9 +244,11 @@
 \vskip 1em
 \begin{mdframed} 
 }{%
-\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \qquad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the above} \quad {\LARGE\color{red} \Stopsign}\qquad }  \end{center}
+\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \qquad \Stopsign \quad \textbf{Do not proceed until you have attempted the above} \quad \Stopsign \qquad }  \end{center}
 }
 
+
+%\begin{center}\colorbox{white}{ \qquad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the above} \quad {\LARGE\color{red} \Stopsign}\qquad }  \end{center}
 
 \newcommand{\ex}{\noindent\textbf{Ex: }}
 
@@ -305,6 +310,7 @@
 \newglossarystyle{myglosses}{%
     \renewenvironment{theglossary}{%
       \setlength{\parindent}{0pt}%
+      \setlength{\parskip}{7pt}
 %      \begin{multicols}{2}%
     }{%
 %      \end{multicols}%
@@ -314,9 +320,9 @@
 %    \renewcommand*{\glsclearpage}{\columnbreak}%
      % set how each entry should appear:
       \renewcommand*{\glossentry}[2]{%
-        \parbox{.3\linewidth}{\hskip \fill\glstarget{##1}{\textsc{\glossentryname{##1}}}}%
-        \hspace{.1\linewidth}%
-        \parbox{.6\linewidth}{\glossentrydesc{##1}, \space ##2 \hskip \fill}\par%
+        \parbox{.15\linewidth}{\glstarget{##1}{\textsc{\glossentryname{##1}}}\hskip \fill}%
+        \hspace{.05\linewidth}%
+        \parbox{.8\linewidth}{\glossentrydesc{##1}, \space ##2 \hskip \fill}\par%
     }%
     \renewcommand*{\subglossentry}[3]{%
         \glossentry{##2}{##3}%
@@ -325,6 +331,16 @@
 
 \input{macros-discrete}
 \input{images/USAmap} %for creating maps of the US in tikz.
+
+% % % Tikz stop sign:
+\newcommand{\Stopsign}{
+\tikz[baseline=-0.4ex, scale=.25]{
+\node[regular polygon,regular polygon sides=8,fill=red] {\bfseries \tiny \color{white} STOP};
+%	\foreach \x in {0,...,7}{
+%		\coordinate (v\x) at (22.5+\x*45:1);
+%	}
+}
+}
 
 \endinput
 
