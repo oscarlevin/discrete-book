@@ -2,9 +2,9 @@
 %%%  It is an attempt at designing a package to be used in my discrete course notes.  It will load amsmath, amsthm, etc and all the definitions I like.
 
 \ProvidesPackage{discretebook}
-\usepackage{amsmath, amsthm}
-%\usepackage{bold-extra}
-\usepackage{textcomp}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{bold-extra}
+%\usepackage{textcomp}
 
 
 
@@ -12,11 +12,26 @@
 
 % % FONT OPTIONS (pick one group to uncomment):
 
+%newpx is my current favorite.  This should work on a TEXLive distribution, but on MiKTeX it initially gave me problems.  Running the update wizard to update MiKTeX then showed ``newpx'' as an available package (only since 8/11/15).  Perhaps just synchronizing in the package manager would do the same thing.  Even then, needed to run initexmf --mkmaps from the command line.
+%You could always uncomment all of these to use the default computer modern font.
 \usepackage[T1]{fontenc}
 \usepackage{newpxtext}
-\usepackage[vvarbb,varg,cmintegrals,cmbraces,bigdelims]{newpxmath}
+\usepackage[vvarbb,cmintegrals,cmbraces,bigdelims]{newpxmath}
 \usepackage[scr=rsfso]{mathalfa}% \mathscr is fancier than \mathcal
-\linespread{1.05}         % adds more leading (space between lines)
+\linespread{1.04}         % adds more leading (space between lines)
+% quantifiers look strange, so change those back to normal:
+	\DeclareSymbolFont{mysymbols}{OMS}{cmsy}{b}{n} %note we make the figures bold to better match newpx.  Replace the ``b'' with an ``m'' to undo this.
+	%\SetSymbolFont{mysymbols}  {bold}{OMS}{cmsy}{b}{n}
+	%\DeclareSymbolFont{myoperators}   {OT1}{cmr} {m}{n}
+	%\SetSymbolFont{myoperators}{bold}{OT1}{cmr} {bx}{n}
+	\DeclareMathSymbol{\forall}{\mathord}{mysymbols}{"38}
+	\DeclareMathSymbol{\exists}{\mathord}{mysymbols}{"39}
+	%\DeclareMathSymbol{\pm}{\mathbin}{mysymbols}{"06}
+	%\DeclareMathSymbol{+}{\mathbin}{myoperators}{"2B}
+	%\DeclareMathSymbol{-}{\mathbin}{mysymbols}{"00}
+	%\DeclareMathSymbol{=}{\mathrel}{myoperators}{"3D}
+
+
 
 %\usepackage[T1]{fontenc}
 %\usepackage{newtxtext,newtxmath}
@@ -67,6 +82,9 @@
 
 \usepackage[colorlinks=true, linkcolor=blue]{hyperref}
 \usepackage[nameinlink]{cleveref}
+
+% % % % % % % % % % % % % %  END OF PACKAGES  % % % % % % % % % % % % % % % % % % %
+
 
 %Number subsections:
 \setsecnumdepth{subsection} %It might look better to turn this off, but then I should change the headings.
