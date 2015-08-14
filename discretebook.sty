@@ -4,6 +4,7 @@
 \ProvidesPackage{discretebook}
 \usepackage{amssymb, amsmath, amsthm}
 \usepackage{bold-extra}
+\usepackage{marvosym} %for stop signs.
 %\usepackage{textcomp}
 
 
@@ -65,7 +66,6 @@
 %\usepackage{titlesec} % to create better chapter header layout
 %\usepackage{booktabs}
 \usepackage{import}
-%\usepackage{marvosym} % to include stop-sign symbol. conflicts with stix font
 \usepackage{etoolbox} % to create toggles
 \usepackage{makeidx}
 \usepackage[nomain]{glossaries}
@@ -73,7 +73,7 @@
 %\setglossarystyle{mcolindex}
 
 \usepackage{tikz}
-\usetikzlibrary{shapes,snakes,shadows,fadings}
+\usetikzlibrary{shapes,decorations,shadows,fadings}
 
 \usepackage{svg}
 
@@ -176,19 +176,24 @@
 
 \def\WriteAnsFileStart{%
 	\Writetofile{\ansfilename}{ %
-		\protect\noindent{\textbf{Solutions for Section \thesection}}
+		\protect \vskip 2em
+		\protect\subsection*{Solutions for Section \thesection}
+		%\noindent{\textsc{\bfseries Solutions for Section \thesection}}
+		\protect\markright{Solutions for \thesection}
+		%\subsubsection*{Solutions for Section \thesection\markright{Section \thesection ~ Solutions}}
+		
 	%	\protect\heading{}{}{Section \thesection\ Solutions} 
 		\protect\begin{itemize}
 	}
 	\subsection*{Exercises\markright{\thesection ~ Exercises}}\addcontentsline{toc}{subsection}{Exercises}
 	}
 	
-\def\WriteAnsFileStartAlt{%
-	\Writetofile{\ansfilename}{\protect\clearpage \protect\noindent{\textbf{Solutions for Chapter \thesection}}
-%	\protect\heading{}{}{Chapter \thesection\ Solutions} 
-	\protect\begin{itemize}}
-	\subsection{Sample Questions\markright{Sample Questions}}\addcontentsline{toc}{subsection}{Sample Questions}
-	}
+%\def\WriteAnsFileStartAlt{%
+%	\Writetofile{\ansfilename}{\protect\clearpage \protect\noindent{\textbf{Solutions for Chapter \thesection}}
+%%	\protect\heading{}{}{Chapter \thesection\ Solutions} 
+%	\protect\begin{itemize}}
+%	\subsection{Sample Questions\markright{Sample Questions}}\addcontentsline{toc}{subsection}{Sample Questions}
+%	}
 	
 \def\WriteAnsFileStop{%
 	\Writetofile{\ansfilename}{\protect\end{itemize}}
@@ -208,6 +213,9 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 %\newtheorem*{solution}{Solution}
+
+
+
 
 %create a mdframe style for examples:
 \mdfdefinestyle{examplestyle}{%
@@ -268,7 +276,7 @@
 \newenvironment{activity}{%
 \noanswers 
 \mdfsetup{%
-	frametitle={\colorbox{white}{\Large\space Investigate! \hspace{4.18in}} },
+	frametitle={\colorbox{white}{\Large\space\space Investigate! \hspace{4.2in}} },
 	frametitleaboveskip=-1.5ex,
 	innerbottommargin=2em,
 	leftmargin=1ex,
@@ -286,7 +294,7 @@
 \vskip 1em
 \begin{mdframed} 
 }{%
-\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \qquad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the above} \quad {\LARGE\color{red} \Stopsign}\qquad }  \end{center}
+\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the activity above} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}
 }
 
 
@@ -371,26 +379,19 @@
     }%
 }
 
+
+
 \input{macros-discrete}
 \input{images/USAmap} %for creating maps of the US in tikz.
 
-% % % Tikz stop sign:
-%\newcommand{\Stopsign}{
-%\tikz[baseline=-0.4ex, scale=.25]{
-%\node[regular polygon,regular polygon sides=8,fill=red,inner sep=0pt,outer sep=0pt,draw=gray] {\bfseries \color{white}\Large \textsf{STOP}};
-%%	\foreach \x in {0,...,7}{
-%%		\coordinate (v\x) at (22.5+\x*45:1);
-%%	}
-%}
-%}
 
-% % Stop sign (taken from marvosym.sty):
-\newcommand{\mvs}{\fontfamily{mvs}\fontencoding{U}%
-\fontseries{m}\fontshape{n}\selectfont}
-\newcommand{\mvchr}[1]{{\mvs\char#1}}
-\newcommand{\textmvs}[1]{{\mvs #1}}
-
-\newcommand\Stopsign{\mvchr{33}}
+% % Stop sign (taken from marvosym.sty):  This was to still use this symbol when removing the marvosym package due to a conflict with stix font.
+%\newcommand{\mvs}{\fontfamily{mvs}\fontencoding{U}%
+%\fontseries{m}\fontshape{n}\selectfont}
+%\newcommand{\mvchr}[1]{{\mvs\char#1}}
+%\newcommand{\textmvs}[1]{{\mvs #1}}
+%
+%\newcommand\Stopsign{\mvchr{33}}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % %5
 
