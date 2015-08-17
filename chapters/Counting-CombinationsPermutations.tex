@@ -1,0 +1,106 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Introduction to Counting} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{Counting} % will be put in the right header
+
+
+\begin{document}
+\section{Combinations and Permutations}\label{sec:comb-perm}
+
+\begin{activity}
+You have a bunch of chips which come in five different colors: red, blue, green, purple and yellow.
+\begin{questions} 
+
+\question How many different two-chip stacks can you make if the bottom chip must be red or blue?  Explain your answer using both the additive and multiplicative principles.
+
+\question How many different three-chip stacks can you make if the bottom chip must be red or blue and the top chip must be green, purple or yellow?  How does this problem relate to the previous one?
+
+\question How many different three-chip stacks are there in which no color is repeated (but otherwise any colors could be on the top or bottom)? What about four-chip stacks?
+
+\question Suppose you wanted to take three different colored chips and put them in your pocket.  How many different choices do you have?  What if you wanted four different colored chips?  How do these problems relate to the previous one?
+
+\end{questions}
+\end{activity}
+
+A {\em permutation} is a (possible) rearrangement of objects.  For example, there are 6 permutations of the letters \textit{a, b, c}:
+\[abc, ~~ acb, ~~ bac, ~~bca, ~~ cab, ~~ cba.\]
+We know that we have them all listed above -- there are 3 choices for which letter we put first, then 2 choices for which letter comes next, which leaves only 1 choice for the last letter.  The multiplicative principle says we multiply $3\cdot 2 \cdot 1$.
+
+\begin{example}
+  How many permutations are there of the letters \textit{a, b, c, d, e, f}?
+  \begin{solution}
+    We do NOT want to try to list all of these out.  However, if we did, we would need to pick a letter to write down first.  There are 6 choices for that letter.  For each choice of first letter, there are 5 choices for the second letter (we cannot repeat the first letter), and for each of those, there are 4 choices for the third, 3 choices for the fourth, 2 choices for the fifth and finally only 1 choice for the last letter.  So there are $6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720$ permutations of the 6 letters.  We could also write this as $6!$ (read, 6 factorial; in general $n\gls{factorial}$ is the product of all natural numbers between $1$ and $n$.)\index{factorial}.
+  \end{solution}
+\end{example}
+
+Sometimes we do not want to permute all of the letters. 
+
+\begin{example}
+  How many 4 letter ``words'' can you make from the letters \textit{a} through \textit{f}, with no repeated letters?
+  \begin{solution}
+    This is just like the problem of permuting 4 letters, only now we have more choices for each letter.  For the first letter, there are 6 choices.  For each of those, there are 5 choices for the second letter.  Then there are 4 choices for the third letter, and 3 choices for the last letter.  The total number of words is $6\cdot 5\cdot 4 \cdot 3 = 360$.  This is not $6!$ because we never multiplied by 2 and 1.  We could start with $6!$ and then cancel the 2 and 1, and thus write $\frac{6!}{2!}$.
+  \end{solution}
+\end{example}
+
+In general, we can ask how many permutations exist of $k$ objects choosing those objects from a larger collection of $n$ objects.  (In the example above, $k = 4$, and $n = 6$.)  We write this number $P(n,k)$.  From the example above we see that to compute $P(n,k)$ we must apply the multiplicative principle to $k$ numbers, starting with $n$ and counting backwards.  So for example
+\[P(10, 4) = 10\cdot 9 \cdot 8 \cdot 7.\]
+Notice again that $P(10,4)$ starts out looking like $10!$, but we stop after 7.  So
+\[P(10,4) = \frac{10\cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}{6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = \frac{10!}{6!}.\]
+Careful: the factorial in the denominator is not $4!$ but rather $(10-4)!$.  
+
+\begin{defbox}{Permutations\index{permutation}}
+ \gls{pnk} is the number of permutations of $k$ out of $n$ objects.
+ 
+ \[P(n,k) = \frac{n!}{(n-k)!}.\]
+\end{defbox}
+
+Note that when $n = k$, we have $P(n,n) = \frac{n!}{(n-n)!} = n!$ (since we define $0!$ to be 1).  This makes sense -- we already know $n!$ gives the number of permutations of all $n$ objects.
+
+Here is another way to find the number of permutations of $k$ out of $n$ objects: first select which $k$ objects will be in the permutation, then count how many ways there are to arrange them.  Once you have selected the $k$ objects, we know there are $k!$ ways to arrange (permute) them.  But how do you select $k$ objects from the $n$?  You have $n$ objects, and you need to {\em choose} $k$ of them.  You can do that in ${n \choose k}$ ways.  This gives us another formula for $P(n,k)$:
+\[P(n,k) = {n \choose k}\cdot k!.\]
+
+Now since we have a closed formula for $P(n,k)$ already, we can substitute that in:
+\[\frac{n!}{(n-k)!} = {n \choose k} \cdot k!.\]
+If we divide both sides by $k!$ we get a closed formula for ${n \choose k}$.
+
+\begin{defbox}{Closed formula for \gls{cnk}}
+  \[{n \choose k} = \frac{n!}{(n-k)!k!}.\]
+\end{defbox}
+
+We say $P(n,k)$ counts permutations, and ${n \choose k}$ counts \emph{combinations}\index{combination}.  The formulas for each are very similar, there is just an extra $k!$ in the denominator of ${n \choose k}$.  That extra $k!$ accounts for the fact that ${n \choose k}$ does not distinguish between the different orders that the $k$ objects can appear in.  We are just selecting (or choosing) the $k$ objects, not arranging them.  Perhaps ``combination'' is a misleading label.  We don't mean it like a combination lock (where the order would definitely matter).  Perhaps a better metaphor is a combination of flavors -- you just need to decide which flavors to combine, not the order in which to combine them.
+
+To further illustrate the connection between combinations and permutations, we close with an example.
+
+\begin{example}
+  You decide to have a dinner party.  Even though you are incredibly popular and have 14 different friends, you only have enough chairs to invite 6 of them.  
+  \begin{enumerate}
+    \item How many choices do you have for which 6 friends to invite? 
+    \item What if you need to decide not only which friends to invite but also in which order to invite them in?  How many choices do you have then?
+  \end{enumerate}
+  \begin{solution}
+    \begin{enumerate}
+
+      \item You must simply choose 6 friends from a group of 14.  This can be done in ${14 \choose 4}$ ways.  We can find this number either by using Pascal's triangle or the closed formula $\frac{14!}{8!\cdot 6!} = 3003$.
+      
+      \item Here you must count all the ways you can permute 6 friends chosen from a group of 14.  So the answer is $P(14, 6)$, which can be calculated as $\frac{14!}{8!} = 2192190$.
+   \end{enumerate}
+    How are these numbers related?  Notice that $P(14,6)$ is {\em much} larger than ${14 \choose 6}$.  This makes sense. ${14 \choose 6}$ picks 6 friends, but $P(14,6)$  arranges the 6 friends as well as picks them.  In fact, we can say exactly how much larger $P(14,6)$ is.  In both counting problems we choose 6 out of 14 friends.  For the first one, we stop there, at 3003 ways.  But for the second counting problem, each of those 3003 choices of 6 friends can be arranged in exactly $6!$ ways.  So now we have $3003\cdot 6!$ choices and that is exactly $2192190$.
+    
+    Alternatively, look at the first problem another way.  We want to select 6 out of 14 friends, but we do not care about the order they are selected in.  To select 6 out of 14 friends, we might try this:
+    \[14 \cdot 13 \cdot 12 \cdot 11 \cdot 10 \cdot 9.\]
+    This is a reasonable guess, since we have 14 choices for the first guest, then 13 for the second, and so on.  But the guess is wrong (in fact, that product is exactly $2192190 = P(14,6)$).  It distinguishes between the different orders in which we could invite the guests.  To correct for this, we could divide by the number of different arrangements of the 6 guests (so that all of these would count as just one outcome).  There are precisely $6!$ ways to arrange 6 guests, so the correct answer to the first question is
+    \[\frac{14 \cdot 13 \cdot 12 \cdot 11\cdot 10 \cdot 9}{6!}.\]
+    Note that another way to write this is
+    \[\frac{14!}{8!\cdot 6!}.\]
+    which is what we had originally.
+  \end{solution}
+
+\end{example}
+
+
+\end{document}
+
+

@@ -1,0 +1,81 @@
+\begin{questions}
+
+\question The dollar menu at your favorite tax-free fast food restaurant has 7 items.  You have \$10 to spend. How many different meals can you buy if you spend all your money and: 
+\begin{parts}
+  \part Purchase at least one of each item.
+  \part Possibly skip some items.
+  \part Don't get more than 2 of any particular item.
+\end{parts}
+
+  \begin{answer}
+  Hint: Stars and bars.
+   \begin{parts}
+    \part ${9 \choose 6}$.
+    \part ${16 \choose 6}$.
+    \part ${16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]$.
+   \end{parts}
+  \end{answer}
+	
+	
+	
+	
+	
+\question After another gym class you are tasked with putting the 14 identical dodge-balls away into 5 bins.  This time, no bin can hold more than 6 balls. How many ways can you clean up?
+
+
+	\begin{answer}
+ ${18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]$.  Subtract all the distributions for which one or more bins contain 7 or more balls.  %How many ways can you do this if no bin can hold more than 6 balls?
+	\end{answer}	
+
+
+
+
+\question Consider the equation $x_1 + x_2 + x_3 + x_4 = 15$.  How many solutions are there with $2 \le x_i \le 5$ for all $i \in \{1,2,3,4\}$?
+
+	\begin{answer}
+	The easiest way to solve this is to instead count the solutions to $y_1 + y_2 + y_3 + y_4 = 7$ with $0 \le y_i \le 3$.  By taking $x_i = y_i+2$, each solution to this new equation corresponds to exactly one solution to the original equation.  
+	
+	Now all the ways to distribute the 7 units to the four $y_i$ variables can be found using stars and bars, specifically 7 stars and 3 bars, so ${10 \choose 3}$.  But this includes the ways that one or more $y_i$ variables can be assigned more than 3 units.  So subtract, using PIE.  We get 
+	\[{10 \choose 3} - {4\choose 1} {6 \choose 3}.\]
+	Note that this is the final answer because it is not possible to have two variables both get 4 units.
+	\end{answer}
+
+
+\question Suppose you planned on giving 7 gold stars to some of the 13 star students in your class.  Each student can receive at most one star.  How many ways can you do this?  Use PIE, and also an easier method, and compare your results.
+
+	\begin{answer}
+		Without any restriction, there would be ${19\choose 12}$ ways to distribute the stars.  Now we must use PIE to eliminate all distributions in which one or more student gets more than one star:
+		\[{19 \choose 12} - \left[{13 \choose 1}{17 \choose 12} - {13\choose 2}{15 \choose 12} + {13\choose 3}{13 \choose 12}\right] = 1716.\]
+		Interestingly enough, this number is also the value of ${13 \choose 7}$, which makes sense: if each student can have at most one star, we must just pick the 7 out of 13 students to receive them.
+	\end{answer}
+
+
+
+\question Based on the previous question, give a combinatorial proof for the identity:
+\[{n \choose k} = {n+k-1 \choose k} - \sum_{j=1}^n (-1)^{j+1}{n \choose j}{n+k-(2j+1) \choose k}.\]
+% \left[{n\choose 1}{n+k-3 \choose k} - {n \choose 2}{n+k-5 \choose k} + {n \choose 3}{n+k-7 \choose k} - \cdots \pm {n \choose n}{n+k-(2n+1) \choose k}\right]\]
+
+	\begin{answer}
+	The question is, how many ways can you distribute $k$ cookies to $n$ kids so that each kid gets at most one cookie.  On one hand, the answer is just ${n \choose k}$ since you must choose $k$ kids to get a cookie.  Alternatively, we can use stars and bars with PIE, which is how we get the right hand side of the identity.  Note that lots of the terms on the right hand side will be zero, as soon as $n+k-(2j+1)$ drops below $k$. 
+	\end{answer}
+
+
+
+\question Illustrate how the counting of derangements works by writing all permutations of $\{1,2,3,4\}$ and the crossing out those which are not derangements.  Keep track of the permutations you cross out more than once, using PIE.
+	\begin{answer}
+		The 9 derangements are: 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.
+	\end{answer}
+
+
+
+\question Ten ladies of a certain age drop off their red hats at the hat check of a museum.  As they are leaving, the hat check attendant gives the hats back randomly.  In how many ways can exactly six of the ladies receive their own hat (and the other four not)?
+
+	\begin{answer}
+	${10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)$.  We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged. 
+	\end{answer}
+	
+	
+
+
+
+\end{questions}

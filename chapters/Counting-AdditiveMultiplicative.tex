@@ -1,0 +1,271 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Introduction to Counting} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{Counting} % will be put in the right header
+
+
+\begin{document}
+
+\section{Additive and Multiplicative Principles}
+
+\begin{activity}
+\begin{questions}
+\question A restaurant offers 8 appetizers and 14 entr\'ees.  How many choices do you have if:
+\begin{parts}
+ \part you will eat one dish, either an appetizers or an entr\'ee?
+ \part you are extra hungry and want to eat both an appetizer and an entr\'ee?
+\end{parts}
+\question Think about the methods you used to solve the counting problems above.  Write down the rules for these methods.
+\question Do your rules work?  A standard deck of playing cards has 26 red cards and 12 face cards.
+
+\begin{parts}
+ \part How many ways can you select a card which is either red or a face card?
+ \part How many ways can you select a card which is both red and a face card?
+ \part How many ways can you select two cards so that the first one is red and the second one is a face card?
+\end{parts}
+\end{questions}
+
+\end{activity}
+
+
+Consider this rather simple counting problem: at Red Dogs and Donuts, there are 14 varieties of donuts, and 16 types of hot dogs.  If you want either a donut or a dog, how many options do you have?  This isn't too hard, you just add 14 and 16.  Will that always work?  What is important here?
+
+
+\begin{defbox}{Additive Principle}
+  The {\em additive principle}\index{additive principle} states that if event $A$ can occur in $m$ ways, and event $B$ can occur in $n$ {\em disjoint}\index{disjoint} ways, then the event ``$A$ or $B$'' can occur in $m + n$ ways.  
+\end{defbox}
+
+It is important that the events be disjoint.  For example, a standard deck of 52 cards contains $26$ red cards and $12$ face cards.  However, the number of ways to select a card which is either red or a face card is not $26 + 12 = 38$.  This is because there are 6 cards which are both red and face cards.
+
+The additive principle works with more than two events.  Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles?  How many choices do you have now?  You would have $14 + 16 + 15 = 45$ options.
+
+\begin{example}
+  How many two letter ``words''\index{words} start with either A or B?  How many start with one of the 5 vowels?  (A word is just a strings of letters; it doesn't have to be English, or even pronounceable.)
+  
+  \begin{solution}
+    First, how many two letter words start with A?  We just need to select the second letter, which can be accomplished in 26 ways.  So there are 26 words starting with A.  There are also 26 words that start with B.  So to select a word which starts with either A or B, we can pick the word from the first 26 or the second 26, for a total of 52 words.  The additive principle is at work here.
+    
+    Now what about all the two letter words starting with a vowel?  Well there are 26 starting with A, another 26 starting with E, and so on.  We will have 5 groups of 26.  So we add 26 to itself 5 times.  Of course it would be easier to just multiply $5\cdot 26$.  We are really using the additive principle again, just using multiplication as a shortcut.
+  \end{solution}
+
+\end{example}
+
+\begin{example}
+  Suppose you are going for some fro yo.  You can pick one of 6 yogurt choices, and one of 4 toppings.  How many choices do you have?  
+  
+  \begin{solution}
+    Break your choices up into disjoint events:  $A$ are the choices with the first topping, $B$ the choices featuring the second topping, and so on.  So we have four events.  Each can occur in 6 ways (one for each yogurt flavor).  The events are disjoint, so the total number of choices is $6 + 6 + 6 + 6$.
+  \end{solution}
+
+
+\end{example}
+
+Note that in both of the previous examples, when using the additive principle on a bunch of events all the same size, it is quicker to multiply.  This really is the same and not just because $6 + 6 + 6 + 6 = 4\cdot 6$.  We can first select the topping in 4 ways (that is we first select which of the disjoint events we will take).  For each of those first 4 choices, we now have 6 choices of yogurt.  We have:
+
+\begin{defbox}{Multiplicative Principle}
+  The {\em multiplicative principle}\index{multiplicative principle} states that if event $A$ can occur in $m$ ways, and each possibility for $A$ allows for exactly $n$ ways for event $B$, then the event ``$A$ and $B$'' can occur in $m \cdot n$ ways.
+\end{defbox}
+
+The multiplicative principle generalizes to more than two events as well.
+
+\begin{example}
+  How many license plates can you make out of three letters followed by three numerical digits?
+  
+  \begin{solution}
+    Here we have six events: the first letter, the second letter, the third letter, the first digit, the second digit and the third digit.  The first three events can each happen in 26 ways, the last three can each happen in 10 ways.  So the total number of license plates will be $26\cdot 26\cdot 26 \cdot 10 \cdot 10 \cdot 10$, using the multiplicative principle.
+    
+    Does this make sense?  Think about how we would pick a license plate. How many choices we would have?  First, we need to pick the first letter.  There are 26 choices.  Now for each of those, there are 26 choices for the second letter.  So 26 second letters with first letter A, 26 second letters with first letter B, and so on.  So we add 26 to itself 26 times.  Or quicker: there are $26 \cdot 26$ choices for the first two letters.  
+    
+    Now for each choice of the first two letters, we have 26 choices for the third letter.  That is, 26 third letters for the first two letters AA, 26 choices for the third letter after starting AB, and so on.  There are $26 \cdot 26$ of these $26$ third letter choices, for a total of $(26\cdot26)\cdot 26$ choices for the first three letters.  And for each of these $26\cdot26\cdot26$ choices of letters, we have a bunch of choices for the remaining digits.
+    
+    In fact, there are going to be exactly 1000 choices for the numbers.  We can see this because there are 1000 three-digit numbers (000 through 999).  This is 10 choices for the first digit, 10 for the second, and 10 for the third.  The multiplicative principle says we multiply: $10\cdot 10 \cdot 10 = 1000$.  
+    
+    So there were $26^3$ choices for the three letters, and $10^3$ choices for the numbers, so to we have a total of $26^3 \cdot 10^3$ choices of license plates.
+  \end{solution}
+
+\end{example}
+
+
+ Careful: ``and'' doesn't mean ``times.''  For example, how many playing cards are both red and a face card?  Not $26 \cdot 12$.  The answer is 6, and we needed to know something about cards to answer that question.  
+ 
+ Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card?  This looks more like the multiplicative principle (you are counting two separate events) but the answer is not $26 \cdot 12$ here either.  The problem is that while there are 26 ways for the first card to be selected, it is not the case that {\em for each} of those there are 12 ways to select the second card.  If the first card was both red and a face card then there would be only 11 choices for the second card.  The moral of this story?  The multiplicative principle only works if the events are independent.\footnote{To solve this problem, you could break into two cases. First count how many ways there are to select the two cards when the first card is a red non-face card and second count how many ways when the first card is a red face card.  Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.}
+
+\subsection{Counting with sets}
+
+
+Do you believe the additive and multiplicative principles?  How would you convince someone they are correct?  This is surprisingly difficult.  They seem so simple, so obvious.  But why do they work?  
+
+To make things clearer, and more mathematically rigorous, we will use sets.  Do not skip this section!  It might seem like we are just trying to give a proof of these principles, but we are doing a lot more.  If we understand the additive and multiplicative principles rigorously, we will be better at applying them, and knowing when and when not to apply them at all.
+
+We will look at the additive and multiplicative principles in a slightly different way.  Instead of thinking about event $A$ and event $B$, we want to think of a set $A$ and a set $B$.  The sets will contain all the different ways the event can happen.  (It will be helpful to be able to switch back and forth between these two models when checking that we have counted correctly.)  Here's what we mean:
+
+\begin{example}
+ Suppose you own 9 shirts and 5 pairs of pants.
+ \begin{enumerate}
+  \item How many outfits can you make?
+  \item If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?
+ \end{enumerate}
+\begin{solution}
+ By now you should agree that the answer to the first question is $9 \cdot 5 = 45$ and the answer to the second question is $9 + 5 = 14$.  These are the multiplicative and additive principles.  There are two events: picking a shirt and picking a pair of pants.  The first event can happen in 9 ways and the second event can happen in 5 ways.  To get both a shirt and a pair of pants, you multiply.  To get just one article of clothing, you add.
+ 
+ Now look at this using sets.  There are two sets, call them $S$ and $P$  The set $S$ contains all 9 shirts so $|S| = 9$ while $|P| = 5$, since there are 5 elements in the set $P$ (namely your 5 pairs of pants).  What are we asking in terms of these sets?  Well in question 2, we really want $|S \cup P|$; how many elements are there in the union of shirts and pants.  This is just $|S| + |P|$ (since there is no overlap; $|S \cap P| = 0$).  Question 1 is slightly more complicated.  Your first guess might be to find $|S \cap P|$, but this is not right (there is nothing in the intersection).  We are not asking for how many clothing items are both a shirt and a pair of pants.  Instead, we want one of each.  We could think of this as asking how many pairs $(x,y)$ there are, where $x$ is a shirt and $y$ is a pair of pants.  As we will soon verify, this number is $|S| \cdot |P|$.
+\end{solution}
+\end{example}
+
+From this example we can see right away how to rephrase our additive principle in terms of sets:
+
+\begin{defbox}{Additive Principle (with sets)\index{additive principle}}
+Given two sets $A$ and $B$, if $A \cap B = \emptyset$ (that is, if there is no element in common to both $A$ and $B$), then
+\[|A \cup B| = |A| + |B|.\]
+\end{defbox}
+
+This hardly needs a proof.  To find $A \cup B$ you take everything in $A$ and throw in everything in $B$.  Since there is no element in both sets already, you will have $|A|$ things and add $|B|$ new things to it.  This is what adding does!  Of course, we can easily extend this to any number of (disjoint) sets.
+
+From the example above, we see that in order to investigate the multiplicative principle carefully, we need to consider ordered pairs.  We should define this carefully.
+
+\begin{defbox}{Cartesian Product}
+ Given sets $A$ and $B$, we can form the \emph{set} $A \times B = \{(x,y) \st x \in A \wedge y \in B\}$ to be the set of all ordered pairs $(x,y)$ where $x$ is an element of $A$ and $y$ is an element of $B$.  We call $A \times B$ the \emph{Cartesian product}\index{Cartesian product} of $A$ and $B$.
+\end{defbox}
+
+The question is, what is $|A \times B|$?  To figure this out, write out $A \times B$.
+
+Let $A = \{a_1,a_2, a_3, \ldots, a_m\}$ and $B = \{b_1,b_2, b_3, \ldots, b_n\}$  (so $|A| = m$ and $|B| = n$).  The set $A \times B$ contains all pairs with the first half of the pair being $a_i$ for some $i$ and the second being $b_j$ for some $j$.  In other words:
+\begin{align*}
+ A \times B = \{ & (a_1, b_1), (a_1, b_2), (a_1, b_3), \ldots (a_1, b_n), \\
+  & (a_2, b_1), (a_2, b_2), (a_2, b_3), \ldots, (a_2, b_n), \\
+  & (a_3, b_1), (a_3, b_2), (a_3, b_3), \ldots, (a_3, b_n), \\
+  & \vdots \\
+  & (a_m, b_1), (a_m, b_2), (a_m, b_3), \ldots, (a_m, b_n)\}.
+\end{align*}
+
+Notice what we have done here: we made $m$ rows of $n$ pairs.  That is a total of $m \cdot n$ pairs.  
+
+Each row above is really $\{a_i\} \times B$ for some $a_i \in A$.  That is, we fixed the $A$-element.  Broken up this way, we have
+\[A \times B = (\{a_1\} \times B) \cup (\{a_2\} \times B) \cup (\{a_3\}\times B) \cup \cdots \cup (\{a_m\} \times B).\]
+So $A \times B$ is really the union of $m$ disjoint sets.  Each of those sets has $n$ elements in them.  So the total (using the additive principle) is $n + n + n + \cdots + n = m \cdot n$.
+
+To summarize:
+
+\begin{defbox}{Multiplicative Principle (with sets)\index{multiplicative principle}}
+ Given two sets $A$ and $B$, we have $|A \times B| = |A| \cdot |B|$.
+\end{defbox}
+
+Again, we can easily extend this to any number of sets.
+
+\subsection{Principle of Inclusion/Exclusion\index{principle of inclusion/exclusion}\index{PIE}}\label{sec:PIE}
+
+While we are thinking about sets, consider what happens to the additive principle when the sets are NOT disjoint. Suppose we want to find $|A \cup B|$ and know that $|A| = 10$ and $|B| = 8$.  This is not enough information though.  We do not know how many of the 8 elements in $B$ are also elements of $A$.  But if we also know that $|A \cap B| = 6$, then we can say exactly how many elements are in $A$, and of those how many are in $B$ and how many are not (6 of the 10 elements are in $B$, so 4 are in $A$ but not in $B$).  We could fill in a Venn diagram \index{Venn diagram} as follows:
+
+\begin{center}
+
+     \begin{tikzpicture}
+   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+   \draw (0,0) node{6} (-1,0) node{4} (1,0) node{2};
+ \end{tikzpicture}
+
+
+\end{center}
+
+This says there are 6 elements in $A \cap B$, 4 elements in $A \setminus B$ and 2 elements in $B \setminus A$.  Now \emph{these} three sets \emph{are} disjoint, so we can use the additive principle to find the number of elements in $A \cup B$.  It is $6 + 4 + 2 = 12$.  
+
+This will always work, but drawing a Venn diagram is more than we need to do.  In fact, it would be nice to relate this problem to the case where $A$ and $B$ are disjoint.  Is there one rule we can make that works in either case?
+
+\todo[inline]{Alees suggests a GCD or LCM question to draw a connection to the other place they have seen this, perhaps as an exercise.  This is a great idea.}
+
+Here is another way to get the answer to the problem above.  We start by just adding $|A| + |B|$.  This is $10 + 8 = 18$, which would be the answer if $|A \cap B| = 0$.  And we see that we are off by exactly 6, which just so happens to be $|A \cap B|$.  So perhaps we guess
+\[|A \cap B| = |A| + |B| - |A \cap B|.\]
+This works for this one example.  Will it always work?  Think about what we are doing here.  We want to know how many things are either in $A$ or $B$ (or both).  We can throw in everything in $A$, and everything in $B$.  This would give $|A| + |B|$ many elements.  But of course when you actually take the union, you do not repeat elements that are in both.  So far we have counted every element in $A \cap B$ exactly twice: once when we put in the elements from $A$ and once when we included the elements from $B$.  We correct by subtracting out the number of elements we have counted twice.  So we added them in twice, subtracted once, leaving them counted only one time.
+
+In other words, we have:
+
+
+\begin{defbox}{Cardinality of a union (2 sets)}
+  For any finite sets $A$ and $B$,
+  \[|A \cup B| = |A| + |B| - |A \cap B|.\]
+\end{defbox}
+
+
+We can do something similar with three sets. 
+
+\begin{example}
+An examination in three subjects, Algebra, Biology, and Chemistry, was taken
+by 41 students. The following table shows how many students failed in each
+single subject and in their various combinations.
+\vskip 1ex
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+ Subject: & A & B & C & AB & AC & BC & ABC\\
+\hline
+Failed: & 12 & 5 & 8 & 2 & 6 & 3 & 1\\
+\hline
+\end{tabular}
+\end{center}
+\vskip 1ex
+How many students failed at least one subject?  
+
+ \begin{solution}
+ 
+The answer is not 37, even though the sum of the numbers above is 37.  The reason is that while 12 students failed algebra, 2 of those students also failed biology and 1 failed chemistry as well.  In fact, that 1 student who failed all three subjects is counted a total of 7 times in the total 37.  To clarify things, let us think of the students who failed algebra as the elements of the set $A$, and similarly for sets $B$ and $C$.  The one student who failed all three subjects is the lone element of the set $A \cap B \cap C$.  Thus in Venn diagrams:
+
+\begin{center}
+ \begin{tikzpicture}[scale=0.9]
+   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+   \draw (0,-.35) node{1};
+ \end{tikzpicture}
+
+\end{center}
+
+Now let's fill in the other intersections.  We know $A\cap B$ contains 2 elements, but one element has already been counted.  So we should put a one in the region where $A$ and $B$ intersect (but $C$ does not).  Similarly, we calculate the cardinality of $(A\cap C) \setminus B$, and $(B \cap C) \setminus A$:
+
+\begin{center}
+  \begin{tikzpicture}[scale=0.9]
+   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+   \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
+ \end{tikzpicture}
+\end{center}
+
+Next we determine the numbers which should go in the remaining regions, including outside of all three circles.  This last number is the number of students who did not fail any subject -- the number we were asked to find:
+
+\begin{center}
+   \begin{tikzpicture}[scale=0.9]
+   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+   \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
+   \draw (-1,.3) node{5} (1,.3) node{1} (0,-1.5) node{0} (-1.5,-1.75) node{26};
+ \end{tikzpicture}
+\end{center}
+
+We found 5 goes in the ``$A$ only'' region because the entire circle for $A$ needed to have a total of 12, and 7 were already accounted for.  
+
+Thus the number of students who passed all three classes is 26.  The number who failed at least one class is 15.
+
+Note that we can also answer other questions.  For example, now many students failed just chemistry?  None.  How many passed biology but failed both algebra and chemistry? 5.
+
+ \end{solution}
+\end{example} 
+ 
+Could we have solved the problem above in an algebraic way?  While the additive principle generalizes to any number of sets, when we add a third set here, we must be careful. With two sets, we needed to know the cardinalities of $A$, $B$, and $A \cap B$ in order to find the cardinality of $A \cup B$.  With three sets we need more information.  There are more ways the sets can combine.  Not surprisingly then, the formula for cardinality of the union of three non-disjoint sets is more complicated:
+
+
+\begin{defbox}{Cardinality of a union (3 sets)}
+  For any finite sets $A$, $B$, and $C$,
+  \[|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|\]
+\end{defbox}
+
+To determine how many elements are in at least one of $A$, $B$, or $C$ we add up all the elements in each of those sets.  However, when we do that, any element in both $A$ and $B$ is counted twice.  Also each element in both $A$ and $C$ is counted twice, as are elements in $B$ and $C$.  So we take each of those out of our sum once.  But now what about the elements which are in $A \cap B \cap C$ (in all three sets).  We added them in three times, but also removed them three times.  So they have not yet been counted.  Thus we add those elements back in at the end.
+
+Returning to our example above, we have $|A| = 12$, $|B| = 5$, $|C| = 8$.  We also have $|A \cap B| = 2$, $|A \cap C| = 6$, $|B \cap C| = 3$ and $|A \cap B \cap C| = 1$.  So:
+\[|A \cup B \cup C| = 12 + 5 + 8 - 2 - 6 - 3 + 1 = 15\]
+This is what we got when we solved the problem using Venn diagrams.
+
+This process of adding in, then taking out, then adding back in, and so on is called the {\em Principle of Inclusion/Exclusion}, or simply PIE.  We will return to this counting technique later to solve for more complicated problems (involving more than 3 sets).
+ 
+ 
+ 
+
+\end{document}
+
+

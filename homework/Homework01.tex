@@ -3,55 +3,16 @@
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
 \usepackage{tikz}
 
-\def\d{\displaystyle}
-\def\?{\reflectbox{?}}
-\def\b#1{\mathbf{#1}}
-\def\f#1{\mathfrak #1}
-\def\c#1{\mathcal #1}
-\def\s#1{\mathscr #1}
-\def\r#1{\mathrm{#1}}
-\def\N{\mathbb N}
-\def\Z{\mathbb Z}
-\def\Q{\mathbb Q}
-\def\R{\mathbb R}
-\def\C{\mathbb C}
-\def\F{\mathbb F}
-\def\A{\mathbb A}
-\def\X{\mathbb X}
-\def\E{\mathbb E}
-\def\O{\mathbb O}
-\def\pow{\mathscr P}
-\def\inv{^{-1}}
-\def\nrml{\triangleleft}
-\def\st{:}
-\def\~{\widetilde}
-\def\rem{\mathcal R}
-\def\iff{\leftrightarrow}
-\def\Iff{\Leftrightarrow}
-\def\and{\wedge}
-\def\And{\bigwedge}
-\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
-\def\Vee{\bigvee}
-\def\VVee{\d\Vee\mkern-18mu\Vee}
-\def\imp{\rightarrow}
-\def\Imp{\Rightarrow}
-\def\Fi{\Leftarrow}
+\input{../macros-discrete}
 
-\def\={\equiv}
-\def\var{\mbox{var}}
-\def\mod{\mbox{Mod}}
-\def\Th{\mbox{Th}}
-\def\sat{\mbox{Sat}}
-\def\con{\mbox{Con}}
-\def\bmodels{=\joinrel\mathrel|}
-\def\iffmodels{\bmodels\models}
-\def\dbland{\bigwedge \!\!\bigwedge}
-\def\dom{\mbox{dom}}
-\def\rng{\mbox{range}}
-\DeclareMathOperator{\wgt}{wgt}
-
-
-\def\bar{\overline}
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
 
 %\pointname{pts}
 \pointsinmargin
@@ -60,20 +21,69 @@
 \pagestyle{head}
 %\printanswers
 
-\firstpageheader{Math 228}{\bf Homework 1} { }%Due: Wed, Jan 16\\ Second draft: Wed, Jan 23.}
+\firstpageheader{Math 228}{\bf Homework 1}{Due: Friday, January 23}
 
 
 \begin{document}
-\noindent \textbf{Instructions}: For Wednesday, carefully write up a solution to the knight and knave puzzle below.  The solution should consist of both the answer (which troll is which) and a careful argument for why that answer must be correct.  Treat this like a mini essay.  Your write-up should be somewhere between two and five paragraphs.  You might find it easier to type this assignment, but neatly hand-written is also acceptable.
+\noindent \textbf{Instructions}: Complete the homework problems below on {\em separate} sheets of paper (and not all jammed up between the questions).  This is to be turned in and graded, so make sure your work is neat and easy to ready - there is nothing wrong with using a separate sheet of paper for each problem. Each solution should be accompanied with supporting work or an explanation why the solution is correct. Your work will be graded on correctness as well as the clarity of your explanations. 
 
 \begin{questions}
-  \question While walking through a fictional forest, you encounter three trolls.  Each is either a {\em knight}, who always tells the truth, or a {\em knave}, who always lies.  The trolls will not let you pass until you correctly identify each as either a knight or a knave.  Each troll makes a single statement:
-  \begin{itemize}
-   \item[] Troll 1: Only one of us is a knave.
-   \item[] Troll 2: No, only one of us is a knight.
-   \item[] Troll 3: We are all knaves.
-  \end{itemize}
-  Which troll is which?
+\question[9] Let $A = \{2, 4, 6, 8\}$.  Suppose $B$ is a set with $|B| = 5$.
+\begin{parts}
+	\part What are the smallest and largest possible values of $|A \cup B|$?  Explain.
+	\begin{solution}
+	$5 \le |A\cup B| \le 9$.  This is because $A \cup B$ contains everything that is either in $A$ or in $B$, or in both (but counted just once).  If there is no overlap between $A$ and $B$, then all 5 elements in $B$ are counted in addition to those in $A$, for a total of 9. On the other hand, if there is as much overlap as possible (i.e., $A \subseteq B$) then there is only one more element in $B$ that is not already in $A$, so the union will contain just the 5 elements in $B$ (4 of which are also in $A$).
+	\end{solution}
+	\part What are the smallest and largest possible values of $|A \cap B|$?  Explain.
+	\begin{solution}
+		$0 \le |A \cap B| \le 4$.  This is because $A \cap B$ contains everything that is both in $A$ and in $B$.  There could be nothing in both sets, in which case the intersection would be the empty set, which has cardinality zero.  The most overlap that could occur is if everything in $A$ is also in $B$, in which case all 4 elements of $A$ would be in $B$ and thus in the intersection.
+	\end{solution}
+	\part What are the smallest and largest possible values of $|A \times B|$?  Explain.
+	\begin{solution}
+	$|A \times B| = 20$ always.  It doesn't matter what $B$ is, just that it contains 5 elements.  $A \times B$ has all the pairs in which the first element in the pair comes from $A$ and the second element comes from $B$.  There will be 5 pairs with first element 2, another 5 pairs with first element 4, another 5 with first element 6, and another 5 with first element 8, for a total of 20 pairs.
+	\end{solution}
+\end{parts}
+
+
+\question[6] Let $A$, $B$ and $C$ be sets.  Suppose that $A \subseteq B$ and $B \subseteq C$.  Does this mean that $A \subseteq C$?  Explain how you know (i.e., prove your answer).
+
+\begin{solution}
+ Yes it does.  We can see this using a Venn diagram - the circle $A$ is completely contained in the circle $B$, and the circle $B$ is completely contained in the circle $C$.  So the circle $A$ is completely contained in the circle $C$.  
+ 
+ Here is a proof: Suppose $A \subseteq B$ and $B \subseteq C$.  Then take any $x \in A$.  Since $A \subseteq B$, we have that $x \in B$ as well - that is, everything in $A$ is also in $B$, so this works for the arbitrary $x$ we chose.  Now that we know that $x \in B$, we can conclude $x \in C$, since $B \subseteq C$ - everything in $B$ is also in $C$.  Since $x$ was an arbitrary element of $A$, which we showed was also in $C$, we have $A \subseteq C$ - everything in $A$ is also in $C$.
+\end{solution}
+
+
+
+
+
+\question[10] For each scenario below, explain how it could be interpreted as a function.  Specifically, say what the domain and codomain should be and why you made the choice you did.  Then decide whether the function could be injective, surjective or even bijective.  Explain what assumptions you would have to make in each case or why it would be impossible.  
+\begin{parts}
+\part The 10 members of Math Club all decide to each pick one of the 15 math club meetings to give a presentation (each of which will take the entire meeting time).
+
+\begin{solution}
+The 10 Math Club members are the domain, and the 15 meetings are the codomain (if you switched these, then some elements of the domain would not match up with anything, so it wouldn't be a function).  The function sends a member to the meeting she signs up for.  This function cannot be surjective because there is no way to fill up all 15 meetings with only 10 members.  The function is injective though, because no two members can sign up for the same meeting.
+\end{solution}
+
+\part Over the next seven days, you plan to finish a box of 24 different types of chocolates.
+\begin{solution}
+The domain is the set of 24 chocolates, the codomain is the set of 7 days (if you switched these we wouldn't have a function because one day would be assigned more than one chocolate).  The function assigns each chocolate to the day on which it was eaten.  This function is definitely not injective because to finish the 24 chocolates in a week, you would need to eat more than one on at least one of the days.  The function {\em could} be surjective: it would be if you eat at least one chocolate on each day.  If you skip a day, then the function is not surjective.  In either case, the function is not bijective because it is not injective.
+\end{solution}
+\end{parts}
+
+\question[5] Make up a scenario like the two above for which the function {\em must} be a bijection.  Explain what it is about your scenario which forces the function to be bijective.
+
+\begin{solution}
+One example: you have five different novels to give to your five friends.  Each friend gets exactly one novel.  Here you could pick either set to be the domain and the other to be the codomain.  The key is that there are an equal number of elements in the domain as in the codomain, and that every element from the domain is assigned exactly one element of the codomain (and visa-versa).  Say we take the novels to be the domain.  The function is injective because no two novels go to the same friend.  The function is surjective because every friend gets at least one novel. Since the function is injective and surjective, it is bijective.
+\end{solution}
+
+
+\bonusquestion[3] BONUS! Find an example of a set $A$ with $|A| = 3$ which contains only other sets and  has the following property: for all sets $B \in A$, we also have $B \subseteq A$.  Explain why your example works.  (FYI: sets that have this property are called {\em transitive}.)
+
+\begin{solution}
+Take $A = \{\emptyset, \{\emptyset\}, \{\emptyset, \{\emptyset\}\}\}$.  There are three things to check.  First, the element $\emptyset \in A$ is also a subset, since the empty set is a subset of every set.  Second, $\{\emptyset\}\in A$.  Is $\{\emptyset\} \subseteq A$?  Yes, because $\{\emptyset\}$ contains one element, namely $\emptyset$ which is also an element of $A$.  Finally, consider $\{\emptyset, \{\emptyset\}\}\in A$.  This two is a subset as both of its element are exactly the other two element of $A$.  Thus $A$ is transitive.  Notice also that each of the elements in $A$ are also transitive sets.  This happens to be the only set of size three with that property.
+\end{solution}
+
 
 \end{questions}
 

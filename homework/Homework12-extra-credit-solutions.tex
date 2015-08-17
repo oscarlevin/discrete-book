@@ -1,0 +1,263 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
+\usepackage{tikz}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+\def\={\equiv}
+\def\var{\mbox{var}}
+\def\mod{\mbox{Mod}}
+\def\Th{\mbox{Th}}
+\def\sat{\mbox{Sat}}
+\def\con{\mbox{Con}}
+\def\bmodels{=\joinrel\mathrel|}
+\def\iffmodels{\bmodels\models}
+\def\dbland{\bigwedge \!\!\bigwedge}
+\def\dom{\mbox{dom}}
+\def\rng{\mbox{range}}
+\DeclareMathOperator{\wgt}{wgt}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{pts-bns}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 12-solutions}{Due: Wednesday, May 6}
+
+\def\vertexsize{4pt}
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=\vertexsize,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+
+\begin{document}
+\noindent \textbf{Instructions}: This is an extra homework assignment for those of you looking to boost your homework grade. There are 12 problems that total 60 points as well as 1 bonus problem worth 4 points. You do not have to complete the entire assignment to get credit. However, these problems are also a nice review for the final. Same rules as usual - turn in your work on separate sheets of paper.  You must justify all your answers for full credit.
+
+\begin{questions}
+\question Fifth grade students at a local elementary school took a poll about how they got to school. Many students took multiple modes of transportation with 31 students saying they got rides from their parents, 32 taking their bike to school and 21 walking. 8 students who said they bike also walk, and 3 students who usually walk get rides from their parents on some mornings. The one student that said he uses his bike and gets ride also said he uses all three modes of transportation. 
+\begin{parts}
+\part[2] Draw a venn diagram of this situation.
+\begin{solution}
+	\begin{center}
+	\includegraphics[height=2 in, width=2 in]{venndiagramh12}
+	\end{center}
+\end{solution}
+\part[3] How many students took the survey?
+\begin{solution}
+	Adding up all the values in the venn diagram we get that there were 73 students who took the survey.
+\end{solution}
+\part[2] How does this problem relate to PIE?
+\begin{solution}
+	Remember that PIE is the principle of inclusion/exclusion and this problem relates because we want to calculate the total number of students who took the survey but we can't just add up all the numbers in the problem because we would be counting certain students multiple times. So, this means that when we are looking at this problem we need to follow the principle for 3 different sets which gives us: \[|A\cup B \cup C|=|A|+|B|+|C|-|A\cap B|-|A\cap C| - |B \cap C|+|A\cap B\cap C|\]
+So, we could have just looked at the problem and related each set of students to each $A, B, C$ where $A\cap B$ is the number of students who did both $A$ and $B$ to get to school.
+\end{solution}
+\end{parts}
+
+\question[4] While walking through a fictional forest, you encounter three trolls.  Each is either a {\em knight}, who always tells the truth, or a {\em knave}, who always lies.  The trolls will not let you pass until you correctly identify each as either a knight or a knave.  Each troll makes a single statement:
+  \begin{itemize}
+   \item[] Troll 1: Only one of us is a knave.
+   \item[] Troll 2: No, only one of us is a knight.
+   \item[] Troll 3: We are all knaves.
+  \end{itemize}
+  Which troll is which?
+  \begin{solution}
+  	Let's first consider the statement of Troll 3. If all of the trolls were knaves, then Troll 3 would be telling the truth and he would be a Knight (which is a contradiction). Therefore, Troll 3 must be a Knave and at least one of the other two trolls must be a Knight. Let's now look at Troll 1's statement. If he is telling the truth then both Troll 1 and Troll 2 must be telling the truth because Troll 3 is already a knave. But if that's the case then Troll 2 is lying and is not a knight. Therefore, Troll 1 must be a knave. Now, that means that Troll 2 must be telling the truth because otherwise Troll 3 would be telling the truth and we already know that's not the case. So, Troll 1 and Troll 3 are knaves and Troll 2 is a knight.
+  \end{solution}
+  \question[6] Can you distribute conjunctions over disjunctions?  Disjunctions over conjunctions?  Let's find out.  Remember, two statements are logically equivalent if they are true in exactly the same cases.
+\begin{parts}
+  \part Are the statements $P \vee (Q \and R)$ and $(P \vee Q) \and (P \vee R)$ logically equivalent?  
+  \begin{solution}
+    Yes they are.  We prove this by showing that their truth tables are identical:
+    \begin{center}
+        \begin{tabular}{c|c|c||c||c}
+    $P$ & $Q$ & $R$ & $P \vee (Q \and R)$ & $(P \vee Q) \and (P \vee R)$\\ \hline
+    T & T & T & T & T\\
+    T & T & F & T & T \\
+    T & F & T & T & T \\
+    T & F & F & T & T \\
+    F & T & T & T & T \\
+    F & T & F & F & F \\
+    F & F & T & F & F \\
+    F & F & F & F & F
+  \end{tabular}
+    \end{center}
+  \end{solution}
+
+  \part Are the statements $P \and (Q \vee R)$ and $(P \and Q) \vee (P \and R)$ logically equivalent?
+  \begin{solution}
+    It works again.  Here are the two truth tables which prove it:
+        \begin{center}
+        \begin{tabular}{c|c|c||c||c}
+    $P$ & $Q$ & $R$ & $P \and (Q \vee R)$ & $(P \and Q) \vee (P \and R)$\\ \hline
+    T & T & T & T & T\\
+    T & T & F & T & T \\
+    T & F & T & T & T \\
+    T & F & F & F & F \\
+    F & T & T & F & F \\
+    F & T & F & F & F \\
+    F & F & T & F & F \\
+    F & F & F & F & F
+  \end{tabular}
+    \end{center}
+  \end{solution}
+
+\end{parts}
+\question[8] {\em Conic}, your favorite math themed fast food drive-in offers 20 flavors which can be added to your soda.  You have enough money to buy a large soda with 4 added flavors.  How many different soda concoctions can you order if:
+\begin{parts}
+  \part you refuse to use any of the flavors more than once?
+  \part you refuse repeats but care about the order the flavors are added?
+  \part you allow yourself multiple shots of the same flavor?
+  \part you allow yourself multiple shots, and care about the order the flavors are added?
+\end{parts}
+
+  \begin{solution}
+   \begin{parts}
+    \part ${20 \choose 4}$ (order does not matter and repeats are not allowed)
+    \part $P(20, 4) = 20\cdot 19\cdot 18 \cdot 17$ (order matters and repeats are not allowed)
+    \part ${23 \choose 19}$ (order does not matter and repeats are allowed - stars and bars)
+    \part $20^4$ (order matters and repeats are allowed - 20 choices 4 times)
+   \end{parts}
+  \end{solution}
+
+\question[4] How many 10-digit numbers contain exactly four 1's, three 2's, two 3's and one 4?
+\begin{solution}
+Your response will be graded on thoughtfulness and effort.  However, this is how I would approach the problem:
+
+Some examples of acceptable outcomes: 1111222334, 1212121343, 4332221111, \ldots.  Each of these has 10 digits (as the questions states), and the number of each type of digit is the same.  It is just the arrangement that matters.  So does order matter here?  Maybe, but the order of what?  The digits?  
+
+How could I break the task of choosing an outcome into subtasks?  One way would be to first select what goes in the first digit, then in the second, etc.  In this sense order does matter.  Does that work?  Well there are 4 choices for the first digit.  For the second digit there are... well it depends on what I choose for the first digit.  So this doesn't work.  Let's try something else.
+
+What if I first select where I put the 4.  It could go 1st, 2nd, etc.  There are 10 spots.  Thus 10, or maybe ${10 \choose 1}$.  Now where can I put the 3's.  It doesn't matter which 3 I place first, so here order does not matter.  I've already filled up one spot with a 4, so there are 9 spots left and I need 2 of them.  So ${9 \choose 2}$.  Ah, then ${7 \choose 3}$ to pick the three spots to put the 2's and ${4 \choose 4}$ choices of where to put the four 1's.  Now do I add or multiply?  Well to get my 10 digit number I need to do all these subtasks, not just one of them, so definitely multiply.  Thus the answer is
+\[{10 \choose 1}{9 \choose 2}{7 \choose 3}{4 \choose 4} = 12600\]
+Oh wait, what if I picked where the 1's went first?  There are ${10 \choose 4}$ spots, which leaves ${6 \choose 3}$ choices for where to put the 2's, and ${3 \choose 2}$ for the 3's and ${1 \choose 1}$ for the 4.  So now it looks like the answer should be
+\[{10 \choose 4}{6 \choose 3}{3 \choose 2}{1 \choose 1}\]
+Which is it?  Oh wait, those are the same.  Yay.
+
+Let me check one more thing.  Did I get everything?  Did I double count?  Maybe let's try building one of the outcomes using the answer (the first one).  The first thing I do is pick on of 10 things.  10 spots.  So for example, I could pick this:
+\[- - - - - ~ 4 - - - -\]
+Next I pick 2 out of 9 things.  Those 9 things are\ldots, the 9 remaining spots.  What do I do with the 2 that I pick?  I put in 3's.  So maybe:
+\[3 - - - - ~ 4 - 3 - -\]
+Yeah, and I was right to use ${9 \choose 2}$ instead of $P(9,2)$ because it does not matter if I pick the 1st spot and then the 8th, or the 8th and then the 1st.  Next I choose 3 out of 7\ldots spots to\ldots put 2's into.  Maybe I get
+\[3 - 2 2 - 4 - 3 - 2\]
+and then put the 1's in the remaining 4 spots - ${4 \choose 4} = 1$, and yes, there is just one way to finish up:
+\[3 1 22141312\]
+And that is an acceptable outcome.  Double yay.
+\end{solution}
+
+
+\question Consider the recurrence relation $a_n = 3a_{n-1} + 10a_{n-2}$, with initial terms $a_0 = 1$ and $a_1= 3$.
+\begin{parts}
+  \part[2] Find the next two terms of the sequence ($a_2$ and $a_3$).
+  \part[3] Solve the recurrence relation. That is, find a closed formula for the $n$th term of the sequence.
+\end{parts}
+  \begin{solution}
+  \begin{parts}
+  \part $a_2 = 19$ and $a_3=87$
+  \part The closed form should look like $a_n=\frac{5}{7}(5)^n +\frac{2}{7}(-2)^n$.
+  \end{parts}
+  \end{solution}
+
+\question[4] Prove, by induction, that the {\em greatest} amount of postage you {\em cannot} make exactly using 4 and 9 cent stamps is 23 cents.
+
+  \begin{solution}
+ Hint: one 9-cent stamp is 1 more than two 4-cent stamps, and seven 4-cent stamps is 1 more than three 9-cent stamps.
+  \end{solution}
+
+
+\question[6] Develop your own story problem for a graph that has an Euler path. Your problem must have at least two parts.
+%\begin{solution}
+%	
+%\end{solution}
+
+\question[4] Prove that every graph has an even number of vertices that have odd degree.
+\begin{solution}
+	Suppose for a contradiction that there exists a graph that has an odd number of vertices with odd degree. Then, if we added up all the degrees of each vertices, we could get an odd number because an odd plus an odd an odd number of times is odd. Now, this creates an issue when we go to calculate the number of edges of the graph by dividing the total number of degrees by 2 because we will get half of an edge, which is not possible. Therefore, every graph that contains vertices of an odd degree must contain an even number of them.
+\end{solution}
+
+\question[4] Give a combinatorial proof that ${ 8 \choose 0} + { 8 \choose 1} + { 8 \choose 2} + ... + { 8 \choose 8} = 2^8$
+\begin{solution}
+	Question: How many bit strings of length 8 are there?\\
+	$2^8$ is clearly the number of bit strings of length 8 because you have two different choices for each of the 8 slots.\\
+	The other side of the equation is a little more difficult to explain. ${8 \choose 0}$ is the number of bit strings of length 8 that contain no 1's. ${8 \choose 1}$ is the number of bit strings of length 8 that contain one 1, and so on and so forth until you get to ${ 8 \choose 8}$ being the number of bit strings that contain 8 ones. Adding all of those up will then get you the total number of bit strings of length 8.
+\end{solution}
+
+\question[4] How many permutations of $1, 2, 3, 4, 5, 6, 7, 8$ have
+\begin{parts}
+\part exactly 2 numbers in their natural position? Explain.
+\begin{solution}
+	This problem is very similar to the Grinch present problem from Homework 4. Therefore we have     \[{8 \choose 2}\left(6! - \left[{6\choose 1}5! - {6 \choose 2}4! + {6 \choose 3}3! - {6 \choose 4}2!+{6 \choose 5}1!-{6 \choose 6}0!\right]\right)\]
+\end{solution}
+\part exactly 3 numbers in their natural position? Explain.
+\begin{solution}
+	\[{8 \choose 3}\left(5! - \left[{5\choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1!+{5 \choose 5}0!\right]\right)\]
+\end{solution}
+\end{parts}
+
+\question[4] An inventory list consists of 115 items, each marked ``available" or ``unavailable". There are 60 items marked available. Show that there are at least two available items in the list exactly four items apart.
+\begin{solution}
+	Assume for a contradiction that there are no items marked available exactly 4 items apart. To do this, let us consider two different sets. The first set will be the number of available items: \[a_1,a_2,...,a_60\] and the second set will be the number of items that cannot be marked as available \[a_1+4,a_2+4,...a_{60}+4\]. Now, each of these sets has exactly 60 items and must be separate items on the overall list. However, there are only 115 items on the list, which means that at least 2 items from each set must be the same item. Therefore, there must be at least two available items in the list exactly four items apart.
+\end{solution}
+
+
+\bonusquestion[4] {\bf BONUS:} Clu D. Tector was lecturing on methods for detecting counterfeit coins. To illustrate a point he removed four coins from his pocket, one of which is either heavier or lighter than the rest (in other words, it was counterfeit). He then pulled a fifth coin from his pocket and said it was a `good' coin. Next produced a balance scale and challenged the audience to suggest a plan for determining, in the fewest possible weighings, which of the four original coins was the counterfeit. He claimed you could do it in no more than two weighings. Describe how you would have to weigh the coins such that you would only have to only weigh the coins twice.
+\begin{solution}
+	First, let's label each of the coins. The first four will be $A,B,C,D$ while the good coin will be $G$. Let's first measure $A,B$ against $C, G$. If the scale is balanced then we got lucky and $D$ is the counterfeit coin. Next, weigh $D$ against $G$ to figure out if it is heavy or light. However, it may be the case that that $A+B > C+G$ or $A+B <C+G$. If the first case is true then $D$ is a good coin, and either $C$ is light or $B$ or $A$ is heavy. Thus, a second weighting of $B$ against $A$ tells which coin is counterfeit. If $A=B$ then $C$ was the counterfeit and was lighter and if $A \not=B$ then whichever one weighed more is the counterfeit and is heavier. Similarly for $A+B<C+G$. In this case, either $C$ is heavy or $A$ or $B$ is light. Weigh $A$ against $B$ and if they are equivalent then $C$ is heavy. If not, then whichever one weighs less is the counterfeit and is lighter than the rest.
+\end{solution}
+\end{questions}
+
+
+
+
+\end{document}
+
+

@@ -1,4 +1,4 @@
-\documentclass[11pt]{exam}
+\documentclass[10pt]{exam}
 
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
 \usepackage{tikz}
@@ -21,119 +21,163 @@
 \pagestyle{head}
 %\printanswers
 
-\firstpageheader{Math 228}{\bf Homework 3}{} %Due: Wed Feb 6, 2013}
+\firstpageheader{Math 228}{\bf Homework 3}{Due: Wednesday, February 4}
 
 
 \begin{document}
-\noindent \textbf{Instructions}: Complete the homework problems below on {\em separate} sheets of paper (and not all jammed up between the questions).  This is to be turned in and graded, so make sure your work is neat and easy to ready - there is nothing wrong with using a separate sheet of paper for each problem. Each solution should be accompanied with supporting work or an explanation why the solution is correct. Your work will be graded on correctness as well as the clarity of your explanations. 
+\noindent \textbf{Instructions}: Same rules as usual - turn in your work on separate sheets of paper.  You must justify all your answers for full credit.
 
 \begin{questions}
-\question[8]  Consider the statement: $\forall x \forall y (x-y \ge 2 \imp \exists z (y < z \wedge  z < x))$.
+
+%\question[8] Let $A = \{1,2,3,\ldots,9\}$.  
+%\begin{parts}
+%	\part How many subsets of $A$ are there?  That is, find $|\pow(A)|$. Explain.
+%	\begin{solution}
+%		There are $512$ subsets.  This is $2^9$, which makes sense because we are deciding yes or no on whether to include each element of $A$ in the subset.
+%	\end{solution}
+%	\part How many subsets of $A$ contain exactly 5 elements?  Explain.
+%		\begin{solution}
+%			Of the nine elements in $A$, we must choose five of them to be in the subset.  So ${9 \choose 5} = 126$.
+%		\end{solution}
+%		
+%  \part How many subsets of $A$ contain only even numbers? Explain.
+%  \begin{solution}
+%    For each of the 9 elements from $A$, we must decide yes or no on whether to include them in the subset.  However, for the odd numbers, we only have one choice: no.  So there are only 4 elements we have two choices for, so the answer is $2^4 = 16$.  (Note, if you wish to exclude the empty set - it does not contain odd numbers, but no evens either - then you could subtract 1).
+%  \end{solution}
+%
+%  \part How many subsets of $A$ contain an even number of elements? Explain.
+%  \begin{solution}
+%    Count the number of subsets with each possible even cardinality:
+%    \[{9 \choose 0} + {9 \choose 2} + {9\choose 4} + {9 \choose 6} + {9 \choose 8} = 256\]
+%  \end{solution}
+%
+%\end{parts}
+
+
+
+
+\question[8] How many $9$-bit strings (that is, bit strings of length 9) are there which:
 \begin{parts}
-\part Explain what this statement says in words.  Is the statement true?
-\begin{solution}
- The strictest translation: For all $x$ and for all $y$, if $x - y$ is at least 2, then there is a number $z$ which is larger than $y$ and less than $x$. 
- 
- Alternatively, iven any two numbers $x$ and $y$, if $x$ is at least two larger than $y$, then there is a number between them.  Or even more loose: For any numbers at least two apart, there is a number between them.
-\end{solution}
+  \part Start with the sub-string 101? Explain.
+  \begin{solution}
+    $2^6 = 64$.  You have 2 choices for each of the remaining 6 bits.
+  \end{solution}
 
-\part State the contrapositive of the original statement.  Do so both in words and in symbols.
-\begin{solution}
- The contrapositive: for all $x$ and $y$, if there is no number $z$ larger than $y$ and smaller than $x$, then $x - y < 2$.  Or if you simplify, for all $x$ and $y$, if every $z$ is either not greater than $y$ or not less than $x$, then $x - y$ is less than $2$.
- 
- \[\forall x \forall y (\forall z (y \ge z \vee z \ge x) \imp x-y < 2)\]
-\end{solution}
+  \part Have weight 5 (i.e., contain exactly five 1's) and start with the sub-string 101? Explain.
+  \begin{solution}
+    ${6 \choose 3} = 20$.  You need to choose 3 of the remaining 6 bits to be 1's.
+  \end{solution}
 
-\part State the converse of the original statement.  Is the converse true?
-\begin{solution}
- The converse is, for all $x$ and for all $y$, if there is some $z$ greater than $y$ and less than $x$, then $x-y \ge 2$.  Or in symbols,
- \[\forall x \forall y (\exists z (y < z \wedge  z < x) \imp x-y \ge 2)\]
- The converse is true, as long as we consider only the integers, but false if we consider the real numbers (or rationals).
-\end{solution}
+	\part Either start with $101$ or end with $11$ (or both)?  Explain.
+		\begin{solution}
+			176.  There are 64 strings that start with 101, and another 128 which end with 11 (we choose 1 or 0 for 7 bits, so $2^7$).  However, we count the strings that start with 101 and end with 11 twice - there are $16$ such strings ($2^4$).  So using PIE, we have $64 + 128 - 16 = 176$ 
+		\end{solution}
 
-\part State the negation of the original statement.  Do so both in words and in symbols (simplifying as much as possible).
-\begin{solution}
- The negation: there are numbers $x$ and $y$ such that $x - y$ is at least 2, but for all $z$, either $z$ is not larger than $y$ or not less than $x$.
- 
- \[\exists x \exists y (x - y \ge 2 \wedge  \forall z (y \ge z \vee z \ge x))\]
-\end{solution}
-
+	\part Have weight 5 and either start with 101 or end with 11 (or both)?  Explain.
+	\begin{solution}
+	 	51. There are ${6 \choose 3} = 20$ strings of weight 5 which start with 101, and another ${7 \choose 3} = 35$ which end with 11.  We have over counted again - there are weight 5 strings which both start with 101 and end with 11, in fact ${4 \choose 1} = 4$ of them.  So all together we have $20 + 35 - 4 = 51$ strings.
+	\end{solution}
+	
+	
 \end{parts}
 
-\question[6] Let $A$, $B$ and $C$ be sets.  Suppose that $A \subseteq B$ and $B \subseteq C$.  Does this mean that $A \subseteq C$?  Explain how you know (i.e., prove your answer).
-
-\begin{solution}
- Yes it does.  We can see this using a Venn diagram - the circle $A$ is completely contained in the circle $B$, and the circle $B$ is completely contained in the circle $C$.  So the circle $A$ is completely contained in the circle $C$.  
- 
- Suppose $A \subseteq B$ and $B \subseteq C$.  Then take any $x \in A$.  Since $A \subseteq B$, we have that $x \in B$ as well - that is, everything in $A$ is also in $B$, so this works for the arbitrary $x$ we chose.  Now that we know that $x \in B$, we can conclude $x \in C$, since $B \subseteq C$ - everything in $B$ is also in $C$.  Since $x$ was an arbitrary element of $A$, which we showed was also in $C$, we have $A \subseteq C$ - everything in $A$ is also in $C$.
-\end{solution}
 
 
-\question[6] 
-\begin{parts}
-  \part Draw a Venn diagram for the set $S = \bar A \cup (B \cap \bar C)$.
-     \begin{solution}
-	    \begin{center}
-		  \begin{tikzpicture}[fill=gray!50]
-		  \fill \threesetbox;
-	    \begin{scope}
-	      \clip \threesetbox \circleB;
-	      \fill[white] \circleA;
-	    \end{scope}
-	    \begin{scope}
-	      \clip \circleC;
-	      \fill[white] \circleA;
-	    \end{scope}
+\question[6] How many triangles are there with vertices from the points shown below?  Note, we are not allowing degenerate triangles - ones with all three vertices on the same line, but we do allow non-right triangles.  Explain why your answer is correct. (HINT: you need at exactly two points on either the $x$- or $y$-axis, but don't over-count the right triangles.)
 
-	    \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-	    \end{tikzpicture}
-	    \end{center}
-    \end{solution}
-    
-  \part For the Venn diagram given below, express the shaded set in terms of $A$, $B$, and $C$.  Simplify your answer so that bars are only directly over letters.
-      \begin{center}
-      \begin{tikzpicture}[fill=gray!50]
-	\fill \circleC;
-	\begin{scope}
-	    \clip \circleC;
-	    \fill[white] \circleA \circleB;
-	  \end{scope}
-	\begin{scope}
-	  \clip \circleA;
-	  \fill \circleB;
-	\end{scope}
-\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-\end{tikzpicture}
+\begin{center}
+  \begin{tikzpicture}[scale=0.7]
+    \foreach \i in {0,...,6} {
+      \fill (\i,0) circle (2pt);
+    }
+    \foreach \i in {1,...,4} {
+      \fill (0,\i) circle (2pt);
+    }
+  \end{tikzpicture}
 \end{center}
 
-    \begin{solution}
-      The shaded region includes everything which is both in $A$ and $B$, and also the part of $C$ which is not in $A$ or $B$.  Therefore the set is \[(A \cap B) \cup (C \cap \bar{A \cup B},\] which can be simplified to
-      \[(A \cap B) \cup (C \cap \bar A \cap \bar B)\]
-    \end{solution}
+\begin{solution}
+  There are 120 triangles.  Here are two ways (there are others as well) to get this:
+  
+  \begin{enumerate}
+    \item First count the triangles with the base on the $x$-axis.  There are ${7 \choose 2}$ ways to pick the base.  The third vertex of the triangle must be one of the 4 dots on the $y$-axis (not the origin) so there are a total of ${7 \choose 2}4$ of these triangles.  The triangles with base on the $y$ axis can be counted similarly: ${5 \choose 2}6$.  However, we have counted all the right triangles twice - they have a base on the $x$-axis and also on the $y$-axis.  There are $4 \cdot 6$ right triangles.  Thus the total number of triangles is:
+    \[{7 \choose 2}4 + {5 \choose 2}6 - 6\cdot 4 = 120\]
+    \item We must select 3 of the 11 dots.  This can be done in ${11 \choose 3}$ ways.  However, this will also give us degenerate triangles when all three vertices are on the $x$-axis or on the $y$-axis.  There are ${7 \choose 3}$ ways we could have picked all three vertices on the $x$-axis.  There are ${5 \choose 3}$ ways we could have picked all three vertices on the $y$-axis.  Therefore the total number of triangles is
+    \[{11 \choose 3} - {7 \choose 3} - {5 \choose 3} = 120\]
+  \end{enumerate}
 
-    
+\end{solution}
+
+
+
+\question[8] Gridtown USA, besides having excellent donut shoppes, is known for its precisely laid out grid of streets and avenues.  Streets run east-west, and avenues north-south, for the entire stretch of the town, never curving and never interrupted by parks or schools or the like.
+
+Suppose you live on the corner of 1st and 1st and work on the corner of 12th and 12th.  Thus you must travel 22 blocks to get to work as quickly as possible.
+
+\begin{parts}
+\part How many different routes can you take to work, assuming you want to get there as quickly as possible?
+\begin{solution}
+  ${22 \choose 11}$ since you must choose 11 of the 22 blocks to travel east.
+\end{solution}
+
+\part Now suppose you want to stop and get a donut on the way to work, from your favorite donut shoppe on the corner of 8th st and 10th ave.  How many routes to work, via the donut shoppe, can you take (again, ensuring the shortest possible route)?
+\begin{solution}
+  The donut shoppe is 16 blocks away, 7 one way, 9 the other.  So to get from home to the donut shoppe, there are ${16 \choose 7}$ routes (or equivalently, ${16 \choose 9}$).  Then from the donut shopped to work, you need to travel 6 more blocks, 2 on way and 4 the other.  So there are ${6 \choose 2}$ (or ${6 \choose 4}$) routes from the donut shoppe to work.  
+  
+  For each of the ways to the donut shoppe, there are so many ways to work, so the multiplicative principle says the total number of ways from home to work via the donut shoppe is
+  \[{16 \choose 7}{6 \choose 2}\]
+\end{solution}
+
+\part Disaster Strikes Gridtown: there is a pothole on 4th avenue between 5th and 6th street.  How many routes to work can you take avoiding that unsightly (and dangerous) stretch of road?
+\begin{solution}
+  Routes to work that hit the pothole: ${7 \choose 3}1{14 \choose 8}$.
+  
+  There for the number of routes to work which {\em avoid} the pothole are
+  \[{22 \choose 11} - {7 \choose 3}{14 \choose 8}\]
+\end{solution}
+
+\part How many routes are there both avoiding the pothole and visiting the donut shoppe?
+\begin{solution}
+  First compute the number of routes to the donut shoppe avoiding the pothole:
+  \[{16 \choose 7} - {7 \choose 3}{8 \choose 6}\]
+  Then you still need to go to work from there.  Thus the answer is:
+  \[\left({16 \choose 7} - {7 \choose 3}{8 \choose 6}\right){6 \choose 2}\]
+\end{solution}
+
 \end{parts}
 
 
 
 
-\uplevel{{\bf Writing Assignment:} Please turn in the following writing assignment separately from the problems above (i.e., on a separate sheet of paper, NOT stapled to the rest of the problems). }
 
-\question[10] In class on Friday (February 1st) we discovered that a graph has an Euler circuit if and only if every vertex has even degree.  Pick either the ``if'' or ``only if'' part of the statement and explain how we know it works.  Clearly state which direction you choose to justify.
 
+
+
+\question[8] Recall that the formula for $P(n,k)$ is $\dfrac{n!}{(n-k)!}$.  Your task here is to explain {\em why} this is the right formula.
+\begin{parts}
+\part Suppose you have 12 chips, each a different color.  How many different stacks of 5 chips can you make?  Explain your answer and why it is the same as using the formula for $P(12,5)$.
 \begin{solution}
- The ``only if'' part is much easier: if a graph has an Euler circuit, then every vertex has even degree.  Suppose we have a graph that has an Euler circuit.  Consider first the vertex we start at - call it $v_0$.  The Euler circuit uses every edge exactly once, and we must end at $v_0$.  We start the circuit, leaving $v_0$ by one of the edges.  Eventually we will need to return to $v_0$, using a second edge.  Perhaps we will leave $v_0$ again, but every time we do, we know we must eventually return (since we finish the circuit by returning to $v_0$).  So for every edge which we leave $v_0$ by, there is a second edge which we return by.  Thus the edges adjacent to $v_0$ come in pairs - the leaving edges and the returning edges - so there are an even number.  That is, the degree of $v_0$ is even.
- 
- Now consider any other vertex in the graph, say $v_1$.  The Euler circuit neither begins, nor ends, at $v_1$.  So every time we take an edge {\em to} $v_1$, we must also take a different edge {\em from} $v_1$.  So again, the edges adjacent to $v_1$ can be divided into two equal sets - the arriving edges and the departing edges.  Therefore the number of edges adjacent to $v_1$ is even.  This works for all vertices other than $v_0$.  
- 
- If you try to justify the ``if'' part - that if every vertex of a graph has an even degree, then it has an Euler circuit - you will need to describe how to generate the Euler circuit for any such graph.  This is not easy.  The idea is this: start at any vertex and create a circuit.  That is, leave the vertex, start traveling along edges, until you arrive back at the starting vertex.  First, we must justify that you won't get stuck - this is because if you did get stuck somewhere, say at $v_1$, then $v_1$ must have had an odd degree (more incoming than outgoing edges) but we know this is false.  So you never get stuck.  However, we don't know that you use all the edges.  Never fear: if there was an edge which you did not use, then there must be an unused edge adjacent to some vertex you visited along your first guess at a circuit.  Redraw your circuit, this time when you get to that vertex with the extra edge, pause your original circuit and go on a little ``side quest'' incorporating the new edge.  You will create an circuit using only edges not used in the original circuit (we know you can do this because you will never get stuck - all the vertices in the ``side quest'' will still have even degree, not counting the edges from the original circuit).  When you return from your side quest, continue and finish your original circuit.  Now inspect the new larger circuit you have created.  Have all the edges been used?  If so, then you are done.  If not, find another side quest to ``splice'' into your current circuit.  Continue until eventually all the edges are incorporated into the circuit.  Note, this is just a rough sketch of what you do.  To completely justify this, you need to carefully describe the algorithm and then prove that it works. 
+There are $12\cdot 11\cdot 10\cdot 9\cdot 8 = 95040$ different stacks of 5 chips.  This is because there are 12 choices for which chip goes on bottom, then 11 choices for which comes next, and so on for a total of 5 chips.  The formula for $P(12,5)$ is $\frac{12!}{7!}$ - the $7!$ cancels out the part of $12!$ we don't include.
 \end{solution}
 
+\part Using the scenario of the 12 chips again, what does $12!$ count?  What does $7!$ count?  Explain.
+\begin{solution}
+$12!$ is the number of different stacks of all 12 chips (12 choices for the bottom chip, 11 for the next, and so on for 12 chips total).  $7!$ is the number of 7-chip stacks you can make using just 7 different colored chips (not all 12) because you have 7 choices for the first chip, 6 for the second, and so on.
+\end{solution}
+\part Explain why it makes sense to divide $12!$ by $7!$ when computing $P(12,5)$ (in terms of the chips).
+\begin{solution}
+Say you made all $12!$ stacks of 12 chips.  For any particular arrangement of the bottom 5 chips, you will have $7!$ stacks that have that bottom arrangement (one for each arrangement of the remaining 7 chips).  But we just want to count the number of 5-chip stacks, so we count all of these as the same outcome (once the top 7 chips are removed, the bottom stacks look identical).  Thus we really want to count how many groups there are.  All $12!$ stacks are grouped into groups of size $7!$, so there are $12!/7!$ groups.
+\end{solution}
+\part Does your explanation work for numbers other than 12 and 5?  Explain the formula $P(n,k) = \frac{n!}{(n-k)!}$ using the variables $n$ and $k$.
+\begin{solution}
+$P(n,k)$ counts the number of stacks of size $k$ where the chips come in $n$ different colors (with at most one chip of each color in the stack).  You could count this by first forming all stacks of $n$ chips, and there are $n!$ of these.  But to get stacks of size $k$, we don't want the top $n-k$ chips.  When we remove $n-k$ chips from the stacks, we sometimes get the same arrangement of the bottom chips.  In fact, for each arrangement of the bottom $k$ chips, there are $(n-k)!$ different ways to arrange the top $n-k$ chips, and all of these should count as just 1 outcome.  Thus we divide $n!$ by $(n-k)!$ to find the number of $k$-chip stacks.
+\end{solution}
+\end{parts}
+
+
+
+
 \end{questions}
-
-
-
-
 \end{document}
 
 

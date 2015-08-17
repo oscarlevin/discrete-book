@@ -3,52 +3,7 @@
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
 \usepackage{tikz}
 
-\def\d{\displaystyle}
-\def\?{\reflectbox{?}}
-\def\b#1{\mathbf{#1}}
-\def\f#1{\mathfrak #1}
-\def\c#1{\mathcal #1}
-\def\s#1{\mathscr #1}
-\def\r#1{\mathrm{#1}}
-\def\N{\mathbb N}
-\def\Z{\mathbb Z}
-\def\Q{\mathbb Q}
-\def\R{\mathbb R}
-\def\C{\mathbb C}
-\def\F{\mathbb F}
-\def\A{\mathbb A}
-\def\X{\mathbb X}
-\def\E{\mathbb E}
-\def\O{\mathbb O}
-\def\pow{\mathscr P}
-\def\inv{^{-1}}
-\def\nrml{\triangleleft}
-\def\st{:}
-\def\~{\widetilde}
-\def\rem{\mathcal R}
-\def\iff{\leftrightarrow}
-\def\Iff{\Leftrightarrow}
-\def\and{\wedge}
-\def\And{\bigwedge}
-\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
-\def\Vee{\bigvee}
-\def\VVee{\d\Vee\mkern-18mu\Vee}
-\def\imp{\rightarrow}
-\def\Imp{\Rightarrow}
-\def\Fi{\Leftarrow}
-
-\def\={\equiv}
-\def\var{\mbox{var}}
-\def\mod{\mbox{Mod}}
-\def\Th{\mbox{Th}}
-\def\sat{\mbox{Sat}}
-\def\con{\mbox{Con}}
-\def\bmodels{=\joinrel\mathrel|}
-\def\iffmodels{\bmodels\models}
-\def\dbland{\bigwedge \!\!\bigwedge}
-\def\dom{\mbox{dom}}
-\def\rng{\mbox{range}}
-\DeclareMathOperator{\wgt}{wgt}
+\input{../macros-discrete}
 
 \def\circleA{(-.5,0) circle (1)}
 \def\circleAlabel{(-1.5,.6) node[above]{$A$}}
@@ -59,105 +14,125 @@
 \def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
 \def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
 
-
-\def\bar{\overline}
-
 %\pointname{pts}
 \pointsinmargin
 \marginpointname{pts}
-\marginbonuspointname{pts-bns}
 \addpoints
 \pagestyle{head}
-%\printanswers
+\printanswers
 
-\firstpageheader{Math 228}{\bf Homework 7}{} %Due: Wed, March 13}
+\firstpageheader{Math 228}{\bf Homework 7}{Due: Wednesday, Mar 11}
 
-\def\vertexsize{4pt}
-\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=\vertexsize,label=#1:#2]{}}
-\newcommand{\va}[1]{\vtx{above}{#1}}
-\newcommand{\vb}[1]{\vtx{below}{#1}}
-\newcommand{\vr}[1]{\vtx{right}{#1}}
-\newcommand{\vl}[1]{\vtx{left}{#1}}
-\renewcommand{\v}{\vtx{above}{}}
 
 \begin{document}
 \noindent \textbf{Instructions}: Same rules as usual - turn in your work on separate sheets of paper.  You must justify all your answers for full credit.
 
 \begin{questions}
-\question After a late night of math studying, you and your friends decide to go to your favorite tax-free fast food Mexican restaurant, {\em Burrito Chime}.  You decide to order off of the dollar menu, which has 7 items.  Your group has \$16 to spend (and will spend all of it). 
-\begin{parts}
-  \part[2] How many different orders are possible?  Explain. (The {\em order} in which the order is place does not matter - just which and how many of each item that is ordered.)
-  \begin{solution}
-    $\d{22 \choose 6}$ - there are 16 stars and 6 bars.
-  \end{solution}
+\question[6] Zombie Euler and Zombie Cauchy - two famous zombie mathematicians - have just signed up for Twitter accounts.  After one day, Zombie Cauchy has more followers than Zombie Euler.  Each day after that, the number of new followers of Zombie Cauchy is exactly the same as the number of new followers of Zombie Euler (and neither lose any followers).  Explain how a proof by mathematical induction can show that on every day after the first day, Zombie Cauchy will have more followers than Zombie Euler.  That is, explain what the base case and inductive case are, and why they together prove that Zombie Cauchy will have more followers on the 4th day.
 
-  \part[2] How many different orders are possible if you want to get at least one of each item? Explain.
-  \begin{solution}
-    $\d{15 \choose 6}$ - buy one of each item, using \$7.  This leaves you \$11 to distribute to the 7 items, so 11 stars and 6 bars.
-  \end{solution}
+\begin{solution}
+  The idea here is that because we know Zombie Cauchy starts ahead, and each day increases by the same amount as Zombie Euler, he will always be ahead.
+  
+   The base case is that Zombie Cauchy has more followers than Zombie Euler on day 1.  We know this is true because it says so in the problem.
+    
+    The inductive case is that {\em if} Zombie Cauchy has more followers on day $k$, then he will still have more followers on day $k+1$.  We know this is true because each day, the Zombies receive an equal number of new followers. 
+    
+    Together, the base case and inductive case show that on the 4th day, Zombie Cauchy will be ahead: he is ahead on day 1, and because on day 1 he is ahead, by the inductive case he will also be ahead on day 2.  By the inductive case again, he will be ahead on day 3 since he is ahead on day 2, and since he is ahead on day 3, he will also be ahead on day 4.  Of course we could keep doing this up to any day.
+\end{solution}
 
-  \part[4] How many different orders are possible if you don't get more than 4 of any one item?  Explain. Hint: get rid of the bad orders using PIE.
-  \begin{solution}
-    \[{22 \choose 6} - \left[{7 \choose 1}{17 \choose 6} - {7 \choose 2}{12 \choose 6} + {7 \choose 3}{7 \choose 6} \right]\]
-  \end{solution}
+\uplevel{{\bf Special Induction Instructions}: For the rest of the homework problems, you should first give a rough sketch of the argument (i.e., say {\em why} induction will work in this case) and then also give a formal proof by induction (starting with, ``Let $P(n)$ be the statement\ldots'').}
 
-\end{parts}
+\question[8] Find the largest number of points which a football team cannot get exactly using just 3-point field goals and 7-point touchdowns (ignore the possibilities of safeties, missed extra points, and two point conversions).  Prove your answer is correct by mathematical induction.
 
+\begin{solution}
+  First note that it is impossible to make 11 points - if only field goals are made, the points must be a multiple of 3, if 1 touchdown is made, the possible point totals are 7, 10, 13, \ldots and two touchdowns are already too much.
+  
+  We will prove that 11 is the largest number of points which cannot be made.  In other words, any number of points greater than or equal to 12 can be made.
+  
+  \begin{proof}
+    Let $P(n)$ be the statement ``it is possible to make $n$ points using touchdowns and field goals.''  We will prove $P(n)$ is true for all $n \ge 12$.
+    
+    First the base case: You can make 12 points with 4 field goals, so $P(12)$ is true.
+    
+    Now the inductive case: Assume $P(k)$ is true for some fixed $k \ge 12$.  That is, it is possible to make $k$ points.  Since $k \ge 12$, we must have made the $k$ points using either at least 2 field goals or at least 2 touchdowns, or both (because if we used just one of each we would have only 10 points).  Now if the $k$ points were accomplished with 2 (or more) field goals, then replace 2 field goals with 1 touchdown.  This increases to point total by 1, giving $k + 1$ points.  On the other hand, if the $k$ points were accomplished with $2$ (or more) touchdowns, replace 2 touchdowns with 5 field goals, again increasing the point total by 1, giving $k+1$ points.  Using one of these two substitutions, we can make $k+1$ points, so $P(k+1)$ is true, establishing the inductive case.
+    
+    Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 12$.
+  \end{proof}
+\end{solution}
 
-\question[6] Consider functions $f:\{1,2,3,4,5\} \to \{0,1,2,\ldots,9\}$.  
-\begin{parts}
-	\part How many of these functions are strictly increasing?  Explain.  (A function is strictly increasing provided if $a < b$, then $f(a) < f(b)$.)
-	\begin{solution}
-		${10 \choose 5}$.  Note that a strictly increasing function is automatically injective.  So the five outputs must all be different.  So let's first pick which five outputs we will use: there are ${10 \choose 5}$ ways to do this.  Now how many ways are there to assign those outputs to the inputs $1$ through 5?  Only one way, since there is only one way to arrange numbers in increasing order.		
-	\end{solution}
-	\part How many of the functions are non-decreasing?  Explain.  (A function is non-decreasing provided if $a < b$, then $f(a) \le f(b)$.)
-	\begin{solution}
-		${14 \choose 5}$.  This is in fact a stars and bars problem.  The stars are the 5 inputs and the bars are the 9 spots between the 10 possible outputs.  Think of it this way - we will specify $f(1)$, then $f(2)$, then $f(3)$, and so on in that order.  Start with the possible output 0.  We can use it as the output of $f(1)$, or we can switch to 1 as a potential output.  Say we put $f(1) = 1$.  Now we are at 1 (can't go back to 0).  Should $f(2) = 1$?  If yes, then we are putting down another star.  If no, put down a bar and switch to 2.  Maybe you switch to 3, then assign $f(2) = 3$ and $f(3) = 3$ (two more stars) before switching to 4 as a possible output.  And so on.  
-	\end{solution}
-\end{parts}
+%\question[6] Prove that the sum of $n$ squares can be found as follows\[1^2 +2^2 +3^2+...+n^2 = \frac{n(n+1)(2n+1)}{6}\]
+%\begin{solution}
+%This question is asking us to show that the sum of squares for $n$ numbers can be found using the formula $\frac{n(n+1)(2n+1)}{6}$. We can definitely see this is true for the first few instances, but we are really taking it on faith that it is true for the first $n$ squares. So, it seems like induction would be a good place to start.
+%\begin{proof}
+%First, let $P(n)$ be the statement that is given.
+%
+%Base case: We must now show that our base case $P(1)$ is true \[1^2 = \frac{1(1+1)(2(1)+1)}{6} = \frac{6}{6} =1\]
+%
+%Inductive case: Now, we assume that for some $k\leq n$ that $P(k)$ is true and show that $P(k+1)$ is true. Namely, assume that $1^2 +2^2 +3^2+...+k^2 = \frac{k(k+1)(2k+1)}{6}$ and show that \[1^2 +2^2 +3^2+...+k^2+{(k+1)}^2 = \frac{(k+1)((k+1)+1)(2(k+1)+1)}{6}\]
+%
+%At this point it is advantageous to start on one side of the equality. So, choosing the left hand side to start I shall manipulate it so that it looks like the right hand side.
+%
+%\begin{align*}
+%1^2 +2^2 +3^2+...+k^2+{(k+1)}^2 = \\
+%= & \frac{k(k+1)(2k+1)}{6} +(k+1)^2 \mbox{ by our inductive hypothesis}\\
+%= & \frac{k(k+1)(2k+1)}{6} +\frac{6(k+1)^2}{6} \\
+%= & \frac{k(k+1)(2k+1)+6(k+1)^2}{6} \\
+%= & \frac{(k+1)[k(2k+1)+6(k+1)]}{6} \mbox{ factoring out $k+1$ from each term}\\
+%= & \frac{(k+1)[2k^2+k+6k+6]}{6}\\
+%= & \frac{(k+1)[2k^2+7k+6]}{6}\\
+%= & \frac{(k+1)[(2k+3)(k+2)]}{6}\\
+%= & \frac{(k+1)(2(k+1)+1)((k+1)+1)}{6}
+%\end{align*}
+%Thus, $P(k+1)$ is true.
+%
+%Therefore, by the principle of mathematical induction $P(n)$ is true for all $n \geq 1$ 
+%\end{proof}
+%\end{solution}
+\question[8] Prove, by mathematical induction, that $F_0 + F_1 + F_2 + \cdots + F_{n} = F_{n+2} - 1$, where $F_n$ is the $n$th Fibonacci number ($F_0 = 0$, $F_1 = 1$ and $F_n = F_{n-1} + F_{n-2}$).
+\begin{solution}
+This is saying that if we add up the first $n$ Fibonacci numbers, we will get another Fibonacci number (specifically, the $(n+2)$th one).  Induction is a good idea here because it will be easy to just add one more Fibonacci number to the sum we already have.  If we already have $F_{k+2}$ and we add $F_{k+1}$ we can use the recurrence relation to simplify this, becoming $F_{k+3}$.  
+ 
+  \begin{proof}
+    Let $P(n)$ be the statement $F_0 + F_1 + F_2 + \cdots + F_n = F_{n+2} - 1$.  We will prove that $P(n)$ is true for all $n \ge 0$.  
+    
+    Base case: $P(0)$ states that $F_0 = F_2 - 1$, which is true because $F_0 = 0$ and $F_2 = 1$.
+    
+    Inductive case:  Assume $P(k)$ is true for an arbitrary fixed $k \ge 0$.  That is, \[F_0 + F_1 + F_2 + \cdots + F_k = F_{k+2} - 1\]
+    We must prove that $P(k+1)$ is true as well (i.e. that $F_0 + F_1 + \cdots +F_{k+1} = F_{k+3} - 1$).  Start with the left hand side:
+    \begin{align*}
+      F_0 + F_1 + F_2 + \cdots + F_k + F_{k+1} & = F_{k+2} - 1 + F_{k+1} & \mbox{ by the inductive hypothesis}\\
+      & = F_{k+3} - 1 & \mbox{ by the definition of the Fibonacci numbers}
+    \end{align*}
+    Thus $P(k+1)$ is true.
+    
+    Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.
+  \end{proof}
 
-\question[6] Rephrase each of the following counting problems in terms of counting functions.  That is, describe a collection of functions so that each function corresponds to an outcome of the counting problem.  Specifically, say what the domain and codomain of the functions are in terms of the counting problem, and say whether you are counting all functions, injective functions, or surjective functions.
-\begin{parts}
-	\part The 10 members of Math Club all decide to each pick one of the 15 math club meetings to give a presentation (each of which will take the entire meeting time).  How many ways can this happen?
-	\begin{solution}
-		We are assigning club members to meetings (some meetings will be left out - so the meetings cannot be the domain).  The set of 10 club members is the domain, and the set of 15 meetings is the codomain.  Since no two members can pick the same meeting, we are asking for the number of injective functions (which in this case is $P(15,10)$).
-	\end{solution}
-	\part Over the next seven days, you plan to finish a box of 24 different types of chocolates, having at least one chocolate each day.  How many ways can this happen?
-	\begin{solution}
-		Let the set of chocolates be the domain and the set of days be the codomain.  This works because each chocolate gets eaten on exactly one day.  Since we want a chocolate on each day, we are asking for the number of surjective functions (which you would use PIE to count).
-	\end{solution}
-	\part At the end of the semester, you assign grades to each student in your class.  There are 12 possible grades, and you have 30 students in your class.  How many ways are there to do this?
-	\begin{solution}
-		In this case, every student gets a grade, but not every grade must be assigned to a student.  So the domain is the set of students and the codomain is the set of grades.  We are looking just for the number of functions - none of them will be injective because the domain is larger than the codomain, and they might not be surjective (if for example everyone gets an A).  
-	\end{solution}
-\end{parts}
+\end{solution}
 
-\question The Grinch sneaks into a room with 6 Christmas presents to 6 different people.  He proceeds to switch the name-labels on the presents.  How many ways could he do this if:
-\begin{parts}
-  \part[4] No present is allowed to end up with its original label?  Explain what each term in your answer represents.
-  \begin{solution}
-    \[6! - \left[{6 \choose 1}5! - {6 \choose 2}4! + {6 \choose 3}3! - {6 \choose 4}2! + {6 \choose 5}1! - {6 \choose 6}0!\right]\]
-  \end{solution}
+\question[8] Prove that for any integer $n\geq 2$, $n$ is either prime or a product of primes. Use strong induction.  Hint: If $n > 2$ and is {\bf not} prime, then $n = a\cdot b$ where $a$ and $b$ are less than $n$.
 
-  \part[4] Exactly 2 presents keep their original labels? Explain.
-  \begin{solution}
-    \[{6 \choose 2}\left(4! - \left[{4\choose 1}3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)\]
-  \end{solution}
+\begin{solution}
+This question is asking us to prove that every integer is a product of primes. That is, we are basically showing the existence of the prime factorization for every integer. Since the question asks us to use strong induction, we are going to first show a base case is true and then assume that if $P(k)$ with $k\geq 2$ and $k<n$ is true then $P(n)$ is also true.
+\begin{proof}
+Let $P(n)$ be the statement ``for any integer $n\geq 2$, $n$ is either a prime or a product of primes''
 
-  \part[2] Exactly 5 presents keep their original labels? Explain.
-  \begin{solution}
-    0.  Once 5 presents have their original label, there is only one present left and only one label left, so the 6th present must get its own label.
-  \end{solution}
+Base case: $P(2)$ is then our first case (because $n\geq 2$) and $P(2)$ states that $n=2$ is either a prime or a product of primes. Well, $2$ is in fact a prime number. So, our base case is satisfied.
 
-\end{parts}
+Inductive case: Assume that for all $k\geq 2$ and $k<n$ that $P(k)$ is true. Namely, $k$ is either a prime or a product of primes. Now, since we are using strong induction, we need to show that $P(n)$ holds. That is, we need to show that $n$ is either prime or a product of primes. If $n$ is a prime, then we are done. So, assume that $n$ is not prime. Then we need to show that $n$ can be written as a product of primes. Since $n$ is not a prime, $n=ab$ where $a,b$ are two integers such that $2 \leq a, b<n$. Now, if $a=2$ then the largest possible value for $b$ is $\frac{n}{2}$, so $a,b< \frac{n}{2} <k$. Therefore by our inductive case, $a$ and $b$ are both either a prime or a product of primes. Namely,
 
+\[a=p_1p_2\cdots p_i \text{ where each $p_i$ is a prime or } a \text{ is prime} \] 
+\[b=r_1r_2\cdots r_j \text{ where each $r_j$ is a prime or } b \text{ is prime}\]
+Thus, $k+1=ab$ is a product of primes.
 
+Therefore by the strong induction principle $P(n)$ is true for all $n\geq 2$
+ \end{proof}
+ \end{solution}
+ 
+ 
 
+ 
 \end{questions}
-
-
-
-
 \end{document}
 
 
