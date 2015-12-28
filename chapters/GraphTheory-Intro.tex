@@ -16,21 +16,22 @@ In the time of Euler, in the town of K\"onigsberg in Prussia, there was a river 
 %\centerline{\includegraphics[width=5in]{images/7bridgescolor.png}}
 
 \begin{center}
-\begin{tikzpicture}
-\definecolor{land}{HTML}{BDC4A7}
+\begin{tikzpicture}[scale=0.9]
+\definecolor{land}{HTML}{BCC3A6}
+%\definecolor{land}{HTML}{FFFFFF}
 \definecolor{water}{HTML}{92A2FF}
 \definecolor{bridge}{HTML}{D3AC6B}
-\clip (-6,-2.5) rectangle (6,2.5);
+\clip (-6,-2.8) rectangle (5.9,2.5);
 %River:
 %\path[fill=water]plot[smooth] coordinates {(-6,-.7) (-6,.2) (-3,.9) (-2,1.2) (0,.8) (1,1) (3,.5) (6,.2)(6,-.8) (4.5, -1)  (2.8, -1.2) (.5, -1) (-2, -1.4) (-4.5, -.6) (-6,-.7)};
-\fill[color=water] (-6,-1.3) rectangle (5.5,1.2);
+\fill[color=water] (-6,-1.3) rectangle (5.5,1.19);
 %Islands:
 \draw[thick, fill=land] plot[smooth cycle] coordinates {(0,0) (-.5, .5) (-1,.6) (-2, .7) (-3,.5) (-3.3, -.7) (-2.8, -.8) (-1,-.7) (-.3, -.5)}; 
 \draw[thick, fill=land] plot[smooth cycle] coordinates {(.5,0) (.4,.5) (1,.6) (2,.5) (2.7,0) (2.9,-.6) (2,-.8) (1,-.5) (.7,-.4)};
 %Banks:
-\shade[bottom color=land, top color=white] plot[smooth] coordinates {(-6,.2) (-4.5,.4) (-3,1) (0,.8) (1.5,1) (3,.5) (5.5,.2)} -- plot coordinates {(5.5,3) (-6,3)};
+\shade[bottom color=land, top color=white!90!land] plot[smooth] coordinates {(-6,.2) (-4.5,.4) (-3,1) (0,.8) (1.5,1) (3,.5) (5.5,.2)} -- plot coordinates {(5.5,3) (-6,3)};
 \draw[thick] plot[smooth] coordinates {(-6,.2) (-4.5,.4) (-3,1) (0,.8) (1.5,1) (3,.5) (5.5,.2)};
-\shade[top color=land, bottom color=white] plot[smooth] coordinates {(-6,-.7) (-4.5,-.6) (-3,-1.2) (0,-1) (3,-1.1) (5,-.8) (5.5,-.7)} -- plot coordinates {(5.5,-3) (-6,-3)};
+\shade[top color=land, bottom color=white!75!land] plot[smooth] coordinates {(-6,-.7) (-4.5,-.6) (-3,-1.2) (0,-1) (3,-1.1) (5,-.8) (5.5,-.7)} -- plot coordinates {(5.5,-3) (-6,-3)};
 \draw[thick] plot[smooth] coordinates {(-6,-.7) (-4.5,-.6) (-3,-1.2) (0,-1) (3,-1.1) (5,-.8) (5.5,-.7)};
 %Bridges:
 \path[fill=bridge] (-.3,.1) to[out=-10, in=190] (.8,.1) -- (.7, -.2) to[out=170, in=10] (-.35,-.2) -- cycle;
@@ -62,14 +63,15 @@ Graph Theory is a relatively new area of mathematics, first studied by the super
 
 The problem above, known as the \emph{Seven Bridges of K\"onigsberg}\index{K\"onigsberg}, is the problem that originally inspired graph theory.   Consider a ``different'' problem.  Below is a drawing of four dots connected by some lines.  Is it possible to trace over each line once and only once (without lifting up your pencil)?  You must start and end on one of the dots.
 
-\centerline{\begin{tikzpicture}[scale=1, yscale=.5]
+\centerline{\begin{tikzpicture}[scale=0.9, yscale=.5]
  \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
   \draw (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
   \end{tikzpicture}}
 
 There is an obvious connection between these two problems.  Any path through the dot and line drawing corresponds exactly to a path over the bridges of K\"onigsberg.  
 
-Pictures like the dot and line drawing are called {\em graphs}.\footnote{Actually, since the picture here has dots connected by more than one line, it is called a \emph{multigraph}.}  Graphs are made up of a collection of dots (called {\em vertices}\index{vertices}) and lines connecting those dots (called \emph{edges}\index{edges}).  When two vertices are connected by an edge, we say they are \emph{adjacent}\index{adjacent}.  The nice thing about looking at graphs instead of pictures of rivers, islands and bridges is that we now have a mathematical object to study.  A {\em set} of vertices and a set of edges (in fact, we can take the set of edges to be a set of two element subsets from the set of vertices).  We have distilled the ``important'' parts of the bridge picture for the purposes of the problem.  It does not matter how big the islands are, what the bridges are made out of, if the river contains alligators, etc.  All that matters is which land masses are connected to which other land masses, and how many times.  This was the great insight that Euler had.
+Pictures like the dot and line drawing are called {\em graphs}. %\footnote{Actually, since the picture here has dots connected by more than one line, it is called a \emph{multigraph}.}  
+Graphs are made up of a collection of dots (called {\em vertices}\index{vertices}) and lines connecting those dots (called \emph{edges}\index{edges}).  When two vertices are connected by an edge, we say they are \emph{adjacent}\index{adjacent}.  The nice thing about looking at graphs instead of pictures of rivers, islands and bridges is that we now have a mathematical object to study.  A {\em set} of vertices and a set of edges (in fact, we can take the set of edges to be a set of two element subsets from the set of vertices).  We have distilled the ``important'' parts of the bridge picture for the purposes of the problem.  It does not matter how big the islands are, what the bridges are made out of, if the river contains alligators, etc.  All that matters is which land masses are connected to which other land masses, and how many times.  This was the great insight that Euler had.
 
 We will return to the question of finding paths through graphs later.  But first, here are a few other situations you can represent with graphs.
 
@@ -94,7 +96,7 @@ We will return to the question of finding paths through graphs later.  But first
     We will answer this question later.  For now, notice how we would ask this question in the context of graph theory.  We are really asking whether it is possible to redraw the graph below without any edges crossing (except at vertices).
     
     \begin{center}
-      \begin{tikzpicture}[yscale=1]
+      \begin{tikzpicture}[yscale=.8]
         \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
       \end{tikzpicture}
     \end{center}
