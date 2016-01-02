@@ -2029,4 +2029,394 @@
 	
 \end{ans}
 \begin{ans}{4.3.7.}
-		If we drew a graph with each letter representing a vertex, and each edge connecting two letters that were consecutive in the alphabet
+		If we drew a graph with each letter representing a vertex, and each edge connecting two letters that were consecutive in the alphabet, we would have a graph containing two vertices of degree 1 (A and Z) and the remaining 24 vertices all of degree 2 (for example, $D$ would be adjacent to both $C$ and $E$).  By Brooks' theorem, this graph has chromatic number at most 2, as that is the maximal degree in the graph and the graph is not a complete graph or odd cycle.  Thus only two boxes are needed.
+	
+\end{ans}
+\begin{ans}{4.3.8.}
+		\begin{proof}
+		Start with a single vertex of $K_6$, call it $v_0$.  There are five edges incident to $v_0$, and by the pigeonhole principle, three of these must be colored identically.  Without loss of generality, say these edges are $(v_0, v_1)$, $(v_0, v_2)$ and $(v_0,v_3)$, and are colored red.  Consider the edges $(v_1,v_2)$, $(v_2,v_3)$, and $(v_3, v_1)$.  If any of these are colored red, we would have a monochromatic red triangle (it plus the two edges incident to $v_0$).  If they are all colored blue, then we have a monochromatic blue triangle (those three edges).  Either way, we are guaranteed to monochromatic triangle.
+
+		\end{proof}
+	
+\end{ans}
+\protect \end {itemize}
+ \protect \vskip 2em \protect \subsection *{Solutions for Section 4.4} \protect \markright {Solutions for 4.4} \par \protect \begin {itemize} 
+\begin{ans}{4.4.1.}
+		This is a question about finding Euler paths.  Draw a graph with a vertex in each state, and connect vertices if their states share a border.  Exactly two vertices will have odd degree: the vertices for Nevada and Utah.  Thus you must start your road trip at in one of those states and end it in the other. %You and your friends want to tour the southwest by car.  You will visit the nine states below, with the following rather odd rule: you must cross each border between neighboring states exactly once (so, for example, you must cross the Colorado-Utah border exactly once).  Can you do it?  If so, does it matter where you start your road trip?  What fact about graph theory solves this problem?
+	
+\end{ans}
+\begin{ans}{4.4.2.}
+		\begin{parts}
+		  \part $K_4$ does not have an Euler path or circuit.
+		  \part $K_5$ has an Euler circuit (so also an Euler path).
+		  \part $K_{5,7}$ does not have an Euler path or circuit.
+		  \part $K_{2,7}$ has an Euler path but not an Euler circuit.
+		  \part $C_7$ has an Euler circuit (it is a circuit graph!)
+		  \part $P_7$ has an Euler path but no Euler circuit.
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{4.4.3.}
+		When $n$ is odd, $K_n$ contains an Euler circuit.  This is because every vertex has degree $n-1$, so an odd $n$ results in all degrees being even.%For which $n$ does the graph $K_n$ contain an Euler circuit?  Explain.
+	
+\end{ans}
+\begin{ans}{4.4.4.}
+		If both $m$ and $n$ are even, then $K_{m,n}$ has an Euler circuit.  When both are odd, there is no Euler path or circuit.  If one is 2 and the other is odd, then there is an Euler path but not an Euler circuit. %For which $m$ and $n$ does the graph $K_{m,n}$ contain an Euler path?  An Euler circuit?  Explain
+	
+\end{ans}
+\begin{ans}{4.4.5.}
+		If we build one bridge, we can have an Euler path.  Two bridges must be built for an Euler circuit.
+		\begin{center}
+		\begin{tikzpicture}[scale=1, yscale=.5]
+		 \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
+		  \draw (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
+		  \draw[dashed] (-1,-2) -- (-1,0);
+		  \draw[dashed] (1,0) to [out=120, in=0] (-1,2);
+		  \end{tikzpicture}
+		\end{center}
+	
+\end{ans}
+\begin{ans}{4.4.6.}
+		We are looking for a Hamiltonian cycle, and this graph does have one:
+
+		\begin{center}
+		\tikz{
+			\foreach \x in {1,...,9}{
+			\coordinate (v\x) at (90-\x*360/9:1.5);
+			}
+			\draw[color=gray] (v1) -- (v3) -- (v5) (v4) -- (v5) (v4) -- (v7) -- (v6) -- (v9) (v3) -- (v7) (v9) -- (v3);
+			\draw[line width=1.2pt, color=blue] (v1) -- (v6) -- (v3) -- (v8) (v8) -- (v4) (v4) -- (v7) -- (v2) -- (v5) -- (v9) -- (v1);
+			\foreach \x in {1,...,9}{
+			\draw (v\x) \v;
+			}
+		}
+		\end{center}
+	
+\end{ans}
+\protect \end {itemize}
+ \protect \vskip 2em \protect \subsection *{Solutions for Section 4.6} \protect \markright {Solutions for 4.6} \par \protect \begin {itemize} 
+\begin{ans}{4.6.1.}
+		The first and the third graphs are the same, but the middle graph is different.
+	
+\end{ans}
+\begin{ans}{4.6.2.}
+		The first (and third) graphs contain an Euler path.  All the graphs are planar.
+	
+\end{ans}
+\begin{ans}{4.6.3.}
+		For example, $K_5$.
+	
+\end{ans}
+\begin{ans}{4.6.4.}
+		For example, $K_{3,3}$.
+	
+\end{ans}
+\begin{ans}{4.6.5.}
+		\begin{parts}
+		  \part Only if $n \ge 6$ and is even.%For which values of $n$ does this make sense?
+		  \part None. %For which values of $n$ does the graph have an Euler path?
+		  \part 12. Such a graph would have $\frac{5n}{2}$ edges.  If the graph is planar, then $n - \frac{5n}{2} + f = 2$ so there would be $\frac{4+3n}{2}$ faces.  Also, we must have $3f \le 2e$, since the graph is simple.  So we must have $3\frac{4 + 3n}{2} \le 5n$.  Solving for $n$ gives $n \ge 12$.%What is the smallest value of $n$ for which the graph might be planar? (tricky)
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{4.6.6.}
+  \begin{parts}
+	 \part There were 24 couples: 6 choices for the girl and 4 choices for the boy.
+	 \part There were 45 couples: ${10 \choose 2}$ since we must choose two of the 10 people to dance together.
+	 \part For part (a), we are counting the number of edges in $K_{4,6}$.  In part (b) we count the edges of $K_{10}$.
+  \end{parts}
+  
+\end{ans}
+\begin{ans}{4.6.7.}
+  Yes, as long as $n$ is even.  If $n$ were odd, then corresponding graph would have an odd number of odd degree vertices, which is impossible.
+  
+\end{ans}
+\begin{ans}{4.6.8.}
+	  \begin{parts}
+	  \part No.  The 9 triangles each contribute 3 edges, and the 6 pentagons contribute 5 edges.  This gives a total of 57, which is exactly twice the number of edges, since each edge borders exactly 2 faces.  But 57 is odd, so this is impossible.
+	  \part Now adding up all the edges of all the 16 polygons gives a total of 64, meaning there would be 32 edges in the polyhedron.  We can then use Euler's formula $v - e + f = 2$ to deduce that there must be 18 vertices.
+	  \part If you add up all the vertices from each polygon separately, we get a total of 64.  This is not divisible by 3, so it cannot be that each vertex belongs to exactly 3 faces.  Could they all belong to 4 faces?  That would mean there were $64/4 = 16$ vertices, but we know from Euler's formula that there must be 18 vertices.  We can write $64 = 3x + 4y$ and solve for $x$ and $y$ (as integers).  We get that there must be 10 vertices with degree 4 and 8 with degree 3. (Note the number of faces joined at a vertex is equal to its degree in graph theoretic terms.)
+	  \end{parts}
+  
+\end{ans}
+\begin{ans}{4.6.9.}
+		 No.  Every polyhedron can be represented as a planar graph, and the Four Color Theorem says that every planar graph has chromatic number at most 4.
+	 
+\end{ans}
+\begin{ans}{4.6.10.}
+  $K_{n,n}$ has $n^2$ edges.  The graph will have an Euler circuit when $n$ is even.  The graph will be planar only when $n < 3$.
+  
+\end{ans}
+\begin{ans}{4.6.11.}
+  $G$ has 8 edges (since the sum of the degrees is 16).  If $G$ is planar, then it will have 4 faces (since $6 - 8 + 4 = 2$).  $G$ does not have an Euler path since there are more than 2 vertices of odd degree.
+  
+\end{ans}
+\begin{ans}{4.6.12.}
+  $7$ colors.  Thus $K_7$ is not planar (by the contrapositive of the Four Color Theorem).
+  
+\end{ans}
+\begin{ans}{4.6.13.}
+  The chromatic number of $K_{3,4}$ is 2, since the graph is bipartite.  You cannot say whether the graph is planar based on this coloring (the converse of the Four Color Theorem is not true).  In fact, the graph is {\em not} planar, since it contains $K_{3,3}$ as a subgraph.
+  
+\end{ans}
+\begin{ans}{4.6.14.}
+		For all these questions, we are really coloring the vertices of a graph.  You get the graph by first drawing a planar representation of the polyhedron and then taking its planar dual: put a vertex in the center of each face (including the outside) and connect two vertices if their faces share an edge.
+		\begin{parts}
+			\part Since the planar dual of a dodecahedron contains a 5-wheel, it's chromatic number is at least 4.  Alternatively, suppose you could color the faces using 3 colors without any two adjacent faces colored the same.  Take any face and color it blue.  The 5 pentagons bordering this blue pentagon cannot be colored blue.  Color the first one red.  Its two neighbors (adjacent to the blue pentagon) get colored green.  The remaining 2 cannot be blue or green, but also cannot both be red since they are adjacent to each other.  Thus a 4th color is needed.
+			\part The planar dual of the dodecahedron is itself a planar graph.  Thus be the 4-color theorem, it can be colored using only 4 colors without two adjacent vertices (corresponding to the faces of the polyhedron) being colored identically.
+			\part The cube can be properly 3-colored.  Color the ``top'' and ``bottom'' red, the ``front'' and ``back'' blue, and the ``left'' and ``right'' green.
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{4.6.15.}
+  $G$ has $13$ edges, since we need $7 - e + 8 = 2$.
+  
+\end{ans}
+\begin{ans}{4.6.16.}
+  \begin{parts}
+	 \part The graph does have an Euler path, but not an Euler circuit.  There are exactly two vertices with odd degree.  The path starts at one and ends at the other.
+	 \part The graph is planar.  Even though as it is drawn edges cross, it is easy to redraw it without edges crossing.
+	 \part The graph is not bipartite (there is an odd cycle), nor complete.
+	 \part The chromatic number of the graph is 3.
+  \end{parts}
+  
+\end{ans}
+\begin{ans}{4.6.17.}
+  \begin{parts}
+	 \part False.  For example, $K_{3,3}$ is not planar.
+	 \part True.  The graph is bipartite so it is possible to divide the vertices into two groups with no edges between vertices in the same group.  Thus we can color all the vertices of one group red and the other group blue.
+	 \part False.  $K_{3,3}$ has 6 vertices with degree 3, so contains no Euler path.
+	 \part False.  $K_{3,3}$ again.
+	 \part False.  The sum of the degrees of all vertices is even for {\em all} graphs so this property does not imply that the graph is bipartite.
+  \end{parts}
+  
+\end{ans}
+\begin{ans}{4.6.18.}
+	The first and third graphs have a matching, shown in bold (there are other matchings as well).  The middle graph does not have a matching.  If you look at the three circled vertices, you see that they only have two neighbors, which violates the matching condition $|N(S)| \ge S$ (the three circled vertices form the set $S$).
+
+	 \begin{tikzpicture}
+	 \coordinate (a) at (0,0);
+	 \coordinate (A) at (0,1);
+	 \coordinate (b) at (1,0);
+	 \coordinate (B) at (1,1);
+	 \coordinate (c) at (2,0);
+	 \coordinate (C) at (2,1);
+	 \draw (a) \v -- (B) \v -- (c) \v -- (C) \v -- (a) \v -- (A)\v -- (b) \v;
+	 \draw[very thick] (a) -- (C) (A) -- (b) (c) -- (B);
+	 \end{tikzpicture}
+	 \hfill
+	 \begin{tikzpicture}
+	 \coordinate (a) at (0,0);
+	 \coordinate (A) at (0,1);
+	 \coordinate (b) at (1,0);
+	 \coordinate (B) at (1,1);
+	 \coordinate (c) at (2,0);
+	 \coordinate (C) at (2,1);
+	 \coordinate (d) at (3,0);
+	 \coordinate (D) at (3,1);
+	 \draw (a) \v -- (A) \v (b) \v -- (B) \v (c) \v -- (C) \v (d) \v  (D)\v;
+	 \draw (a) -- (C) -- (b) -- (D) (A) -- (c) (A) -- (d) -- (C);
+	 \draw[dashed] (a) circle (7pt) (c) circle (7pt) (d) circle (7pt);
+	 \end{tikzpicture}
+	 \hfill
+	 \begin{tikzpicture}
+	 \coordinate (a) at (0,0);
+	 \coordinate (A) at (0,1);
+	 \coordinate (b) at (1,0);
+	 \coordinate (B) at (1,1);
+	 \coordinate (c) at (2,0);
+	 \coordinate (C) at (2,1);
+	 \coordinate (d) at (3,0);
+	 \coordinate (D) at (3,1);
+	 \coordinate (e) at (4,0);
+	 \coordinate (E) at (4,1);
+	 \draw (a) \v (A) \v (b) \v (B) \v (c) \v  (C) \v (d) \v  (D)\v (e)\v (E) \v;
+	 \draw (a) -- (A) (a) -- (B) (A) -- (b) (A) -- (c) (b) -- (C) (B) -- (c) -- (D) (c) -- (E) (C) -- (d) -- (E) (D) -- (e) -- (E);
+	 \draw[very thick] (a) -- (A) (b) -- (C) (c) -- (B) (d) -- (E) (e) -- (D);
+	 \end{tikzpicture}
+
+	
+\end{ans}
+\begin{ans}{4.6.19.}
+  \begin{parts}
+  \part If a graph has an Euler path, then it is planar.
+  \part If a graph does not have an Euler path, then it is not planar.
+  \part There is a graph which is planar and does not have an Euler path.
+  \part Yes.  In fact, in this case it is because the original statement is false.
+  \part False.  $K_4$ is planar but does not have an Euler path.
+  \part False.  $K_5$ has an Euler path but is not planar.
+  \end{parts}
+  
+\end{ans}
+\protect \end {itemize}
+ \protect \vskip 2em \protect \subsection *{Solutions for Section A.1} \protect \markright {Solutions for A.1} \par \protect \begin {itemize} 
+\begin{ans}{A.1.1.}
+		\begin{parts}
+		  \part $\dfrac{4}{1-x}$.  %$4,4,4,4,4,\ldots$
+		  \part $\dfrac{2}{(1-x)^2}$.  %$2, 4, 6, 8, 10, \ldots$
+		  \part $\dfrac{2x^3}{(1-x}^2$.  %$0,0,0,2,4,6,8,10,\ldots$
+		  \part $\dfrac{1}{1-5x}$.  %$1, 5, 25, 125, \ldots$
+		  \part $\dfrac{1}{1+3x}$.  %$1, -3, 9, -27, 81, \ldots$
+		  \part $\dfrac{1}{1-5x^2}$.  %$1, 0, 5, 0, 25, 0, 125, 0, \ldots$
+		  \part $\dfrac{x}{(1-x^3)^2}$.  %$0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, \ldots$
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.1.2.}
+		\begin{parts}
+		  \part $0, 4, 4, 4, 4, 4, \ldots$.  %$\dfrac{4x}{1-x}$
+		  \part $1, 4, 16, 64, 256, \ldots$.  %$\dfrac{1}{1-4x}$
+		  \part $0, 1, -1, 1, -1, 1, -1, \ldots$.  %$\dfrac{x}{1+x}$
+		  \part $0, 3, -6, 9, -12, 15, -18, \ldots $.  %$\dfrac{3x}{(1+x)^2}$
+		  \part $1, 3, 6, 9, 12, 15, \ldots$.  %$\dfrac{1+x+x^2}{(1-x)^2}$ (Hint: multiplication)
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.1.3.}
+		\begin{parts}
+		  \part The second derivative of $\dfrac{1}{1-x}$ is $\dfrac{2}{(1-x)^3}$ which expands to $2 + 6x + 12x^2 + 20x^3 + 30x^4 + \cdots$.  Dividing by 2 gives the generating function for the triangular numbers. %Take two derivatives of the generating function for $1,1,1,1,1, \ldots$
+		  \part Compute $A - xA$ and you get $1 + 2x + 3x^2 + 4x^3 + \cdots$ which can be written as $\dfrac{1}{(1-x)^2}$.  Solving for $A$ gives the correct generating function. %Use differencing.
+		  \part The triangular numbers are the sum of the first $n$ numbers $1,2,3,4, \ldots$.  To get the sequence of partial sums, we multiply by $\frac{1}{1-x}$. so this gives the correct generating function again. %Multiply two known generating functions.
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.1.4.}
+		Call the generating function $A$.  Compute $A - xA = 4 + x + 2x^2 + 3x^3 + 4x^4 + \cdots$.  Thus $A - xA = 4 + \dfrac{x}{(1-x)^2}$.  Solving for $A$ gives $\d\frac{4}{1-x} + \frac{x}{(1-x)^3}$.  %Use differencing to find the generating function for $4, 5, 7, 10, 14, 19, 25, \ldots$
+	
+\end{ans}
+\begin{ans}{A.1.5.}
+		$\dfrac{1+2x}{1-3x + x^2}$.  %Find a generating function for the sequence with recurrence relation $a_n = 3a_{n-1} - a_{n-2}$ with initial terms $a_0 = 1$ and $a_1 = 5$.
+	
+\end{ans}
+\begin{ans}{A.1.6.}
+		Compute $A - xA - x^2A$ and the solve for $A$.  The generating function will be $\dfrac{x}{1-x-x^2}$.  %Use the recurrence relation for the Fibonacci numbers to find the generating function for the Fibonacci sequence.
+	
+\end{ans}
+\begin{ans}{A.1.7.}
+		$\dfrac{x}{(1-x)(1-x-x^2)}$.  %Use multiplication to find the generating function for the sequence of partial sums of Fibonacci numbers, $S_0, S_1, S_2, \ldots$ where $S_0 = F_0$, $S_1 = F_0 + F_1$, $S_2 = F_0 + F_1 + F_2$, $S_3 = F_0 + F_1 + F_2 + F_3$ and so on.
+	
+\end{ans}
+\begin{ans}{A.1.8.}
+		$\dfrac{2}{1-5x} + \dfrac{7}{1+3x}$.  %Find the generating function for the sequence with closed formula $a_n = 2(5^n) + 7(-3)^n$.
+	
+\end{ans}
+\begin{ans}{A.1.9.}
+		$a_n = 3\cdot 4^{n-1} + 1$.  %Find a closed formula for the $n$th term of the sequence with generating function $\dfrac{3x}{1-4x} + \dfrac{1}{1-x}$.
+	
+\end{ans}
+\begin{ans}{A.1.10.}
+		Hint: you should ``multiply'' the two sequences.  Answer: 158.  %Find $a_7$ for the sequence with generating function $\dfrac{2}{(1-x)^2}\cdot\dfrac{x}{1-x-x^2}$
+	
+\end{ans}
+\begin{ans}{A.1.11.}
+		Starting with $\frac{1}{1-x} = 1 + x + x^2 + x^3 +\cdots$, we can take derivatives of both sides, given $\frac{1}{(1-x)^2} = 1 + 2x + 3x^2 + \cdots$.  By the definition of generating functions, this says that $\frac{1}{(1-x)^2}$ generates the {\em sequence} 1, 2, 3\ldots.  You can also find this using differencing or by multiplying.
+	
+\end{ans}
+\begin{ans}{A.1.12.}
+		\begin{parts}
+		 \part $\frac{1}{(1-x^2)^2}$.  %$1, 0, 2, 0, 3, 0, 4,\ldots$
+		 \part $\frac{1}{(1+x)^2}$. %$1, -2, 3, -4, 5, -6, \ldots$
+		 \part $\frac{3x}{(1-x)^2}$.  %$0, 3, 6, 9, 12, 15, 18, \ldots$
+		 \part $\frac{3x}{(1-x)^3}$.  (partial sums).  %$0, 3, 9, 18, 30, 45, 63,\ldots$ (Hint: relate this sequence to the previous one.)
+		 \end{parts}
+	
+\end{ans}
+\begin{ans}{A.1.13.}
+		\begin{parts}
+		  \part $0,0,1,1,2,3,5,8, \ldots$.   %$\frac{x^2}{1-x-x^2}$
+		  \part $1, 0, 1, 0, 2, 0, 3, 0, 5, 0, 8, 0, \ldots$.  %$\frac{1}{1-x^2-x^4}$
+		  \part $1, 3, 18, 81, 405, \ldots$.  %$\frac{1}{1-3x-9x^2}$
+		  \part $1, 2, 4, 7, 12, 20$.  %$\frac{1}{(1-x-x^2)(1-x)}$
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.1.14.}
+		$\frac{1}{1+2x}$.
+	
+\end{ans}
+\begin{ans}{A.1.15.}
+		$\frac{x^3}{(1-x)^2} + \frac{1}{1-x}$.
+	
+\end{ans}
+\begin{ans}{A.1.16.}
+		\begin{parts}
+		 \part $(1-x)A = 3 + 2x + 4x^2 + 6x^3 + \cdots$ which is almost right.  We can fix it like this:
+		 $2 + 4x + 6x^2 + \cdots = \frac{(1-x)A - 3}{x}$.
+		 \part We know $2 + 4x + 6x^3 + \cdots = \frac{2}{(1-x)^2}$.
+		 \part $A = \frac{2x}{(1-x)^3} + \frac{3}{1-x} = \frac{3 -4x + 3x^2}{(1-x)^3}$.
+		\end{parts}
+	
+\end{ans}
+\protect \end {itemize}
+ \protect \vskip 2em \protect \subsection *{Solutions for Section A.2} \protect \markright {Solutions for A.2} \par \protect \begin {itemize} 
+\begin{ans}{A.2.1.}
+		\begin{proof}
+			Suppose $a \mid b$.  Then $b$ is a multiple of $a$, or in other words, $b = ak$ for some $k$.  But then $bc = akc$, and since $kc$ is an integer, this says $bc$ is a multiple of $a$.  In other words, $a \mid bc$.
+		\end{proof}
+	
+\end{ans}
+\begin{ans}{A.2.2.}
+		\begin{proof}
+			Assume $a \mid b$ and $a \mid c$.  This means that $b$ and $c$ are both multiples of $a$, so $b = am$ and $c = an$ for integers $m$ and $n$.  Then $b+c = am+an = a(m+n)$, so $b+c$ is a multiple of $a$, or equivalently, $a \mid b+c$.  Similarly, $b-c = am-an = a(m-n)$, so $b-c$ is a multiple of $a$, which is to say $a \mid b-c$.
+		\end{proof}
+	
+\end{ans}
+\begin{ans}{A.2.3.}
+		$\{\ldots, -8, -4, 0, 4, 8, 12, \ldots\}$, $\{\ldots, -7, -3, 1, 5, 9, 13, \ldots\}$, $\{\ldots, -6, -2, 2, 6, 10, 14, \ldots\}$,\\ and $\{\ldots, -5, -1, 3, 7, 11, 15, \ldots\}$.
+	
+\end{ans}
+\begin{ans}{A.2.4.}
+		\begin{proof}
+			Assume $a \equiv b \pmod n$ and $c \equiv d \pmod n$.  This means $a = b + kn$ and $c = d + jn$ for some integers $k$ and $j$.  Consider $a-c$.  We have:
+			\[a-c = b+kn - (d+jn) = b-d + (k-j)n.\]
+			In other words, $a-c$ is $b-d$ more than some multiple of $n$, so $a-c \equiv b-d \pmod n$.
+		\end{proof}
+	
+\end{ans}
+\begin{ans}{A.2.5.}
+		\begin{parts}
+			\part $3^{456} \equiv 1^{456} = 1 \pmod 2$.
+			\part $3^{456} = 9^{228} \equiv (-1)^{228} = 1 \pmod{5}$.
+			\part $3^{456} = 9^{228} \equiv 2^{228} = 8^{76} \equiv 1^{76} = 1 \pmod 7$.
+			\part $3^{456} = 9^{228} \equiv 0^{228} = 0 \pmod{9}$.
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.2.6.}
+		For all of these, just plug in all integers between 0 and the modulus to see which, if any, work.
+		\begin{parts}
+			\part No solutions.
+			\part $x = 3$.
+			\part $x = 2$, $x = 5$, $x = 8$.
+			\part No solutions.
+			\part No solutions.
+			\part $x = 3$.
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.2.7.}
+		\begin{parts}
+			\part $x = 5+22k$ for $k \in \Z$.
+			\part $x = 4 + 5k$ for $k \in \Z$.
+			\part $x = 6 + 15k$ for $k \in \Z$.
+			\part Hint: first reduce each number modulo 9, which can be done by adding up the digits of the numbers.  Answer: $x = 2 + 9k$ for $k \in \Z$.
+		\end{parts}
+	
+\end{ans}
+\begin{ans}{A.2.8.}
+		We must solve $7x + 5 \equiv 2 \pmod{11}$.  This gives $x \equiv 9 \pmod{11}$.  In general, $x = 9 + 11k$, but when you divide any such $x$ by 11, the remainder will be 9.
+	
+\end{ans}
+\begin{ans}{A.2.9.}
+  		\begin{parts}
+	  		\part Divide through by 2: $3x + 5y = 16$.  Convert to a congruence, modulo 3: $5y \equiv 16 \pmod 3$, which reduces to $2y \equiv 1 \pmod 3$.  So $y \equiv 2 \pmod 3$ or $y = 2 + 3k$.  Plug this back into $3x + 5y = 16$ and solve for $x$, to get $x = 2-5k$.  So the general solution is $x = 2-5k$ and $y = 2+3k$ for $k \in \Z$.
+	  		\part $x = 7+8k$ and $y = -11 - 17k$ for $k \in \Z$.
+	  		\part $x = -4-47k$ and $y = 3 + 35k$ for $k \in \Z$.
+	  	\end{parts}
+  	
+\end{ans}
+\begin{ans}{A.2.10.}
+		First, solve the Diophantine equation $13x + 20 y = 2$.  The general solution is $x = -6 - 20k$ and $y = 4+13k$.  Now if $k = 0$, this correspond to filling the 20 oz. bottle 4 times, and emptying the 13 oz. bottle 6 times, which would require 80 oz. of water.  Increasing $k$ would require considerably more water.  Perhaps $k = -1$ would be better?  Then we would have $x = -6+20 = 14$ and $y = 4-13 = -11$, which describes the solution where we fill the 13 oz. bottle 14 times, and empty the 20 oz. bottle 11 times.  This would require 182 oz. of water.  Thus the most efficient procedure is to repeatedly fill the 20 oz bottle, emptying it into the 13 oz bottle, and discarding full 13 oz. bottles, which requires 80 oz. of water.
+	
+\end{ans}
+\protect \end {itemize}
