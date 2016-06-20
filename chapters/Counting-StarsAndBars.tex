@@ -43,19 +43,19 @@ Consider the following counting problem:
   You have 7 cookies to give to 4 kids.  How many ways can you do this?
 \end{quote}
 
-Take a moment to think about how you might solve this problem.  You may assume that it is acceptable to give a kid no cookies.  Also, the cookies are all identical.  And the order in which you give out the cookies does not matter.
+Take a moment to think about how you might solve this problem.  You may assume that it is acceptable to give a kid no cookies.  Also, the cookies are all identical and the order in which you give out the cookies does not matter.
 
-Before solving the problem, here is a wrong answer.  You might guess that the answer should be $4^7$ because for each of the 7 cookies, there are 4 choices of kids to which you can give the cookie. This is reasonable, but wrong.  To see why, consider a few possible outcomes:  we could assign the first six cookies to kid A, and the seventh cookie to kid B.  Another outcome would assign the first cookie to kid B and the six remaining cookies to kid A.  Both outcomes are included in the $4^7$ answer.  But for our counting problem, both outcomes are really the same -- kid A gets six cookies and kid B gets one cookie.
+Before solving the problem, here is a wrong answer: you might guess that the answer should be $4^7$ because for each of the 7 cookies, there are 4 choices of kids to which you can give the cookie. This is reasonable, but wrong.  To see why, consider a few possible outcomes:  we could assign the first six cookies to kid A, and the seventh cookie to kid B.  Another outcome would assign the first cookie to kid B and the six remaining cookies to kid A.  Both outcomes are included in the $4^7$ answer.  But for our counting problem, both outcomes are really the same -- kid A gets six cookies and kid B gets one cookie.
 
 What do outcomes actually look like?  How can we represent them? One approach would be to write a outcome as a string of four numbers like this:
 \[3112,\]
-which represent the outcome in which the first kid gets 3 cookies, the second and third kid each get 1 cookie, and the fourth kid gets 2 cookies.  Represented this way, the order in which the numbers occur matters.  1312 is a different outcome, because the first kid gets a one cookie instead of 3.  Each number in the string can be any integer between 0 and 7.  But the answer is not $7^4$.  We need the {\em sum} of the numbers to be 7.  
+which represent the outcome in which the first kid gets 3 cookies, the second and third kid each get 1 cookie, and the fourth kid gets 2 cookies.  Represented this way, the order in which the numbers occur matters.  1312 is a different outcome, because the first kid gets a one cookie instead of 3.  Each number in the string can be any integer between 0 and 7.  But the answer is not $7^4$.  We need the {\em sum} of the numbers to be 7.
 
 Another way we might represent outcomes is to write a string of seven letters:
 \[\mbox{ABAADCD},\]
 which represents that the first cookie goes to kid A, the second cookie goes to kid B, the third and fourth cookies go to kid A, and so on.  In fact, this outcome is identical to the previous one -- A gets 3 cookies, B and C get 1 each and D gets 2.  Each of the seven letters in the string can be any of the 4 possible letters (one for each kid), but the number of such strings is not $4^7$, because here order does {\em not} matter.  In fact, another way to write the same outcome is
 \[\mbox{AAABCDD}.\]
-This will be the preferred representation of the outcome.  Since we can write the letters in any order, we might as well write them in {\em non-decreasing} order for the purposes of counting.  So we will write all the A's first, then all the B's, and so on.  
+This will be the preferred representation of the outcome.  Since we can write the letters in any order, we might as well write them in {\em alphabetical} order for the purposes of counting.  So we will write all the A's first, then all the B's, and so on.
 
 Now think about how you could specify such an outcome.  All we really need to do is say when to switch from one letter to the next. In terms of cookies, we need to say after how many cookies do we stop giving cookies to the first kid and start giving cookies to the second kid.  And then after how many do we switch to the third kid?  And after how many do we switch to the fourth?  So yet another way to represent an outcome is like this:
 \[***|*|*|**\]
@@ -82,8 +82,8 @@ Stars and bars can be used in counting problems other than kids and cookies.  He
 \begin{example}
   Your favorite mathematical pizza chain offers 10 toppings.  How many pizzas can you make if you are allowed 6 toppings?  The order of toppings does not matter but now you are allowed repeats.  So one possible pizza is triple sausage, double pineapple, and onions.
   \begin{solution}
-    We get 6 toppings (counting possible repeats).  Represent each of these toppings as a star.  There are 10 toppings to choose from, so we must switch from considering one topping to the next 9 times.  These are the bars.  Think of going down the menu one topping at a time: you see anchovies first, and skip to the next, sausage.  You say yes to sausage 3 times then switch to the next topping on the list.  You keep skipping until you get to pineapple, which you say yes to twice.  Another switch and you are at onions.  You say yes once.  Then you keep switching until you get to the last topping, never saying yes again (since you already have said yes 6 times.
-    
+    We get 6 toppings (counting possible repeats).  Represent each of these toppings as a star.  Think of going down the menu one topping at a time: you see anchovies first, and skip to the next, sausage.  You say yes to sausage 3 times (use 3 stars), then switch to the next topping on the list.  You keep skipping until you get to pineapple, which you say yes to twice.  Another switch and you are at onions.  You say yes once.  Then you keep switching until you get to the last topping, never saying yes again (since you already have said yes 6 times.  There are 10 toppings to choose from, so we must switch from considering one topping to the next 9 times.  These are the bars.
+
     Now that we are confident that we have the right number of stars and bars, we answer the question simply: there are 6 stars and 9 bars, so 15 symbols.  We need to pick 9 of them to be bars, so there number of pizzas possible is
     \[{15 \choose 9}.\]
   \end{solution}
@@ -118,7 +118,7 @@ Stars and bars can be used in counting problems other than kids and cookies.  He
     \item If $x_i$ can be 0 or greater, we are in the standard case with no restrictions.  So 13 stars and 4 bars can be arranged in ${17 \choose 4}$ ways.
     \item Now each variable must be at least 1.  So give one unit to each variable to satisfy that restriction.  Now there are 8 stars left, and still 4 bars, so the number of solutions is ${12 \choose 4}$.
     \item Now each variable must be 2 or greater.  So before any counting, give each variable 2 free units.  We now have 3 remaining stars and 4 bars, so there are ${7 \choose 4}$ solutions.
-      
+
   \end{enumerate}
   \end{solution}
 
@@ -126,5 +126,3 @@ Stars and bars can be used in counting problems other than kids and cookies.  He
 \footnotetext{An integer solution to an equation is a solution in which the unknown must have an integer value.}
 
 \end{document}
-
-
