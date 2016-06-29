@@ -1,0 +1,360 @@
+<section xml:id="sec_count-functions">
+<title>Counting Functions</title>
+<activity> 
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Consider all functions <m>f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}</m>. How many functions are there all together? How many of those are injective? Remember, a function is an injection if every input goes to a different output.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider all functions <m>f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}</m>. How many of the <em>injections</em> have the property that <m>f(x) \ne x</m> for any <m>x \in \{1,2,3,4,5\}</m>?
+</p>
+
+<p>
+Your friend claims that the answer is:
+<me>
+  5! - \left[ {5\choose 1}4! - {5 \choose 2}3! + {5\choose 3}2! - {5 \choose 4}1! + {5\choose 5}0! \right].
+</me>
+</p>
+
+<p>
+Explain why this is correct.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Recall that a <em>surjection</em> is a function for which every element of the codomain is in the range. How many of the functions <m>f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}</m> are surjective? Use PIE!
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+Let's shift focus and think about counting in another way. Consider again the problem of giving cookies to kids. One way to think about this problem is to say that we are <em>assigning</em> each cookie to a kid. So far the cookies have been identical, so it did not matter which cookie went to which kid. But what if it did? Suppose we have 7 different cookies and 4 different kids. How many ways are there to give out the cookies?
+</p>
+
+<p>
+We will consider this question more generally. What are we really doing here? We are <em>mapping</em> each cookie to a kid. This sounds like a function! And it is. What we really have is a function whose domain is the set of cookies and codomain is the set of kids. So we might as well ask:
+</p>
+<example>
+<statement>
+<p>
+How many functions <m>f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}</m> are there?\footnotemark
+</p>
+</statement>
+<solution>
+<p>
+We must assign <m>f(x)</m> for each <m>x</m> in the domain. We have four choices for <m>f(1)</m>: we could have <m>f(1) = a</m>, <m>f(1) = b</m>, <m>f(1) = c</m> or <m>f(1) = d</m>. Similarly, we have four choices for <m>f(2)</m>, and four choices for <m>f(3)</m> and so on. In fact, for each of the seven elements of the domain, we have four choices, so the number of functions here is <m>4^7</m>.
+</p>
+</solution>
+</example>
+<p>
+We might also wonder how many of those functions are injective and how many are surjective. What would these mean in terms of cookies? The function would be injective if each kid got no more than one cookie. There is no way to do this, because we have more cookies than kids. The number of injective functions with this domain and codomain is 0.
+</p>
+
+<p>
+On the other hand, a surjective function would be one in which each kid got at least one cookie. Can we count those? It turns out that counting surjective functions will require PIE. First back up and consider another simpler example.
+</p>
+<example>
+<statement>
+<p>
+How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}</m> are there? How many of those functions are injective?
+</p>
+</statement>
+<solution>
+<p>
+First we count all the functions with domain <m>\{1,2,3,4,5\}</m> and codomain <m>\{a,b,c,d,e\}</m>. For <m>f</m> to be a function, it must assign each element of the domain to exactly one element of the codomain. In other words, we need to assign one of the elements of <m>\{a,b,c,d,e\}</m> to <m>f(1)</m>. There are 5 choices for this. Similarly, there are five choices for <m>f(2)</m>. In fact, there are 5 choices for <m>f(x)</m> for all five possible values of <m>x \in \{1,2,3,4,5\}</m>. Thus the total number of function is <m>5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 = 5^5</m>.
+</p>
+
+<p>
+What about the injective (one-to-one) functions? Again, we have 5 choices for <m>f(1)</m>. However, once we assign a value to <m>f(1)</m>, we cannot assign that value to <m>f(2)</m>, or any other <m>f(x)</m>. So for each of the 5 choices for <m>f(1)</m>, we only have 4 choices for <m>f(2)</m>, and then only 3 choices for <m>f(3)</m> and only 2 choices for <m>f(4)</m>, leaving only 1 choice (the last element of the codomain) for <m>f(5)</m>. Therefore the number of one-to-one functions is <m>5!</m>.
+</p>
+</solution>
+</example>
+<p>
+Using the same counting techniques, you should be able to count the total number of functions from any finite size domain to any finite size codomain, and also count the injective functions (as long as the size of the codomain is at least as large as the domain, otherwise there would be none).
+</p>
+
+<p>
+So what about surjective functions? In the previous example, there are exactly <m>5! = 120</m> surjections. We know this because whenever the domain and codomain of a function are the same finite size, a function is injective if and only if it is surjective. In general, if the domain and codomain both contain <m>n</m> elements, then the number of surjective functions is <m>n!</m>, since this is the number of injective functions. Also, if the codomain is strictly larger than the domain, then the surjective functions are easy to count: there are 0 of them (since there will always be elements of the codomain left out of the range). But what if the size of the codomain is smaller than the size of the domain?
+</p>
+
+<p>
+The idea is to count the functions which are <em>not</em> surjective, and then subtract that from the total number of functions. This works very well when the codomain has two elements in it:
+</p>
+<example>
+<statement>
+<p>
+How many functions <m>f: \{1,2,3,4,5\} \to \{a,b\}</m> are surjective?
+</p>
+</statement>
+<solution>
+<p>
+There are <m>2^5</m> functions all together, two choices for where to send each of the 5 elements of the domain. Now of these, the functions which are <em>not</em> surjective must exclude one or more elements of the codomain from the range. So first, consider functions for which <m>a</m> is not in the range. This can only happen one way: everything gets sent to <m>b</m>. Alternatively, we could exclude <m>b</m> from the range. Then everything gets sent to <m>a</m>, so there is only one function like this. These are the only ways in which a function could not be surjective (no function excludes both <m>a</m> and <m>b</m> from the range) so there are exactly <m>2^5 - 2</m> surjective functions.
+</p>
+</solution>
+</example>
+<p>
+When there are three elements in the codomain, there are now three choices for a single element to exclude from the range. Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these. It's PIE time!
+</p>
+<example>
+<statement>
+<p>
+How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c\}</m> are surjective?
+</p>
+</statement>
+<solution>
+<p>
+Again start with the total number of functions: <m>3^5</m> (as each of the five elements of the domain can go to any of three elements of the codomain). Now we count the functions which are <em>not</em> surjective.
+</p>
+
+<p>
+Start by excluding <m>a</m> from the range. Then we have two choices (<m>b</m> or <m>c</m>) for where to send each of the five elements of the domain. Thus there are <m>2^5</m> functions which exclude <m>a</m> from the range. Similarly, there are <m>2^5</m> functions which exclude <m>b</m>, and another <m>2^5</m> which exclude <m>c</m>. Now have we counted all functions which are not surjective? Yes, but in fact, we have counted some multiple times. For example, the function which sends everything to <m>c</m> was one of the <m>2^5</m> functions we counted when we excluded <m>a</m> from the range, and also one of the <m>2^5</m> functions we counted when we excluded <m>b</m> from the range. We must subtract out all the functions which specifically exclude two elements from the range. There is 1 function when we exclude <m>a</m> and <m>b</m> (everything goes to <m>c</m>), one function when we exclude <m>a</m> and <m>c</m>, and one function when we exclude <m>b</m> and <m>c</m>.
+</p>
+
+<p>
+We are using PIE: to count the functions which are not surjective, we added up the functions which exclude <m>a</m>, <m>b</m>, and <m>c</m> separately, then subtracted the functions which exclude pairs of elements. We would then add back in the functions which exclude groups of three elements, except that there are no such functions. We find that the number of functions which are <em>not</em> surjective is
+<me>
+  2^5 + 2^5 + 2^5 - 1 - 1 - 1 + 0.
+</me>
+</p>
+
+<p>
+Perhaps a more descriptive way to write this is
+<me>
+  {3 \choose 1}2^5 - {3 \choose 2}1^5 + {3 \choose 3}0^5.
+</me>
+since each of the <m>2^5</m>'s was the result of choosing 1 of the 3 elements of the codomain to exclude from the range, each of the three <m>1^5</m>'s was the result of choosing 2 of the 3 elements of the codomain to exclude. Writing <m>1^5</m> instead of 1 makes sense too: we have 1 choice of were to send each of the 5 elements of the domain.
+</p>
+
+<p>
+Now we can finally count the number of surjective functions:
+<me>
+  3^5 - \left[{3 \choose 1}2^5 - {3 \choose 2}1^5\right] = 150.
+</me>
+</p>
+</solution>
+</example>
+<p>
+You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious. We need to use PIE but with more than 3 sets the formula for PIE is very long. However, we have lucked out. As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded. Similarly, the number of functions which exclude a pair of elements will be the same for every pair. With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded. So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are. This works just like it did in \Cref{sec:advPIE}, only now the size of the various combinations of sets is a number raised to a power, as opposed to a binomial coefficient or factorial. Here's what happens with <m>4</m> and <m>5</m> elements in the codomain.
+</p>
+<example>
+<statement>
+<ol>
+<li>How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c,d\}</m> are surjective?</li>
+<li>How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}</m> are surjective?</li>
+</ol>
+</statement>
+<solution>
+<ol>
+<li>There are <m>4^5</m> functions all together; we will subtract the functions which are not surjective.  We could exclude any one of the four elements of the codomain, and doing so will leave us with <m>3^5</m> functions for each excluded element.  This counts too many so we subtract the functions which exclude two of the four elements of the codomain, each pair giving <m>2^5</m> functions.  But this excludes too many, so we add back in the functions which exclude three of the four elements of the codomain, each triple giving <m>1^5</m> function.  There are <m>{4 \choose 1}</m> groups of functions excluding a single element, <m>{4 \choose 2}</m> groups of functions excluding a pair of elements, and <m>{4 \choose 3}</m> groups of functions excluding a triple of elements.  This means that the number of functions which are <em>not</em> surjective is:
+<me>
+  {4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5.
+</me>
+We can now say that the number of functions which are surjective is:
+<me>
+  4^5 - \left[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\right].
+</me>
+</li>
+<li>The number of surjective functions is:
+<me>
+  5^5 - \left[{5 \choose 1}4^5 - {5 \choose 2}3^5 + {5 \choose 3}2^5 - {5 \choose 4}1^5\right].
+</me>
+We took the total number of functions <m>5^5</m> and subtracted all that were not surjective.  There were <m>{5 \choose 1}</m> ways to select a single element from the codomain to exclude from the range, and for each there were <m>4^5</m> functions.  But this double counts, so we use PIE and subtract functions excluding two elements from the range: there are <m>{5 \choose 2}</m> choices for the two elements to exclude, and for each pair, <m>3^5</m> functions.  This takes out too many functions, so we add back in functions which exclude 3 elements from the range: <m>{5 \choose 3}</m> choices for which three to exclude, and then <m>2^5</m> functions for each choice of elements.  Finally we take back out the 1 function which excludes 4 elements for each of the <m>{5 \choose 4}</m> choices of 4 elements.</li>
+</ol>
+</solution>
+</example>
+<p>
+We have seen that counting surjective functions is another nice example of the advanced use of the Principle of Inclusion/Exclusion first introduced in \Cref{sec:advPIE}. Also, counting injective functions turns out to be equivalent to permutations, and counting all functions has a solution akin to those counting problems where order matters but repeats are allowed (like counting the number of words you can make from a given set of letters).
+</p>
+
+<p>
+These are not just a few more examples of the techniques we have developed in this chapter. Quite the opposite: everything we have learned in this chapter are examples of <em>counting functions</em>!
+</p>
+<example>
+<statement>
+<p>
+How many 5-letter words can you make using the eight letters <m>a</m> through <m>h</m>? How many contain no repeated letters?
+</p>
+</statement>
+<solution>
+<p>
+By now it should be no surprise that there are <m>8^5</m> words, and <m>P(8,5)</m> words without repeated letters. The new piece here is that we are actually counting functions. For the first problem, we are counting all functions from <m>\{1,2,\ldots, 5\}</m> to <m>\{a,b,\ldots, h\}</m>. The numbers in the domain represent the <em>position</em> of the letter in the word, the codomain represents the letter that could be assigned to that position. If we ask for no repeated letters, we are asking for injective functions.
+</p>
+
+<p>
+If <m>A</m> and <m>B</m> are <em>any</em> sets with <m>|A| = 5</m> and <m>|B| = 8</m>, then the number of functions <m>f: A \to B</m> is <m>8^5</m> and the number of injections is <m>P(8,5)</m>. So if you can represent your counting problem as a function counting problem, most of the work is done.
+</p>
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+How many subsets are there of <m>\{1,2,\ldots, 9\}</m>? How many 9-bit strings are there (of any weight)?
+</p>
+</statement>
+<solution>
+<p>
+We saw in \Cref{sec:binom} that the answer to both these questions is <m>2^9</m>, as we can say yes or no (or 0 or 1) to each of the 9 elements in the set (positions in the bit-string). But <m>2^9</m> also looks like the answer you get from counting functions. In fact, if you count all functions <m>f: A \to B</m> with <m>|A| = 9</m> and <m>|B| = 2</m>, this is exactly what you get.
+</p>
+
+<p>
+This makes sense! Let <m>A = \{1,2,\ldots, 9\}</m> and <m>B = \{y, n\}</m>. We are assigning each element of the set either a yes or a no. Or in the language of bit-strings, we would take the 9 positions in the bit string as our domain and the set <m>\{0,1\}</m> as the codomain.
+</p>
+</solution>
+</example>
+<p>
+So far we have not used a function as a model for binomial coefficients (combinations). Think for a moment about the relationship between combinations and permutations, say specifically <m>{9 \choose 3}</m> and <m>P(9,3)</m>. We <em>do</em> have a function model for <m>P(9,3)</m>. This is the number of <em>injective</em> functions from a set of size 3 (say <m>\{1,2,3\}</m> to a set of size 9 (say <m>\{1,2,\ldots, 9\}</m>) since there are 9 choices for where to send the first element of the domain, then only 8 choices for the second, and 7 choices for the third. For example, the function might look like this:
+<me>
+  f(1) = 5 \qquad f(2) = 8 \qquad f(3) = 4.
+</me>
+</p>
+
+<p>
+This is a different function from:
+<me>
+  f(1) = 4 \qquad f(2) = 5 \qquad f(3) = 8.
+</me>
+</p>
+
+<p>
+Now <m>P(9,3)</m> counts these as different outcomes correctly, but <m>{9\choose 3}</m> will count these (among others) as just one outcome. In fact, in terms of functions <m>{9 \choose 3}</m> just counts the number of different ranges possible of injective functions. This should not be a surprise since binomial coefficients counts subsets, and the range is a possible subset of the codomain.<fn>A more mathematically sophisticated interpretation of combinations is that we are defining two injective functions to be <em>equivalent</em> if they have the same range, and then counting the number of equivalence classes under this notion of equivalence.</fn>
+</p>
+
+<p>
+While it is possible to interpret combinations as functions, perhaps the better advice is to instead use combinations (or stars and bars) when functions are not quite the right way to interpret the counting question.
+</p>
+<example>
+<statement>
+<p>
+You decide to give away your video game collection so to better spend your time studying advance mathematics. You have 8 games that you will give to 5 different friends. How many ways can you do this? More importantly, is there a good way to model this problem using a function?
+</p>
+</statement>
+<solution>
+<p>
+What if we did try to use a function to describe the situation? What should the domain be? It cannot be the 5 friends, because a single element of the domain cannot be mapped to more than one element of the codomain (and we must give away all the games). So the domain is the set of 8 games and the codomain is the set of 5 friends. In this interpretation, assuming that we don't need to give at least one game to each friend, we are just looking for functions, not necessarily injective functions. So the answer would be <m>5^8</m>.
+</p>
+
+<p>
+But is this correct? It is if we assume that the 8 games are distinct, or more importantly, that it matters which game goes to which friend. As it turns out, the 8 games you have are all copies of <em>The Legend of Zelda</em> (it is a great game after all). Now it really doesn't make sense to think of this as a function, since the domain is not a set of 8 objects. Instead we recognize this as a stars and bars problem, and deduce the answer of <m>{12 \choose 8}</m>.
+</p>
+</solution>
+</example>
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Write out all functions <m>f: \{1,2,3\} \to \{a,b\}</m>. How many are there? How many are injective? How many are surjective? How many are both?
+</p>
+</statement>
+<answer>
+<p>
+There are 8 different functions. For example, <m>f(1) = a</m>, <m>f(2) = a</m>, <m>f(3) = a</m>; or <m>f(1) = a</m>, <m>f(2) = b</m>, <m>f(3) = a</m>, and so on. None of the functions are injective. Exactly 6 of the functions are surjective. No functions are both (since no functions here are injective).
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Write out all functions <m>f: \{1,2\} \to \{a,b,c\}</m>. How many are there? How many are injective? How many are surjective? How many are both?
+</p>
+</statement>
+<answer>
+<p>
+There are nine functions - you have a choice of three outputs for <m>f(1)</m>, and for each, you have three choices for the output <m>f(2)</m>. Of these functions, 6 are injective, 0 are surjective, and 0 are both.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider functions <m>f: \{1,2,3,4\} \to \{a,b,c,d,e,f\}</m>.
+</p>
+
+<ol>
+<li>How many functions are there total?</li>
+<li>How many functions are injective?</li>
+<li>How many functions are surjective?</li>
+<li>How many functions have the property that <m>f(1) \ne a</m> or <m>f(2) \ne b</m>, or both?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>6^4 = 1296</m>, since there are six choices of where to send each of the 4 elements of the domain.</li>
+<li><m>P(6, 4) = 6 \cdot 5 \cdot 4 \cdot 3 = 360</m>, since outputs cannot be repeated.</li>
+<li>None.</li>
+<li>There are <m>5 \cdot 6^3</m> functions for which <m>f(1) \ne a</m> and another <m>5 \cdot 6^3</m> functions for which <m>f(2) \ne b</m>.  There are <m>5^2 \cdot 6^2</m> functions for which both <m>f(1) \ne a</m> and <m>f(2) \ne b</m>.  So the total number of functions for which <m>f(1) \ne a</m> or <m>f(2) \ne b</m> or both is
+<me>
+  5 \cdot 6^3 + 5 \cdot 6^3 - 5^2 \cdot 6^2 = 1260
+</me>
+</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider sets <m>A</m> and <m>B</m> with <m>|A| = 10</m> and <m>|B| = 17</m>.
+</p>
+
+<ol>
+<li>How many functions <m>f: A \to B</m> are there?</li>
+<li>How many functions <m>f: A \to B</m> are injective?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>17^{10}</m></li>
+<li><m>P(17, 10)</m></li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider sets <m>A</m> and <m>B</m> with <m>|A| = 10</m> and <m>|B| = 5</m>. How many functions <m>f: A \to B</m> are surjective?
+</p>
+</statement>
+<answer>
+<p>
+<m>5^{10} - \left[{5 \choose 1}4^{10} - {5 \choose 2}3^{10} + {5 \choose 3}2^{10} - {5 \choose 4}1^{10}\right]</m>
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Let <m>A = \{1,2,3,4,5\}</m>. How many injective functions <m>f:A \to A</m> have the property that for each <m>x \in A</m>, <m>f(x) \ne x</m>?
+</p>
+</statement>
+<answer>
+<p>
+<m>5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right]</m>. This is a sneaky way to as for the number of derangements on 5 elements.
+</p>
+</answer>
+</exercise>
+
+</exercises>
+</section>
