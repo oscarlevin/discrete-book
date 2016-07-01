@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--* Generated from MathBook XML source *-->
+<!--*    on 2016-07-01T11:05:03-06:00    *-->
+<!--*                                    *-->
+<!--*   http://mathbook.pugetsound.edu   *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Euler Paths and Circuits</title>
+<meta name="Keywords" content="Authored in MathBook XML">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/javascript" src="https://sagecell.sagemath.org/static/jquery.min.js"></script><script type="text/x-mathjax-config">
+// contrib directory for accessibility menu, moot after v2.6+?
+MathJax.Ajax.config.path["Contrib"] = "https://cdn.mathjax.org/mathjax/contrib";
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']],
+    },
+    TeX: {
+        // [Contrib]accessibility menu moot after v2.6+?
+        extensions: ["AMSmath.js", "AMSsymbols.js", "extpfeil.js", "autobold.js", "https://aimath.org/mathbook/mathjaxknowl.js", "[Contrib]/a11y/accessibility-menu.js", ],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           // JS comment, XML CDATA protect XHTML quality of file
+                           // if removed in XSL, use entities
+                           //<![CDATA[
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                           //]]>
+                         },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    "HTML-CSS": {
+        scale: 88,
+    },
+});
+    </script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><link href="https://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://aimath.org/knowl.js"></script><script src="https://aimath.org/mathbook/js/lib/jquery.sticky.js"></script><script src="https://aimath.org/mathbook/js/lib/jquery.espy.min.js"></script><script src="https://aimath.org/mathbook/js/Mathbook.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link href="https://aimath.org/mathbook/stylesheets/mathbook-3.css" rel="stylesheet" type="text/css">
+<link href="https://aimath.org/mathbook/mathbook-add-on.css" rel="stylesheet" type="text/css">
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<div style="display:none;">\(\def\withanswers{\toggletrue{includeanswers}}
+\def\course{Math 228}
+\def\noanswers{\togglefalse{includeanswers}}
+\newcommand{\showsolutions}{\toggletrue{showsolutions}}
+\newcommand{\hidesolutions}{\togglefalse{showsolutions}}
+\newcommand{\showinstnotes}{\toggletrue{instructoredition}}
+\newcommand{\hideinstnotes}{\togglefalse{instructoredition}}
+\newcommand{\starthwsol}{\toggletrue{hwsol}}
+\newcommand{\finishhwsol}{\togglefalse{hwsol}}
+\def\circleA{(-.5,0) circle (1)}
+\newcommand{\question}{
+	\iftoggle{includeanswers}{
+		\item\hypertarget{ques.\thesection.\Currentlabel.}{}}{\item}
+	}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\bonusquestion{\question}
+\def\circleB{(.5,0) circle (1)}
+\renewcommand{\part}[1]{\item #1}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\newcommand{\subpart}[1]{\item #1}
+\def\circleC{(0,-1) circle (1)}
+\newcommand{\ansparams}{{\thesection.\Currentlabel.}}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\WriteAnsFileStart{
+	\Writetofile{\ansfilename}{ 
+		\protect 
+		\protect\subsection*{Solutions for Section \thesection}
+		
+		\protect
+		
+		
+	
+		\protect\begin{itemize}
+	}
+	\subsection*{Exercises}\addcontentsline{toc}{subsection}{Exercises}
+	}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\WriteAnsFileStop{
+	\Writetofile{\ansfilename}{\protect\end{itemize}}
+	}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+\newcommand{\ex}{\textbf{Ex: }}
+\renewcommand{\qedsymbol}{qed}
+\renewcommand{\chapternamenum}{}
+\renewcommand{\printchaptername}{}
+\renewcommand{\chapnamefont}{\Large\scshape}
+\renewcommand{\printchapternonum}{
+		
+		\hrule\vskip\midchapskip
+	}
+\renewcommand{\chaptitlefont}{\Huge\scshape}
+\renewcommand{\afterchapternum}{
+		
+
+\vskip\midchapskip\hrule\vskip\midchapskip
+	}
+\renewcommand{\afterchaptertitle}{
+		
+
+\vskip\midchapskip\hrule\vskip\afterchapskip
+	}
+\renewcommand{\glossaryheader}{}
+\renewcommand{\glsgroupheading}[1]{}
+\renewcommand{\glossentry}[2]{
+        \parbox{.15\linewidth}{\glstarget{##1}{\glossentryname{##1}}\hskip \fill}
+        \hspace{.05\linewidth}
+        \parbox{.8\linewidth}{\glossentrydesc{##1}, \space ##2 \hskip \fill}}
+\def\r{.55}
+\renewcommand{\subglossentry}[3]{
+        \glossentry{##2}{##3}
+    }
+\def\ansfilename{practice-answers}
+\def\entry{\entry}
+\def\r{.5}
+\def\entry{\entry}
+\def\shadowprops{{fill=black!50,shadow xshift=0.5ex,shadow yshift=0.5ex,path fading={circle with fuzzy edge 10 percent}}}
+\def\sb{.6}
+\newcommand{\lt}{ &lt; }
+\newcommand{\gt}{ &gt; }
+\newcommand{\amp}{ &amp; }
+\)</div>
+<header id="masthead"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><span class="title">Discrete Mathematics: An Open Introduction    </span></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+</div></div>
+<nav id="primary-navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active">Contents</button><div class="tree-nav toolbar toolbar-divisor-3">
+<a class="previous-button toolbar-item button" href="section-28.html">Previous</a><a class="up-button button toolbar-item" href="chapter-6.html">Up</a><a class="next-button button toolbar-item" href="section-30.html">Next</a>
+</div>
+<button class="sidebar-right-toggle-button button active">Annotations</button>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="section-28.html">Previous</a><a class="up-button button toolbar-item" href="chapter-6.html">Up</a><a class="next-button button toolbar-item" href="section-30.html">Next</a>
+</div>
+</div></nav></header><div class="page">
+<aside id="sidebar-left" class="sidebar"><div class="sidebar-content">
+<nav id="toc"><h2 class="link"><a href="frontmatter-1.html"><span class="title">Front Matter</span></a></h2>
+<ul></ul>
+<h2 class="link"><a href="chapter-1.html"><span class="codenumber">1</span><span class="title">Preface</span></a></h2>
+<ul>
+<li><a href="section-1.html">How to use this book</a></li>
+<li><a href="section-2.html">Previous and future editions</a></li>
+<li><a href="section-3.html">Acknowledgments</a></li>
+</ul>
+<h2 class="link"><a href="chapter-2.html"><span class="codenumber">2</span><span class="title">Introduction and Preliminaries</span></a></h2>
+<ul>
+<li><a href="section-4.html">What is Discrete Mathematics?</a></li>
+<li><a href="sec_sets.html">Sets</a></li>
+<li><a href="sec_functions.html">Functions</a></li>
+</ul>
+<h2 class="link"><a href="ch_counting.html"><span class="codenumber">3</span><span class="title">Counting</span></a></h2>
+<ul>
+<li><a href="section-7.html">Additive and Multiplicative Principles</a></li>
+<li><a href="sec_binom.html">Binomial Coefficients</a></li>
+<li><a href="sec_comb-perm.html">Combinations and Permutations</a></li>
+<li><a href="sec_comb-proofs.html">Combinatorial Proofs</a></li>
+<li><a href="sec_stars-and-bars.html">Stars and Bars</a></li>
+<li><a href="sec_advPIE.html">Advanced Counting Using PIE</a></li>
+<li><a href="sec_count-functions.html">Counting Functions</a></li>
+<li><a href="sec_count-conc.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="chapter-4.html"><span class="codenumber">4</span><span class="title">Sequences</span></a></h2>
+<ul>
+<li><a href="sec_seq_basics.html">Basics</a></li>
+<li><a href="sec_arith-geom.html">Arithmetic and Geometric Sequences</a></li>
+<li><a href="sec_polyfit.html">Polynomial Fitting</a></li>
+<li><a href="section-18.html">Solving Recurrence Relations</a></li>
+<li><a href="sec_induction.html">Induction</a></li>
+<li><a href="section-20.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="chapter-5.html"><span class="codenumber">5</span><span class="title">Logic and Proofs</span></a></h2>
+<ul>
+<li><a href="section-21.html">Propositional Logic</a></li>
+<li><a href="sec_logical-equiv.html">Logical Equivalence</a></li>
+<li><a href="section-23.html">Quantifiers and Predicate Logic</a></li>
+<li><a href="section-24.html">Proofs</a></li>
+<li><a href="section-25.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link active"><a href="chapter-6.html"><span class="codenumber">6</span><span class="title">Graph Theory</span></a></h2>
+<ul>
+<li><a href="section-26.html">Basics</a></li>
+<li><a href="section-27.html">Planar Graphs</a></li>
+<li><a href="section-28.html">Coloring</a></li>
+<li><a href="section-29.html" class="active">Euler Paths and Circuits</a></li>
+<li><a href="section-30.html">Matching in Bipartite Graphs</a></li>
+<li><a href="section-31.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="chapter-7.html"><span class="codenumber">7</span><span class="title">Additional Topics</span></a></h2>
+<ul>
+<li><a href="section-32.html">Generating Functions</a></li>
+<li><a href="section-33.html">Introduction to Number Theory</a></li>
+</ul>
+<h2 class="link"><a href="chapter-8.html"><span class="codenumber">8</span><span class="title">Solutions to Exercises</span></a></h2>
+<ul></ul>
+<h2 class="link"><a href="backmatter-1.html"><span class="title">Back Matter</span></a></h2>
+<ul><li><a href="index-part-1.html">Index</a></li></ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://mathbook.pugetsound.edu">Authored in MathBook XML</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://cdn.mathjax.org/mathjax/badge/badge.gif" border="0" alt="Powered by MathJax"></a></nav></div>
+</div></aside><main class="main"><div id="content" class="mathbook-content"><section class="section" id="section-29"><header title="Section 6.4 Euler Paths and Circuits"><h1 class="heading hide-type" alt="Section 6.4 Euler Paths and Circuits">
+<span class="type">Section</span><span class="codenumber">6.4</span><span class="title">Euler Paths and Circuits</span>
+</h1></header><article class="introduction" id="introduction-27"><h5 class="heading"><span></span></h5>
+<article class="example-like" id="activity-35"><h5 class="heading">
+<span class="type">Activity</span><span class="codenumber">6.4.1</span>
+</h5>
+<p id="p-1818">
+An Euler path, in a graph or multigraph, is a path which uses every edge exactly once. An Euler circuit is an Euler path which starts and stops at the same vertex. Our goal is to find a quick way to check whether a graph (or multigraph) has an Euler path or circuit.
+</p>
+<section class="exercises" id="exercises-46"><header title="Exercises  Exercises"><h1 class="heading hide-type" alt="Exercises  Exercises">
+<span class="type">[]
+</span><span class="codenumber"></span><span class="title">Exercises</span>
+</h1></header><article class="exercise-like" id="exercise-347"><h5 class="heading"><span class="codenumber">1</span></h5>
+<p id="p-1819">
+Which of the graphs below have Euler paths? Which have Euler circuits?
+</p>
+<img width="73%" src="images/088663b2f6fd8eb3c8202d73179f9b69fd674c49.png" alt=""><img width="73%" src="images/6c12f257640a2b7c148a696d4a5122d86ff3c43c.png" alt=""><img width="73%" src="images/873fe330e5570a7414fff40b5d9664a257600f68.png" alt=""><img width="73%" src="images/717cd16e607d9b2d354f3bfef2eb414e625c6bde.png" alt=""></article><div class="hidden-knowl-wrapper"></div>
+<article class="exercise-like" id="exercise-348"><h5 class="heading"><span class="codenumber">2</span></h5>
+<p id="p-1820">
+List the degrees of each vertex of the graphs above. Is there a connection between degrees and the existence of Euler paths and circuits?
+</p></article><div class="hidden-knowl-wrapper"></div>
+<article class="exercise-like" id="exercise-349"><h5 class="heading"><span class="codenumber">3</span></h5>
+<p id="p-1821">
+Is it possible for a graph with a degree 1 vertex to have an Euler circuit? If so, draw one. If not, explain why not. What about an Euler path?
+</p></article><div class="hidden-knowl-wrapper"></div>
+<article class="exercise-like" id="exercise-350"><h5 class="heading"><span class="codenumber">4</span></h5>
+<p id="p-1822">
+What if every vertex of the graph has degree 2. Is there an Euler path? An Euler circuit? Draw some graphs.
+</p></article><div class="hidden-knowl-wrapper"></div>
+<article class="exercise-like" id="exercise-351"><h5 class="heading"><span class="codenumber">5</span></h5>
+<p id="p-1823">
+Below is <!--Style me with CSS--><em>part</em> of a graph. Even though you can only see some of the vertices, can you deduce whether the graph will have an Euler path or circuit?
+</p>
+<img width="73%" src="images/18a4062f412b9da03c6eef35662b12f1a0d07402.png" alt=""></article><div class="hidden-knowl-wrapper"></div></section></article><p id="p-1824">
+If we start at a vertex and trace along edges to get to other vertices, we create a <!--Style me with CSS--><em>path</em> on the graph. If the path travels along every edge exactly once, then the path is called an <!--Style me with CSS--><em>Euler path</em> (or <!--Style me with CSS--><em>Eulerian path</em>). If, in addition, the starting and ending vertices are the same (so you trace along every edge exactly once and end up where you started), then the path is called an <!--Style me with CSS--><em>Euler circuit</em>. Of course if a graph is not connected, there is no hope of finding such a path or circuit. For the rest of this section, assume all the graphs discussed are connected.
+</p>
+<p id="p-1825">
+The bridges of Königsberg problem is really a question about the existence of Euler paths. There will be a route that crosses every bridge exactly once if and only if the graph below has an Euler path:
+</p>
+<p id="p-1826">
+<img width="73%" src="images/ebc6e4a10378d8fb78ff83601f348bbe8f653d9b.png" alt="">
+</p>
+<p id="p-1827">
+This graph is small enough that we could actually check every possible path and in doing so convince ourselves that there is no Euler path (let alone an Euler circuit). On small graphs which do have an Euler path, it is usually not difficult to find one. Our goal is to find a quick way to check whether a graph has an Euler path or circuit, even if the graph is quite large.
+</p>
+<p id="p-1828">
+One way to guarantee that a graph does <!--Style me with CSS--><em>not</em> have an Euler circuit is to include a “spike,” a vertex of degree 1.
+</p>
+<img width="73%" src="images/23fff0a5b5890d2ab6115fd19823d0c44991b1bd.png" alt=""><p id="p-1829">
+The vertex \(a\) has degree 1, and if you try to make an Euler circuit, you see that you will get stuck at the vertex. It is a dead end. That is, unless you start there. But then there is no way to return, so there is no hope of finding an Euler circuit. There is however an Euler path. It starts at the vertex \(a\), then loops around the triangle. You will end at the vertex of degree 3.
+</p>
+<p id="p-1830">
+You run into a similar problem whenever you have a vertex of any odd degree. If you start at such a vertex, you will not be able to end there (after traversing every edge exactly once). After using one edge to leave the starting vertex, you will be left with an even number of edges emanating from the vertex. Half of these could be used for returning to the vertex, the other half for leaving. So you return, then leave. Return, then leave. The only way to use up all the edges is to use the last one by leaving the vertex. On the other hand, if you have a vertex with odd degree that you do not start a path at, then you will eventually get stuck at that vertex. The path will use pairs of edges incident to the vertex to arrive and leave again. Eventually all but one of these edges will be used up, leaving only an edge to arrive by, and none to leave again.
+</p>
+<p id="p-1831">
+What all this says is that if a graph has an Euler path and two vertices with odd degree, then the Euler path must start at one of the odd degree vertices and end at the other. In such a situation, every other vertex <!--Style me with CSS--><em>must</em> have an even degree since we need an equal number of edges to get to those vertices as to leave them. How could we have an Euler circuit? The graph could not have any odd degree vertex as an Euler path would have to start there or end there, but not both. Thus for a graph to have an Euler circuit, all vertices must have even degree.
+</p>
+<p id="p-1832">
+The converse is also true: if all the vertices of a graph have even degree, then the graph has an Euler circuit, and if there are exactly two vertices with odd degree, the graph has an Euler path. To prove this is a little tricky, but the basic idea is that you will never get stuck because there is an “outbound” edge for every “inbound” edge at every vertex. If you try to make an Euler path and miss some edges, you will always be able to “splice in” a circuit using the edges you previously missed.
+</p>
+<article class="definition-like" id="definition-42"><h5 class="heading">
+<span class="type">Definition</span><span class="codenumber">6.4.1</span>
+</h5>
+<p id="p-1833">
+{Euler Paths and Circuits}
+</p>
+<ul style="list-style-type: disc;">
+<li id="li-1114">A graph has an Euler circuit if and only if the degree of every vertex is even.</li>
+<li id="li-1115">A graph has an Euler path if and only if there are at most two vertices with odd degree.</li>
+</ul></article><p id="p-1834">
+Since the bridges of Königsberg graph has all four vertices with odd degree, there is no Euler path through the graph.
+</p></article><section class="subsection" id="subsection-40"><header title="Subsection 6.4.1 Hamilton Paths"><h1 class="heading hide-type" alt="Subsection 6.4.1 Hamilton Paths">
+<span class="type">Subsection</span><span class="codenumber">6.4.1</span><span class="title">Hamilton Paths</span>
+</h1></header><p id="p-1835">
+Suppose you wanted to tour Königsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a <!--Style me with CSS--><em>Hamilton path</em> (or Hamiltonian path). It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete.
+	\withanswers
+</p>
+<section class="exercises" id="exercises-47"><header title="Exercises 6.4.1.1 Exercises"><h1 class="heading hide-type" alt="Exercises 6.4.1.1 Exercises">
+<span class="type">Subsubsection</span><span class="codenumber">6.4.1.1</span><span class="title">Exercises</span>
+</h1></header><article class="exercise-like" id="exercise-352"><h5 class="heading"><span class="codenumber">1</span></h5>
+<p id="p-1836">
+You and your friends want to tour the southwest by car. You will visit the nine states below, with the following rather odd rule: you must cross each border between neighboring states exactly once (so, for example, you must cross the Colorado-Utah border exactly once). Can you do it? If so, does it matter where you start your road trip? What fact about graph theory solves this problem?
+</p>
+\tikz[scale=.2]{
+\USA[every state={draw=white, line width = .7pt, fill=black!10}, CA={fill=gray}, NV={fill=gray},NM={fill=gray},AZ={fill=gray},UT={fill=gray},CO={fill=gray},TX={fill=gray},KS={fill=gray},OK={fill=gray}]
+}
+</article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-256" id="answer-256"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-256" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-1837">
+This is a question about finding Euler paths. Draw a graph with a vertex in each state, and connect vertices if their states share a border. Exactly two vertices will have odd degree: the vertices for Nevada and Utah. Thus you must start your road trip at in one of those states and end it in the other.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-353"><h5 class="heading"><span class="codenumber">2</span></h5>
+<p id="p-1838">
+Which of the following graphs contain an Euler path? Which contain an Euler circuit?
+</p>
+<ol style="list-style-type: lower-alpha;">
+<li id="li-1116">\(K_4\)</li>
+<li id="li-1117">\(K_5\).</li>
+<li id="li-1118">\(K_{5,7}\)</li>
+<li id="li-1119">\(K_{2,7}\)</li>
+<li id="li-1120">\(C_7\)</li>
+<li id="li-1121">\(P_7\)</li>
+</ol></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-257" id="answer-257"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-257" style="display: none;" class="tex2jax_ignore"><span class="solution"><ol style="list-style-type: lower-alpha;">
+<li id="li-1122">\(K_4\) does not have an Euler path or circuit.</li>
+<li id="li-1123">\(K_5\) has an Euler circuit (so also an Euler path).</li>
+<li id="li-1124">\(K_{5,7}\) does not have an Euler path or circuit.</li>
+<li id="li-1125">\(K_{2,7}\) has an Euler path but not an Euler circuit.</li>
+<li id="li-1126">\(C_7\) has an Euler circuit (it is a circuit graph!)</li>
+<li id="li-1127">\(P_7\) has an Euler path but no Euler circuit.</li>
+</ol></span></span>
+</div>
+<article class="exercise-like" id="exercise-354"><h5 class="heading"><span class="codenumber">3</span></h5>
+<p id="p-1839">
+For which \(n\) does the graph \(K_n\) contain an Euler circuit? Explain.
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-258" id="answer-258"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-258" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-1840">
+When \(n\) is odd, \(K_n\) contains an Euler circuit. This is because every vertex has degree \(n-1\), so an odd \(n\) results in all degrees being even.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-355"><h5 class="heading"><span class="codenumber">4</span></h5>
+<p id="p-1841">
+For which \(m\) and \(n\) does the graph \(K_{m,n}\) contain an Euler path? An Euler circuit? Explain.
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-259" id="answer-259"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-259" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-1842">
+If both \(m\) and \(n\) are even, then \(K_{m,n}\) has an Euler circuit. When both are odd, there is no Euler path or circuit. If one is 2 and the other is odd, then there is an Euler path but not an Euler circuit.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-356"><h5 class="heading"><span class="codenumber">5</span></h5>
+<p id="p-1843">
+A bridge builder has come to Königsberg and would like to add bridges so that it <!--Style me with CSS--><em>is</em> possible to travel over every bridge exactly once. How many bridges must be built?
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-260" id="answer-260"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-260" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-1844">
+If we build one bridge, we can have an Euler path. Two bridges must be built for an Euler circuit.
+</p>
+<img width="73%" src="images/baf121dafc0cad7e516196ed1559e71925b73cef.png" alt=""></span></span>
+</div>
+<article class="exercise-like" id="exercise-357"><h5 class="heading"><span class="codenumber">6</span></h5>
+<p id="p-1845">
+Below is a graph representing friendships between a group of students (each vertex is a student and each edge is a friendship). Is it possible for the students to sit around a round table in such a way that every student sits between two friends? What does this question have to do with paths?
+</p>
+\tikz{
+	\foreach \x in {1,...,9}{
+	\coordinate (v\x) at (90-\x*360/9:1.5);
+	\draw (v\x) \v;
+	}
+	\draw (v1) – (v6) – (v3) – (v8) – (v4) – (v7) – (v2) – (v5) – (v9) – (v1);
+	\draw (v1) – (v3) – (v5) (v4) – (v5) (v4) – (v7) – (v6) – (v9) (v3) – (v7) (v9) – (v3);
+}
+</article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-261" id="answer-261"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-261" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-1846">
+We are looking for a Hamiltonian cycle, and this graph does have one:
+</p>
+\tikz{
+			\foreach \x in {1,...,9}{
+			\coordinate (v\x) at (90-\x*360/9:1.5);
+			}			
+			\draw[color=gray] (v1) – (v3) – (v5) (v4) – (v5) (v4) – (v7) – (v6) – (v9) (v3) – (v7) (v9) – (v3);
+			\draw[line width=1.2pt, color=blue] (v1) – (v6) – (v3) – (v8) (v8) – (v4) (v4) – (v7) – (v2) – (v5) – (v9) – (v1);
+			\foreach \x in {1,...,9}{
+			\draw (v\x) \v;
+			}
+		} </span></span>
+</div></section></section></section></div></main>
+</div>
+</body>
+</html>
