@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<!--**************************************-->
+<!--* Generated from MathBook XML source *-->
+<!--*    on 2016-07-04T00:21:54Z    *-->
+<!--*                                    *-->
+<!--*   http://mathbook.pugetsound.edu   *-->
+<!--*                                    *-->
+<!--**************************************-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Advanced Counting Using PIE</title>
+<meta name="Keywords" content="Authored in MathBook XML">
+<meta name="viewport" content="width=device-width,  initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<script type="text/javascript" src="https://sagecell.sagemath.org/static/jquery.min.js"></script><script type="text/x-mathjax-config">
+// contrib directory for accessibility menu, moot after v2.6+?
+MathJax.Ajax.config.path["Contrib"] = "https://cdn.mathjax.org/mathjax/contrib";
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [['\\(','\\)']],
+    },
+    TeX: {
+        // [Contrib]accessibility menu moot after v2.6+?
+        extensions: ["AMSmath.js", "AMSsymbols.js", "extpfeil.js", "autobold.js", "https://aimath.org/mathbook/mathjaxknowl.js", "[Contrib]/a11y/accessibility-menu.js", ],
+        equationNumbers: { autoNumber: "none",
+                           useLabelIds: true,
+                           // JS comment, XML CDATA protect XHTML quality of file
+                           // if removed in XSL, use entities
+                           //<![CDATA[
+                           formatID: function (n) {return String(n).replace(/[:'"<>&]/g,"")},
+                           //]]>
+                         },
+        TagSide: "right",
+        TagIndent: ".8em",
+    },
+    "HTML-CSS": {
+        scale: 88,
+    },
+});
+    </script><script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML-full"></script><link href="https://aimath.org/knowlstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://aimath.org/knowl.js"></script><script src="https://aimath.org/mathbook/js/lib/jquery.sticky.js"></script><script src="https://aimath.org/mathbook/js/lib/jquery.espy.min.js"></script><script src="https://aimath.org/mathbook/js/Mathbook.js"></script><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic%7CSource+Code+Pro:400" rel="stylesheet" type="text/css">
+<link href="https://aimath.org/mathbook/stylesheets/mathbook-3.css" rel="stylesheet" type="text/css">
+<link href="https://aimath.org/mathbook/mathbook-add-on.css" rel="stylesheet" type="text/css">
+</head>
+<body class="mathbook-book has-toc has-sidebar-left">
+<div style="display:none;">\(\def\d{\displaystyle}
+\def\course{Math 228}
+\def\?{\reflectbox{?}}
+\newcommand{\b}[1]{\mathbf{#1}}
+\newcommand{\f}[1]{\mathfrak #1}
+\newcommand{\c}[1]{\mathcal #1}
+\newcommand{\s}[1]{\mathscr #1}
+\newcommand{\r}[1]{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\circleA{(-.5,0) circle (1)}
+\def\Z{\mathbb Z}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\Q{\mathbb Q}
+\def\circleB{(.5,0) circle (1)}
+\def\R{\mathbb R}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\C{\mathbb C}
+\def\circleC{(0,-1) circle (1)}
+\def\F{\mathbb F}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\A{\mathbb A}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\X{\mathbb X}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\U{\mathcal U}
+\def\pow{\mathcal P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\sigalg{$\sigma$-algebra }
+\def\Gal{\mbox{Gal}}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\r{.55}
+\def\land{\wedge}
+\def\And{\bigwedge}
+\def\entry{\entry}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+\def\var{\mbox{var}}
+\def\r{.5}
+\def\Th{\mbox{Th}}
+\def\entry{\entry}
+\def\sat{\mbox{Sat}}
+\def\con{\mbox{Con}}
+\def\iffmodels{\bmodels\models}
+\def\dbland{\bigwedge \!\!\bigwedge}
+\def\dom{\mbox{dom}}
+\def\rng{\mbox{range}}
+\DeclareMathOperator{\wgt}{wgt}
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.4) rectangle (2,1.4)}
+\def\threesetbox{(-2.5,-2.4) rectangle (2.5,1.4)}
+\def\ansfilename{practice-answers}
+\def\shadowprops{{fill=black!50,shadow xshift=0.5ex,shadow yshift=0.5ex,path fading={circle with fuzzy edge 10 percent}}}
+\def\sb{.6}
+\newcommand{\lt}{ &lt; }
+\newcommand{\gt}{ &gt; }
+\newcommand{\amp}{ &amp; }
+\)</div>
+<header id="masthead"><div class="banner"><div class="container">
+<a id="logo-link" href=""></a><div class="title-container">
+<h1 class="heading"><span class="title">Discrete Mathematics: An Open Introduction    </span></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+</div></div>
+<nav id="primary-navbar"><div class="container">
+<div class="navbar-top-buttons">
+<button class="sidebar-left-toggle-button button active">Contents</button><div class="tree-nav toolbar toolbar-divisor-3">
+<a class="previous-button toolbar-item button" href="sec_stars-and-bars.html">Previous</a><a class="up-button button toolbar-item" href="ch_counting.html">Up</a><a class="next-button button toolbar-item" href="sec_count-functions.html">Next</a>
+</div>
+<button class="sidebar-right-toggle-button button active">Annotations</button>
+</div>
+<div class="navbar-bottom-buttons toolbar toolbar-divisor-4">
+<button class="sidebar-left-toggle-button button toolbar-item active">Contents</button><a class="previous-button toolbar-item button" href="sec_stars-and-bars.html">Previous</a><a class="up-button button toolbar-item" href="ch_counting.html">Up</a><a class="next-button button toolbar-item" href="sec_count-functions.html">Next</a>
+</div>
+</div></nav></header><div class="page">
+<aside id="sidebar-left" class="sidebar"><div class="sidebar-content">
+<nav id="toc"><h2 class="link"><a href="frontmatter-1.html"><span class="title">Front Matter</span></a></h2>
+<ul></ul>
+<h2 class="link"><a href="chapter-1.html"><span class="codenumber">1</span><span class="title">Preface</span></a></h2>
+<ul>
+<li><a href="section-1.html">How to use this book</a></li>
+<li><a href="section-2.html">Previous and future editions</a></li>
+<li><a href="section-3.html">Acknowledgments</a></li>
+</ul>
+<h2 class="link"><a href="ch_intro.html"><span class="codenumber">2</span><span class="title">Introduction and Preliminaries</span></a></h2>
+<ul>
+<li><a href="section-4.html">What is Discrete Mathematics?</a></li>
+<li><a href="sec_sets.html">Sets</a></li>
+<li><a href="sec_functions.html">Functions</a></li>
+</ul>
+<h2 class="link active"><a href="ch_counting.html"><span class="codenumber">3</span><span class="title">Counting</span></a></h2>
+<ul>
+<li><a href="sec_additiveMultiplicative.html">Additive and Multiplicative Principles</a></li>
+<li><a href="sec_binom.html">Binomial Coefficients</a></li>
+<li><a href="sec_comb-perm.html">Combinations and Permutations</a></li>
+<li><a href="sec_comb-proofs.html">Combinatorial Proofs</a></li>
+<li><a href="sec_stars-and-bars.html">Stars and Bars</a></li>
+<li><a href="sec_advPIE.html" class="active">Advanced Counting Using PIE</a></li>
+<li><a href="sec_count-functions.html">Counting Functions</a></li>
+<li><a href="sec_count-conc.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="ch_sequences.html"><span class="codenumber">4</span><span class="title">Sequences</span></a></h2>
+<ul>
+<li><a href="sec_seq_basics.html">Basics</a></li>
+<li><a href="sec_arith-geom.html">Arithmetic and Geometric Sequences</a></li>
+<li><a href="sec_polyfit.html">Polynomial Fitting</a></li>
+<li><a href="sec_recurrence.html">Solving Recurrence Relations</a></li>
+<li><a href="sec_induction.html">Induction</a></li>
+<li><a href="sec_sequences-conc.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="ch_logic.html"><span class="codenumber">5</span><span class="title">Logic and Proofs</span></a></h2>
+<ul>
+<li><a href="sec_propositional.html">Propositional Logic</a></li>
+<li><a href="sec_logical-equiv.html">Logical Equivalence</a></li>
+<li><a href="sec_quantifiers.html">Quantifiers and Predicate Logic</a></li>
+<li><a href="sec_proofs.html">Proofs</a></li>
+<li><a href="sec_logic-conc.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="ch_graphtheory.html"><span class="codenumber">6</span><span class="title">Graph Theory</span></a></h2>
+<ul>
+<li><a href="section-26.html">Basics</a></li>
+<li><a href="sec_planar.html">Planar Graphs</a></li>
+<li><a href="sec_coloring.html">Coloring</a></li>
+<li><a href="sec_paths.html">Euler Paths and Circuits</a></li>
+<li><a href="sec_matchings.html">Matching in Bipartite Graphs</a></li>
+<li><a href="sec_gt-conc.html">Chapter Summary</a></li>
+</ul>
+<h2 class="link"><a href="ch_additionalTopics.html"><span class="codenumber">7</span><span class="title">Additional Topics</span></a></h2>
+<ul>
+<li><a href="section-32.html">Generating Functions</a></li>
+<li><a href="section-33.html">Introduction to Number Theory</a></li>
+</ul>
+<h2 class="link"><a href="ch_solutions.html"><span class="codenumber">8</span><span class="title">Solutions to Exercises</span></a></h2>
+<ul></ul>
+<h2 class="link"><a href="backmatter-1.html"><span class="title">Back Matter</span></a></h2>
+<ul><li><a href="index-part-1.html">Index</a></li></ul></nav><div class="extras"><nav><a class="mathbook-link" href="https://mathbook.pugetsound.edu">Authored in MathBook XML</a><a href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://cdn.mathjax.org/mathjax/badge/badge.gif" border="0" alt="Powered by MathJax"></a></nav></div>
+</div></aside><main class="main"><div id="content" class="mathbook-content"><section class="section" id="sec_advPIE"><header title="Section 3.6 Advanced Counting Using PIE"><h1 class="heading hide-type" alt="Section 3.6 Advanced Counting Using PIE">
+<span class="type">Section</span><span class="codenumber">3.6</span><span class="title">Advanced Counting Using PIE</span><a href="sec_advPIE.html" class="permalink">¶ permalink</a>
+</h1></header><article class="introduction" id="introduction-10"><h5 class="heading"><span></span></h5>
+<article class="example-like" id="activity-8"><h5 class="heading">
+<span class="type">Activity</span><span class="codenumber">3.6.1</span>
+</h5>
+<section class="exercises" id="exercises-14"><header title="Exercises  Exercises"><h1 class="heading hide-type" alt="Exercises  Exercises">
+<span class="type">[]
+</span><span class="codenumber"></span><span class="title">Exercises</span>
+</h1></header><article class="exercise-like" id="exercise-104"><h5 class="heading"><span class="codenumber">1</span></h5>
+<p id="p-519">
+You have 11 identical mini key-lime pies to give to 4 children. However, you don't want any kid to get more than 3 pies. How many ways can you distribute the pies?
+</p>
+<ol style="list-style-type: lower-alpha;">
+<li id="li-395">How many ways are there to distribute the pies without any restriction?</li>
+<li id="li-396">Let's get rid of the ways that one or more kid gets too many pies.  How many ways are there to distribute the pies if Al gets too many pies?  What if Bruce gets too many?  Or Cat?  Or Dent?</li>
+<li id="li-397">What if two kids get too many pies?  How many ways can this happen?  Does it matter which two kids you pick to overfeed?</li>
+<li id="li-398">Is it possible that three kids get too many pies?  If so, how many ways can this happen?</li>
+<li id="li-399">How should you combine all the numbers you found above to answer the original question?</li>
+</ol></article><div class="hidden-knowl-wrapper"></div>
+<article class="exercise-like" id="exercise-105"><h5 class="heading"><span class="codenumber">2</span></h5>
+<p id="p-520">
+Suppose now you have 13 pies and 7 children. No child can have more than 2 pies. How many ways can you distribute the pies?
+</p></article><div class="hidden-knowl-wrapper"></div></section></article><p id="p-521">
+Stars and bars allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to \(x+y+z = 11\), for example. A relatively easy modification allows us to put a <!--Style me with CSS--><em>lower bound</em> restriction on these problems: perhaps each kid must get at least two cookies or \(x,y,z \ge 2\). This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using stars and bars.
+</p>
+<p id="p-522">
+What if we wanted an <!--Style me with CSS--><em>upper bound</em> restriction? For example, we might insist that no kid gets more than 4 cookies or that \(x, y, z \le 4\). It turns out this is considerably harder, but still possible. The idea is to count all the distributions and then remove those that violate the condition. In other words, we must count the number of ways to distribute 11 cookies to 3 kids in which <!--Style me with CSS--><em>one or more</em> of the kids gets more than 4 cookies. For any particular kid, this is not a problem; we do this using stars and bars. But how to combine the number of ways for kid A, or B or C? We must use the PIE.
+</p>
+<p id="p-523">
+The Principle of Inclusion/Exclusion (PIE) gives a method for finding the cardinality of the union of not necessarily disjoint sets. We saw in \Cref{sec:PIE} how this works with three sets. To find how many things are in <!--Style me with CSS--><em>one or more</em> of the sets \(A\), \(B\), and \(C\), we should just add up the number of things in each of these sets. However, if there is any overlap among the sets, those elements are counted multiple times. So we subtract the things in each intersection of a pair of sets. But doing this removes elements which are in all three sets once too often, so we need to add it back in. In terms of cardinality of sets, we have
+\begin{equation*}
+  |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A\cap B \cap C|.
+\end{equation*}
+</p>
+<div class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-example-32" id="example-32"><article class="example-like"><h5 class="heading">
+<span class="type">Example</span><span class="codenumber">3.6.1</span>
+</h5></article></a></div>
+<div id="hk-example-32" style="display: none;" class="tex2jax_ignore">
+<article class="example-like"><p id="p-524">
+Three kids, Alberto, Bernadette, and Carlos, decide to share 11 cookies. They wonder how many ways they could split the cookies up provided that none of them receive more than 4 cookies (someone receiving no cookies is for some reason acceptable to these kids).
+</p></article><div class="posterior"><div>
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-solution-30" id="solution-30"><span class="">Solution</span></a></span><span id="hk-solution-30" style="display: none;" class="tex2jax_ignore"><div class="remark-like">
+<p id="p-525">
+Without the “no more than 4” restriction, the answer would be \({13 \choose 2}\), using 11 stars and 2 bars (separating the three kids). Now count the number of ways that one or more of the kids violates the condition, i.e., gets at least 4 cookies.
+</p>
+<p id="p-526">
+Let \(A\) be the set of outcomes in which Alberto gets more than 4 cookies. Let \(B\) be the set of outcomes in which Bernadette gets more than 4 cookies. Let \(C\) be the set of outcomes in which Carlos gets more than 4 cookies. We then are looking (for the sake of subtraction) for the size of the set \(A \cup B \cup C\). Using PIE, we must find the sizes of \(|A|\), \(|B|\), \(|C|\), \(|A\cap B|\) and so on. Here is what we find.
+</p>
+<ul style="list-style-type: disc;">
+<li id="li-400">\(|A| = {8 \choose 2}\).  First give Alberto 5 cookies, then distribute the remaining 6 to the three kids without restrictions, using 6 stars and 2 bars.</li>
+<li id="li-401">\(|B| = {8 \choose 2}\).  Just like above, only now Bernadette gets 5 cookies at the start.</li>
+<li id="li-402">\(|C| = {8 \choose 2}\).  Carlos gets 5 cookies first.</li>
+<li id="li-403">\(|A \cap B| = {3 \choose 2}\).  Give Alberto and Bernadette 5 cookies each, leaving 1 (star) to distribute to the three kids (2 bars).</li>
+<li id="li-404">\(|A \cap C| = {3 \choose 2}\).  Alberto and Carlos get 5 cookies first.</li>
+<li id="li-405">\(|B \cap C| = {3 \choose 2}\).  Bernadette and Carlos get 5 cookies first.</li>
+<li id="li-406">\(|A \cap B \cap C| = 0\).  It is not possible for all three kids to get 4 or more cookies.</li>
+</ul>
+<p id="p-527">
+Combining all of these we see
+\begin{equation*}
+  |A \cup B \cup C| = {8 \choose 2} + {8 \choose 2} + {8 \choose 2} - {3 \choose 2} - {3 \choose 2} - {3 \choose 2} + 0 = 75.
+\end{equation*}
+</p>
+<p id="p-528">
+Thus the answer to the original question is \({13 \choose 2} - 75 = 78 - 75 = 3\). This makes sense now that we see it. The only way to ensure that no kid gets more than 4 cookies is to give two kids 4 cookies and one kid 3; there are three choices for which kid that should be. We could have found the answer much quicker through this observation, but the point of the example is to illustrate that PIE works!
+</p>
+</div></span>
+</div></div>
+</div>
+<p id="p-529">
+For four or more sets, we do not write down a formula for PIE. Instead, we just think of the principle: add up all the elements in single sets, then subtract out things you counted twice (elements in the intersection of a <!--Style me with CSS--><em>pair</em> of sets), then add back in elements you removed too often (elements in the intersection of groups of three sets), then take back out elements you added back in too often (elements in the intersection of groups of four sets), then add back in, take back out, add back in, etc. This would be very difficult if it wasn't for the fact that in these problems, all the cardinalities of the single sets are equal, as are all the cardinalities of the intersections of two sets, and that of three sets, and so on. Thus we can group all of these together and multiply by how many different combinations of 1, 2, 3,… sets there are.
+</p>
+<div class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-example-33" id="example-33"><article class="example-like"><h5 class="heading">
+<span class="type">Example</span><span class="codenumber">3.6.2</span>
+</h5></article></a></div>
+<div id="hk-example-33" style="display: none;" class="tex2jax_ignore">
+<article class="example-like"><p id="p-530">
+How many ways can you distribute 10 cookies to 4 kids so that no kid gets more than 2 cookies?
+</p></article><div class="posterior"><div>
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-solution-31" id="solution-31"><span class="">Solution</span></a></span><span id="hk-solution-31" style="display: none;" class="tex2jax_ignore"><div class="remark-like">
+<p id="p-531">
+To answer this, we will subtract all the outcomes in which a kid gets 3 or more cookies. How many outcomes are there like that? We can force kid A to eat 3 or more cookies by giving him 3 cookies before we start. Doing so reduces the problem to one in which we have 7 cookies to give to 4 kids without any restrictions. In that case, we have 7 stars (the 7 remaining cookies) and 3 bars (one less than the number of kids) so we can distribute the cookies in \({10 \choose 3}\) ways. Of course we could choose any one of the 4 kids to give too many cookies, so it would appear that there are \({4 \choose 1}{10 \choose 3}\) ways to distribute the cookies giving too many to one kid. But in fact, we have over counted.
+</p>
+<p id="p-532">
+We must get rid of the outcomes in which two kids have too many cookies. There are \({4 \choose 2}\) ways to select 2 kids to give extra cookies. It takes 6 cookies to do this, leaving only 4 cookies. So we have 4 stars and still 3 bars. The remaining 4 cookies can thus be distributed in \({7 \choose 3}\) ways (for each of the \({4 \choose 2}\) choices of which 2 kids to over-feed).
+</p>
+<p id="p-533">
+But now we have removed too much. We must add back in all the ways to give too many cookies to three kids. This uses 9 cookies, leaving only 1 to distribute to the 4 kids using stars and bars, which can be done in \({4 \choose 3}\) ways. We must consider this outcome for every possible choice of which three kids we over-feed, and there are \({4 \choose 3}\) ways of selecting that set of 3 kids.
+</p>
+<p id="p-534">
+Next we would subtract all the ways to give four kids too many cookies, but in this case, that number is 0.
+</p>
+<p id="p-535">
+All together we get that the number of ways to distribute 10 cookies to 4 kids without giving any kid more than 2 cookies is:
+\begin{equation*}
+  {13 \choose 3} - \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right] = 286 - [480 - 210 + 16] = 0.
+\end{equation*}
+</p>
+<p id="p-536">
+This makes sense: there is NO way to distribute 10 cookies to 4 kids and make sure that nobody gets more than 2. It is slightly surprising that
+\begin{equation*}
+  {13 \choose 3} = \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right]
+\end{equation*}
+but since PIE works, this equality must hold.
+</p>
+</div></span>
+</div></div>
+</div>
+<p id="p-537">
+Just so you don't think that these problems always have easier solutions, consider the following example.
+</p>
+<div class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-example-34" id="example-34"><article class="example-like"><h5 class="heading">
+<span class="type">Example</span><span class="codenumber">3.6.3</span>
+</h5></article></a></div>
+<div id="hk-example-34" style="display: none;" class="tex2jax_ignore">
+<article class="example-like"><p id="p-538">
+Earlier we counted the number of solutions to the equation
+\begin{equation*}
+  x_1 + x_2 + x_3 + x_4 + x_5 = 13.
+\end{equation*}
+</p>
+<p id="p-539">
+How many of those solutions have \(0 \le x_i \le 3\) for each \(x_i\)?
+</p></article><div class="posterior"><div>
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-solution-32" id="solution-32"><span class="">Solution</span></a></span><span id="hk-solution-32" style="display: none;" class="tex2jax_ignore"><div class="remark-like">
+<p id="p-540">
+We must subtract off the number of solutions in which one or more of the variables has a value greater than 3. We will need to use PIE because counting the number of solutions for which each of the five variables separately are greater than 3 counts solutions multiple times. Here is what we get:
+</p>
+<ul style="list-style-type: disc;">
+<li id="li-407">Total solutions: \({17 \choose 4}\).</li>
+<li id="li-408">Solutions where \(x_1 &gt; 3\): \({13 \choose 4}\).  Give \(x_1\) 4 units first, then distribute the remaining 9 units to the 5 variables.</li>
+<li id="li-409">Solutions where \(x_1 &gt; 3\) and \(x_2 &gt; 3\): \({9 \choose 4}\). After you give 4 units to \(x_1\) and another 4 to \(x_2\), you only have 5 units left to distribute.</li>
+<li id="li-410">Solutions where \(x_1 &gt; 3\), \(x_2 &gt; 3\) and \(x_3 &gt; 3\): \({5 \choose 4}\).</li>
+<li id="li-411">Solutions where \(x_1 &gt; 3\), \(x_2 &gt; 3\), \(x_3 &gt; 3\), and \(x_4 &gt; 3\): 0.</li>
+</ul>
+<p id="p-541">
+We also need to account for the fact that we could choose any of the five variables in the place of \(x_1\) above, any pair of variables in the place of \(x_1\) and \(x_2\) and so on. It is because of this that the double counting occurs, so we need to use PIE. All together we have that the number of solutions with \(0 \le x_i \le 3\) is
+\begin{equation*}
+  {17 \choose 4} - \left[{5\choose 1}{13 \choose 4} - {5 \choose 2}{9 \choose 4} + {5 \choose 3}{5 \choose 4}\right] = 15.
+\end{equation*}
+</p>
+</div></span>
+</div></div>
+</div></article><section class="subsection" id="subsec_derangements"><header title="Subsection 3.6.1 Counting Derangements"><h1 class="heading hide-type" alt="Subsection 3.6.1 Counting Derangements">
+<span class="type">Subsection</span><span class="codenumber">3.6.1</span><span class="title">Counting Derangements</span><a href="sec_advPIE.html#subsec_derangements" class="permalink">¶ permalink</a>
+</h1></header><article class="example-like" id="activity-9"><h5 class="heading">
+<span class="type">Activity</span><span class="codenumber">3.6.2</span>
+</h5>
+<p id="p-542">
+For your senior prank, you decide to switch the nameplates on your favorite 5 professors' doors. So that none of them feel left out, you want to make sure that all of the nameplates end up on the wrong door. How many ways can this be accomplished?
+</p></article><p id="p-543">
+The advanced use of PIE has applications beyond stars and bars. A <!--Style me with CSS--><em>derangement</em> of \(n\) elements \(\{1,2,3,\ldots, n\}\) is a permutation in which no element is fixed. For example, there are \(6\) permutations of the three elements \(\{1,2,3\}\):
+\begin{equation*}
+  123 ~~ 132 ~~ 213 ~~ 231 ~~ 312 ~~ 321.
+\end{equation*}
+but most of these have one or more elements fixed: \(123\) has all three elements fixed, \(132\) has the first element fixed (1 is in its original first position), and so on. In fact, the only derangements of three elements are
+\begin{equation*}
+  231 \mbox{  and  } 312.
+\end{equation*}
+</p>
+<p id="p-544">
+If we go up to 4 elements, there are 24 permutations (because we have 4 choices for the first element, 3 choices for the second, 2 choices for the third leaving only 1 choice for the last). How many of these are derangements? If you list out all 24 permutations and eliminate those which are not derangements, you will be left with just 9 derangements. Let's see how we can get that number using PIE.
+</p>
+<div class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-example-35" id="example-35"><article class="example-like"><h5 class="heading">
+<span class="type">Example</span><span class="codenumber">3.6.4</span>
+</h5></article></a></div>
+<div id="hk-example-35" style="display: none;" class="tex2jax_ignore">
+<article class="example-like"><p id="p-545">
+How many derangements are there of 4 elements?
+</p></article><div class="posterior"><div>
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-solution-33" id="solution-33"><span class="">Solution</span></a></span><span id="hk-solution-33" style="display: none;" class="tex2jax_ignore"><div class="remark-like"><p id="p-546">
+We count all permutations, and subtract those which are not derangements. There are \(4! = 24\) permutations of 4 elements. Now for a permutation to <!--Style me with CSS--><em>not</em> be a derangement, at least one of the 4 elements must be fixed. There are \({4 \choose 1}\) choices for which single element we fix. Once fixed, we need to find a permutation of the other three elements. There are \(3!\) permutations on 3 elements. But now we have counted too many non-derangements, so we must subtract those permutations which fix two elements. There are \({4 \choose 2}\) choices for which two elements we fix, and then for each pair, \(2!\) permutations of the remaining elements. But this subtracts too many, so add back in permutations which fix 3 elements, all \({4 \choose 3}1!\) of them. Finally subtract the \({4 \choose 4}0!\) permutations (recall \(0! = 1\)) which fix all four elements. All together we get that the number of derangements of 4 elements is:
+\begin{equation*}
+  4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4}0!\right] = 24 - 15 = 9.
+\end{equation*}
+</p></div></span>
+</div></div>
+</div>
+<p id="p-547">
+Of course we can use a similar formula to count the derangements on any number of elements. However, the more elements we have, the longer the formula gets. Here is another example.
+</p>
+<div class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-example-36" id="example-36"><article class="example-like"><h5 class="heading">
+<span class="type">Example</span><span class="codenumber">3.6.5</span>
+</h5></article></a></div>
+<div id="hk-example-36" style="display: none;" class="tex2jax_ignore">
+<article class="example-like"><p id="p-548">
+Five gentlemen attend a party, leaving their hats at the door. At the end of the party, they hastily grab hats on their way out. How many different ways could this happen so that none of the gentlemen leave with their own hat?
+</p></article><div class="posterior"><div>
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-solution-34" id="solution-34"><span class="">Solution</span></a></span><span id="hk-solution-34" style="display: none;" class="tex2jax_ignore"><div class="remark-like"><p id="p-549">
+We are counting derangements on 5 elements. There are \(5!\) ways for the gentlemen to grab hats in any order - but many of these permutations will result in someone getting their own hat. So we subtract all the ways in which one or more of the men get their own hat. In other words, we subtract the non-derangements. Doing so requires PIE. Thus the answer is:
+\begin{equation*}
+  5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right].
+\end{equation*}
+</p></div></span>
+</div></div>
+</div>
+<p id="p-550">
+\withanswers
+</p>
+<section class="exercises" id="exercises-15"><header title="Exercises 3.6.1.1 Exercises"><h1 class="heading hide-type" alt="Exercises 3.6.1.1 Exercises">
+<span class="type">Subsubsection</span><span class="codenumber">3.6.1.1</span><span class="title">Exercises</span>
+</h1></header><article class="exercise-like" id="exercise-106"><h5 class="heading"><span class="codenumber">1</span></h5>
+<p id="p-551">
+The dollar menu at your favorite tax-free fast food restaurant has 7 items. You have $10 to spend. How many different meals can you buy if you spend all your money and:
+</p>
+<ol style="list-style-type: lower-alpha;">
+<li id="li-412">Purchase at least one of each item.</li>
+<li id="li-413">Possibly skip some items.</li>
+<li id="li-414">Don't get more than 2 of any particular item.</li>
+</ol></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-83" id="answer-83"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-83" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-552">
+Hint: Stars and bars.
+</p>
+<ol style="list-style-type: lower-alpha;">
+<li id="li-415">\({9 \choose 6}\).</li>
+<li id="li-416">\({16 \choose 6}\).</li>
+<li id="li-417">\({16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]\).</li>
+</ol></span></span>
+</div>
+<article class="exercise-like" id="exercise-107"><h5 class="heading"><span class="codenumber">2</span></h5>
+<p id="p-553">
+After another gym class you are tasked with putting the 14 identical dodgeballs away into 5 bins. This time, no bin can hold more than 6 balls. How many ways can you clean up?
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-84" id="answer-84"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-84" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-554">
+\({18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]\). Subtract all the distributions for which one or more bins contain 7 or more balls.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-108"><h5 class="heading"><span class="codenumber">3</span></h5>
+<p id="p-555">
+Consider the equation \(x_1 + x_2 + x_3 + x_4 = 15\). How many solutions are there with \(2 \le x_i \le 5\) for all \(i \in \{1,2,3,4\}\)?
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-85" id="answer-85"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-85" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-556">
+The easiest way to solve this is to instead count the solutions to \(y_1 + y_2 + y_3 + y_4 = 7\) with \(0 \le y_i \le 3\). By taking \(x_i = y_i+2\), each solution to this new equation corresponds to exactly one solution to the original equation.
+</p>
+<p id="p-557">
+Now all the ways to distribute the 7 units to the four \(y_i\) variables can be found using stars and bars, specifically 7 stars and 3 bars, so \({10 \choose 3}\). But this includes the ways that one or more \(y_i\) variables can be assigned more than 3 units. So subtract, using PIE. We get
+\begin{equation*}
+  {10 \choose 3} - {4\choose 1} {6 \choose 3}.
+\end{equation*}
+</p>
+<p id="p-558">
+Note that this is the final answer because it is not possible to have two variables both get 4 units.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-109"><h5 class="heading"><span class="codenumber">4</span></h5>
+<p id="p-559">
+Suppose you planned on giving 7 gold stars to some of the 13 star students in your class. Each student can receive at most one star. How many ways can you do this? Use PIE, and also an easier method, and compare your results.
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-86" id="answer-86"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-86" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-560">
+Without any restriction, there would be \({19\choose 12}\) ways to distribute the stars. Now we must use PIE to eliminate all distributions in which one or more student gets more than one star:
+\begin{equation*}
+  {19 \choose 12} - \left[{13 \choose 1}{17 \choose 12} - {13\choose 2}{15 \choose 12} + {13\choose 3}{13 \choose 12}\right] = 1716.
+\end{equation*}
+</p>
+<p id="p-561">
+Interestingly enough, this number is also the value of \({13 \choose 7}\), which makes sense: if each student can have at most one star, we must just pick the 7 out of 13 students to receive them.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-110"><h5 class="heading"><span class="codenumber">5</span></h5>
+<p id="p-562">
+Based on the previous question, give a combinatorial proof for the identity:
+\begin{equation*}
+  {n \choose k} = {n+k-1 \choose k} - \sum_{j=1}^n (-1)^{j+1}{n \choose j}{n+k-(2j+1) \choose k}.
+\end{equation*}
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-87" id="answer-87"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-87" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-563">
+The question is, how many ways can you distribute \(k\) cookies to \(n\) kids so that each kid gets at most one cookie. On one hand, the answer is just \({n \choose k}\) since you must choose \(k\) kids to get a cookie. Alternatively, we can use stars and bars with PIE, which is how we get the right hand side of the identity. Note that lots of the terms on the right hand side will be zero, as soon as \(n+k-(2j+1)\) drops below \(k\).
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-111"><h5 class="heading"><span class="codenumber">6</span></h5>
+<p id="p-564">
+Illustrate how the counting of derangements works by writing all permutations of \(\{1,2,3,4\}\) and the crossing out those which are not derangements. Keep track of the permutations you cross out more than once, using PIE.
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-88" id="answer-88"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-88" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-565">
+The 9 derangements are: 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.
+</p></span></span>
+</div>
+<article class="exercise-like" id="exercise-112"><h5 class="heading"><span class="codenumber">7</span></h5>
+<p id="p-566">
+Ten ladies of a certain age drop off their red hats at the hat check of a museum. As they are leaving, the hat check attendant gives the hats back randomly. In how many ways can exactly six of the ladies receive their own hat (and the other four not)?
+</p></article><div class="hidden-knowl-wrapper">
+<span class="hidden-knowl-wrapper"><a knowl="" class="id-ref" refid="hk-answer-89" id="answer-89"><span class="heading"><span class="type">Answer</span></span></a></span><span id="hk-answer-89" style="display: none;" class="tex2jax_ignore"><span class="solution"><p id="p-567">
+\({10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)\). We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.
+</p></span></span>
+</div></section></section></section></div></main>
+</div>
+</body>
+</html>
