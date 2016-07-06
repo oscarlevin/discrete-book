@@ -40,7 +40,7 @@ What if <m>a_0 = 2</m> and <m>a_1 = 5</m>? Find a closed formula.
  
 </activity>
 <p>
-We have seen that it is often easier to find recursive definitions than closed formulas. Lucky for us, there are a few techniques for converting recursive definitions to closed formulas. Doing so is called <em>solving a recurrence relation</em>. Recall that the recurrence relation is a recursive definition without the initial conditions. For example, the recurrence relation for the Fibonacci sequence<index><main>Fibonacci sequence</main></index> is <m>\gls{Fn} = F_{n-1} + F_{n-2}</m>. (This, together with the initial conditions <m>F_0 = 0</m> and <m>F_1 = 1</m> give the entire recursive definition for the sequence.)
+We have seen that it is often easier to find recursive definitions than closed formulas. Lucky for us, there are a few techniques for converting recursive definitions to closed formulas. Doing so is called <em>solving a recurrence relation</em>. Recall that the recurrence relation is a recursive definition without the initial conditions. For example, the recurrence relation for the Fibonacci sequence<index><main>Fibonacci sequence</main></index> is <m>\Fn = F_{n-1} + F_{n-2}</m>. (This, together with the initial conditions <m>F_0 = 0</m> and <m>F_1 = 1</m> give the entire recursive definition for the sequence.)
 </p>
 <example>
 <statement>
@@ -108,7 +108,6 @@ To get a feel for the recurrence relation, write out the first few terms of the 
 
 <p>
 Now use this equation over and over again, changing <m>n</m> each time:
-
 <md>
   <mrow>  a_1 - a_0 \amp = 1</mrow>
   <mrow>  a_2 - a_1 \amp = 2</mrow>
@@ -207,7 +206,6 @@ Solve the recurrence relation <m>a_n = 3a_{n-1} + 2</m> subject to <m>a_0 = 1</m
 <solution>
 <p>
 Again, we iterate the recurrence relation, building up to the index <m>n</m>.
-
 <md>
   <mrow>  a_1 \amp = 3a_0 + 2</mrow>
   <mrow>  a_2 \amp = 3(a_1) + 2 = 3(3a_0 + 2) + 2</mrow>
@@ -219,7 +217,6 @@ Again, we iterate the recurrence relation, building up to the index <m>n</m>.
 
 <p>
 It is difficult to see what is happening here because we have to distribute all those 3's. Let' try again, this time simplifying a bit as we go.
-
 <md>
   <mrow>  a_1 \amp = 3a_0 + 2</mrow>
   <mrow>  a_2 \amp = 3(a_1) + 2 = 3(3a_0 + 2) + 2 = 3^2a_0 + 2\cdot 3 + 2</mrow>
@@ -272,10 +269,10 @@ so by factoring, <m>r = -2</m> or <m>r = 3</m> (or <m>r = 0</m>, although this d
 <p>
 This points us in the direction of a more general technique for solving recurrence relations. Notice we will always be able to factor out the <m>r^{n-2}</m> as we did above. So we really only care about the other part. We call this other part the <em>characteristic equation</em><index><main>characteristic equation</main></index> for the recurrence relation. We are interested in finding the roots of the characteristic equation, which are called (surprise) the <em>characteristic roots</em>.
 </p>
-<definition>
-<statement>
+<convention>
+<title>Characteristic Roots</title>
 <p>
-{Characteristic Roots}<index><main>characteristic roots</main></index>
+<index><main>characteristic roots</main></index>
 Given a recurrence relation <m>a_n + \alpha a_{n-1} + \beta a_{n-2} = 0</m>, the <term>characteristic polynomial</term> is
 <me>
   x^2 + \alpha x + \beta
@@ -293,8 +290,7 @@ If <m>r_1</m> and <m>r_2</m> are two distinct roots of the characteristic polyno
 </me>
 where <m>a</m> and <m>b</m> are constants determined by the initial conditions.
 </p>
-</statement>
-</definition>
+</convention>
 
 <example>
 <statement>
@@ -320,7 +316,6 @@ so <m>x = 2</m> and <m>x = 5</m> are the characteristic roots. We therefore know
 
 <p>
 To find <m>a</m> and <m>b</m>, plug in <m>n =0</m> and <m>n = 1</m> to get a system of two equations with two unknowns:
-
 <md>
   <mrow>  2 \amp  = a 2^0 + b 5^0 = a + b</mrow>
   <mrow>  3 \amp  = a 2^1 + b 5^1 = 2a + 5b</mrow>
@@ -346,18 +341,16 @@ Before leaving the characteristic root technique, we should think about what mig
 <p>
 However, it is possible for the characteristic polynomial to only have one root. This can happen if the characteristic polynomial factors as <m>(x - r)^2</m>. It is still the case that <m>r^n</m> would be a solution to the recurrence relation, but we won't be able to find solutions for all initial conditions using the general form <m>a_n = ar_1^n + br_2^n</m>, since we can't distinguish between <m>r_1^n</m> and <m>r_2^n</m>. We are in luck though:
 </p>
-<definition>
-<statement>
+<convention>
+<title>Characteristic Root Technique for Repeated Roots</title>
 <p>
-{Characteristic Root Technique for Repeated Roots}
 Suppose the recurrence relation <m>a_n = \alpha a_{n-1} + \beta a_{n-2}</m> has a characteristic polynomial with only one root <m>r</m>. Then the solution to the recurrence relation is
 <me>
   a_n = ar^n + bnr^n
 </me>
 where <m>a</m> and <m>b</m> are constants determined by the initial conditions.
 </p>
-</statement>
-</definition>
+</convention>
 <p>
 Notice the extra <m>n</m> in <m>bnr^n</m>. This allows us to solve for the constants <m>a</m> and <m>b</m> from the initial conditions.
 </p>
@@ -382,7 +375,6 @@ so <m>x =3</m> is the only characteristic root. Therefore we know that the solut
   a_n = a 3^n + bn3^n
 </me>
 for some constants <m>a</m> and <m>b</m>. Now use the initial conditions:
-
 <md>
   <mrow>  a_0 = 1 \amp = a 3^0 + b\cdot 0 \cdot 3^0 = a</mrow>
   <mrow>  a_1 = 4 \amp = a\cdot 3 + b\cdot 1 \cdot3 = 3a + 3b.</mrow>
@@ -400,28 +392,29 @@ Since <m>a = 1</m>, we find that <m>b = \frac{1}{3}</m>. Therefore the solution 
 <p>
 Although we will not consider examples more complicated than these, this characteristic root technique can be applied to much more complicated recurrence relations. For example, <m>a_n = 2a_{n-1} + a_{n-2} - 3a_{n-3}</m> has characteristic polynomial <m>x^3 - 2 x^2 - x + 3</m>. Assuming you see how to factor such a degree 3 (or more) polynomial you can easily find the characteristic roots and as such solve the recurrence relation (the solution would look like <m>a_n = ar_1^n + br_2^n + cr_3^n</m> if there were 3 distinct roots). It is also possible to solve recurrence relations of the form <m>a_n = \alpha a_{n-1} + \beta a_{n-2} + C</m> for some constant <m>C</m>. It is also possible (and acceptable) for the characteristic roots to be complex numbers.
 </p>
-<activity>
-<p>
-\begin{questions}
-</p>
-
+<activity> 
+<exercises>
 <ol>
 <li>Find both a recursive and closed formula for how many Skittles the <em>n</em>th customer gets.</li>
 <li>Check your solution for the closed formula by solving the recurrence relation using the Characteristic Root technique.</li>
 </ol>
+\end{exercise}
 
+<exercise>
+<statement>
 <p>
-\question You have access to <m>1 \times 1</m> tiles which come in 2 different colors and <m>1\times 2</m> tiles which come in 3 different colors. We want to figure out how many different <m>1 \times n</m> path designs we can make out of these tiles.
+You have access to <m>1 \times 1</m> tiles which come in 2 different colors and <m>1\times 2</m> tiles which come in 3 different colors. We want to figure out how many different <m>1 \times n</m> path designs we can make out of these tiles.
 </p>
 
 <ol>
 <li>Find a recursive definition for the sequence <m>a_n</m> of paths of length <m>n</m>.</li>
 <li>Solve the recurrence relation using the Characteristic Root technique.</li>
 </ol>
+</statement>
+</exercise>
 
-<p>
-\end{questions}
-</p>
+</exercises>
+ 
 </activity>
 <p>
 \withanswers
