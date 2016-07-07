@@ -23,7 +23,7 @@ Perhaps in investigating the problem above you picked some amounts of postage, a
 </p>
 
 <p>
-Actually, we will not make a sequence of questions, but rather a sequence of statements. Let \gls{pofn} be the statement <q>you can make <m>n</m> cents of postage using just 8-cent and 5-cent stamps.</q> Since each <m>P(n)</m> is a statement, it is either true or false. So if we form the sequence of statements
+Actually, we will not make a sequence of questions, but rather a sequence of statements. Let <m>\pofn</m><index><main><m>\pofn</m></main></index> be the statement <q>you can make <m>n</m> cents of postage using just 8-cent and 5-cent stamps.</q> Since each <m>P(n)</m> is a statement, it is either true or false. So if we form the sequence of statements
 <me>
   P(1), P(2), P(3), P(4), \ldots
 </me>
@@ -43,7 +43,7 @@ Suppose I told you that <m>P(43)</m> was true (it is). Can you determine from th
 </p>
 
 <p>
-Notice that we have not said how to make 44 cents, just that we can, on the basis that we can make 43 cents. How do we know we can make 43 cents? Perhaps because we know we can make \gls{fortytwo} cents, which we know we can do because we know we can make 41 cents, and so on. It's a recursion! As with a recursive definition of a numerical sequence, we must specify our initial value. In this case, the initial value is <q><m>P(1)</m> is false.</q> That's not good, since our recurrence relation just says that <m>P(k+1)</m> is true <em>if</em> <m>P(k)</m> is also true. We need to start the process with a true <m>P(k)</m>. So instead, we might want to use <q><m>P(31)</m> is true</q> as the initial condition.
+Notice that we have not said how to make 44 cents, just that we can, on the basis that we can make 43 cents. How do we know we can make 43 cents? Perhaps because we know we can make <m>\fortytwo</m><index><main><m>\fortytwo</m></main></index> cents, which we know we can do because we know we can make 41 cents, and so on. It's a recursion! As with a recursive definition of a numerical sequence, we must specify our initial value. In this case, the initial value is <q><m>P(1)</m> is false.</q> That's not good, since our recurrence relation just says that <m>P(k+1)</m> is true <em>if</em> <m>P(k)</m> is also true. We need to start the process with a true <m>P(k)</m>. So instead, we might want to use <q><m>P(31)</m> is true</q> as the initial condition.
 </p>
 
 <p>
@@ -96,10 +96,10 @@ But there is another side to proofs by induction as well. In mathematics, it is 
 <p>
 Here is the general structure of a proof by mathematical induction:
 </p>
-<definition>
-<statement>
+<convention>
+<title>Induction Proof Structure</title>
 <p>
-{Induction Proof Structure}<index><main>induction</main></index>
+<index><main>induction</main></index>
 Start by saying what the statement is that you want to prove: <q>Let <m>P(n)</m> be the statement<ellipsis /></q>
 To prove that <m>P(n)</m> is true for all <m>n \ge 0</m>, you must prove two facts:
 </p>
@@ -112,8 +112,7 @@ To prove that <m>P(n)</m> is true for all <m>n \ge 0</m>, you must prove two fac
 <p>
 Assuming you are successful on both parts above, you can conclude, <q>Therefore by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \ge 0</m>.</q>
 </p>
-</statement>
-</definition>
+</convention>
 <p>
 Sometimes the statement <m>P(n)</m> will only be true for values of <m>n \ge 4</m>, for example, or some other value. In such cases, replace all the 0's above with 4's (or the other value).
 </p>
@@ -282,7 +281,6 @@ Base case: <m>P(5)</m> is the statement <m>5^2 \lt  2^5</m>. Since <m>5^2 = 25</
 
 <p>
 Inductive case: Let <m>k \ge 5</m> be an arbitrary integer. Assume, for induction, that <m>P(k)</m> is true. That is, assume <m>k^2 \lt  2^k</m>. We will prove that <m>P(k+1)</m> is true, i.e., <m>(k+1)^2 \lt  2^{k+1}</m>. To prove such an inequality, start with the left hand side and work towards the right hand side:
-
 <md>
   <mrow>  (k+1)^2 \amp  = k^2 + 2k + 1 \amp</mrow>
   <mrow>  \amp  \lt  2^k + 2k + 1 \amp \mbox{\ldots by the inductive hypothesis.}</mrow>
@@ -370,10 +368,10 @@ The advantage is that we now have a stronger inductive hypothesis. We can assume
 <p>
 It is slightly easier if we change our variables for strong induction. Here is what the formal proof would look like:
 </p>
-<definition>
-<statement>
+<convention>
+<title>Strong Induction Proof Structure</title>
 <p>
-{Strong Induction Proof Structure}<index><main>induction</main><sub>strong induction</sub></index>
+<index><main>induction</main><sub>strong induction</sub></index>
 	Again, start by saying what you want to prove: ``Let <m>P(n)</m> be the statement<ellipsis />" Then establish two facts:
 </p>
 
@@ -385,8 +383,7 @@ It is slightly easier if we change our variables for strong induction. Here is w
 <p>
 Conclude, <q>therefore, by strong induction, <m>P(n)</m> is true for all <m>n > 0</m>.</q>
 </p>
-</statement>
-</definition>
+</convention>
 <p>
 Of course, it is acceptable to replace 0 with a larger base case if needed.<fn>Technically, strong induction does not require you to prove a separate base case.  This is because when proving the inductive case, you must show that <m>P(0)</m> is true, assuming <m>P(k)</m> is true for all <m>k \lt  0</m>.  But this is not any help so you end up proving <m>P(0)</m> anyway.  To be on the safe side, we will always include the base case separately.</fn>
 </p>
@@ -472,7 +469,6 @@ Use induction to prove for all <m>n \in \N</m> that <m>\d\sum_{k=0}^n 2^k = 2^{n
 <proof>
 <p>
 We must prove that <m>1 + 2 + 2^2 + 2^3 + \cdots +2^n = 2^{n+1} - 1</m> for all <m>n \in \N</m>. Thus let <m>P(n)</m> be the statement <m>1 + 2 + 2^2 + \cdots + 2^n = 2^{n+1} - 1</m>. We will prove that <m>P(n)</m> is true for all <m>n \in \N</m>. First we establish the base case, <m>P(0)</m>, which claims that <m>1 = 2^{0+1} -1</m>. Since <m>2^1 - 1 = 2 - 1 = 1</m>, we see that <m>P(0)</m> is true. Now for the inductive case. Assume that <m>P(k)</m> is true for an arbitrary <m>k \in \N</m>. That is, <m>1 + 2 + 2^2 + \cdots + 2^k = 2^{k+1} - 1</m>. We must show that <m>P(k+1)</m> is true (i.e., that <m>1 + 2 + 2^2 + \cdots + 2^{k+1} = 2^{k+2} - 1</m>). To do this, we start with the left hand side of <m>P(k+1)</m> and work to the right hand side:
-
 <md>
   <mrow>  1 + 2 + 2^2 + \cdots + 2^k + 2^{k+1} = \amp ~ 2^{k+1} - 1 + 2^{k+1} \amp  \mbox{ \footnotesize by the inductive hypothesis}</mrow>
   <mrow>  = \amp  ~2\cdot 2^{k+1} - 1 \amp</mrow>
@@ -499,7 +495,6 @@ Prove that <m>7^n - 1</m> is a multiple of 6 for all <m>n \in \N</m>.
 <proof>
 <p>
 Let <m>P(n)</m> be the statement <q><m>7^n - 1</m> is a multiple of 6.</q> We will show <m>P(n)</m> is true for all <m>n \in \N</m>. First we establish the base case, <m>P(0)</m>. Since <m>7^0 - 1 = 0</m>, and <m>0</m> is a multiple of 6, <m>P(0)</m> is true. Now for the inductive case. Assume <m>P(k)</m> holds for an arbitrary <m>k \in \N</m>. That is, <m>7^k - 1</m> is a multiple of 6, or in other words, <m>7^k - 1 = 6j</m> for some integer <m>j</m>. Now consider <m>7^{k+1} - 1</m>:
-
 <md>
   <mrow>  7^{k+1} - 1 ~ \amp  = 7^{k+1} - 7 + 6 \amp  \mbox{ \footnotesize by cleverness: <m>-1 = -7 + 6</m>}</mrow>
   <mrow>  \amp  = 7(7^k - 1) + 6 \amp  \mbox{ \footnotesize factor out a 7 from the first two terms}</mrow>
@@ -527,7 +522,6 @@ Prove that <m>1 + 3 + 5 + \cdots + (2n-1) = n^2</m> for all <m>n \ge 1</m>.
 <proof>
 <p>
 Let <m>P(n)</m> be the statement <m>1+3 +5 + \cdots + (2n-1) = n^2</m>. We will prove that <m>P(n)</m> is true for all <m>n \ge 1</m>. First the base case, <m>P(1)</m>. We have <m>1 = 1^2</m> which is true, so <m>P(1)</m> is established. Now the inductive case. Assume that <m>P(k)</m> is true for some fixed arbitrary <m>k \ge 1</m>. That is, <m>1 + 3 + 5 + \cdots + (2k-1) = k^2</m>. We will now prove that <m>P(k+1)</m> is also true (i.e., that <m>1 + 3 + 5 + \cdots + (2k+1) = (k+1)^2</m>). We start with the left hand side of <m>P(k+1)</m> and work to the right hand side:
-
 <md>
   <mrow>  1 + 3 + 5 + \cdots + (2k-1) + (2k+1) ~ \amp  = k^2 + (2k+1) \amp  \mbox{ \footnotesize by the induction hypothesis}</mrow>
   <mrow>  \amp  = (k+1)^2 \amp  \mbox{ \footnotesize by factoring}</mrow>
@@ -553,7 +547,6 @@ Prove that <m>F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1</m> where <m>F_n<
 <proof>
 <p>
 Let <m>P(n)</m> be the statement <m>F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1</m>. We will show that <m>P(n)</m> is true for all <m>n \ge 0</m>. First the base case is easy because <m>F_0 = 0</m> and <m>F_1 = 1</m> so <m>F_0 = F_1 - 1</m>. Now consider the inductive case. Assume <m>P(k)</m> is true, that is, assume <m>F_0 + F_2 + F_4 + \cdots + F_{2k} = F_{2k+1} - 1</m>. To establish <m>P(k+1)</m> we work from left to right:
-
 <md>
   <mrow>  F_0 + F_2 + F_4 + \cdots + F_{2k} + F_{2k+2} ~ \amp  = F_{2k+1} - 1 + F_{2k+2} \amp  \mbox{\footnotesize by the inductive hypothesis}</mrow>
   <mrow>  \amp  = F_{2k+1} + F_{2k+2} - 1 \amp</mrow>
@@ -580,7 +573,6 @@ Prove that <m>2^n \lt  n!</m> for all <m>n \ge 4</m>. (Recall, <m>n! = 1\cdot 2 
 <proof>
 <p>
 Let <m>P(n)</m> be the statement <m>2^n \lt  n!</m>. We will show <m>P(n)</m> is true for all <m>n \ge 4</m>. First, we check the base case and see that yes, <m>2^4 \lt  4!</m> (as <m>16 \lt  24</m>) so <m>P(4)</m> is true. Now for the inductive case. Assume <m>P(k)</m> is true for an arbitrary <m>k \ge 4</m>. That is, <m>2^k \lt  k!</m>. Now consider <m>P(k+1)</m>: <m>2^{k+1} \lt  (k+1)!</m>. To prove this, we start with the left side and work to the right side.
-
 <md>
   <mrow>  2^{k+1}~ \amp  = 2\cdot 2^k \amp</mrow>
   <mrow>  \amp  \lt  2\cdot k! \amp  \mbox{ \footnotesize by the inductive hypothesis}</mrow>
@@ -753,7 +745,6 @@ Suppose that a particular real number <m>x</m> has the property that <m>x + \fra
 <answer>
 <p>
 When <m>n = 0</m>, we get <m>x^0 +\frac{1}{x^0} = 2</m> and when <m>n = 1</m>, <m>x + \frac{1}{x}</m> is an integer, so the base case holds. Now assume the result holds for all natural numbers <m>n \lt  k</m>. In particular, we know that <m>x^{k-1} + \frac{1}{x^{k-1}}</m> and <m>x + \frac{1}{x}</m> are both integers. Thus their product is also an integer. But,
-
 <md>
   <mrow>  \left(x^{k-1} + \frac{1}{x^{k-1}}\right)\left(x + \frac{1}{x}\right) \amp  = x^k + \frac{x^{k-1}}{x} + \frac{x}{x^{k-1}} + \frac{1}{x^k}</mrow>
   <mrow>  \amp  = x^k + \frac{1}{x^k} + x^{k-2} + \frac{1}{x^{k-2}}</mrow>
