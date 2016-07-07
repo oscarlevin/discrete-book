@@ -1,0 +1,1020 @@
+<section>
+<title>Introduction to Number Theory</title>
+
+
+<introduction>
+<p>
+We have used the natural numbers to solve problems. This was the right set of numbers to work with in discrete mathematics because we always dealt with a whole number of things. The natural numbers have been a tool. Let's take a moment now to inspect that tool. What mathematical discoveries can we make <em>about</em> the natural numbers themselves?
+</p>
+
+<p>
+This is the main question of number theory: a huge, ancient, complex, and above all, beautiful branch of mathematics. Historically, number theory was known as the Queen of Mathematics and was very much a branch of <em>pure</em> mathematics, studied for its own sake instead of as a means to understanding real world applications. This has changed in recent years however, as applications of number theory have been unearthed. Probably the most well known example of this is RSA cryptography, one of the methods used in encrypt data on the internet. It is number theory that makes this possible.
+</p>
+
+<p>
+What sorts of questions belong to the realm of number theory? Here is a motivating example. Recall in our study of induction, we asked:
+</p>
+<blockquote>
+Which amounts of postage can be made exactly using just 5-cent and 8-cent stamps?
+</blockquote>
+<p>
+We were able to prove that <em>any</em> amount greater than 27 cents could be made. You might wonder what would happen if we changed the denomination of the stamps. What if we instead had 4- and 9-cent stamps? Would there be some amount after which all amounts would be possible? Well, again, we could replace two 4-cent stamps with a 9-cent stamp, or three 9-cent stamps with seven 4-cent stamps. In each case we can create one more cent of postage. Using this as the inductive case would allow us to prove that any amount of postage greater than 23 cents can be made.
+</p>
+
+<p>
+What if we had 2-cent and 4-cent stamps. Here it looks less promising. If we take some number of 2-cent stamps and some number of 4-cent stamps, what can we say about the total? Could it ever be odd? Doesn't look like it.
+</p>
+
+<p>
+<em>Why</em> does 5 and 8 work, 4 and 9 work, but 2 and 4 not work? What is it about these numbers? If I gave you a pair of numbers, could you tell me right away if they would work or not? We will answer these questions, and more, after first investigating some simpler properties of numbers themselves.
+</p>
+</introduction>
+
+
+<subsection>
+<title>Divisibility</title>
+<p>
+It is easy to add and multiply natural numbers. If we extend our focus to all integers, then subtraction is also easy (we need the negative numbers so we can subtract any number from any other number, even larger from smaller). Division is the first operation that presents a challenge. If we wanted to extend our set of numbers so any division would be possible (maybe excluding division by 0) we would need to look at the rational numbers (the set of all numbers which can be written as fractions). This would be going too far, so we will refuse this option.
+</p>
+
+<p>
+In fact, it is a good thing that not every number can be divided by other numbers. This helps us understand the structure of the natural numbers and opens the door to many interesting questions and applications.
+</p>
+
+<p>
+If given numbers <m>a</m> and <m>b</m>, it is possible that <m>a \div b</m> gives a whole number. In this case, we say that <m>b</m> <em>divides</em><index><main>divides</main></index> <m>a</m>, in symbols, we write <m>b \mid a</m>. If this holds, then <m>b</m> is a divisor or factor of <m>a</m>, and <m>a</m> is a multiple of <m>b</m>. In other words, if <m>b \mid a</m>, then <m>a = bk</m> for some integer <m>k</m> (this is saying <m>a</m> is some multiple of <m>b</m>).
+</p>
+<convention>
+<title>The Divisibility Relation</title>
+<p>
+<index><main>divisibility relation</main></index>
+	Given integers <m>m</m> and <m>n</m>, we say,
+<me>
+  \mdivn \qquad \mbox{``<m>m\emph{divides}n</m>''}
+</me>
+provided <m>n \div m</m> is an integer. Thus the following assertions mean the same thing:
+</p>
+
+<ol>
+<li><m>m \mid n</m></li>
+<li><m>n = mk</m> for some integer <m>k</m></li>
+<li><m>m</m> is a factor (or divisor) of <m>n</m></li>
+<li><m>n</m> is a multiple of <m>m</m>.</li>
+</ol>
+</convention>
+<p>
+Notice that <m>m \mid n</m> is a statement. It is either true or false. On the other hand, <m>n \div m</m> or <m>n/m</m> is some number. If we want to claim that <m>n/m</m> is not an integer, so <m>m</m> does not divide <m>n</m>, then we can write <m>m \nmid n</m>.
+</p>
+<example>
+<statement>
+<p>
+Decide whether each of the statements below are true or false.
+</p>
+
+<ol>
+<li><m>4 \mid 20</m></li>
+<li><m>20 \mid 4</m></li>
+<li><m>0 \mid 5</m></li>
+<li><m>5 \mid 0</m></li>
+<li><m>7 \mid 7</m></li>
+<li><m>1 \mid 37</m></li>
+<li><m>-3 \mid 12</m></li>
+<li><m>8 \mid 12</m></li>
+<li><m>1642 \mid 136299</m></li>
+</ol>
+</statement>
+<solution>
+<ol>
+<li>True.  4 <q>goes into</q> 20 five times without remainder.  In other words, <m>20 \div 4 = 5</m>, an integer. We could also justify this by saying that <m>20</m> is a multiple of 4: <m>20 = 4\cdot 5</m>.</li>
+<li>False. While 20 is a multiple of 4, it is false that <m>4</m> is a multiple of 20.</li>
+<li>False.  <m>5 \div 0</m> is not even defined, let alone an integer.</li>
+<li>True.  In fact, <m>x \mid 0</m> is true for all <m>x</m>.  This is because 0 is a multiple of every number: <m>0 = x\cdot 0</m>.</li>
+<li>True.  In fact, <m>x \mid x</m> is true for all <m>x</m>.</li>
+<li>True.  1 divides every number (other than 0).</li>
+<li>True.  Negative numbers work just fine for the divisibility relation.  Here <m>12 = -3 \cdot 4</m>.	It is also true that <m>3 \mid -12</m> and that <m>-3 \mid -12</m>.</li>
+<li>False.  Both 8 and 12 are divisible by 4, but this does not mean that <m>12</m> is divisible by <m>8</m>.</li>
+<li>False. See below.</li>
+</ol>
+</solution>
+</example>
+<p>
+This last example raises a question: how might one decide whether <m>m \mid n</m>? Of course, if you had a trusted calculator, you could ask it for the value of <m>n \div m</m>. If it spits out anything other than an integer, you know <m>m \nmid n</m>. This seems a little like cheating though: we don't have division, so should we really use division to check divisibility?
+</p>
+
+<p>
+While we don't really know how to divide, we do know how to multiply. We might try multiplying <m>m</m> by larger and larger numbers until we get close to <m>n</m>. How close? Well, we want to be sure that if we multiply <m>m</m> by the next larger integer, we go over <m>n</m>.
+</p>
+
+<p>
+For example, let's try this to decide whether <m>1642 \mid 136299</m>. Start finding multiples of 1642:
+<me>
+  1642 \cdot 2 = 3284 \qquad 1642 \cdot 3 = 4926 \qquad 1642\cdot 4 = 6568 \qquad \cdots
+</me>
+</p>
+
+<p>
+All of these are well less than 136299. I suppose we can jump ahead a bit:
+<me>
+  1642 \cdot 50 = 82100 \qquad 1642 \cdot 80 = 131360 \qquad 1642 \cdot 85 = 139570
+</me>
+</p>
+
+<p>
+Ah, so we need to look somewhere between 80 and 85. Try 83:
+<me>
+  1642 \cdot 83 = 136286
+</me>
+</p>
+
+<p>
+Is this the best we can do? How far are we from our desired 136299? If we subtract, we get <m>136299 - 136286 = 13</m>. So we know we cannot go up to 84, that will be too much. In other words, we have found that
+<me>
+  136299 = 83 \cdot 1642 + 13
+</me>
+</p>
+
+<p>
+Since <m>13 \lt  1642</m>, we can now safely say that <m>1642 \nmid 136299</m>.
+</p>
+
+<p>
+It turns out that the process we went through above can be repeated for any pair of numbers. We can always write the number <m>a</m> as some multiple of the number <m>b</m> plus some remainder. We know this because we know about <em>division with remainder</em> from elementary school. This is just a way of saying it using multiplication. Due to the procedural nature that can be used to find the remainder, this fact is usually called the <em>division algorithm</em>:
+</p>
+<convention>
+<title>The Division Algorithm</title>
+<p>
+<index><main>Division algorithm</main></index>
+	Given any two integers <m>a</m> and <m>b</m>, we can always find an integer <m>q</m> such that
+<me>
+  a = qb + r
+</me>
+where <m>r</m> is an integer satisfying <m>0 \le r \lt  |b|</m>
+</p>
+</convention>
+<p>
+The idea is that we can always take a large enough multiple of <m>b</m> so that the remainder <m>r</m> is as small as possible. We do allow the possibility of <m>r = 0</m>, in which case we have <m>b \mid a</m>.
+</p>
+</subsection>
+
+
+<subsection>
+<title>Remainder Classes</title>
+<p>
+The division algorithm tells us that there are only <m>b</m> possible remainders when dividing by <m>b</m>. If we fix this divisor, we can group integers by the remainder. Each group is called a <em>remainder class modulo <m>b</m></em> (or sometimes <em>residue class</em>).
+</p>
+<example>
+<statement>
+<p>
+Describe the remainder classes modulo <m>5</m>.
+</p>
+</statement>
+<solution>
+<p>
+We want to classify numbers by what their remainder would be when divided by <m>5</m>. From the division algorithm, we know there will be exactly 5 remainder classes, because there are only 5 choices for what <m>r</m> could be (<m>0 \le r \lt  5</m>).
+</p>
+
+<p>
+First consider <m>r = 0</m>. Here we are looking for all the numbers divisible by <m>5</m> since <m>a = 5q+0</m>. In other words, the multiples of 5. We get the infinite set
+<me>
+  \{\ldots, -15, -10, -5, 0, 5, 10, 15, 20, \ldots\}
+</me>
+</p>
+
+<p>
+Notice we also include negative integers.
+</p>
+
+<p>
+Next consider <m>r = 1</m>. Which integers, when divided by 5, have remainder 1? Well, certainly 1, does, as does 6, and 11. Negatives? Here we must be careful: <m>-6</m> does NOT have remainder 1. We can write <m>-6 = -2\cdot 5 + 4</m> or <m>-6 = -1 \cdot 5 - 1</m>, but only one of these is a <q>correct</q> instance of the division algorithm: <m>r = 4</m> since we need <m>r</m> to be non-negative. So in fact, to get <m>r = 1</m>, we would have <m>-4</m>, or <m>-9</m>, etc. Thus we get the remainder class
+<me>
+  \{\ldots, -14, -9, -4, 1, 6, 11, 16, 21, \ldots\}
+</me>
+</p>
+
+<p>
+There are three more to go. The remainder classes for <m>2</m>, <m>3</m>, and <m>4</m> are, respectively
+<me>
+  \{\ldots, -13, -8, -3, 2, 7, 12, 17, 22,\ldots\}
+</me>
+</p>
+<me>
+  \{\ldots, -12, -7, -2, 3, 8, 13, 18, 23, \ldots\}
+</me>
+<me>
+  \{\ldots, -11, -6, -1, 4, 9, 14, 19, 24, \ldots\}.
+</me>
+</solution>
+</example>
+<p>
+Note that in the example above, <em>every</em> integer is in exactly one remainder class. The technical way to say this is that the remainder classes modulo <m>b</m> form a <em>partition</em> of the integers.<fn>It is possible to develop a mathematical theory of partitions, prove statements about all partitions in general and then apply those observations to our case here.</fn> The most important fact about partitions, is that it is possible to define an <em>equivalence relation</em> from a partition: this is a relationship between pairs of numbers which acts in all the important ways like the <q>equals</q> relationship.<fn>Again, there is a mathematical theory of equivalence relations which applies in many more instances than the one we look at here.</fn>
+</p>
+
+<p>
+All fun technical language aside, the idea is really simple. If two numbers belong to the same remainder class, then in some way, they are the same. That is, they are the same <em>up to division by <m>b</m></em>. In the case where <m>b = 5</m> above, the numbers <m>8</m> and <m>23</m>, while not the same number, are the same when it comes to dividing by 5, because both have remainder <m>3</m>.
+</p>
+
+<p>
+It matters what the divisor is: <m>8</m> and <m>23</m> are the same up to division by <m>5</m>, but not up to division by <m>7</m>, since <m>8</m> has remainder of 1 when divided by 7 while 23 has a remainder of 2.
+</p>
+
+<p>
+With all this in mind, let's introduce some notation. We want to say that <m>8</m> and 23 are basically the same, even though they are not equal. It would be wrong to say <m>8 = 23</m>. Instead, we write <m>8 \equiv 23</m>. But this is not always true. It works if we are thinking division by 5, so we need to denote that somehow. What we will actually write is this:
+<me>
+  8 \equiv 23 \pmod{5}
+</me>
+which is read, <q>8 is congruent to 23 modulo 5</q> (or just <q>mod 5</q>).<index><main>mod</main></index> Of course then we could observe that
+<me>
+  8 \not\equiv 23 \pmod{7}
+</me>
+</p>
+<convention>
+<title>Congruence Modulo $n$</title>
+<p>
+We say <term><m>a</m> is congruent to <m>b</m> modulo <m>n</m></term><index><main>congruence</main></index><index><main>modulo <m>n</m></main></index>, and write,
+<me>
+  a \cong b \modn
+</me>
+provided <m>a</m> and <m>b</m> have the same remainder when divided by <m>n</m>. In other words, provided <m>a</m> and <m>b</m> belong to the same remainder class modulo <m>n</m>.
+</p>
+</convention>
+<p>
+Many books define congruence modulo <m>n</m> slightly differently. They say that <m>a \equiv b \pmod{n}</m> if and only if <m>n \mid a-b</m>. In other words, two numbers are congruent modulo <m>n</m>, if their difference is a multiple of <m>n</m>. So which definition is correct? Turns out, it doesn't matter: they are equivalent.
+</p>
+
+<p>
+To see why, consider two numbers <m>a</m> and <m>b</m> which are congruent modulo <m>n</m>. Then <m>a</m> and <m>b</m> have the same remainder when divided by <m>n</m>. We have
+<me>
+  a = q_1 n + r \qquad\qquad b = q_2 n + r
+</me>
+</p>
+
+<p>
+Here the two <m>r</m>'s really are the same. Consider what we get when we take the difference of <m>a</m> and <m>b</m>:
+<me>
+  a-b = q_1n + r - (q_2n + r) = q_1n - q_2 n = (q_1-q_2)n
+</me>
+</p>
+
+<p>
+So <m>a-b</m> is a multiple of <m>n</m>, or equivalently, <m>n \mid a-b</m>.
+</p>
+
+<p>
+On the other hand, if we assume first that <m>n \mid a-b</m>, so <m>a-b = kn</m>, then consider what happens if we divide each term by <m>n</m>. Dividing <m>a</m> by <m>n</m> will leave some remainder, as will dividing <m>b</m> by <m>n</m>. However, dividing <m>kn</m> by <m>n</m> will leave 0 remainder. So the remainders on the left hand side must cancel out. That is, the remainders must be the same.
+</p>
+
+<p>
+Thus we have:
+</p>
+<convention>
+<title>Congruence and Divisibility</title>
+<p>
+For any integers <m>a</m>, <m>b</m>, and <m>n</m>, we have
+<me>
+  a \equiv b \pmod{n} \qquad \mbox{ if and only if }  \qquad n \mid a-b.
+</me>
+</p>
+</convention>
+<p>
+It will also be useful to switch back and forth between congruences and regular equations. The above fact helps with this. We know that <m>a \equiv b \pmod{n}</m> if and only if <m>n \mid a-b</m>, if and only if <m>a-b = kn</m> for some integer <m>k</m>. Rearranging that equation, we get <m>a = b + kn</m>. In other words, if <m>a</m> and <m>b</m> are congruent modulo <m>n</m>, then <m>a</m> is <m>b</m> more than some multiple of <m>n</m>. This conforms with our earlier observation that all the numbers in a particular remainder class are the same amount larger than the multiples of <m>n</m>.
+</p>
+<convention>
+<title>Congruence and Equality</title>
+<p>
+For any integers <m>a</m>, <m>b</m>, and <m>n</m>, we have
+<me>
+  a \equiv b \pmod{n} \qquad \mbox{ if and only if }  \qquad a = b + kn \mbox{ for some integer <m>k</m>} .
+</me>
+</p>
+</convention>
+</subsection>
+
+
+<subsection>
+<title>Properties of Congruence</title>
+<p>
+We said earlier that congruence modulo <m>n</m> behaves, in many important ways, the same way equality does. Specifically, we could prove that congruence modulo <m>n</m> is an <em>equivalence relation</em>, which would require checking the following three facts:
+</p>
+<convention>
+<title>Congruence Modulo $n$ is an Equivalence Relation</title>
+<p>
+Given any integers <m>a</m>, <m>b</m>, and <m>c</m>, and any positive integer <m>n</m>, the following hold:
+</p>
+
+<ol>
+<li><m>a \equiv a \pmod{n}</m>.</li>
+<li>If <m>a \equiv b \pmod{n}</m> then <m>b \equiv a \pmod{n}</m>.</li>
+<li>If <m>a \equiv b \pmod{n}</m> and <m>b \equiv c \pmod{n}</m>, then <m>a \equiv c \pmod{n}</m>.</li>
+</ol>
+
+<p>
+In other words, congruence modulo <m>n</m> is reflexive, symmetric, and transitive, so is an equivalence relation.
+</p>
+</convention>
+<p>
+You should take a minute to convince yourself that each of the properties above actually hold of congruence. Try explaining each using both the remainder and divisibility definitions.
+</p>
+
+<p>
+Next, consider how congruence behaves when doing basic arithmetic. We already know that if you subtract two congruent numbers, the result will be congruent to 0 (be a multiple of <m>n</m>). What if we add something congruent to 1 to something congruent to 2? Will we get something congruent to 3?
+</p>
+<convention>
+<title>Congruence and Arithmetic</title>
+<p>
+<index><main>modular arithmetic</main></index>
+	Suppose <m>a \equiv b \pmod{n}</m> and <m>c \equiv d \pmod{n}</m>. Then the following hold:
+</p>
+
+<ol>
+<li><m>a+c \equiv b+d \pmod{n}</m>.</li>
+<li><m>a-c \equiv b-d \pmod{n}</m>.</li>
+<li><m>ac \equiv bd \pmod{n}</m>.</li>
+</ol>
+</convention>
+<p>
+The above facts might be written a little strangely, but the idea is simple. If we have a true congruence, and we add the same thing to both sides, the result is still a true congruence. This sounds like we are saying:
+</p>
+<blockquote>
+If <m>a \equiv b \pmod{n}</m> then <m>a+c \equiv b+c \pmod{n}</m>.
+</blockquote>
+<p>
+Of course this is true as well, it is the special case where <m>c = d</m>. But what we have works in more generality. Think of congruence as being <q>basically equal.</q> If we have two numbers which are basically equal, and we add basically the same thing to both sides, the result will be basically equal.
+</p>
+
+<p>
+This seems reasonable. Is it really true? Let's prove the first fact:
+</p>
+
+<proof>
+<p>
+Suppose <m>a \equiv b \pmod{n}</m> and <m>c \equiv d \pmod{n}</m>. That means <m>a = b + kn</m> and <m>c = d + jn</m> for integers <m>k</m> and <m>j</m>. Add these equations:
+<me>
+  a+c = b+d + kn + jn.
+</me>
+</p>
+
+<p>
+But <m>kn + jn = (k+j)n</m>, which is just a multiple of <m>n</m>. So <m>a+c = b+d + (j+k)n</m>, or in other words, <m>a+c \equiv b+d \pmod{n}</m>
+</p>
+</proof>
+
+<p>
+The other two facts can be proved in a similar way. \todo{put as exercise?}
+</p>
+
+<p>
+One of the important consequences of these facts about congruences, is that we can basically replace any number in a congruence with any other number it is congruent to. Here are some examples to see how (and why) that works:
+</p>
+<example>
+<statement>
+<p>
+Find the remainder of <m>3491</m> divided by <m>9</m>.
+</p>
+</statement>
+<solution>
+<p>
+We could do long division, but there is another way. We want to find <m>x</m> such that <m>x \equiv 3491 \pmod{9}</m>. Now <m>3491 = 3000 + 400 + 90 + 1</m>. Of course <m>90 \equiv 0 \pmod 9</m>, so we can replace the 90 in the sum with 0. Why is this okay? We are actually subtracting the <q>same</q> thing from both sides:
+<me>
+  \begin{aligned}x \amp  \equiv 3000 + 400 + 90 + 1 \pmod 9 \\
+  	- ~~ 0 \amp  \equiv 90 \pmod 9 \\ \midrule
+  	x \amp  \equiv 3000 + 400 + 0 + 1\pmod 9.
+\end{aligned}
+</me>
+</p>
+
+<p>
+Next, note that <m>400 = 4 \cdot 100</m>, and <m>100 \equiv 1 \pmod 9</m> (since <m>9 \mid 99</m>). So we can in fact replace the 400 with simply a 4. Again, we are appealing to our claim that we can replace congruent elements, but we are really appealing to property 3 about the arithmetic of congruence: we know <m>100 \equiv 1 \pmod{9}</m>, so if we multiply both sides by <m>4</m>, we get <m>400 \equiv 4 \pmod 9</m>.
+</p>
+
+<p>
+Similarly, we can replace 3000 with 3, since <m>1000 = 1 + 999 \equiv 1 \pmod 9</m>. So our original congruence becomes
+<me>
+  x \equiv 3 + 4 + 0 + 1 \pmod 9
+</me>
+</p>
+<me>
+  x \equiv 8 \pmod 9.
+</me>
+<p>
+Therefore <m>3491</m> divided by 9 has remainder 8.
+</p>
+</solution>
+</example>
+<p>
+The above example should convince you that the well known divisibility test for 9 is true: the sum of the digits of a number is divisible by 9 if and only if the original number is divisible by 9. In fact, we now know something more: any number is congruent to the sum of its digits, modulo 9.<fn>This works for 3 as well, but definitely not for any modulus in general.</fn>
+</p>
+
+<p>
+Let's try another:
+</p>
+<example>
+<statement>
+<p>
+Find the remainder when <m>3^{123}</m> is divided by 7.
+</p>
+</statement>
+<solution>
+<p>
+Of course, we are working with congruence because we want to find the smallest positive <m>x</m> such that <m>x \equiv 3^{123} \pmod 7</m>. Now first write <m>3^{123} = (3^3)^{41}</m>. We have:
+<me>
+  3^{123} = 27^{41} \equiv 6^{41} \pmod 7,
+</me>
+since <m>27 \equiv 6 \pmod 7</m>. Notice further that <m>6^2 = 36</m> is congruent to 1 modulo 7. Thus we can simplify further:
+<me>
+  6^{41} = 6\cdot (6^2)^{20} \equiv 6 \cdot 1^{20} \pmod 7.
+</me>
+</p>
+
+<p>
+But <m>1^{20} = 1</m>, so we are done:
+<me>
+  3^{123} \equiv 6 \pmod 7.
+</me>
+</p>
+</solution>
+</example>
+<p>
+In the above example, we are using the fact that if <m>a \equiv b \pmod n</m>, then <m>a^p \equiv b^p \pmod n</m>. This is just applying property 3 a bunch of times.
+</p>
+
+<p>
+So far we have seen how to add, subtract and multiply with congruences. What about division? There is a reason we have waited to discuss it. It turns out that we cannot simply divide. In other words, even if <m>ad \equiv bd \pmod n</m>, we do not know that <m>a \equiv b \pmod n</m>. Consider, for example:
+<me>
+  18 \equiv 42 \pmod 8.
+</me>
+</p>
+
+<p>
+This is true. Now <m>18</m> and <m>42</m> are both divisible by 6. However,
+<me>
+  3 \not\equiv 7 \pmod 8.
+</me>
+</p>
+
+<p>
+While this doesn't work, note that <m>3 \equiv 7 \pmod 4</m>. We cannot divide <m>8</m> by 6, but we can divide 8 by the greatest common factor of <m>8</m> and <m>6</m>. Will this always happen?
+</p>
+
+<p>
+Suppose <m>ad \equiv bd \pmod n</m>. In other words, we have <m>ad = bd + kn</m> for some integer <m>k</m>. Of course <m>ad</m> is divisible by <m>d</m>, as is <m>bd</m>. So <m>kn</m> must also be divisible by <m>d</m>. Now if <m>n</m> and <m>d</m> have no common factors (other than 1), then we must have <m>d \mid k</m>. But in general, if we try to divide <m>kn</m> by <m>d</m>, we don't know that we will get an integer multiple of <m>n</m>. Some of the <m>n</m> might get divided as well. To be safe, let's divide as much of <m>n</m> as we can. Take the largest factor of both <m>d</m> and <m>n</m>, and cancel that out from <m>n</m>. The rest of the factors of <m>d</m> will come from <m>k</m>, no problem.
+</p>
+
+<p>
+We will call the largest factor of both <m>d</m> and <m>n</m> the <m>\gcd(d,n)</m>, for <em>greatest common divisor</em><index><main>gcd</main></index><index><main>greatest commond divisor</main></index>. In our example above, <m>\gcd(6,8) = 2</m> since the greatest divisor common to 6 and 8 is 2.
+</p>
+<convention>
+<title>Congruence and Division</title>
+<p>
+Suppose <m>ad \equiv bd \pmod n</m>. Then <m>a \equiv b \pmod{\frac{n}{\gcd(d,n)}}</m>.
+</p>
+
+<p>
+If <m>d</m> and <m>n</m> have no common factors then <m>\gcd(d,n) = 1</m>, so <m>a \equiv b \pmod n</m>.
+</p>
+</convention>
+
+<example>
+<statement>
+<p>
+Simplify the following congruences using division: (a) <m>24 \equiv 39 \pmod 5</m> and (b) <m>24 \equiv 39 \pmod{15}</m>.
+</p>
+</statement>
+<solution>
+<p>
+(a) Both <m>24</m> and <m>39</m> are divisible by <m>3</m>, and <m>3</m> and <m>5</m> have no common factors, so we get
+<me>
+  8 \equiv 13 \pmod 5.
+</me>
+</p>
+
+<p>
+(b) Again, we can divide by 3. However, doing so blindly gives us <m>8 \equiv 13 \pmod{15}</m> which is no longer true. Instead, we must also divide the modulus 15 by the greatest common factor of <m>3</m> and <m>15</m>, which is <m>3</m>. Again we get
+<me>
+  8 \equiv 13 \pmod 5.
+</me>
+</p>
+</solution>
+</example>
+</subsection>
+
+
+<subsection>
+<title>Solving Congruences</title>
+<p>
+\todo[inline]{This would be a good place for an activity.}
+</p>
+
+<p>
+Now that we have some algebraic rules to govern congruence relations, we can attempt to solve for an unknown in a congruence. For example, is there a value of <m>x</m> that satisfies,
+<me>
+  3x + 2 \equiv 4 \pmod{5},
+</me>
+and if so, what is it?
+</p>
+
+<p>
+In this example, since the modulus is small, we could simply try every possible value for <m>x</m>. There are really only 5 to consider, since any integer that satisfied the congruence could be replaced with any other integer it was congruent to modulo 5. Here, when <m>x = 4</m> we get <m>3x + 2 = 14</m> which is indeed congruent to 4 modulo 5. This means that <m>x = 9</m> and <m>x = 14</m> and <m>x = 19</m> and so on will each also be a solution because as we saw above, replacing any number in a congruence with a congruent number does not change the truth of the congruence.
+</p>
+
+<p>
+So in this example, simply compute <m>3x + 2</m> for values of <m>x \in \{0,1,2,3,4\}</m>. This gives 2, 5, 8, 11, and 14 respectively, for which only 14 is congruent to 4.
+</p>
+
+<p>
+Let's also see how you could solve this using our rules for the algebra of congruences. Such an approach would be much simpler than the trial and error tactic if the modulus was larger. First, we know we can subtract 2 from both sides:
+<me>
+  3x \equiv 2 \pmod{5}.
+</me>
+</p>
+
+<p>
+Then to divide both sides by 3, we first add 0 to both sides. Of course, on the right hand side, we want that 0 to be a 10 (yes, <m>10</m> really is 0 since they are congruent modulo 5). This gives,
+<me>
+  3x \equiv 12 \pmod{5}.
+</me>
+</p>
+
+<p>
+Now divide both sides by 3. Since <m>\gcd(3,5) = 1</m>, we do not need to change the modulus:
+<me>
+  x \equiv 4 \pmod{5}.
+</me>
+</p>
+
+<p>
+Notice that this in fact gives the <em>general solution</em>: not only can <m>x = 4</m>, but <m>x</m> can be any number which is congruent to 4. We can leave it like this, or write <q><m>x = 4 + 5k</m> for any integer <m>k</m>.</q>
+</p>
+<example>
+<statement>
+<p>
+Solve the following congruences for <m>x</m>.
+</p>
+
+<ol>
+<li><m>7x \equiv 12 \pmod{13}</m>.</li>
+<li><m>84x - 38 \equiv 79 \pmod{15}</m>.</li>
+<li><m>20x \equiv 23 \pmod{14}</m>.</li>
+</ol>
+</statement>
+<solution>
+<ol>
+<li>All we need to do here is divide both sides by 7.  We add 13 to the right hand side repeatedly until we get a multiple of 7 (adding 13 is the same as adding 0, so this is legal).  We get <m>25</m>, <m>38</m>, <m>51</m>, <m>64</m>, <m>77</m> <ndash /> got it.  So we have:
+<me>
+  \begin{aligned}7x \amp  \equiv 12 \pmod{13} \\
+			7x \amp  \equiv 77 \pmod{13} \\
+			x \amp  \equiv 11 \pmod{13}.
+\end{aligned}
+</me>
+</li>
+<li>Here, since we have numbers larger than the modulus, we can reduce them prior to applying any algebra.  We have <m>84 \equiv 9</m>, <m>38 \equiv 8</m> and <m>79 \equiv 4</m>.  Thus,
+<me>
+  \begin{aligned}84x - 38 \amp  \equiv 79 \pmod{15} \\
+		9x - 8 \amp  \equiv 4 \pmod{15} \\
+		9x \amp  \equiv 12 \pmod{15} \\
+		9x \amp  \equiv 72 \pmod{15}.
+\end{aligned}
+</me>
+We got the 72 by adding <m>0 \equiv 60 \pmod{15}</m> to both sides of the congruence.  Now divide both sides by 9.  However, since <m>\gcd(9, 15) = 3</m>, we must divide the modulus by 3 as well:
+<me>
+  x \equiv 8 \pmod 5.
+</me>
+So the solutions are those values which are congruent to 8, or equivalently 3, modulo 5.  This means that in some sense there are 3 solutions modulo 15: 3, 8, and 13.  We can write the solution:
+<me>
+  x \equiv 3 \pmod{15}; ~~ x \equiv 8 \pmod{15}; ~~x \equiv 13 \pmod{15}.
+</me>
+</li>
+<li>First, reduce modulo 14:
+<me>
+  20x \equiv 23 \pmod{14}
+</me>
+<me>
+  6x \equiv 9 \pmod{14}.
+</me>
+We could now divide both sides by 3, or try to increase 9 by a multiple of 14 to get a multiple of 6.  If we divide by 3, we get,
+<me>
+  2x \equiv 3 \pmod{14}.
+</me>
+Now try adding multiples of 14 to 3, in hopes of getting a number we can divide by 2.  This will not work!  Every time we add 14 to the right side, the result will still be odd.  We will never get an even number, so we will never be able to divide by 2.  Thus there are no solutions to the congruence.</li>
+</ol>
+</solution>
+</example>
+<p>
+The last congruence above illustrates the way in which congruences might not have solutions. We could have seen this immediately in fact. Look at the original congruence:
+<me>
+  20x \equiv 23 \pmod{14}.
+</me>
+</p>
+
+<p>
+If we write this as an equation, we get
+<me>
+  20x = 23 + 14k,
+</me>
+or equivalently <m>20x - 14k = 23</m>. We can easily see there will be no solution to this equation in integers. The left hand side will always be even, but the right hand side is odd. A similar problem would occur if the right hand side was divisible by <em>any</em> number the left hand side was not.
+</p>
+
+<p>
+So in general, given the congruence
+<me>
+  ax \equiv b \pmod{n},
+</me>
+if <m>a</m> and <m>n</m> are divisible by a number which <m>b</m> is not divisible by, then there will be no solutions. In fact, we really only need to check one divisor of <m>a</m> and <m>n</m>: the greatest common divisor. Thus, a more compact way to say this is:
+</p>
+<convention>
+<title>Congruences with no solutions</title>
+<p>
+If <m>\gcd(a,n) \nmid b</m>, then <m>ax \equiv b \pmod{n}</m> has no solutions.
+</p>
+</convention>
+</subsection>
+
+
+<subsection>
+<title>Solving Linear Diophantine Equations</title>
+<p>
+Discrete math deals with whole numbers of things. So when we want to solve equations, we usually are looking for <em>integer</em> solutions. Equations which are intended to only have integer solutions were first studied by in the third century by the Greek mathematician Diophantus of Alexandria, and as such are called <em>Diophantine equations</em><index><main>Diophantine equation</main></index>. Probably the most famous example of a Diophantine equation is <m>a^2 + b^2 = c^2</m>. The integer solutions to this equation are called <em>Pythagorean triples</em>. In general, solving Diophantine equations is hard (in fact, there is provably no general algorithm for deciding whether a Diophantine equation has a solution, a result known as Matiyasevich's Theorem). We will restrict our focus to <em>linear</em> Diophantine equations, which are considerably easier to work with.
+</p>
+<convention>
+<title>Diophantine Equations</title>
+<p>
+An equation in two or more variables is called a <term>Diophantine equation</term> if only integers solutions are of interest. A <term>linear</term> Diophantine equation takes the form <m>a_1x_1 + a_2x_x + \cdots + a_nx_n = b</m> for constants <m>a_1,\ldots, a_n, b</m>.
+</p>
+
+<p>
+A <term>solution</term> to a Diophantine equation is a solution to the equation consisting only of integers.
+</p>
+</convention>
+<p>
+We have the tools we need to solve linear Diophantine equations. We will consider, as a main example, the equation
+<me>
+  51x + 87y = 123.
+</me>
+</p>
+
+<p>
+The general strategy will be to convert the equation to a congruence, then solve that congruence.<fn>This is certainly not the only way to proceed.  A more common technique would be to apply the <em>Euclidean algorithm</em>.  Our way can be a little faster, and is presented here primarily for variety.</fn> Let's work this particular example to see how this might go.
+</p>
+
+<p>
+First, check if perhaps there are no solutions because a divisor of <m>51</m> and <m>87</m> is not a divisor of <m>123</m>. Really, we just need to check whether <m>\gcd(51, 87) \mid 123</m>. This greatest common divisor is 3, and yes <m>3 \mid 123</m>. At this point, we might as well factor out this greatest common divisor. So instead, we will solve:
+<me>
+  17x + 29y = 41.
+</me>
+</p>
+
+<p>
+Now observe that if there are going to be solutions, then for those values of <m>x</m> and <m>y</m>, the two sides of the equation must have the same remainder as each other, no matter what we divide by. In particular, if we divide both sides by 17, we must get the same remainder. Thus we can safely write
+<me>
+  17x + 29y \equiv 41 \pmod{17}.
+</me>
+</p>
+
+<p>
+We choose 17 because <m>17x</m> will have remainder 0. This will allow us to reduce the congruence to just one variable. We could have also moved to a congruence modulo 29, although there is usually a good reason to select the smaller choice, as this will allow us to reduce the other coefficient. In our case, we reduce the congruence as follows:
+<me>
+  \begin{aligned}17x + 29y \amp  \equiv 41 \pmod{17} \\
+0x + 12y \amp  \equiv 7 \pmod{17} \\
+12 y \amp  \equiv 24 \pmod{17} \\
+y \amp  \equiv 2 \pmod{17}.
+\end{aligned}
+</me>
+</p>
+
+<p>
+Now at this point we know <m>y = 2 + 17k</m> will work for any integer <m>k</m>. If we haven't made a mistake, we should be able to plug this back into our original Diophantine equation to find <m>x</m>:
+<me>
+  \begin{aligned}17x + 29(2 + 17k) \amp  = 41\\
+17x \amp  = -17 - 29\cdot 17k\\
+x \amp  = -1-29k.
+\end{aligned}
+</me>
+</p>
+
+<p>
+We have now found all solutions to the Diophantine equation. For each <m>k</m>, <m>x = -1-29k</m> and <m>y = 2 + 17k</m> will satisfy the equation. We could check this for a few cases. If <m>k = 0</m>, the solution is <m>(-1,2)</m>, and yes, <m>-17 + 2\cdot 29 = 41</m>. If <m>k = 3</m>, the solution is <m>(-88, 53)</m>. If <m>k = -2</m>, we get <m>(57, -32)</m>.
+</p>
+
+<p>
+To summarize this process, to solve <m>ax + by = c</m>, we,
+</p>
+
+<ol>
+<li>Divide both sides of the equation by <m>\gcd(a,b)</m> (if this does not leave the right hand side as an integer, there are no solutions).  Let's assume that <m>ax + by = c</m> has already been reduced in this way.</li>
+<li>Pick the smaller of <m>a</m> and <m>b</m> (here, assume it is <m>b</m>), and convert to a congruence modulo <m>b</m>:
+<me>
+  ax + by \equiv c \pmod{b}.
+</me>
+This will reduce to a congruence with one variable, <m>x</m>:
+<me>
+  ax \equiv c \pmod{b}.
+</me>
+</li>
+<li>Solve the congruence as we did in the previous section.  Write your solution as an equation, such as,
+<me>
+  x = n + kb
+</me>
+</li>
+<li>Plug this into the original Diophantine equation, and solve for <m>y</m>.</li>
+<li>If we want to know solutions in a particular range (for example, <m>0 \le x, y \le 20</m>), pick different values of <m>k</m> until you have all required solutions.</li>
+</ol>
+
+<p>
+Here is another example:
+</p>
+<example>
+<statement>
+<p>
+How can you make <dollar />6.37 using just 5-cent and 8-cent stamps? What is the smallest and largest number of stamps you could use?
+</p>
+</statement>
+<solution>
+<p>
+First, we need a Diophantine equation. We will work in numbers of cents. Let <m>x</m> be the number of <m>5</m>-cent stamps, and <m>y</m> be the number of 8-cent stamps. We have:
+<me>
+  5x + 8y = 637.
+</me>
+</p>
+
+<p>
+Convert to a congruence and solve:
+<me>
+  \begin{aligned}8y \amp  \equiv 367 \pmod{5}\\
+				3y \amp  \equiv 2 \pmod 5\\
+				3y \amp  \equiv 12 \pmod 5\\
+				y \amp  \equiv 4 \pmod 5.\\
+\end{aligned}
+</me>
+</p>
+
+<p>
+Thus <m>y = 4 + 5k</m>. Then <m>5x + 8(4+5k) = 637</m>, so <m>x = 121 - 8k</m>.
+</p>
+
+<p>
+This says that one way to make <dollar />6.37 is to take 121 of the 5-cent stamps and 4 of the 8-cent stamps. To find the smallest and largest number of stamps, try different values of <m>k</m>.
+</p>
+<tabular>
+<row><cell><m>k</m></cell><cell><m>(x,y)</m></cell><cell>Stamps</cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>-1</cell><cell>(129, -1)</cell><cell>not possible</cell></row>
+<row><cell>0</cell><cell>(121, 4)</cell><cell>125</cell></row>
+<row><cell>1</cell><cell>(113, 9)</cell><cell>122</cell></row>
+<row><cell>2</cell><cell>(105, 13)</cell><cell>119</cell></row>
+<row><cell>\vdots</cell><cell>\vdots</cell><cell>\vdots</cell></row>
+</tabular>
+<p>
+This is no surprise. Having the most stamps means we have as many 5-cent stamps as possible, and to get the smallest number of stamps would require have the least number of 5-cent stamps. To minimize the number of 5-cent stamps, we want to pick <m>k</m> so that <m>121-8k</m> is as small as possible (but still positive). When <m>k = 15</m>, we have <m>x = 1</m> and <m>y = 79</m>.
+</p>
+
+<p>
+Therefore, to make <dollar />6.37, you can us as few as 80 stamps (1 5-cent stamp and 79 8-cent stamps) or as many as 125 stamps (121 5-cent stamps and 4 8-cent stamps).
+</p>
+</solution>
+</example>
+<p>
+Using this method, as long as you can solve linear congruences in one variable, you can solve linear Diophantine equations of two variables. There are times though that solving the linear congruence is a lot of work. For example, suppose you need to solve,
+<me>
+  13x \equiv 6 \pmod{51}.
+</me>
+</p>
+
+<p>
+You <em>could</em> keep adding 51 to the right side until you get a multiple of 13: You would get 57, 108, 159, 210, 261, 312, and 312 is the first of these that is divisible by 13. This works, but is really too much work. Instead we could convert <em>back</em> to a Diophantine equation:
+<me>
+  13x = 6 + 51k
+</me>
+</p>
+
+<p>
+Now solve <em>this</em> like we have in this section. Write it as a congruence modulo 13:
+<me>
+  \begin{aligned}0 \amp \equiv 6 + 51k \pmod{13}\\
+-12k \amp \equiv 6 \pmod{13}\\
+2k \amp \equiv -1 \pmod{13}\\
+2k \amp \equiv 12 \pmod{13}\\
+k \amp \equiv 6 \pmod{13}
+\end{aligned}
+</me>
+so <m>k = 6 + 13j</m>. Now go back and figure out <m>x</m>:
+<me>
+  \begin{aligned}13x \amp  = 6 + 51(6+13j)\\
+x \amp  = 24 + 51j.
+\end{aligned}
+</me>
+</p>
+
+<p>
+Of course you could do this switching back and forth between congruences and Diophantine equations as many times as you like. If you <em>only</em> used this technique, you would essentially replicate the Euclidean algorithm, a more standard way to solve Diophantine equations.
+	\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Suppose <m>a</m>, <m>b</m>, and <m>c</m> are integers. Prove that if <m>a \mid b</m>, then <m>a \mid bc</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+Suppose <m>a \mid b</m>. Then <m>b</m> is a multiple of <m>a</m>, or in other words, <m>b = ak</m> for some <m>k</m>. But then <m>bc = akc</m>, and since <m>kc</m> is an integer, this says <m>bc</m> is a multiple of <m>a</m>. In other words, <m>a \mid bc</m>.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose <m>a</m>, <m>b</m>, and <m>c</m> are integers. Prove that if <m>a \mid b</m> and <m>a \mid c</m> then <m>a \mid b+c</m> and <m>a \mid b-c</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+Assume <m>a \mid b</m> and <m>a \mid c</m>. This means that <m>b</m> and <m>c</m> are both multiples of <m>a</m>, so <m>b = am</m> and <m>c = an</m> for integers <m>m</m> and <m>n</m>. Then <m>b+c = am+an = a(m+n)</m>, so <m>b+c</m> is a multiple of <m>a</m>, or equivalently, <m>a \mid b+c</m>. Similarly, <m>b-c = am-an = a(m-n)</m>, so <m>b-c</m> is a multiple of <m>a</m>, which is to say <m>a \mid b-c</m>.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Write out the remainder classes for <m>n = 4</m>.
+</p>
+</statement>
+<answer>
+<p>
+<m>\{\ldots, -8, -4, 0, 4, 8, 12, \ldots\}</m>, <m>\{\ldots, -7, -3, 1, 5, 9, 13, \ldots\}</m>, <m>\{\ldots, -6, -2, 2, 6, 10, 14, \ldots\}</m>,
+</p>
+
+<p>
+and <m>\{\ldots, -5, -1, 3, 7, 11, 15, \ldots\}</m>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Let <m>a</m>, <m>b</m>, <m>c</m>, and <m>n</m> be integers. Prove that if <m>a \equiv b \pmod{n}</m> and <m>c \equiv d \pmod{n}</m>, then <m>a-c \equiv b-d \pmod{n}</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+Assume <m>a \equiv b \pmod n</m> and <m>c \equiv d \pmod n</m>. This means <m>a = b + kn</m> and <m>c = d + jn</m> for some integers <m>k</m> and <m>j</m>. Consider <m>a-c</m>. We have:
+<me>
+  a-c = b+kn - (d+jn) = b-d + (k-j)n.
+</me>
+</p>
+
+<p>
+In other words, <m>a-c</m> is <m>b-d</m> more than some multiple of <m>n</m>, so <m>a-c \equiv b-d \pmod n</m>.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Find the remainder of <m>3^{456}</m> when divided by
+</p>
+
+<ol>
+<li>2.</li>
+<li>5.</li>
+<li>7.</li>
+<li>9.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>3^{456} \equiv 1^{456} = 1 \pmod 2</m>.</li>
+<li><m>3^{456} = 9^{228} \equiv (-1)^{228} = 1 \pmod{5}</m>.</li>
+<li><m>3^{456} = 9^{228} \equiv 2^{228} = 8^{76} \equiv 1^{76} = 1 \pmod 7</m>.</li>
+<li><m>3^{456} = 9^{228} \equiv 0^{228} = 0 \pmod{9}</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Determine which of the following congruences have solutions, and find any solutions (between 0 and the modulus) by trial and error.
+</p>
+
+<ol>
+<li><m>4x \equiv 5 \pmod 6</m>.</li>
+<li><m>4x \equiv 5 \pmod 7</m>.</li>
+<li><m>6x \equiv 3 \pmod 9</m>.</li>
+<li><m>6x \equiv 4 \pmod 9</m>.</li>
+<li><m>x^2 \equiv 2 \pmod 4</m>.</li>
+<li><m>x^2 \equiv 2 \pmod 7</m>.</li>
+</ol>
+</statement>
+<answer>
+<p>
+For all of these, just plug in all integers between 0 and the modulus to see which, if any, work.
+</p>
+
+<ol>
+<li>No solutions.</li>
+<li><m>x = 3</m>.</li>
+<li><m>x = 2</m>, <m>x = 5</m>, <m>x = 8</m>.</li>
+<li>No solutions.</li>
+<li>No solutions.</li>
+<li><m>x = 3</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Solve the following congruences (describe the general solution).
+</p>
+
+<ol>
+<li><m>5x + 8 \equiv 11 \pmod{22}</m>.</li>
+<li><m>6x \equiv 4 \pmod{10}</m>.</li>
+<li><m>4x \equiv 24 \pmod{30}</m>.</li>
+<li><m>341x \equiv 2941 \pmod{9}</m>.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>x = 5+22k</m> for <m>k \in \Z</m>.</li>
+<li><m>x = 4 + 5k</m> for <m>k \in \Z</m>.</li>
+<li><m>x = 6 + 15k</m> for <m>k \in \Z</m>.</li>
+<li>Hint: first reduce each number modulo 9, which can be done by adding up the digits of the numbers.  Answer: <m>x = 2 + 9k</m> for <m>k \in \Z</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+I'm thinking of a number. If you multiply my number by 7, add 5, and divide the result by 11, you will be left with a remainder of 2. What remainder would you get if you divided my original number by 11?
+</p>
+</statement>
+<answer>
+<p>
+We must solve <m>7x + 5 \equiv 2 \pmod{11}</m>. This gives <m>x \equiv 9 \pmod{11}</m>. In general, <m>x = 9 + 11k</m>, but when you divide any such <m>x</m> by 11, the remainder will be 9.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Solve the following linear Diophantine equations, using modular arithmetic (describe the general solutions).
+</p>
+
+<ol>
+<li><m>6x + 10y = 32</m>.</li>
+<li><m>17x + 8y = 31</m>.</li>
+<li><m>35x + 47y = 1</m>.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>Divide through by 2: <m>3x + 5y = 16</m>.  Convert to a congruence, modulo 3: <m>5y \equiv 16 \pmod 3</m>, which reduces to <m>2y \equiv 1 \pmod 3</m>.  So <m>y \equiv 2 \pmod 3</m> or <m>y = 2 + 3k</m>.  Plug this back into <m>3x + 5y = 16</m> and solve for <m>x</m>, to get <m>x = 2-5k</m>.  So the general solution is <m>x = 2-5k</m> and <m>y = 2+3k</m> for <m>k \in \Z</m>.</li>
+<li><m>x = 7+8k</m> and <m>y = -11 - 17k</m> for <m>k \in \Z</m>.</li>
+<li><m>x = -4-47k</m> and <m>y = 3 + 35k</m> for <m>k \in \Z</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+You have a 13 oz. bottle and a 20 oz. bottle, with which you wish to measure exactly 2 oz. However, you have a limited supply of water. If any water enters either bottle and then gets dumped out, it is gone forever. What is the least amount of water you can start with and still complete the task?
+</p>
+<answer>
+<p>
+First, solve the Diophantine equation <m>13x + 20 y = 2</m>. The general solution is <m>x = -6 - 20k</m> and <m>y = 4+13k</m>. Now if <m>k = 0</m>, this correspond to filling the 20 oz. bottle 4 times, and emptying the 13 oz. bottle 6 times, which would require 80 oz. of water. Increasing <m>k</m> would require considerably more water. Perhaps <m>k = -1</m> would be better? Then we would have <m>x = -6+20 = 14</m> and <m>y = 4-13 = -11</m>, which describes the solution where we fill the 13 oz. bottle 14 times, and empty the 20 oz. bottle 11 times. This would require 182 oz. of water. Thus the most efficient procedure is to repeatedly fill the 20 oz bottle, emptying it into the 13 oz bottle, and discarding full 13 oz. bottles, which requires 80 oz. of water.
+</p>
+</answer>
+<p>
+\todo[inline]{Add homework problems?}
+</p>
+</statement>
+</exercise>
+
+</exercises>
+<p>
+\Closesolutionfile{\ansfilename}
+</p>
+</subsection>
+
+</section>

@@ -1,0 +1,577 @@
+<section xml:id="sec_propositional">
+<title>Propositional Logic</title>
+
+
+<introduction>
+<activity>
+<p>
+After excavating for weeks, you finally arrive at the burial chamber. The room is empty except for two large chests. On each is carved a message (strangely in English).
+</p>
+\tikz{
+    \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=2cm, minimum width=4.5cm, text width=4.5cm, align=center] { If this chest is empty, then the other chest's message is true.};
+}
+  
+\tikz{
+   \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=2cm, minimum width=4.5cm, text width=4.5cm, align=center] {
+         This chest is filled with treasure or the other chest contains deadly scorpions.
+        };
+}
+<p>
+You know exactly one of these messages is true. What should you do?
+</p>
+</activity>
+<p>
+A proposition<index><main>proposition</main></index> is simply a statement. Propositional logic studies the ways statements can interact with each other. It is important to remember that propositional logic does not really care about the content of the statements. For example, in terms of propositional logic, the claims, <q>if the moon is made of cheese then basketballs are round,</q> and <q>if spiders have eight legs then Sam walks with a limp</q> are exactly the same. They are both statements of the form, <q>if \textlangle something\textrangle, then \textlangle something else\textrangle.</q>
+</p>
+
+<p>
+Here's a question: is it true that when playing Monopoly, if you get more doubles than any other player you will lose, or that if you lose you must have bought the most properties? We will answer this question, and won't need to know anything about Monopoly. Instead we will look at the logical form of the statement. First though, let's back up and make sure we are very clear on some basics.
+</p>
+<convention>
+<title>Statements</title>
+<p>
+A <term>statement</term><index><main>statement</main></index> is any declarative sentence which is either true or false.
+</p>
+</convention>
+
+<example>
+<statement>
+<p>
+These are statements:
+</p>
+
+<ul>
+<li>Telephone numbers in the USA have 10 digits.</li>
+<li>The moon is made of cheese.</li>
+<li>42 is a perfect square.</li>
+<li>Every even number greater than 2 can be expressed as the sum of two primes.</li>
+</ul>
+
+<p>
+And these are not:
+</p>
+
+<ul>
+<li>Would you like some cake?</li>
+<li>The sum of two squares.</li>
+<li><m>1+3+5+7+\cdots+2n+1</m>.</li>
+<li>Go to your room!</li>
+<li>This sentence is false.\footnotemark</li>
+<li>That's what she said.</li>
+</ul>
+</statement>
+</example>
+<p>
+The reason the last sentence is not a statement is because it contains variables (<q>that</q> and <q>she</q>). Unless those are specified, the sentence cannot be true or false, and as such not a statement. Other examples of this: <m>x + 3 = 7</m>. Depending on <m>x</m>, this is either true or false, but as it stands it it neither.
+</p>
+
+<p>
+You can build more complicated statements out of simpler ones using <em>logical connectives</em><index><main>connectives</main></index>. For example, this is a statement:
+</p>
+<blockquote>
+Telephone numbers in the USA have 10 digits and 42 is a perfect square.
+</blockquote>
+<p>
+Note that we can break this down into two smaller statements. The two shorter statements are <em>connected</em> by an <q>and.</q> We will consider 5 connectives: <q>and</q> (Sam is a man and Chris is a woman), <q>or</q> (Sam is a man or Chris is a woman), <q>if<ellipsis /> then<ellipsis /></q> (if Sam is a man, then Chris is a woman), <q>if and only if</q> (Sam is a man if and only if Chris is a woman), and <q>not</q> (Sam is not a man).
+</p>
+
+<p>
+Since we rarely care about the content of the individual statements, we can replace them with variables. By convention, we use capital letters in the middle of the alphabet for these <em>propositional</em> (or <em>sentential</em>) variables: <m>\PQRS</m><index><main><m>\PQRS</m></main></index>. We also have symbols for the logical connectives: <m>\wedge</m>, <m>\vee</m>, <m>\imp</m>, <m>\iff</m>, <m>\neg</m>.
+</p>
+<convention>
+<title>Logical Connectives</title>
+<ul>
+<li><m>P \and Q</m> means  <m>P</m> and <m>Q</m>, called a <em>conjunction</em><index><main>conjunction</main></index><index><main>connectives</main><sub>and</sub></index>.</li>
+<li><m>P \or Q</m> means <m>P</m> or <m>Q</m>, called a <em>disjunction</em><index><main>disjunction</main></index><index><main>connectives</main><sub>or</sub></index>.</li>
+<li><m>P \imp Q</m> means if <m>P</m> then <m>Q</m>, called an <em>implication</em> or <em>conditional</em><index><main>implication</main></index><index><main>conditional</main></index><index><main>connectives</main><sub>implies</sub></index><index><main>if<ellipsis /> then</main></index>.</li>
+<li><m>P \iff Q</m> means <m>P</m> if and only if <m>Q</m>, called a <em>biconditional</em><index><main>biconditional</main></index><index><main>connectives</main><sub>if and only if</sub></index><index><main>if and only if</main></index>.</li>
+<li><m>\not P</m> means not <m>P</m>, called a <em>negation</em><index><main>negation</main></index><index><main>connectives</main><sub>not</sub></index>.</li>
+</ul>
+</convention>
+<p>
+The logical connectives allow us to construct longer statements out of simpler statements. But the result is still a statement since it is either true or false. The <em>truth value</em><index><main>truth value</main></index> can be determined by the truth or falsity of the parts, depending on the connectives.
+</p>
+<convention>
+<title>Truth Conditions for Connectives</title>
+<ul>
+<li><m>P \wedge Q</m> is true when both <m>P</m> and <m>Q</m> are true</li>
+<li><m>P \vee Q</m> is true when <m>P</m> or <m>Q</m> or both are true.</li>
+<li><m>P \imp Q</m> is true when <m>P</m> is false or <m>Q</m> is true or both.</li>
+<li><m>P \iff Q</m> is true when <m>P</m> and <m>Q</m> are both true, or both false.</li>
+<li><m>\neg P</m> is true when <m>P</m> is false.</li>
+</ul>
+</convention>
+<p>
+These should be what you would expect, except perhaps for <m>P \imp Q</m>. Consider the statement, <q>if Bob gets a 90 on the final, then Bob will pass the class.</q> This is definitely an implication: <m>P</m> is the statement, <q>Bob gets a 90 on the final,</q> and <m>Q</m> is the statement, <q>Bob will pass the class.</q> Suppose I made that statement to Bob. In what circumstances would it be fair to call me a liar? What if Bob really did get a 90 on the final, and he did pass the class? Then I have not lied; my statement is true. But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false. The tricky case is this: what if Bob did not get a 90 on the final? Maybe he passes the class, maybe he doesn't. Did I lie in either case? I think not. In these last two cases, <m>P</m> was false, and the statement <m>P \imp Q</m> was true. In the first case, <m>Q</m> was true, and so was <m>P \imp Q</m>. So <m>P \imp Q</m> is true when either <m>P</m> is false or <m>Q</m> is true.
+</p>
+
+<p>
+Perhaps an easier way to look at it is this: <m>P \imp Q</m>
+is <em>false</em> in only one case: if <m>P</m> is true and <m>Q</m> is false. Otherwise, <m>P \imp Q</m> is true. Admittedly, there are times in English when this is not how <q>if<ellipsis />, then<ellipsis /></q> works. However, in mathematics, we <em>define</em> the implication to work this way.
+</p>
+</introduction>
+
+
+<subsection>
+<title>Truth Tables</title>
+<p>
+<index><main>truth table</main></index>
+</p>
+
+<p>
+Our earlier question about Monopoly is to determine whether the following statement is true:
+</p>
+<blockquote>
+If you get more doubles than any other player then you will lose, or if you lose then you must have bought the most properties.
+</blockquote>
+<p>
+In other words, we need to decide when the statement <m>(P \imp Q) \vee (Q \imp R)</m> is true. Using the rules above, we see that for this to be true, either <m>P \imp Q</m> must be true or <m>Q \imp R</m> must be true (or both). Those are true if either <m>P</m> is false or <m>Q</m> is true (in the first case) and <m>Q</m> is false or <m>R</m> is true (in the second case). So<mdash />yeah, it gets kind of messy. Luckily, we can make a chart to keep track of all the possibilities. Enter truth tables. The idea is this: on each row, we list a possible combination of T's and F's (for true and false) for each of the sentential variables, and then mark down whether the statement in question is true or false in that case. We do this for every possible combination of T's and F's. Then we can clearly see in which cases the statement is true or false. For complicated statements, we will first fill in values for each part of the statement, as a way of breaking up our task into smaller, more manageable pieces.
+</p>
+
+<p>
+All you really need to know is the truth tables for each of the logical connectives. Here they are:
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>P\wedge Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>F</cell></row>
+</tabular>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>P\vee Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>F</cell></row>
+</tabular>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>P\imp Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell></row>
+</tabular>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>P\iff Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell></row>
+</tabular>
+<p>
+The truth table for negation looks like this:
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>\neg P</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell></row>
+<row><cell></cell></row>
+</tabular>
+<p>
+None of these truth tables should come as a surprise; they are all just restating the definitions of the connectives. Let's try another one.
+</p>
+<example>
+<statement>
+<p>
+Make a truth table for the statement <m>\neg P \vee Q</m>.
+</p>
+</statement>
+<solution>
+<p>
+Note that this statement is not <m>\neg(P \vee Q)</m>, the negation belongs to <m>P</m> alone. Here is the truth table:
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>\neg P</m></cell><cell><m>\neg P \vee Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell><cell>T</cell></row>
+</tabular>
+<p>
+We added a column for <m>\neg P</m> to make filling out the last column easier. The entries in the <m>\neg P</m> column were determined by the entries in the <m>P</m> column. Then to fill in the final column, look only at the column for <m>Q</m> and the column for <m>\neg P</m> and use the rule for <m>\vee</m>.
+</p>
+</solution>
+</example>
+<p>
+You might notice that the final column is identical to the final column in the truth table for <m>P \imp Q</m>. Since we listed the possible values for <m>P</m> and <m>Q</m> in the same (in fact, standard) order, this says that <m>\neg P \vee Q</m> and <m>P \imp Q</m> are <em>logically equivalent</em>.
+</p>
+<convention>
+<title>Logical Equivalence</title>
+<p>
+Two (compound) statements <m>P</m> and <m>Q</m> are <term>logically equivalent</term><index><main>logical equivalence</main></index> provided <m>P</m> is true precisely when <m>Q</m> is true.
+</p>
+
+<p>
+To verify that two statements are logically equivalent, you can make a truth table for each and check whether the columns for the two statements are identical.
+</p>
+</convention>
+<p>
+Now let's answer our question about monopoly:
+</p>
+<example>
+<statement>
+<p>
+Analyze the statement, <q>if you get more doubles than any other player you will lose, or that if you lose you must have bought the most properties,</q> using truth tables.
+</p>
+</statement>
+<solution>
+<p>
+Represent the statement in symbols as <m>(P \imp Q) \vee (Q \imp R)</m>, where <m>P</m> is the statement <q>you get more doubles than any other player,</q> <m>Q</m> is the statement <q>you will lose,</q> and <m>R</m> is the statement <q>you must have bought the most properties.</q> Now make a truth table.
+</p>
+
+<p>
+The truth table needs to contain 8 rows in order to account for every possible combination of truth and falsity among the three statements. Here is the full truth table:
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>R</m></cell><cell><m>P \imp Q</m></cell><cell><m>Q \imp R</m></cell><cell><m>(P \imp Q) \vee (Q \imp R)</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell><cell>F</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+</tabular>
+<p>
+The first three columns are simply a systematic listing of all possible combinations of T and F for the three statements (do you see how you would list the 16 possible combinations for four statements?). The next two columns are determined by the values of <m>P</m>, <m>Q</m>, and <m>R</m> and the definition of implication. Then, the last column is determined by the values in the previous two columns and the definition of <m>\vee</m>. It is this final column we care about.
+</p>
+
+<p>
+Notice that in each of the eight possible cases, the statement in question is true. So our statement about monopoly is true (regardless of how many properties you own, how many doubles you roll, or whether you win or lose).
+</p>
+</solution>
+</example>
+<p>
+The statement about monopoly is an example of a <em>tautology</em><index><main>tautology</main></index>, a statement which is true on the basis of its logical form alone. Tautologies are always true but they don't tell us much about the world. No knowledge about monopoly was required to determine that the statement was true. In fact, it is equally true that <q>If the moon is made of cheese, then Elvis is still alive, or if Elvis is still alive, then unicorns have 5 legs.</q>
+</p>
+</subsection>
+
+
+<subsection>
+<title>Deductions</title>
+<activity>
+<p>
+Holmes owns two suits: one blue and one brown. He always wears either a blue suit or white socks. Whenever he wears his blue suit and a blue shirt, he also wears a blue tie. He never wears the blue suit unless he is also wearing either a blue shirt or white socks. Whenever he wears white socks, he also wears a blue shirt. Today, Holmes is wearing a gold tie. What else is he wearing?\footnotemark
+</p>
+</activity>
+<p>
+Earlier we claimed that the following was a valid argument:
+</p>
+<blockquote>
+If Edith eats her vegetables, then she can have a cookie.  Edith ate her vegetables.  Therefore Edith gets a cookie.
+</blockquote>
+<p>
+How do we know this is valid? Let's look at the form of the statements. Let <m>P</m> denote <q>Edith eats her vegetables</q> and <m>Q</m> denote <q>Edith can have a cookie.</q> The logical form of the argument is then:
+</p>
+<tabular>
+<row><cell></cell><cell><m>P \imp Q</m></cell></row>
+<row><cell></cell><cell><m>P</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell><m>\therefore</m></cell><cell><m>Q</m></cell></row>
+</tabular>
+<p>
+This is an example of a <em>deduction rule</em><index><main>deduction rule</main></index>, an argument form which is always valid. This one is a particularly famous rule called <em>modus ponens</em>}<index><main></main></index>modus ponens@<em>modus ponens</em>. Are you convinced that it is a valid deduction rule? If not, consider the following truth table:
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>P\imp Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell></row>
+</tabular>
+<p>
+This is just the truth table for <m>P \imp Q</m>, but what matters here is that all the lines in the deduction rule have their own column in the truth table. Remember that an argument is valid provided the conclusion must be true given that the premises are true. The premises in this case are <m>P \imp Q</m> and <m>P</m>. Which <em>rows</em> of the truth table correspond to both of these being true? <m>P</m> is true in the first two rows, and of those, only the first row has <m>P \imp Q</m> true as well. And low-and-behold, in this one case, <m>Q</m> is also true. So if <m>P\imp Q</m> and <m>P</m> are both true, we see that <m>Q</m> must be true as well.
+</p>
+
+<p>
+Here are a few more examples.
+</p>
+<example>
+<statement>
+<p>
+Show that
+</p>
+<tabular>
+<row><cell></cell><cell><m>P \imp Q</m></cell></row>
+<row><cell></cell><cell><m>\neg P \imp Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell><m>\therefore</m></cell><cell><m>Q</m></cell></row>
+</tabular>
+<p>
+is a valid deduction rule.
+</p>
+</statement>
+<solution>
+<p>
+We make a truth table which contains all the lines of the argument form:
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>P\imp Q</m></cell><cell><m>\neg P</m></cell><cell><m>\neg P \imp Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>F</cell></row>
+</tabular>
+<p>
+(we include a column for <m>\neg P</m> just as a step to help getting the column for <m>\neg P \imp Q</m>).
+</p>
+
+<p>
+Now look at all the rows for which both <m>P \imp Q</m> and <m>\neg P \imp Q</m> are true. This happens only in rows 1 and 3. Hey! In those rows <m>Q</m> is true as well, so the argument form is valid (it is a valid deduction rule).
+</p>
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Decide whether
+</p>
+<tabular>
+<row><cell></cell><cell><m>(P \imp R) \vee (Q \imp R)</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell><m>\therefore</m></cell><cell><m>(P \vee Q) \imp R</m></cell></row>
+</tabular>
+<p>
+is a valid deduction rule.
+</p>
+</statement>
+<solution>
+<p>
+Let's make a truth table containing both statements.
+</p>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>R</m></cell><cell><m>P\vee Q</m></cell><cell><m>P \imp R</m></cell><cell><m>Q \imp R</m></cell><cell><m>(P\vee Q) \imp R</m></cell><cell><m>(P\imp R) \vee (Q \imp R)</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>F</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>F</cell><cell>F</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>F</cell><cell>F</cell><cell>T</cell><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell></cell></row>
+</tabular>
+<p>
+Look at the fourth row. In this case, <m>(P \imp R) \vee (Q \imp R)</m> is true, but <m>(P \vee Q) \imp R</m> is false. Therefore the argument form is not valid (it is not a valid deduction rule). The truth table tells us more: our premise is true when <m>P</m> is true and <m>Q</m> and <m>R</m> are both false, but the conclusion is false in this case. The same problem occurs when <m>Q</m> is true and <m>P</m> and <m>R</m> are false (row 6).
+</p>
+
+<p>
+Notice that if we switch the premise and conclusion, then we do have a valid argument. Whenever <m>(P\vee Q) \imp R</m> is true, so is <m>(P \imp R) \vee (Q \imp R)</m>. Another way to say this is to state that the statement
+<me>
+  [(P \vee Q) \imp R] \imp [(P \imp R) \vee (Q \imp R)]
+</me>
+is a tautology.
+</p>
+</solution>
+</example>
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Consider the statement about a party, <q>If it's your birthday or there will be cake, then there will be cake.</q>
+</p>
+
+<ol>
+<li>Translate the above statement into symbols.  Clearly state which statement is <m>P</m> and which is <m>Q</m>.</li>
+<li>Make a truth table for the statement.</li>
+<li>Assuming the statement is true, what (if anything) can you conclude if there will be cake?</li>
+<li>Assuming the statement is true, what (if anything) can you conclude if there will not be cake?</li>
+<li>Suppose you found out that the statement was a lie.  What can you conclude?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>P</m>: it's your birthday; <m>Q</m>: there will be cake.  <m>(P \vee Q) \imp Q</m></li>
+<li>Hint: you should get three T's and one F.</li>
+<li>Only that there will be cake.</li>
+<li>It's NOT your birthday!</li>
+<li>It's your birthday, but the cake is a lie.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose <m>P</m> and <m>Q</m> are the statements:
+<m>P</m>: Jack passed math.
+<m>Q</m>: Jill passed math.
+</p>
+
+<ol>
+<li>Translate <q>Jack and Jill both passed math</q> into symbols.</li>
+<li>Translate <q>If Jack passed math, then Jill did not</q> into symbols.</li>
+<li>Translate <q><m>P \vee Q</m></q> into English.</li>
+<li>Translate <q><m>\neg(P \wedge Q) \imp Q</m></q> into English.</li>
+<li>Suppose you know that if Jack passed math, then so did Jill.  What can you conclude if you know that:
+\begin{subparts}
+ \subpart Jill passed math?  
+\subpart  Jill did not pass math?
+\end{subparts}</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>P \wedge Q</m>.</li>
+<li><m>P \imp \neg Q</m>.</li>
+<li>Jack passed math or Jill passed math (or both).</li>
+<li>If Jack and Jill did not both pass math, then Jill did.</li>
+<li>\begin{subparts}
+	  \subpart Nothing else. 
+	  \subpart  Jack did not pass math either.
+	\end{subparts}</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Geoff Poshingten is out at a fancy pizza joint, and decides to order a calzone. When the waiter asks what he would like in it, he replies, <q>I want either pepperoni or sausage, and if I have sausage, I must also include quail. Oh, and if I have pepperoni or quail then I must also have ricotta cheese.</q>
+</p>
+
+<ol>
+<li>Translate Geoff's order into logical symbols.</li>
+<li>The waiter knows that Geoff is either a liar or a truth-teller (so either everything he says is false, or everything is true).  Which is it?</li>
+<li>What, if anything, can the waiter conclude about the ingredients in Geoff's desired calzone?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>Three statements: <m>P \vee S</m>, <m>S \imp Q</m>, <m>(P \vee Q) \imp R</m>.  You could also connect the first two with a <m>\wedge</m>.</li>
+<li>He cannot be lying about all three sentences, so he is telling the truth.</li>
+<li>No matter what, Geoff wants ricotta.  If he doesn't have quail, then he must have pepperoni but not sausage.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Make a truth table for the statement <m>(P \vee Q) \imp (P \wedge Q)</m>.
+</p>
+</statement>
+<answer>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>(P \vee Q) \imp (P \wedge Q)</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>T</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell></row>
+</tabular>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Make a truth table for the statement <m>\neg P \wedge (Q \imp P)</m>. What can you conclude about <m>P</m> and <m>Q</m> if you know the statement is true?
+</p>
+</statement>
+<answer>
+<tabular>
+<row><cell><m>P</m></cell><cell><m>Q</m></cell><cell><m>\neg P \wedge (Q \imp P)</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell></row>
+<row><cell>T</cell><cell>T</cell><cell>F</cell></row>
+<row><cell>T</cell><cell>F</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>T</cell><cell>F</cell></row>
+<row><cell>F</cell><cell>F</cell><cell>T</cell></row>
+</tabular>
+<p>
+If the statement is true, then both <m>P</m> and <m>Q</m> are false.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Make a truth table for the statement <m>\neg P \imp (Q \wedge R)</m>.
+</p>
+</statement>
+<answer>
+<p>
+Hint: Like above, only now you will need 8 rows instead of just 4.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Determine if the following deduction rule is valid:
+</p>
+<tabular>
+<row><cell></cell><cell><m>P \vee Q</m></cell></row>
+<row><cell></cell><cell><m>\neg P</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell><m>\therefore</m></cell><cell><m>Q</m></cell></row>
+</tabular>
+</statement>
+<answer>
+<p>
+The rule is valid. To see this, make a truth table which contains <m>P \vee Q</m> and <m>\neg P</m> (and <m>P</m> and <m>Q</m> of course). Look at the truth value of <m>Q</m> in each of the rows that have <m>P \vee Q</m> and <m>\neg P</m> true.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Determine if the following is a valid deduction rule:
+</p>
+<tabular>
+<row><cell></cell><cell><m>P \imp (Q \vee R)</m></cell></row>
+<row><cell></cell><cell><m>\neg(P \imp Q)</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell><m>\therefore</m></cell><cell><m>R</m></cell></row>
+</tabular>
+</statement>
+<answer>
+<p>
+The deduction rule is valid. Again, make a truth table containing the premises and conclusion. Look at the rows for which the premises are true.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Determine if the following is a valid deduction rule:
+</p>
+<tabular>
+<row><cell></cell><cell><m>(P \wedge Q) \imp R</m></cell></row>
+<row><cell></cell><cell><m>\neg P \vee \neg Q</m></cell></row>
+<row bottom="minor"><cell></cell><cell></cell></row>
+<row><cell><m>\therefore</m></cell><cell><m>\neg R</m></cell></row>
+</tabular>
+</statement>
+<answer>
+<p>
+The rule is NOT valid. If you make a truth table containing the premises and conclusion, there will be a row with both premises true but the conclusion false. For example, if <m>P</m> and <m>Q</m> are false and <m>R</m> is true, then <m>P \wedge Q</m> is false, so <m>(P \wedge Q) \imp R</m> is true. Also <m>\neg P</m> is true, so <m>\neg P \vee \neg Q</m> is true. However, <m>\neg R</m> is false.
+</p>
+</answer>
+</exercise>
+
+</exercises>
+</subsection>
+
+</section>

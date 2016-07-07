@@ -1,0 +1,237 @@
+<section xml:id="sec_paths">
+<title>Euler Paths and Circuits</title>
+
+
+<introduction>
+<activity>
+<p>
+An Euler path, in a graph or multigraph, is a path which uses every edge exactly once. An Euler circuit is an Euler path which starts and stops at the same vertex. Our goal is to find a quick way to check whether a graph (or multigraph) has an Euler path or circuit.
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Which of the graphs below have Euler paths? Which have Euler circuits?
+</p>
+<image width="73%" source="images/088663b2f6fd8eb3c8202d73179f9b69fd674c49.png" /> 
+
+
+ <image width="73%" source="images/6c12f257640a2b7c148a696d4a5122d86ff3c43c.png" /> 
+
+
+ <image width="73%" source="images/873fe330e5570a7414fff40b5d9664a257600f68.png" /> 
+
+
+<image width="73%" source="images/717cd16e607d9b2d354f3bfef2eb414e625c6bde.png" />
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+List the degrees of each vertex of the graphs above. Is there a connection between degrees and the existence of Euler paths and circuits?
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Is it possible for a graph with a degree 1 vertex to have an Euler circuit? If so, draw one. If not, explain why not. What about an Euler path?
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+What if every vertex of the graph has degree 2. Is there an Euler path? An Euler circuit? Draw some graphs.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Below is <em>part</em> of a graph. Even though you can only see some of the vertices, can you deduce whether the graph will have an Euler path or circuit?
+</p>
+<image width="73%" source="images/18a4062f412b9da03c6eef35662b12f1a0d07402.png" />
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+If we start at a vertex and trace along edges to get to other vertices, we create a <em>path</em> on the graph. If the path travels along every edge exactly once, then the path is called an <em>Euler path</em> (or <em>Eulerian path</em>). If, in addition, the starting and ending vertices are the same (so you trace along every edge exactly once and end up where you started), then the path is called an <em>Euler circuit</em>. Of course if a graph is not connected, there is no hope of finding such a path or circuit. For the rest of this section, assume all the graphs discussed are connected.
+</p>
+
+<p>
+The bridges of K&#xf6;nigsberg problem is really a question about the existence of Euler paths. There will be a route that crosses every bridge exactly once if and only if the graph below has an Euler path:
+</p>
+
+<p>
+<image width="73%" source="images/ebc6e4a10378d8fb78ff83601f348bbe8f653d9b.png" />
+</p>
+
+<p>
+This graph is small enough that we could actually check every possible path and in doing so convince ourselves that there is no Euler path (let alone an Euler circuit). On small graphs which do have an Euler path, it is usually not difficult to find one. Our goal is to find a quick way to check whether a graph has an Euler path or circuit, even if the graph is quite large.
+</p>
+
+<p>
+One way to guarantee that a graph does <em>not</em> have an Euler circuit is to include a <q>spike,</q> a vertex of degree 1.
+</p>
+<image width="73%" source="images/23fff0a5b5890d2ab6115fd19823d0c44991b1bd.png" />
+<p>
+The vertex <m>a</m> has degree 1, and if you try to make an Euler circuit, you see that you will get stuck at the vertex. It is a dead end. That is, unless you start there. But then there is no way to return, so there is no hope of finding an Euler circuit. There is however an Euler path. It starts at the vertex <m>a</m>, then loops around the triangle. You will end at the vertex of degree 3.
+</p>
+
+<p>
+You run into a similar problem whenever you have a vertex of any odd degree. If you start at such a vertex, you will not be able to end there (after traversing every edge exactly once). After using one edge to leave the starting vertex, you will be left with an even number of edges emanating from the vertex. Half of these could be used for returning to the vertex, the other half for leaving. So you return, then leave. Return, then leave. The only way to use up all the edges is to use the last one by leaving the vertex. On the other hand, if you have a vertex with odd degree that you do not start a path at, then you will eventually get stuck at that vertex. The path will use pairs of edges incident to the vertex to arrive and leave again. Eventually all but one of these edges will be used up, leaving only an edge to arrive by, and none to leave again.
+</p>
+
+<p>
+What all this says is that if a graph has an Euler path and two vertices with odd degree, then the Euler path must start at one of the odd degree vertices and end at the other. In such a situation, every other vertex <em>must</em> have an even degree since we need an equal number of edges to get to those vertices as to leave them. How could we have an Euler circuit? The graph could not have any odd degree vertex as an Euler path would have to start there or end there, but not both. Thus for a graph to have an Euler circuit, all vertices must have even degree.
+</p>
+
+<p>
+The converse is also true: if all the vertices of a graph have even degree, then the graph has an Euler circuit, and if there are exactly two vertices with odd degree, the graph has an Euler path. To prove this is a little tricky, but the basic idea is that you will never get stuck because there is an <q>outbound</q> edge for every <q>inbound</q> edge at every vertex. If you try to make an Euler path and miss some edges, you will always be able to <q>splice in</q> a circuit using the edges you previously missed.
+</p>
+<convention>
+<title>Euler Paths and Circuits</title>
+<ul>
+<li>A graph has an Euler circuit if and only if the degree of every vertex is even.</li>
+<li>A graph has an Euler path if and only if there are at most two vertices with odd degree.</li>
+</ul>
+</convention>
+<p>
+Since the bridges of K&#xf6;nigsberg graph has all four vertices with odd degree, there is no Euler path through the graph.
+</p>
+</introduction>
+
+
+<subsection>
+<title>Hamilton Paths</title>
+<p>
+Suppose you wanted to tour K&#xf6;nigsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a <em>Hamilton path</em> (or Hamiltonian path)<index><main>Hamilton path</main></index>. It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete<index><main>NP-complete</main></index>.
+	\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+You and your friends want to tour the southwest by car. You will visit the nine states below, with the following rather odd rule: you must cross each border between neighboring states exactly once (so, for example, you must cross the Colorado-Utah border exactly once). Can you do it? If so, does it matter where you start your road trip? What fact about graph theory solves this problem?
+</p>
+\tikz[scale=.2]{
+\USA[every state={draw=white, line width = .7pt, fill=black!10}, CA={fill=gray}, NV={fill=gray},NM={fill=gray},AZ={fill=gray},UT={fill=gray},CO={fill=gray},TX={fill=gray},KS={fill=gray},OK={fill=gray}]
+}
+</statement>
+<answer>
+<p>
+This is a question about finding Euler paths. Draw a graph with a vertex in each state, and connect vertices if their states share a border. Exactly two vertices will have odd degree: the vertices for Nevada and Utah. Thus you must start your road trip at in one of those states and end it in the other.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Which of the following graphs contain an Euler path? Which contain an Euler circuit?
+</p>
+
+<ol>
+<li><m>K_4</m></li>
+<li><m>K_5</m>.</li>
+<li><m>K_{5,7}</m></li>
+<li><m>K_{2,7}</m></li>
+<li><m>C_7</m></li>
+<li><m>P_7</m></li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>K_4</m> does not have an Euler path or circuit.</li>
+<li><m>K_5</m> has an Euler circuit (so also an Euler path).</li>
+<li><m>K_{5,7}</m> does not have an Euler path or circuit.</li>
+<li><m>K_{2,7}</m> has an Euler path but not an Euler circuit.</li>
+<li><m>C_7</m> has an Euler circuit (it is a circuit graph!)</li>
+<li><m>P_7</m> has an Euler path but no Euler circuit.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+For which <m>n</m> does the graph <m>K_n</m> contain an Euler circuit? Explain.
+</p>
+</statement>
+<answer>
+<p>
+When <m>n</m> is odd, <m>K_n</m> contains an Euler circuit. This is because every vertex has degree <m>n-1</m>, so an odd <m>n</m> results in all degrees being even.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+For which <m>m</m> and <m>n</m> does the graph <m>K_{m,n}</m> contain an Euler path? An Euler circuit? Explain.
+</p>
+</statement>
+<answer>
+<p>
+If both <m>m</m> and <m>n</m> are even, then <m>K_{m,n}</m> has an Euler circuit. When both are odd, there is no Euler path or circuit. If one is 2 and the other is odd, then there is an Euler path but not an Euler circuit.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+A bridge builder has come to K&#xf6;nigsberg and would like to add bridges so that it <em>is</em> possible to travel over every bridge exactly once. How many bridges must be built?
+</p>
+</statement>
+<answer>
+<p>
+If we build one bridge, we can have an Euler path. Two bridges must be built for an Euler circuit.
+</p>
+<image width="73%" source="images/baf121dafc0cad7e516196ed1559e71925b73cef.png" /> </answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Below is a graph representing friendships between a group of students (each vertex is a student and each edge is a friendship). Is it possible for the students to sit around a round table in such a way that every student sits between two friends? What does this question have to do with paths?
+</p>
+\tikz{
+	\foreach \x in {1,...,9}{
+	\coordinate (v\x) at (90-\x*360/9:1.5);
+	\draw (v\x) \v;
+	}
+	\draw (v1) <ndash /> (v6) <ndash /> (v3) <ndash /> (v8) <ndash /> (v4) <ndash /> (v7) <ndash /> (v2) <ndash /> (v5) <ndash /> (v9) <ndash /> (v1);
+	\draw (v1) <ndash /> (v3) <ndash /> (v5) (v4) <ndash /> (v5) (v4) <ndash /> (v7) <ndash /> (v6) <ndash /> (v9) (v3) <ndash /> (v7) (v9) <ndash /> (v3);
+}
+</statement>
+<answer>
+<p>
+We are looking for a Hamiltonian cycle, and this graph does have one:
+</p>
+\tikz{
+			\foreach \x in {1,...,9}{
+			\coordinate (v\x) at (90-\x*360/9:1.5);
+			}			
+			\draw[color=gray] (v1) <ndash /> (v3) <ndash /> (v5) (v4) <ndash /> (v5) (v4) <ndash /> (v7) <ndash /> (v6) <ndash /> (v9) (v3) <ndash /> (v7) (v9) <ndash /> (v3);
+			\draw[line width=1.2pt, color=blue] (v1) <ndash /> (v6) <ndash /> (v3) <ndash /> (v8) (v8) <ndash /> (v4) (v4) <ndash /> (v7) <ndash /> (v2) <ndash /> (v5) <ndash /> (v9) <ndash /> (v1);
+			\foreach \x in {1,...,9}{
+			\draw (v\x) \v;
+			}
+		} </answer>
+</exercise>
+
+</exercises>
+</subsection>
+
+</section>

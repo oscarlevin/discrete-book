@@ -1,0 +1,355 @@
+<section xml:id="sec_advPIE">
+<title>Advanced Counting Using PIE</title>
+
+
+<introduction>
+<activity> 
+<exercises>
+
+<exercise>
+<statement>
+<p>
+You have 11 identical mini key-lime pies to give to 4 children. However, you don't want any kid to get more than 3 pies. How many ways can you distribute the pies?
+</p>
+
+<ol>
+<li>How many ways are there to distribute the pies without any restriction?</li>
+<li>Let's get rid of the ways that one or more kid gets too many pies.  How many ways are there to distribute the pies if Al gets too many pies?  What if Bruce gets too many?  Or Cat?  Or Dent?</li>
+<li>What if two kids get too many pies?  How many ways can this happen?  Does it matter which two kids you pick to overfeed?</li>
+<li>Is it possible that three kids get too many pies?  If so, how many ways can this happen?</li>
+<li>How should you combine all the numbers you found above to answer the original question?</li>
+</ol>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose now you have 13 pies and 7 children. No child can have more than 2 pies. How many ways can you distribute the pies?
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+Stars and bars allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to <m>x+y+z = 11</m>, for example. A relatively easy modification allows us to put a <em>lower bound</em> restriction on these problems: perhaps each kid must get at least two cookies or <m>x,y,z \ge 2</m>. This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using stars and bars.
+</p>
+
+<p>
+What if we wanted an <em>upper bound</em> restriction? For example, we might insist that no kid gets more than 4 cookies or that <m>x, y, z \le 4</m>. It turns out this is considerably harder, but still possible. The idea is to count all the distributions and then remove those that violate the condition. In other words, we must count the number of ways to distribute 11 cookies to 3 kids in which <em>one or more</em> of the kids gets more than 4 cookies. For any particular kid, this is not a problem; we do this using stars and bars. But how to combine the number of ways for kid A, or B or C? We must use the PIE.
+</p>
+
+<p>
+The Principle of Inclusion/Exclusion (PIE) gives a method for finding the cardinality of the union of not necessarily disjoint sets. We saw in \Cref{sec:PIE} how this works with three sets. To find how many things are in <em>one or more</em> of the sets <m>A</m>, <m>B</m>, and <m>C</m>, we should just add up the number of things in each of these sets. However, if there is any overlap among the sets, those elements are counted multiple times. So we subtract the things in each intersection of a pair of sets. But doing this removes elements which are in all three sets once too often, so we need to add it back in. In terms of cardinality of sets, we have
+<me>
+  |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A\cap B \cap C|.
+</me>
+</p>
+<example>
+<statement>
+<p>
+Three kids, Alberto, Bernadette, and Carlos, decide to share 11 cookies. They wonder how many ways they could split the cookies up provided that none of them receive more than 4 cookies (someone receiving no cookies is for some reason acceptable to these kids).
+</p>
+</statement>
+<solution>
+<p>
+Without the <q>no more than 4</q> restriction, the answer would be <m>{13 \choose 2}</m>, using 11 stars and 2 bars (separating the three kids). Now count the number of ways that one or more of the kids violates the condition, i.e., gets at least 4 cookies.
+</p>
+
+<p>
+Let <m>A</m> be the set of outcomes in which Alberto gets more than 4 cookies. Let <m>B</m> be the set of outcomes in which Bernadette gets more than 4 cookies. Let <m>C</m> be the set of outcomes in which Carlos gets more than 4 cookies. We then are looking (for the sake of subtraction) for the size of the set <m>A \cup B \cup C</m>. Using PIE, we must find the sizes of <m>|A|</m>, <m>|B|</m>, <m>|C|</m>, <m>|A\cap B|</m> and so on. Here is what we find.
+</p>
+
+<ul>
+<li class="custom-list-style-type" label="" ><m>|A| = {8 \choose 2}</m>.  First give Alberto 5 cookies, then distribute the remaining 6 to the three kids without restrictions, using 6 stars and 2 bars.</li>
+<li class="custom-list-style-type" label="" ><m>|B| = {8 \choose 2}</m>.  Just like above, only now Bernadette gets 5 cookies at the start.</li>
+<li class="custom-list-style-type" label="" ><m>|C| = {8 \choose 2}</m>.  Carlos gets 5 cookies first.</li>
+<li class="custom-list-style-type" label="" ><m>|A \cap B| = {3 \choose 2}</m>.  Give Alberto and Bernadette 5 cookies each, leaving 1 (star) to distribute to the three kids (2 bars).</li>
+<li class="custom-list-style-type" label="" ><m>|A \cap C| = {3 \choose 2}</m>.  Alberto and Carlos get 5 cookies first.</li>
+<li class="custom-list-style-type" label="" ><m>|B \cap C| = {3 \choose 2}</m>.  Bernadette and Carlos get 5 cookies first.</li>
+<li class="custom-list-style-type" label="" ><m>|A \cap B \cap C| = 0</m>.  It is not possible for all three kids to get 4 or more cookies.</li>
+</ul>
+
+<p>
+Combining all of these we see
+<me>
+  |A \cup B \cup C| = {8 \choose 2} + {8 \choose 2} + {8 \choose 2} - {3 \choose 2} - {3 \choose 2} - {3 \choose 2} + 0 = 75.
+</me>
+</p>
+
+<p>
+Thus the answer to the original question is <m>{13 \choose 2} - 75 = 78 - 75 = 3</m>. This makes sense now that we see it. The only way to ensure that no kid gets more than 4 cookies is to give two kids 4 cookies and one kid 3; there are three choices for which kid that should be. We could have found the answer much quicker through this observation, but the point of the example is to illustrate that PIE works!
+</p>
+</solution>
+</example>
+<p>
+For four or more sets, we do not write down a formula for PIE. Instead, we just think of the principle: add up all the elements in single sets, then subtract out things you counted twice (elements in the intersection of a <em>pair</em> of sets), then add back in elements you removed too often (elements in the intersection of groups of three sets), then take back out elements you added back in too often (elements in the intersection of groups of four sets), then add back in, take back out, add back in, etc. This would be very difficult if it wasn't for the fact that in these problems, all the cardinalities of the single sets are equal, as are all the cardinalities of the intersections of two sets, and that of three sets, and so on. Thus we can group all of these together and multiply by how many different combinations of 1, 2, 3,<ellipsis /> sets there are.
+</p>
+<example>
+<statement>
+<p>
+How many ways can you distribute 10 cookies to 4 kids so that no kid gets more than 2 cookies?
+</p>
+</statement>
+<solution>
+<p>
+To answer this, we will subtract all the outcomes in which a kid gets 3 or more cookies. How many outcomes are there like that? We can force kid A to eat 3 or more cookies by giving him 3 cookies before we start. Doing so reduces the problem to one in which we have 7 cookies to give to 4 kids without any restrictions. In that case, we have 7 stars (the 7 remaining cookies) and 3 bars (one less than the number of kids) so we can distribute the cookies in <m>{10 \choose 3}</m> ways. Of course we could choose any one of the 4 kids to give too many cookies, so it would appear that there are <m>{4 \choose 1}{10 \choose 3}</m> ways to distribute the cookies giving too many to one kid. But in fact, we have over counted.
+</p>
+
+<p>
+We must get rid of the outcomes in which two kids have too many cookies. There are <m>{4 \choose 2}</m> ways to select 2 kids to give extra cookies. It takes 6 cookies to do this, leaving only 4 cookies. So we have 4 stars and still 3 bars. The remaining 4 cookies can thus be distributed in <m>{7 \choose 3}</m> ways (for each of the <m>{4 \choose 2}</m> choices of which 2 kids to over-feed).
+</p>
+
+<p>
+But now we have removed too much. We must add back in all the ways to give too many cookies to three kids. This uses 9 cookies, leaving only 1 to distribute to the 4 kids using stars and bars, which can be done in <m>{4 \choose 3}</m> ways. We must consider this outcome for every possible choice of which three kids we over-feed, and there are <m>{4 \choose 3}</m> ways of selecting that set of 3 kids.
+</p>
+
+<p>
+Next we would subtract all the ways to give four kids too many cookies, but in this case, that number is 0.
+</p>
+
+<p>
+All together we get that the number of ways to distribute 10 cookies to 4 kids without giving any kid more than 2 cookies is:
+<me>
+  {13 \choose 3} - \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right] = 286 - [480 - 210 + 16] = 0.
+</me>
+</p>
+
+<p>
+This makes sense: there is NO way to distribute 10 cookies to 4 kids and make sure that nobody gets more than 2. It is slightly surprising that
+<me>
+  {13 \choose 3} = \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right]
+</me>
+but since PIE works, this equality must hold.
+</p>
+</solution>
+</example>
+<p>
+Just so you don't think that these problems always have easier solutions, consider the following example.
+</p>
+<example>
+<statement>
+<p>
+Earlier we counted the number of solutions to the equation
+<me>
+  x_1 + x_2 + x_3 + x_4 + x_5 = 13.
+</me>
+</p>
+
+<p>
+How many of those solutions have <m>0 \le x_i \le 3</m> for each <m>x_i</m>?
+</p>
+</statement>
+<solution>
+<p>
+We must subtract off the number of solutions in which one or more of the variables has a value greater than 3. We will need to use PIE because counting the number of solutions for which each of the five variables separately are greater than 3 counts solutions multiple times. Here is what we get:
+</p>
+
+<ul>
+<li>Total solutions: <m>{17 \choose 4}</m>.</li>
+<li>Solutions where <m>x_1 > 3</m>: <m>{13 \choose 4}</m>.  Give <m>x_1</m> 4 units first, then distribute the remaining 9 units to the 5 variables.</li>
+<li>Solutions where <m>x_1 > 3</m> and <m>x_2 > 3</m>: <m>{9 \choose 4}</m>. After you give 4 units to <m>x_1</m> and another 4 to <m>x_2</m>, you only have 5 units left to distribute.</li>
+<li>Solutions where <m>x_1 > 3</m>, <m>x_2 > 3</m> and <m>x_3 > 3</m>: <m>{5 \choose 4}</m>.</li>
+<li>Solutions where <m>x_1 > 3</m>, <m>x_2 > 3</m>, <m>x_3 > 3</m>, and <m>x_4 > 3</m>: 0.</li>
+</ul>
+
+<p>
+We also need to account for the fact that we could choose any of the five variables in the place of <m>x_1</m> above, any pair of variables in the place of <m>x_1</m> and <m>x_2</m> and so on. It is because of this that the double counting occurs, so we need to use PIE. All together we have that the number of solutions with <m>0 \le x_i \le 3</m> is
+<me>
+  {17 \choose 4} - \left[{5\choose 1}{13 \choose 4} - {5 \choose 2}{9 \choose 4} + {5 \choose 3}{5 \choose 4}\right] = 15.
+</me>
+</p>
+</solution>
+</example>
+</introduction>
+
+
+<subsection xml:id="subsec_derangements">
+<title>Counting Derangements</title>
+<activity>
+<p>
+For your senior prank, you decide to switch the nameplates on your favorite 5 professors' doors. So that none of them feel left out, you want to make sure that all of the nameplates end up on the wrong door. How many ways can this be accomplished?
+</p>
+</activity>
+<p>
+The advanced use of PIE has applications beyond stars and bars. A <em>derangement</em><index><main>derangement</main></index> of <m>n</m> elements <m>\{1,2,3,\ldots, n\}</m> is a permutation in which no element is fixed. For example, there are <m>6</m> permutations of the three elements <m>\{1,2,3\}</m>:
+<me>
+  123 ~~ 132 ~~ 213 ~~ 231 ~~ 312 ~~ 321.
+</me>
+but most of these have one or more elements fixed: <m>123</m> has all three elements fixed, <m>132</m> has the first element fixed (1 is in its original first position), and so on. In fact, the only derangements of three elements are
+<me>
+  231 \mbox{  and  } 312.
+</me>
+</p>
+
+<p>
+If we go up to 4 elements, there are 24 permutations (because we have 4 choices for the first element, 3 choices for the second, 2 choices for the third leaving only 1 choice for the last). How many of these are derangements? If you list out all 24 permutations and eliminate those which are not derangements, you will be left with just 9 derangements. Let's see how we can get that number using PIE.
+</p>
+<example>
+<statement>
+<p>
+How many derangements are there of 4 elements?
+</p>
+</statement>
+<solution>
+<p>
+We count all permutations, and subtract those which are not derangements. There are <m>4! = 24</m> permutations of 4 elements. Now for a permutation to <em>not</em> be a derangement, at least one of the 4 elements must be fixed. There are <m>{4 \choose 1}</m> choices for which single element we fix. Once fixed, we need to find a permutation of the other three elements. There are <m>3!</m> permutations on 3 elements. But now we have counted too many non-derangements, so we must subtract those permutations which fix two elements. There are <m>{4 \choose 2}</m> choices for which two elements we fix, and then for each pair, <m>2!</m> permutations of the remaining elements. But this subtracts too many, so add back in permutations which fix 3 elements, all <m>{4 \choose 3}1!</m> of them. Finally subtract the <m>{4 \choose 4}0!</m> permutations (recall <m>0! = 1</m>) which fix all four elements. All together we get that the number of derangements of 4 elements is:
+<me>
+  4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4}0!\right] = 24 - 15 = 9.
+</me>
+</p>
+</solution>
+</example>
+<p>
+Of course we can use a similar formula to count the derangements on any number of elements. However, the more elements we have, the longer the formula gets. Here is another example.
+</p>
+<example>
+<statement>
+<p>
+Five gentlemen attend a party, leaving their hats at the door. At the end of the party, they hastily grab hats on their way out. How many different ways could this happen so that none of the gentlemen leave with their own hat?
+</p>
+</statement>
+<solution>
+<p>
+We are counting derangements on 5 elements. There are <m>5!</m> ways for the gentlemen to grab hats in any order - but many of these permutations will result in someone getting their own hat. So we subtract all the ways in which one or more of the men get their own hat. In other words, we subtract the non-derangements. Doing so requires PIE. Thus the answer is:
+<me>
+  5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right].
+</me>
+</p>
+</solution>
+</example>
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+The dollar menu at your favorite tax-free fast food restaurant has 7 items. You have <dollar />10 to spend. How many different meals can you buy if you spend all your money and:
+</p>
+
+<ol>
+<li>Purchase at least one of each item.</li>
+<li>Possibly skip some items.</li>
+<li>Don't get more than 2 of any particular item.</li>
+</ol>
+</statement>
+<answer>
+<p>
+Hint: Stars and bars.
+</p>
+
+<ol>
+<li><m>{9 \choose 6}</m>.</li>
+<li><m>{16 \choose 6}</m>.</li>
+<li><m>{16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+After another gym class you are tasked with putting the 14 identical dodgeballs away into 5 bins. This time, no bin can hold more than 6 balls. How many ways can you clean up?
+</p>
+</statement>
+<answer>
+<p>
+<m>{18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]</m>. Subtract all the distributions for which one or more bins contain 7 or more balls.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider the equation <m>x_1 + x_2 + x_3 + x_4 = 15</m>. How many solutions are there with <m>2 \le x_i \le 5</m> for all <m>i \in \{1,2,3,4\}</m>?
+</p>
+</statement>
+<answer>
+<p>
+The easiest way to solve this is to instead count the solutions to <m>y_1 + y_2 + y_3 + y_4 = 7</m> with <m>0 \le y_i \le 3</m>. By taking <m>x_i = y_i+2</m>, each solution to this new equation corresponds to exactly one solution to the original equation.
+</p>
+
+<p>
+Now all the ways to distribute the 7 units to the four <m>y_i</m> variables can be found using stars and bars, specifically 7 stars and 3 bars, so <m>{10 \choose 3}</m>. But this includes the ways that one or more <m>y_i</m> variables can be assigned more than 3 units. So subtract, using PIE. We get
+<me>
+  {10 \choose 3} - {4\choose 1} {6 \choose 3}.
+</me>
+</p>
+
+<p>
+Note that this is the final answer because it is not possible to have two variables both get 4 units.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose you planned on giving 7 gold stars to some of the 13 star students in your class. Each student can receive at most one star. How many ways can you do this? Use PIE, and also an easier method, and compare your results.
+</p>
+</statement>
+<answer>
+<p>
+Without any restriction, there would be <m>{19\choose 12}</m> ways to distribute the stars. Now we must use PIE to eliminate all distributions in which one or more student gets more than one star:
+<me>
+  {19 \choose 12} - \left[{13 \choose 1}{17 \choose 12} - {13\choose 2}{15 \choose 12} + {13\choose 3}{13 \choose 12}\right] = 1716.
+</me>
+</p>
+
+<p>
+Interestingly enough, this number is also the value of <m>{13 \choose 7}</m>, which makes sense: if each student can have at most one star, we must just pick the 7 out of 13 students to receive them.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Based on the previous question, give a combinatorial proof for the identity:
+<me>
+  {n \choose k} = {n+k-1 \choose k} - \sum_{j=1}^n (-1)^{j+1}{n \choose j}{n+k-(2j+1) \choose k}.
+</me>
+</p>
+</statement>
+<answer>
+<p>
+The question is, how many ways can you distribute <m>k</m> cookies to <m>n</m> kids so that each kid gets at most one cookie. On one hand, the answer is just <m>{n \choose k}</m> since you must choose <m>k</m> kids to get a cookie. Alternatively, we can use stars and bars with PIE, which is how we get the right hand side of the identity. Note that lots of the terms on the right hand side will be zero, as soon as <m>n+k-(2j+1)</m> drops below <m>k</m>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Illustrate how the counting of derangements works by writing all permutations of <m>\{1,2,3,4\}</m> and the crossing out those which are not derangements. Keep track of the permutations you cross out more than once, using PIE.
+</p>
+</statement>
+<answer>
+<p>
+The 9 derangements are: 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Ten ladies of a certain age drop off their red hats at the hat check of a museum. As they are leaving, the hat check attendant gives the hats back randomly. In how many ways can exactly six of the ladies receive their own hat (and the other four not)?
+</p>
+</statement>
+<answer>
+<p>
+<m>{10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)</m>. We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.
+</p>
+</answer>
+</exercise>
+
+</exercises>
+</subsection>
+
+</section>

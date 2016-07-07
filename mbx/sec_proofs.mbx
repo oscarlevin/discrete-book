@@ -1,0 +1,817 @@
+<section xml:id="sec_proofs">
+<title>Proofs</title>
+
+
+<introduction>
+<activity>
+<p>
+Suppose you have a collection of 5-cent stamps and 8-cent stamps. We saw earlier that it is possible to make any amount of postage greater than 27 cents using combinations of both these types of stamps. But, let's ask some other questions:
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+What amounts of postage can you make if you only use an even number of both types of stamps? Prove your answer.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose you made an even amount of postage. Prove that you used an even number of at least one of the types of stamps.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose you made exactly 72 cents of postage. Prove that you used at least 6 of one type of stamp.
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+Anyone who doesn't believe there is creativity in mathematics clearly has not tried to write proofs. Finding a way to convince the world that a particular statement is necessarily true is a mighty undertaking and can often be quite challenging. There is not a guaranteed path to success in the search for proofs. For example, in the summer of 1742, a German mathematician by the name of Christian Goldbach wondered whether every even integer greater than 2 could be written as the sum of two primes. Centuries later, we still don't have a proof of this apparent fact (computers have checked that <q>Goldbach's Conjecture</q> holds for all numbers less than <m>4\times 10^{18}</m>, which leaves only infinitely many more numbers to check).
+</p>
+
+<p>
+Writing proofs is a bit of an art. Like any art, to be truly great at it, you need some sort of inspiration, as well as some foundational technique. Just as musicians can learn proper fingering, and painters can learn the proper way to hold a brush, we can look at the proper way to construct arguments. A good place to start might be to study a classic.
+</p>
+
+<theorem>
+<statement>
+<p>
+There are infinitely many primes.<index><main>prime numbers</main></index>
+</p>
+</statement>
+<proof>
+<p>
+Suppose this were not the case. That is, suppose there are only finitely many primes. Then there must be a last, largest prime, call it <m>p</m>. Consider the number
+<me>
+  N = p! + 1 = (p \cdot (p-1) \cdot \cdots 3\cdot 2 \cdot 1) + 1.
+</me>
+</p>
+
+<p>
+Now <m>N</m> is certainly larger than <m>p</m>. Also, <m>N</m> is not divisible by any number less than or equal to <m>p</m>, since every number less than or equal to <m>p</m> divides <m>p!</m>. Thus the prime factorization of <m>N</m> contains prime numbers (possibly just <m>N</m> itself) all greater than <m>p</m>. So <m>p</m> is not the largest prime, a contradiction. Therefore there are infinitely many primes.
+</p>
+</proof>
+
+</theorem>
+
+<p>
+This proof is an example of a <em>proof by contradiction</em>, one of the standard styles of mathematical proof. First and foremost, the proof is an argument. It contains sequence of statements, the last being the <em>conclusion</em> which follows from the previous statements. The argument is valid so the conclusion must be true if the premises are true. Let's go through the proof line by line.
+</p>
+
+<ol>
+<li>Suppose there are only finitely many primes.
+
+ {this is a premise.  Note the use of <q>suppose.</q>}</li>
+<li>There must be a largest prime, call it <m>p</m>.
+
+ {follows from line 1, by the definition of <q>finitely many.</q>}</li>
+<li>Let <m>N = p! + 1</m>.
+
+  <em>basically just notation, although this is the inspired part of the proof; looking at <m>p! + 1</m> is the key insight.</em></li>
+<li><m>N</m> is larger than <m>p</m>.
+
+  <em>by the definition of <m>p!</m></em></li>
+<li><m>N</m> is not divisible by any number less than or equal to <m>p</m>.
+
+  <em>by definition, <m>p!</m> is divisible by each number less than or equal to <m>p</m>, so <m>p! + 1</m> is not.</em></li>
+<li>The prime factorization of <m>N</m> contains prime numbers greater than <m>p</m>.
+
+  <em>since <m>N</m> is divisible by each prime number in the prime factorization of <m>N</m>, and by line 5.</em></li>
+<li>Therefore <m>p</m> is not the largest prime.
+
+  <em>by line 6, <m>N</m> is divisible by a prime larger than <m>p</m>.</em></li>
+<li>This is a contradiction.
+
+  <em>from line 2 and line 7: the largest prime is <m>p</m> and there is a prime larger than <m>p</m>.</em></li>
+<li>Therefore there are infinitely many primes.
+
+  <em>from line 1 and line 8: our only premise lead to a contradiction, so the premise is false.</em></li>
+</ol>
+
+<p>
+We should say a bit more about the last line. Up through line 8, we have a valid argument with the premise <q>there are only finitely many primes</q> and the conclusion <q>there is a prime larger than the largest prime.</q> This is a valid argument as each line follows from previous lines. So if the premises are true, then the conclusion <em>must</em> be true. However, the conclusion is <b>NOT</b> true. The only way out: the premise must be false.
+</p>
+
+<p>
+The sort of line-by-line analysis we did above is a great way to really understand what is going on. Whenever you come across a proof in a textbook, you really should make sure you understand what each line is saying and why it is true. Additionally, it is equally important to understand the overall structure of the proof. This is where using tools from logic is helpful. Luckily there are a relatively small number of standard proof styles that keep showing up again and again. Being familiar with these can help understand proof, as well as give ideas of how to write your own.
+</p>
+</introduction>
+
+
+<subsection>
+<title>Direct Proof</title>
+<p>
+<index><main>direct proof</main></index>
+</p>
+
+<p>
+The simplest (from a logic perspective) style of proof is a <em>direct proof</em>. Often all that is required to prove something is a systematic explanation of what everything means. Direct proofs are especially useful when proving implications. The general format to prove <m>P \imp Q</m> is this:
+</p>
+<blockquote>
+Assume <m>P</m>.  Explain, explain,\ldots, explain.  Therefore <m>Q</m>.
+</blockquote>
+<p>
+Often we want to prove universal statements, perhaps of the form <m>\forall x (P(x) \imp Q(x))</m>. Again, we will want to assume <m>P(x)</m> is true and deduce <m>Q(x)</m>. But what about the <m>x</m>? We want this to work for <em>all</em> <m>x</m>. We accomplish this by fixing <m>x</m> to be an arbitrary element (of the sort we are interested in).
+</p>
+
+<p>
+Here are a few examples. First, we will set up the proof structure for a direct proof, then fill in the details.
+</p>
+<example>
+<statement>
+<p>
+Prove: For all integers <m>n</m>, if <m>n</m> is even, then <m>n^2</m> is even.
+</p>
+</statement>
+<solution>
+<p>
+The format of the proof with be this: Let <m>n</m> be an arbitrary integer. Assume that <m>n</m> is even. Explain explain explain. Therefore <m>n^2</m> is even.
+</p>
+
+<p>
+To fill in the details, we will basically just explain what it means for <m>n</m> to be even, and then see what that means for <m>n^2</m>. Here is a complete proof.
+</p>
+
+<proof>
+<p>
+Let <m>n</m> be an arbitrary integer. Suppose <m>n</m> is even. Then <m>n = 2k</m> for some integer <m>k</m>. Now <m>n^2 = (2k)^2 = 4k^2 = 2(2k^2)</m>. Since <m>2k^2</m> is an integer, <m>n^2</m> is even.
+</p>
+</proof>
+
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Prove: For all integers <m>a</m>, <m>b</m>, and <m>c</m>, if <m>a|b</m> and <m>b|c</m> then <m>a|c</m>. Here <m>x|y</m>, read <q><m>x</m> divides <m>y</m></q> means that <m>y</m> is a multiple of <m>x</m> (so <m>x</m> will divide into <m>y</m> without remainder).
+</p>
+</statement>
+<solution>
+<p>
+Even before we know what the divides symbol means, we can set up a direct proof for this statement. It will go something like this: Let <m>a</m>, <m>b</m>, and <m>c</m> be arbitrary integers. Assume that <m>a|b</m> and <m>b|c</m>. Dot dot dot. Therefore <m>a|c</m>.
+</p>
+
+<p>
+How do we connect the dots? We need to say what our hypothesis (<m>a|b</m> and <m>b|c</m>) really means and why this gives us what the conclusion (<m>a|c</m>) really means. Another way to say that <m>a|b</m> is to say that <m>b = ka</m> for some integer <m>k</m> (that is, that <m>b</m> is a multiple of <m>a</m>). What are we going for? That <m>c = la</m>, for some integer <m>l</m> (because we want <m>c</m> to be a multiple of <m>a</m>). Here is the complete proof.
+</p>
+
+<proof>
+<p>
+Let <m>a</m>, <m>b</m>, and <m>c</m> be integers. Assume that <m>a|b</m> and <m>b|c</m>. In other words, <m>b</m> is a multiple of <m>a</m> and <m>c</m> is a multiple of <m>b</m>. So there are integers <m>k</m> and <m>j</m> such that <m>b = ka</m> and <m>c = jb</m>. Combining these (through substitution) we get that <m>c = jka</m>. But <m>jk</m> is an integer, so this says that <m>c</m> is a multiple of <m>a</m>. Therefore <m>a|c</m>.
+</p>
+</proof>
+
+</solution>
+</example>
+</subsection>
+
+
+<subsection>
+<title>Proof by Contrapositive</title>
+<p>
+<index><main>contrapositive</main><sub>proof by</sub></index><index><main>proof by contrapositive</main></index>
+</p>
+
+<p>
+Recall that an implication <m>P \imp Q</m> is logically equivalent to its contrapositive <m>\neg Q \imp \neg P</m>. There are plenty of examples of statements which are hard to prove directly, but whose contrapositive can easily be proved directly. This is all that proof by contrapositive does. It gives a direct proof of the contrapositive of the implication. This is enough because the contrapositive is logically equivalent to the original implication.
+</p>
+
+<p>
+The skeleton of the proof of <m>P \imp Q</m> by contrapositive will always look roughly like this:
+</p>
+<blockquote>
+Assume <m>\neg Q</m>.  Explain, explain, \ldots, explain.  Therefore <m>\neg P</m>.
+</blockquote>
+<p>
+As before, if there are variables and quantifiers, we set them to be arbitrary elements of our domain. Here are a couple examples.
+</p>
+<example>
+<statement>
+<p>
+Is the statement <q>for all integers <m>n</m>, if <m>n^2</m> is even, then <m>n</m> is even</q> true?
+</p>
+</statement>
+<solution>
+<p>
+This is the converse of the statement we proved above using a direct proof. From trying a few examples, this statement definitely appears this is true. So let's prove it.
+</p>
+
+<p>
+A direct proof of this statement would require fixing an arbitrary <m>n</m> and assuming that <m>n^2</m> is even. But it is not at all clear how this would allow us to conclude anything about <m>n</m>. Just because <m>n^2 = 2k</m> does not in itself suggest how we could write <m>n</m> as a multiple of 2.
+</p>
+
+<p>
+Try something else: write the contrapositive of the statement. We get, for all integers <m>n</m>, if <m>n</m> is odd then <m>n^2</m> is odd. This looks much more promising. Our proof will look something like this:
+</p>
+
+<p>
+Let <m>n</m> be an arbitrary integer. Suppose that <m>n</m> is not even. This means that<ellipsis />. In other words<ellipsis />. But this is the same as saying <ellipsis />. Therefore <m>n^2</m> is not even.
+</p>
+
+<p>
+Now we fill in the details.
+</p>
+
+<proof>
+<p>
+We will prove the contrapositive. Let <m>n</m> be an arbitrary integer. Suppose that <m>n</m> is not even, and thus odd. Then <m>n= 2k+1</m> for some integer <m>k</m>. Now <m>n^2 = (2k+1)^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1</m>. Since <m>2k^2 + 2k</m> is an integer, we see that <m>n^2</m> is odd and therefore not even.
+</p>
+</proof>
+
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Prove: for all integers <m>a</m> and <m>b</m>, if <m>a + b</m> is odd, then <m>a</m> is odd or <m>b</m> is odd.
+</p>
+</statement>
+<solution>
+<p>
+The problem with trying a direct proof is that it will be hard to separate <m>a</m> and <m>b</m> from knowing something about <m>a+b</m>. On the other hand, if we know something about <m>a</m> and <m>b</m> separately, then combining them might give us information about <m>a+b</m>. Our proof will have the following format:
+</p>
+
+<p>
+Let <m>a</m> and <m>b</m> be integers. Assume that <m>a</m> and <m>b</m> are both even. la la la. Therefore <m>a+b</m> is even.
+</p>
+
+<p>
+Now for a complete proof.
+</p>
+
+<proof>
+<p>
+Let <m>a</m> and <m>b</m> be integers. Assume that <m>a</m> and <m>b</m> are even. Then <m>a = 2k</m> and <m>b = 2l</m> for some integers <m>k</m> and <m>l</m>. Now <m>a + b = 2k + 2l = 2(k+1)</m>. Since <m>k + l</m> is an integer, we see that <m>a + b</m> is even, completing the proof.
+</p>
+</proof>
+
+<p>
+Note that our assumption that <m>a</m> and <m>b</m> are even is really the negation of <m>a</m> or <m>b</m> is odd. We used De Morgan's law here.
+</p>
+</solution>
+</example>
+<p>
+We have seen how to prove some statements in the form of implications: either directly or by contrapositive. Some statements aren't written as implications to begin with.
+</p>
+<example>
+<statement>
+<p>
+Consider the statement, for every prime number <m>p</m>, either <m>p = 2</m> or <m>p</m> is odd. We can rephrase this: for every prime number <m>p</m>, if <m>p \ne 2</m>, then <m>p</m> is odd. Now try to prove it.
+</p>
+</statement>
+<proof>
+<p>
+Let <m>p</m> be an arbitrary prime number. Assume <m>p</m> is not odd. So <m>p</m> is divisible by 2. Since <m>p</m> is prime, it must have exactly two divisors, and it has 2 as a divisor, so <m>p</m> must be divisible by only 1 and 2. Therefore <m>p = 2</m>. This completes the proof (by contrapositive).
+</p>
+</proof>
+
+</example>
+</subsection>
+
+
+<subsection>
+<title>Proof by Contradiction</title>
+<p>
+<index><main>contradiction</main></index><index><main>proof by contradiction</main></index>
+</p>
+
+<p>
+There might be statements which really cannot be rephrased as implications. For example, <q><m>\sqrt 2</m> is irrational.</q> In this case, it is hard to know where to start. What can we assume? Well, say we want to prove the statement <m>P</m>. What if we could prove that <m>\neg P \imp Q</m> where <m>Q</m> was false? If this implication is true, and <m>Q</m> is false, what can we say about <m>\neg P</m>? It must be false as well, which makes <m>P</m> true!
+</p>
+
+<p>
+This is why proof by contradiction works. If we can prove that <m>\neg P</m> leads to a contradiction, then the only conclusion is that <m>\neg P</m> is false, so <m>P</m> is true. That's what we wanted to prove. In other words, if it is impossible for <m>P</m> to be false, <m>P</m> must be true.
+</p>
+
+<p>
+Here are a couple examples of proofs by contradiction.
+</p>
+<example>
+<statement>
+<p>
+Prove that <m>\sqrt{2}</m> is irrational.
+</p>
+</statement>
+<proof>
+<p>
+Suppose not. Then <m>\sqrt 2</m> is equal to a fraction <m>\frac{a}{b}</m>. Without loss of generality, assume <m>\frac{a}{b}</m> is in lowest terms (otherwise reduce the fraction). So,
+<me>
+  2 = \frac{a^2}{b^2}
+</me>
+</p>
+<me>
+  2b^2 = a^2
+</me>
+<p>
+Thus <m>a^2</m> is even, and as such <m>a</m> is even. So <m>a = 2k</m> for some integer <m>k</m>, and <m>a^2 = 4k^2</m>. We then have,
+<me>
+  2b^2 = 4k^2
+</me>
+</p>
+<me>
+  b^2 = 2k^2
+</me>
+<p>
+Thus <m>b^2</m> is even, and as such <m>b</m> is even. Since <m>a</m> is also even, we see that <m>\frac{a}{b}</m> is not in lowest terms, a contradiction. Thus <m>\sqrt 2</m> is irrational.
+</p>
+</proof>
+
+</example>
+
+<example>
+<statement>
+<p>
+Prove: there are no integers <m>x</m> and <m>y</m> such that <m>x^2  = 4y + 2</m>.
+</p>
+</statement>
+<proof>
+<p>
+We proceed by contradiction. So suppose there <em>are</em> integers <m>x</m> and <m>y</m> such that <m>x^2 = 4y + 2 = 2(2y + 1)</m>. So <m>x^2</m> is even. We have seen that this implies that <m>x</m> is even. So <m>x = 2k</m> for some integer <m>k</m>. Then <m>x^2 = 4k^2</m>. This in turn gives
+	<m>2k^2 = (2y + 1)</m>. But <m>2k^2</m> is even, and <m>2y + 1</m> is odd, so these cannot be equal. Thus we have a contradiction, so there must not be any integers <m>x</m> and <m>y</m> such that <m>x^2 = 4y + 2</m>.
+</p>
+</proof>
+
+</example>
+
+<example>
+<statement>
+<p>
+The Pigeonhole Principle<index><main>Pigeonhole principle</main></index>: if more than <m>n</m> pigeons fly into <m>n</m> pigeon holes, then at least one pigeon hole will contain at least two pigeons. Prove this!
+</p>
+
+<proof>
+<p>
+Suppose, contrary to stipulation, that each of the pigeon holes contain at most one pigeon. Then at most, there will be <m>n</m> pigeons. But we assumed that there are more than <m>n</m> pigeons, so this is impossible. Thus there must be a pigeon hole with more than one pigeon.
+</p>
+</proof>
+
+<p>
+While we phrased this proof as a proof by contradiction, we could have also used a proof by contrapositive since our contradiction was simply the negation of the hypothesis. Sometimes this will happen, in which case you can use either style of proof. There are examples however where the contradiction occurs <q>far away</q> from the original statement.
+</p>
+</statement>
+</example>
+</subsection>
+
+
+<subsection>
+<title>Proof by (counter) Example</title>
+<p>
+<index><main>counterexample</main></index>
+</p>
+
+<p>
+It is almost NEVER okay to prove a statement with just an example. Certainly none of the statements proved above can be proved through an example. This is because in each of those cases we are trying to prove that something holds of <u>all</u> integers. We claim that <m>n^2</m> being even implies that <m>n</m> is even, <em>no matter what integer</em> <m>n</m> we pick. Showing that this works for <m>n = 4</m> is not even close to enough.
+</p>
+
+<p>
+This cannot be stressed enough. If you are trying to prove a statement of the form <m>\forall x P(x)</m>, you absolutely CANNOT prove this with an example.<fn>This is not to say that looking at examples is a waste of time.  Doing so will often give you an idea of how to write a proof.  But the examples do not belong in the proof.</fn>
+</p>
+
+<p>
+However, existential statements can be proven this way. If we want to prove that there is an integer <m>n</m> such that <m>n^2-n+41</m> is not prime, all we need to do is find one. This might seem like a silly thing to want to prove until you try a few values for <m>n</m>.
+</p>
+<tabular>
+<row><cell><m>n</m></cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell><cell>6</cell><cell>7</cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row>
+<row><cell><m>n^2 - n + 41</m></cell><cell>41</cell><cell>43</cell><cell>47</cell><cell>53</cell><cell>61</cell><cell>71</cell><cell>83</cell></row>
+</tabular>
+<p>
+So far we have gotten only primes. You might be tempted to conjecture, <q>For all positive integers <m>n</m>, the number <m>n^2 - n + 41</m> is prime.</q> If you wanted to prove this, you would need to use a direct proof, a proof by contrapositive, or another style of proof, but certainly it is not enough to give even 7 examples. In fact, we can prove this conjecture is <em>false</em> by proving its negation: <q>There is a positive integer <m>n</m> such that <m>n^2 - n + 41</m> is not prime.</q> Since this is an existential statement, it suffices to show that there does indeed exist such a number.
+</p>
+
+<p>
+In fact, we can quickly see that <m>n = 41</m> will give <m>41^2</m> which is certainly not prime. You might say that this is a counterexample to the conjecture that <m>n^2 - n + 41</m> is always prime. Since so many statements in mathematics are universal, making their negations existential, we can often prove that a statement is false (if it is) by providing a counterexample.
+</p>
+<example>
+<statement>
+<p>
+Above we proved, <q>for all integers <m>a</m> and <m>b</m>, if <m>a+b</m> is odd, then <m>a</m> is odd or <m>b</m> is odd.</q> Is the converse true?
+</p>
+</statement>
+<solution>
+<p>
+The converse is the statement, <q>for all integers <m>a</m> and <m>b</m>, if <m>a</m> is odd or <m>b</m> is odd, then <m>a + b</m> is odd.</q> This is false! How do we prove it is false? We need to prove the negation of the converse. Let's look at the symbols. The converse is
+<me>
+  \forall a \forall b ((O(a) \vee O(b)) \imp O(a+b)).
+</me>
+</p>
+
+<p>
+We want to prove the negation:
+<me>
+  \neg \forall a \forall b ((O(a) \vee O(b)) \imp O(a+b)).
+</me>
+</p>
+
+<p>
+Simplify using the rules from the previous sections:
+<me>
+  \exists a \exists b ((O(a) \vee O(b)) \wedge \neg O(a+b)).
+</me>
+</p>
+
+<p>
+As the negation passed by the quantifiers, they changed from <m>\forall</m> to <m>\exists</m>. We then needed to take the negation of an implication, which is equivalent to asserting the if part and not the then part.
+</p>
+
+<p>
+Now we know what to do. To prove that the converse is false we need to find two integers <m>a</m> and <m>b</m> so that <m>a</m> is odd or <m>b</m> is odd, but <m>a+b</m> is not odd (so even). That's easy: 1 and 3. (remember, <q>or</q> means one or the other or both). Both of these are odd, but <m>1+3 = 4</m> is not odd.
+</p>
+</solution>
+</example>
+</subsection>
+
+
+<subsection>
+<title>Proof by Cases</title>
+<p>
+<index><main>cases</main></index><index><main>proof by cases</main></index>
+</p>
+
+<p>
+We could go on and on and on about different proof styles (we haven't even mentioned induction or combinatorial proofs here), but instead we will end with one final useful technique: proof by cases. The idea is to prove that <m>P</m> is true by proving that <m>Q \imp P</m> and <m>\neg Q \imp P</m> for some statement <m>Q</m>. So no matter what, whether or not <m>Q</m> is true, we know that <m>P</m> is true. In fact, we could generalize this. Suppose we want to prove <m>P</m>. We know that at least one of the statements <m>Q_1, Q_2, \ldots, Q_n</m> are true. If we can show that <m>Q_1 \imp P</m> and <m>Q_2 \imp P</m> and so on all the way to <m>Q_n \imp P</m>, then we can conclude <m>P</m>. The key thing is that we want to be sure that one of our cases (the <m>Q_i</m>'s) must be true no matter what.
+</p>
+
+<p>
+If that last paragraph was confusing, hopefully an example will make things better.
+</p>
+<example>
+<statement>
+<p>
+Prove: for any integer <m>n</m>, the number <m>(n^3 -n)</m> is even.
+</p>
+</statement>
+<solution>
+<p>
+It is hard to know where to start this, because we don't know much of anything about <m>n</m>. We might be able to prove that <m>n^3 - n</m> is even if we knew that <m>n</m> was even. In fact, we could probably prove that <m>n^3-n</m> was even if <m>n</m> was odd. But since <m>n</m> must either be even or odd, this will be enough. Here's the proof.
+</p>
+
+<proof>
+<p>
+We consider two cases: if <m>n</m> is even or if <m>n</m> is odd.
+</p>
+
+<p>
+<u>Case 1</u>: <m>n</m> is even. Then <m>n = 2k</m> for some integer <m>k</m>. This give
+<md>
+  <mrow>  n^3 - n \amp  = 8k^3 - 2k</mrow>
+  <mrow>  \amp  = 2(4k^2 - k),</mrow>
+</md>
+and since <m>4k^2 - k</m> is an integer, this says that <m>n^3-n</m> is even.
+</p>
+
+<p>
+<u>Case 2</u>: <m>n</m> is odd. Then <m>n = 2k+1</m> for some integer <m>k</m>. This gives
+<md>
+  <mrow>  n^3 - n \amp  = (2k+1)^3 - (2k+1)</mrow>
+  <mrow>  \amp  = 8k^3 + 6k^2 + 6k + 1 - 2k - 1</mrow>
+  <mrow>  \amp  = 2(4k^3 + 3k^2 + 2k),</mrow>
+</md>
+and since <m>4k^3 + 3k^2 + 2k</m> is an integer, we see that <m>n^3 - n</m> is even again.
+</p>
+
+<p>
+Since <m>n^3 - n</m> is even in both exhaustive cases, we see that <m>n^3 - n</m> is indeed always even.
+</p>
+</proof>
+
+</solution>
+</example>
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Consider the statement <q>for all integers <m>a</m> and <m>b</m>, if <m>a + b</m> is even, then <m>a</m> and <m>b</m> are even</q>
+</p>
+
+<ol>
+<li>Write the contrapositive of the statement.</li>
+<li>Write the converse of the statement.</li>
+<li>Write the negation of the statement.</li>
+<li>Is the original statement true or false?  Prove your answer.</li>
+<li>Is the contrapositive of the original statement true or false?  Prove your answer.</li>
+<li>Is the converse of the original statement true or false?  Prove your answer.</li>
+<li>Is the negation of the original statement true or false?  Prove your answer.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>For all integers <m>a</m> and <m>b</m>, if <m>a</m> or <m>b</m> are not even, then <m>a+b</m> is not even.</li>
+<li>For all integers <m>a</m> and <m>b</m>, if <m>a</m> and <m>b</m> are even, then <m>a+b</m> is even.</li>
+<li>There are numbers <m>a</m> and <m>b</m> such that <m>a+b</m> is even but <m>a</m> and <m>b</m> are not both even.</li>
+<li>False.  For example, <m>a = 3</m> and <m>b = 5</m>.  <m>a+b = 8</m>, but neither <m>a</m> nor <m>b</m> are even.</li>
+<li>False, since it is equivalent to the original statement.</li>
+<li>True.  Let <m>a</m> and <m>b</m> be integers.  Assume both are even.  Then <m>a = 2k</m> and <m>b = 2j</m> for some integers <m>k</m> and <m>j</m>.  But then <m>a+b = 2k + 2j = 2(k+j)</m> which is even.</li>
+<li>True, since the statement is false.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider the statement: for all integers <m>n</m>, if <m>n</m> is even then <m>8n</m> is even.
+</p>
+
+<ol>
+<li>Prove the statement.  What sort of proof are you using?</li>
+<li>Is the converse true?  Prove or disprove.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>Direct proof.
+
+<proof>
+<p>
+Let <m>n</m> be an integer. Assume <m>n</m> is even. Then <m>n = 2k</m> for some integer <m>k</m>. Thus <m>8n = 16k = 2(8k)</m>. Therefore <m>8n</m> is even.
+</p>
+</proof>
+
+</li>
+<li>The converse is false.  That is, there is an integer <m>n</m> such that <m>8n</m> is even but <m>n</m> is odd.  For example, consider <m>n = 3</m>.  Then <m>8n = 24</m> which is even but <m>n = 3</m> is odd.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Prove that <m>\sqrt 3</m> is irrational.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+Suppose <m>\sqrt{3}</m> were rational. Then <m>\sqrt{3} = \frac{a}{b}</m> for some integers <m>a</m> and <m>b \ne 0</m>. Without loss of generality, assume <m>\frac{a}{b}</m> is reduced. Now
+<me>
+  3 = \frac{a^2}{b^2}
+</me>
+</p>
+<me>
+  b^2 3 = a^2
+</me>
+<p>
+So <m>a^2</m> is a multiple of 3. This can only happen if <m>a</m> is a multiple of 3, so <m>a = 3k</m> for some integer <m>k</m>. Then we have
+<me>
+  b^2 3 = 9k^2
+</me>
+</p>
+<me>
+  b^2 = 3k^2
+</me>
+<p>
+So <m>b^2</m> is a multiple of 3, making <m>b</m> a multiple of 3 as well. But this contradicts our assumption that <m>\frac{a}{b}</m> is in lowest terms.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider the statement: for all integers <m>a</m> and <m>b</m>, if <m>a</m> is even and <m>b</m> is a multiple of 3, then <m>ab</m> is a multiple of 6.
+</p>
+
+<ol>
+<li>Prove the statement.  What sort of proof are you using?</li>
+<li>State the converse.  Is it true?  Prove or disprove.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>Direct proof.
+
+<proof>
+<p>
+Let <m>a</m> and <m>b</m> be integers. Assume <m>a</m> is even and <m>b</m> is a multiple of 3. Then <m>a = 2k</m> and <m>b = 3j</m> for some integers <m>k</m> and <m>j</m>. Now
+<me>
+  ab = (2k)(3j) = 6(kj)
+</me>
+</p>
+
+<p>
+Since <m>kj</m> is an integer, we have that <m>ab</m> is a multiple of 6.
+</p>
+</proof>
+
+</li>
+<li>The converse is: for all integers <m>a</m> and <m>b</m>, if <m>ab</m> is a multiple of 6, then <m>a</m> is even and <m>b</m> is a multiple of 3.  This is false.  Consider <m>a = 3</m> and <m>b = 10</m>.  Then <m>ab = 30</m> which is a multiple of 6, but <m>a</m> is not even and <m>b</m> is not divisible by 3.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Prove the statement: For all integers <m>n</m>, if <m>5n</m> is odd, then <m>n</m> is odd. Clearly state the style of proof you are using.
+</p>
+</statement>
+<answer>
+<p>
+We will prove the contrapositive: if <m>n</m> is even, then <m>5n</m> is even.
+</p>
+
+<proof>
+<p>
+Let <m>n</m> be an arbitrary integer, and suppose <m>n</m> is even. Then <m>n = 2k</m> for some integer <m>k</m>. Thus <m>5n = 5\cdot 2k = 10k = 2(5k)</m>. Since <m>5k</m> is an integer, we see that <m>5n</m> must be even. This completes the proof.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Prove the statement: For all integers <m>a</m>, <m>b</m>, and <m>c</m>, if <m>a^2 + b^2 = c^2</m>, then <m>a</m> or <m>b</m> is even.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+Suppose, contrary to stipulation, that there are integers <m>a</m>, <m>b</m> and <m>c</m> such that <m>a^2 + b^2 = c^2</m> but <m>a</m> and <m>b</m> are both odd. Then <m>a = 2k+1</m> and <m>b = 2j + 1</m> for some integers <m>k</m> and <m>j</m>. We then have
+<me>
+  a^2 + b^2 = (2k+1)^2 + (2j+1)^2 = 4k^2 + 4k + 1 + 4j^2 + 4j + 1 = 4(k^2 + j^2 + k + j) + 2
+</me>
+</p>
+
+<p>
+So <m>c^2 = 4(k^2 + j^2 + k + j) + 2</m>. This means that <m>c^2</m> is even, which can only happen if <m>c</m> is even. But then <m>c^2</m> must be a multiple of 4. However, this is a contradiction because <m>4(k^2 + j^2 + k + j) + 2</m> is not a multiple of 4.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+The game TENZI comes with 40 six-sided dice (each numbered 1 to 6). Suppose you roll all 40 dice. Prove that there will be at least seven dice that land on the same number.
+</p>
+</statement>
+<answer>
+<p>
+This is an example of the pigeonhole principle. We can prove it by contrapositive.
+</p>
+
+<proof>
+<p>
+Suppose that each number only came up 6 or fewer times. So there are at most six 1's, six 2's, and so on. That's a total of 36 dice, so you must not have rolled all 40 dice.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many dice would you have to roll before you were guaranteed that some four of them would all match or all be different? Prove your answer.
+</p>
+</statement>
+<answer>
+<p>
+We can have 9 dice without any four matching or all being different: three 1's, three 2's, three 3's. We will prove that whenever you roll 10 dice, you will always get four matching or all being different.
+</p>
+
+<proof>
+<p>
+Suppose you roll 10 dice, but that there are NOT four matching rolls. This means at most, there are three of any given value. If we only had three different values, that would be only 9 dice, so there must be 4 different values, giving 4 dice that are all different.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Prove that <m>\log(7)</m> is irrational.
+</p>
+</statement>
+<answer>
+<p>
+We give a proof by contradiction.
+</p>
+
+<proof>
+<p>
+Suppose, contrary to stipulation that <m>\log(7)</m> is rational. Then <m>\log(7) = \frac{a}{b}</m> with <m>a</m> and <m>b \ne 0</m> integers. By properties of logarithms, this implies
+<me>
+  7 = 10^{\frac{a}{b}}
+</me>
+</p>
+
+<p>
+Equivalently,
+<me>
+  7^b = 10^a
+</me>
+</p>
+
+<p>
+But this is impossible as any power of 7 will be odd while any power of 10 will be even.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Prove that there are no integer solutions to the equation <m>x^2 = 4y + 3</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+Suppose there were integers <m>x</m> and <m>y</m> such that <m>x^2 = 4y + 3</m>. Now <m>x^2</m> must be odd, since <m>4y + 3</m> is odd. Since <m>x^2</m> is odd, we know <m>x</m> must be odd as well. So <m>x = 2k + 1</m> for some integer <m>k</m>. Then <m>x^2 = 4k^2 + 4k + 1 = 4(k^2 + k) + 1</m>. Therefore we have,
+<me>
+  4(k^2 + k) + 1 = 4y + 3
+</me>
+which implies
+<me>
+  4(k^2 + k) = 4y + 2
+</me>
+and therefore
+<me>
+  2(k^2 + k) = 2y + 1.
+</me>
+</p>
+
+<p>
+But this is a contradiction <ndash /> the left hand side is even while the right hand side is odd.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Prove that every prime number greater than 3 is either one more or one less than a multiple of 6. Hint: prove the contrapositive by cases.
+</p>
+</statement>
+<answer>
+<p>
+We must prove that for any integer greater than 3, if the integer is prime, then it is one more or one less than a multiple of 6. The contrapositive of this statement is that if a number greater than 3 is not one more or one less than a multiple of 6, then it is not prime.
+</p>
+
+<proof>
+<p>
+Let <m>n</m> be an integer greater than 3, and assume <m>n \ne 6k+1</m> and <m>n \ne 6k-1</m> for any integer <m>k</m>. Then for some integer <m>k</m>, <m>n = 6k</m>, <m>n = 6k+2</m>, <m>n = 6k+3</m> or <m>n = 6k+4</m>. Case 1: <m>n = 6k</m>. Then <m>n</m> is a multiple of 6, so is not prime. Case 2: <m>n = 6k+2</m>. Then <m>n</m> is even, so not prime. Case 3: <m>n = 6k+3</m>. Then <m>n</m> is a multiple of 3, so not prime. Case 4: <m>n = 6k+4</m>. Then <m>n</m> is even, so not prime. So in any case, <m>n</m> is not prime.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+For each of the statements below, say what method of proof you should use to prove them. Then say how the proof starts and how it ends. Bonus points for filling in the middle.
+</p>
+
+<ol>
+<li>There are no integers <m>x</m> and <m>y</m> such that <m>x</m> is a prime greater than 5 and <m>x = 6y + 3</m>.</li>
+<li>For all integers <m>n</m>, if <m>n</m> is a multiple of 3, then <m>n</m> can be written as the sum of consecutive integers.</li>
+<li>For all integers <m>a</m> and <m>b</m>, if <m>a^2 + b^2</m> is odd, then <m>a</m> or <m>b</m> is odd.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>Proof by contradiction.  Start of proof: Assume, for the sake of contradiction, that there are integers <m>x</m> and <m>y</m> such that <m>x</m> is a prime greater than 5 and <m>x = 6y + 3</m>.  End of proof: <ellipsis /> this is a contradiction, so there are no such integers.</li>
+<li>Direct proof.  Start of proof: Let <m>n</m> be an integers.  Assume <m>n</m> is a multiple of 3.  End of proof: Therefore <m>n</m> can be written as the sum of consecutive integers.</li>
+<li>Proof by contrapositive.  Start of proof: Let <m>a</m> and <m>b</m> be integers.  Assume that <m>a</m> and <m>b</m> are even.  End of proof: Therefore <m>a^2 + b^2</m> is even.</li>
+</ol>
+</answer>
+</exercise>
+
+</exercises>
+</subsection>
+
+</section>

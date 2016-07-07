@@ -1,0 +1,365 @@
+<section xml:id="sec_comb-perm">
+<title>Combinations and Permutations</title>
+<activity>
+<p>
+You have a bunch of chips which come in five different colors: red, blue, green, purple and yellow.
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+How many different two-chip stacks can you make if the bottom chip must be red or blue? Explain your answer using both the additive and multiplicative principles.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many different three-chip stacks can you make if the bottom chip must be red or blue and the top chip must be green, purple or yellow? How does this problem relate to the previous one?
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many different three-chip stacks are there in which no color is repeated (but otherwise any colors could be on the top or bottom)? What about four-chip stacks?
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose you wanted to take three different colored chips and put them in your pocket. How many different choices do you have? What if you wanted four different colored chips? How do these problems relate to the previous one?
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+A <em>permutation</em> is a (possible) rearrangement of objects. For example, there are 6 permutations of the letters <em>a, b, c</em>:
+<me>
+  abc, ~~ acb, ~~ bac, ~~bca, ~~ cab, ~~ cba.
+</me>
+</p>
+
+<p>
+We know that we have them all listed above <ndash /> there are 3 choices for which letter we put first, then 2 choices for which letter comes next, which leaves only 1 choice for the last letter. The multiplicative principle says we multiply <m>3\cdot 2 \cdot 1</m>.
+</p>
+<example>
+<statement>
+<p>
+How many permutations are there of the letters <em>a, b, c, d, e, f</em>?
+</p>
+</statement>
+<solution>
+<p>
+We do NOT want to try to list all of these out. However, if we did, we would need to pick a letter to write down first. There are 6 choices for that letter. For each choice of first letter, there are 5 choices for the second letter (we cannot repeat the first letter), and for each of those, there are 4 choices for the third, 3 choices for the fourth, 2 choices for the fifth and finally only 1 choice for the last letter. So there are <m>6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720</m> permutations of the 6 letters. We could also write this as <m>6!</m> (read, 6 factorial; in general <m>n\factorial</m> is the product of all natural numbers between <m>1</m> and <m>n</m>.)<index><main>factorial</main></index>.
+</p>
+</solution>
+</example>
+<p>
+Sometimes we do not want to permute all of the letters.
+</p>
+<example>
+<statement>
+<p>
+How many 4 letter <q>words</q> can you make from the letters <em>a</em> through <em>f</em>, with no repeated letters?
+</p>
+</statement>
+<solution>
+<p>
+This is just like the problem of permuting 4 letters, only now we have more choices for each letter. For the first letter, there are 6 choices. For each of those, there are 5 choices for the second letter. Then there are 4 choices for the third letter, and 3 choices for the last letter. The total number of words is <m>6\cdot 5\cdot 4 \cdot 3 = 360</m>. This is not <m>6!</m> because we never multiplied by 2 and 1. We could start with <m>6!</m> and then cancel the 2 and 1, and thus write <m>\frac{6!}{2!}</m>.
+</p>
+</solution>
+</example>
+<p>
+In general, we can ask how many permutations exist of <m>k</m> objects choosing those objects from a larger collection of <m>n</m> objects. (In the example above, <m>k = 4</m>, and <m>n = 6</m>.) We write this number <m>P(n,k)</m>. From the example above, we see that to compute <m>P(n,k)</m> we must apply the multiplicative principle to <m>k</m> numbers, starting with <m>n</m> and counting backwards. So for example
+<me>
+  P(10, 4) = 10\cdot 9 \cdot 8 \cdot 7.
+</me>
+</p>
+
+<p>
+Notice again that <m>P(10,4)</m> starts out looking like <m>10!</m>, but we stop after 7. So
+<me>
+  P(10,4) = \frac{10\cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}{6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = \frac{10!}{6!}.
+</me>
+</p>
+
+<p>
+Careful: the factorial in the denominator is not <m>4!</m> but rather <m>(10-4)!</m>.
+</p>
+<convention>
+<title>Permutations</title>
+<p>
+<index><main>permutation</main></index>
+<m>\pnk</m><index><main><m>\pnk</m></main></index> is the number of permutations of <m>k</m> out of <m>n</m> objects.
+<me>
+  P(n,k) = \frac{n!}{(n-k)!}.
+</me>
+</p>
+</convention>
+<p>
+Note that when <m>n = k</m>, we have <m>P(n,n) = \frac{n!}{(n-n)!} = n!</m> (since we define <m>0!</m> to be 1). This makes sense <ndash /> we already know <m>n!</m> gives the number of permutations of all <m>n</m> objects.
+</p>
+
+<p>
+Here is another way to find the number of permutations of <m>k</m> out of <m>n</m> objects: first select which <m>k</m> objects will be in the permutation, then count how many ways there are to arrange them. Once you have selected the <m>k</m> objects, we know there are <m>k!</m> ways to arrange (permute) them. But how do you select <m>k</m> objects from the <m>n</m>? You have <m>n</m> objects, and you need to <em>choose</em> <m>k</m> of them. You can do that in <m>{n \choose k}</m> ways. This gives us another formula for <m>P(n,k)</m>:
+<me>
+  P(n,k) = {n \choose k}\cdot k!.
+</me>
+</p>
+
+<p>
+Now since we have a closed formula for <m>P(n,k)</m> already, we can substitute that in:
+<me>
+  \frac{n!}{(n-k)!} = {n \choose k} \cdot k!.
+</me>
+</p>
+
+<p>
+If we divide both sides by <m>k!</m> we get a closed formula for <m>{n \choose k}</m>.
+</p>
+
+<p>
+\begin{defbox}{Closed formula for <m>\cnk</m><index><main><m>\cnk</m></main></index>}
+<me>
+  {n \choose k} = \frac{n!}{(n-k)!k!}.
+</me>
+</p>
+
+<p>
+\end{convention}
+</p>
+
+<p>
+We say <m>P(n,k)</m> counts permutations, and <m>{n \choose k}</m> counts <em>combinations</em><index><main>combination</main></index>. The formulas for each are very similar, there is just an extra <m>k!</m> in the denominator of <m>{n \choose k}</m>. That extra <m>k!</m> accounts for the fact that <m>{n \choose k}</m> does not distinguish between the different orders that the <m>k</m> objects can appear in. We are just selecting (or choosing) the <m>k</m> objects, not arranging them. Perhaps <q>combination</q> is a misleading label. We don't mean it like a combination lock (where the order would definitely matter). Perhaps a better metaphor is a combination of flavors <ndash /> you just need to decide which flavors to combine, not the order in which to combine them.
+</p>
+
+<p>
+To further illustrate the connection between combinations and permutations, we close with an example.
+</p>
+<example>
+<statement>
+<p>
+You decide to have a dinner party. Even though you are incredibly popular and have 14 different friends, you only have enough chairs to invite 6 of them.
+</p>
+
+<ol>
+<li>How many choices do you have for which 6 friends to invite?</li>
+<li>What if you need to decide not only which friends to invite but also in which order to invite them in?  How many choices do you have then?</li>
+</ol>
+</statement>
+<solution>
+<ol>
+<li>You must simply choose 6 friends from a group of 14.  This can be done in <m>{14 \choose 6}</m> ways.  We can find this number either by using Pascal's triangle or the closed formula <m>\frac{14!}{8!\cdot 6!} = 3003</m>.</li>
+<li>Here you must count all the ways you can permute 6 friends chosen from a group of 14.  So the answer is <m>P(14, 6)</m>, which can be calculated as <m>\frac{14!}{8!} = 2192190</m>.</li>
+</ol>
+
+<p>
+How are these numbers related? Notice that <m>P(14,6)</m> is <em>much</em> larger than <m>{14 \choose 6}</m>. This makes sense. <m>{14 \choose 6}</m> picks 6 friends, but <m>P(14,6)</m> arranges the 6 friends as well as picks them. In fact, we can say exactly how much larger <m>P(14,6)</m> is. In both counting problems we choose 6 out of 14 friends. For the first one, we stop there, at 3003 ways. But for the second counting problem, each of those 3003 choices of 6 friends can be arranged in exactly <m>6!</m> ways. So now we have <m>3003\cdot 6!</m> choices and that is exactly <m>2192190</m>.
+</p>
+
+<p>
+Alternatively, look at the first problem another way. We want to select 6 out of 14 friends, but we do not care about the order they are selected in. To select 6 out of 14 friends, we might try this:
+<me>
+  14 \cdot 13 \cdot 12 \cdot 11 \cdot 10 \cdot 9.
+</me>
+</p>
+
+<p>
+This is a reasonable guess, since we have 14 choices for the first guest, then 13 for the second, and so on. But the guess is wrong (in fact, that product is exactly <m>2192190 = P(14,6)</m>). It distinguishes between the different orders in which we could invite the guests. To correct for this, we could divide by the number of different arrangements of the 6 guests (so that all of these would count as just one outcome). There are precisely <m>6!</m> ways to arrange 6 guests, so the correct answer to the first question is
+<me>
+  \frac{14 \cdot 13 \cdot 12 \cdot 11\cdot 10 \cdot 9}{6!}.
+</me>
+</p>
+
+<p>
+Note that another way to write this is
+<me>
+  \frac{14!}{8!\cdot 6!}.
+</me>
+which is what we had originally.
+</p>
+</solution>
+</example>
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+A pizza parlor offers 10 toppings.
+</p>
+
+<ol>
+<li>How many 3-topping pizzas could they put on their menu?  Assume double toppings are not allowed.</li>
+<li>How many total pizzas are possible, with between zero and ten toppings (but not double toppings) allowed?</li>
+<li>The pizza parlor will list the 10 toppings in two equal-sized columns on their menu.  How many ways can they arrange the toppings in the left column?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>{10 \choose 3}</m>.</li>
+<li><m>2^{10}</m>.</li>
+<li><m>P(10,5)</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+A combination lock consists of a dial with 40 numbers on it. To open the lock, you turn the dial to the right until you reach a first number, then to the left until you get to second number, then to the right again to the third number. The numbers must be distinct. How many different combinations are possible?
+</p>
+</statement>
+<answer>
+<p>
+Despite its name, we are not looking for a combination here. The order in which the three numbers appears matters. There are <m>P(40,3) = 40\cdot 39 \cdot 38</m> different possibilities for the <q>combination</q>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Using the digits 2 through 8, find the number of different 5-digit numbers such that:
+</p>
+
+<ol>
+<li>Digits can be used more than once.</li>
+<li>Digits cannot be repeated, but can come in any order.</li>
+<li>Digits cannot be repeated and must be written in increasing order.</li>
+<li>Which of the above counting questions is a combination and which is a permutation?  Explain why this makes sense.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>This is just the multiplicative principle.  There are 7 digits which we can select for each of the 5 positions, so we have <m>7^5</m> such numbers.</li>
+<li>Now we have 7 choices for the first number, 6 for the second, etc.  So there are <m>7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 = P(7,5)</m> such numbers.</li>
+<li>To build such a number we simply must select 5 different digits.  After doing so, there will only be one way to arrange them into a 5-digit number.  Thus there are <m>{7 \choose 5}</m> such numbers.</li>
+<li>The permutation is in part (b), while the combination is in part (c).  At first this seems backwards, since usually we use combinations for when order does not matter.  Here it looks like in part (c) that order does matter.  The better way to distinguish between combinations and permutations is to ask whether we are counting different arrangements as different outcomes.  In part (c), there is only one arrangement of any set of 5 digits, while in part (b) each set of 5 digits gives <m>5!</m> different outcomes.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many quadrilaterals can you draw using the dots below as vertices (corners)?
+</p>
+<image width="73%" source="images/eefb805e23476db65060aa4c8c0d359fdd61b53f.png" />
+</statement>
+<answer>
+<p>
+<m>{7\choose 2}{7\choose 2}</m>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many of the quadrilaterals possible in the previous problem are:
+</p>
+
+<ol>
+<li>Squares?</li>
+<li>Rectangles?</li>
+<li>Parallelograms?</li>
+<li>Trapezoids?<fn>Here, as in calculus, a trapezoid is defined as a quadrilateral with <em>at least</em> one pair of parallel sides.  In particular, parallelograms are trapezoids.</fn></li>
+<li>Trapezoids that are not parallelograms?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>5 (you need to skip one dot on the top and on the bottom).</li>
+<li><m>{7 \choose 2}</m>.  Once you select the two dots on the top, the bottom two are determined.</li>
+<li>This is tricky since you need to worry about running out of space.  One way to count: break into cases by the location of the top left corner.  You get <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15)</m>.</li>
+<li>All of them</li>
+<li>All of them, except the parallelograms.  So <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+An <em>anagram</em> of a word is just a rearrangement of its letters. How many different anagrams of <q>uncopyrightable</q> are there? (This happens to be the longest common English word without any repeated letters.)
+</p>
+</statement>
+<answer>
+<p>
+Since there are 15 different letters, we have 15 choices for the first letter, 14 for the next, and so on. Thus there are <m>15!</m> anagrams.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many anagrams are there of the word <q>assesses</q> that start with the letter <q>a</q>?
+</p>
+</statement>
+<answer>
+<p>
+After the first letter, we must rearrange the remaining 7 letters. There are only two letters, so this is really just a bit-string question. Thus there <m>{7 \choose 2}</m> anagrams starting with <q>a</q>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many anagrams are there of <q>anagram</q>?
+</p>
+</statement>
+<answer>
+<p>
+First, decide where to put the <q>a</q>s. There are 7 positions, and we must choose 3 of them to fill with an <q>a</q>. This can be done in <m>{7 \choose 3}</m> ways. The remaining 4 spots all get a different letter, so there are <m>4!</m> ways to finish off the anagram. This gives a total of <m>{7 \choose 3}\cdot 4!</m> anagrams. Strangely enough, this is 840, which is also equal to <m>P(7,4)</m>. To get the answer that way, start by picking one of the 7 <em>positions</em> to be filled by the <q>n</q>, one of the remaining 6 positions to be filled by the <q>g</q>, one of the remaining 5 positions to be filled by the <q>r</q>, one of the remaining 4 positions to be filled by the <q>m</q> and then put <q>a</q>s in the remaining 3 positions.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+On a business retreat, your company of 20 businessmen and businesswomen go golfing.
+</p>
+
+<ol>
+<li>You need to divide up into foursomes (groups of 4 people): a first foursome, a second foursome, and so on.  How many ways can you do this?</li>
+<li>After all your hard work, you realize that in fact, you want each foursome to include one of the five Board members.  How many ways can you do this?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>{20 \choose 4}{16 \choose 4}{12 \choose 4}{8 \choose 4}{4 \choose 4}</m>.</li>
+<li><m>5!{15 \choose 3}{12 \choose 3}{9 \choose 3}{6 \choose 3}{3 \choose 3}</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many different seating arrangements are possible for King Arthur and his 9 knights around their round table?
+</p>
+</statement>
+<answer>
+<p>
+<m>9!</m> (there are 10 people seated around the table, but it does not matter where King Arthur sits, only who sits to his left, two seats to his left, and so on).
+</p>
+</answer>
+</exercise>
+
+</exercises>
+</section>

@@ -1,0 +1,772 @@
+<section xml:id="sec_comb-proofs">
+<title>Combinatorial Proofs</title>
+
+
+<introduction>
+<activity> 
+<exercises>
+
+<exercise>
+<statement>
+<p>
+The Stanley Cup is decided in a best of 7 tournament between two teams. In how many ways can your team win? Let's answer this question two ways:
+</p>
+
+<ol>
+<li>How many of the 7 games does your team need to win?  How many ways can this happen?</li>
+<li>What if the tournament goes all 7 games?  So you win the last game.  How many ways can the first 6 games go down?</li>
+<li>What if the tournament goes just 6 games?  How many ways can this happen?  What about 5 games?  4 games?</li>
+<li>What are the two different ways to compute the number of ways your team can win?  Write down an equation involving binary coefficients (that is, <m>{n \choose k}</m>'s).  What pattern in Pascal's triangle is this an example of?</li>
+</ol>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Generalize. What if the rules changed and you played a best of <m>9</m> tournament (5 wins required)? What if you played an <m>n</m> game tournament with <m>k</m> wins required to be named champion?
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+</introduction>
+
+
+<subsection xml:id="subsec_patternsPascal">
+<title>Patterns in Pascal's Triangle</title>
+<p>
+Have a look again at Pascal's triangle. Forget for a moment where it comes from - just look at it as a mathematical object. What do you notice?
+</p>
+<image width="73%" source="images/c391f01a4cf0ecca5c669799e8497e52ef937573.png" />
+<p>
+There are lots of patterns hidden away in the triangle, enough to fill a reasonably sized book. Here are just a few of the most obvious ones:
+</p>
+
+<ol>
+<li>The entries on the border of the triangle are all 1.</li>
+<li>Any entry not on the border is the sum of the two entries above it.</li>
+<li>The triangle is symmetric.  On any row, entries on the left side are mirrored on the right side.</li>
+<li>The sum of all entries on a given row is a power of 2. (You should check this!)</li>
+</ol>
+
+<p>
+We would like to state these observations in a more precise way, and then prove that they are correct. Now each entry in Pascal's triangle is in fact a binomial coefficient. The 1 on the very top of the triangle is <m>{0 \choose 0}</m>. The next row (which we will call row 1, even though it is not the top-most row) consists of <m>{1 \choose 0}</m> and <m>{1 \choose 1}</m>. Row 4 (the row 1, 4, 6, 4, 1) consists of the binomial coefficients
+<me>
+  {4 \choose 0} ~~ {4 \choose 1} ~~ {4 \choose 2} ~~ {4 \choose 3} ~~ {4 \choose 4}.
+</me>
+</p>
+
+<p>
+Given this description of the elements in Pascal's triangle, we can rewrite the above observations as follows:
+</p>
+
+<ol>
+<li><m>{n \choose 0} = 1</m> and <m>{n \choose n} = 1</m>.</li>
+<li><m>{n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}</m>.</li>
+<li><m>{n \choose k} = {n \choose n-k}</m>.</li>
+<li><m>{n\choose 0} + {n \choose 1} + {n \choose 2} + \cdots + {n \choose n} = 2^n</m>.</li>
+</ol>
+
+<p>
+Each of these are an example of a <em>binomial identity</em><index><main>binomial identity</main></index>: an identity (i.e., equation) involving binomial coefficients.
+</p>
+
+<p>
+Our goal is to establish these identities. We wish to prove that they hold for all values of <m>n</m> and <m>k</m>. These proofs can be done in many ways. One option would be to give algebraic proofs, using the formula for <m>{n \choose k}</m>:
+<me>
+  {n \choose k} = \frac{n!}{(n-k)!\,k!}.
+</me>
+</p>
+
+<p>
+Here's how you might do that for the second identity above.
+</p>
+<example>
+<statement>
+<p>
+Give an algebraic proof for the binomial identity
+<me>
+  {n \choose k} = {n-1\choose k-1} + {n-1 \choose k}.
+</me>
+</p>
+</statement>
+<proof>
+<p>
+By the definition of <m>{n \choose k}</m>, we have
+<me>
+  {n-1 \choose k-1} = \frac{(n-1)!}{(n-1-(k-1))!(k-1)!} = \frac{(n-1)!}{(n-k)!(k-1)!} \hfill \mbox{ and }  {n-1 \choose k} = \frac{(n-1)!}{(n-1-k)!k!}.
+</me>
+</p>
+
+<p>
+Thus, starting with the right hand side of the equation we are trying to establish:
+<md>
+  <mrow>  {n-1 \choose k-1} + {n-1 \choose k} \amp  = \frac{(n-1)!}{(n-k)!(k-1)!}+ \frac{(n-1)!}{(n-1-k)!\,k!}</mrow>
+  <mrow>  \amp  = \frac{(n-1)!k}{(n-k)!\,k!} + \frac{(n-1)!(n-k)}{(n-k)!\,k!}</mrow>
+  <mrow>  \amp  = \frac{(n-1)!(k+n-k)}{(n-k)!\,k!}</mrow>
+  <mrow>  \amp  = \frac{n!}{(n-k)!\, k!}</mrow>
+  <mrow>  \amp  = {n \choose k}.</mrow>
+</md>
+</p>
+
+<p>
+The second line (where the common denominator is found) works because <m>k(k-1)! = k!</m> and <m>(n-k)(n-k-1)! = (n-k)!</m>.
+</p>
+</proof>
+
+</example>
+<p>
+This is certainly a valid proof, but also is entirely useless. Even if you understand the proof perfectly, it does not tell you <em>why</em> the identity is true. A better approach would be to explain what <m>{n \choose k}</m> <em>means</em> and then say why that is also what <m>{n-1 \choose k-1} + {n-1 \choose k}</m> means. Let's see how this works for the four identities we observed above.
+</p>
+<example>
+<statement>
+<p>
+Explain why <m>{n \choose 0} = 1</m> and <m>{n \choose n} = 1</m>.
+</p>
+</statement>
+<solution>
+<p>
+What do these binomial coefficients tell us? Well, <m>{n \choose 0}</m> gives the number of ways to select 0 objects from a collection of <m>n</m> objects. There is only one way to do this, namely to not select any of the objects. Thus <m>{n \choose 0} = 1</m>. Similarly, <m>{n \choose n}</m> gives the number of ways to select <m>n</m> objects from a collection of <m>n</m> objects. There is only one way to do this: select all <m>n</m> objects. Thus <m>{n \choose n} = 1</m>.
+</p>
+
+<p>
+Alternatively, we know that <m>{n \choose 0}</m> is the number of <m>n</m>-bit strings with weight 0. There is only one such string, the string of all 0's. So <m>{n \choose 0} = 1</m>. Similarly <m>{n \choose n}</m> is the number of <m>n</m>-bit strings with weight <m>n</m>. There is only one string with this property, the string of all 1's.
+</p>
+
+<p>
+Another way: <m>{n \choose 0}</m> gives the number of subsets of a set of size <m>n</m> containing 0 elements. There is only one such subset, the empty set. <m>{n \choose n}</m> gives the number of subsets containing <m>n</m> elements. The only such subset is the original set (of all elements).
+</p>
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Explain why <m>{n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}</m>.
+</p>
+</statement>
+<solution>
+<p>
+The easiest way to see this is to consider bit strings. <m>{n \choose k}</m> is the number of bit strings of length <m>n</m> containing <m>k</m> 1's. Of all of these strings, some start with a 1 and the rest start with a 0. First consider all the bit strings which start with a 1. After the 1, there must be <m>n-1</m> more bits (to get the total length up to <m>n</m>) and exactly <m>k-1</m> of them must be 1's (as we already have one, and we need <m>k</m> total). How many strings are there like that? There are exactly <m>{n-1 \choose k-1}</m> such bit strings, so of all the length <m>n</m> bit strings containing <m>k</m> 1's, <m>{n-1 \choose k-1}</m> of them start with a 1. Similarly, there are <m>{n-1\choose k}</m> which start with a 0 (we still need <m>n-1</m> bits and now <m>k</m> of them must be 1's). Since there are <m>{n-1 \choose k}</m> bit strings containing <m>n-1</m> bits with <m>k</m> 1's, that is the number of length <m>n</m> bit strings with <m>k</m> 1's which start with a 0.
+</p>
+
+<p>
+Another way: consider the question, how many ways can you select <m>k</m> pizza toppings from a menu containing <m>n</m> choices? One way to do this is just <m>{n \choose k}</m>. Another way to answer the same question is to first decide whether or not you want anchovies. If you do want anchovies, you still need to pick <m>k-1</m> toppings, now from just <m>n-1</m> choices. That can be done in <m>{n-1 \choose k-1}</m> ways. If you do not want anchovies, then you still need to select <m>k</m> toppings from <m>n-1</m> choices (the anchovies are out). You can do that in <m>{n-1 \choose k}</m> ways. Since the choices with anchovies are disjoint from the choices without anchovies, the total choices are <m>{n-1 \choose k-1}+{n-1 \choose k}</m>. But wait. We answered the same question in two different ways, so the two answers must be the same. Thus <m>{n \choose k} = {n-1\choose k-1} + {n-1 \choose k}</m>.
+</p>
+
+<p>
+You can also explain (prove) this identity by counting subsets, or even lattice paths.
+</p>
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Prove the binomial identity <m>{n \choose k} = {n \choose n-k}</m>.
+</p>
+</statement>
+<solution>
+<p>
+Why is this true? <m>{n \choose k}</m> counts the number of ways to select <m>k</m> things from <m>n</m> choices. On the other hand, <m>{n \choose n-k}</m> counts the number of ways to select <m>n-k</m> things from <m>n</m> choices. Are these really the same? Well, what if instead of selecting the <m>n-k</m> things you choose to exclude them. How many ways are there to choose <m>n-k</m> things to exclude from <m>n</m> choices. Clearly this is <m>{n \choose n-k}</m> as well (it doesn't matter whether you include or exclude the things once you have chosen them). And if you exclude <m>n-k</m> things, then you are including the other <m>k</m> things. So the set of outcomes should be the same.
+</p>
+
+<p>
+Let's try the pizza counting example like we did above. How many ways are there to pick <m>k</m> toppings from a list of <m>n</m> choices? On the one hand, the answer is simply <m>{n \choose k}</m>. Alternatively, you could make a list of all the toppings you don't want. To end up with a pizza containing exactly <m>k</m> toppings, you need to pick <m>n-k</m> toppings to not put on the pizza. You have <m>{n \choose n-k}</m> choices for the toppings you don't want. Both of these ways give you a pizza with <m>k</m> toppings, in fact all the ways to get a pizza with <m>k</m> toppings. Thus these two answers must be the same: <m>{n \choose k} = {n \choose n-k}</m>.
+</p>
+
+<p>
+You can also prove (explain) this identity using bit strings, subsets, or lattice paths. The bit string argument is nice: <m>{n \choose k}</m> counts the number of bit strings of length <m>n</m> with <m>k</m> 1's. This is also the number of bit string of length <m>n</m> with <m>k</m> 0's (just replace each 1 with a 0 and each 0 with a 1). But if a string of length <m>n</m> has <m>k</m> 0's, it must have <m>n-k</m> 1's. And there are exactly <m>{n\choose n-k}</m> strings of length <m>n</m> with <m>n-k</m> 1's.
+</p>
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Prove the binomial identity <m>{n\choose 0} + {n \choose 1} + {n\choose 2} + \cdots + {n \choose n} = 2^n</m>.
+</p>
+</statement>
+<solution>
+<p>
+Let's do a <q>pizza proof</q> again. We need to find a question about pizza toppings which has <m>2^n</m> as the answer. How about this: If a pizza joint offers <m>n</m> toppings, how many pizzas can you build using any number of toppings from no toppings to all toppings, using each topping at most once?
+</p>
+
+<p>
+On one hand, the answer is <m>2^n</m>. For each topping you can say <q>yes</q> or <q>no,</q> so you have two choices for each topping.
+</p>
+
+<p>
+On the other hand, divide the possible pizzas into disjoint groups: the pizzas with no toppings, the pizzas with one topping, the pizzas with two toppings, etc. If we want no toppings, there is only one pizza like that (the empty pizza, if you will) but it would be better to think of that number as <m>{n \choose 0}</m> since we choose 0 of the <m>n</m> toppings. How many pizzas have 1 topping? We need to choose 1 of the <m>n</m> toppings, so <m>{n \choose 1}</m>. We have:
+</p>
+
+<ul>
+<li class="custom-list-style-type" label="" >Pizzas with 0 toppings: <m>{n \choose 0}</m></li>
+<li class="custom-list-style-type" label="" >Pizzas with 1 topping: <m>{n \choose 1}</m></li>
+<li class="custom-list-style-type" label="" >Pizzas with 2 toppings: <m>{n \choose 2}</m></li>
+<li class="custom-list-style-type" label="" > <m>\vdots</m></li>
+<li class="custom-list-style-type" label="" >Pizzas with <m>n</m> toppings: <m>{n \choose n}</m>.</li>
+</ul>
+
+<p>
+The total number of possible pizzas will be the sum of these, which is exactly the left hand side of the identity we are trying to prove.
+</p>
+
+<p>
+Again, we could have proved the identity using subsets, bit strings, or lattice paths (although the lattice path argument is a little tricky).
+</p>
+</solution>
+</example>
+<p>
+Hopefully this gives some idea of how explanatory proofs of binomial identities can go. It is worth pointing out that sometimes more traditional proofs are also nice.<fn>Most every binomial identity can be proved using mathematical induction, using the recursive definition for <m>{n \choose k}</m>.  We will discuss induction in \Cref{sec:induction}.</fn> For example, consider the following rather slick proof of the last identity.
+</p>
+
+<p>
+Recall the binomial theorem:
+<me>
+  (x + y)^n = {n \choose 0}x^n + {n \choose 1}x^{n-1}y + {n \choose 2}x^{n-2}y^2 + \cdots + {n \choose n-1}x\cdot y^n + {n \choose n}y^n.
+</me>
+</p>
+
+<p>
+Let <m>x = 1</m> and <m>y = 1</m>. We get:
+<me>
+  (1 + 1)^n = {n \choose 0}1^n + {n \choose 1}1^{n-1}1 + {n \choose 2}1^{n-2}1^2 + \cdots + {n \choose n-1}1\cdot 1^n + {n \choose n}1^n.
+</me>
+</p>
+
+<p>
+Of course this simplifies to:
+<me>
+  (2)^n = {n \choose 0} + {n \choose 1} + {n \choose 2} + \cdots + {n \choose n-1} + {n \choose n}.
+</me>
+</p>
+
+<p>
+Something fun to try: Let <m>x = 1</m> and <m>y = 2</m>. Neat huh?
+</p>
+</subsection>
+
+
+<subsection xml:id="subsec_moreProofs">
+<title>More Proofs</title>
+<p>
+The explanatory proofs given in the above examples are typically called <em>combinatorial proofs</em>. In general, to give a combinatorial proof for a binomial identity, say <m>A = B</m> you do the following:
+</p>
+
+<ol>
+<li>Find a counting problem you will be able to answer in two ways.</li>
+<li>Explain why one answer to the counting problem is <m>A</m>.</li>
+<li>Explain why the other answer to the counting problem is <m>B</m>.</li>
+</ol>
+
+<p>
+Since both <m>A</m> and <m>B</m> are the answers to the same question, we must have <m>A = B</m>.
+</p>
+
+<p>
+The tricky thing is coming up with the question. This is not always obvious, but it gets easier the more counting problems you solve. You will start to recognize types of answers as the answers to types of questions. More often what will happen is you will be solving a counting problem and happen to think up two different ways of finding the answer. Now you have a binomial identity and the proof is right there. The proof <em>is</em> the problem you just solved together with your two solutions.
+</p>
+
+<p>
+For example, consider this counting question:
+</p>
+<blockquote>
+How many 10-letter words use exactly four A's, three B's, two C's and one D?
+</blockquote>
+<p>
+Let's try to solve this problem. We have 10 spots for letters to go. Four of those need to be A's. We can pick the four A-spots in <m>{10 \choose 4}</m> ways. Now where can we put the B's? Well there are only 6 spots left, we need to pick <m>3</m> of them. This can be done in <m>{6 \choose 3}</m> ways. The two C's need to go in two of the 3 remaining spots, so we have <m>{3 \choose 2}</m> ways of doing that. That leaves just one spot of the D, but we could write that 1 choice as <m>{1 \choose 1}</m>. Thus the answer is:
+<me>
+  {10 \choose 4}{6 \choose 3}{3 \choose 2}{1 \choose 1}.
+</me>
+</p>
+
+<p>
+But why stop there? We can find the answer another way too. First let's decide where to put the one D: we have 10 spots, we need to choose 1 of them, so this can be done in <m>{10 \choose 1}</m> ways. Next, choose one of the <m>{9 \choose 2}</m> ways to place the two C's. We now have <m>7</m> spots left, and three of them need to be filled with B's. There are <m>{7 \choose 3}</m> ways to do this. Finally the A's can be placed in <m>{4 \choose 4}</m> (that is, only one) ways. So another answer to the question is
+<me>
+  {10 \choose 1}{9 \choose 2}{7 \choose 3}{4 \choose 4}.
+</me>
+</p>
+
+<p>
+Interesting. This gives us the binomial identity:
+<me>
+  {10 \choose 4}{6 \choose 3}{3 \choose 2}{1 \choose 1} = {10 \choose 1}{9 \choose 2}{7 \choose 3}{4 \choose 4}.
+</me>
+</p>
+
+<p>
+Here are a couple of other binomial identities with combinatorial proofs.
+</p>
+<example>
+<statement>
+<p>
+Prove the identity
+<me>
+  1 n + 2(n-1) + 3  (n-2) + \cdots + (n-1) 2 + n  1 = {n+2 \choose 3}.
+</me>
+</p>
+</statement>
+<solution>
+<p>
+To give a combinatorial proof we need to think up a question we can answer in two ways: one way needs to give the left-hand-side of the identity, the other way needs to be the right-hand-side of the identity. Our clue to what question to ask comes from the right hand side: <m>{n+2 \choose 3}</m> counts the number of ways to select 3 things from a group of <m>n+2</m> things. Let's name those things <m>1, 2, 3, \ldots, n+2</m>. In other words, we want to find 3-element subsets of those numbers (since order should not matter, subsets are exactly the right thing to think about). We will have to be a bit clever to explain why the left-hand-side also gives the number of these subsets. Here's the proof.
+</p>
+
+<proof>
+<p>
+Consider the question <q>How many 3-element subsets are there of the set <m>\{1,2,3,\ldots, n+2\}</m>?</q> We answer this in two ways:
+</p>
+
+<p>
+<u>Answer 1</u>: We must select 3 elements from the collection of <m>n+2</m> elements. This can be done in <m>{n+2 \choose 3}</m> ways.
+</p>
+
+<p>
+<u>Answer 2</u>: Break this problem up into cases by what the middle number in the subset is. Say each subset is <m>\{a,b,c\}</m> written in increasing order. We count the number of subsets for each distinct value of <m>b</m>. The smallest possible value of <m>b</m> is <m>2</m>, and the largest is <m>n+1</m>.
+</p>
+
+<p>
+When <m>b = 2</m>, there are <m>1 \cdot n</m> subsets: 1 choice for <m>a</m> and <m>n</m> choices (3 through <m>n+2</m>) for <m>c</m>.
+</p>
+
+<p>
+When <m>b = 3</m>, there are <m>2 \cdot (n-1)</m> subsets: 2 choices for <m>a</m> and <m>n-1</m> choices for <m>c</m>.
+</p>
+
+<p>
+When <m>b = 4</m>, there are <m>3 \cdot (n-2)</m> subsets: 3 choices for <m>a</m> and <m>n-2</m> choices for <m>c</m>.
+</p>
+
+<p>
+And so on. When <m>b = n+1</m>, there are <m>n</m> choices for <m>a</m> and only 1 choice for <m>c</m>, so <m>n \cdot 1</m> subsets.
+</p>
+
+<p>
+Therefore the total number of subsets is
+<me>
+  1 n + 2 (n-1) + 3  (n-2) + \cdots + (n-1)2 + n  1.
+</me>
+</p>
+
+<p>
+Since Answer 1 and Answer 2 are answers to the same question, they must be equal. Therefore
+<me>
+  1 n + 2 (n-1) + 3  (n-2) + \cdots + (n-1) 2 + n  1 = {n+2 \choose 3}.
+</me>
+</p>
+</proof>
+
+</solution>
+</example>
+
+<example>
+<statement>
+<p>
+Prove the binomial identity
+<me>
+  {n \choose 0}^2 + {n \choose 1}^2 + {n \choose 2}^2 + \cdots + {n \choose n}^2 = {2n \choose n}.
+</me>
+</p>
+</statement>
+<solution>
+<p>
+We will give two different proofs of this fact. The first will be very similar to the previous example (counting subsets). The second proof is a little slicker, using lattice paths.
+</p>
+
+<proof>
+<p>
+Consider the question: <q>How many pizzas can you make using <m>n</m> toppings when there are <m>2n</m> toppings to choose from?</q>
+</p>
+
+<p>
+<u>Answer 1</u>: There are <m>2n</m> toppings, from which you must choose <m>n</m>. This can be done in <m>{2n \choose n}</m> ways.
+</p>
+
+<p>
+<u>Answer 2</u>: Divide the toppings into two groups of <m>n</m> toppings (perhaps <m>n</m> meats and <m>n</m> veggies). Any choice of <m>n</m> toppings must include some number from the first group and some number from the second group. Consider each possible number of meat toppings separately:
+</p>
+
+<p>
+0 meats: <m>{n \choose 0}{n \choose n}</m>, since you need to choose 0 of the <m>n</m> meats and <m>n</m> of the <m>n</m> veggies.
+</p>
+
+<p>
+1 meat: <m>{n \choose 1}{n \choose n-1}</m>, since you need 1 of <m>n</m> meats so <m>n-1</m> of <m>n</m> veggies.
+</p>
+
+<p>
+2 meats: <m>{n \choose 2}{n \choose n-2}</m>. Choose 2 meats and the remaining <m>n-2</m> toppings from the <m>n</m> veggies.
+</p>
+
+<p>
+And so on. The last case is <m>n</m> meats, which can be done in <m>{n \choose n}{n \choose 0}</m> ways.
+</p>
+
+<p>
+Thus the total number of pizzas possible is
+<me>
+  {n \choose 0}{n \choose n} + {n \choose 1}{n \choose n-1} + {n \choose 2}{n \choose n-2} + \cdots + {n \choose n}{n \choose 0}.
+</me>
+</p>
+
+<p>
+This is not quite the left hand side <ellipsis /> yet. Notice that <m>{n \choose n} = {n \choose 0}</m> and <m>{n \choose n-1} = {n  \choose 1}</m> and so on, by the symmetry formula. Thus we do indeed get
+<me>
+  {n \choose 0}^2 + {n \choose 1}^2 + {n \choose 2}^2 + \cdots + {n \choose n}^2.
+</me>
+</p>
+</proof>
+
+<p>
+Here's the second proof:
+</p>
+
+<proof>
+<p>
+Consider the question: How many lattice paths are there from <m>(0,0)</m> to <m>(n,n)</m>?
+</p>
+
+<p>
+<u>Answer 1</u>: We must travel <m>2n</m> units, and <m>n</m> of them must be in the up direction. Thus there are <m>{2n \choose n}</m> paths.
+</p>
+
+<p>
+<u>Answer 2</u>: Note that any path from <m>(0,0)</m> to <m>(n,n)</m> must cross the line <m>x + y = n</m>. That is, any path must pass through exactly one of the points: <m>(0,n)</m>, <m>(1,n-1)</m>, <m>(2,n-2)</m>, <ellipsis />, <m>(n, 0)</m>. For example, this is what happens in the case <m>n = 4</m>:
+</p>
+<image width="73%" source="images/2b986d7a1809e69532bfc0431acc9468401749aa.png" />
+<p>
+How many paths pass through <m>(0,n)</m>? To get to that point, you must travel <m>n</m> units, and <m>0</m> of them are to the right, so there are <m>{n \choose 0}</m> ways to get to <m>(0,n)</m>. From <m>(0,n)</m> to <m>(n,n)</m> takes <m>n</m> steps, and <m>0</m> of them are up. So there are <m>{n \choose 0}</m> ways to get from <m>(0,n)</m> to <m>(n,n)</m>. Therefore there are <m>{n \choose 0}{n \choose 0}</m> paths from <m>(0,0)</m> to <m>(n,n)</m> through the point <m>(0,n)</m>.
+</p>
+
+<p>
+What about through <m>(1,n-1)</m>. There are <m>{n \choose 1}</m> paths to get there (<m>n</m> steps, 1 to the right) and <m>{n \choose 1}</m> paths to complete the journey to <m>(n,n)</m> (<m>n</m> steps, <m>1</m> up). So there are <m>{n \choose 1}{n \choose 1}</m> paths from <m>(0,0)</m> to <m>(n,n)</m> through <m>(1,n-1)</m>.
+</p>
+
+<p>
+In general, to get to <m>(n,n)</m> through the point <m>(k,n-k)</m> we have <m>{n \choose k}</m> paths to the midpoint and then <m>{n \choose k}</m> paths from the midpoint to <m>(n,n)</m>. So there are <m>{n \choose k}{n \choose k}</m> paths from <m>(0,0)</m> to <m>(n,n)</m> through <m>(k, n-k)</m>.
+</p>
+
+<p>
+All together then the total paths from <m>(0,0)</m> to <m>(n,n)</m> passing through exactly one of these midpoints is
+<me>
+  {n \choose 0}^2 + {n \choose 1}^2 + {n \choose 2}^2 + \cdots + {n \choose n}^2.
+</me>
+</p>
+</proof>
+
+</solution>
+</example>
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Prove the identity <m>{n\choose k} = {n-1 \choose k-1} + {n-1 \choose k}</m> using a question about subsets.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+<u>Question</u>: How many subsets of size <m>k</m> are there of the set <m>\{1,2,\ldots, n\}</m>?
+</p>
+
+<p>
+<u>Answer 1</u>: You must choose <m>k</m> out of <m>n</m> elements to put in the set, which can be done in <m>{n \choose k}</m> ways.
+</p>
+
+<p>
+<u>Answer 2</u>: First count the number of <m>k</m>-element subsets of <m>\{1,2,\ldots, n\}</m> which contain the number <m>n</m>. We must choose <m>k-1</m> of the <m>n-1</m> other element to include in this set. Thus there are <m>{n-1\choose k-1}</m> such subsets. We have not yet counted all the <m>k</m>-element subsets of <m>\{1,2,\ldots, n\}</m> though. In fact, we have missed exactly those subsets which do NOT contain <m>n</m>. To form one of these subsets, we need to choose <m>k</m> of the other <m>n-1</m> elements, so this can be done in <m>{n-1 \choose k}</m> ways. Thus the answer to the question is <m>{n-1 \choose k-1} + {n-1 \choose k}</m>.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Give a combinatorial proof of the identity <m>2+2+2 = 3\cdot 2</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+<u>Question</u>: How many 2-letter words start with <em>a</em>, <em>b</em>, or <em>c</em> and end with either <em>y</em> or <em>z</em>?
+</p>
+
+<p>
+<u>Answer 1</u>: There are two words that start with <em>a</em>, two that start with <em>b</em>, two that start with <em>c</em>, for a total of <m>2+2+2</m>.
+</p>
+
+<p>
+<u>Answer 2</u>: There are three choices for the first letter and two choices for the second letter, for a total of <m>3 \cdot 2</m>.
+</p>
+
+<p>
+Since the two answer are both answers to the same question, they are equal. Thus <m>2 + 2 + 2 = 3\cdot 2</m>.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Give a combinatorial proof for the identity <m>1 + 2 + 3 + \cdots + n = {n+1 \choose 2}</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+<u>Question</u>: How many subsets of <m>A = {1,2,3, \ldots, n+1}</m> contain exactly two elements?
+</p>
+
+<p>
+<u>Answer 1</u>: We must choose 2 elements from <m>n+1</m> choices, so there are <m>{n+1 \choose 2}</m> subsets.
+</p>
+
+<p>
+<u>Answer 2</u>: We break this question down into cases, based on what the larger of the two elements in the subset is. The larger element can't be 1, since we need at least one element smaller than it.
+</p>
+
+<p>
+Larger element is 2: there is 1 choice for the smaller element.
+</p>
+
+<p>
+Larger element is 3: there are 2 choices for the smaller element.
+</p>
+
+<p>
+Larger element is 4: there are 3 choices for the smaller element.
+</p>
+
+<p>
+And so on. When the larger element is <m>n+1</m>, there are <m>n</m> choices for the smaller element. Since each two element subset must be in exactly one of these cases, the total number of two element subsets is <m>1 + 2 + 3 + \cdots + n</m>.
+</p>
+
+<p>
+Answer 1 and answer 2 are both correct, so they must be equal. Therefore
+<me>
+  1 + 2 + 3 + \cdots + n = {n+1 \choose 2}
+</me>
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+A woman is getting married. She has 15 best friends but can only select 6 of them to be her bridesmaids, one of which needs to be her maid of honor. How many ways can she do this?
+</p>
+
+<ol>
+<li>What if she first selects the 6 bridesmaids, and then selects one of them to be the maid of honor?</li>
+<li>What if she first selects her maid of honor, and then 5 other bridemaids?</li>
+<li>Explain why <m>6 {15 \choose 6} = 15 {14 \choose 5}</m>.</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>She has <m>{15 \choose 6}</m> ways to select the 6 bridesmaids, and then for each way, has 6 choices for the maid of honor.  Thus she has <m>{15 \choose 6}6</m> choices.</li>
+<li>She has 15 choices for who will be her maid of honor.  Then she needs to select 5 of the remaining 14 friends to be bridesmaids, which she can do in <m>{14 \choose 5}</m> ways.  Thus she has <m>15 {14 \choose 5}</m> choices.</li>
+<li>We have answered the question (how many wedding parties can the bride choose from) in two ways.  The first way gives the left hand side of the identity and the second way gives the right hand side of the identity.  Therefore the identity holds.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Give a combinatorial proof of the identity <m>{n \choose 2}{n-2 \choose k-2} = {n\choose k}{k \choose 2}</m>.
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+<u>Question</u>: You have a large container filled with ping-pong balls, all with a different number of them. You must select <m>k</m> of the balls, putting two of them in a jar and the others in a box. How many ways can you do this?
+</p>
+
+<p>
+<u>Answer 1</u>: First select 2 of the <m>n</m> balls to put in the jar, then select <m>k-2</m> of the remaining <m>n-2</m> balls to put in the box. The first task can be completed in <m>{n \choose 2}</m> different ways, the second task in <m>{n-2 \choose k-2}</m> ways. Thus there are <m>{n \choose 2}{n-2 \choose k-2}</m> ways to select the balls.
+</p>
+
+<p>
+<u>Answer 2</u>: First select <m>k</m> balls from the <m>n</m> in the container. Then pick 2 of the <m>k</m> balls you picked to put in the jar, placing the remaining <m>k-2</m> in the box. The first task can be completed in <m>{n \choose k}</m> ways, the second task in <m>{k \choose 2}</m> ways. Thus there are <m>{n \choose k}{k \choose 2}</m> ways to select the balls.
+</p>
+
+<p>
+Since both answers count the same thing, they must be equal.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Consider the bit strings in <m>\b B^6_2</m> (bit strings of length 6 and weight 2).
+</p>
+
+<ol>
+<li>How many of those bit strings start with 1?</li>
+<li>How many of those bit strings start with 01?</li>
+<li>How many of those bit strings start with 001?</li>
+<li>Are there any other strings we have not counted yet?  Which ones, and how many are there?</li>
+<li>How many bit strings are there total in <m>\b B^6_2</m>?</li>
+<li>What binomial identity have you just given a combinatorial proof for?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>After the 1, we need to find a 5-bit string with one 1.  There are <m>{5 \choose 1}</m> ways to do this.</li>
+<li><m>{4 \choose 1}</m> (we need to pick 1 of the remaining 4 slots to be the second 1).</li>
+<li><m>{3 \choose 1}</m></li>
+<li>Yes.  We still need strings starting with 0001 (there are <m>{2 \choose 1}</m> of these) and strings starting 00001 (there is only <m>{1 \choose 1} = 1</m> of these).</li>
+<li><m>{6 \choose 2}</m></li>
+<li>An example of the Hockey Stick Theorem:
+<me>
+  {1 \choose 1} + {2 \choose 1} + {3 \choose 1} + {4 \choose 1} + {5 \choose 1} = {6 \choose 2}
+</me>
+</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Let's count <em>ternary</em> digit strings, that is, strings in which each digit can be 0, 1, or 2.
+</p>
+
+<ol>
+<li>How many ternary digit strings contain exactly <m>n</m> digits?</li>
+<li>How many ternary digit strings contain exactly <m>n</m> digits and <m>n</m> 2's.</li>
+<li>How many ternary digit strings contain exactly <m>n</m> digits and <m>n-1</m> 2's.  (Hint: where can you put the non-2 digit, and then what could it be?)</li>
+<li>How many ternary digit strings contain exactly <m>n</m> digits and <m>n-2</m> 2's.  (Hint: see previous hint)</li>
+<li>How many ternary digit strings contain exactly <m>n</m> digits and <m>n-k</m> 2's.</li>
+<li>How many ternary digit strings contain exactly <m>n</m> digits and no 2's. (Hint: what kind of a string is this?)</li>
+<li>Use the above parts to give a combinatorial proof for the identity
+<me>
+  {n \choose 0} + 2{n \choose 1} + 2^2{n \choose 2} + 2^3{n \choose 3} + \cdots + 2^n{n \choose n} = 3^n.
+</me>
+</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>3^n</m>, since there are 3 choices for each of the <m>n</m> digits.</li>
+<li><m>1</m>, since all the digits need to be 2's.  However, we might write this as <m>{n \choose 0}</m>.</li>
+<li>There are <m>{n \choose 1}</m> places to put the non-2 digit.  That digit can be either a 0 or a 1, so there are <m>2{n \choose 1}</m> such strings.</li>
+<li>We must choose two slots to fill with 0's or 1's.  There are <m>{n \choose 2}</m> ways to do that.  Once the slots are picked, we have two choices for the first slot (0 or 1) and two choices for the second slot (0 or 1).  So there are a total of <m>2^2{n \choose 2}</m> such strings.</li>
+<li>There are <m>{n \choose k}</m> ways to pick which slots don't have the 2's.  Then those slots can be filled in <m>2^k</m> ways (0 or 1 for each slot).  So there are <m>2^k{n \choose k}</m> such strings.</li>
+<li>These strings contain just 0's and 1's, so they are bit strings.  There are <m>2^n</m> bit strings.  But keeping with the pattern above, we might write this as <m>2^n {n \choose n}</m>.</li>
+<li>We answer the question of how many length <m>n</m> ternary digit strings there are in two ways.  First, each digit can be one of three choices, so the total number of strings is <m>3^n</m>.  On the other hand, we could break the question down into cases by how many of the digits are 2's.  If they are all 2's, then there are <m>{n \choose 0}</m> strings.  If all but one is a 2, then there are <m>2{n \choose 1}</m> strings.  If all but 2 of the digits are 2's, then there are <m>2^2{n \choose 2}</m> strings.  We choose 2 of the <m>n</m> digits to be non-2, and then there are 2 choices for each of those digits.  And so on for every possible number of 2's in the string.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many ways are there to rearrange the letters in the word <q>rearrange</q>? Answer this question in at least two different ways to establish a binomial identity.
+</p>
+</statement>
+<answer>
+<p>
+The word contains 9 letters: 3 <q>r</q>s, 2 <q>a</q>s and 2 <q>e</q>s, along with an <q>n</q> and a <q>g</q>. We could first select the positions for the <q>r</q>s in <m>{9 \choose 3}</m> ways, then the <q>a</q>s in <m>{6 \choose 2}</m> ways, the <q>e</q>s in <m>{4 \choose 2}</m> ways and then select one of the remaining two spots to put the <q>n</q> (placing the <q>g</q> in the last spot). This gives the answer
+<me>
+  {9 \choose 3}{6 \choose 2}{4 \choose 2}{2\choose 1}{1\choose 1}.
+</me>
+</p>
+
+<p>
+Alternatively, we could select the positions of the letters in the opposite order, which would give an answer
+<me>
+  {9 \choose 1}{8\choose 1}{7 \choose 2}{5\choose 2}{3\choose 3}.
+</me>
+</p>
+
+<p>
+(where the 3 <q>r</q>s go in the remaining 3 spots). These two expressions are equal:
+<me>
+  {9 \choose 3}{6 \choose 2}{4 \choose 2}{2\choose 1}{1\choose 1} = {9 \choose 1}{8\choose 1}{7 \choose 2}{5\choose 2}{3\choose 3}.
+</me>
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Give a combinatorial proof for the identity <m>P(n,k) = {n \choose k}k!</m>
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+<u>Question</u>: How many <m>k</m>-letter words can you make using <m>n</m> different letters without repeating any letter?
+</p>
+
+<p>
+<u>Answer 1</u>: There are <m>n</m> choices for the first letter, <m>n-1</m> choices for the second letter, <m>n-2</m> choices for the third letter, and so on until <m>n - (k-1)</m> choices for the <m>k</m>th letter (since <m>k-1</m> letters have already been assigned at that point). The product of these numbers can be written <m>\frac{n!}{(n-k)!}</m> which is <m>P(n,k)</m>.
+</p>
+
+<p>
+<u>Answer 2</u>: First pick <m>k</m> letters to be in the word from the <m>n</m> choices. This can be done in <m>{n \choose k}</m> ways. Now arrange those letters into a word. There are <m>k</m> choices for the first letter, <m>k-1</m> choices for the second, and so on, for a total of <m>k!</m> arrangements of the <m>k</m> letters. Thus the total number of words is <m>{n \choose k}k!</m>.
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Establish the identity below using a combinatorial proof.
+<me>
+  {2 \choose 2}{n \choose 2} + {3 \choose 2}{n-1 \choose 2} + {4\choose 2}{n-2 \choose 2} + \cdots + {n\choose 2}{2\choose 2} = {n+3 \choose 5}.
+</me>
+</p>
+</statement>
+<answer>
+
+<proof>
+<p>
+<u>Question</u>: How many 5-element subsets are there of the set <m>\{1,2,\ldots, n+3\}</m>.
+</p>
+
+<p>
+<u>Answer 1</u>: We choose 5 out of the <m>n+3</m> elements, so <m>{n+3 \choose 5}</m>.
+</p>
+
+<p>
+<u>Answer 2</u>: Break this up into cases by what the <q>middle</q> (third smallest) element of the 5 element subset is. The smallest this could be is a 3. In that case, we have <m>{2 \choose 2}</m> choices for the numbers below it, and <m>{n \choose 2}</m> choices for the numbers above it. Alternatively, the middle number could be a 4. In this case there are <m>{3 \choose 2}</m> choices for the bottom two numbers and <m>{n-1 \choose 2}</m> choices for the top two numbers. If the middle number is 5, then there are <m>{4 \choose 2}</m> choices for the bottom two numbers and <m>{n-2 \choose 2}</m> choices for the top two numbers. An so on, all the way up to the largest the middle number could be, which is <m>n+1</m>. In that case there are <m>{n \choose 2}</m> choices for the bottom two numbers and <m>{2 \choose 2}</m> choices for the top number. Thus the number of 5 element subsets is.
+<me>
+  {2 \choose 2}{n \choose 2} + {3 \choose 2}{n-1 \choose 2} + {4\choose 2}{n-2 \choose 2} + \cdots + {n\choose 2}{2\choose 2}.
+</me>
+</p>
+</proof>
+
+</answer>
+</exercise>
+
+</exercises>
+</subsection>
+
+</section>

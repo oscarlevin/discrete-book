@@ -1,0 +1,450 @@
+<section xml:id="sec_binom">
+<title>Binomial Coefficients</title>
+
+
+<introduction>
+<activity>
+<p>
+In Chess, a rook can move only in straight lines (not diagonally). Fill in each square of the chess board below with the number of different shortest paths the rook, in the upper left corner, can take to get to that square. For example, one square is already filled in. There are six different paths from the rook to the square: DDRR (down down right right), DRDR, DRRD, RDDR, RDRD and RRDD.
+</p>
+
+<p>
+\cbDefineNewPiece{white}x{<m>6</m>}{<m>6</m>}
+</p>
+\chessboard[smallboard, borderwidth=.5px, showmover=false, labelleft=false, labelbottom=false, color=blue, setpieces={ra8, xc6}, blackfieldcolor=gray, setfontcolors] 
+</activity>
+<p>
+Here are some apparently different discrete objects we can count: subsets, bit strings, lattice paths, and binomial coefficients. We will give an example of each type of counting problem (and say what these things even are). As we will see, these counting problems are surprisingly similar.
+</p>
+
+<p>
+\subsubsection*{Subsets} Subsets should be familiar, otherwise read over \Cref{sec:sets} again. Suppose we look at the set <m>A = \{1,2,3,4,5\}</m>. How many subsets of <m>A</m> contain exactly 3 elements?
+</p>
+
+<p>
+First, a simpler question. How many subsets of <m>A</m> are there total? In other words, what is <m>|\pow(A)|</m> (the cardinality of the power set of <m>A</m>)? Think about how we would build a subset. We need to decide, for each of the elements of <m>A</m>, whether or not to include the element in our subset. So we need to decide <q>yes</q> or <q>no</q> for the element 1. And for each choice we make, we need to decide <q>yes</q> or <q>no</q> for the element 2. And so on. For each of the 5 elements, we have 2 choices. Therefore the number of subsets is simply <m>2^5</m> (by the multiplicative principle).
+</p>
+
+<p>
+Of those 32 subsets, how many have 3 elements? This is not obvious. Note that we cannot just use the multiplicative principle. Maybe we want to say we have 2 choices for the first element, 2 choices for the second, 2 choices for the third, and then only 1 choice for the other two. But what if we said <q>no</q> to one of the first three elements? Then we would have two choices for the 4th element. What a mess!
+</p>
+
+<p>
+Another (bad) idea: we need to pick three elements to be in our subset. There are 5 elements to choose from. So there are 5 choices for the first element, and for each of those 4 choices for the second, and then 3 for the third (last) element. The multiplicative principle would say then that there are a total of <m>5 \cdot 4 \cdot 3 = 60</m> ways to select the 3 element subset. But this cannot be correct (<m>60 > 32</m> for one thing). One of the outcomes we would get from these choices would be the set <m>\{3,2,5\}</m>, by choosing the element 3 first, then the element 2, then the element 5. Another outcome would be <m>\{5,2,3\}</m> by choosing the element 5 first, then the element 2, then the element 3. But these are the same set! We can correct this by dividing the supposed 60 outcomes by the number of different outcomes which count as the same for each three elements. There happen to be 6 of these. So we expect there to be 10 3-element subsets of <m>A</m>.
+</p>
+
+<p>
+Is this right? Well, we could list out all 10 of them, being very systematic in doing so, to make sure we don't miss any or list any twice. Or we could try to count how many subsets of <m>A</m> <em>don't</em> have 3 elements in them. How many have no elements? Just 1 (the empty set). How many have 5? Again, just 1. These are the cases in which we say <q>no</q> to all elements, or <q>yes</q> to all elements. Okay, what about the subsets which contain a single element? There are 5 of these. We must say <q>yes</q> to exactly one element, and there are 5 to choose from. This is also the number of subsets containing 4 elements. Those are the ones for which we must say <q>no</q> to exactly one element.
+</p>
+
+<p>
+So far we have counted 12 of the 32 subsets. We have not yet counted the subsets with cardinality 2 and with cardinality 3. There are a total of 20 subsets left to split up between these two groups. But the number of each must be the same! If we say <q>yes</q> to exactly two elements, that can be accomplished in exactly the same number of ways as the number of ways we can say <q>no</q> to exactly two elements. So the number of 2-element subsets is equal to the number of 3-element subsets. Together there are 20 of these subsets, so 10 each.
+</p>
+<tabular>
+<row><cell>Number of elements:</cell><cell>0</cell><cell>1</cell><cell>2</cell><cell>3</cell><cell>4</cell><cell>5</cell></row>
+<row bottom="minor"><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row>
+<row><cell>Number of subsets:</cell><cell>1</cell><cell>5</cell><cell>10</cell><cell>10</cell><cell>5</cell><cell>1</cell></row>
+</tabular>
+<p>
+\subsubsection*{Bit Strings} <q>Bit</q> is short for <q>binary digit,</q> so a bit string is a string of binary digits. The binary digits are simply the numbers 0 and 1. All of the following are bit strings:
+<me>
+  1001 \quad 0 \quad 1111 \quad 1010101010
+</me>
+</p>
+
+<p>
+The number of bits (0's or 1's) in the string is the <em>length</em> of the string; the strings above have lengths 4, 1, 4, and 10 respectively. We also can ask how many of the bits are 1's. The number of 1's in a bit string is the <em>weight</em> of the string; the weights of the above strings are 2, 0, 4, and 5 respectively.
+</p>
+<convention>
+<title>Bit Strings</title>
+<p>
+<index><main>bit string</main></index>
+</p>
+
+<ul>
+<li>A <m>n</m>-bit string is a bit string of length <m>n</m>.  That is, it is a string containing <m>n</m> symbols, each of which is a bit, either 0 or 1.</li>
+<li>The <em>weight</em><index><main>weight, of a string</main></index> of a bit string is the number of 1's in it.</li>
+<li><m>\Bn</m><index><main><m>\Bn</m></main></index> is the <em>set</em> of all <m>n</m>-bit strings.</li>
+<li><m>\Bnk</m><index><main><m>\Bnk</m></main></index> is the set of all <m>n</m>-bit strings of weight <m>k</m>.</li>
+</ul>
+</convention>
+<p>
+For example, the elements of the set <m>\b B^3_2</m> are the bit strings 011, 101, and 110. Those are the only strings containing three bits exactly two of which are 1's.
+</p>
+
+<p>
+The counting questions: How many bit strings have length 5? How many of those have weight 3? In other words, we are asking for the cardinalities <m>|\b B^5|</m> and <m>|\b B^5_3|</m>.
+</p>
+
+<p>
+To find the number of 5-bit strings is straight forward. We have 5 bits, and each can either be a 0 or a 1. So there are 2 choices for the first bit, 2 choices for the second, and so on. By the multiplicative principle, there are <m>2 \cdot 2 \cdot 2\cdot 2 \cdot 2 = 2^5 = 32</m> such strings.
+</p>
+
+<p>
+Finding the number of 5-bit strings of weight 3 is harder. Think about how such a string could start. The first bit must be either a 0 or a 1. In the first case (the string starts with a 0), we must then decide on four more bits. To have a total of three 1's, among those four remaining bits there must be three 1's. In other words, we must include all 4-bit strings of weight 3. In the second case (the string starts with a 1), we still have four bits to choose, but now only two of them can be 1's, so we should look at all the 4-bit strings of weight 2. In other words:
+<me>
+  |\b B^5_3| = |\b B^4_2| + |\b B^4_3|.
+</me>
+</p>
+
+<p>
+This is an example of a <em>recurrence relation</em>. We represented one instance of our counting problem in terms of two simpler instances of the problem. It holds because the strings in <m>\b B^5_3</m> all have the form <m>1\b B^4_2</m> (that is, a 1 followed by a string from <m>\b B^4_2</m>) or <m>0\b B^4_3</m>. If only we knew the cardinalities of <m>\b B^4_2</m> and <m>\b B^4_3</m>. Repeating the same reasoning,
+<me>
+  |\b B^4_2| = |\b B^3_1| + |\b B^3_2| \quad \mbox{and} \quad |\b B^4_3| = |\b B^3_2| + |\b B^3_3|.
+</me>
+</p>
+
+<p>
+We can keep going down, but this should be good enough. Both <m>\b B^3_1</m> and <m>\b B^3_2</m> contain 3 bit strings: we must pick one of the three bits to be a 1 (three ways to do that) or one of the three bits to be a 0 (three ways to do that). Also, <m>\b B^3_3</m> contains just one string: 111. Thus <m>|\b B^4_2| = 6</m> and <m>|\b B^4_3| = 4</m>, which puts <m>\b B^5_3</m> at a total of 10 strings.
+</p>
+
+<p>
+But wait <ndash /> 32 and 10 were the answers to the counting questions about subsets. Coincidence? Not at all. Each bit string can be thought of as a <em>code</em> for a subset. For the set <m>A = \{1,2,3,4,5\}</m>, we would use 5-bit strings, one bit for each element of <m>A</m>. Each bit in the string is a 0 if its corresponding element of <m>A</m> is not in the subset, and a 1 if the element of <m>A</m> is in the subset. Remember, deciding the subset amounted to a sequence of five yes/no votes for the elements of <m>A</m>. Instead of yes, we put a 1; instead of no, we put a 0.
+</p>
+
+<p>
+For example, the bit string <m>11001</m> represents the subset <m>\{1,2,5\}</m> since the first, second and fifth bits are 1's. The subset <m>\{3,5\}</m> would be coded by the string <m>00101</m>. What we really have here is a bijection from <m>\pow(A)</m> to <m>\b B^5</m>.
+</p>
+
+<p>
+Now for a subset to contain exactly three elements, the corresponding bit string must contain exactly three 1's. In other words, the weight must be 3. Thus counting the number of 3-element subsets of <m>A</m> is the same as counting the number 5-bit strings of weight 3.
+</p>
+
+<p>
+\subsubsection*{Lattice Paths}
+</p>
+
+<p>
+The <em>integer lattice</em> is the set of all points in the Cartesian plane for which both the <m>x</m> and <m>y</m> coordinates are integers. If you like to draw graphs on graph paper, the lattice is the set of all the intersections of the grid lines.
+</p>
+
+<p>
+A <em>lattice path</em><index><main>lattice path</main></index> is one of the shortest possible paths connecting two points on the lattice, moving only horizontally and vertically. For example, here are three possible lattice paths from the points <m>(0,0)</m> to <m>(3,2)</m>:
+</p>
+<image width="73%" source="images/c72931cb5fcaf88f00186c4cbcc1df19ddcec751.png" />  <image width="73%" source="images/ae3b0dbde6d51296abbc18973b7a703d05546f15.png" />  <image width="73%" source="images/433885b65a8ef04df8018db3e14906966c8976bb.png" />
+<p>
+Notice to ensure the path is the <em>shortest</em> possible, each move must be either to the right or up. Additionally, in this case, each path has <em>length</em> 5 as no matter what order we take them in, we must take three steps right and two steps up.
+</p>
+
+<p>
+The counting question: how many lattice paths are there between <m>(0,0)</m> and <m>(3,2)</m>? We could try to draw all of these, or instead of drawing them, maybe just list which direction we travel on each of the 5 steps. One path might be RRUUR, or maybe UURRR, or perhaps RURRU (those correspond to the three paths drawn above). So how many such strings of R's and U's are there?
+</p>
+
+<p>
+Notice that each of these strings must contain 5 symbols. Exactly 3 of them must be R's (since our destination is 3 units to the right). This seems awfully familiar. In fact, what if we used <m>1</m>'s instead of R's and 0's instead of U's? Then we would just have 5-bit strings of weight 3. There are 10 of those, so there are 10 lattice paths from (0,0) to (3,2).
+</p>
+
+<p>
+The correspondence between bit strings and lattice paths does not stop there. Here is another way to count lattice paths. Consider the lattice shown below:
+</p>
+<image width="73%" source="images/5b636ef8f4f3a06c6c4dc573cc43fa2bf6f9d4d5.png" />
+<p>
+Any lattice path from (0,0) to (3,2) must pass through exactly one of <m>A</m> and <m>B</m>. The point <m>A</m> is 4 steps away from (0,0) and two of them are right. The number of lattice paths to <m>A</m> is the same as the number of 4-bit strings of weight 2, namely 6. The point <m>B</m> is 4 steps away from (0,0), but now 3 of them are right. So the number of paths to point <m>B</m> is the same as the number of 4-bit strings of weight 3, namely 4. So the total number of paths to (3,2) is just <m>6+4</m>. This is the same way we calculated the number of 5-bit strings of weight 3. The point: the exact same recurrence relation exists for bit strings and for lattice paths.
+</p>
+
+<p>
+\subsubsection*{Binomial Coefficients}
+</p>
+
+<p>
+Binomial coefficients are the coefficients in the expanded version of a binomial, such as <m>(x+y)^5</m>. What happens when we multiply such a binomial out? We will expand <m>(x+y)^n</m> for various values of <m>n</m>. Each of these are done by multiplying everything out (i.e., FOIL-ing) and then collecting like terms.
+<me>
+  (x+y)^1 = x + y
+</me>
+</p>
+<me>
+  (x+y)^2 = x^2 + 2xy + y^2
+</me>
+<me>
+  (x+y)^3 = x^3 + 3x^2y + 3xy^2 + y^3
+</me>
+<me>
+  (x+y)^4 = x^4 + 4x^3y + 6x^2y^2 + 4xy^3 + y^4.
+</me>
+<p>
+In fact, there is a quicker way to expand the above binomials. For example, consider the next one, <m>(x+y)^5</m>. What we are really doing is multiplying out,
+<me>
+  (x+y)(x+y)(x+y)(x+y)(x+y).
+</me>
+</p>
+
+<p>
+In the expansion, there will be only one <m>x^5</m> term and one <m>y^5</m> term. This is because to get an <m>x^5</m>, we need to use the <m>x</m> term in each of the copies of the binomial <m>(x+y)</m>, and similarly for <m>y^5</m>. What about <m>x^4y</m>? To get terms like this, we need to use four <m>x</m>'s and one <m>y</m>, so we need exactly one of the five binomials to contribute a <m>y</m>. There are 5 choices for this, so there are 5 ways to get <m>x^4y</m>, so the coefficient of <m>x^4y</m> is 5. This is also the coefficient for <m>xy^4</m> for the same (but opposite) reason: there are 5 ways to pick which of the 5 binomials contribute the single <m>x</m>. So far we have
+<me>
+  (x+y)^5 = x^5 + 5x^4y + \underline{~?~}~x^3y^2 + \underline{~?~}~x^2y^3 + 5 xy^4 + y^5.
+</me>
+</p>
+
+<p>
+We still need the coefficients of <m>x^3y^2</m> and <m>x^2y^3</m>. In both cases, we need to pick exactly 3 of the 5 binomials to contribute one variable, the other two to contribute the other. Wait. This sounds familiar. We have 5 things, each can be one of two things, and we need a total of 3 of one of them. That's just like taking 5 bits and making sure exactly 3 of them are 1's. So the coefficient of <m>x^3y^2</m> (and also <m>x^2y^3</m>) will be exactly the same as the number of bit strings of length 5 and weight 3, which we found earlier to be 10. So we have:
+<me>
+  (x+y)^5 = x^5 + 5x^4y + 10x^3y^2 + 10x^2y^3 + 5 xy^4 + y^5.
+</me>
+</p>
+
+<p>
+These numbers we keep seeing over and over again. They are the number of subsets of a particular size, the number of bit strings of a particular weight, the number of lattice paths, and the coefficients of these binomial products. We will call them <em>binomial coefficients</em>. We even have a special symbol for them: <m>{n \choose k}</m>.
+</p>
+<convention>
+<title>Binomial Coefficients</title>
+<p>
+<index><main>binomial coefficients</main></index>
+For each integer <m>n \ge 0</m> and integer <m>k</m> with <m>0 \le k \le n</m> there is a number
+<me>
+  \cnk
+</me>
+read <q><m>n</m> choose <m>k</m>.</q> We have:
+</p>
+
+<ul>
+<li><m>{n\choose k} = |\b B^n_k|</m>, the number of <m>n</m>-bit strings of weight <m>k</m>.</li>
+<li><m>{n \choose k}</m> is the number of subsets of a set of size <m>n</m> each with cardinality <m>k</m>.</li>
+<li><m>{n \choose k}</m> is the number of lattice paths of length <m>n</m> containing <m>k</m> steps to the right.</li>
+<li><m>{n \choose k}</m> is the coefficient of <m>x^ky^{n-k}</m> in the expansion of <m>(x+y)^n</m>.</li>
+<li><m>{n \choose k}</m> is the number of ways to select <m>k</m> objects from a total of <m>n</m> objects.</li>
+</ul>
+</convention>
+<p>
+The last bullet point is usually taken as the definition of <m>{n \choose k}</m>. Out of <m>n</m> objects we must choose <m>k</m> of them, so there are <m>n</m> choose <m>k</m> ways of doing this. Each of our counting problems above can be viewed in this way:
+</p>
+
+<ul>
+<li>How many subsets of <m>\{1,2,3,4,5\}</m> contain exactly 3 elements?  We must choose <m>3</m> of the 5 elements to be in our subset.  There are <m>{5 \choose 3}</m> ways to do this, so there are <m>{5 \choose 3}</m> such subsets.</li>
+<li>How many bit strings have length 5 and weight 3?  We must choose <m>3</m> of the 5 bits to be 1's.  There are <m>{5 \choose 3}</m> ways to do this, so there are <m>{5 \choose 3}</m> such bit strings.</li>
+<li>How many lattice paths are there from (0,0) to (3,2)?  We must choose 3 of the 5 steps to be towards the right.  There are <m>{5 \choose 3}</m> ways to do this, so there are <m>{5 \choose 3}</m> such lattice paths.</li>
+<li>What is the coefficient of <m>x^3y^2</m> in the expansion of <m>(x+y)^5</m>?  We must choose 3 of the 5 copies of the binomial to contribute an <m>x</m>.  There are <m>{5 \choose 3}</m> ways to do this, so the coefficient is <m>{5 \choose 3}</m>.</li>
+</ul>
+
+<p>
+It should be clear that in each case above, we have the right answer. All we had to do is phrase the question correctly and it became obvious that <m>{5 \choose 3}</m> is correct. However, this does not tell us that the answer is in fact 10 in each case. We will eventually find a formula for <m>{n \choose k}</m>, but for now, look back at how we arrived at the answer 10 in our counting problems above. It all came down to bit strings, and we have a recurrence relation for bit strings:
+<me>
+  |\b B^n_k| = |\b B^{n-1}_{k-1}| + |\b B^{n-1}_k|.
+</me>
+</p>
+
+<p>
+Remember, this is because we can start the bit string with either a 1 or a 0. In both cases, we have <m>n-1</m> more bits to pick. The strings starting with 1 must contain <m>k-1</m> more 1's, while the strings starting with 0 still need <m>k</m> more 1's.
+</p>
+
+<p>
+Since <m>|\b B^n_k| = {n \choose k}</m>, the same recurrence relation holds for binomial coefficients:
+</p>
+
+<p>
+\begin{defbox}{Recurrence relation for <m>{n \choose k}</m>}
+<me>
+  {n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}
+</me>
+</p>
+
+<p>
+\end{convention}
+</p>
+</introduction>
+
+
+<subsection xml:id="subsec_Pascal">
+<title>Pascal's Triangle</title>
+<p>
+Let's arrange the binomial coefficients <m>{n \choose k}</m> into a triangle like follows:
+</p>
+<image width="73%" source="images/7956cdf4b07dcd74a2e9cf86ce2bd07df5f3416a.png" />
+<p>
+This can continue as far down as we like. The recurrence relation for <m>{n \choose k}</m> tells us that each entry in the triangle is the sum of the two entries above it. The entries on the sides of the triangle are always 1. This is because <m>{n \choose 0} = 1</m> for all <m>n</m> since there is only one way to pick 0 of <m>n</m> objects and <m>{n \choose n} = 1</m> since there is one way to select all <m>n</m> out of <m>n</m> objects. Using the recurrence relation, and the fact that the sides of the triangle are 1's, we can easily replace all the entries above with the correct values of <m>{n \choose k}</m>. Doing so gives us <em>Pascal's triangle</em>.
+</p>
+
+<p>
+We can use Pascal's triangle to calculate binomial coefficients. For example, using the triangle on the next page, we can find <m>{12 \choose 6} = 924</m>.
+</p>
+
+<p>
+<nbsp />
+</p>
+\hspace{-1.5em}{ <sc>Pascal's Triangle</sc>}<index><main>Pascal's triangle</main></index>
+<p>
+<image width="73%" source="images/7f9a22ad4d10e05d72ef522bf982030847970464.png" />
+</p>
+
+<p>
+\withanswers
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Let <m>S = \{1, 2, 3, 4, 5, 6\}</m>
+</p>
+
+<ol>
+<li>How many subsets are there total?</li>
+<li>How many subsets have <m>\{2,3,5\}</m> as a subset?</li>
+<li>How many subsets contain at least one odd number?</li>
+<li>How many subsets contain exactly one even number?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>2^6 = 64</m>.</li>
+<li><m>2^3 = 8</m>.  We need to select yes/no for each of the remaining three elements.</li>
+<li><m>2^6 - 2^3 = 56</m>.  There are 8 subsets which do not contain any odd numbers.</li>
+<li><m>3\cdot 2^3 = 24</m>.  First pick the even number.  Then say yes or no to each of the odd numbers.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Let <m>S = \{1, 2, 3, 4, 5, 6\}</m>
+</p>
+
+<ol>
+<li>How many subsets are there of cardinality 4?</li>
+<li>How many subsets of cardinality 4 have <m>\{2,3,5\}</m> as a subset?</li>
+<li>How many subsets of cardinality 4 contain at least one odd number?</li>
+<li>How many subsets of cardinality 4 contain exactly one even number?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>{6\choose 4} = 15</m>.</li>
+<li><m>{3 \choose 1} = 3</m>.  We need to select 1 of the 3 remaining elements to be in the subset.</li>
+<li><m>{6 \choose 4} = 15</m>.  All subsets of cardinality 4 must contain at least one odd number.</li>
+<li><m>{3 \choose 1} = 3</m>.  Select 1 of the 3 even numbers.  The remaining three odd numbers of <m>S</m> must all be in the set.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+You break your piggy-bank to discover lots of pennies and nickels. You start arranging these in rows of 6 coins.
+</p>
+
+<ol>
+<li>You find yourself making rows containing an equal number of pennies and nickels.  For fun, you decide to lay out every possible such row.  How many coins will you need?</li>
+<li>How many coins would you need to make all possible rows of 6 coins (not necessarily with equal number of pennies and nickels)?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li>We can think of each row as a 6-bit string of weight 3 (since of the 6 coins, we require 3 to be pennies).  Thus there are <m>{6 \choose 3} = 20</m> rows possible.  Each row requires 6 coins, so if we want to make all the rows at the same time, we will need 120 coins (60 of each).</li>
+<li>Now there are <m>2^6 = 64</m> rows possible, which is also <m>{6 \choose 0} + {6\choose 1} + {6 \choose 2} + {6 \choose 3} + {6 \choose 4} + {6 \choose 5} + {6 \choose 6}</m>.  Thus we need <m>6 \cdot 64 = 384</m> coins (192 of each).</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many 10-bit strings contain 6 or more 1's?
+</p>
+</statement>
+<answer>
+<p>
+<m>{10 \choose 6} + {10\choose 7} + {10\choose 8} + {10 \choose 9} + {10\choose 10} = 386</m>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many subsets of <m>\{0,1,\ldots, 9\}</m> have cardinality 6 or more?
+</p>
+</statement>
+<answer>
+<p>
+<m>{10 \choose 6} + {10\choose 7} + {10\choose 8} + {10 \choose 9} + {10\choose 10} = 386</m>. This is the same as the previous question, since we can think of each subset as a 10-bit string with a 1 representing that we include that element in the subset.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+What is the coefficient of <m>x^{12}</m> in <m>(x+2)^{15}</m>?
+</p>
+</statement>
+<answer>
+<p>
+To get an <m>x^{12}</m>, we must pick 12 of the 15 factors to contribute an <m>x</m>, leaving the other 3 to contribute a 2. There are <m>{15 \choose 12}</m> ways to select these 12 factors. So the term containing an <m>x^{12}</m> will be <m>{15 \choose 12}x^{12}2^{3}</m>. In other words the coefficient of <m>x^{12}</m> is <m>{15\choose 12}2^3</m>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+What is the coefficient of <m>x^9</m> in the expansion of <m>(x+1)^{14} + x^3(x+2)^{15}</m>?
+</p>
+</statement>
+<answer>
+<p>
+Use the binomial theorem. <m>{14\choose 9} + {15 \choose 6}2^9</m>.
+</p>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How many shortest lattice paths start at (3,3) and
+</p>
+
+<ol>
+<li>end at (10,10)?</li>
+<li>end at (10,10) and pass through (5,7)?</li>
+<li>end at (10,10) and avoid (5,7)?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>{14 \choose 7}</m>.</li>
+<li><m>{6 \choose 2}{8\choose 5}</m>.</li>
+<li><m>{14 \choose 7} - {6\choose 2}{8 \choose 5}</m>.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Suppose you are ordering a large pizza from <em>D.P.<nbsp />Dough</em>. You want 3 distinct toppings, chosen from their list of 11 vegetarian toppings.
+</p>
+
+<ol>
+<li>How many choices do you have for your pizza?</li>
+<li>How many choices do you have for your pizza if you refuse to have pineapple as one of your toppings?</li>
+<li>How many choices do you have for your pizza if you <em>insist</em> on having pineapple as one of your toppings?</li>
+<li>How do the three questions above relate to each other?</li>
+</ol>
+</statement>
+<answer>
+<ol>
+<li><m>{11 \choose 3} = 165</m>, since you have to select a 3-element subset of the set of 11 toppings.</li>
+<li><m>{10 \choose 3} = 120</m>, since you must select 3 of the 10 non-pineapple toppings.</li>
+<li><m>{10 \choose 2} = 45</m>, since you must select 2 of the remaining 10 non-pineapple toppings to have in addition to the pineapple.</li>
+<li><m>165  = 120 + 45</m>, which makes sense because every 3-topping pizza either has pineapple or does not have pineapple as a topping.</li>
+</ol>
+</answer>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Explain why the coefficient of <m>x^5y^3</m> the same as the coefficient of <m>x^3y^5</m> in the expansion of <m>(x+y)^8</m>?
+</p>
+</statement>
+<answer>
+<p>
+The coefficient of <m>x^5y^3</m> is <m>{8\choose 5}</m>, since we must pick 5 of the 8 factors to contribute an <m>x</m>. The coefficient of <m>x^3y^5</m> is <m>{8 \choose 3}</m>, since we pick 3 out of the 8 factors to contribute an <m>x</m>. But <m>{8 \choose 5} = {8\choose 3}</m>, because we could just as easily have picked 5 out of the 8 factors to contribute a <m>y</m>.
+</p>
+</answer>
+</exercise>
+
+</exercises>
+</subsection>
+
+</section>

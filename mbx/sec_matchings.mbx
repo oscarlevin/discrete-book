@@ -1,0 +1,159 @@
+<section xml:id="sec_matchings">
+<title>Matching in Bipartite Graphs</title>
+<activity>
+<p>
+Given a bipartite graph, a <em>matching</em> is a subset of the edges for which every vertex belongs to exactly one of the edges. Our goal in this activity is to discover some criterion for when a bipartite graph has a matching.
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+Does the graph below contain a matching? If so, find one.
+</p>
+<image width="73%" source="images/7cbf2c0c97ed8225200b96de6623412c9947dec0.png" />
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Not all bipartite graphs have matchings. Draw as many fundamentally different examples of bipartite graphs which do NOT have matchings. Your goal is to find all the possible obstructions to a graph having a matching. Write down the <em>necessary</em> conditions for a graph to have a matching (that is, fill in the blank: If a graph has a matching, then <u></u>). Then ask yourself whether these conditions are sufficient (is it true that if <u></u>, then the graph has a matching?).
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+We conclude with one more example of a graph theory problem to illustrate the variety and vastness of the subject.
+</p>
+
+<p>
+Suppose you have a (not necessarily complete) bipartite graph <m>G</m>. This will consist of two sets of vertices <m>A</m> and <m>B</m> with some edges connecting some vertices of <m>A</m> to some vertices in <m>B</m> (but of course, no edges between two vertices both in <m>A</m> or both in <m>B</m>). A <em>matching of <m>A</m></em><index><main>matching</main></index> is a subset of the edges for which each vertex of <m>A</m> belongs to exactly one edge of the subset, and no vertex in <m>B</m> belongs to more than one edge in the subset. In practice we will assume that <m>|A| = |B|</m> (the two sets have the same number of vertices) so this says that every vertex in the graph belongs to exactly one edge in the matching.
+</p>
+
+<p>
+Some context might make this easier to understand. Think of the vertices in <m>A</m> as representing students in a class, and the vertices in <m>B</m> as representing presentation topics. We put an edge from a vertex <m>a \in A</m> to a vertex <m>b \in B</m> if student <m>a</m> would like to present on topic <m>b</m>. Of course, some students would want to present on more than one topic, so their vertex would have degree greater than 1. As the teacher, you want to assign each student their own unique topic. Thus you want to find a matching of <m>A</m>: you pick some subset of the edges so that each student gets matched up with exactly one topic, and no topic gets matched to two students.<fn>The standard example for matchings used to be the <em>marriage problem</em> in which <m>A</m> consisted of the men in the town, <m>B</m> the women, and an edge represented a marriage that was agreeable to both parties.  A matching then represented a way for the town elders to marry off everyone in the town, no polygamy allowed.  We have chosen a more progressive context for the sake of political correctness.</fn>
+</p>
+
+<p>
+The question is: when does a bipartite graph contain a matching of <m>A</m>? To begin to answer this question, consider what could prevent the graph from containing a matching. This will not necessarily tell us a condition when the graph <em>does</em> have a matching, but at least it is a start.
+</p>
+
+<p>
+One way <m>G</m> could not have a matching is if there is a vertex in <m>A</m> not adjacent to any vertex in <m>B</m> (so having degree 0). What else? What if two students both like the same one topic, and no others? Then after assigning that one topic to the first student, there is nothing left for the second student to like, so it is very much as if the second student has degree 0. Or what if three students like only two topics between them. Again, after assigning one student a topic, we reduce this down to the previous case of two students liking only one topic. We can continue this way with more and more students.\todo{write exercise asking for a proof by induction for this}
+</p>
+
+<p>
+It should be clear at this point that if there is every a group of <m>n</m> students who as a group like <m>n-1</m> or fewer topics, then no matching is possible. This is true for any value of <m>n</m>, and any group of <m>n</m> students.
+</p>
+
+<p>
+To make this more graph-theoretic, say you have a set <m>S \subseteq A</m> of vertices. Define <m>\nofs</m><index><main><m>\nofs</m></main></index> to be the set of all the <em>neighbors</em><index><main>neighbors</main></index> of vertices in <m>S</m>. That is, <m>N(S)</m> contains all the vertices (in <m>B</m>) which are adjacent to at least one of the vertices in <m>S</m>. (In the student/topic graph, <m>N(S)</m> is the set of topics liked by the students of <m>S</m>.) Our discussion above can be summarized as follows:
+</p>
+<convention>
+<title>Matching Condition</title>
+<p>
+<index><main>matching condition</main></index>
+If a bipartite graph <m>G = \{A, B\}</m> has a matching of <m>A</m>, then
+<me>
+  |N(S)| \ge |S|
+</me>
+for all <m>S \subseteq A</m>.
+</p>
+</convention>
+<p>
+Is the converse true? Suppose <m>G</m> satisfies the matching condition <m>|N(S)| \ge |S|</m> for all <m>S \subseteq A</m> (every set of vertices has at least as many neighbors than vertices in the set). Does that mean that there is a matching? Surprisingly, yes. The obvious necessary condition is also sufficient.<fn>This happens often in graph theory.  If you can avoid the obvious counter-examples, you often get what you want.</fn> This is a theorem first proved by Philip Hall in 1935.<fn>There is also an infinite version of the theorem which was proved by Marshal Hall, Jr.  The name is a coincidence though as the two Halls are not related.</fn>
+</p>
+
+<theorem>
+<title>Hall's Marriage Theorem</title>
+<statement>
+<p>
+<index><main>Hall's Marriage Theorem</main></index>
+Let <m>G</m> be a bipartite graph with sets <m>A</m> and <m>B</m>. Then <m>G</m> has a matching of <m>A</m> if and only if
+<me>
+  |N(S)| \ge |S|
+</me>
+for all <m>S \subseteq A</m>.
+</p>
+</statement>
+</theorem>
+
+<p>
+There are quite a few different proofs of this theorem <ndash /> a quick internet search will get you started.
+</p>
+
+<p>
+In addition to its application to marriage and student presentation topics, matchings have applications all over the place. We conclude with one such example.
+</p>
+<example>
+<statement>
+<p>
+Suppose you deal 52 regular playing cards into 13 piles of 4 cards each. Prove that you can always select one card from each pile to get one of each of the 13 card values Ace, 2, 3, <ellipsis />, 10, Jack, Queen, and King.
+</p>
+</statement>
+<solution>
+<p>
+Doing this directly would be difficult, but we can use the matching condition to help. Construct a graph <m>G</m> with 13 vertices in the set <m>A</m>, each representing one of the 13 card values, and 13 vertices in the set <m>B</m>, each representing one of the 13 piles. Draw an edge between a vertex <m>a \in A</m> to a vertex <m>b \in B</m> if a card with value <m>a</m> is in the pile <m>b</m>. Notice that we are just looking for a matching of <m>A</m>; each value needs to be found in the piles exactly once.
+</p>
+
+<p>
+We will have a matching if the matching condition holds. Given any set of card values (a set <m>S \subseteq A</m>) we must show that <m>|N(S)| \ge |S|</m>. That is, the number of piles that contain those values is at least the number of different values. But what if it wasn't? Say <m>|S| = k</m>. If <m>|N(S)| \lt  k</m>, then we would have fewer than <m>4k</m> different cards in those piles (since each pile contains 4 cards). But there are <m>4k</m> cards with the <m>k</m> different values, so at least one of these cards must be in another pile, a contradiction. Thus the matching condition holds, so there is a matching, as required.
+</p>
+</solution>
+</example>
+<p>
+\todo[inline]{Make this activity into an exercise, or homework problem?}
+</p>
+<activity>
+<p>
+The two richest families in Westeros have decided to enter into an alliance by marriage. The first family has 10 sons, the second has 10 girls. The ages of the kids in the two families match up. To avoid impropriety, the families insist that each child must marry someone either their own age, or someone one position younger or older. In fact, the graph representing agreeable marriages looks like this:
+</p>
+<image width="73%" source="images/4da1503134aebbdb9fbe5b28a9f8a86a61d5c52d.png" />
+<p>
+The question: how many different acceptable marriage arrangements which marry off all 20 children are possible?
+</p>
+<exercises>
+
+<exercise>
+<statement>
+<p>
+How many marriage arrangements are possible if we insist that there are exactly 6 boys marry girls not their own age?
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Could you generalize the previous answer to arrive at the total number of marriage arrangements?
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+How do you know you are correct? Try counting in a different way. Look at smaller family sizes and get a sequence.
+</p>
+</statement>
+</exercise>
+
+<exercise>
+<statement>
+<p>
+Can you give a recurrence relation that fits the problem?
+</p>
+</statement>
+</exercise>
+
+</exercises>
+ 
+</activity>
+<p>
+\withanswers
+</p>
+</section>
