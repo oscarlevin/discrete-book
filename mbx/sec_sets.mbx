@@ -449,21 +449,59 @@ Let <m>A = \{1,2\}</m> and <m>B = \{3,4,5\}</m>. Find <m>A \times B</m> and <m>A
 <index><main>Venn diagram</main></index>
 There is a very nice visual tool we can use to represent operations on sets. Venn diagrams display sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality of a particular set by putting the number in the corresponding region.
 </p>
-<image width="73%" source="images/7668dda40d201d0598cd4121bc3950c950ae3d26.png" /> 
- \hspace{2in}
-<image width="73%" source="images/b81b9bb17efc4c3cb87f0e5fa9d338158fab5b72.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50,scale=0.85]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}]]></latex-image-code>
+</image>
+\hspace{2in}
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[scale=.60, fill=gray!50]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}]]></latex-image-code>
+</image>
+<br />
 <p>
 Each circle represents a set. The rectangle containing the circles represents the universe. To represent combinations of these sets, we shade the corresponding region. For example, we could draw <m>A \cap B</m> as:
 </p>
-<image width="73%" source="images/7ba0e380a2e0ccf56912d30783766c218331541b.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50,scale=0.85]
+	\begin{scope}
+	\clip \circleA;
+	\fill \circleB;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 Here is a representation of <m>A \cap \bar B</m>, or equivalently <m>A \setminus B</m>:
 </p>
-<image width="73%" source="images/604a05abbead08c82056c6a7ab8b7cbaed17de69.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50,scale=0.85]
+	\begin{scope}
+	\clip \twosetbox \circleB;
+	\fill \circleA;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 A more complicated example is <m>(B \cap C) \cup (C \cap \bar A)</m>, as seen below.
 </p>
-<image width="73%" source="images/0393a3810198703ded0cb75161eadce914133952.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50,scale=0.65]
+	\fill \circleC;
+	\begin{scope}
+	    \clip \circleC;
+	    \fill[white] \circleA \circleB;
+	  \end{scope}
+	  \begin{scope}
+	  	\clip \circleC;
+	  	\fill \circleB;
+	  \end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 Notice that the shaded regions above could also be arrived at in another way. We could have started with all of <m>C</m>, then excluded the region where <m>C</m> and <m>A</m> overlap outside of <m>B</m>. That region is <m>(A \cap C) \cap \bar B</m>. So the above Venn diagram also represents <m>C \cap \bar{\left((A\cap C)\cap \bar B\right)}.</m> So using just the picture, we have determined that
 <me>
@@ -610,23 +648,74 @@ Draw a Venn diagram to represent each of the following:
 <answer>
 <ol>
 <li><m>A \cup \bar B</m>:
-
-	    <image width="73%" source="images/15fab8f3164b418b4f9a8d5df48dffb1121152e2.png" /> </li>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50]
+	  
+	  \fill \circleA;
+	  
+	    \begin{scope}
+	    \clip \circleB \twosetbox; 
+	    \fill \twosetbox;
+	    \end{scope}
+	    \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+	  \end{tikzpicture}]]></latex-image-code>
+</image>
+</li>
 <li><m>\bar{(A \cup B)}</m>:
-
-	  <image width="73%" source="images/992e99ee0330ff03608295c74afbc48e1b7e4bd6.png" /> </li>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50]
+	    \fill \twosetbox;
+	    \fill[white] \circleA \circleB;
+	    \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+	  \end{tikzpicture}]]></latex-image-code>
+</image>
+</li>
 <li><m>A \cap (B \cup C)</m>:
-
-	  <image width="73%" source="images/28309b4e1a8b7f0b55a4fbf67de01e8fd3e09954.png" /> </li>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50]
+	  \begin{scope}
+	    \clip \circleA;
+	    \fill \circleB \circleC;
+	  \end{scope}
+	  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+	  \end{tikzpicture}]]></latex-image-code>
+</image>
+</li>
 <li><m>(A \cap B) \cup C</m>:
-
-	  <image width="73%" source="images/63c62f4e6e0a81cc56f410ea4139a583381e3135.png" /> </li>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50]
+	  \begin{scope}
+	    \clip \circleA;
+	    \fill \circleB;
+	  \end{scope}
+	  \fill \circleC;
+	  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+	  \end{tikzpicture}]]></latex-image-code>
+</image>
+</li>
 <li><m>\bar A \cap B \cap \bar C</m>:
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50]
+	  \fill \circleB;
+	  \begin{scope}
+	    \clip \circleB;
+	    \fill[white] \circleA \circleC;
+	  \end{scope}
 
-	  <image width="73%" source="images/bb70dd8aa6faf68fd892f43f718c2bcd1176fe7b.png" /> </li>
+	  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+	  \end{tikzpicture}]]></latex-image-code>
+</image>
+</li>
 <li><m>(A \cup B) \setminus C</m>:
-
-	  <image width="73%" source="images/c4a2b2312d0721bfd4e79d8862e078efdb9d5a8a.png" /> </li>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50]
+	  \fill \circleA;
+	  \fill \circleB;
+	  \fill[white] \circleC;
+	  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+	  \end{tikzpicture}]]></latex-image-code>
+</image>
+</li>
 </ol>
 </answer>
 </exercise>
@@ -636,7 +725,23 @@ Draw a Venn diagram to represent each of the following:
 <p>
 Describe a set in terms of <m>A</m> and <m>B</m> which has the following Venn diagram:
 </p>
-<image width="73%" source="images/2742b3b994dfaafd9877da6d1168f869bc47b7fa.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[fill=gray!50, scale=0.75]
+\scope
+\clip (-2,-2) rectangle (2,2)
+      (1,0) circle (1);
+\fill (0,0) circle (1);
+\endscope
+\scope
+\clip (-2,-2) rectangle (2,2)
+      (0,0) circle (1);
+\fill (1,0) circle (1);
+\endscope
+\draw[thick] (0,0) circle (1) (-1,.7)  node [text=black,above] {\(A\)}
+      (1,0) circle (1) (2,.7)  node [text=black,above] {\(B\)}
+      (-1.5,-1.5) rectangle (2.5,1.5);
+\end{tikzpicture}]]></latex-image-code>
+</image>
 </statement>
 <answer>
 <p>

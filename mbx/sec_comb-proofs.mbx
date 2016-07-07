@@ -40,7 +40,35 @@ Generalize. What if the rules changed and you played a best of <m>9</m> tourname
 <p>
 Have a look again at Pascal's triangle. Forget for a moment where it comes from - just look at it as a mathematical object. What do you notice?
 </p>
-<image width="73%" source="images/c391f01a4cf0ecca5c669799e8497e52ef937573.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+
+
+
+
+  \foreach \row in {0,...,7} {
+    \hexbox{\row}0{ 1}
+  }
+  \foreach \row in {1,...,7} {
+    \pgfmathsetmacro{\entry}1;
+    \foreach \col in {1,...,\row} {
+     \pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
+      \global
+\ifnum \entry<100
+	\hexbox{\row}{\col}{\entry}
+      \else \ifnum \entry<1000
+	\hexbox{\row}{\col}{ \entry}
+      \else \ifnum \entry<10000
+	\hexbox{\row}{\col}{ \entry}
+	\else
+	\hexbox{\row}{\col}{ \entry}
+	\fi
+      \fi
+      \fi
+    }
+  }
+\end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 There are lots of patterns hidden away in the triangle, enough to fill a reasonably sized book. Here are just a few of the most obvious ones:
 </p>
@@ -436,7 +464,14 @@ Consider the question: How many lattice paths are there from <m>(0,0)</m> to <m>
 <p>
 <u>Answer 2</u>: Note that any path from <m>(0,0)</m> to <m>(n,n)</m> must cross the line <m>x + y = n</m>. That is, any path must pass through exactly one of the points: <m>(0,n)</m>, <m>(1,n-1)</m>, <m>(2,n-2)</m>, <ellipsis />, <m>(n, 0)</m>. For example, this is what happens in the case <m>n = 4</m>:
 </p>
-<image width="73%" source="images/2b986d7a1809e69532bfc0431acc9468401749aa.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[scale=0.8]
+      \draw[very thin, color=gray!50] (-.5,-.5) grid (4.5, 4.5);
+      \draw (0,0) circle (1.5pt) node[below left] { (0,0)} (4,4) circle (1.5pt) node[above right] { (4,4)};
+      \draw[thick] (-.5, 4.5) <ndash /> (4.5, -.5) node[right]{ \(x + y = 4\)};
+      \draw (0,4) circle (1.5pt) node[above right]{ (0,4)} (1,3) circle (1.5pt) node[above right]{ (1,3)} (2,2) circle (1.5pt) node[above right]{ (2,2)} (3,1) circle (1.5pt) node[above right]{ (3,1)} (4,0) circle (1.5pt) node[above right]{ (4,0)};
+    \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 How many paths pass through <m>(0,n)</m>? To get to that point, you must travel <m>n</m> units, and <m>0</m> of them are to the right, so there are <m>{n \choose 0}</m> ways to get to <m>(0,n)</m>. From <m>(0,n)</m> to <m>(n,n)</m> takes <m>n</m> steps, and <m>0</m> of them are up. So there are <m>{n \choose 0}</m> ways to get from <m>(0,n)</m> to <m>(n,n)</m>. Therefore there are <m>{n \choose 0}{n \choose 0}</m> paths from <m>(0,0)</m> to <m>(n,n)</m> through the point <m>(0,n)</m>.
 </p>

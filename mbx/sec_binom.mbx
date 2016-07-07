@@ -121,7 +121,36 @@ The <em>integer lattice</em> is the set of all points in the Cartesian plane for
 <p>
 A <em>lattice path</em><index><main>lattice path</main></index> is one of the shortest possible paths connecting two points on the lattice, moving only horizontally and vertically. For example, here are three possible lattice paths from the points <m>(0,0)</m> to <m>(3,2)</m>:
 </p>
-<image width="73%" source="images/c72931cb5fcaf88f00186c4cbcc1df19ddcec751.png" />  <image width="73%" source="images/ae3b0dbde6d51296abbc18973b7a703d05546f15.png" />  <image width="73%" source="images/433885b65a8ef04df8018db3e14906966c8976bb.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+      \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+      \foreach \x in {0,...,3}
+      \foreach \y in {0,...,2}
+      \fill (\x,\y) circle (1.5pt);
+      \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+      \draw[very thick] (0,0) <ndash /> (2,0) <ndash /> (2,2) <ndash /> (3,2);
+    \end{tikzpicture}]]></latex-image-code>
+</image>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+      \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+      \foreach \x in {0,...,3}
+      \foreach \y in {0,...,2}
+      \fill (\x,\y) circle (1.5pt);
+      \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+      \draw[very thick] (0,0) <ndash /> (0,2) <ndash /> (3,2);
+    \end{tikzpicture}]]></latex-image-code>
+</image>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+      \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+      \foreach \x in {0,...,3}
+      \foreach \y in {0,...,2}
+      \fill (\x,\y) circle (1.5pt);
+      \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+      \draw[very thick] (0,0) <ndash /> (1,0) <ndash /> (1,1) <ndash /> (3,1) <ndash /> (3,2);
+    \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 Notice to ensure the path is the <em>shortest</em> possible, each move must be either to the right or up. Additionally, in this case, each path has <em>length</em> 5 as no matter what order we take them in, we must take three steps right and two steps up.
 </p>
@@ -137,7 +166,16 @@ Notice that each of these strings must contain 5 symbols. Exactly 3 of them must
 <p>
 The correspondence between bit strings and lattice paths does not stop there. Here is another way to count lattice paths. Consider the lattice shown below:
 </p>
-<image width="73%" source="images/5b636ef8f4f3a06c6c4dc573cc43fa2bf6f9d4d5.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+      \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+      \foreach \x in {0,...,3}
+      \foreach \y in {0,...,2}
+      \fill (\x,\y) circle (1.5pt);
+      \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+      \draw (3,1) node[above right] { \(B\)} (2,2) node[above right]{ \(A\)};
+    \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 Any lattice path from (0,0) to (3,2) must pass through exactly one of <m>A</m> and <m>B</m>. The point <m>A</m> is 4 steps away from (0,0) and two of them are right. The number of lattice paths to <m>A</m> is the same as the number of 4-bit strings of weight 2, namely 6. The point <m>B</m> is 4 steps away from (0,0), but now 3 of them are right. So the number of paths to point <m>B</m> is the same as the number of 4-bit strings of weight 3, namely 4. So the total number of paths to (3,2) is just <m>6+4</m>. This is the same way we calculated the number of 5-bit strings of weight 3. The point: the exact same recurrence relation exists for bit strings and for lattice paths.
 </p>
@@ -248,7 +286,13 @@ Since <m>|\b B^n_k| = {n \choose k}</m>, the same recurrence relation holds for 
 <p>
 Let's arrange the binomial coefficients <m>{n \choose k}</m> into a triangle like follows:
 </p>
-<image width="73%" source="images/7956cdf4b07dcd74a2e9cf86ce2bd07df5f3416a.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+    \foreach \n in {0,...,4}
+    \foreach \k in {0,...,\n}
+    \draw (-\n+2*\k, -\n) node {\(\displaystyle{\n \choose \k}\)};
+  \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 This can continue as far down as we like. The recurrence relation for <m>{n \choose k}</m> tells us that each entry in the triangle is the sum of the two entries above it. The entries on the sides of the triangle are always 1. This is because <m>{n \choose 0} = 1</m> for all <m>n</m> since there is only one way to pick 0 of <m>n</m> objects and <m>{n \choose n} = 1</m> since there is one way to select all <m>n</m> out of <m>n</m> objects. Using the recurrence relation, and the fact that the sides of the triangle are 1's, we can easily replace all the entries above with the correct values of <m>{n \choose k}</m>. Doing so gives us <em>Pascal's triangle</em>.
 </p>
@@ -262,7 +306,35 @@ We can use Pascal's triangle to calculate binomial coefficients. For example, us
 </p>
 \hspace{-1.5em}{ <sc>Pascal's Triangle</sc>}<index><main>Pascal's triangle</main></index>
 <p>
-<image width="73%" source="images/7f9a22ad4d10e05d72ef522bf982030847970464.png" />
+
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+</p>
+
+<p>
+\foreach \row in {0,...,16} {
+\hexbox{\row}0{ 1}
+}
+\foreach \row in {1,...,16} {
+\pgfmathsetmacro{\entry}1;
+\foreach \col in {1,...,\row} {
+\pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
+\global
+\ifnum \entry<100
+	\hexbox{\row}{\col}{ \entry}
+\else \ifnum \entry<1000
+	\hexbox{\row}{\col}{\entry}
+\else \ifnum \entry<10000
+	\hexbox{\row}{\col}{ \entry}
+	\else
+	\hexbox{\row}{\col}{ \entry}
+	\fi
+\fi
+\fi
+}
+}
+\end{tikzpicture}]]></latex-image-code>
+</image>
 </p>
 
 <p>

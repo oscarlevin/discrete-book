@@ -35,11 +35,19 @@ When is it possible to draw a graph so that none of the edges cross? If this <em
 <p>
 Notice that the definition of planar includes the phrase <q>it is possible to.</q> This means that even if a graph does not look like it is planar, it still might be. Perhaps you can redraw it in a way in which no edges cross. For example, this is a planar graph:
 </p>
-<image width="73%" source="images/55bdd559e50d5573b959dbafe78446ec3adefea1.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[scale=.7, xscale=1.5]
+ \draw (-1, 0) \v <ndash /> (-.5,2) \v <ndash /> (0,0) \v <ndash /> (.5, 2) \v <ndash /> (1,0) \v <ndash /> (-.5,2) (.5,2) <ndash /> (-1,0);
+  \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 That is because we can redraw it like this:
 </p>
-<image width="73%" source="images/d6b6626f17abf8cacec1110ae29dc60b0f284d62.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[scale=.7, xscale=1.5]
+     \draw (-1, 0) \v <ndash /> (-.5,2) \v <ndash /> (0,0) \v <ndash /> (1.5, -1) \v <ndash /> (1,0) \v <ndash /> (-.5,2) (1.5,-1) <ndash /> (-1,0);
+  \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 The graphs are the same, so if one is planar, the other must be too. However, the original drawing of the graph was not a <em>planar representation</em> of the graph.
 </p>
@@ -51,13 +59,19 @@ When a planar graph is drawn without edges crossing, the edges and vertices of t
 <p>
 <u>A warning</u>: you can only count faces when the graph is drawn in a planar way. For example, consider these two representations of the same graph:
 </p>
-<nbsp /> 
-  <image width="73%" source="images/10f042afa3846f3b3b606086668dae438af97f87.png" /> 
-
-  
-  <image width="73%" source="images/7de229e67a1be4101adc98fd37c4fce781a52f33.png" /> 
-
-   <nbsp />
+<nbsp />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+    \draw (45:1) \v <ndash /> (135:1) \v <ndash /> (225:1) \v <ndash /> (315:1) \v <ndash /> (45:1) <ndash /> (225:1) (135:1) <ndash /> (315:1);
+  \end{tikzpicture}]]></latex-image-code>
+</image>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+    \draw (45:1) \v <ndash /> (135:1) \v <ndash /> (225:1) \v <ndash /> (315:1) \v <ndash /> (45:1) <ndash /> (225:1);
+    \draw (135:1) .. controls (70:2) and (20:2) .. (315:1);
+  \end{tikzpicture}]]></latex-image-code>
+</image>
+<nbsp />
 <p>
 If you try to count faces using the graph on the left, you might say there are 5 faces (including the outside). But drawing the graph with a planar representation shows that in fact there are only 4 faces.
 </p>
@@ -78,17 +92,28 @@ For any (connected) planar graph with <m>v</m> vertices, <m>e</m> edges and <m>f
 <p>
 Why is Euler's formula true? One way to convince yourself of its validity is to draw a planar graph step by step. Start with the graph <m>P_2</m>:
 </p>
-<image width="73%" source="images/6f214a1ed41c63827a7ec8b5d55f89a938049e92.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+    \draw (-.5,-.5) \v <ndash /> (.5,.5)\v;
+  \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 Any connected graph (besides just a single isolated vertex) must contain this subgraph. Now build up to your graph by adding edges and vertices. Each step will consist of either adding a new vertex connected by a new edge to part of your graph (so creating a new <q>spike</q>) or by connecting two vertices already in the graph with a new edge (completing a circuit).
 </p>
-<nbsp /> 
-  <image width="73%" source="images/7825c6bb140774e6ef36e5e347b0255b368af018.png" /> 
-
-  
-  <image width="73%" source="images/4f7c5d0a9b71c5406f852180de516a9009b21f5b.png" /> 
-
-   <nbsp />
+<nbsp />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+    \draw (-1, 0) \v <ndash /> (-1,2) \v <ndash /> (1,2) \v <ndash /> (1,0) \v <ndash /> (-1,2);
+    \draw[dashed] (1,2) <ndash /> (2,1) \v;
+  \end{tikzpicture}]]></latex-image-code>
+</image>
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+    \draw (-1, 0) \v <ndash /> (-1,2) \v <ndash /> (1,2) \v <ndash /> (1,0) \v <ndash /> (-1,2);
+    \draw[dashed] (1,0) <ndash /> (-1,0);
+  \end{tikzpicture}]]></latex-image-code>
+</image>
+<nbsp />
 <p>
 What do these <q>moves</q> do? When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same. But this means that <m>v - e + f</m> does not change. Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same. So again, <m>v - e + f</m> does not change.
 </p>
@@ -163,7 +188,12 @@ For which values of <m>m</m> and <m>n</m> are <m>K_n</m> and <m>K_{m,n}</m> plan
 <p>
 Not all graphs are planar. If there are too many edges and too few vertices, then some of the edges will need to intersect. The first time this happens is in <m>K_5</m>.
 </p>
-<image width="73%" source="images/2e35f4612460a7e4dfa9979ebf79da27b89e7d2b.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture} 
+    \foreach \x in {0,...,4}
+    \draw (\x*72+18:1) \v <ndash /> (\x*72+90:1) <ndash /> (\x*72-54:1);
+  \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 If you try to redraw this without edges crossing, you quickly get into trouble. There seems to be one edge too many. In fact, we can prove that no matter how you draw it, <m>K_5</m> will always have edges crossing.
 </p>
@@ -200,7 +230,11 @@ But this is impossible, since we have already determined that <m>f = 7</m> and <
 <p>
 The other simplest graph which is not planar is <m>K_{3,3}</m>
 </p>
-<image width="73%" source="images/a28fefdc57ec2e14817d653676fd93c1be4d4605.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=1.2]
+        \draw (-1,1) \v <ndash /> (-1,0)\v  <ndash /> (0,1) \v <ndash /> (0,0) \v <ndash /> (1,1) \v <ndash /> (1,0) \v <ndash /> (0,1) <ndash /> (-1,0) <ndash /> (1,1) (1,0) <ndash /> (-1,1) <ndash /> (0,0);
+      \end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 Proving that <m>K_{3,3}</m> is not planar answers the houses and utilities puzzle: it is not possible to connect each of three houses to each of three utilities without the lines crossing.
 </p>
@@ -258,7 +292,13 @@ Another area of mathematics where you might have heard the terms <q>vertex,</q> 
 <p>
 Notice that since <m>8 - 12 + 6 = 2</m>, the vertices, edges and faces of a cube satisfy Euler's formula for planar graphs. This is not a coincidence. We can represent a cube as a planar graph by projecting the vertices and edges onto the plane. One such projection looks like this:
 </p>
-<image width="73%" source="images/7eae7c327932930ae200960a9a91eb5acdd08283.png" />
+<image>
+<latex-image-code><![CDATA[\begin{tikzpicture}
+\foreach \ang in {45, 135, 225, 315} {
+\draw (\ang:.4) \v <ndash /> (\ang:1) \v <ndash /> (\ang+90:1) (\ang:.4) <ndash /> (\ang+90:.4);
+}
+\end{tikzpicture}]]></latex-image-code>
+</image>
 <p>
 In fact, <u>every</u> convex polyhedron can be projected onto the plane without edges crossing. Think of placing the polyhedron inside a sphere, with a light at the center of the sphere. The edges and vertices of the polyhedron cast a shadow onto the interior of the sphere. You can then cut a hole in the sphere in the middle of one of the projected faces and <q>stretch</q> the sphere to lay down flat on the plane. The face that was punctured becomes the <q>outside</q> face of the planar graph.
 </p>
