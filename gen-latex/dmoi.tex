@@ -1,0 +1,483 @@
+%**************************************%
+%* Generated from MathBook XML source *%
+%*    on 2016-07-21T16:01:04-06:00    *%
+%*                                    *%
+%*   http://mathbook.pugetsound.edu   *%
+%*                                    *%
+%**************************************%
+\documentclass[10pt,]{book}
+%% Load geometry package to allow page margin adjustments
+\usepackage{geometry}
+\geometry{letterpaper,total={5.0in,9.0in}}
+%% Custom Preamble Entries, early (use latex.preamble.early)
+%% Inline math delimiters, \(, \), need to be robust
+%% 2016-01-31:  latexrelease.sty  supersedes  fixltx2e.sty
+%% If  latexrelease.sty  exists, bugfix is in kernel
+%% If not, bugfix is in  fixltx2e.sty
+%% See:  https://tug.org/TUGboat/tb36-3/tb114ltnews22.pdf
+%% and read "Fewer fragile commands" in distribution's  latexchanges.pdf
+\IfFileExists{latexrelease.sty}{}{\usepackage{fixltx2e}}
+%% Page Layout Adjustments (latex.geometry)
+%% This LaTeX file may be compiled with pdflatex or xelatex
+%% The following provides engine-specific capabilities
+%% Generally, xelatex will do better languages other than US English
+%% You can pick from the conditional if you will only ever use one engine
+\usepackage{ifthen}
+\usepackage{ifxetex}
+\ifthenelse{\boolean{xetex}}{%
+%% begin: xelatex-specific configuration
+%% fontspec package will make Latin Modern (lmodern) the default font
+\usepackage{xltxtra}
+\usepackage{fontspec}
+%% end: xelatex-specific configuration
+}{%
+%% begin: pdflatex-specific configuration
+%% translate common Unicode to their LaTeX equivalents
+%% Also, fontenc with T1 makes CM-Super the default font
+%% (\input{ix-utf8enc.dfu} from the "inputenx" package is possible addition (broken?)
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%% end: pdflatex-specific configuration
+}
+%% Monospace font: Inconsolata (zi4)
+%% Sponsored by TUG: http://levien.com/type/myfonts/inconsolata.html
+%% See package documentation for excellent instructions
+%% One caveat, seem to need full file name to locate OTF files
+%% Loads the "upquote" package as needed, so we don't have to
+%% Upright quotes might come from the  textcomp  package, which we also use
+%% We employ the shapely \ell to match Google Font version
+%% pdflatex: "varqu" option produces best upright quotes
+%% xelatex: add StylisticSet 1 for shapely \ell
+%% xelatex: add StylisticSet 2 for plain zero
+%% xelatex: we add StylisticSet 3 for upright quotes
+%% 
+\ifthenelse{\boolean{xetex}}{%
+%% begin: xelatex-specific monospace font
+\usepackage{zi4}
+\setmonofont[BoldFont=Inconsolatazi4-Bold.otf,StylisticSet={1,3}]{Inconsolatazi4-Regular.otf}
+%% end: xelatex-specific monospace font
+}{%
+%% begin: pdflatex-specific monospace font
+\usepackage[varqu]{zi4}
+%% end: pdflatex-specific monospace font
+}
+%% Symbols, align environment, bracket-matrix
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% allow more columns to a matrix
+%% can make this even bigger by overriding with  latex.preamble.late  processing option
+\setcounter{MaxMatrixCols}{30}
+%% Semantic Macros
+%% To preserve meaning in a LaTeX file
+%% Only defined here if required in this document
+%% Subdivision Numbering, Chapters, Sections, Subsections, etc
+%% Subdivision numbers may be turned off at some level ("depth")
+%% A section *always* has depth 1, contrary to us counting from the document root
+%% The latex default is 3.  If a larger number is present here, then
+%% removing this command may make some cross-references ambiguous
+%% The precursor variable $numbering-maxlevel is checked for consistency in the common XSL file
+\setcounter{secnumdepth}{3}
+%% Environments with amsthm package
+%% Theorem-like environments in "plain" style, with or without proof
+\usepackage{amsthm}
+\theoremstyle{plain}
+%% Numbering for Theorems, Conjectures, Examples, Figures, etc
+%% Controlled by  numbering.theorems.level  processing parameter
+%% Always need a theorem environment to set base numbering scheme
+%% even if document has no theorems (but has other environments)
+\newtheorem{theorem}{Theorem}[section]
+%% Only variants actually used in document appear here
+%% Style is like a theorem, and for statements without proofs
+%% Numbering: all theorem-like numbered consecutively
+%% i.e. Corollary 4.3 follows Theorem 4.2
+%% Numbering for Projects (independent of others)
+%% Controlled by  numbering.projects.level  processing parameter
+%% Always need a project environment to set base numbering scheme
+%% even if document has no projectss (but has other blocks)
+\newtheorem{project}{Project}[section]
+%% Project-like environments, normal text
+\theoremstyle{definition}
+\newtheorem{activity}[project]{\emph{Investigate!}}
+%% Localize LaTeX supplied names (possibly none)
+\renewcommand*{\appendixname}{Appendix}
+\renewcommand*{\chaptername}{Chapter}
+%% Raster graphics inclusion, wrapped figures in paragraphs
+\usepackage{graphicx}
+%% Colors for Sage boxes, author tools (red hilites), red/green edits
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%% More flexible list management, esp. for references and exercises
+%% But also for specifying labels (i.e. custom order) on nested lists
+\usepackage{enumitem}
+%% Support for index creation
+%% imakeidx package does not require extra pass (as with makeidx)
+%% We set the title of the "Index" section via a keyword
+%% And we provide language support for the "see" phrase
+\usepackage{imakeidx}
+\makeindex[title=Index, intoc=true]
+\renewcommand{\seename}{see}
+%% hyperref driver does not need to be specified
+\usepackage{hyperref}
+%% Hyperlinking active in PDFs, all links solid and blue
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,filecolor=blue,urlcolor=blue}
+\hypersetup{pdftitle={Discrete Mathematics}}
+%% If you manually remove hyperref, leave in this next command
+\providecommand\phantomsection{}
+%% Graphics Preamble Entries
+\usepackage{tikz}
+
+\usetikzlibrary{positioning,matrix,arrows}
+
+\usetikzlibrary{shapes,decorations,shadows,fadings}
+%% If tikz has been loaded, replace ampersand with \amp macro
+%% extpfeil package for certain extensible arrows,
+%% as also provided by MathJax extension of the same name
+%% NB: this package loads mtools, which loads calc, which redefines
+%%     \setlength, so it can be removed if it seems to be in the 
+%%     way and your math does not use:
+%%     
+%%     \xtwoheadrightarrow, \xtwoheadleftarrow, \xmapsto, \xlongequal, \xtofrom
+%%     
+%%     we have had to be extra careful with variable thickness
+%%     lines in tables, and so also load this package late
+\usepackage{extpfeil}
+%% Custom Preamble Entries, late (use latex.preamble.late)
+%% Begin: Author-provided macros
+%% (From  docinfo/macros  element)
+%% Plus three from MBX for XML characters
+\def\d{\displaystyle}
+\def\course{Math 228}
+\def\?{\reflectbox{?}}
+\newcommand{\b}[1]{\mathbf{#1}}
+\newcommand{\f}[1]{\mathfrak #1}
+\newcommand{\c}[1]{\mathcal #1}
+\newcommand{\s}[1]{\mathscr #1}
+\newcommand{\r}[1]{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\circleA{(-.5,0) circle (1)}
+\def\Z{\mathbb Z}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\Q{\mathbb Q}
+\def\circleB{(.5,0) circle (1)}
+\def\R{\mathbb R}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\C{\mathbb C}
+\def\circleC{(0,-1) circle (1)}
+\def\F{\mathbb F}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\A{\mathbb A}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\X{\mathbb X}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\U{\mathcal U}
+\def\pow{\mathcal P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\sigalg{$\sigma$-algebra }
+\def\Gal{\mbox{Gal}}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\r{.55}
+\def\land{\wedge}
+\def\And{\bigwedge}
+\def\entry{\entry}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+\def\var{\mbox{var}}
+\def\r{.5}
+\def\Th{\mbox{Th}}
+\def\entry{\entry}
+\def\sat{\mbox{Sat}}
+\def\con{\mbox{Con}}
+\def\iffmodels{\bmodels\models}
+\def\dbland{\bigwedge \!\!\bigwedge}
+\def\dom{\mbox{dom}}
+\def\rng{\mbox{range}}
+\DeclareMathOperator{\wgt}{wgt}
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.4) rectangle (2,1.4)}
+\def\threesetbox{(-2.5,-2.4) rectangle (2.5,1.4)}
+\def\ansfilename{practice-answers}
+\def\shadowprops{{fill=black!50,shadow xshift=0.5ex,shadow yshift=0.5ex,path fading={circle with fuzzy edge 10 percent}}}
+\def\sb{.6}
+\newcommand{\lt}{ < }
+\newcommand{\gt}{ > }
+\newcommand{\amp}{ & }
+%% End: Author-provided macros
+%% Title page information for book
+\title{Discrete Mathematics\\
+{\large An Open Introduction}}
+\author{Oscar Levin\\
+School of Mathematical Science\\
+University of Northern Colorado
+}
+\date{July 21, 2016}
+\begin{document}
+\frontmatter
+%% begin: half-title
+\thispagestyle{empty}
+{\centering
+\vspace*{0.28\textheight}
+{\Huge Discrete Mathematics}\\[2\baselineskip]
+{\LARGE An Open Introduction}\\
+}
+\clearpage
+%% end:   half-title
+%% begin: adcard
+\thispagestyle{empty}
+\null%
+\clearpage
+%% end:   adcard
+%% begin: title page
+%% Inspired by Peter Wilson's "titleDB" in "titlepages" CTAN package
+\thispagestyle{empty}
+{\centering
+\vspace*{0.14\textheight}
+{\Huge Discrete Mathematics}\\[\baselineskip]
+{\LARGE An Open Introduction}\\[3\baselineskip]
+{\Large Oscar Levin}\\[0.5\baselineskip]
+{\Large University of Northern Colorado}\\[3\baselineskip]
+{\Large July 21, 2016}\\}
+\clearpage
+%% end:   title page
+%% begin: copyright-page
+\thispagestyle{empty}
+\vspace*{\stretch{2}}
+\vspace*{\stretch{1}}
+\null\clearpage
+%% end:   copyright-page
+%% begin: acknowledgement
+\chapter*{Acknowledgements}\label{acknowledgement-1}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+  This book would not exist if not for ``Discrete and Combinatorial Mathematics'' by Richard Grassl and Tabitha Mingus. It is the book I learned discrete math out of, and taught out of the semester before I began writing this text. I wanted to maintain the inquiry based feel of their book but update, expand and rearrange some of the material.
+  %
+\par
+
+  In Spring 2015, Alees Seehausen, a graduate student at the University of Northern Colorado, co-taught the Discrete Mathematics course with me and helped develop many of the \emph{Investigate!} activities and other problems currently used in the text. She also offered many suggestions for improvement of the expository text, for which I am quite grateful. Thanks also to Katie Morrison and Nate Eldredge for their suggestions after using parts of this text in their class.
+  %
+\par
+
+  Finally, a thank you to the numerous students who have pointed out typos and made suggestions over the years and a thanks in advance to those who will do so in the future.
+  %
+%% end:   acknowledgement
+%% begin: preface
+\chapter*{Preface}\label{preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+This text aims to give an introduction to select topics in discrete mathematics at a level appropriate for first or second year undergraduate math majors, especially those who intend to teach middle and high school mathematics. The book began as a set of notes for the Discrete Mathematics course at the University of Northern Colorado. This course serves both as a survey of the topics in discrete math and as the ``bridge'' course for math majors, as UNC does not offer a separate ``introduction to proofs'' course. Most students who take the course plan to teach, although there are a handful of students who will go on to graduate school or study applied math or computer science. For these students the current text hopefully is still of interest, but the intent is not to provide a solid mathematical foundation for computer science, unlike the majority of textbooks on the subject.
+%
+\par
+
+Another difference between this text and most other discrete math books is that this book is intended to be used in a class taught using problem oriented or inquiry based methods. When I teach the class, I will assign sections for reading \emph{after} first introducing them in class by using a mix of group work and class discussion on a few interesting problems. The text is meant to consolidate what we \emph{discover} in class and serve as a reference for students as they master the concepts and techniques covered in the unit. None-the-less, every attempt has been made to make the text sufficient for self study as well, in a way that hopefully mimics an inquiry based classroom.
+%
+\par
+
+The topics covered in this text were chosen to match the need of the students I teach at UNC. The main areas of study are combinatorics, sequences, logic and proofs, and graph theory, in that order. Induction is covered at the end of the chapter on sequences. Most discrete books put logic first as a preliminary, which certainly has its advantages. However, I wanted to discuss logic and proofs together, and found that doing both of these before anything else was overwhelming for my students given that they didn't yet have context of other problems in the subject. Also, after spending a couple weeks on proofs, we would hardly use that at all when covering combinatorics, so much of the progress we made was quickly lost.
+%
+\par
+
+Depending on the speed of the class, it might be possible to include additional material. In past semesters I have included generating functions (after sequences) and some basic number theory (either after the logic and proofs chapter or at the very end of the course). These additional topics are covered in appendix A.
+%
+\par
+
+While I (currently) believe this selection and order of topics is optimal, you should feel free to skip around to what interests you. There are occasionally examples and exercises that rely on earlier material, but I have tried to keep these to a minimum and usually can either be skipped or understood without too much additional study. If you are an instructor, feel free to edit the \LaTeX{}~source to fit your needs.
+%
+%% begin: preface
+\chapter*{How to use this book}\label{preface-2}
+\addcontentsline{toc}{chapter}{How to use this book}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+  In addition to expository text, this book has a few features designed to encourage you to interact with the mathematics.
+  %
+%% begin: preface
+\chapter*{\emph{Investigate!} activities}\label{preface-3}
+\addcontentsline{toc}{chapter}{\emph{Investigate!} activities}
+
+  Sprinkled throughout the sections (usually at the very beginning of a topic) you will find activities designed to get you acquainted with the topic soon to be discussed. These are similar (sometimes identical) to group activities I give students to introduce material. You really should spend some time thinking about, or even working through, these problems before reading the section. By priming yourself to the types of issues involved in the material you are about to read, you will better understand what is to come. There are no solutions provided for these problems, but don't worry if you can't solve them or are not confident in your answers. My hope is that you will take this frustration with you while you read the proceeding section. By the time you are done with the section, things should be much clearer.
+  %
+%% end:   preface
+%% begin: preface
+\chapter*{Examples}\label{preface-4}
+\addcontentsline{toc}{chapter}{Examples}
+
+  I have tried to include the ``correct'' number of examples. For those examples which include \emph{problems}, full solutions are included. Before reading the solution, try to at least have an understanding of what the problem is asking. Unlike some textbooks, the examples are not meant to be all inclusive for problems you will see in the exercises. They should not be used as a blueprint for solving other problems. Instead, use the examples to deepen our understanding of the concepts and techniques discussed in each section. Then use this understanding to solve the exercises at the end of each section.
+  %
+%% end:   preface
+%% begin: preface
+\chapter*{Exercises}\label{preface-5}
+\addcontentsline{toc}{chapter}{Exercises}
+
+  You get good at math through practice. Each section concludes with a small number of exercises meant to solidify concepts and basic skills presented in that section. At the end of each chapter, a larger collection of similar exercises is included (as a sort of ``chapter review'') which might bridge material of different sections in that chapter. Every exercise has either a hint, answer or full solution (which in the pdf version of the text can be found by clicking on the exercises number \textendash{} clicking on the solution number will bring you back to the exercise). Readers are encouraged to try these exercises before looking at the solution. When I teach with this book, I assign these exercises as practice and then use them, or similar problems, on quizzes and exams.
+  %
+%% end:   preface
+%% begin: preface
+\chapter*{Homework Problems}\label{preface-6}
+\addcontentsline{toc}{chapter}{Homework Problems}
+
+       Each chapter includes a small number of more involved problems \textendash{} the type I would assign as homework to be written up and collected each week. As many of these are problems I assign, solutions are not included. If you are using this book for self study, consider these additional \emph{Investigate!} problems.
+    %
+%% end:   preface
+%% end:   preface
+%% begin: preface
+\chapter*{Previous and future editions}\label{pref_editions}
+\addcontentsline{toc}{chapter}{Previous and future editions}
+
+This current Fall 2015 edition of the text is essentially the first edition of the book. I have previously compiled many of the sections in a book format for easy distribution, but those were mostly just lecture notes and exercises (there was no index or Investigate problems; very little in the way of consistent formatting).
+%
+\par
+
+My intent is to compile a new edition prior to each Fall semester which incorporate additions and corrections suggested by instructors and students who use the text the previous semester. Thus I encourage you to send along any suggestions and comments as you have them. For future editions, I will keep track of any major changes here.
+%
+%% end:   preface
+\par\hfill\begin{tabular}{l@{}}
+Oscar Levin, Ph.D.\\
+University of Northern Colorado, 2016
+\end{tabular}\\\par
+%% end:   preface
+%% begin: table of contents
+\setcounter{tocdepth}{1}
+\renewcommand*\contentsname{Contents}
+\tableofcontents
+%% end:   table of contents
+\mainmatter
+\typeout{************************************************}
+\typeout{Chapter 1 Introduction and Preliminaries}
+\typeout{************************************************}
+\chapter[Introduction and Preliminaries]{Introduction and Preliminaries}\label{ch_intro}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+      Welcome to Discrete Mathematics. If this is your first time encountering the subject, you will probably find discrete mathematics quite different from other math subjects. You might not even know what discrete math is! Hopefully this short introduction
+      will shed some light on what the subject is about and what you can expect as you move forward in your studies.
+    %
+\typeout{************************************************}
+\typeout{Section 1.1 What is Discrete Mathematics?}
+\typeout{************************************************}
+\section[What is Discrete Mathematics?]{What is Discrete Mathematics?}\label{sec_intro-intro}
+\begin{quote}dis\textperiodcentered{}crete / dis'krët.%
+\par
+ \emph{Adjective}: Individually separate and distinct.%
+\par
+\emph{Synonyms}: separate - detached - distinct - abstract.%
+\end{quote}
+
+    Defining \emph{discrete mathematics} is hard because defining \emph{mathematics} is hard. What is mathematics? The study of numbers? In part, but you also study functions and lines and triangles and parallelepipeds and vectors and
+    \dots{}. Or perhaps you want to say that mathematics is a collection of tools that allow you to solve problems. What sort of problems? Okay, those that involve numbers, functions, lines, triangles,
+    \dots{}. Whatever your conception of what mathematics is, try applying the concept of ``discrete'' to it, as defined above. Some math fundamentally deals with
+    \dots{} \emph{stuff}
+    \dots{} that is individually separate and distinct.
+  %
+\par
+
+    In an algebra or calculus class, you might have found a particular set of numbers (maybe the set of number in the range of a function). You would represent this set as an interval: \([0,\infty)\) is the range of \(f(x) = x^2\) since the set
+    of outputs of the function are all real numbers 0 and greater. This set of numbers is NOT discrete. The numbers in the set are not separated by much at all. In fact, take any two numbers in the set and there are infinitely many more between
+    them which are also in the set. Discrete math could still ask about the range of a function, but the set would not be an interval. Consider the function which gives the number of children each person reading this has. What is the range? I'm guessing
+    it is something like \(\{0, 1, 2, 3\}\). Maybe 4 is in there too. But certainly there is nobody reading this that has 1.32419 children. This set \emph{is} discrete because the elements are separate. Also notice that the inputs to the function
+    are a discrete set as each input is an individual person. You would not consider fractional inputs (there is nothing we care about \(2/3\) between a pair of readers).
+  %
+\par
+
+    One way to get a feel for the subject is to consider the types of problems you solve in discrete math. Here are a few simple examples:
+  %
+\begin{activity}[]\label{activity-1}
+
+      Here are a few Discrete Math problems for you to try.
+    %
+\par
+
+      \emph{Note: Throughout the text you will see \emph{Investigate!} activities like this one. Answer the questions in these as best you can to give yourself a feel for what is coming next.}
+    %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-1}{}
+        The most popular mathematician in the world is throwing a party for all of his friends. As a way to kick things off, they decide that everyone should shake hands. Assuming all 10 people at the party each shake hands with every other person (but not themselves,
+        obviously) exactly once, how many handshakes take place?
+      \item\hypertarget{li-2}{}
+        At the warm-up event for Oscar's All Star Hot Dog Eating Contest, Al ate one hot dog. Bob then showed him up by eating three hot dogs. Not to be outdone, Carl ate five. This continued with each contestant eating two more hot dogs than the previous contestant.
+        How many hot dogs did Zeno (the 26th and final contestant) eat? How many hot dogs were eaten all together?
+      \item\hypertarget{li-3}{}
+        While walking through a fictional forest, you encounter three trolls. Each is either a \emph{knight}, who always tells the truth, or a \emph{knave}, who always lies. The trolls will not let you pass until you correctly identify each as either
+        a knight or a knave. Each troll makes a single statement:
+
+
+        \begin{itemize}[label=\textbullet]
+\item{}Troll 1: If I am a knave, then there are exactly two knights here.\item{}Troll 2: Troll 1 is lying.\item{}Troll 3: Either we are all knaves or at least one of us is a knight.\end{itemize}
+
+
+
+        Which troll is which?
+      \item\hypertarget{li-7}{}
+        Back in the days of yore, five small towns decided they wanted to build roads directly connecting each pair of towns. While the towns had plenty of money to build roads as long and as winding as they wished, it was very important that the roads not intersect
+        with each other (as stop signs had not yet been invented). Also, tunnels and bridges were not allowed. Is it possible for each of these towns to build a road to each of the four other towns without creating any intersections?
+      \end{enumerate}
+\end{activity}
+\par
+
+    One reason it is difficult to define discrete math is that it is a very broad description which encapsulates a large number of subjects. In this course we will study four main topics: \emph{combinatorics} (the theory of ways things \emph{combine};
+    in particular, how to count these ways), \emph{sequences}, \emph{logic}, and \emph{graph theory}. However, there are other topics that belong under the discrete umbrella, including computer science, abstract algebra, number theory, game theory,
+    probability, and geometry (some of these, particularly the last two, have both discrete and non-discrete variants).
+  %
+\par
+
+    Ultimately the best way to learn what discrete math is about is to \emph{do} it. Let's get started! Before we can begin answering more complicated (and fun) problems, we must lay down some foundation. We start by reviewing sets and functions in
+    the framework of discrete mathematics.
+  %
+%
+%% A lineskip in table of contents as transition to appendices, backmatter
+\addtocontents{toc}{\vspace{\normalbaselineskip}}
+%
+%
+\appendix
+%
+\typeout{************************************************}
+\typeout{Appendix A Notation}
+\typeout{************************************************}
+\chapter[Notation]{Notation}\label{appendix-1}
+\begin{longtable}[l]{llr}
+\textbf{Symbol}&\textbf{Description}&\textbf{Page}\\[1em]
+\endfirsthead
+\textbf{Symbol}&\textbf{Description}&\textbf{Page}\\[1em]
+\endhead
+\multicolumn{3}{r}{(Continued on next page)}\\
+\endfoot
+\endlastfoot
+\end{longtable}
+%
+\backmatter
+%
+%
+%% The index is here, setup is all in preamble
+\printindex
+%
+\cleardoublepage
+\pagestyle{empty}
+\vspace*{\stretch{1}}
+\centerline{
+    This book was authored in MathBook XML.
+  %
+}
+\vspace*{\stretch{2}}
+\end{document}
