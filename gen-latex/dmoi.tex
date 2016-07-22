@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-07-21T16:01:04-06:00    *%
+%*    on 2016-07-22T12:51:08-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -70,6 +70,8 @@
 %% Semantic Macros
 %% To preserve meaning in a LaTeX file
 %% Only defined here if required in this document
+%% Used for inline definitions of terms
+\newcommand{\terminology}[1]{\textbf{#1}}
 %% Subdivision Numbering, Chapters, Sections, Subsections, etc
 %% Subdivision numbers may be turned off at some level ("depth")
 %% A section *always* has depth 1, contrary to us counting from the document root
@@ -90,6 +92,10 @@
 %% Style is like a theorem, and for statements without proofs
 %% Numbering: all theorem-like numbered consecutively
 %% i.e. Corollary 4.3 follows Theorem 4.2
+%% Example-like environments, normal text
+%% Numbering is in sync with theorems, etc
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
 %% Numbering for Projects (independent of others)
 %% Controlled by  numbering.projects.level  processing parameter
 %% Always need a project environment to set base numbering scheme
@@ -98,9 +104,72 @@
 %% Project-like environments, normal text
 \theoremstyle{definition}
 \newtheorem{activity}[project]{\emph{Investigate!}}
+%% assemblage: minimally structured content, high visibility presentation
+%% Package for breakable highlight boxes
+\usepackage{mdframed}
+%% assemblage style
+\mdfdefinestyle{assemblage}{framemethod=default,linewidth=2pt,roundcorner=16pt,backgroundcolor=black!05}
+%% Miscellaneous environments, normal text
+%% Numbering for inline exercises and lists is in sync with theorems, etc
+\theoremstyle{definition}
+\newtheorem{exercise}[theorem]{Exercise}
 %% Localize LaTeX supplied names (possibly none)
 \renewcommand*{\appendixname}{Appendix}
 \renewcommand*{\chaptername}{Chapter}
+%% For improved tables
+\usepackage{array}
+%% Some extra height on each row is desirable, especially with horizontal rules
+%% Increment determined experimentally
+\setlength{\extrarowheight}{0.2ex}
+%% Define variable thickness horizontal rules, full and partial
+%% Thicknesses are 0.03, 0.05, 0.08 in the  booktabs  package
+\makeatletter
+\newcommand{\hrulethin}  {\noalign{\hrule height 0.04em}}
+\newcommand{\hrulemedium}{\noalign{\hrule height 0.07em}}
+\newcommand{\hrulethick} {\noalign{\hrule height 0.11em}}
+%% We preserve a copy of the \setlength package before other
+%% packages (extpfeil) get a chance to load packages that redefine it
+\let\oldsetlength\setlength
+\newlength{\Oldarrayrulewidth}
+\newcommand{\crulethin}[1]%
+{\noalign{\global\oldsetlength{\Oldarrayrulewidth}{\arrayrulewidth}}%
+\noalign{\global\oldsetlength{\arrayrulewidth}{0.04em}}\cline{#1}%
+\noalign{\global\oldsetlength{\arrayrulewidth}{\Oldarrayrulewidth}}}%
+\newcommand{\crulemedium}[1]%
+{\noalign{\global\oldsetlength{\Oldarrayrulewidth}{\arrayrulewidth}}%
+\noalign{\global\oldsetlength{\arrayrulewidth}{0.07em}}\cline{#1}%
+\noalign{\global\oldsetlength{\arrayrulewidth}{\Oldarrayrulewidth}}}
+\newcommand{\crulethick}[1]%
+{\noalign{\global\oldsetlength{\Oldarrayrulewidth}{\arrayrulewidth}}%
+\noalign{\global\oldsetlength{\arrayrulewidth}{0.11em}}\cline{#1}%
+\noalign{\global\oldsetlength{\arrayrulewidth}{\Oldarrayrulewidth}}}
+%% Single letter column specifiers defined via array package
+\newcolumntype{A}{!{\vrule width 0.04em}}
+\newcolumntype{B}{!{\vrule width 0.07em}}
+\newcolumntype{C}{!{\vrule width 0.11em}}
+\makeatother
+%% Figures, Tables, Listings, Floats
+%% The [H]ere option of the float package fixes floats in-place,
+%% in deference to web usage, where floats are totally irrelevant
+%% We re/define the figure, table and listing environments, if used
+%%   1) New mbxfigure and/or mbxtable environments are defined with float package
+%%   2) Standard LaTeX environments redefined to use new environments
+%%   3) Standard LaTeX environments redefined to step theorem counter
+%%   4) Counter for new environments is set to the theorem counter before caption
+%% You can remove all this figure/table setup, to restore standard LaTeX behavior
+%% HOWEVER, numbering of figures/tables AND theorems/examples/remarks, etc
+%% WILL ALL de-synchronize with the numbering in the HTML version
+%% You can remove the [H] argument of the \newfloat command, to allow flotation and 
+%% preserve numbering, BUT the numbering may then appear "out-of-order"
+\usepackage{float}
+\usepackage[bf]{caption} % http://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 
+\usepackage{newfloat}
+% Figure environment setup so that it no longer floats
+\SetupFloatingEnvironment{figure}{fileext=lof,placement={H},within=section,name=Figure}
+% figures have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme 
+\makeatletter
+\let\c@figure\c@theorem
+\makeatother
 %% Raster graphics inclusion, wrapped figures in paragraphs
 \usepackage{graphicx}
 %% Colors for Sage boxes, author tools (red hilites), red/green edits
@@ -108,6 +177,9 @@
 %% More flexible list management, esp. for references and exercises
 %% But also for specifying labels (i.e. custom order) on nested lists
 \usepackage{enumitem}
+%% Lists of exercises in their own section, maximum depth 4
+\newlist{exerciselist}{description}{4}
+\setlist[exerciselist]{leftmargin=0pt,itemsep=1.0ex,topsep=1.0ex,partopsep=0pt,parsep=0pt}
 %% Support for index creation
 %% imakeidx package does not require extra pass (as with makeidx)
 %% We set the title of the "Index" section via a keyword
@@ -115,6 +187,8 @@
 \usepackage{imakeidx}
 \makeindex[title=Index, intoc=true]
 \renewcommand{\seename}{see}
+%% Package for tables spanning several pages
+\usepackage{longtable}
 %% hyperref driver does not need to be specified
 \usepackage{hyperref}
 %% Hyperlinking active in PDFs, all links solid and blue
@@ -129,6 +203,9 @@
 
 \usetikzlibrary{shapes,decorations,shadows,fadings}
 %% If tikz has been loaded, replace ampersand with \amp macro
+\ifdefined\tikzset
+    \tikzset{ampersand replacement = \amp}
+\fi
 %% extpfeil package for certain extensible arrows,
 %% as also provided by MathJax extension of the same name
 %% NB: this package loads mtools, which loads calc, which redefines
@@ -146,13 +223,10 @@
 %% Plus three from MBX for XML characters
 \def\d{\displaystyle}
 \def\course{Math 228}
-\def\?{\reflectbox{?}}
-\newcommand{\b}[1]{\mathbf{#1}}
 \newcommand{\f}[1]{\mathfrak #1}
-\newcommand{\c}[1]{\mathcal #1}
 \newcommand{\s}[1]{\mathscr #1}
-\newcommand{\r}[1]{\mathrm{#1}}
 \def\N{\mathbb N}
+\def\B{\mathbf{B}}
 \def\circleA{(-.5,0) circle (1)}
 \def\Z{\mathbb Z}
 \def\circleAlabel{(-1.5,.6) node[above]{$A$}}
@@ -181,7 +255,6 @@
 \def\Gal{\mbox{Gal}}
 \def\iff{\leftrightarrow}
 \def\Iff{\Leftrightarrow}
-\def\r{.55}
 \def\land{\wedge}
 \def\And{\bigwedge}
 \def\entry{\entry}
@@ -230,7 +303,7 @@
 School of Mathematical Science\\
 University of Northern Colorado
 }
-\date{July 21, 2016}
+\date{July 22, 2016}
 \begin{document}
 \frontmatter
 %% begin: half-title
@@ -256,7 +329,7 @@ University of Northern Colorado
 {\LARGE An Open Introduction}\\[3\baselineskip]
 {\Large Oscar Levin}\\[0.5\baselineskip]
 {\Large University of Northern Colorado}\\[3\baselineskip]
-{\Large July 21, 2016}\\}
+{\Large July 22, 2016}\\}
 \clearpage
 %% end:   title page
 %% begin: copyright-page
@@ -445,6 +518,874 @@ University of Northern Colorado, 2016
     Ultimately the best way to learn what discrete math is about is to \emph{do} it. Let's get started! Before we can begin answering more complicated (and fun) problems, we must lay down some foundation. We start by reviewing sets and functions in
     the framework of discrete mathematics.
   %
+\typeout{************************************************}
+\typeout{Section 1.2 Sets}
+\typeout{************************************************}
+\section[Sets]{Sets}\label{sec_intro-sets}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+      The most fundamental objects we will use in our studies (and really in all of math) are
+      \terminology{sets}
+      \index{set}. Much of what follows might be review, but it is very important that you are fluent in the language of set theory. Most of the notation we use below is standard, although some might be a little different than what you have seen before.
+    %
+\par
+
+      For us, a set will simply be an unordered collection of objects. Two examples: we could consider the set of all actors who have played \emph{The Doctor} on \emph{Doctor Who}\index{Doctor Who}, or the
+      set of natural numbers between 1 and 10 inclusive. In the first case, Tom Baker is a element (or member) of the set, while Idris Elba, among many others, is not an element of the set. Also, the two examples are of different sets. Two sets are equal
+      exactly if they contain the exact same elements.
+    %
+\typeout{************************************************}
+\typeout{Subsection 1.2.1 Notation}
+\typeout{************************************************}
+\subsection[Notation]{Notation}\label{subsec_notation}
+
+      We need some notation to make talking about sets easier. Consider,
+      \begin{equation*}
+        A = \{1, 2, 3\}.
+      \end{equation*}
+    %
+\par
+
+      This is read, ``\(A\) is the set containing the elements 1, 2 and 3.'' We use curly braces ``\(\{,~~ \}\)'' to enclose elements of a set. Some more notation:
+      \begin{equation*}
+        a \in \{a, b, c\}.
+      \end{equation*}
+    %
+\par
+
+      The symbol ``\(\in\)'' is read ``is in'' or ``is an element of.'' Thus the above means that \(a\) is an element of the set containing the letters \(a\), \(b\), and \(c\). Note that this is a true statement. It would also
+      be true to say that \(d\) is not in that set:
+      \begin{equation*}
+        d \not\in \{a, b, c\}.
+      \end{equation*}
+    %
+\par
+
+      Be warned: we write ``\(x \in A\)'' when we wish to express that one of the elements of the set \(A\) is \(x\). For example, consider the set,
+      \begin{equation*}
+        A = \{1, b, \{x, y, z\}, \emptyset\}.
+      \end{equation*}
+    %
+\par
+
+      This is a strange set, to be sure. It contains four elements: the number 1, the letter b, the set \(\{x,y,z\}\), and the empty set (\(\emptyset = \{ \}\), the set containing no elements). Is \(x\) in \(A\)? The answer is no. None of
+      the four elements in \(A\) are the letter \(x\), so we must conclude that \(x \notin A\). Similarly, if we considered the set \(B = \{1,b\}\), then again \(B \notin A\). Even though the elements of \(B\) are also elements of \(A\),
+      we cannot say that the \emph{set} \(B\) is one of the things in the collection \(A\).
+    %
+\par
+
+      If a set is
+      \terminology{finite}
+      \index{finite}, then we can describe it by simply listing the elements. Infinite sets exists though, so we need to be able to describe them as well. For instance, if we want \(A\) to be the set of all even natural numbers,
+      would could write,
+      \begin{equation*}
+        A = \{0, 2, 4, 6, \ldots\},
+      \end{equation*}
+      but this is a little imprecise. Better would be
+      \begin{equation*}
+        A = \{x \in \N \st \exists n\in \N ( x = 2 n)\}.
+      \end{equation*}
+    %
+\par
+
+      Breaking that down: ``\(x \in \N\)'' means \(x\) is in the set \(\N\) \label{notation-1}
+ (the set of natural numbers, starting with 0), \(:\) \label{notation-2}
+      is read ``such that'' and ``\(\exists n\in \N (x = 2n) \)
+      '' is read ``there exists an \(n\) in the natural numbers for which \(x\) is two times \(n\)'' (in other words, \(x\) is even). Slightly easier might be,
+      \begin{equation*}
+        A = \{x \st \mbox{  is even} \}.
+      \end{equation*}
+    %
+\par
+
+      Note: sometimes people use \(|\) or \(\backepsilon\) for the ``such that'' symbol instead of the colon.
+    %
+\par
+
+      Defining a set using this sort of notation is very useful, although it takes some practice to read them correctly. It is a way to describe the set of all things that satisfy some condition (the condition is the logical statement after the ``:''      symbol). Here are some more examples. We use the symbols \(\wedge\) for ``and'' and \(\vee\) for ``or'' (which includes the ``or both'' for us)
+      \index{connectives!and}
+      \index{connectives!or}.
+    %
+\begin{example}[]\label{example-1}
+
+          Describe each of the following sets both in words and by listing out enough elements to see the pattern.
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-8}{}\(\{x \st x + 3 \in \N\}\).\item\hypertarget{li-9}{}\(\{x \in \N \st x + 3 \in \N\}\).\item\hypertarget{li-10}{}\(\{x \st x \in \N \vee -x \in \N\}\).\item\hypertarget{li-11}{}\(\{x \st x \in \N \wedge -x \in \N\}\).\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-12}{}
+              This is the set of all number which are 3 less than a natural number (i.e., that if you add 3 to them, you get a natural number). The set could also be written as \(\{-3, -2, -1, 0, 1, 2, \ldots\}\) (note that 0 is a natural number, so
+              \(-3\) is in this set because \(-3 + 3 = 0\)).
+            %
+\item\hypertarget{li-13}{}
+              This is the set of all natural numbers which are 3 less than a natural number. So here we just have \(\{0, 1, 2,3 \ldots\}\).
+            %
+\item\hypertarget{li-14}{}
+              This is the set of all integers
+              \index{integers} (positive and negative whole numbers, written \(\Z\)). In other words, \(\{\ldots, -2, -1, 0, 1, 2, \ldots\}\).
+            %
+\item\hypertarget{li-15}{}
+              Here we want all numbers \(x\) such that \(x\) and \(-x\) are natural numbers. There is only one: 0. So we have the set \(\{0\}\).
+            %
+\end{enumerate}
+\end{example}
+\par
+
+      We already have a lot of notation, and there is more yet. Below is a handy chart of symbols. Some of these will be discussed in greater detail as we move forward.
+    %
+\begin{mdframed}[style=assemblage]%
+\noindent\textbf{\large Set Theory Notation}\label{assemblage-1}\par\medskip
+
+        \begin{tabular}{lll}
+Symbol:&Read:&Example:\tabularnewline\hrulethick
+\(\{, \}\)
+
+            &braces&\(\{1,2,3\}\). The braces enclose the elements of a set. This is the set which contains the numbers 1, 2, and 3.\tabularnewline[0pt]
+
+              \(\st\)
+
+            &such that&\(\{x \st x > 2\}\) is the set of all \(x\) such that \(x\) is greater than 2.\tabularnewline[0pt]
+
+              \(\in\)
+
+            &is an element of&\(2 \in \{1,2,3\}\) asserts that 2 is one of the elements in the set \(\{1,2,3\}\). However, \(4 \notin\{1,2,3\}\).\tabularnewline[0pt]
+
+              \(\subseteq\)
+
+            &is a subset of&\(A \subseteq B\) asserts that every element of \(A\) is also an element of \(B\).\tabularnewline[0pt]
+
+              \(\subset\)
+            &is a proper subset of&\(A \subset B\) asserts that every element of \(A\) is also an element of \(B\), but \(A \ne B\).\tabularnewline[0pt]
+
+              \(\cap\)
+
+            &intersection
+
+            &\(A \cap B\) is the \emph{set} containing all elements which are elements of both \(A\) and \(B\).\tabularnewline[0pt]
+
+              \(\cup\)
+
+            &union
+
+            &\(A \cup B\) is the \emph{set} containing all elements which are elements of \(A\) or \(B\) or both.\tabularnewline[0pt]
+
+              \(\times\)
+
+            &cross&\(A \times B\) is the set of all ordered pairs \((a,b)\) with \(a \in A\) and \(b \in B\).\tabularnewline[0pt]
+
+              \(\setminus\)
+
+            &set difference&\(A \setminus B\) is the \emph{set} containing all elements of \(A\) which are not elements of \(B\).\tabularnewline[0pt]
+
+              \(\bar{A}\)
+            &complement (of \(A\))&\(\bar{A}\) is the set of everything which is not an element of \(A\). The \(A\) can be any set here.\tabularnewline[0pt]
+
+              \(\left|A\right|\)
+            &cardinality (of \(A\))&\(|\{4,5,6\}| = 3\) because there are 3 elements in the set. Sometimes we call \(|A|\) the \emph{size} of \(A\).\tabularnewline[0pt]
+ \terminology{Logic symbols:}&\tabularnewline[0pt]
+\(\wedge\)
+            &and&\(x \in A \wedge x \notin B\) means \(x\) is both in the set \(A\) and not in the set \(B\).\tabularnewline[0pt]
+
+              \(\vee\)
+
+            &or&\(x \in A \vee x \notin B\) asserts that \(x\) is an element of \(A\) or not an element of \(B\), or both.\tabularnewline[0pt]
+
+              \(\neg\)
+
+            &not&Another way to write \(x \notin A\) is \(\neg x \in A\).\tabularnewline[0pt]
+
+              \(\forall\)
+
+            &for all&\(\forall x (x \ge 0)\) claims that every number is greater than 0.
+
+            \tabularnewline[0pt]
+
+              \(\exists\)
+
+            &there exists
+            &\(\exists x (x \lt  0)\) claims that there is a number less than 0.
+\end{tabular}
+
+      %
+\end{mdframed}
+\begin{mdframed}[style=assemblage]%
+\noindent\textbf{\large Special sets}\label{assemblage-2}\par\medskip
+
+        \begin{tabular}{ll}
+\(\emptyset\)
+            &The \emph{empty set} is the set which contains no elements.\tabularnewline[0pt]
+
+              \(\U\)
+            &The \emph{universe set} is the set of all elements.\tabularnewline[0pt]
+
+              \(\N\)
+            &The set of natural numbers. That is, \(\N = \{0, 1, 2, 3\ldots\}\).\tabularnewline[0pt]
+
+              \(\Z\)
+            &The set of integers. That is, \(\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}\).\tabularnewline[0pt]
+
+              \(\Q\)
+            &The set of rational numbers.\tabularnewline[0pt]
+
+              \(\R\)
+            &The set of real numbers.\tabularnewline[0pt]
+
+              \(\pow(A)\)
+
+            &The \emph{power set} of any set \(A\) is the set of all subsets of \(A\).
+\end{tabular}
+
+      %
+\end{mdframed}
+\begin{activity}[]\label{activity-2}
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-16}{}
+            Find the cardinality of each set below.
+
+          \begin{enumerate}
+\item\hypertarget{li-17}{}\(A = \{3,4,\ldots, 15\}\).\item\hypertarget{li-18}{}\(B = \{n \in \N \st 2 \lt  n \le 200\}\).\item\hypertarget{li-19}{}\(C = \{n \le 100 \st n \in \N \wedge \exists m \in \N (n = 2m+1)\}\).\end{enumerate}
+\item\hypertarget{li-20}{}
+          Find two sets \(A\) and \(B\) for which \(|A| = 5\), \(|B| = 6\), and \(|A\cup B| = 9\). What is \(|A \cap B|\)?
+      \item\hypertarget{li-21}{}
+          Find sets \(A\) and \(B\) with \(|A| = |B|\) such that \(|A\cup B| = 7\) and \(|A \cap B| = 3\). What is \(|A|\)?
+
+        \item\hypertarget{li-22}{}
+              Let \(A = \{1,2,\ldots, 10\}\). Define \(\mathcal{B}_2 = \{B \subseteq A \st |B| = 2\}\). Find \(|\mathcal{B}_2|\).
+        \item\hypertarget{li-23}{}
+            For any sets \(A\) and \(B\), define \(AB = \{ab \st a\in A \wedge b \in B\}\). If \(A = \{1,2\}\) and \(B = \{2,3,4\}\), what is \(|AB|\)? What is \(|A \times B|\)?
+        \end{enumerate}
+\end{activity}
+\typeout{************************************************}
+\typeout{Subsection 1.2.2 Relationships Between Sets}
+\typeout{************************************************}
+\subsection[Relationships Between Sets]{Relationships Between Sets}\label{subsection-2}
+
+      We have already said what it means for two sets to be equal: they have exactly the same elements. Thus, for example,
+      \begin{equation*}
+        \{1, 2, 3\} = \{2, 1, 3\}.
+      \end{equation*}
+    %
+\par
+
+      (Remember, the order the elements are written down in does not matter.) Also,
+      \begin{equation*}
+        \{1, 2, 3\} = \{1, 1+1, 1+1+1\} = \{I, II, III\}
+      \end{equation*}
+      since these are all ways to write the set containing the first three positive integers (how we write them doesn't matter, just what they are).
+    %
+\par
+
+      What about the sets \(A = \{1, 2, 3\}\) and \(B = \{1, 2, 3, 4\}\)? Clearly \(A \ne B\), but notice that every element of \(A\) is also an element of \(B\). Because of this we say that \(A\) is a \emph{subset}
+      \index{subset} of \(B\), or in symbols \(A \subset B\) or \(A \subseteq B\). (Both symbols are read ``is a subset of.'' The difference is that sometimes we want to say that \(A\) is either equal to or a subset of \(B\), in which
+      case we use \(\subseteq\). This is analoguous to the difference between \(\lt\) and \(\le\).)
+    %
+\begin{example}[]\label{example-2}
+
+          Let \(A = \{1, 2, 3, 4, 5, 6\}\), \(B = \{2, 4, 6\}\), \(C = \{1, 2, 3\}\) and \(D = \{7, 8, 9\}\). Determine which of the following are true, false, or meaningless.
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-24}{}\(A \subset B\).\item\hypertarget{li-25}{}\(B \subset A\).\item\hypertarget{li-26}{}\(B \in C\).\item\hypertarget{li-27}{}\(\emptyset \in A\).\item\hypertarget{li-28}{}\(\emptyset \subset A\).\item\hypertarget{li-29}{}\(A \lt  D\).\item\hypertarget{li-30}{}\(3 \in C\).\item\hypertarget{li-31}{}\(3 \subset C\).\item\hypertarget{li-32}{}\(\{3\} \subset C\).\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-33}{}
+              False. For example, \(1\in A\) but \(1 \notin B\).
+            %
+\item\hypertarget{li-34}{}
+              True. Every element in \(B\) is an element in \(A\).
+            %
+\item\hypertarget{li-35}{}
+              False. The elements in \(C\) are 1, 2, and 3. The \emph{set} \(B\) is not equal to 1, 2, or 3.
+            %
+\item\hypertarget{li-36}{}
+              False. \(A\) has exactly 6 elements, and none of them are the empty set.
+            %
+\item\hypertarget{li-37}{}
+              True. Everything in the empty set (nothing) is also an element of \(A\). Notice that the empty set is a subset of every set.
+            %
+\item\hypertarget{li-38}{}
+              Meaningless. A set cannot be less than another set.
+            %
+\item\hypertarget{li-39}{}
+              True. \(3\) is one of the elements of the set \(C\).
+            %
+\item\hypertarget{li-40}{}
+              Meaningless. \(3\) is not a set, so it cannot be a subset of another set.
+            %
+\item\hypertarget{li-41}{}
+              True. \(3\) is the only element of the set \(\{3\}\), and is an element of \(C\), so every element in \(\{3\}\) is an element of \(C\).
+            %
+\end{enumerate}
+\end{example}
+\par
+
+      In the example above, \(B\) is a subset of \(A\). You might wonder what other sets are subsets of \(A\). If you collect all these subsets of \(A\) into a new set, we get a set of sets. We call the set of all subsets of \(A\) the \emph{power set}
+      \index{power set} of \(A\), and write it \(\pow(A)\).
+    %
+\begin{example}[]\label{example-3}
+
+          Let \(A = \{1,2,3\}\). Find \(\pow(A)\).
+        %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+          \(\pow(A)\) is a set of sets, all of which are subsets of \(A\). So
+          \begin{equation*}
+            \pow(A) = \{ \emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1, 3\}, \{2,3\}, \{1,2,3\}\}.
+          \end{equation*}
+        %
+\par
+
+          Notice that while \(2 \in A\), it is wrong to write \(2 \in \pow(A)\) since none of the elements in \(\pow(A)\) are numbers! On the other hand, we do have \(\{2\} \in \pow(A)\) because \(\{2\} \subseteq A\).
+        %
+\par
+
+          What does a subset of \(\pow(A)\) look like? Notice that \(\{2\} \not\subseteq \pow(A)\) because not everything in \(\{2\}\) is in \(\pow(A)\). But we do have \(\{ \{2\} \} \subseteq \pow(A)\). The only element of \(\{\{2\}\}\)          is the set \(\{2\}\) which is also an element of \(\pow(A)\). We could take the collection of all subsets of \(\pow(A)\) and call that \(\pow(\pow(A))\). Or even the power set of that set of sets of sets.
+        %
+\end{example}
+\par
+
+      Another way to compare sets is by their size. Notice that in the example above, \(A\) has 6 elements, \(B\), \(C\), and \(D\) all have 3 elements. The size of a set is called the set's \emph{cardinality}
+      \index{cardinality}. We would write \(|A| = 6\), \(|B| = 3\), and so on. For sets that have a finite number of elements, the cardinality of the set is simply the number of elements in the set. Note that the cardinality of \(\{ 1, 2, 3, 2, 1\}\)      is 3. We do not count repeats (in fact, \(\{1, 2, 3, 2, 1\}\) is exactly the same set as \(\{1, 2, 3\}\)). There are sets with infinite cardinality, such as \(\N\), the set of rational numbers (written \(\mathbb Q\)), the set of even
+      natural numbers, and the set of real numbers (\(\mathbb R\)). It is possible to distinguish between different infinite cardinalities, but that is beyond the scope of this text. For us, a set will either be infinite, or finite; if it is finite,
+      the we can determine its cardinality by counting elements.
+    %
+\begin{example}[]\label{example-4}
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-42}{}
+              Find the cardinality of \(A = \{23, 24, \ldots, 37, 38\}\).
+            %
+\item\hypertarget{li-43}{}
+              Find the cardinality of \(B = \{1, \{2, 3, 4\}, \emptyset\}\).
+            %
+\item\hypertarget{li-44}{}
+              If \(C = \{1,2,3\}\), what is the cardinality of \(\pow(C)\)?
+            %
+\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-45}{}
+              Since \(38 - 23 = 15\), we can conclude that the cardinality of the set is \(|A| = 16\) (you need to add one since 23 is included).
+            %
+\item\hypertarget{li-46}{}
+              Here \(|B| = 3\). The three elements are the number 1, the set \(\{2,3,4\}\), and the empty set.
+            %
+\item\hypertarget{li-47}{}
+              We wrote out the elements of the power set \(\pow(C)\) above, and there are 8 elements (each of which is a set). So \(|\pow(C)| = 8\).\footnotemark
+            %
+\end{enumerate}
+\end{example}
+\typeout{************************************************}
+\typeout{Subsection 1.2.3 Operations On Sets}
+\typeout{************************************************}
+\subsection[Operations On Sets]{Operations On Sets}\label{subsection-3}
+
+      Is it possible to add two sets? Not really, however there is something similar. If we want to combine two sets to get the collection of objects that are in either set, then we can take the \emph{union}
+      \index{union} of the two sets. Symbolically,
+      \begin{equation*}
+        C = A \cup B,
+      \end{equation*}
+      read, ``\(C\) is the union of \(A\) and \(B\),'' means that the elements of \(C\) are exactly the elements which are either an element of \(A\) or an element of \(B\) (or an element of both). For example, if \(A = \{1, 2, 3\}\)      and \(B = \{2, 3, 4\}\), then \(A \cup B = \{1, 2, 3, 4\}\).
+    %
+\par
+
+      The other common operation on sets is \emph{intersection}
+      \index{intersection}. We write,
+      \begin{equation*}
+        C = A \cap B
+      \end{equation*}
+      and say, ``\(C\) is the intersection of \(A\) and \(B\),'' when the elements in \(C\) are precisely those both in \(A\) and in \(B\). So if \(A = \{1, 2, 3\}\) and \(B = \{2, 3, 4\}\), then \(A \cap B = \{2, 3\}\).
+    %
+\par
+
+      Often when dealing with sets, we will have some understanding as to what ``everything'' is. Perhaps we are only concerned with natural numbers. In this case we would say that our \emph{universe} is \(\N\). Sometimes we denote this universe
+      by \(\U\). Given this context, we might wish to speak of all the elements which are \emph{not} in a particular set. We say \(B\) is the \emph{complement}
+      \index{complement} of \(A\), and write,
+      \begin{equation*}
+        B = \bar A
+      \end{equation*}
+      when \(B\) contains every element not contained in \(A\). So if our universe is \(\{1, 2,\ldots, 9, 10\}\), and \(A = \{2, 3, 5, 7\}\), then \(\bar A = \{1, 4, 6, 8, 9,10\}\).
+    %
+\par
+
+      Of course we can perform more than one operation at a time. For example, consider
+      \begin{equation*}
+        A \cap \bar B.
+      \end{equation*}
+    %
+\par
+
+      This is the set of all elements which are both elements of \(A\) and not elements of \(B\). What have we done? We've started with \(A\) and removed all of the elements which were in \(B\). Another way to write this is the \emph{set difference}
+      \index{set difference}
+      \index{difference, of sets}:
+      \begin{equation*}
+        A \cap \bar B = A \setminus B.
+      \end{equation*}
+    %
+\par
+
+      It is important to remember that these operations (union, intersection, complement, and difference) on sets produce other sets. Don't confuse these with the symbols from the previous section (element of and subset of). \(A \cap B\) is a set,
+      while \(A \subseteq B\) is true or false. This is the same difference as between \(3 + 2\) (which is a number) and \(3 \le 2\) (which is false).
+    %
+\begin{example}[]\label{example-5}
+
+          Let \(A = \{1, 2, 3, 4, 5, 6\}\), \(B = \{2, 4, 6\}\), \(C = \{1, 2, 3\}\) and \(D = \{7, 8, 9\}\). If the universe is \(\U = \{1, 2, \ldots, 10\}\), find:
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-48}{}\(A \cup B\).\item\hypertarget{li-49}{}\(A \cap B\).\item\hypertarget{li-50}{}\(B \cap C\).\item\hypertarget{li-51}{}\(A \cap D\).\item\hypertarget{li-52}{}\(\bar{B \cup C}\).\item\hypertarget{li-53}{}\(A \setminus B\).\item\hypertarget{li-54}{}\((D \cap \bar C) \cup \bar{A \cap B}\).\item\hypertarget{li-55}{}\(\emptyset \cup C\).\item\hypertarget{li-56}{}\(\emptyset \cap C\).\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-57}{}\(A \cup B = \{1, 2, 3, 4, 5, 6\} = A\) since everything in \(B\) is already in \(A\).\item\hypertarget{li-58}{}\(A \cap B = \{2, 4, 6\} = B\) since everything in \(B\) is in \(A\).\item\hypertarget{li-59}{}\(B \cap C = \{2\}\) as the only element of both \(B\) and \(C\) is 2.\item\hypertarget{li-60}{}\(A \cap D = \emptyset\) since \(A\) and \(D\) have no common elements.\item\hypertarget{li-61}{}\(\bar{B \cup C} = \{5, 7, 8, 9, 10\}\). First we find that \(B \cup C = \{1, 2, 3, 4, 6\}\), then we take everything not in that set.\item\hypertarget{li-62}{}\(A \setminus B = \{1, 3, 5\}\) since the elements 1, 3, and 5 are in \(A\) but not in \(B\). This is the same as \(A \cap \bar B\).\item\hypertarget{li-63}{}\((D \cap \bar C) \cup \bar{A \cap B} = \{1, 3, 5, 7, 8, 9, 10\}.\) The set contains all elements that are either in \(D\) but not in \(C\) (\(\{7,8,9\}\)), or not in both \(A\) and \(B\) (\(\{1,3,5,7,8,9,10\}\)).\item\hypertarget{li-64}{}\(\emptyset \cup C = C\) since nothing is added by the empty set.\item\hypertarget{li-65}{}\(\emptyset \cap C = \emptyset\) since nothing can be both in a set and in the empty set.\end{enumerate}
+\end{example}
+\par
+
+      You might notice that the symbols for union and intersection slightly resemble the logic symbols for ``or'' and ``and.'' This is no accident. What does it mean for \(x\) to be an element of \(A\cup B\)? It means that \(x\) is an element
+      of \(A\emph{or}x\) is an element of \(B\) (or both). That is,
+      \begin{equation*}
+        x \in A \cup B \qquad \Iff \qquad x \in A \vee x \in B.
+      \end{equation*}
+    %
+\par
+
+      Similarly,
+      \begin{equation*}
+        x \in A \cap B \qquad \Iff \qquad x \in A \wedge x \in B.
+      \end{equation*}
+    %
+\par
+
+      Also,
+      \begin{equation*}
+        x \in \bar A \qquad \Iff \qquad \neg (x \in A).
+      \end{equation*}
+      which says \(x\) is an element of the complement of \(A\) if \(x\) is not an element of \(A\).
+    %
+\par
+
+      There is one more way to combine sets which will be useful for us: the \emph{Cartesian product}, \(A \times B\). This sounds fancy but is nothing you haven't seen before. When you graph a function in calculus, you graph it in the Cartesian
+      plane. This is the set of all ordered pairs of real numbers \((x,y)\). We can do this for \emph{any} pair of sets, not just the real numbers with themselves.
+    %
+\par
+
+      Put another way, \(A \times B = \{(a,b) \st a \in A \wedge b \in B\}\). The first coordinate comes from the first set and the second coordinate comes from the second set. Sometimes we will want to take the Cartesian product of a set with itself,
+      and this is fine: \(A \times A = \{(a,b) \st a, b \in A\}\) (we might also write \(A^2\) for this set). Notice that in \(A \times A\), we still want \emph{all} ordered pairs, not just the ones where the first and second coordinate are
+      the same. We can also take products of 3 or more sets, getting ordered triples, or quadruples, and so on.
+    %
+\begin{example}[]\label{example-6}
+
+          Let \(A = \{1,2\}\) and \(B = \{3,4,5\}\). Find \(A \times B\) and \(A \times A\). How many elements do you expect to be in \(B \times B\)?
+        %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+          \(A \times B = \{(1,3), (1,4), (1,5), (2,3), (2,4), (2,5)\}\).
+        %
+\par
+
+          \(A \times A = A^2 = \{(1,1), (1,2), (2,1), (2,2)\}\).
+        %
+\par
+
+          \(|B\times B| = 9\). There will be 3 pairs with first coordinate \(3\), three more with first coordinate \(4\), and a final three with first coordinate \(5\).
+        %
+\end{example}
+\typeout{************************************************}
+\typeout{Subsection 1.2.4 Venn Diagrams}
+\typeout{************************************************}
+\subsection[Venn Diagrams]{Venn Diagrams}\label{subsection-4}
+
+      \index{Venn diagram} There is a very nice visual tool we can use to represent operations on sets. Venn diagrams display sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality
+      of a particular set by putting the number in the corresponding region.
+    %
+\leavevmode%
+\begin{figure}
+\centering
+{
+          \begin{tikzpicture}[fill=gray!50,scale=0.85]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\end{figure}
+{
+        \begin{tikzpicture}[scale=.60, fill=gray!50]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\par
+
+      Each circle represents a set. The rectangle containing the circles represents the universe. To represent combinations of these sets, we shade the corresponding region. For example, we could draw \(A \cap B\) as:
+    %
+{
+        \begin{tikzpicture}[fill=gray!50,scale=0.85]
+	\begin{scope}
+	\clip \circleA;
+	\fill \circleB;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\par
+
+      Here is a representation of \(A \cap \bar B\), or equivalently \(A \setminus B\):
+    %
+{
+        \begin{tikzpicture}[fill=gray!50,scale=0.85]
+	\begin{scope}
+	\clip \twosetbox \circleB;
+	\fill \circleA;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\par
+
+      A more complicated example is \((B \cap C) \cup (C \cap \bar A)\), as seen below.
+    %
+{
+        \begin{tikzpicture}[fill=gray!50,scale=0.65]
+	\fill \circleC;
+	\begin{scope}
+	    \clip \circleC;
+	    \fill[white] \circleA \circleB;
+	  \end{scope}
+	  \begin{scope}
+	  	\clip \circleC;
+	  	\fill \circleB;
+	  \end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\par
+
+      Notice that the shaded regions above could also be arrived at in another way. We could have started with all of \(C\), then excluded the region where \(C\) and \(A\) overlap outside of \(B\). That region is \((A \cap C) \cap \bar B\).
+      So the above Venn diagram also represents \(C \cap \bar{\left((A\cap C)\cap \bar B\right)}.\) So using just the picture, we have determined that
+      \begin{equation*}
+        (B \cap C) \cup (C \cap \bar A) = C \cap \bar{\left((A\cap C)\cap \bar B\right)}.
+      \end{equation*}
+    %
+\typeout{************************************************}
+\typeout{Exercises 1.2.4.1 Exercises}
+\typeout{************************************************}
+\subsubsection[Exercises]{Exercises}\label{exercises-1}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-1}{}
+            Let \(A = \{1,2,3,4,5\}\), \(B = \{3,4,5,6,7\}\), and \(C = \{2,3,5\}\).
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-66}{}
+                Find \(A \cap B\).
+              %
+\item\hypertarget{li-67}{}
+                Find \(A \cup B\).
+              %
+\item\hypertarget{li-68}{}
+                Find \(A \setminus B\).
+              %
+\item\hypertarget{li-69}{}
+                Find \(A \cap \bar{(B \cup C)}\).
+              %
+\item\hypertarget{li-70}{}
+                Find \(A \times C\).
+              %
+\item\hypertarget{li-71}{}
+                Is \(C \subseteq A\)? Explain.
+              %
+\item\hypertarget{li-72}{}
+                Is \(C \subseteq B\)? Explain.
+              %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-1}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-73}{}\(A \cap B = \{3,4,5\}\).\item\hypertarget{li-74}{}\(A \cup B = \{1,2,3,4,5,6,7\}\).\item\hypertarget{li-75}{}\(A \setminus B = \{1,2\}\).\item\hypertarget{li-76}{}\(A \cap \bar{(B \cup C)} = \{1\}\).\item\hypertarget{li-77}{}\(A \times B = \{(1,2), (1,3), (1,5), (2,2), (2,3), (2,5), (3,2), (3,3), (3,5), (4,2), (4,3), (4,5), (5,2), (5,3), (5,5)\}\).\item\hypertarget{li-78}{}
+                Yes.
+              %
+\item\hypertarget{li-79}{}
+                No.
+              %
+\end{enumerate}
+\item[2.]\hypertarget{exercise-2}{}
+            Let \(A = \{x \in \N \st 3 \le x \le 13\}\), \(B = \{x \in \N \st x \mbox{ is even} \}\), and \(C = \{x \in \N \st x \mbox{ is odd} \}\).
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-80}{}
+                Find \(A \cap B\).
+              %
+\item\hypertarget{li-81}{}
+                Find \(A \cup B\).
+              %
+\item\hypertarget{li-82}{}
+                Find \(B \cap C\).
+              %
+\item\hypertarget{li-83}{}
+                Find \(B \cup C\).
+              %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-2}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-84}{}\(A \cap B = \{4,6,8,10,12\}\)\item\hypertarget{li-85}{}\(A \cup B = \{x \in \N \st (3 \le x \le 13) \vee x \mbox{ is even} \}.\) (the set of all natural numbers which are either even or between 3 and 13 inclusive).\item\hypertarget{li-86}{}\(B \cap C = \emptyset\).\item\hypertarget{li-87}{}\(B \cup C = \N\).\end{enumerate}
+\item[3.]\hypertarget{exercise-3}{}
+            Find an example of sets \(A\) and \(B\) such that \(A\cap B = \{3, 5\}\) and \(A \cup B = \{2, 3, 5, 7, 8\}\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-3}{}\quad
+
+            For example, \(A = \{2,3,5,7,8\}\) and \(B = \{3,5\}\).
+          %
+\item[4.]\hypertarget{exercise-4}{}
+            Find an example of sets \(A\) and \(B\) such that \(A \subseteq B\) and \(A \in B\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-4}{}\quad
+
+            Let \(A = \{1,2,3\}\) and \(B = \{1,2,3,4,5,\{1,2,3\}\}\)
+          %
+\item[5.]\hypertarget{exercise-5}{}
+            Recall \(\Z = \{\ldots,-2,-1,0, 1,2,\ldots\}\) (the integers). Let \(\Z^+ = \{1, 2, 3, \ldots\}\) be the positive integers. Let \(2\Z\) be the even integers, \(3\Z\) be the multiples of 3, and so on.
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-88}{}
+                Is \(\Z^+ \subseteq 2\Z\)? Explain.
+              %
+\item\hypertarget{li-89}{}
+                Is \(2\Z \subseteq \Z^+\)? Explain.
+              %
+\item\hypertarget{li-90}{}
+                Find \(2\Z \cap 3\Z\). Describe the set in words, and also in symbols (using a \(\st\) symbol).
+              %
+\item\hypertarget{li-91}{}
+                Express \(\{x \in \Z \st \exists y\in \Z (x = 2y \vee x = 3y)\}\) as a union or intersection of two sets above.
+              %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-5}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-92}{}
+                No.
+              %
+\item\hypertarget{li-93}{}
+                No.
+              %
+\item\hypertarget{li-94}{}\(2\Z \cap 3\Z\) is the set of all integers which are multiples of both 2 and 3 (so multiples of 6). Therefore \(2\Z \cap 3\Z = \{x \in \Z \st \exists y\in \Z(x = 6y)\}\).\item\hypertarget{li-95}{}\(2\Z \cup 3\Z\).\end{enumerate}
+\item[6.]\hypertarget{exercise-6}{}
+            Let \(A_2\) be the set of all multiples of 2 except for \(2\). Let \(A_3\) be the set of all multiples of 3 except for 3. And so on, so that \(A_n\) is the set of all multiple of \(n\) except for \(n\), for any \(n \ge 2\).
+            Describe (in words) the set \(\bar{A_2 \cup A_3 \cup A_4 \cup \cdots}\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-6}{}\quad
+
+            The set of primes.
+          %
+\item[7.]\hypertarget{exercise-7}{}
+            Draw a Venn diagram to represent each of the following:
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-96}{}\(A \cup \bar B\)\item\hypertarget{li-97}{}\(\bar{(A \cup B)}\)\item\hypertarget{li-98}{}\(A \cap (B \cup C)\)\item\hypertarget{li-99}{}\((A \cap B) \cup C\)\item\hypertarget{li-100}{}\(\bar A \cap B \cap \bar C\)\item\hypertarget{li-101}{}\((A \cup B) \setminus C\)\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-7}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-102}{}\(A \cup \bar B\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+
+\fill \circleA;
+
+  \begin{scope}
+  \clip \circleB \twosetbox;
+  \fill \twosetbox;
+  \end{scope}
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-103}{}\(\bar{(A \cup B)}\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+  \fill \twosetbox;
+  \fill[white] \circleA \circleB;
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-104}{}\(A \cap (B \cup C)\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\begin{scope}
+  \clip \circleA;
+  \fill \circleB \circleC;
+\end{scope}
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-105}{}\((A \cap B) \cup C\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\begin{scope}
+  \clip \circleA;
+  \fill \circleB;
+\end{scope}
+\fill \circleC;
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-106}{}\(\bar A \cap B \cap \bar C\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\fill \circleB;
+\begin{scope}
+  \clip \circleB;
+  \fill[white] \circleA \circleC;
+\end{scope}
+
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-107}{}\((A \cup B) \setminus C\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\fill \circleA;
+\fill \circleB;
+\fill[white] \circleC;
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\end{enumerate}
+\item[8.]\hypertarget{exercise-8}{}
+            Describe a set in terms of \(A\) and \(B\) which has the following Venn diagram:
+          %
+{
+              \begin{tikzpicture}[fill=gray!50, scale=0.75]
+\scope
+\clip (-2,-2) rectangle (2,2)
+      (1,0) circle (1);
+\fill (0,0) circle (1);
+\endscope
+\scope
+\clip (-2,-2) rectangle (2,2)
+      (0,0) circle (1);
+\fill (1,0) circle (1);
+\endscope
+\draw[thick] (0,0) circle (1) (-1,.7)  node [text=black,above] {\(A\)}
+      (1,0) circle (1) (2,.7)  node [text=black,above] {\(B\)}
+      (-1.5,-1.5) rectangle (2.5,1.5);
+\end{tikzpicture}
+}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-8}{}\quad
+
+            For example, \(A \cup B \cap \bar{(A \cap B)}\). Note that \(\bar{A \cap B}\) would almost work, but also contain the area outside of both circles.
+          %
+\item[9.]\hypertarget{exercise-9}{}
+            Find the following cardinalities:
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-108}{}\(|A|\) when \(A = \{4,5,6,\ldots,37\}\)\item\hypertarget{li-109}{}\(|A|\) when \(A = \{x \in \Z \st -2 \le x \le 100\}\)\item\hypertarget{li-110}{}\(|A \cap B|\) when \(A = \{x \in \N \st x \le 20\}\) and \(B = \{x \in \N \st x \mbox{ is prime} \}\)\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-9}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-111}{}
+                34.
+              %
+\item\hypertarget{li-112}{}
+                103.
+              %
+\item\hypertarget{li-113}{}
+                8.
+              %
+\end{enumerate}
+\item[10.]\hypertarget{exercise-10}{}
+            Let \(A = \{a, b, c\}\). Find \(\pow(A)\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-10}{}\quad
+
+            \(\pow(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\}\}\).
+          %
+\item[11.]\hypertarget{exercise-11}{}
+            Let \(A = \{1,2,\ldots, 10\}\). How many subsets of \(A\) contain exactly one element (i.e., how many \emph{singleton} subsets are there). How many \emph{doubleton} (containing exactly two elements) are there?
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-11}{}\quad
+
+            There are 10 singletons. There are 45 doubletons (because \(45 = 9+8+7+\cdots+2+1\)).
+          %
+\item[12.]\hypertarget{exercise-12}{}
+            Let \(A = \{1,2,3,4,5,6\}\). Find all sets \(B \in \pow(A)\) which have the property \(\{2,3,5\} \subseteq B\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-12}{}\quad
+
+            \(\{2,3,5\}\), \(\{1,2,3,5\}\), \(\{2,3,4,5\}\), \(\{2,3,5,6\}\), \(\{1,2,3,4,5\}\), \(\{1,2,3,5,6\}\), \(\{2,3,4,5,6\}\), and \(\{1,2,3,4,5,6\}\).
+          %
+\item[13.]\hypertarget{exercise-13}{}
+            Find an example of sets \(A\) and \(B\) such that \(|A| = 4\), \(|B| = 5\), and \(|A \cup B| = 9\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-13}{}\quad
+
+            For example \(A = \{1,2,3,4\}\) and \(B = \{5,6,7,8,9\}\).
+          %
+\item[14.]\hypertarget{exercise-14}{}
+            Find an example of sets \(A\) and \(B\) such that \(|A| = 3\), \(|B| = 4\), and \(|A \cup B| = 5\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-14}{}\quad
+
+            For example, \(A = \{1,2,3\}\) and \(B = \{2,3,4,5\}\).
+          %
+\item[15.]\hypertarget{exercise-15}{}
+            Are there sets \(A\) and \(B\) such that \(|A| = |B|\), \(|A\cup B| = 10\), and \(|A\cap B| = 5\)? Explain.
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-15}{}\quad
+
+            No. There must be 5 elements in common to both sets. Since there are 10 distinct elements all together in \(A\) and \(B\), this means that between \(A\) and \(B\), there must be 5 elements which they do not have in common (some
+            in \(A\) but not in \(B\), some in \(B\) but not in \(A\)). But 5 is odd, so to have \(|A| = |B|\), we would need 7.5 elements in each set, which is impossible.
+          %
+\item[16.]\hypertarget{exercise-16}{}
+            In a regular deck of playing cards there are 26 red cards and 12 face cards. Explain, using sets and what you have learned about cardinalities, why there are only 32 cards which are either red or a face card.
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-16}{}\quad
+
+            If \(R\) is the set of red cards and \(F\) is the set of face cards, we want to find \(|R \cup F|\). This is not simply \(|R| + |F|\) because there are 6 cards which are both red and a face card; \(|R \cap F| = 6\). We find
+            \(|R \cup F| = 32\).
+          %
+\end{exerciselist}
 %
 %% A lineskip in table of contents as transition to appendices, backmatter
 \addtocontents{toc}{\vspace{\normalbaselineskip}}
@@ -464,6 +1405,14 @@ University of Northern Colorado, 2016
 \multicolumn{3}{r}{(Continued on next page)}\\
 \endfoot
 \endlastfoot
+$\N$&The set of natural numbers&\pageref{notation-1}\\
+$\st$&``such that''&\pageref{notation-2}\\
+$$&&\pageref{notation-3}\\
+$\st$&``such that''&\pageref{notation-4}\\
+$\in$&``is an element of''&\pageref{notation-5}\\
+$\neg$&Logical negation&\pageref{notation-6}\\
+$\vee$&Logical ``or''&\pageref{notation-7}\\
+$\{, \}$&braces, to contain set elements.&\pageref{notation-8}\\
 \end{longtable}
 %
 \backmatter
