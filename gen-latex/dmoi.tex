@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-07-22T15:40:36-06:00    *%
+%*    on 2016-07-22T23:52:40-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -67,6 +67,12 @@
 %% allow more columns to a matrix
 %% can make this even bigger by overriding with  latex.preamble.late  processing option
 \setcounter{MaxMatrixCols}{30}
+%%
+%% Color support, xcolor package
+%% Always loaded.  Used for:
+%% mdframed boxes, add/delete text, author tools
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%%
 %% Semantic Macros
 %% To preserve meaning in a LaTeX file
 %% Only defined here if required in this document
@@ -106,15 +112,18 @@
 \newtheorem{activity}[project]{\emph{Investigate!}}
 %% assemblage: minimally structured content, high visibility presentation
 %% Package for breakable highlight boxes
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage[framemethod=tikz]{mdframed}
 %% assemblage environment and style
-\newenvironment{assemblage}[1]{\mdfsetup{frametitle={\colorbox{blue!20}{\space#1\space}},	frametitlealignment={\hspace*{1ex}}, frametitleaboveskip=-1.5ex, frametitlebelowskip=0pt, roundcorner=1pt, leftmargin=3pt, rightmargin=3pt, backgroundcolor=blue!5, linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
+\newenvironment{assemblage}[1]{\mdfsetup{frametitle={\colorbox{blue!20}{\space#1\space}},%
+frametitlealignment={\hspace*{1ex}}, frametitleaboveskip=-1.5ex, frametitlebelowskip=0pt,%
+roundcorner=1pt, leftmargin=3pt, rightmargin=3pt, backgroundcolor=blue!5,%
+linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 %% Miscellaneous environments, normal text
 %% Numbering for inline exercises and lists is in sync with theorems, etc
 \theoremstyle{definition}
 \newtheorem{exercise}[theorem]{Exercise}
 %% Localize LaTeX supplied names (possibly none)
+\renewcommand*{\proofname}{Proof}
 \renewcommand*{\chaptername}{Chapter}
 %% Equation Numbering
 %% Controlled by  numbering.equations.level  processing parameter
@@ -151,19 +160,85 @@
 \newcolumntype{B}{!{\vrule width 0.07em}}
 \newcolumntype{C}{!{\vrule width 0.11em}}
 \makeatother
+%% Figures, Tables, Listings, Floats
+%% The [H]ere option of the float package fixes floats in-place,
+%% in deference to web usage, where floats are totally irrelevant
+%% We re/define the figure, table and listing environments, if used
+%%   1) New mbxfigure and/or mbxtable environments are defined with float package
+%%   2) Standard LaTeX environments redefined to use new environments
+%%   3) Standard LaTeX environments redefined to step theorem counter
+%%   4) Counter for new environments is set to the theorem counter before caption
+%% You can remove all this figure/table setup, to restore standard LaTeX behavior
+%% HOWEVER, numbering of figures/tables AND theorems/examples/remarks, etc
+%% WILL ALL de-synchronize with the numbering in the HTML version
+%% You can remove the [H] argument of the \newfloat command, to allow flotation and 
+%% preserve numbering, BUT the numbering may then appear "out-of-order"
+\usepackage{float}
+\usepackage[bf]{caption} % http://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 
+\usepackage{newfloat}
+% Side-by-side elements need careful treatement for aligning captions, see: 
+% http://tex.stackexchange.com/questions/230335/vertically-aligning-minipages-subfigures-and-subtables-not-with-baseline 
+\usepackage{stackengine,ifthen}
+\newcounter{figstack}
+\newcounter{figindex}
+\newlength\fight
+\newcommand\pushValignCaptionBottom[5][b]{%
+\stepcounter{figstack}%
+\expandafter\def\csname %
+figalign\romannumeral\value{figstack}\endcsname{#1}%
+\expandafter\def\csname %
+figtype\romannumeral\value{figstack}\endcsname{#2}%
+\expandafter\def\csname %
+figwd\romannumeral\value{figstack}\endcsname{#3}%
+\expandafter\def\csname %
+figcontent\romannumeral\value{figstack}\endcsname{#4}%
+\expandafter\def\csname %
+figcap\romannumeral\value{figstack}\endcsname{#5}%
+\setbox0=\hbox{%
+\begin{#2}{#3}#4\end{#2}}%
+\ifdim\dimexpr\ht0+\dp0\relax>\fight\global\setlength{\fight}{%
+\dimexpr\ht0+\dp0\relax}\fi%
+}
+\newcommand\popValignCaptionBottom{%
+\setcounter{figindex}{0}%
+\hfill%
+\whiledo{\value{figindex}<\value{figstack}}{%
+\stepcounter{figindex}%
+\def\tmp{\csname figwd\romannumeral\value{figindex}\endcsname}%
+\begin{\csname figtype\romannumeral\value{figindex}\endcsname}[t]{\tmp}%
+\centering%
+\stackinset{c}{}%
+{\csname figalign\romannumeral\value{figindex}\endcsname}{}%
+{\csname figcontent\romannumeral\value{figindex}\endcsname}%
+{\rule{0pt}{\fight}}\par%
+\csname figcap\romannumeral\value{figindex}\endcsname%
+\end{\csname figtype\romannumeral\value{figindex}\endcsname}%
+\hfill%
+}%
+\setcounter{figstack}{0}%
+\setlength{\fight}{0pt}%
+\hfill%
+}
+% Figure environment setup so that it no longer floats
+\SetupFloatingEnvironment{figure}{fileext=lof,placement={H},within=section,name=Figure}
+% figures have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme 
+\makeatletter
+\let\c@figure\c@theorem
+\makeatother
 %% Footnote Numbering
 %% We reset the footnote counter, as given by numbering.footnotes.level
 \makeatletter\@addtoreset{footnote}{section}\makeatother
 %% Raster graphics inclusion, wrapped figures in paragraphs
 \usepackage{graphicx}
-%% Colors for Sage boxes, author tools (red hilites), red/green edits
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%%
 %% More flexible list management, esp. for references and exercises
 %% But also for specifying labels (i.e. custom order) on nested lists
 \usepackage{enumitem}
 %% Lists of exercises in their own section, maximum depth 4
 \newlist{exerciselist}{description}{4}
 \setlist[exerciselist]{leftmargin=0pt,itemsep=1.0ex,topsep=1.0ex,partopsep=0pt,parsep=0pt}
+%% Package for tables spanning several pages
+\usepackage{longtable}
 %% hyperref driver does not need to be specified
 \usepackage{hyperref}
 %% Hyperlinking active in PDFs, all links solid and blue
@@ -274,11 +349,1682 @@
 %% Title page information for book
 \title{Discrete Mathematics\\
 {\large An Open Introduction}}
-\author{}
-\date{}
+\author{Oscar Levin\\
+School of Mathematical Science\\
+University of Northern Colorado
+}
+\date{July 22, 2016}
 \begin{document}
+\frontmatter
+%% begin: half-title
+\thispagestyle{empty}
+{\centering
+\vspace*{0.28\textheight}
+{\Huge Discrete Mathematics}\\[2\baselineskip]
+{\LARGE An Open Introduction}\\
+}
+\clearpage
+%% end:   half-title
+%% begin: adcard
+\thispagestyle{empty}
+\null%
+\clearpage
+%% end:   adcard
+%% begin: title page
+%% Inspired by Peter Wilson's "titleDB" in "titlepages" CTAN package
+\thispagestyle{empty}
+{\centering
+\vspace*{0.14\textheight}
+{\Huge Discrete Mathematics}\\[\baselineskip]
+{\LARGE An Open Introduction}\\[3\baselineskip]
+{\Large Oscar Levin}\\[0.5\baselineskip]
+{\Large University of Northern Colorado}\\[3\baselineskip]
+{\Large July 22, 2016}\\}
+\clearpage
+%% end:   title page
+%% begin: copyright-page
+\thispagestyle{empty}
+\vspace*{\stretch{2}}
+\vspace*{\stretch{1}}
+\null\clearpage
+%% end:   copyright-page
+%% begin: acknowledgement
+\chapter*{Acknowledgements}\label{acknowledgement-1}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+  This book would not exist if not for ``Discrete and Combinatorial Mathematics'' by Richard Grassl and Tabitha Mingus. It is the book I learned discrete math out of, and taught out of the semester before I began writing this text. I wanted to maintain the inquiry based feel of their book but update, expand and rearrange some of the material.
+  %
+\par
+
+  In Spring 2015, Alees Seehausen, a graduate student at the University of Northern Colorado, co-taught the Discrete Mathematics course with me and helped develop many of the \emph{Investigate!} activities and other problems currently used in the text. She also offered many suggestions for improvement of the expository text, for which I am quite grateful. Thanks also to Katie Morrison and Nate Eldredge for their suggestions after using parts of this text in their class.
+  %
+\par
+
+  Finally, a thank you to the numerous students who have pointed out typos and made suggestions over the years and a thanks in advance to those who will do so in the future.
+  %
+%% end:   acknowledgement
+%% begin: preface
+\chapter*{Preface}\label{preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+This text aims to give an introduction to select topics in discrete mathematics at a level appropriate for first or second year undergraduate math majors, especially those who intend to teach middle and high school mathematics. The book began as a set of notes for the Discrete Mathematics course at the University of Northern Colorado. This course serves both as a survey of the topics in discrete math and as the ``bridge'' course for math majors, as UNC does not offer a separate ``introduction to proofs'' course. Most students who take the course plan to teach, although there are a handful of students who will go on to graduate school or study applied math or computer science. For these students the current text hopefully is still of interest, but the intent is not to provide a solid mathematical foundation for computer science, unlike the majority of textbooks on the subject.
+%
+\par
+
+Another difference between this text and most other discrete math books is that this book is intended to be used in a class taught using problem oriented or inquiry based methods. When I teach the class, I will assign sections for reading \emph{after} first introducing them in class by using a mix of group work and class discussion on a few interesting problems. The text is meant to consolidate what we \emph{discover} in class and serve as a reference for students as they master the concepts and techniques covered in the unit. None-the-less, every attempt has been made to make the text sufficient for self study as well, in a way that hopefully mimics an inquiry based classroom.
+%
+\par
+
+The topics covered in this text were chosen to match the need of the students I teach at UNC. The main areas of study are combinatorics, sequences, logic and proofs, and graph theory, in that order. Induction is covered at the end of the chapter on sequences. Most discrete books put logic first as a preliminary, which certainly has its advantages. However, I wanted to discuss logic and proofs together, and found that doing both of these before anything else was overwhelming for my students given that they didn't yet have context of other problems in the subject. Also, after spending a couple weeks on proofs, we would hardly use that at all when covering combinatorics, so much of the progress we made was quickly lost.
+%
+\par
+
+Depending on the speed of the class, it might be possible to include additional material. In past semesters I have included generating functions (after sequences) and some basic number theory (either after the logic and proofs chapter or at the very end of the course). These additional topics are covered in appendix A.
+%
+\par
+
+While I (currently) believe this selection and order of topics is optimal, you should feel free to skip around to what interests you. There are occasionally examples and exercises that rely on earlier material, but I have tried to keep these to a minimum and usually can either be skipped or understood without too much additional study. If you are an instructor, feel free to edit the \LaTeX{}~source to fit your needs.
+%
+%% begin: preface
+\chapter*{How to use this book}\label{preface-2}
+\addcontentsline{toc}{chapter}{How to use this book}
 \typeout{************************************************}
-\typeout{Chapter 1 Counting}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+  In addition to expository text, this book has a few features designed to encourage you to interact with the mathematics.
+  %
+%% begin: preface
+\chapter*{\emph{Investigate!} activities}\label{preface-3}
+\addcontentsline{toc}{chapter}{\emph{Investigate!} activities}
+
+  Sprinkled throughout the sections (usually at the very beginning of a topic) you will find activities designed to get you acquainted with the topic soon to be discussed. These are similar (sometimes identical) to group activities I give students to introduce material. You really should spend some time thinking about, or even working through, these problems before reading the section. By priming yourself to the types of issues involved in the material you are about to read, you will better understand what is to come. There are no solutions provided for these problems, but don't worry if you can't solve them or are not confident in your answers. My hope is that you will take this frustration with you while you read the proceeding section. By the time you are done with the section, things should be much clearer.
+  %
+%% end:   preface
+%% begin: preface
+\chapter*{Examples}\label{preface-4}
+\addcontentsline{toc}{chapter}{Examples}
+
+  I have tried to include the ``correct'' number of examples. For those examples which include \emph{problems}, full solutions are included. Before reading the solution, try to at least have an understanding of what the problem is asking. Unlike some textbooks, the examples are not meant to be all inclusive for problems you will see in the exercises. They should not be used as a blueprint for solving other problems. Instead, use the examples to deepen our understanding of the concepts and techniques discussed in each section. Then use this understanding to solve the exercises at the end of each section.
+  %
+%% end:   preface
+%% begin: preface
+\chapter*{Exercises}\label{preface-5}
+\addcontentsline{toc}{chapter}{Exercises}
+
+  You get good at math through practice. Each section concludes with a small number of exercises meant to solidify concepts and basic skills presented in that section. At the end of each chapter, a larger collection of similar exercises is included (as a sort of ``chapter review'') which might bridge material of different sections in that chapter. Every exercise has either a hint, answer or full solution (which in the pdf version of the text can be found by clicking on the exercises number \textendash{} clicking on the solution number will bring you back to the exercise). Readers are encouraged to try these exercises before looking at the solution. When I teach with this book, I assign these exercises as practice and then use them, or similar problems, on quizzes and exams.
+  %
+%% end:   preface
+%% begin: preface
+\chapter*{Homework Problems}\label{preface-6}
+\addcontentsline{toc}{chapter}{Homework Problems}
+
+       Each chapter includes a small number of more involved problems \textendash{} the type I would assign as homework to be written up and collected each week. As many of these are problems I assign, solutions are not included. If you are using this book for self study, consider these additional \emph{Investigate!} problems.
+    %
+%% end:   preface
+%% end:   preface
+%% begin: preface
+\chapter*{Previous and future editions}\label{pref_editions}
+\addcontentsline{toc}{chapter}{Previous and future editions}
+
+This current Fall 2015 edition of the text is essentially the first edition of the book. I have previously compiled many of the sections in a book format for easy distribution, but those were mostly just lecture notes and exercises (there was no index or Investigate problems; very little in the way of consistent formatting).
+%
+\par
+
+My intent is to compile a new edition prior to each Fall semester which incorporate additions and corrections suggested by instructors and students who use the text the previous semester. Thus I encourage you to send along any suggestions and comments as you have them. For future editions, I will keep track of any major changes here.
+%
+%% end:   preface
+\par\hfill\begin{tabular}{l@{}}
+Oscar Levin, Ph.D.\\
+University of Northern Colorado, 2016
+\end{tabular}\\\par
+%% end:   preface
+%% begin: table of contents
+\setcounter{tocdepth}{1}
+\renewcommand*\contentsname{Contents}
+\tableofcontents
+%% end:   table of contents
+\mainmatter
+\typeout{************************************************}
+\typeout{Chapter 1 Introduction and Preliminaries}
+\typeout{************************************************}
+\chapter[Introduction and Preliminaries]{Introduction and Preliminaries}\label{ch_intro}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+      Welcome to Discrete Mathematics. If this is your first time encountering the subject, you will probably find discrete mathematics quite different from other math subjects. You might not even know what discrete math is! Hopefully this short introduction
+      will shed some light on what the subject is about and what you can expect as you move forward in your studies.
+    %
+\typeout{************************************************}
+\typeout{Section 1.1 What is Discrete Mathematics?}
+\typeout{************************************************}
+\section[What is Discrete Mathematics?]{What is Discrete Mathematics?}\label{sec_intro-intro}
+\begin{quote}dis\textperiodcentered{}crete / dis'krët.%
+\par
+ \emph{Adjective}: Individually separate and distinct.%
+\par
+\emph{Synonyms}: separate - detached - distinct - abstract.%
+\end{quote}
+
+    Defining \emph{discrete mathematics} is hard because defining \emph{mathematics} is hard. What is mathematics? The study of numbers? In part, but you also study functions and lines and triangles and parallelepipeds and vectors and
+    \dots{}. Or perhaps you want to say that mathematics is a collection of tools that allow you to solve problems. What sort of problems? Okay, those that involve numbers, functions, lines, triangles,
+    \dots{}. Whatever your conception of what mathematics is, try applying the concept of ``discrete'' to it, as defined above. Some math fundamentally deals with
+    \dots{} \emph{stuff}
+    \dots{} that is individually separate and distinct.
+  %
+\par
+
+    In an algebra or calculus class, you might have found a particular set of numbers (maybe the set of number in the range of a function). You would represent this set as an interval: \([0,\infty)\) is the range of \(f(x) = x^2\) since the set
+    of outputs of the function are all real numbers 0 and greater. This set of numbers is NOT discrete. The numbers in the set are not separated by much at all. In fact, take any two numbers in the set and there are infinitely many more between
+    them which are also in the set. Discrete math could still ask about the range of a function, but the set would not be an interval. Consider the function which gives the number of children each person reading this has. What is the range? I'm guessing
+    it is something like \(\{0, 1, 2, 3\}\). Maybe 4 is in there too. But certainly there is nobody reading this that has 1.32419 children. This set \emph{is} discrete because the elements are separate. Also notice that the inputs to the function
+    are a discrete set as each input is an individual person. You would not consider fractional inputs (there is nothing we care about \(2/3\) between a pair of readers).
+  %
+\par
+
+    One way to get a feel for the subject is to consider the types of problems you solve in discrete math. Here are a few simple examples:
+  %
+\begin{activity}[]\label{activity-1}
+
+      Here are a few Discrete Math problems for you to try.
+    %
+\par
+
+      \emph{Note: Throughout the text you will see \emph{Investigate!} activities like this one. Answer the questions in these as best you can to give yourself a feel for what is coming next.}
+    %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-1}{}
+        The most popular mathematician in the world is throwing a party for all of his friends. As a way to kick things off, they decide that everyone should shake hands. Assuming all 10 people at the party each shake hands with every other person (but not themselves,
+        obviously) exactly once, how many handshakes take place?
+      \item\hypertarget{li-2}{}
+        At the warm-up event for Oscar's All Star Hot Dog Eating Contest, Al ate one hot dog. Bob then showed him up by eating three hot dogs. Not to be outdone, Carl ate five. This continued with each contestant eating two more hot dogs than the previous contestant.
+        How many hot dogs did Zeno (the 26th and final contestant) eat? How many hot dogs were eaten all together?
+      \item\hypertarget{li-3}{}
+        While walking through a fictional forest, you encounter three trolls. Each is either a \emph{knight}, who always tells the truth, or a \emph{knave}, who always lies. The trolls will not let you pass until you correctly identify each as either
+        a knight or a knave. Each troll makes a single statement:
+
+
+        \begin{itemize}[label=\textbullet]
+\item{}Troll 1: If I am a knave, then there are exactly two knights here.\item{}Troll 2: Troll 1 is lying.\item{}Troll 3: Either we are all knaves or at least one of us is a knight.\end{itemize}
+
+
+
+        Which troll is which?
+      \item\hypertarget{li-7}{}
+        Back in the days of yore, five small towns decided they wanted to build roads directly connecting each pair of towns. While the towns had plenty of money to build roads as long and as winding as they wished, it was very important that the roads not intersect
+        with each other (as stop signs had not yet been invented). Also, tunnels and bridges were not allowed. Is it possible for each of these towns to build a road to each of the four other towns without creating any intersections?
+      \end{enumerate}
+\end{activity}
+\par
+
+    One reason it is difficult to define discrete math is that it is a very broad description which encapsulates a large number of subjects. In this course we will study four main topics: \emph{combinatorics} (the theory of ways things \emph{combine};
+    in particular, how to count these ways), \emph{sequences}, \emph{logic}, and \emph{graph theory}. However, there are other topics that belong under the discrete umbrella, including computer science, abstract algebra, number theory, game theory,
+    probability, and geometry (some of these, particularly the last two, have both discrete and non-discrete variants).
+  %
+\par
+
+    Ultimately the best way to learn what discrete math is about is to \emph{do} it. Let's get started! Before we can begin answering more complicated (and fun) problems, we must lay down some foundation. We start by reviewing sets and functions in
+    the framework of discrete mathematics.
+  %
+\typeout{************************************************}
+\typeout{Section 1.2 Sets}
+\typeout{************************************************}
+\section[Sets]{Sets}\label{sec_intro-sets}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+      The most fundamental objects we will use in our studies (and really in all of math) are
+      \terminology{sets}
+      \index{set}. Much of what follows might be review, but it is very important that you are fluent in the language of set theory. Most of the notation we use below is standard, although some might be a little different than what you have seen before.
+    %
+\par
+
+      For us, a set will simply be an unordered collection of objects. Two examples: we could consider the set of all actors who have played \emph{The Doctor} on \emph{Doctor Who}\index{Doctor Who}, or the
+      set of natural numbers between 1 and 10 inclusive. In the first case, Tom Baker is a element (or member) of the set, while Idris Elba, among many others, is not an element of the set. Also, the two examples are of different sets. Two sets are equal
+      exactly if they contain the exact same elements.
+    %
+\typeout{************************************************}
+\typeout{Subsection 1.2.1 Notation}
+\typeout{************************************************}
+\subsection[Notation]{Notation}\label{subsec_notation}
+
+      We need some notation to make talking about sets easier. Consider,
+      \begin{equation*}
+        A = \{1, 2, 3\}.
+      \end{equation*}
+    %
+\par
+
+      This is read, ``\(A\) is the set containing the elements 1, 2 and 3.'' We use curly braces ``\(\{,~~ \}\)'' to enclose elements of a set. Some more notation:
+      \begin{equation*}
+        a \in \{a, b, c\}.
+      \end{equation*}
+    %
+\par
+
+      The symbol ``\(\in\)'' is read ``is in'' or ``is an element of.'' Thus the above means that \(a\) is an element of the set containing the letters \(a\), \(b\), and \(c\). Note that this is a true statement. It would also
+      be true to say that \(d\) is not in that set:
+      \begin{equation*}
+        d \not\in \{a, b, c\}.
+      \end{equation*}
+    %
+\par
+
+      Be warned: we write ``\(x \in A\)'' when we wish to express that one of the elements of the set \(A\) is \(x\). For example, consider the set,
+      \begin{equation*}
+        A = \{1, b, \{x, y, z\}, \emptyset\}.
+      \end{equation*}
+    %
+\par
+
+      This is a strange set, to be sure. It contains four elements: the number 1, the letter b, the set \(\{x,y,z\}\), and the empty set (\(\emptyset = \{ \}\), the set containing no elements). Is \(x\) in \(A\)? The answer is no. None of
+      the four elements in \(A\) are the letter \(x\), so we must conclude that \(x \notin A\). Similarly, if we considered the set \(B = \{1,b\}\), then again \(B \notin A\). Even though the elements of \(B\) are also elements of \(A\),
+      we cannot say that the \emph{set} \(B\) is one of the things in the collection \(A\).
+    %
+\par
+
+      If a set is
+      \terminology{finite}
+      \index{finite}, then we can describe it by simply listing the elements. Infinite sets exists though, so we need to be able to describe them as well. For instance, if we want \(A\) to be the set of all even natural numbers,
+      would could write,
+      \begin{equation*}
+        A = \{0, 2, 4, 6, \ldots\},
+      \end{equation*}
+      but this is a little imprecise. Better would be
+      \begin{equation*}
+        A = \{x \in \N \st \exists n\in \N ( x = 2 n)\}.
+      \end{equation*}
+    %
+\par
+
+      Breaking that down: ``\(x \in \N\)'' means \(x\) is in the set \(\N\) \label{notation-1}
+ (the set of natural numbers, starting with 0), \(:\) \label{notation-2}
+      is read ``such that'' and ``\(\exists n\in \N (x = 2n) \)
+      '' is read ``there exists an \(n\) in the natural numbers for which \(x\) is two times \(n\)'' (in other words, \(x\) is even). Slightly easier might be,
+      \begin{equation*}
+        A = \{x \st \mbox{  is even} \}.
+      \end{equation*}
+    %
+\par
+
+      Note: sometimes people use \(|\) or \(\backepsilon\) for the ``such that'' symbol instead of the colon.
+    %
+\par
+
+      Defining a set using this sort of notation is very useful, although it takes some practice to read them correctly. It is a way to describe the set of all things that satisfy some condition (the condition is the logical statement after the ``:''      symbol). Here are some more examples. We use the symbols \(\wedge\) for ``and'' and \(\vee\) for ``or'' (which includes the ``or both'' for us)
+      \index{connectives!and}
+      \index{connectives!or}.
+    %
+\begin{example}[]\label{example-1}
+
+          Describe each of the following sets both in words and by listing out enough elements to see the pattern.
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-8}{}\(\{x \st x + 3 \in \N\}\).\item\hypertarget{li-9}{}\(\{x \in \N \st x + 3 \in \N\}\).\item\hypertarget{li-10}{}\(\{x \st x \in \N \vee -x \in \N\}\).\item\hypertarget{li-11}{}\(\{x \st x \in \N \wedge -x \in \N\}\).\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-12}{}
+              This is the set of all number which are 3 less than a natural number (i.e., that if you add 3 to them, you get a natural number). The set could also be written as \(\{-3, -2, -1, 0, 1, 2, \ldots\}\) (note that 0 is a natural number, so
+              \(-3\) is in this set because \(-3 + 3 = 0\)).
+            %
+\item\hypertarget{li-13}{}
+              This is the set of all natural numbers which are 3 less than a natural number. So here we just have \(\{0, 1, 2,3 \ldots\}\).
+            %
+\item\hypertarget{li-14}{}
+              This is the set of all integers
+              \index{integers} (positive and negative whole numbers, written \(\Z\)). In other words, \(\{\ldots, -2, -1, 0, 1, 2, \ldots\}\).
+            %
+\item\hypertarget{li-15}{}
+              Here we want all numbers \(x\) such that \(x\) and \(-x\) are natural numbers. There is only one: 0. So we have the set \(\{0\}\).
+            %
+\end{enumerate}
+\end{example}
+\par
+
+      We already have a lot of notation, and there is more yet. Below is a handy chart of symbols. Some of these will be discussed in greater detail as we move forward.
+    %
+\begin{assemblage}{Set Theory Notation}\label{assemblage-1}\par\medskip
+
+        \begin{tabular}{lll}
+Symbol:&Read:&Example:\tabularnewline\hrulethick
+\(\{, \}\)
+
+            &braces&\(\{1,2,3\}\). The braces enclose the elements of a set. This is the set which contains the numbers 1, 2, and 3.\tabularnewline[0pt]
+
+              \(\st\)
+
+            &such that&\(\{x \st x > 2\}\) is the set of all \(x\) such that \(x\) is greater than 2.%
+\tabularnewline[0pt]
+
+              \(\in\)
+
+            &is an element of&\(2 \in \{1,2,3\}\) asserts that 2 is one of the elements in the set \(\{1,2,3\}\). However, \(4 \notin\{1,2,3\}\).%
+\tabularnewline[0pt]
+
+              \(\subseteq\)
+
+            &is a subset of&\(A \subseteq B\) asserts that every element of \(A\) is also an element of \(B\).\tabularnewline[0pt]
+
+              \(\subset\)
+            &is a proper subset of&\(A \subset B\) asserts that every element of \(A\) is also an element of \(B\), but \(A \ne B\).\tabularnewline[0pt]
+
+              \(\cap\)
+
+            &intersection
+
+            &\(A \cap B\) is the \emph{set} containing all elements which are elements of both \(A\) and \(B\).\tabularnewline[0pt]
+
+              \(\cup\)
+
+            &union
+
+            &\(A \cup B\) is the \emph{set} containing all elements which are elements of \(A\) or \(B\) or both.\tabularnewline[0pt]
+
+              \(\times\)
+
+            &cross&\(A \times B\) is the set of all ordered pairs \((a,b)\) with \(a \in A\) and \(b \in B\).\tabularnewline[0pt]
+
+              \(\setminus\)
+
+            &set difference&\(A \setminus B\) is the \emph{set} containing all elements of \(A\) which are not elements of \(B\).\tabularnewline[0pt]
+
+              \(\bar{A}\)
+            &complement (of \(A\))&\(\bar{A}\) is the set of everything which is not an element of \(A\). The \(A\) can be any set here.\tabularnewline[0pt]
+
+              \(\left|A\right|\)
+            &cardinality (of \(A\))&\(|\{4,5,6\}| = 3\) because there are 3 elements in the set. Sometimes we call \(|A|\) the \emph{size} of \(A\).\tabularnewline[0pt]
+ \terminology{Logic symbols:}&\tabularnewline[0pt]
+\(\wedge\)
+            &and&\(x \in A \wedge x \notin B\) means \(x\) is both in the set \(A\) and not in the set \(B\).\tabularnewline[0pt]
+
+              \(\vee\)
+
+            &or&\(x \in A \vee x \notin B\) asserts that \(x\) is an element of \(A\) or not an element of \(B\), or both.\tabularnewline[0pt]
+
+              \(\neg\)
+
+            &not&Another way to write \(x \notin A\) is \(\neg x \in A\).\tabularnewline[0pt]
+
+              \(\forall\)
+
+            &for all&\(\forall x (x \ge 0)\) claims that every number is greater than 0.
+
+            \tabularnewline[0pt]
+
+              \(\exists\)
+
+            &there exists
+            &\(\exists x (x \lt  0)\) claims that there is a number less than 0.
+\end{tabular}
+
+      %
+\end{assemblage}
+\begin{assemblage}{Special sets}\label{assemblage-2}\par\medskip
+
+        \begin{tabular}{ll}
+\(\emptyset\)
+            &The \emph{empty set} is the set which contains no elements.\tabularnewline[0pt]
+
+              \(\U\)
+            &The \emph{universe set} is the set of all elements.\tabularnewline[0pt]
+
+              \(\N\)
+            &The set of natural numbers. That is, \(\N = \{0, 1, 2, 3\ldots\}\).\tabularnewline[0pt]
+
+              \(\Z\)
+            &The set of integers. That is, \(\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}\).\tabularnewline[0pt]
+
+              \(\Q\)
+            &The set of rational numbers.\tabularnewline[0pt]
+
+              \(\R\)
+            &The set of real numbers.\tabularnewline[0pt]
+
+              \(\pow(A)\)
+
+            &The \emph{power set} of any set \(A\) is the set of all subsets of \(A\).
+\end{tabular}
+
+      %
+\end{assemblage}
+\begin{activity}[]\label{activity-2}
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-16}{}
+            Find the cardinality of each set below.
+
+          \begin{enumerate}
+\item\hypertarget{li-17}{}\(A = \{3,4,\ldots, 15\}\).\item\hypertarget{li-18}{}\(B = \{n \in \N \st 2 \lt  n \le 200\}\).\item\hypertarget{li-19}{}\(C = \{n \le 100 \st n \in \N \wedge \exists m \in \N (n = 2m+1)\}\).\end{enumerate}
+\item\hypertarget{li-20}{}
+          Find two sets \(A\) and \(B\) for which \(|A| = 5\), \(|B| = 6\), and \(|A\cup B| = 9\). What is \(|A \cap B|\)?
+      \item\hypertarget{li-21}{}
+          Find sets \(A\) and \(B\) with \(|A| = |B|\) such that \(|A\cup B| = 7\) and \(|A \cap B| = 3\). What is \(|A|\)?
+
+        \item\hypertarget{li-22}{}
+              Let \(A = \{1,2,\ldots, 10\}\). Define \(\mathcal{B}_2 = \{B \subseteq A \st |B| = 2\}\). Find \(|\mathcal{B}_2|\).
+        \item\hypertarget{li-23}{}
+            For any sets \(A\) and \(B\), define \(AB = \{ab \st a\in A \wedge b \in B\}\). If \(A = \{1,2\}\) and \(B = \{2,3,4\}\), what is \(|AB|\)? What is \(|A \times B|\)?
+        \end{enumerate}
+\end{activity}
+\typeout{************************************************}
+\typeout{Subsection 1.2.2 Relationships Between Sets}
+\typeout{************************************************}
+\subsection[Relationships Between Sets]{Relationships Between Sets}\label{subsection-2}
+
+      We have already said what it means for two sets to be equal: they have exactly the same elements. Thus, for example,
+      \begin{equation*}
+        \{1, 2, 3\} = \{2, 1, 3\}.
+      \end{equation*}
+    %
+\par
+
+      (Remember, the order the elements are written down in does not matter.) Also,
+      \begin{equation*}
+        \{1, 2, 3\} = \{1, 1+1, 1+1+1\} = \{I, II, III\}
+      \end{equation*}
+      since these are all ways to write the set containing the first three positive integers (how we write them doesn't matter, just what they are).
+    %
+\par
+
+      What about the sets \(A = \{1, 2, 3\}\) and \(B = \{1, 2, 3, 4\}\)? Clearly \(A \ne B\), but notice that every element of \(A\) is also an element of \(B\). Because of this we say that \(A\) is a \emph{subset}
+      \index{subset} of \(B\), or in symbols \(A \subset B\) or \(A \subseteq B\). (Both symbols are read ``is a subset of.'' The difference is that sometimes we want to say that \(A\) is either equal to or a subset of \(B\), in which
+      case we use \(\subseteq\). This is analoguous to the difference between \(\lt\) and \(\le\).)
+    %
+\begin{example}[]\label{example-2}
+
+          Let \(A = \{1, 2, 3, 4, 5, 6\}\), \(B = \{2, 4, 6\}\), \(C = \{1, 2, 3\}\) and \(D = \{7, 8, 9\}\). Determine which of the following are true, false, or meaningless.
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-24}{}\(A \subset B\).\item\hypertarget{li-25}{}\(B \subset A\).\item\hypertarget{li-26}{}\(B \in C\).\item\hypertarget{li-27}{}\(\emptyset \in A\).\item\hypertarget{li-28}{}\(\emptyset \subset A\).\item\hypertarget{li-29}{}\(A \lt  D\).\item\hypertarget{li-30}{}\(3 \in C\).\item\hypertarget{li-31}{}\(3 \subset C\).\item\hypertarget{li-32}{}\(\{3\} \subset C\).\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-33}{}
+              False. For example, \(1\in A\) but \(1 \notin B\).
+            %
+\item\hypertarget{li-34}{}
+              True. Every element in \(B\) is an element in \(A\).
+            %
+\item\hypertarget{li-35}{}
+              False. The elements in \(C\) are 1, 2, and 3. The \emph{set} \(B\) is not equal to 1, 2, or 3.
+            %
+\item\hypertarget{li-36}{}
+              False. \(A\) has exactly 6 elements, and none of them are the empty set.
+            %
+\item\hypertarget{li-37}{}
+              True. Everything in the empty set (nothing) is also an element of \(A\). Notice that the empty set is a subset of every set.
+            %
+\item\hypertarget{li-38}{}
+              Meaningless. A set cannot be less than another set.
+            %
+\item\hypertarget{li-39}{}
+              True. \(3\) is one of the elements of the set \(C\).
+            %
+\item\hypertarget{li-40}{}
+              Meaningless. \(3\) is not a set, so it cannot be a subset of another set.
+            %
+\item\hypertarget{li-41}{}
+              True. \(3\) is the only element of the set \(\{3\}\), and is an element of \(C\), so every element in \(\{3\}\) is an element of \(C\).
+            %
+\end{enumerate}
+\end{example}
+\par
+
+      In the example above, \(B\) is a subset of \(A\). You might wonder what other sets are subsets of \(A\). If you collect all these subsets of \(A\) into a new set, we get a set of sets. We call the set of all subsets of \(A\) the \emph{power set}
+      \index{power set} of \(A\), and write it \(\pow(A)\).
+    %
+\begin{example}[]\label{example-3}
+
+          Let \(A = \{1,2,3\}\). Find \(\pow(A)\).
+        %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+          \(\pow(A)\) is a set of sets, all of which are subsets of \(A\). So
+          \begin{equation*}
+            \pow(A) = \{ \emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1, 3\}, \{2,3\}, \{1,2,3\}\}.
+          \end{equation*}
+        %
+\par
+
+          Notice that while \(2 \in A\), it is wrong to write \(2 \in \pow(A)\) since none of the elements in \(\pow(A)\) are numbers! On the other hand, we do have \(\{2\} \in \pow(A)\) because \(\{2\} \subseteq A\).
+        %
+\par
+
+          What does a subset of \(\pow(A)\) look like? Notice that \(\{2\} \not\subseteq \pow(A)\) because not everything in \(\{2\}\) is in \(\pow(A)\). But we do have \(\{ \{2\} \} \subseteq \pow(A)\). The only element of \(\{\{2\}\}\)          is the set \(\{2\}\) which is also an element of \(\pow(A)\). We could take the collection of all subsets of \(\pow(A)\) and call that \(\pow(\pow(A))\). Or even the power set of that set of sets of sets.
+        %
+\end{example}
+\par
+
+      Another way to compare sets is by their size. Notice that in the example above, \(A\) has 6 elements, \(B\), \(C\), and \(D\) all have 3 elements. The size of a set is called the set's \emph{cardinality}
+      \index{cardinality}. We would write \(|A| = 6\), \(|B| = 3\), and so on. For sets that have a finite number of elements, the cardinality of the set is simply the number of elements in the set. Note that the cardinality of \(\{ 1, 2, 3, 2, 1\}\)      is 3. We do not count repeats (in fact, \(\{1, 2, 3, 2, 1\}\) is exactly the same set as \(\{1, 2, 3\}\)). There are sets with infinite cardinality, such as \(\N\), the set of rational numbers (written \(\mathbb Q\)), the set of even
+      natural numbers, and the set of real numbers (\(\mathbb R\)). It is possible to distinguish between different infinite cardinalities, but that is beyond the scope of this text. For us, a set will either be infinite, or finite; if it is finite,
+      the we can determine its cardinality by counting elements.
+    %
+\begin{example}[]\label{example-4}
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-42}{}
+              Find the cardinality of \(A = \{23, 24, \ldots, 37, 38\}\).
+            %
+\item\hypertarget{li-43}{}
+              Find the cardinality of \(B = \{1, \{2, 3, 4\}, \emptyset\}\).
+            %
+\item\hypertarget{li-44}{}
+              If \(C = \{1,2,3\}\), what is the cardinality of \(\pow(C)\)?
+            %
+\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-45}{}
+              Since \(38 - 23 = 15\), we can conclude that the cardinality of the set is \(|A| = 16\) (you need to add one since 23 is included).
+            %
+\item\hypertarget{li-46}{}
+              Here \(|B| = 3\). The three elements are the number 1, the set \(\{2,3,4\}\), and the empty set.
+            %
+\item\hypertarget{li-47}{}
+              We wrote out the elements of the power set \(\pow(C)\) above, and there are 8 elements (each of which is a set). So \(|\pow(C)| = 8\).\footnotemark
+            %
+\end{enumerate}
+\end{example}
+\typeout{************************************************}
+\typeout{Subsection 1.2.3 Operations On Sets}
+\typeout{************************************************}
+\subsection[Operations On Sets]{Operations On Sets}\label{subsection-3}
+
+      Is it possible to add two sets? Not really, however there is something similar. If we want to combine two sets to get the collection of objects that are in either set, then we can take the \emph{union}
+      \index{union} of the two sets. Symbolically,
+      \begin{equation*}
+        C = A \cup B,
+      \end{equation*}
+      read, ``\(C\) is the union of \(A\) and \(B\),'' means that the elements of \(C\) are exactly the elements which are either an element of \(A\) or an element of \(B\) (or an element of both). For example, if \(A = \{1, 2, 3\}\)      and \(B = \{2, 3, 4\}\), then \(A \cup B = \{1, 2, 3, 4\}\).
+    %
+\par
+
+      The other common operation on sets is \emph{intersection}
+      \index{intersection}. We write,
+      \begin{equation*}
+        C = A \cap B
+      \end{equation*}
+      and say, ``\(C\) is the intersection of \(A\) and \(B\),'' when the elements in \(C\) are precisely those both in \(A\) and in \(B\). So if \(A = \{1, 2, 3\}\) and \(B = \{2, 3, 4\}\), then \(A \cap B = \{2, 3\}\).
+    %
+\par
+
+      Often when dealing with sets, we will have some understanding as to what ``everything'' is. Perhaps we are only concerned with natural numbers. In this case we would say that our \emph{universe} is \(\N\). Sometimes we denote this universe
+      by \(\U\). Given this context, we might wish to speak of all the elements which are \emph{not} in a particular set. We say \(B\) is the \emph{complement}
+      \index{complement} of \(A\), and write,
+      \begin{equation*}
+        B = \bar A
+      \end{equation*}
+      when \(B\) contains every element not contained in \(A\). So if our universe is \(\{1, 2,\ldots, 9, 10\}\), and \(A = \{2, 3, 5, 7\}\), then \(\bar A = \{1, 4, 6, 8, 9,10\}\).
+    %
+\par
+
+      Of course we can perform more than one operation at a time. For example, consider
+      \begin{equation*}
+        A \cap \bar B.
+      \end{equation*}
+    %
+\par
+
+      This is the set of all elements which are both elements of \(A\) and not elements of \(B\). What have we done? We've started with \(A\) and removed all of the elements which were in \(B\). Another way to write this is the \emph{set difference}
+      \index{set difference}
+      \index{difference, of sets}:
+      \begin{equation*}
+        A \cap \bar B = A \setminus B.
+      \end{equation*}
+    %
+\par
+
+      It is important to remember that these operations (union, intersection, complement, and difference) on sets produce other sets. Don't confuse these with the symbols from the previous section (element of and subset of). \(A \cap B\) is a set,
+      while \(A \subseteq B\) is true or false. This is the same difference as between \(3 + 2\) (which is a number) and \(3 \le 2\) (which is false).
+    %
+\begin{example}[]\label{example-5}
+
+          Let \(A = \{1, 2, 3, 4, 5, 6\}\), \(B = \{2, 4, 6\}\), \(C = \{1, 2, 3\}\) and \(D = \{7, 8, 9\}\). If the universe is \(\U = \{1, 2, \ldots, 10\}\), find:
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-48}{}\(A \cup B\).\item\hypertarget{li-49}{}\(A \cap B\).\item\hypertarget{li-50}{}\(B \cap C\).\item\hypertarget{li-51}{}\(A \cap D\).\item\hypertarget{li-52}{}\(\bar{B \cup C}\).\item\hypertarget{li-53}{}\(A \setminus B\).\item\hypertarget{li-54}{}\((D \cap \bar C) \cup \bar{A \cap B}\).\item\hypertarget{li-55}{}\(\emptyset \cup C\).\item\hypertarget{li-56}{}\(\emptyset \cap C\).\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-57}{}\(A \cup B = \{1, 2, 3, 4, 5, 6\} = A\) since everything in \(B\) is already in \(A\).\item\hypertarget{li-58}{}\(A \cap B = \{2, 4, 6\} = B\) since everything in \(B\) is in \(A\).\item\hypertarget{li-59}{}\(B \cap C = \{2\}\) as the only element of both \(B\) and \(C\) is 2.\item\hypertarget{li-60}{}\(A \cap D = \emptyset\) since \(A\) and \(D\) have no common elements.\item\hypertarget{li-61}{}\(\bar{B \cup C} = \{5, 7, 8, 9, 10\}\). First we find that \(B \cup C = \{1, 2, 3, 4, 6\}\), then we take everything not in that set.\item\hypertarget{li-62}{}\(A \setminus B = \{1, 3, 5\}\) since the elements 1, 3, and 5 are in \(A\) but not in \(B\). This is the same as \(A \cap \bar B\).\item\hypertarget{li-63}{}\((D \cap \bar C) \cup \bar{A \cap B} = \{1, 3, 5, 7, 8, 9, 10\}.\) The set contains all elements that are either in \(D\) but not in \(C\) (\(\{7,8,9\}\)), or not in both \(A\) and \(B\) (\(\{1,3,5,7,8,9,10\}\)).\item\hypertarget{li-64}{}\(\emptyset \cup C = C\) since nothing is added by the empty set.\item\hypertarget{li-65}{}\(\emptyset \cap C = \emptyset\) since nothing can be both in a set and in the empty set.\end{enumerate}
+\end{example}
+\par
+
+      You might notice that the symbols for union and intersection slightly resemble the logic symbols for ``or'' and ``and.'' This is no accident. What does it mean for \(x\) to be an element of \(A\cup B\)? It means that \(x\) is an element
+      of \(A\emph{or}x\) is an element of \(B\) (or both). That is,
+      \begin{equation*}
+        x \in A \cup B \qquad \Iff \qquad x \in A \vee x \in B.
+      \end{equation*}
+    %
+\par
+
+      Similarly,
+      \begin{equation*}
+        x \in A \cap B \qquad \Iff \qquad x \in A \wedge x \in B.
+      \end{equation*}
+    %
+\par
+
+      Also,
+      \begin{equation*}
+        x \in \bar A \qquad \Iff \qquad \neg (x \in A).
+      \end{equation*}
+      which says \(x\) is an element of the complement of \(A\) if \(x\) is not an element of \(A\).
+    %
+\par
+
+      There is one more way to combine sets which will be useful for us: the \emph{Cartesian product}, \(A \times B\). This sounds fancy but is nothing you haven't seen before. When you graph a function in calculus, you graph it in the Cartesian
+      plane. This is the set of all ordered pairs of real numbers \((x,y)\). We can do this for \emph{any} pair of sets, not just the real numbers with themselves.
+    %
+\par
+
+      Put another way, \(A \times B = \{(a,b) \st a \in A \wedge b \in B\}\). The first coordinate comes from the first set and the second coordinate comes from the second set. Sometimes we will want to take the Cartesian product of a set with itself,
+      and this is fine: \(A \times A = \{(a,b) \st a, b \in A\}\) (we might also write \(A^2\) for this set). Notice that in \(A \times A\), we still want \emph{all} ordered pairs, not just the ones where the first and second coordinate are
+      the same. We can also take products of 3 or more sets, getting ordered triples, or quadruples, and so on.
+    %
+\begin{example}[]\label{example-6}
+
+          Let \(A = \{1,2\}\) and \(B = \{3,4,5\}\). Find \(A \times B\) and \(A \times A\). How many elements do you expect to be in \(B \times B\)?
+        %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+          \(A \times B = \{(1,3), (1,4), (1,5), (2,3), (2,4), (2,5)\}\).
+        %
+\par
+
+          \(A \times A = A^2 = \{(1,1), (1,2), (2,1), (2,2)\}\).
+        %
+\par
+
+          \(|B\times B| = 9\). There will be 3 pairs with first coordinate \(3\), three more with first coordinate \(4\), and a final three with first coordinate \(5\).
+        %
+\end{example}
+\typeout{************************************************}
+\typeout{Subsection 1.2.4 Venn Diagrams}
+\typeout{************************************************}
+\subsection[Venn Diagrams]{Venn Diagrams}\label{subsection-4}
+
+      \index{Venn diagram} There is a very nice visual tool we can use to represent operations on sets. Venn diagrams display sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality
+      of a particular set by putting the number in the corresponding region.
+    %
+\leavevmode%
+\begin{figure}
+\centering
+\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
+\centering% horizontal alignment 
+{
+          \begin{tikzpicture}[fill=gray!50,scale=0.85]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+}% end body 
+{}% caption 
+\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
+\centering% horizontal alignment 
+{
+        \begin{tikzpicture}[scale=.60, fill=gray!50]
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+}% end body 
+{}% caption 
+\popValignCaptionBottom
+\end{figure}
+\par
+
+      Each circle represents a set. The rectangle containing the circles represents the universe. To represent combinations of these sets, we shade the corresponding region. For example, we could draw \(A \cap B\) as:
+    %
+{
+        \begin{tikzpicture}[fill=gray!50,scale=0.85]
+	\begin{scope}
+	\clip \circleA;
+	\fill \circleB;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\par
+
+      Here is a representation of \(A \cap \bar B\), or equivalently \(A \setminus B\):
+    %
+{
+        \begin{tikzpicture}[fill=gray!50,scale=0.85]
+	\begin{scope}
+	\clip \twosetbox \circleB;
+	\fill \circleA;
+	\end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\par
+
+      A more complicated example is \((B \cap C) \cup (C \cap \bar A)\), as seen below.
+    %
+{
+        \begin{tikzpicture}[fill=gray!50,scale=0.65]
+	\fill \circleC;
+	\begin{scope}
+	    \clip \circleC;
+	    \fill[white] \circleA \circleB;
+	  \end{scope}
+	  \begin{scope}
+	  	\clip \circleC;
+	  	\fill \circleB;
+	  \end{scope}
+ \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\par
+
+      Notice that the shaded regions above could also be arrived at in another way. We could have started with all of \(C\), then excluded the region where \(C\) and \(A\) overlap outside of \(B\). That region is \((A \cap C) \cap \bar B\).
+      So the above Venn diagram also represents \(C \cap \bar{\left((A\cap C)\cap \bar B\right)}.\) So using just the picture, we have determined that
+      \begin{equation*}
+        (B \cap C) \cup (C \cap \bar A) = C \cap \bar{\left((A\cap C)\cap \bar B\right)}.
+      \end{equation*}
+    %
+\typeout{************************************************}
+\typeout{Exercises 1.2.4.1 Exercises}
+\typeout{************************************************}
+\subsubsection[Exercises]{Exercises}\label{exercises-1}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-1}{}
+            Let \(A = \{1,2,3,4,5\}\), \(B = \{3,4,5,6,7\}\), and \(C = \{2,3,5\}\).
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-66}{}
+                Find \(A \cap B\).
+              %
+\item\hypertarget{li-67}{}
+                Find \(A \cup B\).
+              %
+\item\hypertarget{li-68}{}
+                Find \(A \setminus B\).
+              %
+\item\hypertarget{li-69}{}
+                Find \(A \cap \bar{(B \cup C)}\).
+              %
+\item\hypertarget{li-70}{}
+                Find \(A \times C\).
+              %
+\item\hypertarget{li-71}{}
+                Is \(C \subseteq A\)? Explain.
+              %
+\item\hypertarget{li-72}{}
+                Is \(C \subseteq B\)? Explain.
+              %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-1}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-73}{}\(A \cap B = \{3,4,5\}\).\item\hypertarget{li-74}{}\(A \cup B = \{1,2,3,4,5,6,7\}\).\item\hypertarget{li-75}{}\(A \setminus B = \{1,2\}\).\item\hypertarget{li-76}{}\(A \cap \bar{(B \cup C)} = \{1\}\).\item\hypertarget{li-77}{}\(A \times B = \{(1,2), (1,3), (1,5), (2,2), (2,3), (2,5), (3,2), (3,3), (3,5), (4,2), (4,3), (4,5), (5,2), (5,3), (5,5)\}\).\item\hypertarget{li-78}{}
+                Yes.
+              %
+\item\hypertarget{li-79}{}
+                No.
+              %
+\end{enumerate}
+\item[2.]\hypertarget{exercise-2}{}
+            Let \(A = \{x \in \N \st 3 \le x \le 13\}\), \(B = \{x \in \N \st x \mbox{ is even} \}\), and \(C = \{x \in \N \st x \mbox{ is odd} \}\).
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-80}{}
+                Find \(A \cap B\).
+              %
+\item\hypertarget{li-81}{}
+                Find \(A \cup B\).
+              %
+\item\hypertarget{li-82}{}
+                Find \(B \cap C\).
+              %
+\item\hypertarget{li-83}{}
+                Find \(B \cup C\).
+              %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-2}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-84}{}\(A \cap B = \{4,6,8,10,12\}\)\item\hypertarget{li-85}{}\(A \cup B = \{x \in \N \st (3 \le x \le 13) \vee x \mbox{ is even} \}.\) (the set of all natural numbers which are either even or between 3 and 13 inclusive).\item\hypertarget{li-86}{}\(B \cap C = \emptyset\).\item\hypertarget{li-87}{}\(B \cup C = \N\).\end{enumerate}
+\item[3.]\hypertarget{exercise-3}{}
+            Find an example of sets \(A\) and \(B\) such that \(A\cap B = \{3, 5\}\) and \(A \cup B = \{2, 3, 5, 7, 8\}\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-3}{}\quad
+
+            For example, \(A = \{2,3,5,7,8\}\) and \(B = \{3,5\}\).
+          %
+\item[4.]\hypertarget{exercise-4}{}
+            Find an example of sets \(A\) and \(B\) such that \(A \subseteq B\) and \(A \in B\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-4}{}\quad
+
+            Let \(A = \{1,2,3\}\) and \(B = \{1,2,3,4,5,\{1,2,3\}\}\)
+          %
+\item[5.]\hypertarget{exercise-5}{}
+            Recall \(\Z = \{\ldots,-2,-1,0, 1,2,\ldots\}\) (the integers). Let \(\Z^+ = \{1, 2, 3, \ldots\}\) be the positive integers. Let \(2\Z\) be the even integers, \(3\Z\) be the multiples of 3, and so on.
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-88}{}
+                Is \(\Z^+ \subseteq 2\Z\)? Explain.
+              %
+\item\hypertarget{li-89}{}
+                Is \(2\Z \subseteq \Z^+\)? Explain.
+              %
+\item\hypertarget{li-90}{}
+                Find \(2\Z \cap 3\Z\). Describe the set in words, and also in symbols (using a \(\st\) symbol).
+              %
+\item\hypertarget{li-91}{}
+                Express \(\{x \in \Z \st \exists y\in \Z (x = 2y \vee x = 3y)\}\) as a union or intersection of two sets above.
+              %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-5}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-92}{}
+                No.
+              %
+\item\hypertarget{li-93}{}
+                No.
+              %
+\item\hypertarget{li-94}{}\(2\Z \cap 3\Z\) is the set of all integers which are multiples of both 2 and 3 (so multiples of 6). Therefore \(2\Z \cap 3\Z = \{x \in \Z \st \exists y\in \Z(x = 6y)\}\).\item\hypertarget{li-95}{}\(2\Z \cup 3\Z\).\end{enumerate}
+\item[6.]\hypertarget{exercise-6}{}
+            Let \(A_2\) be the set of all multiples of 2 except for \(2\). Let \(A_3\) be the set of all multiples of 3 except for 3. And so on, so that \(A_n\) is the set of all multiple of \(n\) except for \(n\), for any \(n \ge 2\).
+            Describe (in words) the set \(\bar{A_2 \cup A_3 \cup A_4 \cup \cdots}\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-6}{}\quad
+
+            The set of primes.
+          %
+\item[7.]\hypertarget{exercise-7}{}
+            Draw a Venn diagram to represent each of the following:
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-96}{}\(A \cup \bar B\)\item\hypertarget{li-97}{}\(\bar{(A \cup B)}\)\item\hypertarget{li-98}{}\(A \cap (B \cup C)\)\item\hypertarget{li-99}{}\((A \cap B) \cup C\)\item\hypertarget{li-100}{}\(\bar A \cap B \cap \bar C\)\item\hypertarget{li-101}{}\((A \cup B) \setminus C\)\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-7}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-102}{}\(A \cup \bar B\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+
+\fill \circleA;
+
+  \begin{scope}
+  \clip \circleB \twosetbox;
+  \fill \twosetbox;
+  \end{scope}
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-103}{}\(\bar{(A \cup B)}\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+  \fill \twosetbox;
+  \fill[white] \circleA \circleB;
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-104}{}\(A \cap (B \cup C)\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\begin{scope}
+  \clip \circleA;
+  \fill \circleB \circleC;
+\end{scope}
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-105}{}\((A \cap B) \cup C\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\begin{scope}
+  \clip \circleA;
+  \fill \circleB;
+\end{scope}
+\fill \circleC;
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-106}{}\(\bar A \cap B \cap \bar C\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\fill \circleB;
+\begin{scope}
+  \clip \circleB;
+  \fill[white] \circleA \circleC;
+\end{scope}
+
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\item\hypertarget{li-107}{}\((A \cup B) \setminus C\):
+              {
+               \begin{tikzpicture}[fill=gray!50]
+\fill \circleA;
+\fill \circleB;
+\fill[white] \circleC;
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\end{enumerate}
+\item[8.]\hypertarget{exercise-8}{}
+            Describe a set in terms of \(A\) and \(B\) which has the following Venn diagram:
+          %
+{
+              \begin{tikzpicture}[fill=gray!50, scale=0.75]
+\scope
+\clip (-2,-2) rectangle (2,2)
+      (1,0) circle (1);
+\fill (0,0) circle (1);
+\endscope
+\scope
+\clip (-2,-2) rectangle (2,2)
+      (0,0) circle (1);
+\fill (1,0) circle (1);
+\endscope
+\draw[thick] (0,0) circle (1) (-1,.7)  node [text=black,above] {\(A\)}
+      (1,0) circle (1) (2,.7)  node [text=black,above] {\(B\)}
+      (-1.5,-1.5) rectangle (2.5,1.5);
+\end{tikzpicture}
+}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-8}{}\quad
+
+            For example, \(A \cup B \cap \bar{(A \cap B)}\). Note that \(\bar{A \cap B}\) would almost work, but also contain the area outside of both circles.
+          %
+\item[9.]\hypertarget{exercise-9}{}
+            Find the following cardinalities:
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-108}{}\(|A|\) when \(A = \{4,5,6,\ldots,37\}\)\item\hypertarget{li-109}{}\(|A|\) when \(A = \{x \in \Z \st -2 \le x \le 100\}\)\item\hypertarget{li-110}{}\(|A \cap B|\) when \(A = \{x \in \N \st x \le 20\}\) and \(B = \{x \in \N \st x \mbox{ is prime} \}\)\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-9}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-111}{}
+                34.
+              %
+\item\hypertarget{li-112}{}
+                103.
+              %
+\item\hypertarget{li-113}{}
+                8.
+              %
+\end{enumerate}
+\item[10.]\hypertarget{exercise-10}{}
+            Let \(A = \{a, b, c\}\). Find \(\pow(A)\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-10}{}\quad
+
+            \(\pow(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\}\}\).
+          %
+\item[11.]\hypertarget{exercise-11}{}
+            Let \(A = \{1,2,\ldots, 10\}\). How many subsets of \(A\) contain exactly one element (i.e., how many \emph{singleton} subsets are there). How many \emph{doubleton} (containing exactly two elements) are there?
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-11}{}\quad
+
+            There are 10 singletons. There are 45 doubletons (because \(45 = 9+8+7+\cdots+2+1\)).
+          %
+\item[12.]\hypertarget{exercise-12}{}
+            Let \(A = \{1,2,3,4,5,6\}\). Find all sets \(B \in \pow(A)\) which have the property \(\{2,3,5\} \subseteq B\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-12}{}\quad
+
+            \(\{2,3,5\}\), \(\{1,2,3,5\}\), \(\{2,3,4,5\}\), \(\{2,3,5,6\}\), \(\{1,2,3,4,5\}\), \(\{1,2,3,5,6\}\), \(\{2,3,4,5,6\}\), and \(\{1,2,3,4,5,6\}\).
+          %
+\item[13.]\hypertarget{exercise-13}{}
+            Find an example of sets \(A\) and \(B\) such that \(|A| = 4\), \(|B| = 5\), and \(|A \cup B| = 9\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-13}{}\quad
+
+            For example \(A = \{1,2,3,4\}\) and \(B = \{5,6,7,8,9\}\).
+          %
+\item[14.]\hypertarget{exercise-14}{}
+            Find an example of sets \(A\) and \(B\) such that \(|A| = 3\), \(|B| = 4\), and \(|A \cup B| = 5\).
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-14}{}\quad
+
+            For example, \(A = \{1,2,3\}\) and \(B = \{2,3,4,5\}\).
+          %
+\item[15.]\hypertarget{exercise-15}{}
+            Are there sets \(A\) and \(B\) such that \(|A| = |B|\), \(|A\cup B| = 10\), and \(|A\cap B| = 5\)? Explain.
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-15}{}\quad
+
+            No. There must be 5 elements in common to both sets. Since there are 10 distinct elements all together in \(A\) and \(B\), this means that between \(A\) and \(B\), there must be 5 elements which they do not have in common (some
+            in \(A\) but not in \(B\), some in \(B\) but not in \(A\)). But 5 is odd, so to have \(|A| = |B|\), we would need 7.5 elements in each set, which is impossible.
+          %
+\item[16.]\hypertarget{exercise-16}{}
+            In a regular deck of playing cards there are 26 red cards and 12 face cards. Explain, using sets and what you have learned about cardinalities, why there are only 32 cards which are either red or a face card.
+          %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-16}{}\quad
+
+            If \(R\) is the set of red cards and \(F\) is the set of face cards, we want to find \(|R \cup F|\). This is not simply \(|R| + |F|\) because there are 6 cards which are both red and a face card; \(|R \cap F| = 6\). We find
+            \(|R \cup F| = 32\).
+          %
+\end{exerciselist}
+\typeout{************************************************}
+\typeout{Section 1.3 Functions}
+\typeout{************************************************}
+\section[Functions]{Functions}\label{sec_intro-functions}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+
+A function\index{function} is a rule that assigns each input exactly one output. The set of all inputs for a function is called the \emph{domain}\index{domain}. The set of all allowable outputs is called the \emph{codomain}\index{codomain}. For example, a function might assign each natural number to a natural number from 1 to 5. In that case, the domain is the natural numbers and the codomain is the set of natural numbers from 1 to 5. Now it could be that this particular function we are thinking about assigns each even natural number to the number 2 and each odd natural number to the number 1. In this case, not all of the codomain is actually used. We would say that the set \(\{1,2\}\) is the \emph{range}\index{range} of the function. These are the elements in the codomain (allowable outputs) which are actually outputs for some input.
+%
+\par
+
+The key thing that makes a rule actually a \emph{function} is that there is \emph{only one} output for each input. That is, it is important that the rule be a good rule. What output do we assign to the input 7? There can only be one answer for any particular function.
+%
+\par
+
+To specify the name of the function, as well as the domain and codomain, we write \(f:X \to Y\)\label{notation-9}
+. The function is called \(f\), the domain is the set \(X\), and the codomain is the set \(Y\). This, however, does not describe the rule. To do that, we say something like this:
+%
+\begin{quote}
+The function \(f:X \to Y\) is defined by \(f(x) = x^2 + 3\).
+\end{quote}
+\par
+
+This function takes an input \(x\) and computes the output by squaring \(x\) and then adding 3. In this case, you better hope that \(X\) is a set of numbers and \(Y\) is a set of numbers which can be 3 more than squares of numbers from \(X\). It would not work for \(Y\) to be negative numbers here. That would not be a valid function.
+%
+\par
+
+The description of the rule can vary greatly. We might just give a list of each output for each input. You could also describe the function with a table or a graph or in words.
+%
+\begin{example}[]\label{example-7}
+
+The following are all examples of functions:
+%
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-114}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).  The domain and codomain are both the set of integers.  However, the range is only the set of integer multiples of 3.\item\hypertarget{li-115}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).  The domain is the set \(\{1,2,3\}\), the codomain is the set \(\{a,b,c\}\) and the range is the set \(\{a,c\}\).  Note that \(g(2)\) and \(g(3)\) are the same element of the codomain.  This is okay since each element in the domain still has only one output.\item\hypertarget{li-116}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
+{
+\begin{tikzpicture}[scale=0.85]
+        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+      \end{tikzpicture}
+}
+\end{enumerate}
+\end{example}
+\par
+
+The arrow diagram used to define the function above can be very helpful in visualizing functions. We will often be working with functions on finite sets so this kind of picture is often more useful than a traditional graph of a function. A graph of the function in example 3 above would look like this:
+%
+{
+\begin{tikzpicture}[scale=0.75]
+    \draw[thin, gray!50] (0,0) grid (3.5, 3.5);
+    \draw[->, thick] (0,0) -- (0,3.5);
+   \draw[->, thick] (0,0) -- (3.5,0);
+   \fill (1,2) circle (3pt) (2,1) circle (3pt) (3,3) circle (3pt);
+  \end{tikzpicture}
+}
+\par
+
+It would be absolutely WRONG to connect the dots or try to fit them to some curve. There are only three elements in the domain. A curve suggests that the domain contains an entire interval of real numbers. Remember, we are not in calculus any more!
+%
+\par
+
+It is important to know how to determin if a rule is or is not a function. The arrow diagrams can help.
+%
+\begin{example}[]\label{example-8}
+
+Which of the following diagrams represent a function? Let \(X = \{1,2,3,4\}\) and \(Y = \{a,b,c,d\}\)
+%
+\(f:X \to Y\){
+\begin{tikzpicture}[scale=0.9]
+        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
+        \draw[->] (-.5,1) node[above] {2} -- (-1.5,0) node[below] {\(a\)};
+        \draw[->] (.5,1) node[above] {3} -- (.5, 0) node[below] {\(c\)};
+        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {\(b\)};
+      \end{tikzpicture}
+}
+\(g:X \to Y\){
+\begin{tikzpicture}[scale=0.9]
+        \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
+        \draw[->] (-.5,1) node[above] {2} -- (-1.6,0) node[below] {\(a\)};
+        \draw[->] (.5,1) node[above] {3} -- (-1.4, 0);
+        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {\(b\)};
+        \draw (.5,0) node[below] {\(c\)};
+      \end{tikzpicture}
+}
+\(h:X \to Y\){
+\begin{tikzpicture}[scale=0.9]
+        \draw (-1.5,1) node[above] {1};
+        \draw[->] (-.5,1) node[above] {2} (-.6,1) -- (-1.5,0) node[below] {\(a\)};
+        \draw[->] (-.4,1) -- (.5,0);
+        \draw[->] (.5,1) node[above] {3} -- (1.5, 0) node[below] {\(d\)};
+        \draw[->] (1.5,1) node[above] {4} -- (-.5, 0) node[below] {\(b\)};
+        \draw (.5,0) node[below] {\(c\)};
+      \end{tikzpicture}
+}
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+\(f\) is a function. So is \(g\). There is no problem with an element of the codomain not being the output for any input, and there is no problem with \(a\) from the codomain being the output of both 2 and 3 from the domain.
+%
+\par
+
+However, \(h\) is not a function. In fact, it fails for two reasons. First, the element 1 from the domain has not been mapped to any element from the codomain. Second, the element 2 from the domain has been mapped to more than one element from the codomain (\(a\) and \(c\)). Note that either one of these problems is enough to make a rule not a function. for example, neither of the following mappings are functions:
+%
+{
+\begin{tikzpicture}[scale=0.9]
+        \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
+        \draw[->] (-1, 1) -- (-.5,0);
+        \draw[->] (1,1) -- (.5, 0);
+        \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
+      \end{tikzpicture}
+}
+{
+\begin{tikzpicture}[scale=0.9]
+         \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
+         \draw[->] (-1.1, 1) -- (-1.5, 0);
+         \draw[->] (-.9, 1) -- (-.5, 0);
+         \draw[->] (0,1) -- (.5,0);
+         \draw[->] (1,1) -- (1.5, 0);
+         \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
+       \end{tikzpicture}
+}
+\end{example}
+\typeout{************************************************}
+\typeout{Subsection 1.3.1 Surjections, Injections, and Bijections}
+\typeout{************************************************}
+\subsection[Surjections, Injections, and Bijections]{Surjections, Injections, and Bijections}\label{subsection-5}
+
+We now turn to investigating special properties functions might or might not possess.
+%
+\par
+
+In the examples above, you may have noticed that sometimes there are elements of the codomain which are not in the range. When this sort of the thing \emph{does not} happen, (that is, when everything in the codomain is in the range) we say the function is \emph{onto}\index{onto} or that the function maps the domain \emph{onto} the codomain. This terminology should make sense: the function puts the domain (entirely) on top of the codomain. The fancy math term for an onto function is a \emph{surjection}\index{surjection}, and we say that an onto function is a \emph{surjective} function.
+%
+\par
+
+In pictures:
+%
+{
+\begin{tikzpicture}
+        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+        \draw[->] (-1.5, 1) -- (-1,0);
+        \draw[->] (-.5,1) -- (0, 0);
+        \draw[->] (.5, 1) -- (.9,0);
+        \draw[->] (1.5,1) -- (1.1,0);
+        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
+      \end{tikzpicture}
+}
+{
+\begin{tikzpicture}
+        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+        \draw[->] (-1.5, 1) -- (-1.1,0);
+        \draw[->] (-.5,1) -- (-.9, 0);
+        \draw[->] (.5, 1) -- (.9,0);
+        \draw[->] (1.5,1) -- (1.1,0);
+        \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
+      \end{tikzpicture}
+}
+\begin{example}[]\label{example-9}
+
+Which functions are surjective (i.e., onto)?
+%
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-117}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).\item\hypertarget{li-118}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).\item\hypertarget{li-119}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
+{
+\begin{tikzpicture}
+        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+      \end{tikzpicture}
+}
+\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-120}{}\(f\) is not surjective.  There are elements in the codomain which are not in the range.  For example, no \(n \in \Z\) gets mapped to the number 1 (the rule would say that \(\frac{1}{3}\) would be sent to 1, but \(\frac{1}{3}\) is not in the domain).  In fact, the range of the function is \(3\Z\) (the integer multiples of 3), which is not equal to \(\Z\).\item\hypertarget{li-121}{}\(g\) is not surjective.  There is no \(x \in \{1,2,3\}\) (the domain) for which \(g(x) = b\),  so \(b\), which is in the codomain, is not in the range.\item\hypertarget{li-122}{}\(h\) is surjective.  Every element of the codomain is also in the range.  Nothing in the codomain is missed.\end{enumerate}
+\end{example}
+\par
+
+To be a function, a map cannot assign a single element of the domain to two or more different elements of the codomain. However, we have seen that the reverse is permissible. That is, a function might assign the same element of the codomain to two or more different elements of the domain. When this \emph{does not} occur (that is, when each element of the codomain is assigned to at most one element of the domain) then we say the function is \emph{one-to-one}\index{one-to-one}. Again, this terminology makes sense: we are sending at most one element from the domain to one element from the codomain. One input to one output. The fancy math term for a one-to-one function is an \emph{injection}\index{injection}. We call one-to-one functions \emph{injective} functions.
+%
+\par
+
+In pictures:
+%
+{
+\begin{tikzpicture}
+        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+        \draw[->] (-1.5, 1) -- (-2,0);
+        \draw[->] (-.5,1) -- (-1, 0);
+        \draw[->] (.5, 1) -- (1,0);
+        \draw[->] (1.5,1) -- (2,0);
+        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
+      \end{tikzpicture}
+}
+{
+\begin{tikzpicture}
+        \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
+        \draw[->] (-1.5, 1) -- (-2,0);
+        \draw[->] (-.5,1) -- (-1, 0);
+        \draw[->] (.5, 1) -- (.9,0);
+        \draw[->] (1.5,1) -- (1.1,0);
+        \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
+      \end{tikzpicture}
+}
+\begin{example}[]\label{example-10}
+
+Which functions are injective (i.e., one-to-one)?
+%
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-123}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).\item\hypertarget{li-124}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).\item\hypertarget{li-125}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
+{
+\begin{tikzpicture}
+        \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
+        \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
+        \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
+      \end{tikzpicture}
+}
+\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-126}{}\(f\) is injective.  Each element in the codomain is assigned to at \emph{most} one element from the domain.  If \(x\) is a multiple of three, then only \(x/3\) is mapped to \(x\).  If \(x\) is not a multiple of 3, then there is no input corresponding to the output \(x\).\item\hypertarget{li-127}{}\(g\) is not injective.  Both inputs \(2\) and \(3\) are assigned the output \(a\).\item\hypertarget{li-128}{}\(h\) is injective.  Each output is only an output once.\end{enumerate}
+\end{example}
+\par
+
+From the examples above, it should be clear that there are functions which are surjective, injective, both, or neither. In the case when a function is both one-to-one and onto (an injection and surjection), we say the function is a \emph{bijection}\index{bijection}, or that the function is a \emph{bijective} function.
+%
+\typeout{************************************************}
+\typeout{Subsection 1.3.2 Inverse Image}
+\typeout{************************************************}
+\subsection[Inverse Image]{Inverse Image}\label{subsection-6}
+
+When discussing functions, we have notation for talking about an element of the domain (say \(x\)) and its corresponding element in the codomain (we write \(f(x)\)). It would also be nice to start with some element of the codomain (say \(y\)) and talk about which element or elements (if any) from the domain get sent to it. We could write ``those \(x\) in the domain such that \(f(x) = y\),'' but this is a lot of writing. Here is some notation to make our lives easier.
+%
+\par
+
+Suppose \(f:X \to Y\) is a function. For \(y \in Y\) (an element of the codomain), we write \(f\inv(Y)\)\index{\(f\inv(Y)\)} to represent the \emph{set} of all elements in the domain \(X\) which get sent to \(y\). That is, \(f\inv(y) = \{x \in X \st f(x) = y\}\). We say that \(f\inv(y)\) is the \emph{complete inverse image}\index{inverse image} of \(y\) under \(f\).
+%
+\par
+
+WARNING: \(f\inv(y)\) is not an inverse function!!!! Inverse functions only exist for bijections, but \(f\inv(y)\) is defined for any function \(f\). The point: \(f\inv(y)\) is a set, not an element of the domain.
+%
+\begin{example}[]\label{example-11}
+
+Consider the function \(f:\{1,2,3,4,5,6\} \to \{a,b,c,d\}\) given by \(f(1) = a\), \(f(2) = a\), \(f(3) = b\), \(f(4) = c\), \(f(5) = c\) and \(f(6) = c\). Find the complete inverse image of each element in the codomain.
+%
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+Remember, we are looking for sets.
+\begin{equation*}
+  f\inv(a) = \{1,2\}
+\end{equation*}
+%
+\begin{equation*}
+  f\inv(b) = \{3\}
+\end{equation*}\begin{equation*}
+  f\inv(c) = \{4,5,6\}
+\end{equation*}\begin{equation*}
+  f\inv(d) = \emptyset.
+\end{equation*}\end{example}
+\begin{example}[]\label{example-12}
+
+Consider the function \(g:\Z \to \Z\) defined by \(g(n) = n^2 + 1\). Find \(g\inv(1)\), \(g\inv(2)\), \(g\inv(3)\) and \(g\inv(10)\).
+%
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+To find \(g\inv(1)\), we need to find all integers \(n\) such that \(n^2 + 1 = 1\). Clearly only 0 works, so \(g\inv(1) = \{0\}\) (note that even though there is only one element, we still write it as a set with one element in it).
+%
+\par
+
+To find \(g\inv(2)\), we need to find all \(n\) such that \(n^2 + 1 = 2\). We see \(g\inv(2) = \{-1,1\}\).
+%
+\par
+
+If \(n^2 + 1 = 3\), then we are looking for an \(n\) such that \(n^2 = 2\). There are no such integers so \(g\inv(3) = \emptyset\).
+%
+\par
+
+Finally, \(g\inv(10) = \{-3, 3\}\) because \(g(-3) = 10\) and \(g(3) = 10\).
+%
+\end{example}
+\par
+
+Since \(f\inv(y)\) is a set, it makes sense to ask for \(|f\inv(y)|\), the number of elements in the domain which map to \(y\).
+%
+\begin{example}[]\label{example-13}
+
+Find a function \(f:\{1,2,3,4,5\} \to \N\) such that \(|f\inv(7)| = 5\).
+%
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+There is only one such function. We need five elements of the domain to map to the number \(7 \in \N\). Since there are only five elements in the domain, all of them must map to 7. So \(f(1) = 7\), \(f(2) = 7\), \(f(3) = 7\), \(f(4) = 7\), and \(f(5) = 7\).
+%
+\end{example}
+\begin{assemblage}{Function Definitions}\label{assemblage-3}\par\medskip
+\end{assemblage}
+\typeout{************************************************}
+\typeout{Exercises 1.3.2.1 Exercises}
+\typeout{************************************************}
+\subsubsection[Exercises]{Exercises}\label{exercises-2}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-17}{}
+Write out all functions \(f: \{1,2,3\} \to \{a,b\}\). How many are there? How many are injective? How many are surjective? How many are both?
+%
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-17}{}\quad
+
+There are 8 different functions. For example, \(f(1) = a\), \(f(2) = a\), \(f(3) = a\); or \(f(1) = a\), \(f(2) = b\), \(f(3) = a\), and so on. None of the functions are injective. Exactly 6 of the functions are surjective. No functions are both (since no functions here are injective).
+%
+\item[2.]\hypertarget{exercise-18}{}
+Write out all functions \(f: \{1,2\} \to \{a,b,c\}\). How many are there? How many are injective? How many are surjective? How many are both?
+%
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-18}{}\quad
+
+There are nine functions \textendash{} you have a choice of three outputs for \(f(1)\), and for each, you have three choices for the output \(f(2)\). Of these functions, 6 are injective, 0 are surjective, and 0 are both.
+%
+\item[3.]\hypertarget{exercise-19}{}
+Consider the function \(f:\{1,2,3,4,5\} \to \{1,2,3,4\}\) given by the table below:
+%
+\begin{tabular}{llllll}
+\(x\)&1&2&3&4&5\tabularnewline[0pt]
+&&&&&\tabularnewline\hrulethin
+\(f(x)\)&3&2&4&1&2
+\end{tabular}
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-137}{}
+Is \(f\) injective?  Explain.
+%
+\item\hypertarget{li-138}{}
+Is \(f\) surjective?  Explain.
+%
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-19}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-139}{}\(f\) is not injective, since \(f(2) = f(5)\) - two different inputs have the same output.\item\hypertarget{li-140}{}\(f\) is surjective, since every element of the codomain is an element of the range.\end{enumerate}
+\item[4.]\hypertarget{exercise-20}{}
+Consider the function \(f:\{1,2,3,4\} \to \{1,2,3,4\}\) given by the graph below.
+%
+{
+\begin{tikzpicture}[scale=1]
+    \draw[thin, gray!50] (0,0) grid (4.5, 4.5);
+    \draw[<->, thick] (0,4.5) node[left] {\(f(x)\)} -- (0,0) -- (4.5,0) node[below right] {\(x\)};
+    \foreach \x in {1,2,3,4}
+      \draw (\x,0) node[below] { \x} (0, \x) node[left] { \x};
+    \fill (1,3) circle (.1) (2,4) circle (.1) (3,1) circle (.1) (4,3) circle (.1);
+  \end{tikzpicture}
+}
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-141}{}
+Is \(f\) injective?  Explain.
+%
+\item\hypertarget{li-142}{}
+Is \(f\) surjective?  Explain.
+%
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-20}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-143}{}\(f\) is not injective, since \(f(1) = 3\) and \(f(4) = 3\).\item\hypertarget{li-144}{}\(f\) is not surjective, since there is no input which gives 2 as an output.\end{enumerate}
+\item[5.]\hypertarget{exercise-21}{}
+For each function given below, determine whether or not the function is injective and whether or not the function is surjective.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-145}{}\(f:\N \to \N\) given by \(f(n) = n+4\).\item\hypertarget{li-146}{}\(f:\Z \to \Z\) given by \(f(n) = n+4\).\item\hypertarget{li-147}{}\(f:\Z \to \Z\) given by \(f(n) = 5n - 8\).\item\hypertarget{li-148}{}\(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n/2 \amp  \mbox{ if  is even} \\
+                                         (n+1)/2 \amp  \mbox{ if  is odd} .
+\end{cases}\)\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-21}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-149}{}\(f\) is injective, but not surjective.\item\hypertarget{li-150}{}\(f\) is injective and surjective.\item\hypertarget{li-151}{}\(f\) is injective, but not surjective.\item\hypertarget{li-152}{}\(f\) is not injective, but is surjective.\end{enumerate}
+\item[6.]\hypertarget{exercise-22}{}
+Let \(A = \{1,2,3,\ldots,10\}\). Consider the function \(f:\pow(A) \to \N\) given by \(f(B) = |B|\). That is, \(f\) takes a subset of \(A\) as an input and outputs the cardinality of that set.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-153}{}
+Is \(f\) injective?  Prove your answer.
+%
+\item\hypertarget{li-154}{}
+Is \(f\) surjective?  Prove your answer.
+%
+\item\hypertarget{li-155}{}
+Find \(f\inv(1)\).
+%
+\item\hypertarget{li-156}{}
+Find \(f\inv(0)\).
+%
+\item\hypertarget{li-157}{}
+Find \(f\inv(12)\).
+%
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-22}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-158}{}\(f\) is not injective.  To prove this, we must simply find two different elements of the domain which map to the same element of the codomain.  Since \(f(\{1\}) = 1\) and \(f(\{2\}) = 1\), we see that \(f\) is not injective.\item\hypertarget{li-159}{}\(f\) is not surjective.  The largest subset of \(A\) is \(A\) itself, and \(|A| = 10\).  So no natural number greater than 10 will ever be an output.\item\hypertarget{li-160}{}\(f\inv(1) = \{\{1\}, \{2\}, \{3\}, \ldots \{10\}\}\) (the set of all the singleton subsets of \(A\)).\item\hypertarget{li-161}{}\(f\inv(0) = \{\emptyset\}\).  Note, it would be wrong to write \(f\inv(0) = \emptyset\) - that would claim that there is no input which has 0 as an output.\item\hypertarget{li-162}{}\(f\inv(12) = \emptyset\), since there are no subsets of \(A\) with cardinality 12.\end{enumerate}
+\item[7.]\hypertarget{exercise-23}{}
+Let \(A = \{n \in \N \st 0 \le n \le 999\}\) be the set of all numbers with three or fewer digits. Define the function \(f:A \to \N\) by \(f(abc) = a+b+c\), where \(a\), \(b\), and \(c\) are the digits of the number in \(A\). For example, \(f(253) = 2 + 5 + 3 =  10\).
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-163}{}
+Find \(f\inv(3)\).
+%
+\item\hypertarget{li-164}{}
+Find \(f\inv(28)\).
+%
+\item\hypertarget{li-165}{}
+Is \(f\) injective.  Explain.
+%
+\item\hypertarget{li-166}{}
+Is \(f\) surjective. Explain.
+%
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-23}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-167}{}\(f\inv(3) = \{003, 030, 300, 012, 021, 102, 201, 120, 210, 111\}\)\item\hypertarget{li-168}{}\(f\inv(28) = \emptyset\) (since the largest sum of three digits is \(9+9+9 = 27\))\item\hypertarget{li-169}{}
+Part (a) proves that \(f\) is not injective - the output 3 is assigned to 10 different inputs.
+%
+\item\hypertarget{li-170}{}
+Part (b) proves that \(f\) is not surjective - there is an element of the codomain (28) which is assigned to no inputs.
+%
+\end{enumerate}
+\item[8.]\hypertarget{exercise-24}{}
+Let \(f:X \to Y\) be some function. Suppose \(3 \in Y\). What can you say about \(f\inv(3)\) if you know,
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-171}{}\(f\) is injective? Explain.\item\hypertarget{li-172}{}\(f\) is surjective? Explain.\item\hypertarget{li-173}{}\(f\) is bijective? Explain.\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-24}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-174}{}\(|f\inv(3)| \le 1\).  In other words, either \(f\inv(3)\) is the emptyset or is a set containing exactly one element.  Injective functions cannot have two elements from the domain both map to 3.\item\hypertarget{li-175}{}\(|f\inv(3)| \ge 1\).  In other words, \(f\inv(3)\) is a set containing at least one elements, possibly more.  Surjective functions cannot have nothing mapping to 3.\item\hypertarget{li-176}{}\(|f\inv(3)| = 1\).  There is exactly one element from \(X\) which gets mapped to 3, so \(f\inv(3)\) is the set containing that one element.\end{enumerate}
+\item[9.]\hypertarget{exercise-25}{}
+Find a set \(X\) and a function \(f:X \to \N\) so that \(f\inv(0) \cup f\inv(1) = X\).
+%
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-25}{}\quad
+
+\(X\) can really be any set, as long as \(f(x) = 0\) or \(f(x) = 1\) for every \(x \in X\). For example, \(X = \N\) and \(f(n) = 0\) works.
+%
+\item[10.]\hypertarget{exercise-26}{}
+What can you deduce about the sets \(X\) and \(Y\) if you know\dots{}
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-177}{}
+there is an injective function \(f:X \to Y\)?  Explain.
+%
+\item\hypertarget{li-178}{}
+there is a surjective function \(f:X \to Y\)?  Explain.
+%
+\item\hypertarget{li-179}{}
+there is a bijectitve function \(f:X \to Y\)?  Explain.
+%
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-26}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-180}{}\(|X| \le |Y|\). Otherwise two or more of the elements of \(X\) would need to map to the same element of \(Y\).\item\hypertarget{li-181}{}\(|X| \ge |Y|\). Otherwise there would be one or more elements of \(Y\) which were never an output.\item\hypertarget{li-182}{}\(|X| = |Y|\).  This is the only way for both of the above to occur.\end{enumerate}
+\item[11.]\hypertarget{exercise-27}{}
+Suppose \(f:X \to Y\) is a function. Which of the following are possible? Explain.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-183}{}\(f\) is injective but not surjective.\item\hypertarget{li-184}{}\(f\) is surjective but not injective.\item\hypertarget{li-185}{}\(|X| = |Y|\) and \(f\) is injective but not surjective.\item\hypertarget{li-186}{}\(|X| = |Y|\) and \(f\) is surjective but not injective.\item\hypertarget{li-187}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is injective but not surjective.\item\hypertarget{li-188}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is surjective but not injective.\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-27}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-189}{}
+Yes. (Can you give an example?)
+%
+\item\hypertarget{li-190}{}
+Yes.
+%
+\item\hypertarget{li-191}{}
+Yes.
+%
+\item\hypertarget{li-192}{}
+Yes.
+%
+\item\hypertarget{li-193}{}
+No.
+%
+\item\hypertarget{li-194}{}
+No.
+%
+\end{enumerate}
+\item[12.]\hypertarget{exercise-28}{}
+Consider the function \(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n+1 \amp  \mbox{ if  is even} \\
+                                                                 n-3 \amp  \mbox{ if  is odd} .
+\end{cases}\)
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-195}{}
+Is \(f\) injective?  Prove your answer.
+%
+\item\hypertarget{li-196}{}
+Is \(f\) surjective?  Prove your answer.
+%
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-28}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-197}{}\(f\) is injective.
+
+\begin{proof}\hypertarget{proof-1}{}
+
+Let \(x\) and \(y\) be elements of the domain \(\Z\). Assume \(f(x) = f(y)\). If \(x\) and \(y\) are both even, then \(f(x) = x+1\) and \(f(y) = y+1\). Since \(f(x) = f(y)\), we have \(x + 1 = y + 1\) which implies that \(x = y\). Similarly, if \(x\) and \(y\) are both odd, then \(x - 3 = y-3\) so again \(x = y\). The only other possibility is that \(x\) is even an \(y\) is odd (or visa-versa). But then \(x + 1\) would be odd and \(y - 3\) would be even, so it cannot be that \(f(x) = f(y)\). Therefore if \(f(x) = f(y)\) we then have \(x = y\), which proves that \(f\) is injective.
+%
+\end{proof}
+\item\hypertarget{li-198}{}\(f\) is surjective.
+
+\begin{proof}\hypertarget{proof-2}{}
+
+Let \(y\) be an element of the codomain \(\Z\). We will show there is an element \(n\) of the domain (\(\Z\)) such that \(f(n) = y\). There are two cases. First, if \(y\) is even, then let \(n = y+3\). Since \(y\) is even, \(n\) is odd, so \(f(n) = n-3 = y+3-3 = y\) as desired. Second, if \(y\) is odd, then let \(n = y-1\). Since \(y\) is odd, \(n\) is even, so \(f(n) = n+1 = y-1+1 = y\) as needed. Therefore \(f\) is surjective.
+%
+\end{proof}
+\end{enumerate}
+\item[13.]\hypertarget{exercise-29}{}
+At the end of the semester a teacher assigns letter grades to each of her students. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
+%
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-29}{}\quad
+
+Yes, this is a function, if you choose the domain and codomain correctly. The domain will be the set of students, and the codomain will be the set of possible grades. The function is almost certainly not injective, because it is likely that two students will get the same grade. The function might be surjective \textendash{} it will be if there is at least one student who gets each grade.
+%
+\item[14.]\hypertarget{exercise-30}{}
+In the game of \emph{Hearts}, four players are each dealt 13 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
+%
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-30}{}\quad
+
+Yes, as long as the set of cards is the domain and the set of players is the codomain. The function is not injective because multiple cards go to each player. It is surjective since all players get cards.
+%
+\item[15.]\hypertarget{exercise-31}{}
+Suppose 7 players are playing 5-card stud. Each player initially receives 5 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
+%
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Answer.}\hypertarget{answer-31}{}\quad
+
+This cannot be a function. If the domain were the set of cards, then it is not a function because not every card gets dealt to a player. If the domain were the set of players, it would not be a function because a single player would get mapped to multiple cards. Since this is not a function, it doesn't make sense to say whether it is injective/surjective/bijective.
+%
+\end{exerciselist}
+\typeout{************************************************}
+\typeout{Chapter 2 Counting}
 \typeout{************************************************}
 \chapter[Counting]{Counting}\label{ch_counting}
 \typeout{************************************************}
@@ -307,29 +2053,29 @@ How many subsets of \(\{1,2,3,\ldots, 10\}\) have cardinality \(7\)?
 Before tackling these difficult questions, let's look at the basics of counting.
 %
 \typeout{************************************************}
-\typeout{Section 1.1 Additive and Multiplicative Principles}
+\typeout{Section 2.1 Additive and Multiplicative Principles}
 \typeout{************************************************}
 \section[Additive and Multiplicative Principles]{Additive and Multiplicative Principles}\label{sec_additiveMultiplicative}
 \typeout{************************************************}
 \typeout{Introduction  }
 \typeout{************************************************}
-\begin{activity}[]\label{activity-1}
+\begin{activity}[]\label{activity-3}
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-5}{}A restaurant offers 8 appetizers and 14 entrées. How many choices do you have if:
+\item\hypertarget{li-203}{}A restaurant offers 8 appetizers and 14 entrées. How many choices do you have if:
 
 \begin{enumerate}
-\item\hypertarget{li-6}{} you will eat one dish, either an appetizer or an entrée?
-\item\hypertarget{li-7}{}
+\item\hypertarget{li-204}{} you will eat one dish, either an appetizer or an entrée?
+\item\hypertarget{li-205}{}
 you are extra hungry and want to eat both an appetizer and an entrée?
 \end{enumerate}
-\item\hypertarget{li-8}{}Think about the methods you used to solve question 1. Write down the rules for these methods.
-\item\hypertarget{li-9}{}Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.\item\hypertarget{li-10}{}\begin{enumerate}
-\item\hypertarget{li-11}{}
+\item\hypertarget{li-206}{}Think about the methods you used to solve question 1. Write down the rules for these methods.
+\item\hypertarget{li-207}{}Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.\item\hypertarget{li-208}{}\begin{enumerate}
+\item\hypertarget{li-209}{}
 How many ways can you select a card which is either red or a face card?
-\item\hypertarget{li-12}{}
+\item\hypertarget{li-210}{}
 How many ways can you select a card which is both red and a face card?
-\item\hypertarget{li-13}{}
+\item\hypertarget{li-211}{}
 How many ways can you select two cards so that the first one is red and the second one is a face card?
 \end{enumerate}
 \end{enumerate}
@@ -337,7 +2083,7 @@ How many ways can you select two cards so that the first one is red and the seco
 
 Consider this rather simple counting problem: at Red Dogs and Donuts, there are 14 varieties of donuts, and 16 types of hot dogs. If you want either a donut or a dog, how many options do you have? This isn't too hard, you just add 14 and 16. Will that always work? What is important here?
 %
-\begin{assemblage}{Additive Principle}\label{assemblage-1}\par\medskip
+\begin{assemblage}{Additive Principle}\label{assemblage-4}\par\medskip
 
 The \terminology{additive principle}\index{additive principle} states that if event \(A\) can occur in \(m\) ways, and event \(B\) can occur in \(n\) \terminology{disjoint}\index{disjoint} ways, then the event ``\(A\) or \(B\)'' can occur in \(m + n\) ways.
 %
@@ -350,7 +2096,7 @@ It is important that the events be disjoint. For example, a standard deck of 52 
 
 The additive principle works with more than two events. Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles? How many choices do you have now? You would have \(14 + 16 + 15 = 45\) options.
 %
-\begin{example}[]\label{example-1}
+\begin{example}[]\label{example-14}
 
 How many two letter ``words''\index{words} start with either A or B? How many start with one of the 5 vowels? (A word is just a strings of letters; it doesn't have to be English, or even pronounceable.)
 %
@@ -363,7 +2109,7 @@ First, how many two letter words start with A? We just need to select the second
 Now what about all the two letter words starting with a vowel? There are 26 starting with A, another 26 starting with E, and so on. We will have 5 groups of 26. So we add 26 to itself 5 times. Of course it would be easier to just multiply \(5\cdot 26\). We are really using the additive principle again, just using multiplication as a shortcut.
 %
 \end{example}
-\begin{example}[]\label{example-2}
+\begin{example}[]\label{example-15}
 
 Suppose you are going for some fro-yo. You can pick one of 6 yogurt choices, and one of 4 toppings. How many choices do you have?
 %
@@ -376,7 +2122,7 @@ Break your choices up into disjoint events: \(A\) are the choices with the first
 
 Note that in both of the previous examples, when using the additive principle on a bunch of events all the same size, it is quicker to multiply. This really is the same, and not just because \(6 + 6 + 6 + 6 = 4\cdot 6\). We can first select the topping in 4 ways (that is, we first select which of the disjoint events we will take). For each of those first 4 choices, we now have 6 choices of yogurt. We have:
 %
-\begin{assemblage}{Multiplicative Principle}\label{assemblage-2}\par\medskip
+\begin{assemblage}{Multiplicative Principle}\label{assemblage-5}\par\medskip
 
 The \terminology{multiplicative principle}\index{multiplicative principle} states that if event \(A\) can occur in \(m\) ways, and each possibility for \(A\) allows for exactly \(n\) ways for event \(B\), then the event ``\(A\) and \(B\)'' can occur in \(m \cdot n\) ways.
 %
@@ -385,7 +2131,7 @@ The \terminology{multiplicative principle}\index{multiplicative principle} state
 
 The multiplicative principle generalizes to more than two events as well.
 %
-\begin{example}[]\label{example-3}
+\begin{example}[]\label{example-16}
 
 How many license plates can you make out of three letters followed by three numerical digits?
 %
@@ -419,7 +2165,7 @@ Careful: ``and'' doesn't mean ``times.'' For example, how many playing cards are
 Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the multiplicative principle (you are counting two separate events) but the answer is not \(26 \cdot 12\) here either. The problem is that while there are 26 ways for the first card to be selected, it is not the case that \emph{for each} of those there are 12 ways to select the second card. If the first card was both red and a face card, then there would be only 11 choices for the second card. The moral of this story is that the multiplicative principle only works if the events are independent.\footnote{To solve this problem, you could break it into two cases. First, count how many ways there are to select the two cards when the first card is a red non-face card. Second, count how many ways when the first card is a red face card.  Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.\label{fn-1}}
 %
 \typeout{************************************************}
-\typeout{Subsection 1.1.1 Counting With Sets}
+\typeout{Subsection 2.1.1 Counting With Sets}
 \typeout{************************************************}
 \subsection[Counting With Sets]{Counting With Sets}\label{subsec_countingWithSets}
 
@@ -433,16 +2179,16 @@ To make things clearer, and more mathematically rigorous, we will use sets. Do n
 
 We will look at the additive and multiplicative principles in a slightly different way. Instead of thinking about event \(A\) and event \(B\), we want to think of a set \(A\) and a set \(B\). The sets will contain all the different ways the event can happen. (It will be helpful to be able to switch back and forth between these two models when checking that we have counted correctly.) Here's what we mean:
 %
-\begin{example}[]\label{example-4}
+\begin{example}[]\label{example-17}
 
 Suppose you own 9 shirts and 5 pairs of pants.
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-14}{}
+\item\hypertarget{li-212}{}
 How many outfits can you make?
 %
-\item\hypertarget{li-15}{}
+\item\hypertarget{li-213}{}
 If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?
 %
 \end{enumerate}
@@ -459,7 +2205,7 @@ Now look at this using sets. There are two sets, call them \(S\) and \(P\). The 
 
 From this example we can see right away how to rephrase our additive principle in terms of sets:
 %
-\begin{assemblage}{Additive Principle (with sets)}\label{assemblage-3}\par\medskip
+\begin{assemblage}{Additive Principle (with sets)}\label{assemblage-6}\par\medskip
 
 \index{additive principle}
 Given two sets \(A\) and \(B\), if \(A \cap B = \emptyset\) (that is, if there is no element in common to both \(A\) and \(B\)), then
@@ -476,7 +2222,7 @@ This hardly needs a proof. To find \(A \cup B\), you take everything in \(A\) an
 
 From the example above, we see that in order to investigate the multiplicative principle carefully, we need to consider ordered pairs. We should define this carefully:
 %
-\begin{assemblage}{Cartesian Product}\label{assemblage-4}\par\medskip
+\begin{assemblage}{Cartesian Product}\label{assemblage-7}\par\medskip
 
 Given sets \(A\) and \(B\), we can form the \terminology{set} \(A \times B = \{(x,y) \st x \in A \wedge y \in B\}\) to be the set of all ordered pairs \((x,y)\) where \(x\) is an element of \(A\) and \(y\) is an element of \(B\). We call \(A \times B\) the \terminology{Cartesian product}\index{Cartesian product} of \(A\) and \(B\).
 %
@@ -515,7 +2261,7 @@ So \(A \times B\) is really the union of \(m\) disjoint sets. Each of those sets
 
 To summarize:
 %
-\begin{assemblage}{Multiplicative Principle (with sets)}\label{assemblage-5}\par\medskip
+\begin{assemblage}{Multiplicative Principle (with sets)}\label{assemblage-8}\par\medskip
 
 \index{multiplicative principle}
 Given two sets \(A\) and \(B\), we have \(|A \times B| = |A| \cdot |B|\).
@@ -526,7 +2272,7 @@ Given two sets \(A\) and \(B\), we have \(|A \times B| = |A| \cdot |B|\).
 Again, we can easily extend this to any number of sets.
 %
 \typeout{************************************************}
-\typeout{Subsection 1.1.2 Principle of Inclusion/Exclusion}
+\typeout{Subsection 2.1.2 Principle of Inclusion/Exclusion}
 \typeout{************************************************}
 \subsection[Principle of Inclusion/Exclusion]{Principle of Inclusion/Exclusion}\label{sec_PIE}
 
@@ -561,7 +2307,7 @@ This works for this one example. Will it always work? Think about what we are do
 
 In other words, we have:
 %
-\begin{assemblage}{Cardinality of a union (2 sets)}\label{assemblage-6}\par\medskip
+\begin{assemblage}{Cardinality of a union (2 sets)}\label{assemblage-9}\par\medskip
 
 For any finite sets \(A\) and \(B\),
 \begin{equation*}
@@ -573,7 +2319,7 @@ For any finite sets \(A\) and \(B\),
 
 We can do something similar with three sets.
 %
-\begin{example}[]\label{example-5}
+\begin{example}[]\label{example-18}
 
 An examination in three subjects, Algebra, Biology, and Chemistry, was taken
 by 41 students. The following table shows how many students failed in each
@@ -638,7 +2384,7 @@ Note that we can also answer other questions. For example, now many students fai
 
 Could we have solved the problem above in an algebraic way? While the additive principle generalizes to any number of sets, when we add a third set here, we must be careful. With two sets, we needed to know the cardinalities of \(A\), \(B\), and \(A \cap B\) in order to find the cardinality of \(A \cup B\). With three sets we need more information. There are more ways the sets can combine. Not surprisingly then, the formula for cardinality of the union of three non-disjoint sets is more complicated:
 %
-\begin{assemblage}{Cardinality of a union (3 sets)}\label{assemblage-7}\par\medskip
+\begin{assemblage}{Cardinality of a union (3 sets)}\label{assemblage-10}\par\medskip
 
 For any finite sets \(A\), \(B\), and \(C\),
 \begin{equation*}
@@ -666,144 +2412,144 @@ This is what we got when we solved the problem using Venn diagrams.
 This process of adding in, then taking out, then adding back in, and so on is called the \emph{Principle of Inclusion/Exclusion}, or simply PIE. We will return to this counting technique later to solve for more complicated problems (involving more than 3 sets).
 %
 \typeout{************************************************}
-\typeout{Exercises 1.1.2.1 Exercises}
+\typeout{Exercises 2.1.2.1 Exercises}
 \typeout{************************************************}
-\subsubsection[Exercises]{Exercises}\label{exercises-1}
+\subsubsection[Exercises]{Exercises}\label{exercises-3}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-1}{}
+\item[1.]\hypertarget{exercise-32}{}
 Your wardrobe consists of 5 shirts, 3 pairs of pants, and 17 bow ties\index{bow ties}. How many different outfits can you make?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-1}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-32}{}\quad
 
 255.
 %
-\item[2.]\hypertarget{exercise-2}{}
+\item[2.]\hypertarget{exercise-33}{}
 For your college interview, you must wear a tie. You own 3 regular (boring) ties and 5 (cool) bow ties. How many choices do you have for your neck-wear?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-2}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-33}{}\quad
 
 8.
 %
-\item[3.]\hypertarget{exercise-3}{}
+\item[3.]\hypertarget{exercise-34}{}
 You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-3}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-34}{}\quad
 
 15.
 %
-\item[4.]\hypertarget{exercise-4}{}
+\item[4.]\hypertarget{exercise-35}{}
 For the rest of your outfit, you have 5 shirts, 4 skirts, 3 pants, and 7 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-4}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-35}{}\quad
 
 \(5\cdot (4+3) + 7 = 42\).
 %
-\item[5.]\hypertarget{exercise-5}{}
+\item[5.]\hypertarget{exercise-36}{}
 Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an example of a question for which the answer is:
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-16}{}
+\item\hypertarget{li-214}{}
 16.
 %
-\item\hypertarget{li-17}{}
+\item\hypertarget{li-215}{}
 63.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-5}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-36}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-18}{}
+\item\hypertarget{li-216}{}
 16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.
 %
-\item\hypertarget{li-19}{}
+\item\hypertarget{li-217}{}
 63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.
 %
 \end{enumerate}
-\item[6.]\hypertarget{exercise-6}{}
+\item[6.]\hypertarget{exercise-37}{}
 If \(|A| = 10\) and \(|B| = 15\), what is the largest possible value for \(|A \cap B|\)? What is the smallest? What are the possible values for \(|A \cup B|\)?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-6}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-37}{}\quad
 
 \(0 \le |A \cap B| \le 10\) and \(15 \le |A \cup B| \le 25\).
 %
-\item[7.]\hypertarget{exercise-7}{}
+\item[7.]\hypertarget{exercise-38}{}
 If \(|A| = 8\) and \(|B| = 5\), what is \(|A \cup B| + |A \cap B|\)?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-7}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-38}{}\quad
 
 \(|A \cup B| + |A \cap B| = 13\).
 %
-\item[8.]\hypertarget{exercise-8}{}
+\item[8.]\hypertarget{exercise-39}{}
 A group of college students were asked about their TV watching habits. Of those surveyed, 28 students watch \emph{The Walking Dead}, 19 watch \emph{The Blacklist}, and 24 watch \emph{Game of Thrones}. Additionally, 16 watch \emph{The Walking Dead} and \emph{The Blacklist}, 14 watch \emph{The Walking Dead} and \emph{Game of Thrones}, and 10 watch \emph{The Blacklist} and \emph{Game of Thrones}. There are 8 students who watch all three shows. How many students surveyed watched at least one of the shows?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-8}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-39}{}\quad
 
 39.
 %
-\item[9.]\hypertarget{exercise-9}{}
+\item[9.]\hypertarget{exercise-40}{}
 Find \(|(A \cup C)\setminus B|\) provided \(|A| = 50\), \(|B| = 45\), \(|C| = 40\), \(|A\cap B| = 20\), \(|A \cap C| = 15\), \(|B \cap C| = 23\), and \(|A \cap B \cap C| = 12\).
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-9}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-40}{}\quad
 
 \(|(A \cup C)\setminus B| = 44\). Use a Venn diagram.
 %
-\item[10.]\hypertarget{exercise-10}{}
+\item[10.]\hypertarget{exercise-41}{}
 Using the same data as the previous question, describe a set with cardinality 26.
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-10}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-41}{}\quad
 
 One possibility: \((A \cup B) \cap C\).
 %
-\item[11.]\hypertarget{exercise-11}{}
+\item[11.]\hypertarget{exercise-42}{}
 Consider all 5 letter ``words'' made from the letters \(a\) through \(h\). (Recall, words are just strings of letters, not necessarily actual Elglish words.)
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-20}{}
+\item\hypertarget{li-218}{}
 How many of these words are there total?
 %
-\item\hypertarget{li-21}{}
+\item\hypertarget{li-219}{}
 How many of these words contain no repeated letters?
 %
-\item\hypertarget{li-22}{}
+\item\hypertarget{li-220}{}
 How many of these words (repetitions allowed) start with the sub-word ``aha''?
 %
-\item\hypertarget{li-23}{}
+\item\hypertarget{li-221}{}
 How many of these words (repetitions allowed) either start with ``aha'' or end with ``bah'' or both?
 %
-\item\hypertarget{li-24}{}
+\item\hypertarget{li-222}{}
 How many of the words containing no repeats also do not contain the sub-word ``bad'' (in consecutive letters)?
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-11}{}\quad
+\noindent\textbf{Answer.}\hypertarget{answer-42}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-25}{}\(8^5\), since you select from 8 letters 5 times.\item\hypertarget{li-26}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4\).  After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-27}{}
+\item\hypertarget{li-223}{}\(8^5\), since you select from 8 letters 5 times.\item\hypertarget{li-224}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4\).  After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-225}{}
 64 - you need to select the 4th and 5th letters.
 %
-\item\hypertarget{li-28}{}\(64 + 64 - 0 = 128\).  There are 64 words which start with ``aha'' and another 64 words that end with ``bah.''  Perhaps we over counted the words that both start with ``aha'' and end with ``bah'' but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-29}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\). All the words minus the bad ones.  The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
+\item\hypertarget{li-226}{}\(64 + 64 - 0 = 128\).  There are 64 words which start with ``aha'' and another 64 words that end with ``bah.''  Perhaps we over counted the words that both start with ``aha'' and end with ``bah'' but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-227}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\). All the words minus the bad ones.  The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
 \end{exerciselist}
 \end{document}
