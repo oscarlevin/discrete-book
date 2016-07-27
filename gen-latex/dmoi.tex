@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-07-25T19:53:10-06:00    *%
+%*    on 2016-07-27T14:45:50-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -18,18 +18,33 @@
 %% and read "Fewer fragile commands" in distribution's  latexchanges.pdf
 \IfFileExists{latexrelease.sty}{}{\usepackage{fixltx2e}}
 %% Page Layout Adjustments (latex.geometry)
-%% This LaTeX file may be compiled with pdflatex or xelatex
+%% This LaTeX file may be compiled with pdflatex, xelatex, or lualatex
 %% The following provides engine-specific capabilities
-%% Generally, xelatex will do better languages other than US English
+%% Generally, xelatex and lualatex will do better languages other than US English
 %% You can pick from the conditional if you will only ever use one engine
 \usepackage{ifthen}
-\usepackage{ifxetex}
-\ifthenelse{\boolean{xetex}}{%
-%% begin: xelatex-specific configuration
+\usepackage{ifxetex,ifluatex}
+\ifthenelse{\boolean{xetex} \or \boolean{luatex}}{%
+%% begin: xelatex and lualatex-specific configuration
 %% fontspec package will make Latin Modern (lmodern) the default font
-\usepackage{xltxtra}
+\ifxetex\usepackage{xltxtra}\fi
 \usepackage{fontspec}
-%% end: xelatex-specific configuration
+%% realscripts is the only part of xltxtra relevant to lualatex 
+\ifluatex\usepackage{realscripts}\fi
+%% 
+%% Extensive support for other languages
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+%% Greek (Modern)
+\setotherlanguage[numerals=greek]{greek}
+\newfontfamily\greekfont[Script=Greek]{GFS Artemisia}
+%% Magyar (Hungarian)
+\setotherlanguage{magyar}
+%% Spanish
+\setotherlanguage{spanish}
+%% Vietnamese
+\setotherlanguage{vietnamese}
+%% end: xelatex and lualatex-specific configuration
 }{%
 %% begin: pdflatex-specific configuration
 %% translate common Unicode to their LaTeX equivalents
@@ -47,15 +62,15 @@
 %% Upright quotes might come from the  textcomp  package, which we also use
 %% We employ the shapely \ell to match Google Font version
 %% pdflatex: "varqu" option produces best upright quotes
-%% xelatex: add StylisticSet 1 for shapely \ell
-%% xelatex: add StylisticSet 2 for plain zero
-%% xelatex: we add StylisticSet 3 for upright quotes
+%% xelatex,lualatex: add StylisticSet 1 for shapely \ell
+%% xelatex,lualatex: add StylisticSet 2 for plain zero
+%% xelatex,lualatex: we add StylisticSet 3 for upright quotes
 %% 
-\ifthenelse{\boolean{xetex}}{%
-%% begin: xelatex-specific monospace font
+\ifthenelse{\boolean{xetex} \or \boolean{luatex}}{%
+%% begin: xelatex and lualatex-specific monospace font
 \usepackage{zi4}
 \setmonofont[BoldFont=Inconsolatazi4-Bold.otf,StylisticSet={1,3}]{Inconsolatazi4-Regular.otf}
-%% end: xelatex-specific monospace font
+%% end: xelatex and lualatex-specific monospace font
 }{%
 %% begin: pdflatex-specific monospace font
 \usepackage[varqu]{zi4}
@@ -109,7 +124,7 @@
 \newtheorem{project}{Project}[section]
 %% Project-like environments, normal text
 \theoremstyle{definition}
-\newtheorem{investigation}[project]{Investigation}
+\newtheorem{investigation}[project]{\emph{Investigate!}}
 %% assemblage: minimally structured content, high visibility presentation
 %% Package for breakable highlight boxes
 \usepackage[framemethod=tikz]{mdframed}
@@ -176,49 +191,6 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 \usepackage{float}
 \usepackage[bf]{caption} % http://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 
 \usepackage{newfloat}
-% Side-by-side elements need careful treatement for aligning captions, see: 
-% http://tex.stackexchange.com/questions/230335/vertically-aligning-minipages-subfigures-and-subtables-not-with-baseline 
-\usepackage{stackengine,ifthen}
-\newcounter{figstack}
-\newcounter{figindex}
-\newlength\fight
-\newcommand\pushValignCaptionBottom[5][b]{%
-\stepcounter{figstack}%
-\expandafter\def\csname %
-figalign\romannumeral\value{figstack}\endcsname{#1}%
-\expandafter\def\csname %
-figtype\romannumeral\value{figstack}\endcsname{#2}%
-\expandafter\def\csname %
-figwd\romannumeral\value{figstack}\endcsname{#3}%
-\expandafter\def\csname %
-figcontent\romannumeral\value{figstack}\endcsname{#4}%
-\expandafter\def\csname %
-figcap\romannumeral\value{figstack}\endcsname{#5}%
-\setbox0=\hbox{%
-\begin{#2}{#3}#4\end{#2}}%
-\ifdim\dimexpr\ht0+\dp0\relax>\fight\global\setlength{\fight}{%
-\dimexpr\ht0+\dp0\relax}\fi%
-}
-\newcommand\popValignCaptionBottom{%
-\setcounter{figindex}{0}%
-\hfill%
-\whiledo{\value{figindex}<\value{figstack}}{%
-\stepcounter{figindex}%
-\def\tmp{\csname figwd\romannumeral\value{figindex}\endcsname}%
-\begin{\csname figtype\romannumeral\value{figindex}\endcsname}[t]{\tmp}%
-\centering%
-\stackinset{c}{}%
-{\csname figalign\romannumeral\value{figindex}\endcsname}{}%
-{\csname figcontent\romannumeral\value{figindex}\endcsname}%
-{\rule{0pt}{\fight}}\par%
-\csname figcap\romannumeral\value{figindex}\endcsname%
-\end{\csname figtype\romannumeral\value{figindex}\endcsname}%
-\hfill%
-}%
-\setcounter{figstack}{0}%
-\setlength{\fight}{0pt}%
-\hfill%
-}
 % Figure environment setup so that it no longer floats
 \SetupFloatingEnvironment{figure}{fileext=lof,placement={H},within=section,name=Figure}
 % figures have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme 
@@ -354,7 +326,7 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 School of Mathematical Science\\
 University of Northern Colorado
 }
-\date{July 25, 2016}
+\date{July 27, 2016}
 \begin{document}
 \frontmatter
 %% begin: half-title
@@ -380,7 +352,7 @@ University of Northern Colorado
 {\LARGE An Open Introduction}\\[3\baselineskip]
 {\Large Oscar Levin}\\[0.5\baselineskip]
 {\Large University of Northern Colorado}\\[3\baselineskip]
-{\Large July 25, 2016}\\}
+{\Large July 27, 2016}\\}
 \clearpage
 %% end:   title page
 %% begin: copyright-page
@@ -429,7 +401,7 @@ While I (currently) believe this selection and order of topics is optimal, you s
 \typeout{************************************************}
 \typeout{Paragraphs  Previous and future editions}
 \typeout{************************************************}
-\paragraph[Previous and future editions]{Previous and future editions}\label{pref_editions}
+\paragraph[Previous and future editions]{Previous and future editions}\hypertarget{pref_editions}{}
 
 This current Fall 2015 edition of the text is essentially the first edition of the book. I have previously compiled many of the sections in a book format for easy distribution, but those were mostly just lecture notes and exercises (there was no index or Investigate problems; very little in the way of consistent formatting).
 %
@@ -451,28 +423,28 @@ University of Northern Colorado, 2016
 \typeout{************************************************}
 \typeout{Paragraphs  \emph{Investigate!} activities}
 \typeout{************************************************}
-\paragraph[\emph{Investigate!} activities]{\emph{Investigate!} activities}\label{paragraphs-2}
+\paragraph[\emph{Investigate!} activities]{\emph{Investigate!} activities}\hypertarget{paragraphs-2}{}
 
   Sprinkled throughout the sections (usually at the very beginning of a topic) you will find activities designed to get you acquainted with the topic soon to be discussed. These are similar (sometimes identical) to group activities I give students to introduce material. You really should spend some time thinking about, or even working through, these problems before reading the section. By priming yourself to the types of issues involved in the material you are about to read, you will better understand what is to come. There are no solutions provided for these problems, but don't worry if you can't solve them or are not confident in your answers. My hope is that you will take this frustration with you while you read the proceeding section. By the time you are done with the section, things should be much clearer.
   %
 \typeout{************************************************}
 \typeout{Paragraphs  Examples}
 \typeout{************************************************}
-\paragraph[Examples]{Examples}\label{paragraphs-3}
+\paragraph[Examples]{Examples}\hypertarget{paragraphs-3}{}
 
   I have tried to include the ``correct'' number of examples. For those examples which include \emph{problems}, full solutions are included. Before reading the solution, try to at least have an understanding of what the problem is asking. Unlike some textbooks, the examples are not meant to be all inclusive for problems you will see in the exercises. They should not be used as a blueprint for solving other problems. Instead, use the examples to deepen our understanding of the concepts and techniques discussed in each section. Then use this understanding to solve the exercises at the end of each section.
   %
 \typeout{************************************************}
 \typeout{Paragraphs  Exercises}
 \typeout{************************************************}
-\paragraph[Exercises]{Exercises}\label{paragraphs-4}
+\paragraph[Exercises]{Exercises}\hypertarget{paragraphs-4}{}
 
   You get good at math through practice. Each section concludes with a small number of exercises meant to solidify concepts and basic skills presented in that section. At the end of each chapter, a larger collection of similar exercises is included (as a sort of ``chapter review'') which might bridge material of different sections in that chapter. Every exercise has either a hint, answer or full solution (which in the pdf version of the text can be found by clicking on the exercises number \textendash{} clicking on the solution number will bring you back to the exercise). Readers are encouraged to try these exercises before looking at the solution. When I teach with this book, I assign these exercises as practice and then use them, or similar problems, on quizzes and exams.
   %
 \typeout{************************************************}
 \typeout{Paragraphs  Homework Problems}
 \typeout{************************************************}
-\paragraph[Homework Problems]{Homework Problems}\label{paragraphs-5}
+\paragraph[Homework Problems]{Homework Problems}\hypertarget{paragraphs-5}{}
 
        Each chapter includes a small number of more involved problems \textendash{} the type I would assign as homework to be written up and collected each week. As many of these are problems I assign, solutions are not included. If you are using this book for self study, consider these additional \emph{Investigate!} problems.
     %
@@ -507,9 +479,7 @@ University of Northern Colorado, 2016
 
     Defining \emph{discrete mathematics} is hard because defining \emph{mathematics} is hard. What is mathematics? The study of numbers? In part, but you also study functions and lines and triangles and parallelepipeds and vectors and
     \dots{}. Or perhaps you want to say that mathematics is a collection of tools that allow you to solve problems. What sort of problems? Okay, those that involve numbers, functions, lines, triangles,
-    \dots{}. Whatever your conception of what mathematics is, try applying the concept of ``discrete'' to it, as defined above. Some math fundamentally deals with
-    \dots{} \emph{stuff}
-    \dots{} that is individually separate and distinct.
+    \dots{}. Whatever your conception of what mathematics is, try applying the concept of ``discrete'' to it, as defined above. Some math fundamentally deals with\dots{} \emph{stuff}\dots{} that is individually separate and distinct.
   %
 \par
 
@@ -540,25 +510,33 @@ University of Northern Colorado, 2016
         At the warm-up event for Oscar's All Star Hot Dog Eating Contest, Al ate one hot dog. Bob then showed him up by eating three hot dogs. Not to be outdone, Carl ate five. This continued with each contestant eating two more hot dogs than the previous contestant.
         How many hot dogs did Zeno (the 26th and final contestant) eat? How many hot dogs were eaten all together?
       \item\hypertarget{li-3}{}
-        While walking through a fictional forest, you encounter three trolls. Each is either a \emph{knight}, who always tells the truth, or a \emph{knave}, who always lies. The trolls will not let you pass until you correctly identify each as either
-        a knight or a knave. Each troll makes a single statement:
+      After excavating for weeks, you finally arrive at the burial chamber. The room is empty except for two large chests. On each is carved a message (strangely in English).
+      %
+{
+\begin{tikzpicture}
+          \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=2cm, minimum width=4.5cm, text width=4.5cm, align=center] { If this chest is empty, then the other chest's message is true.};
+      \end{tikzpicture}
+}
+{
+\begin{tikzpicture}
+         \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=2cm, minimum width=4.5cm, text width=4.5cm, align=center] {
+               This chest is filled with treasure or the other chest contains deadly scorpions.
+              };
+      \end{tikzpicture}
+}
+\par
 
-
-        \begin{itemize}[label=\textbullet]
-\item{}Troll 1: If I am a knave, then there are exactly two knights here.\item{}Troll 2: Troll 1 is lying.\item{}Troll 3: Either we are all knaves or at least one of us is a knight.\end{itemize}
-
-
-
-        Which troll is which?
-      \item\hypertarget{li-7}{}
+      You know exactly one of these messages is true. What should you do?
+      %
+\item\hypertarget{li-4}{}
         Back in the days of yore, five small towns decided they wanted to build roads directly connecting each pair of towns. While the towns had plenty of money to build roads as long and as winding as they wished, it was very important that the roads not intersect
         with each other (as stop signs had not yet been invented). Also, tunnels and bridges were not allowed. Is it possible for each of these towns to build a road to each of the four other towns without creating any intersections?
       \end{enumerate}
 \end{investigation}
 \par
 
-    One reason it is difficult to define discrete math is that it is a very broad description which encapsulates a large number of subjects. In this course we will study four main topics: \emph{combinatorics} (the theory of ways things \emph{combine};
-    in particular, how to count these ways), \emph{sequences}, \emph{logic}, and \emph{graph theory}. However, there are other topics that belong under the discrete umbrella, including computer science, abstract algebra, number theory, game theory,
+    One reason it is difficult to define discrete math is that it is a very broad description which encapsulates a large number of subjects. In this course we will study four main topics: \terminology{combinatorics} (the theory of ways things \emph{combine};
+    in particular, how to count these ways), \terminology{sequences}, \terminology{symbolic logic}, and \terminology{graph theory}. However, there are other topics that belong under the discrete umbrella, including computer science, abstract algebra, number theory, game theory,
     probability, and geometry (some of these, particularly the last two, have both discrete and non-discrete variants).
   %
 \par
@@ -579,121 +557,204 @@ University of Northern Colorado, 2016
 \typeout{************************************************}
 \typeout{Introduction  }
 \typeout{************************************************}
+\begin{investigation}[]\label{investigation-2}
 
-      In order to \emph{do} mathematics, we must be able to
-      \emph{talk} and \emph{write} about mathematics. Perhaps your experience with mathematics so far has mostly involved finding answers to problems. As we embark towards more advanced and abstract mathematics, writing will play a more prominent role in the mathematical process.
+        While walking through a fictional forest, you encounter three trolls. Each is either a \emph{knight}, who always tells the truth, or a \emph{knave}, who always lies. The trolls will not let you pass until you correctly identify each as either a knight or a knave. Each troll makes a single statement:
+
+
+        \begin{quote}Troll 1: If I am a knave, then there are exactly two knights here.%
+\par
+Troll 2: Troll 1 is lying.%
+\par
+Troll 3: Either we are all knaves or at least one of us is a knight.%
+\end{quote}
+
+
+
+        Which troll is which?%
+\end{investigation}
+
+      In order to \emph{do} mathematics, we must be able to \emph{talk} and
+      \emph{write} about mathematics. Perhaps your experience with mathematics so far has mostly involved finding answers to problems. As we embark towards more advanced and abstract mathematics, writing will play a more prominent role in the mathematical process.
     %
 \par
 
-      Communication in mathematics requires more precision than many other subjects, and thus we should take a few pages here to consider the basic building blocks:
-      \emph{mathematical statements}.%
-\begin{assemblage}{Statements}\label{assemblage-1}\par\medskip
-
-      A
-      \terminology{statement}\index{statement} is any declarative sentence which is either true or false.
+      Communication in mathematics requires more precision than many other subjects, and thus we should take a few pages here to consider the basic building blocks: \emph{mathematical statements}.
     %
-\end{assemblage}
+\typeout{************************************************}
+\typeout{Subsection 1.2.1 Atomic and Molecular Statements}
+\typeout{************************************************}
+\subsection[Atomic and Molecular Statements]{Atomic and Molecular Statements}\label{atomic-molecular-statements}
+
+      A \terminology{statement}\index{statement} is any declarative sentence which is either true or false. A statement is
+      \terminology{atomic} if it cannot be divided into smaller statements, otherwise it is called
+      \terminology{molecular}.
+    %
 \begin{example}[]\label{example-1}
 
-        These are statements:
-      %
+          These are statements (in fact,
+          \emph{atomic} statements):
+        %
 \leavevmode%
 \begin{itemize}[label=\textbullet]
 \item{}
-            Telephone numbers in the USA have 10 digits.
-          %
+              Telephone numbers in the USA have 10 digits.
+            %
 \item{}
-            The moon is made of cheese.
-          %
+              The moon is made of cheese.
+            %
 \item{}
-            42 is a perfect square.
-          %
+              42 is a perfect square.
+            %
 \item{}
-            Every even number greater than 2 can be expressed as the sum of two primes.
-          %
+              Every even number greater than 2 can be expressed as the sum of two primes.
+            %
 \item{}
-            \(3+7 = 12\)
-          %
+              \(3+7 = 12\)
+            %
 \end{itemize}
 \par
 
-        And these are not:
-      %
+          And these are not statements:
+        %
 \leavevmode%
 \begin{itemize}[label=\textbullet]
 \item{}
-            Would you like some cake?
-          %
+              Would you like some cake?
+            %
 \item{}
-            The sum of two squares.
-          %
+              The sum of two squares.
+            %
 \item{}\(1+3+5+7+\cdots+2n+1\).\item{}
-            Go to your room!
-          %
+              Go to your room!
+            %
 \item{}
-            \(3+x = 12\)
-          %
+              \(3+x = 12\)
+            %
 \end{itemize}
 \end{example}
-
-    The reason the last sentence is not a statement is because it contains a variable. Depending on what \(x\) is, the sentence is either true or false, but right now it is neither. One way to make the sentence into a statement is to specify the value of the variable in some way. This could be done in a number of ways. For example, ``\(3+x = 12\) where \(x = 9\)'' is a true statement, as is ``\(3+x = 12\) for some value of \(x\)''. This is an example of \emph{quantifying} over a variable, which we will discuss more in a bit.
-  %
 \par
 
-    You can build more complicated statements out of simpler ones using \emph{logical connectives}\index{connectives}. For example, this is a statement:
-  %
+      The reason the last sentence is not a statement is because it contains a variable. Depending on what
+      \(x\) is, the sentence is either true or false, but right now it is neither. One way to make the sentence into a statement is to specify the value of the variable in some way. This could be done in a number of ways. For example,
+      ``\(3+x = 12\) where \(x = 9\)'' is a true statement, as is
+      ``\(3+x = 12\) for some value of \(x\) ''. This is an example of
+      \emph{quantifying} over a variable, which we will discuss more in a bit.
+    %
+\par
+
+      You can build more complicated (molecular) statements out of simpler (atomic or molecular) ones using
+      \terminology{logical connectives}
+      \index{connectives}. For example, this is a statement:
+    %
 \begin{quote}
-    Telephone numbers in the USA have 10 digits and 42 is a perfect square.
-  \end{quote}
+      Telephone numbers in the USA have 10 digits and 42 is a perfect square.
+    \end{quote}
 \par
 
-    Note that we can break this down into two smaller statements. The two shorter statements are \emph{connected} by an ``and.'' We will consider 5 connectives: ``and'' (Sam is a man and Chris is a woman), ``or'' (Sam is a man or Chris is a woman), ``if\dots{} then\dots{}'' (if Sam is a man, then Chris is a woman), ``if and only if'' (Sam is a man if and only if Chris is a woman), and ``not'' (Sam is not a man).
-  %
+      Note that we can break this down into two smaller statements. The two shorter statements are
+      \emph{connected} by an
+      ``and.'' We will consider 5 connectives:
+      ``and'' (Sam is a man and Chris is a woman),
+      ``or'' (Sam is a man or Chris is a woman),
+      ``if\dots{}, then\dots{}'' (if Sam is a man, then Chris is a woman),
+      ``if and only if'' (Sam is a man if and only if Chris is a woman), and
+      ``not'' (Sam is not a man). The first four are called
+      \emph{binary connectives} (because they connect two statements) while
+      ``not'' is an example of a
+      \emph{unary connective} (since it applies to a single statement).
+    %
 \par
 
-    Since we rarely care about the content of the individual statements, we can replace them with variables. By convention, we use capital letters in the middle of the alphabet for these \emph{propositional} (or \emph{sentential}) variables: \(P, Q, R, S, \ldots\)\label{notation-1}
-. We also have symbols for the logical connectives: \(\wedge\), \(\vee\), \(\imp\), \(\iff\), \(\neg\).
-  %
-\begin{assemblage}{Logical Connectives}\label{assemblage-2}\par\medskip
+      Which connective we use to modify statment(s) will determine the
+      \terminology{truth value}
+      \index{truth value} of the molecular statement (that is, whether the statement is true or false), based on the truth values of the statements being modified. It is important to realize that we do not need to know what the parts actually say, only whether those parts are true or false. So to analyze logical connectives, it is enough to consider \terminology{propositional variables} (sometimes called \emph{sentential} variables), usually capital letters in the middle of the alphabet: \(P, Q, R, S, \ldots\)
+      \label{notation-1}
+. These are variables that can take on one of two values: T or F. We also have symbols for the logical connectives:
+      \(\wedge\),
+      \(\vee\),
+      \(\imp\),
+      \(\iff\),
+      \(\neg\).
+    %
+\begin{assemblage}{Logical Connectives}\label{assemblage-1}\par\medskip
 
-      \leavevmode%
+        \leavevmode%
 \begin{itemize}[label=\textbullet]
 \item{}\(P \wedge Q\) means \(P\) and \(Q\), called a
-          \terminology{conjunction}\index{conjunction}\index{connectives!and}.\item{}\(P \vee Q\) means \(P\) or \(Q\), called a
-          \terminology{disjunction}\index{disjunction}\index{connectives!or}.\item{}\(P \imp Q\) means if \(P\) then \(Q\), called an
-          \terminology{implication} or
-          \terminology{conditional}\index{implication}\index{conditional}\index{connectives!implies}\index{if\dots{} then}.\item{}\(P \iff Q\) means \(P\) if and only if \(Q\), called a
-          \terminology{biconditional}\index{biconditional}\index{connectives!if and only if}\index{if and only if}.\item{}\(\not P\) means not \(P\), called a
-          \terminology{negation}\index{negation}\index{connectives!not}.\end{itemize}
+            \terminology{conjunction}\index{conjunction}\index{connectives!and}.\item{}\(P \vee Q\) means
+            \(P\) or
+            \(Q\), called a
+            \terminology{disjunction}\index{disjunction}\index{connectives!or}.\item{}\(P \imp Q\) means if
+            \(P\) then
+            \(Q\), called an
+            \terminology{implication} or
+            \terminology{conditional}\index{implication}\index{conditional}\index{connectives!implies}\index{if\dots{}
+                                then}.\item{}\(P \iff Q\) means
+            \(P\) if and only if
+            \(Q\), called a
+            \terminology{biconditional}\index{biconditional}\index{connectives!if and only if}\index{if and only if}.\item{}\(\neg P\) means not
+            \(P\), called a
+            \terminology{negation}\index{negation}\index{connectives!not}.\end{itemize}
 
-    %
+      %
 \end{assemblage}
 \par
 
-    The logical connectives allow us to construct longer statements out of simpler statements. But the result is still a statement since it is either true or false. In fact, the key idea here is that the
-    \terminology{truth value}\index{truth value} of a statement can be determined by the truth or falsity of its parts, depending on the connectives.
-  %
-\begin{assemblage}{Truth Conditions for Connectives}\label{assemblage-3}\par\medskip
+      The
+      \terminology{truth value} of a statement is determined by the truth value(s) of its part(s), depending on the connectives:
+    %
+\begin{assemblage}{Truth Conditions for Connectives}\label{assemblage-2}\par\medskip
 
-      \leavevmode%
+        \leavevmode%
 \begin{itemize}[label=\textbullet]
-\item{}\(P \wedge Q\) is true when both \(P\) and \(Q\) are true\item{}\(P \vee Q\) is true when \(P\) or \(Q\) or both are true.\item{}\(P \imp Q\) is true when \(P\) is false or \(Q\) is true or both.\item{}\(P \iff Q\) is true when \(P\) and \(Q\) are both true, or both false.\item{}\(\neg P\) is true when \(P\) is false.\end{itemize}
+\item{}\(P \wedge Q\) is true when both
+            \(P\) and
+            \(Q\) are true\item{}\(P \vee Q\) is true when
+            \(P\) or
+            \(Q\) or both are true.\item{}\(P \imp Q\) is true when
+            \(P\) is false or
+            \(Q\) is true or both.\item{}\(P \iff Q\) is true when
+            \(P\) and
+            \(Q\) are both true, or both false.\item{}\(\neg P\) is true when
+            \(P\) is false.\end{itemize}
 
-    %
+      %
 \end{assemblage}
 \par
 
-    Note that for us, \emph{or} is the
-    \terminology{inclusive or}\index{inclusive or} (and not the sometimes used \emph{exclusive or}) meaning that \(P \vee Q\) is in fact true when both \(P\) and \(Q\) are true. As for the other connectives, ``and'' behaves as you would expect, as does negation. The biconditional (if and only if) might seem a little strange, but you should think of this as saying the two parts of the statements are \emph{equivalent}. This leaves only the conditional \(P \imp Q\) which has a slightly different meaning in mathematics than it does in ordinary usage. However, implications are so common and useful in mathematics, that we must develop fluency with their use, and as such, they deserve their own subsection.
-  %
+      Note that for us,
+      \emph{or} is the
+      \terminology{inclusive or}
+      \index{inclusive or} (and not the sometimes used
+      \emph{exclusive or}) meaning that
+      \(P \vee Q\) is in fact true when both
+      \(P\) and
+      \(Q\) are true. As for the other connectives,
+      ``and'' behaves as you would expect, as does negation. The biconditional (if and only if) might seem a little strange, but you should think of this as saying the two parts of the statements are
+      \emph{equivalent}. This leaves only the conditional
+      \(P \imp Q\) which has a slightly different meaning in mathematics than it does in ordinary usage. However, implications are so common and useful in mathematics, that we must develop fluency with their use, and as such, they deserve their own subsection.
+    %
 \typeout{************************************************}
-\typeout{Subsection 1.2.1 Implications}
+\typeout{Subsection 1.2.2 Implications}
 \typeout{************************************************}
 \subsection[Implications]{Implications}\label{subsec_implications}
 
-      Easily the most common type of statement in mathematics is the conditional, or implication. Even statements that do not at first look like they have this form conceal an implication at their heart. Consider the \emph{Pythagorean Theorem}. Many a college freshman would quote this theorem as ``\(a^2 + b^2 = c^2\).'' This is absolutely not correct. For one thing, that is not a statement since it has three variables in it. But perhaps they imply that this should be true for any values of the variables. So \(1^2 + 5^2 = 2^2\)??? How can we fix this? Well, the equation is true as long as \(a\) and \(b\) are the legs or a right triangle and \(c\) is the hypotenuse. In other words:
+      Easily the most common type of statement in mathematics is the conditional, or implication. Even statements that do not at first look like they have this form conceal an implication at their heart. Consider the
+      \emph{Pythagorean Theorem}. Many a college freshman would quote this theorem as
+      ``
+                    \(a^2 + b^2 = c^2\).'' This is absolutely not correct. For one thing, that is not a statement since it has three variables in it. But perhaps they imply that this should be true for any values of the variables. So
+      \(1^2 + 5^2 = 2^2\)??? How can we fix this? Well, the equation is true as long as
+      \(a\) and
+      \(b\) are the legs or a right triangle and
+      \(c\) is the hypotenuse. In other words:
 
-      \begin{quote}\emph{If }\(a\) and \(b\) are the legs of a right triangle with hypotenuse \(c\), \emph{then}\(a^2 + b^2 = c^2\).
+      \begin{quote}\emph{If
+                    }\(a\) and
+        \(b\) are the legs of a right triangle with hypotenuse
+        \(c\),
+        \emph{then
+                    }\(a^2 + b^2 = c^2\).
       \end{quote}
 
     %
@@ -708,77 +769,138 @@ University of Northern Colorado, 2016
 \begin{example}[]\label{example-2}
 Consider the statement:
           \begin{quote}if Bob gets a 90 on the final, then Bob will pass the class.\end{quote}
- This is definitely an implication: \(P\) is the statement, ``Bob gets a 90 on the final,'' and \(Q\) is the statement, ``Bob will pass the class.'' %
+
+          This is definitely an implication:
+          \(P\) is the statement,
+          ``Bob gets a 90 on the final,'' and
+          \(Q\) is the statement,
+          ``Bob will pass the class.''
+        %
 \par
- Suppose I made that statement to Bob. In what circumstances would it be fair to call me a liar? What if Bob really did get a 90 on the final, and he did pass the class? Then I have not lied; my statement is true. But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false. The tricky case is this: what if Bob did not get a 90 on the final? Maybe he passes the class, maybe he doesn't. Did I lie in either case? I think not. In these last two cases, \(P\) was false, and the statement \(P \imp Q\) was true. In the first case, \(Q\) was true, and so was \(P \imp Q\). So \(P \imp Q\) is true when either \(P\) is false or \(Q\) is true.
+
+          Suppose I made that statement to Bob. In what circumstances would it be fair to call me a liar? What if Bob really did get a 90 on the final, and he did pass the class? Then I have not lied; my statement is true. But if Bob did get a 90 on the final and did not pass the class, then I lied, making the statement false. The tricky case is this: what if Bob did not get a 90 on the final? Maybe he passes the class, maybe he doesn't. Did I lie in either case? I think not. In these last two cases,
+          \(P\) was false, and the statement
+          \(P \imp Q\) was true. In the first case,
+          \(Q\) was true, and so was
+          \(P \imp Q\). So
+          \(P \imp Q\) is true when either
+          \(P\) is false or
+          \(Q\) is true.
         %
 \end{example}
 \par
 
-      Just to be clear, although we sometimes read \(P \imp Q\) as ``\(P\) \emph{implies} \(Q\)'', we are not insisting that there is some causal relationship between the statements \(P\) and \(Q\). In particular, if you claim that
-      \(P \imp Q\) is \emph{false}, you are not saying that \(P\) does not imply \(Q\), but rather that \(P\) is true and \(Q\) is false.
+      Just to be clear, although we sometimes read
+      \(P \imp Q\) as
+      ``
+                    \(P\)
+                    \emph{implies}
+                    \(Q\)
+                '', we are not insisting that there is some causal relationship between the statements
+      \(P\) and
+      \(Q\). In particular, if you claim that
+      \(P \imp Q\) is
+      \emph{false}, you are not saying that
+      \(P\) does not imply
+      \(Q\), but rather that
+      \(P\) is true and
+      \(Q\) is false.
     %
 \begin{example}[]\label{example-3}
 Decide which of the following statements are true and which are false. Briefly explain.
           \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-28}{}\(0=1 ~~ \imp ~~ 1=1\)\item\hypertarget{li-29}{}\(1=1 ~~ \imp ~~\) most horses have 4 legs\item\hypertarget{li-30}{}If 8 is a prime number, then the 7624th digit of \(\pi\) is an 8.\item\hypertarget{li-31}{}If the 7624th digit of \(\pi\) is an 8, then \(2+2 = 4\)\end{enumerate}
+\item\hypertarget{li-25}{}\(0=1 ~~ \imp ~~ 1=1\)\item\hypertarget{li-26}{}\(1=1 ~~ \imp ~~\) most horses have 4 legs\item\hypertarget{li-27}{}If 8 is a prime number, then the 7624th digit of
+              \(\pi\) is an 8.\item\hypertarget{li-28}{}If the 7624th digit of
+              \(\pi\) is an 8, then
+              \(2+2 = 4\)\end{enumerate}
 
         %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-          All four of the statements are true. Remember, the only way for an implication to be false is for the \emph{if} part to be true and the \emph{then} part to be false.
+          All four of the statements are true. Remember, the only way for an implication to be false is for the
+          \emph{if} part to be true and the
+          \emph{then} part to be false.
           \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-32}{}Here the hypothesis is false and the conclusion is true, so the implication is true. \item\hypertarget{li-33}{}Here both the hypothesis and the conclusion is true, so the implication is true. It does not matter that there is no logical connection between the true mathematical fact and the fact about horses.\item\hypertarget{li-34}{}I have no idea what the 7624th digit of \(\pi\) is, but this does not matter. Since the hypothesis is false, the implication is automatically true.\item\hypertarget{li-35}{}Similarly here, regardless of the truth value of the hypothesis, the conclusion is true, making the implication true.\end{enumerate}
+\item\hypertarget{li-29}{}Here the hypothesis is false and the conclusion is true, so the implication is true.
+            \item\hypertarget{li-30}{}Here both the hypothesis and the conclusion is true, so the implication is true. It does not matter that there is no logical connection between the true mathematical fact and the fact about horses.\item\hypertarget{li-31}{}I have no idea what the 7624th digit of
+              \(\pi\) is, but this does not matter. Since the hypothesis is false, the implication is automatically true.\item\hypertarget{li-32}{}Similarly here, regardless of the truth value of the hypothesis, the conclusion is true, making the implication true.\end{enumerate}
 
         %
 \end{example}
 \par
 
-      It is important to understand the conditions under which an implication is true not only to decide whether a mathematical statement is true, but in order to \emph{prove} that it is. Proofs by seem scary (especially if you have had a bad high school geometry experience) but all we are really doing is explaining (very carefully) why a statement is true. And if you understand the truth conditions for an implication, you already have the outline for a proof.
+      It is important to understand the conditions under which an implication is true not only to decide whether a mathematical statement is true, but in order to
+      \emph{prove} that it is. Proofs by seem scary (especially if you have had a bad high school geometry experience) but all we are really doing is explaining (very carefully) why a statement is true. And if you understand the truth conditions for an implication, you already have the outline for a proof.
     %
-\begin{assemblage}{Direct Proofs of Implications}\label{assemblage-4}\par\medskip
+\begin{assemblage}{Direct Proofs of Implications}\label{assemblage-3}\par\medskip
 
-        To prove an implication \(P \imp Q\), it is enough to assume \(P\) and from it deduce \(Q\).
+        To prove an implication
+        \(P \imp Q\), it is enough to assume
+        \(P\) and from it deduce
+        \(Q\).
       %
 \end{assemblage}
 \par
 
-      There are other techniques to prove statements (implications and others) that we will encounter throughout our studies, and new proof techniques are discovered all the time. Direct proof is the easiest and most elegant style of proof and have the advantage that such a proof often does a great job of explaining \emph{why} the statement is true.
+      There are other techniques to prove statements (implications and others) that we will encounter throughout our studies, and new proof techniques are discovered all the time. Direct proof is the easiest and most elegant style of proof and have the advantage that such a proof often does a great job of explaining
+      \emph{why} the statement is true.
     %
 \begin{example}[]\label{example-4}
 
-          Prove: If two numbers \(a\) and \(b\) are even, then their sum \(a+b\) is even.
+          Prove: If two numbers
+          \(a\) and
+          \(b\) are even, then their sum
+          \(a+b\) is even.
         %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-          Suppose the numbers \(a\) and \(b\) are even. This means that \(a = 2k\) and \(b=2j\) for some integers \(k\) and \(j\). The sum is then \(a+b = 2k+2j = 2(k+j)\). Since \(k+j\) is an integer, this means that \(a+b\) is even.
+          Suppose the numbers
+          \(a\) and
+          \(b\) are even. This means that
+          \(a = 2k\) and
+          \(b=2j\) for some integers
+          \(k\) and
+          \(j\). The sum is then
+          \(a+b = 2k+2j = 2(k+j)\). Since
+          \(k+j\) is an integer, this means that
+          \(a+b\) is even.
         %
 \par
 
-          Notice that since we get to assume the hypothesis of the implication we immediately have a place to start.  The proof proceeds essentially by repeatedly asking and answering, ``what does that mean?''
+          Notice that since we get to assume the hypothesis of the implication we immediately have a place to start. The proof proceeds essentially by repeatedly asking and answering,
+          ``what does that mean?''
         %
 \end{example}
 \par
 
-      This sort of argument shows up outside of math as well.  If you ever found yourself starting an argument with, ``hypothetically, let's assume '' then you have attempted a direct proof of you desired conclusion.
+      This sort of argument shows up outside of math as well. If you ever found yourself starting an argument with,
+      ``hypothetically, let's assume
+                    '' then you have attempted a direct proof of you desired conclusion.
     %
 \par
 
       Since implications are so prevalent in mathematics, we have some special language to help discuss them:
     %
-\begin{assemblage}{Converse and Contrapositive}\label{assemblage-5}\par\medskip
+\begin{assemblage}{Converse and Contrapositive}\label{assemblage-4}\par\medskip
 
         \leavevmode%
 \begin{itemize}[label=\textbullet]
 \item{}
               The
-              \terminology{converse}\index{converse} of an implication \(P \imp Q\) is the implication \(Q \imp P\). The converse is NOT logically equivalent to the original implication.
+              \terminology{converse}
+              \index{converse} of an implication
+              \(P \imp Q\) is the implication
+              \(Q \imp P\). The converse is
+              NOT logically equivalent to the original implication.
             %
 \item{}
               The
-              \terminology{contrapositive}\index{contrapositive} of an implication \(P \imp Q\) is the statement \(\neg Q \imp \neg P\). An implication and its contrapositive are logically equivalent (they are either both true or both false).
+              \terminology{contrapositive}
+              \index{contrapositive} of an implication
+              \(P \imp Q\) is the statement
+              \(\neg Q \imp \neg P\). An implication and its contrapositive are logically equivalent (they are either both true or both false).
             %
 \end{itemize}
 
@@ -786,7 +908,12 @@ Decide which of the following statements are true and which are false. Briefly e
 \end{assemblage}
 \par
 
-      Mathematics is overflowing with examples of true implications with a false converse. If a number greater than 2 is prime, then that number is odd. However, just because a number is odd does not mean it is prime. If a shape is a square, then it is a rectangle. But it is false that if a shape is a rectangle, then it is a square. While this happens often, it does not always happen. For example, they Pythagorean theorem has a true converse: if \(a^2 + b^2 = c^2\), then the triangle with sides \(a\), \(b\), and \(c\) is a \emph{right} triangle. Whenever you encounter a implication in mathematics, it is always reasonable to ask whether the converse is true.
+      Mathematics is overflowing with examples of true implications with a false converse. If a number greater than 2 is prime, then that number is odd. However, just because a number is odd does not mean it is prime. If a shape is a square, then it is a rectangle. But it is false that if a shape is a rectangle, then it is a square. While this happens often, it does not always happen. For example, they Pythagorean theorem has a true converse: if
+      \(a^2 + b^2 = c^2\), then the triangle with sides
+      \(a\),
+      \(b\), and
+      \(c\) is a
+      \emph{right} triangle. Whenever you encounter a implication in mathematics, it is always reasonable to ask whether the converse is true.
     %
 \par
 
@@ -796,7 +923,8 @@ Decide which of the following statements are true and which are false. Briefly e
 True or false: If you draw any nine playing cards from a regular deck, then you will have at least three cards all of the same suit. Is the converse true?%
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-          True. The original implication is a little hard to analyze because there are so many different combinations of nine cards. But consider the contrapositive: If you \emph{don't} have at least three cards all of the same suit, then you don't have nine cards. It is easy to see why this is true: you can at most have two cards of each of the four suits, for a total of eight cards (or fewer).
+          True. The original implication is a little hard to analyze because there are so many different combinations of nine cards. But consider the contrapositive: If you
+          \emph{don't} have at least three cards all of the same suit, then you don't have nine cards. It is easy to see why this is true: you can at most have two cards of each of the four suits, for a total of eight cards (or fewer).
         %
 \par
 
@@ -809,55 +937,107 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \begin{example}[]\label{example-6}
 
-          Suppose I tell Sue that if she gets a 93
-          \% on her final, then she will get an A in the class. Assuming that what I said is true, what can you conclude in the following cases:
+          Suppose I tell Sue that if she gets a 93\% on her final, then she will get an A in the class. Assuming that what I said is true, what can you conclude in the following cases:
         %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-38}{}Sue gets a 93
-            \% on her final.\item\hypertarget{li-39}{}Sue gets an A in the class.\item\hypertarget{li-40}{}Sue does not get a 93
-            \% on her final.\item\hypertarget{li-41}{}Sue does not get an A in the class.\end{enumerate}
+\item\hypertarget{li-35}{}Sue gets a 93\% on her final.\item\hypertarget{li-36}{}Sue gets an A in the class.\item\hypertarget{li-37}{}Sue does not get a 93\% on her final.\item\hypertarget{li-38}{}Sue does not get an A in the class.\end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-          Note first that whenever \(P \imp Q\) and \(P\) are both true statements, \(Q\) must be true as well. For this problem, take \(P\) to mean ``Sue gets a 93\% on her final'' and \(Q\) to mean ``Sue will get an A in the class.''
+          Note first that whenever
+          \(P \imp Q\) and
+          \(P\) are both true statements,
+          \(Q\) must be true as well. For this problem, take
+          \(P\) to mean
+          ``Sue gets a 93\%
+                            on her final'' and
+          \(Q\) to mean
+          ``Sue will get an A in the class.''
         %
 \leavevmode%
 \begin{itemize}[label=\textbullet]
-\item{}We have \(P \imp Q\) and \(P\) so \(Q\) follows. Sue gets an A.\item{}You cannot conclude anything. Sue could have gotten the A because she did extra credit for example. Notice that we do not know that if Sue gets an \(A\), then she gets a 93
-            \% on her final. That is the converse of the original implication, so it might or might not be true.\item{}The inverse of \(P \imp Q\) is \(\neg P \imp \neg Q\), which states that if Sue does not get a 93
-            \% on the final then she will not get an A in the class. But this does not follow from the original implication. Again, we can conclude nothing. Sue could have done extra credit.\item{}What would happen if Sue does not get an A but \emph{did} get a 93 \% on the final. Then \(P\) would be true and \(Q\) would be false. But this makes the implication \(P \imp Q\) false! So it must be that Sue did not get a 93
-            \% on the final. Notice now we have the implication \(\neg Q \imp \neg P\) which is the contrapositive of \(P \imp Q\). Since \(P \imp Q\) is assumed to be true, we know \(\neg Q \imp \neg P\) is true as well.\end{itemize}
+\item{}We have
+            \(P \imp Q\) and
+            \(P\) so
+            \(Q\) follows. Sue gets an A.\item{}You cannot conclude anything. Sue could have gotten the A because she did extra credit for example. Notice that we do not know that if Sue gets an
+            \(A\), then she gets a 93\% on her final. That is the converse of the original implication, so it might or might not be true.\item{}The inverse of
+            \(P \imp Q\) is
+            \(\neg P \imp \neg Q\), which states that if Sue does not get a 93\% on the final then she will not get an A in the class. But this does not follow from the original implication. Again, we can conclude nothing. Sue could have done extra credit.\item{}What would happen if Sue does not get an A but
+            \emph{did} get a 93\% on the final. Then
+            \(P\) would be true and
+            \(Q\) would be false. But this makes the implication
+            \(P \imp Q\) false! So it must be that Sue did not get a 93\% on the final. Notice now we have the implication
+            \(\neg Q \imp \neg P\) which is the contrapositive of
+            \(P \imp Q\). Since
+            \(P \imp Q\) is assumed to be true, we know
+            \(\neg Q \imp \neg P\) is true as well.\end{itemize}
 \end{example}
 \par
 
-      As we said above, an implication is not logically equivalent to its converse, but it is possible that both are true. In this case, when both \(P \imp Q\) and \(Q \imp P\) are true, we say that \(P\) and \(Q\) are equivalent. This is the biconditional we mentioned earlier:
+      As we said above, an implication is not logically equivalent to its converse, but it is possible that both are true. In this case, when both
+      \(P \imp Q\) and
+      \(Q \imp P\) are true, we say that
+      \(P\) and
+      \(Q\) are equivalent. This is the biconditional we mentioned earlier:
     %
-\begin{assemblage}{If and only if}\label{assemblage-6}\par\medskip
+\begin{assemblage}{If and only if}\label{assemblage-5}\par\medskip
 
-        \begin{equation*}
-          P \iff Q \mbox{ is logically equivalent to } (P \imp Q) \wedge (Q \imp P).
-        \end{equation*}
+        \begin{quote}  \(P \iff Q\) is logically equivalent to \((P \imp Q) \wedge (Q \imp P)\).%
+\end{quote}
+
       %
 \par
 
-        Example: Given an integer \(n\), it is true that \(n\) is even if and only if \(n^2\) is even. That is, if \(n\) is even, then \(n^2\) is even, as well as the converse: if \(n^2\) is even, then \(n\) is even.
+        Example: Given an integer
+        \(n\), it is true that
+        \(n\) is even if and only if
+        \(n^2\) is even. That is, if
+        \(n\) is even, then
+        \(n^2\) is even, as well as the converse: if
+        \(n^2\) is even, then
+        \(n\) is even.
       %
 \end{assemblage}
 \par
 
-      You can think of ``if and only if'' statements as having two parts: an implication and its converse. We might say one is the ``if'' part, and the other is the ``only if'' part. We also sometimes say that ``if and only if'' statements have two directions: a forward direction \((P \imp Q)\) and a backwards direction (\(P \leftarrow Q\), which is really just sloppy notation for \(Q \imp P\)).
+      You can think of
+      ``if and only if'' statements as having two parts: an implication and its converse. We might say one is the
+      ``if'' part, and the other is the
+      ``only if'' part. We also sometimes say that
+      ``if and only if'' statements have two directions: a forward direction
+      \((P \imp Q)\) and a backwards direction (\(P \leftarrow Q\), which is really just sloppy notation for
+      \(Q \imp P\)).
     %
 \par
 
-      Let's think a little about which part is which. Is \(P \imp Q\) the ``if'' part or the ``only if'' part? Perhaps we should look at an example.
+      Let's think a little about which part is which. Is
+      \(P \imp Q\) the
+      ``if'' part or the
+      ``only if'' part? Perhaps we should look at an example.
     %
 \begin{example}[]\label{example-7}
 
-          Suppose it is true that I sing if and only if I'm in the shower. We know this means that both if I sing, then I'm in the shower, and also the converse, that if I'm in the shower, then I sing. Let \(P\) be the statement, ``I sing,'' and \(Q\) be, ``I'm in the shower.'' So \(P \imp Q\) is the statement ``if I sing, then I'm in the shower.'' Which part of the if and only if statement is this?
+          Suppose it is true that I sing if and only if I'm in the shower. We know this means that both if I sing, then I'm in the shower, and also the converse, that if I'm in the shower, then I sing. Let
+          \(P\) be the statement,
+          ``I sing,'' and
+          \(Q\) be,
+          ``I'm in the shower.'' So
+          \(P \imp Q\) is the statement
+          ``if I sing, then I'm in the shower.'' Which part of the if and only if statement is this?
         %
 \par
 
-          What we are really asking is what is the meaning of ``I sing if I'm in the shower'' and ``I sing only if I'm in the shower.'' When is the first one (the ``if'' part) \emph{false}? When I am in the shower but not singing. That is the same condition on being false as the statement ``if I'm in the shower, then I sing.'' So the ``if'' part is \(Q \imp P\). On the other hand, to say, ``I sing only if I'm in the shower'' is equivalent to saying ``if I sing, then I'm in the shower,'' so the only if part is \(P \imp Q\).
+          What we are really asking is what is the meaning of
+          ``I sing if I'm in the shower'' and
+          ``I sing only if I'm in the shower.'' When is the first one (the
+          ``if'' part)
+          \emph{false}? When I am in the shower but not singing. That is the same condition on being false as the statement
+          ``if I'm in the shower, then I sing.'' So the
+          ``if'' part is
+          \(Q \imp P\). On the other hand, to say,
+          ``I sing only if I'm in the shower'' is equivalent to saying
+          ``if I sing, then I'm in the shower,'' so the only if part is
+          \(P \imp Q\).
         %
 \end{example}
 \par
@@ -866,7 +1046,8 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \begin{example}[]\label{example-8}
 
-          Rephrase the implication, ``if I dream, then I am asleep'' in as many different ways as possible. Then do the same for the converse.
+          Rephrase the implication,
+          ``if I dream, then I am asleep'' in as many different ways as possible. Then do the same for the converse.
         %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
@@ -874,24 +1055,12 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
         %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-46}{}
-              I am asleep if I dream.
-            %
-\item\hypertarget{li-47}{}
-              I dream only if I am asleep.
-            %
-\item\hypertarget{li-48}{}
-              In order to dream, I must be asleep.
-            %
-\item\hypertarget{li-49}{}
-              To dream, it is necessary that I am asleep.
-            %
-\item\hypertarget{li-50}{}
-              To be asleep, it is sufficient to dream.
-            %
-\item\hypertarget{li-51}{}
-              I am not dreaming unless I am asleep.
-            %
+\item\hypertarget{li-43}{} I am asleep if I dream. %
+\item\hypertarget{li-44}{} I dream only if I am asleep. %
+\item\hypertarget{li-45}{} In order to dream, I must be asleep. %
+\item\hypertarget{li-46}{} To dream, it is necessary that I am asleep. %
+\item\hypertarget{li-47}{} To be asleep, it is sufficient to dream. %
+\item\hypertarget{li-48}{} I am not dreaming unless I am asleep. %
 \end{enumerate}
 \par
 
@@ -899,30 +1068,55 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
         %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-52}{}
+\item\hypertarget{li-49}{}
               I dream if I am asleep.
             %
-\item\hypertarget{li-53}{}
+\item\hypertarget{li-50}{}
               I am asleep only if I dream.
             %
-\item\hypertarget{li-54}{}
+\item\hypertarget{li-51}{}
               It is necessary that I dream in order to be asleep.
             %
-\item\hypertarget{li-55}{}
+\item\hypertarget{li-52}{}
               It is sufficient that I be asleep in order to dream.
             %
-\item\hypertarget{li-56}{}
+\item\hypertarget{li-53}{}
               If I don't dream, then I'm not asleep.
             %
 \end{enumerate}
 \end{example}
 \par
 
-      Hopefully you agree with the above example. We include the ``necessary and sufficient'' versions because those are common when discussing mathematics. In fact, let's agree once and for all what they mean:
+      Hopefully you agree with the above example. We include the
+      ``necessary and sufficient'' versions because those are common when discussing mathematics. In fact, let's agree once and for all what they mean:
     %
-\begin{assemblage}{Necessary and Sufficient}\label{assemblage-7}\par\medskip
+\begin{assemblage}{Necessary and Sufficient}\label{assemblage-6}\par\medskip
 
-        \index{necessary condition}\index{sufficient condition}
+        \index{necessary condition}
+        \index{sufficient condition}
+      %
+\par
+
+        \leavevmode%
+\begin{itemize}[label=\textbullet]
+\item{}``
+                                \(P\)
+                                is necessary for
+                                \(Q\)
+                            '' means
+            \(Q \imp P\).\item{}``
+                                \(P\)
+                                is sufficient for
+                                \(Q\)
+                            '' means
+            \(P \imp Q\).\item{}
+              If
+              \(P\) is necessary and sufficient for
+              \(Q\), then
+              \(P \iff Q\).
+            %
+\end{itemize}
+
       %
 \end{assemblage}
 \par
@@ -931,90 +1125,371 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \begin{example}[]\label{example-9}
 
-          Recall from calculus, if a function is differentiable at a point \(c\), then it is continuous at \(c\), but that the converse of this statement is not true (for example, \(f(x) = |x|\) at the point 0). Restate this fact using necessary and sufficient language.
+          Recall from calculus, if a function is differentiable at a point
+          \(c\), then it is continuous at
+          \(c\), but that the converse of this statement is not true (for example,
+          \(f(x) = |x|\) at the point 0). Restate this fact using necessary and sufficient language.
         %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-          It is true that in order for a function to be differentiable at a point \(c\), it is necessary for the function to be continuous at \(c\). However, it is not necessary that a function be differentiable at \(c\) for it to be continuous at \(c\).
+          It is true that in order for a function to be differentiable at a point
+          \(c\), it is necessary for the function to be continuous at
+          \(c\). However, it is not necessary that a function be differentiable at
+          \(c\) for it to be continuous at
+          \(c\).
         %
 \par
 
-          It is true that to be continuous at a point \(c\), it is sufficient that the function be differentiable at \(c\). However, it is not the case that being continuous at \(c\) is sufficient for a function to be differentiable at \(c\).
+          It is true that to be continuous at a point
+          \(c\), it is sufficient that the function be differentiable at
+          \(c\). However, it is not the case that being continuous at
+          \(c\) is sufficient for a function to be differentiable at
+          \(c\).
         %
 \end{example}
 \par
 
-      Thinking about the necessity and sufficiency of conditions can also help when writing proofs and justifying conclusions. If you want to establish some mathematical fact, it is helpful to think what other facts would \emph{be enough} (be sufficient) to prove your fact. If you have an assumption, think about what must also be necessary if that hypothesis is true.
+      Thinking about the necessity and sufficiency of conditions can also help when writing proofs and justifying conclusions. If you want to establish some mathematical fact, it is helpful to think what other facts would
+      \emph{be enough} (be sufficient) to prove your fact. If you have an assumption, think about what must also be necessary if that hypothesis is true.
     %
 \typeout{************************************************}
-\typeout{Subsection 1.2.2 Quantifiers}
+\typeout{Subsection 1.2.3 Quantifiers}
 \typeout{************************************************}
 \subsection[Quantifiers]{Quantifiers}\label{subsec_quantifiers}
+\typeout{************************************************}
+\typeout{Introduction  }
+\typeout{************************************************}
+\begin{investigation}[]\label{investigation-3}
 
-      It would be nice to use variables in our mathematical sentences.  For example, suppose we wanted to claim that if \(n\) is prime, then \(n+7\) is not prime.  This looks like an implication.  I would like to write something like
+          Consider the statement below. Decide whether any are equivalent to each other, or whether any imply any others.
+        %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-57}{}
+              You can fool some people all of the time.
+            %
+\item\hypertarget{li-58}{}
+              You can fool everyone some of the time.
+            %
+\item\hypertarget{li-59}{}
+              You can always fool some people.
+            %
+\item\hypertarget{li-60}{}
+              Sometimes you can fool everyone.
+            %
+\end{enumerate}
+\end{investigation}
+
+      It would be nice to use variables in our mathematical sentences. For example, suppose we wanted to claim that if
+      \(n\) is prime, then
+      \(n+7\) is not prime. This looks like an implication. I would like to write something like
       \begin{equation*}
         P(n) \imp \neg P(n+7)
       \end{equation*}
-      where \(P(n)\) means ``\(n\) is prime.'' But this is not quite right.  For one thing, because this sentence has a free variable (that is, a variable that we have not specified anything about), it is not a statement.  Now if we plug in a specific value for \(n\), we do get a statement.  In fact, it turns out that no matter what value we plug in for \(n\), we get a true implication.  So what we really want to say is that \emph{for all} values of \(n\), if \(n\) is prime, then  \(n+7\) is not.  We need to \emph{quantify} the variable.
+      where
+      \(P(n)\) means
+      ``
+                    \(n\)
+                    is prime.'' But this is not quite right. For one thing, because this sentence has a free variable (that is, a variable that we have not specified anything about), it is not a statement. Now if we plug in a specific value for
+      \(n\), we do get a statement. In fact, it turns out that no matter what value we plug in for
+      \(n\), we get a true implication. So what we really want to say is that
+      \emph{for all} values of
+      \(n\), if
+      \(n\) is prime, then
+      \(n+7\) is not. We need to
+      \emph{quantify} the variable.
     %
 \par
 
-      Although there are many types of \emph{quantifiers} in English (e.g., many, few, most, etc.) in mathematics we for the most part stick to two: existential and universal.
+      Although there are many types of
+      \emph{quantifiers} in English (e.g., many, few, most, etc.) in mathematics we for the most part stick to two: existential and universal.
     %
-\begin{assemblage}{Universal and Existential Quantifiers}\label{assemblage-8}\par\medskip
+\begin{assemblage}{Universal and Existential Quantifiers}\label{assemblage-7}\par\medskip
 
-    \index{quantifiers}
-    %
-\par
-
-      The existential quantifier is \(\exists\) and is read ``there exists'' or ``there is.''  For example,\index{existential quantifier}\index{quantifiers!exists}
-      \begin{equation*}
-        \exists x (x \lt  0)
-      \end{equation*}
-      asserts that there is a number less than 0.
+        \index{quantifiers}
       %
 \par
 
-      The universal quantifier is \(\forall\) and is read ``for all'' or ``every.''  For example,\index{universal quantifier}\index{quantifiers!for all}
-      \begin{equation*}
-        \forall x (x \ge 0)
-      \end{equation*}
-      asserts that every number is greater than or equal to 0.
+        The existential quantifier is
+        \(\exists\) and is read
+        ``there exists'' or
+        ``there is.'' For example,\index{existential quantifier}
+        \index{quantifiers!exists}
+        \begin{equation*}
+          \exists x (x \lt 0)
+        \end{equation*}
+        asserts that there is a number less than 0.
+      %
+\par
+
+        The universal quantifier is
+        \(\forall\) and is read
+        ``for all'' or
+        ``every.'' For example,\index{universal quantifier}
+        \index{quantifiers!for all}
+        \begin{equation*}
+          \forall x (x \ge 0)
+        \end{equation*}
+        asserts that every number is greater than or equal to 0.
       %
 \end{assemblage}
 \par
 
-      As with all mathematical statements, we would like to decide whether quantified statements are true or false.  Consider the statement
+      As with all mathematical statements, we would like to decide whether quantified statements are true or false. Consider the statement
       \begin{equation*}
         \forall x \exists y (y \lt x).
       \end{equation*}
-      You would read this, ``for every \(x\) there is is some \(y\) such that \(y\) is less than \(x\).''  Is this true?  The answer depends on what our \emph{domain of discourse} is: when we say ``for all'' \(x\), do we mean all positive integers or all real numbers or all elements of some other set?  Usually this information is implied.  In discrete mathematics, we almost always quantify over the \emph{natural numbers}, 0, 1, 2, , so let's take that for our domain of discourse here.
+      You would read this,
+      ``for every
+                    \(x\)
+                    there is is some
+                    \(y\)
+                    such that
+                    \(y\)
+                    is less than
+                    \(x\).'' Is this true? The answer depends on what our
+      \emph{domain of discourse} is: when we say
+      ``for all''
+      \(x\), do we mean all positive integers or all real numbers or all elements of some other set? Usually this information is implied. In discrete mathematics, we almost always quantify over the
+      \emph{natural numbers}, 0, 1, 2,
+      , so let's take that for our domain of discourse here.
     %
 \par
 
-      For the statement to be true, we need it to be the case that no matter what natural number we select, there is always some natural number that is strictly smaller.  Perhaps we could let \(y\) be \(x-1\)?  But here is the problem: what if \(x = 0\)?  Then \(y = -1\) and that is \emph{not a number!} (in our domain of discourse).  Thus we see that the statement is not true because there is a number such that every number is at least as large as.  or in symbols,
+      For the statement to be true, we need it to be the case that no matter what natural number we select, there is always some natural number that is strictly smaller. Perhaps we could let
+      \(y\) be
+      \(x-1\)? But here is the problem: what if
+      \(x = 0\)? Then
+      \(y = -1\) and that is
+      \emph{not a number!} (in our domain of discourse). Thus we see that the statement is not true because there is a number such that every number is at least as large as. or in symbols,
       \begin{equation*}
         \exists x \forall y (y \ge x).
       \end{equation*}
     %
 \par
 
-      To show that the original statement is false, we proved that the \emph{negation} was true.  And notice how the negation and original statement compare.  This is typical.
+      To show that the original statement is false, we proved that the
+      \emph{negation} was true. And notice how the negation and original statement compare. This is typical.
     %
-\begin{assemblage}{Quantifiers and Negation}\label{assemblage-9}\par\medskip
+\begin{assemblage}{Quantifiers and Negation}\label{assemblage-8}\par\medskip
 
-    \begin{quote}\(\neg \forall x P(x)\) is equivalent to  \(\exists x \neg P(x)\).%
+        \begin{quote}
+            \(\neg \forall x P(x)\) is equivalent to
+            \(\exists x \neg P(x)\).%
 \par
-\(\neg \exists x P(x)\) is equivalent to  \(\forall x \neg P(x)
-  \).%
+
+            \(\neg \exists x P(x)\) is equivalent to
+            \(\forall x \neg P(x)
+                            \).%
 \end{quote}
 
-%
+      %
 \end{assemblage}
 \par
 
-    Essentially, we can pass the negation symbol over a quantifier, but that causes the quantifier to switch type.  This should not be surprising: if not everything is a property, then something doesn't have that property.  And if there is not something with a property, then everything doesn't have that property.
-  %
+      Essentially, we can pass the negation symbol over a quantifier, but that causes the quantifier to switch type. This should not be surprising: if not everything is a property, then something doesn't have that property. And if there is not something with a property, then everything doesn't have that property.
+    %
+\typeout{************************************************}
+\typeout{Exercises 1.2.4 Exercises}
+\typeout{************************************************}
+\subsection[Exercises]{Exercises}\label{exercises-1}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-1}{}Classify each of the sentences below as an atomic statement, and molecular statement, or not a statement at all.  If the statement is molecular, say what kind it is (conjuction, disjunction, conditional, biconditional, negation).
+        \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-61}{}The sum of the first 100 odd positive integers.\item\hypertarget{li-62}{}Everybody needs somebody sometime.\item\hypertarget{li-63}{}The Broncos will win the Super Bowl or I'll eat my hat.\item\hypertarget{li-64}{}We can have donuts for dinner, but only if it rains.\item\hypertarget{li-65}{}Every natural number greater than 1 is either prime or composite.\item\hypertarget{li-66}{}This sentences is false\end{enumerate}
+
+        %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-7}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-67}{}This is not a statement; it does not make sense to say it is true or false.\item\hypertarget{li-68}{}This is an atomic statement (there are some quantifiers, but no connectives).\item\hypertarget{li-69}{}This is a molecular statement, specifically a disjunction.  Although if we read into it a bit more, what the speaker is really saying is that if the Broncos do not win the super bowl, then he will eat his hat, which would be a conditional.\item\hypertarget{li-70}{}This is a molecular statement, a conditional.\item\hypertarget{li-71}{}This is an atomic statement.  Even though there is an ``or'' in the statement, it would not make sense to consider the two halves of the disjuction.  This is because we quantified \emph{over} the disjunction.  In symbols, we have \(\forall x (x > 1 \imp (P(x) \vee C(x)))\).  If we drop the quantifier, we are not left with a statement, since there is a free variable.\item\hypertarget{li-72}{}This is not a statement, although it certainly looks like one.  Remember that statements must be true or false.  If this sentence were true, that would make it false.  If it were false, that would make it true.  Examples like this are rare and usually arise from some sort of self reference.\end{enumerate}
+\item[2.]\hypertarget{exercise-2}{}
+    Suppose \(P\) and \(Q\) are the statements:
+    \(P\): Jack passed math.
+    \(Q\): Jill passed math.
+    %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-73}{} Translate ``Jack and Jill both passed math'' into symbols. %
+\item\hypertarget{li-74}{} Translate ``If Jack passed math, then Jill did not'' into symbols. %
+\item\hypertarget{li-75}{} Translate ``\(P \vee Q\)'' into English. %
+\item\hypertarget{li-76}{} Translate ``\(\neg(P \wedge Q) \imp Q\)'' into English. %
+\item\hypertarget{li-77}{} Suppose you know that if Jack passed math, then so did Jill.  What can you conclude if you know that:
+      \begin{enumerate}[label=\roman*.]
+\item\hypertarget{li-78}{} Jill passed math?  \item\hypertarget{li-79}{}  Jill did not pass math?\end{enumerate}
+
+     %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-8}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-80}{}\(P \wedge Q\).\item\hypertarget{li-81}{}\(P \imp \neg Q\).\item\hypertarget{li-82}{}
+    Jack passed math or Jill passed math (or both).
+    %
+\item\hypertarget{li-83}{}
+    If Jack and Jill did not both pass math, then Jill did.
+    %
+\item\hypertarget{li-84}{}
+    \begin{enumerate}[label=\roman*.]
+\item\hypertarget{li-85}{} Nothing else. \item\hypertarget{li-86}{} Jack did not pass math either.\end{enumerate}
+
+    %
+\end{enumerate}
+\item[3.]\hypertarget{exercise-3}{}
+    Geoff Poshingten is out at a fancy pizza joint, and decides to order a calzone. When the waiter asks what he would like in it, he replies, ``I want either pepperoni or sausage. Also, if I have sausage, then I must also include quail. Oh, and if I have pepperoni or quail then I must also have ricotta cheese.''
+    %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-87}{} Translate Geoff's order into logical symbols. %
+\item\hypertarget{li-88}{} The waiter knows that Geoff is either a liar or a truth-teller (so either everything he says is false, or everything is true).  Which is it? %
+\item\hypertarget{li-89}{} What, if anything, can the waiter conclude about the ingredients in Geoff's desired calzone? %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-9}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-90}{} Three statements: \(P \vee S\), \(S \imp Q\), \((P \vee Q) \imp R\).  You could also connect the first two with a \(\wedge\). %
+\item\hypertarget{li-91}{} He cannot be lying about all three sentences, so he is telling the truth. %
+\item\hypertarget{li-92}{} No matter what, Geoff wants ricotta.  If he doesn't have quail, then he must have pepperoni but not sausage. %
+\end{enumerate}
+\item[4.]\hypertarget{exercise-4}{} Consider the statement ``If Oscar eats Chinese food, then he drinks milk.'' %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-93}{} Write the converse of the statement. %
+\item\hypertarget{li-94}{} Write the contrapositive of the statement. %
+\item\hypertarget{li-95}{} Is it possible for the contrapositive to be false? If it was, what would that tell you? %
+\item\hypertarget{li-96}{} Suppose the original statement is true, and that Oscar drinks milk. Can you conclude anything (about his eating Chinese food)? Explain. %
+\item\hypertarget{li-97}{} Suppose the original statement is true, and that Oscar does not drink milk. Can you conclude anything (about his eating Chinese food)? Explain. %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-10}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-98}{} If Oscar drinks milk, then he eats Chinese food. %
+\item\hypertarget{li-99}{} If Oscar does not drink milk, then he does not eat Chinese food. %
+\item\hypertarget{li-100}{} Yes. The original statement would be false too. %
+\item\hypertarget{li-101}{} Nothing. The converse need not be true. %
+\item\hypertarget{li-102}{} He does not eat Chinese food. The contrapositive would be true. %
+\end{enumerate}
+\item[5.]\hypertarget{exercise-5}{}
+          Which of the following statements are equivalent to the implication, ``if you win the lottery, then you will be rich,'' and which are equivalent to the converse of the implication?
+        %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-103}{} Either you win the lottery or else you are not rich. %
+\item\hypertarget{li-104}{} Either you don't win the lottery or else you are rich. %
+\item\hypertarget{li-105}{} You will win the lottery and be rich. %
+\item\hypertarget{li-106}{} You will be rich if you win the lottery. %
+\item\hypertarget{li-107}{} You will win the lottery if you are rich. %
+\item\hypertarget{li-108}{} It is necessary for you to win the lottery to be rich. %
+\item\hypertarget{li-109}{} It is sufficient to with the lottery to be rich. %
+\item\hypertarget{li-110}{} You will be rich only if you win the lottery. %
+\item\hypertarget{li-111}{} Unless you win the lottery, you won't be rich. %
+\item\hypertarget{li-112}{} If you are rich, you must have one the lottery. %
+\item\hypertarget{li-113}{} If you are not rich, then you did not win the lottery. %
+\item\hypertarget{li-114}{} You will win the lottery if and only if you are rich. %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-11}{}\quad
+
+          The statements are equivalent to the\dots{}
+        %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-115}{} converse. %
+\item\hypertarget{li-116}{} implication. %
+\item\hypertarget{li-117}{} neither. %
+\item\hypertarget{li-118}{} implication. %
+\item\hypertarget{li-119}{} converse. %
+\item\hypertarget{li-120}{} converse. %
+\item\hypertarget{li-121}{} implication. %
+\item\hypertarget{li-122}{} converse. %
+\item\hypertarget{li-123}{} converse. %
+\item\hypertarget{li-124}{} converse (in fact, this IS the converse). %
+\item\hypertarget{li-125}{} implication (the statement is the contrapositive of the implication). %
+\item\hypertarget{li-126}{} neither. %
+\end{enumerate}
+\item[6.]\hypertarget{exercise-6}{}
+          Consider the implication, ``if you clean your room, then you can watch TV.'' Rephrase the implication in as many ways as possible. Then do the same for the converse.
+        %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-12}{}\quad
+
+          Hint: of course there are many answers. It helps to assume that the statement is true and the converse is NOT true. Think about what that means in the real world and then start saying it in different ways. Some ideas: use necessary and sufficient language, use ``only if,'' consider negations, use ``or else'' language.
+        %
+\item[7.]\hypertarget{exercise-7}{}
+          Translate into symbols. Use \(E(x)\) for ``\(x\) is even'' and \(O(x)\) for ``\(x\) is odd.''
+        %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-127}{} No number is both even and odd. %
+\item\hypertarget{li-128}{} One more than any even number is an odd number. %
+\item\hypertarget{li-129}{} There is prime number that is even. %
+\item\hypertarget{li-130}{} Between any two numbers there is a third number. %
+\item\hypertarget{li-131}{} There is no number between a number and one more than that number. %
+\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-13}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-132}{}\(\neg \exists x (E(x) \wedge O(x))\).\item\hypertarget{li-133}{}\(\forall x (E(x) \imp O(x+1))\).\item\hypertarget{li-134}{}\(\exists x(P(x) \wedge E(x))\) (where \(P(x)\) means ``\(x\) is prime'').\item\hypertarget{li-135}{}\(\forall x \forall y \exists z(x \lt  z \lt  y \vee y \lt  z \lt  x)\).\item\hypertarget{li-136}{}\(\forall x \neg \exists y (x \lt  y \lt  x+1)\).\end{enumerate}
+\item[8.]\hypertarget{exercise-8}{}
+          Translate into English:
+        %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-137}{}\(\forall x (E(x) \imp E(x +2))\).\item\hypertarget{li-138}{}\(\forall x \exists y (\sin(x) = y)\).\item\hypertarget{li-139}{}\(\forall y \exists x (\sin(x) = y)\).\item\hypertarget{li-140}{}\(\forall x \forall y (x^3 = y^3 \imp x = y)\).\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-14}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-141}{} Any even number plus 2 is an even number. %
+\item\hypertarget{li-142}{} For any \(x\) there is a \(y\) such that \(\sin(x) = y\). In other words, every number \(x\) is in the domain of sine. %
+\item\hypertarget{li-143}{} For every \(y\) there is an \(x\) such that \(\sin(x) = y\). In other words, every number \(y\) is in the range of sine (which is false). %
+\item\hypertarget{li-144}{} For any numbers, if the cubes of two numbers are equal, then the numbers are equal. %
+\end{enumerate}
+\item[9.]\hypertarget{exercise-9}{}
+          Suppose \(P(x)\) is some predicate for which the statement \(\forall x P(x)\) is true. Is it also the case that \(\exists x P(x)\) is true? In other words, is the statement \(\forall x P(x) \imp \exists x P(x)\) always true? Is the converse always true? Explain.
+        %
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-15}{}\quad
+
+          If \(P(x)\) is true of every \(x\), then in particular it is true of \(x = 0\) (or any fixed element of the universe). So then there is definitely some \(x\) (namely 0) for which \(P(x)\) holds. Thus \(\forall x P(x) \imp \exists x P(x)\) is always true. The converse is not always true though. Consider the predicate \(x = 5\). So \(P(x)\) is true if and only if \(x = 5\). Certainly it is true that \(\exists x P(x)\) (since we can take \(x = 5\)), but false that \(\forall x P(x)\).
+        %
+\item[10.]\hypertarget{exercise-10}{}
+          For each of the statements below, give a domain of discourse for which the statement is true, and a domain for which the statement is false.
+        %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-145}{}\(\forall x \exists y (y^2 = x)\).\item\hypertarget{li-146}{}\(\forall x \forall y \exists z (x \lt  z \lt  y)\).\item\hypertarget{li-147}{}\(\exists x \forall y \forall z (y \lt  z \imp y \le x \le z)\) Hint: domains need not be infinite.\end{enumerate}
+\par\smallskip
+\par\smallskip
+\noindent\textbf{Solution.}\hypertarget{solution-16}{}\quad
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-148}{}
+              This says that everything has a square root (every element is the square of something). This is true of the positive real numbers, and also of the complex numbers. It is false of the natural numbers though, as for \(x = 2\) there is no natural number \(y\) such that \(y^2 = 2\).
+            %
+\item\hypertarget{li-149}{}
+              This asserts that between every pair of numbers there is some number strictly between them. This is true of the rationals (and reals) but false of the integers. If \(x = 1\) and \(y = 2\), then there is nothing we can take for \(z\).
+            %
+\item\hypertarget{li-150}{}
+              Here we are saying that something is between every pair of numbers. For almost every domain, this is false. In fact, if the domain contains \(\{1,2,3, 4\}\), then no matter what we take \(x\) to be, there will be a pair that \(x\) is NOT between. However, the set \(\{1,2,3\}\) as our domain makes the statement true. Let \(x = 2\). Then no matter what \(y\) and \(z\) we pick, if \(y \lt  z\), then 2 is between them.
+            %
+\end{enumerate}
+\end{exerciselist}
 \typeout{************************************************}
 \typeout{Section 1.3 Sets}
 \typeout{************************************************}
@@ -1029,9 +1504,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \par
 
-      For us, a set will simply be an unordered collection of objects. Two examples: we could consider the set of all actors who have played \emph{The Doctor} on \emph{Doctor Who}\index{Doctor Who}, or the
-      set of natural numbers between 1 and 10 inclusive. In the first case, Tom Baker is a element (or member) of the set, while Idris Elba, among many others, is not an element of the set. Also, the two examples are of different sets. Two sets are equal
-      exactly if they contain the exact same elements.
+      For us, a set will simply be an unordered collection of objects. Two examples: we could consider the set of all actors who have played \emph{The Doctor} on \emph{Doctor Who}\index{Doctor Who}, or the set of natural numbers between 1 and 10 inclusive. In the first case, Tom Baker is a element (or member) of the set, while Idris Elba, among many others, is not an element of the set. Also, the two examples are of different sets. Two sets are equal exactly if they contain the exact same elements. For example, the set containing all of the vowels in the declaration of independence is precisely the same set as the set of vowels in the word ``questionably'' (namely, all of them); we do not care about order or repetitions, just whether the element is in the set or not.
     %
 \typeout{************************************************}
 \typeout{Subsection 1.3.1 Notation}
@@ -1052,8 +1525,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \par
 
-      The symbol ``\(\in\)'' is read ``is in'' or ``is an element of.'' Thus the above means that \(a\) is an element of the set containing the letters \(a\), \(b\), and \(c\). Note that this is a true statement. It would also
-      be true to say that \(d\) is not in that set:
+      The symbol ``\(\in\)'' is read ``is in'' or ``is an element of.'' Thus the above means that \(a\) is an element of the set containing the letters \(a\), \(b\), and \(c\). Note that this is a true statement. It would also be true to say that \(d\) is not in that set:
       \begin{equation*}
         d \not\in \{a, b, c\}.
       \end{equation*}
@@ -1067,16 +1539,11 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \par
 
-      This is a strange set, to be sure. It contains four elements: the number 1, the letter b, the set \(\{x,y,z\}\), and the empty set (\(\emptyset = \{ \}\), the set containing no elements). Is \(x\) in \(A\)? The answer is no. None of
-      the four elements in \(A\) are the letter \(x\), so we must conclude that \(x \notin A\). Similarly, if we considered the set \(B = \{1,b\}\), then again \(B \notin A\). Even though the elements of \(B\) are also elements of \(A\),
-      we cannot say that the \emph{set} \(B\) is one of the things in the collection \(A\).
+      This is a strange set, to be sure. It contains four elements: the number 1, the letter b, the set \(\{x,y,z\}\), and the empty set (\(\emptyset = \{ \}\), the set containing no elements). Is \(x\) in \(A\)? The answer is no. None of the four elements in \(A\) are the letter \(x\), so we must conclude that \(x \notin A\). Similarly, consider the set \(B = \{1,b\}\). Even though the elements of \(B\) are elements of \(A\), we cannot say that the \emph{set} \(B\) is one of the elements of \(A\). Therefore \(B \notin A\). (Soon we will see that \(B\) is a \emph{subset} of \(A\), but this is different from being an element of \(A\).)
     %
 \par
 
-      If a set is
-      \terminology{finite}
-      \index{finite}, then we can describe it by simply listing the elements. Infinite sets exists though, so we need to be able to describe them as well. For instance, if we want \(A\) to be the set of all even natural numbers,
-      would could write,
+      We have described the sets above by listing their elements. Sometimes this is hard to do, especially when there are lots of elements in the set (perhaps infinitely many). For instance, if we want \(A\) to be the set of all even natural numbers, would could write,
       \begin{equation*}
         A = \{0, 2, 4, 6, \ldots\},
       \end{equation*}
@@ -1089,7 +1556,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
       Breaking that down: ``\(x \in \N\)'' means \(x\) is in the set \(\N\) \label{notation-2}
  (the set of natural numbers, starting with 0), \(:\) \label{notation-3}
-      is read ``such that'' and ``\(\exists n\in \N (x = 2n) \)
+ is read ``such that'' and ``\(\exists n\in \N (x = 2n) \)
       '' is read ``there exists an \(n\) in the natural numbers for which \(x\) is two times \(n\)'' (in other words, \(x\) is even). Slightly easier might be,
       \begin{equation*}
         A = \{x \st \mbox{  is even} \}.
@@ -1101,9 +1568,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
     %
 \par
 
-      Defining a set using this sort of notation is very useful, although it takes some practice to read them correctly. It is a way to describe the set of all things that satisfy some condition (the condition is the logical statement after the ``:''      symbol). Here are some more examples. We use the symbols \(\wedge\) for ``and'' and \(\vee\) for ``or'' (which includes the ``or both'' for us)
-      \index{connectives!and}
-      \index{connectives!or}.
+      Defining a set using this sort of notation is very useful, although it takes some practice to read them correctly. It is a way to describe the set of all things that satisfy some condition (the condition is the logical statement after the ``\(\st\)'' symbol). Here are some more examples.
     %
 \begin{example}[]\label{example-10}
 
@@ -1111,22 +1576,22 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
         %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-60}{}\(\{x \st x + 3 \in \N\}\).\item\hypertarget{li-61}{}\(\{x \in \N \st x + 3 \in \N\}\).\item\hypertarget{li-62}{}\(\{x \st x \in \N \vee -x \in \N\}\).\item\hypertarget{li-63}{}\(\{x \st x \in \N \wedge -x \in \N\}\).\end{enumerate}
+\item\hypertarget{li-151}{}\(\{x \st x + 3 \in \N\}\).\item\hypertarget{li-152}{}\(\{x \in \N \st x + 3 \in \N\}\).\item\hypertarget{li-153}{}\(\{x \st x \in \N \vee -x \in \N\}\).\item\hypertarget{li-154}{}\(\{x \st x \in \N \wedge -x \in \N\}\).\end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-64}{}
+\item\hypertarget{li-155}{}
               This is the set of all number which are 3 less than a natural number (i.e., that if you add 3 to them, you get a natural number). The set could also be written as \(\{-3, -2, -1, 0, 1, 2, \ldots\}\) (note that 0 is a natural number, so
               \(-3\) is in this set because \(-3 + 3 = 0\)).
             %
-\item\hypertarget{li-65}{}
+\item\hypertarget{li-156}{}
               This is the set of all natural numbers which are 3 less than a natural number. So here we just have \(\{0, 1, 2,3 \ldots\}\).
             %
-\item\hypertarget{li-66}{}
+\item\hypertarget{li-157}{}
               This is the set of all integers
               \index{integers} (positive and negative whole numbers, written \(\Z\)). In other words, \(\{\ldots, -2, -1, 0, 1, 2, \ldots\}\).
             %
-\item\hypertarget{li-67}{}
+\item\hypertarget{li-158}{}
               Here we want all numbers \(x\) such that \(x\) and \(-x\) are natural numbers. There is only one: 0. So we have the set \(\{0\}\).
             %
 \end{enumerate}
@@ -1135,133 +1600,63 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
       We already have a lot of notation, and there is more yet. Below is a handy chart of symbols. Some of these will be discussed in greater detail as we move forward.
     %
-\begin{assemblage}{Set Theory Notation}\label{assemblage-10}\par\medskip
+\begin{assemblage}{Set Theory Notation}\label{assemblage-9}\par\medskip
 
-        \begin{tabular}{lll}
-Symbol:&Read:&Example:\tabularnewline\hrulethick
-\(\{, \}\)
+  \leavevmode%
+\begin{description}
+\item[\(\{, \}\)]\hypertarget{li-159}{} We use these \emph{braces} to enclose the elements of a set. So \(\{1,2,3\}\) is the set containing 1, 2, and 3. %
+\item[\(\st\)]\hypertarget{li-160}{}\(\{x \st x > 2\}\) is the set of all \(x\) \emph{such that} \(x\) is greater than 2.%
+\item[\(\in\)]\hypertarget{li-161}{} \(2 \in \{1,2,3\}\) asserts that 2 is \emph{an elements of} the set \(\{1,2,3\}\). %
+\item[\(\not\in\)]\hypertarget{li-162}{} \(4 \notin \{1,2,3\}\) because 4 \emph{is not an element of} the set \(\{1,2,3\}\). %
+\item[\(\subseteq\)]\hypertarget{li-163}{}\(A \subseteq B\) asserts that \emph{\(A\) is a subset of \(B\)}: every element of \(A\) is also an element of \(B\).%
+\item[\(\subset\)]\hypertarget{li-164}{}\(A \subset B\) asserts that  \emph{\(A\) is a proper subset of \(B\)}: every element of \(A\) is also an element of \(B\), but \(A \ne B\).%
+\item[\(\cap\)]\hypertarget{li-165}{}\(A \cap B\), is the \emph{intersection of \(A\) and \(B\)}: the set containing all elements which are elements of both \(A\) and \(B\).%
+\item[\(\cup\)]\hypertarget{li-166}{}\(A \cup B\) is the \emph{union of \(A\) and \(B\)}: is the set containing all elements which are elements of \(A\) or \(B\) or both.%
+\item[\(\times\)]\hypertarget{li-167}{}\(A \times B\) is the \emph{Cartesian product of \(A\) and   \(B\)}: the set of all ordered pairs \((a,b)\) with \(a \in A\) and \(b \in B\).%
+\item[\(\setminus\)]\hypertarget{li-168}{}\(A \setminus B\) is \emph{\(A\) set-minus \(B\)}: the set containing all elements of \(A\) which are not elements of \(B\).%
+\item[\(\bar{A}\)]\hypertarget{li-169}{}The \emph{complement of \(A\)} is the set of everything which is not an element of \(A\). %
+\item[\(\left|A\right|\)]\hypertarget{li-170}{}The \emph{cardinality (or size) of \(A\)} is the number of elements in \(A\).%
+\end{description}
 
-            &braces&\(\{1,2,3\}\). The braces enclose the elements of a set. This is the set which contains the numbers 1, 2, and 3.\tabularnewline[0pt]
+%
+\end{assemblage}
+\begin{assemblage}{Special sets}\label{assemblage-10}\par\medskip
 
-              \(\st\)
-
-            &such that&\(\{x \st x > 2\}\) is the set of all \(x\) such that \(x\) is greater than 2.%
-\tabularnewline[0pt]
-
-              \(\in\)
-
-            &is an element of&\(2 \in \{1,2,3\}\) asserts that 2 is one of the elements in the set \(\{1,2,3\}\). However, \(4 \notin\{1,2,3\}\).%
-\tabularnewline[0pt]
-
-              \(\subseteq\)
-
-            &is a subset of&\(A \subseteq B\) asserts that every element of \(A\) is also an element of \(B\).\tabularnewline[0pt]
-
-              \(\subset\)
-            &is a proper subset of&\(A \subset B\) asserts that every element of \(A\) is also an element of \(B\), but \(A \ne B\).\tabularnewline[0pt]
-
-              \(\cap\)
-
-            &intersection
-
-            &\(A \cap B\) is the \emph{set} containing all elements which are elements of both \(A\) and \(B\).\tabularnewline[0pt]
-
-              \(\cup\)
-
-            &union
-
-            &\(A \cup B\) is the \emph{set} containing all elements which are elements of \(A\) or \(B\) or both.\tabularnewline[0pt]
-
-              \(\times\)
-
-            &cross&\(A \times B\) is the set of all ordered pairs \((a,b)\) with \(a \in A\) and \(b \in B\).\tabularnewline[0pt]
-
-              \(\setminus\)
-
-            &set difference&\(A \setminus B\) is the \emph{set} containing all elements of \(A\) which are not elements of \(B\).\tabularnewline[0pt]
-
-              \(\bar{A}\)
-            &complement (of \(A\))&\(\bar{A}\) is the set of everything which is not an element of \(A\). The \(A\) can be any set here.\tabularnewline[0pt]
-
-              \(\left|A\right|\)
-            &cardinality (of \(A\))&\(|\{4,5,6\}| = 3\) because there are 3 elements in the set. Sometimes we call \(|A|\) the \emph{size} of \(A\).\tabularnewline[0pt]
- \terminology{Logic symbols:}&\tabularnewline[0pt]
-\(\wedge\)
-            &and&\(x \in A \wedge x \notin B\) means \(x\) is both in the set \(A\) and not in the set \(B\).\tabularnewline[0pt]
-
-              \(\vee\)
-
-            &or&\(x \in A \vee x \notin B\) asserts that \(x\) is an element of \(A\) or not an element of \(B\), or both.\tabularnewline[0pt]
-
-              \(\neg\)
-
-            &not&Another way to write \(x \notin A\) is \(\neg x \in A\).\tabularnewline[0pt]
-
-              \(\forall\)
-
-            &for all&\(\forall x (x \ge 0)\) claims that every number is greater than 0.
-
-            \tabularnewline[0pt]
-
-              \(\exists\)
-
-            &there exists
-            &\(\exists x (x \lt  0)\) claims that there is a number less than 0.
-\end{tabular}
+        \leavevmode%
+\begin{description}
+\item[\(\emptyset\)]\hypertarget{li-171}{}The \emph{empty set} is the set which contains no elements.%
+\item[\(\U\)]\hypertarget{li-172}{}The \emph{universe set} is the set of all elements.%
+\item[\(\N\)]\hypertarget{li-173}{}The set of natural numbers. That is, \(\N = \{0, 1, 2, 3\ldots\}\).%
+\item[\(\Z\)]\hypertarget{li-174}{}The set of integers. That is, \(\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}\).%
+\item[\(\Q\)]\hypertarget{li-175}{}The set of rational numbers.%
+\item[\(\R\)]\hypertarget{li-176}{}The set of real numbers.%
+\item[\(\pow(A)\)]\hypertarget{li-177}{}The \emph{power set} of any set \(A\) is the set of all subsets of \(A\).%
+\end{description}
 
       %
 \end{assemblage}
-\begin{assemblage}{Special sets}\label{assemblage-11}\par\medskip
-
-        \begin{tabular}{ll}
-\(\emptyset\)
-            &The \emph{empty set} is the set which contains no elements.\tabularnewline[0pt]
-
-              \(\U\)
-            &The \emph{universe set} is the set of all elements.\tabularnewline[0pt]
-
-              \(\N\)
-            &The set of natural numbers. That is, \(\N = \{0, 1, 2, 3\ldots\}\).\tabularnewline[0pt]
-
-              \(\Z\)
-            &The set of integers. That is, \(\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}\).\tabularnewline[0pt]
-
-              \(\Q\)
-            &The set of rational numbers.\tabularnewline[0pt]
-
-              \(\R\)
-            &The set of real numbers.\tabularnewline[0pt]
-
-              \(\pow(A)\)
-
-            &The \emph{power set} of any set \(A\) is the set of all subsets of \(A\).
-\end{tabular}
-
-      %
-\end{assemblage}
-\begin{investigation}[]\label{investigation-2}
+\begin{investigation}[]\label{investigation-4}
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-68}{}
+\item\hypertarget{li-178}{}
             Find the cardinality of each set below.
-
           \begin{enumerate}
-\item\hypertarget{li-69}{}\(A = \{3,4,\ldots, 15\}\).\item\hypertarget{li-70}{}\(B = \{n \in \N \st 2 \lt  n \le 200\}\).\item\hypertarget{li-71}{}\(C = \{n \le 100 \st n \in \N \wedge \exists m \in \N (n = 2m+1)\}\).\end{enumerate}
-\item\hypertarget{li-72}{}
-          Find two sets \(A\) and \(B\) for which \(|A| = 5\), \(|B| = 6\), and \(|A\cup B| = 9\). What is \(|A \cap B|\)?
-      \item\hypertarget{li-73}{}
-          Find sets \(A\) and \(B\) with \(|A| = |B|\) such that \(|A\cup B| = 7\) and \(|A \cap B| = 3\). What is \(|A|\)?
-
-        \item\hypertarget{li-74}{}
-              Let \(A = \{1,2,\ldots, 10\}\). Define \(\mathcal{B}_2 = \{B \subseteq A \st |B| = 2\}\). Find \(|\mathcal{B}_2|\).
-        \item\hypertarget{li-75}{}
+\item\hypertarget{li-179}{}\(A = \{3,4,\ldots, 15\}\).\item\hypertarget{li-180}{}\(B = \{n \in \N \st 2 \lt  n \le 200\}\).\item\hypertarget{li-181}{}\(C = \{n \le 100 \st n \in \N \wedge \exists m \in \N (n = 2m+1)\}\).\end{enumerate}
+%
+\item\hypertarget{li-182}{}
+          Find two sets \(A\) and \(B\) for which \(|A| = 5\), \(|B| = 6\), and \(|A\cup B| = 9\). What is \(|A \cap B|\)?%
+\item\hypertarget{li-183}{}
+          Find sets \(A\) and \(B\) with \(|A| = |B|\) such that \(|A\cup B| = 7\) and \(|A \cap B| = 3\). What is \(|A|\)?%
+\item\hypertarget{li-184}{}
+          Let \(A = \{1,2,\ldots, 10\}\). Define \(\mathcal{B}_2 = \{B \subseteq A \st |B| = 2\}\). Find \(|\mathcal{B}_2|\).%
+\item\hypertarget{li-185}{}
             For any sets \(A\) and \(B\), define \(AB = \{ab \st a\in A \wedge b \in B\}\). If \(A = \{1,2\}\) and \(B = \{2,3,4\}\), what is \(|AB|\)? What is \(|A \times B|\)?
         \end{enumerate}
 \end{investigation}
 \typeout{************************************************}
 \typeout{Subsection 1.3.2 Relationships Between Sets}
 \typeout{************************************************}
-\subsection[Relationships Between Sets]{Relationships Between Sets}\label{subsection-4}
+\subsection[Relationships Between Sets]{Relationships Between Sets}\label{subsection-5}
 
       We have already said what it means for two sets to be equal: they have exactly the same elements. Thus, for example,
       \begin{equation*}
@@ -1279,8 +1674,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \par
 
       What about the sets \(A = \{1, 2, 3\}\) and \(B = \{1, 2, 3, 4\}\)? Clearly \(A \ne B\), but notice that every element of \(A\) is also an element of \(B\). Because of this we say that \(A\) is a \emph{subset}
-      \index{subset} of \(B\), or in symbols \(A \subset B\) or \(A \subseteq B\). (Both symbols are read ``is a subset of.'' The difference is that sometimes we want to say that \(A\) is either equal to or a subset of \(B\), in which
-      case we use \(\subseteq\). This is analoguous to the difference between \(\lt\) and \(\le\).)
+      \index{subset} of \(B\), or in symbols \(A \subset B\) or \(A \subseteq B\). (Both symbols are read ``is a subset of.'' The difference is that sometimes we want to say that \(A\) is either equal to or a subset of \(B\), in which case we use \(\subseteq\). This is analoguous to the difference between \(\lt\) and \(\le\).)
     %
 \begin{example}[]\label{example-11}
 
@@ -1288,35 +1682,35 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
         %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-76}{}\(A \subset B\).\item\hypertarget{li-77}{}\(B \subset A\).\item\hypertarget{li-78}{}\(B \in C\).\item\hypertarget{li-79}{}\(\emptyset \in A\).\item\hypertarget{li-80}{}\(\emptyset \subset A\).\item\hypertarget{li-81}{}\(A \lt  D\).\item\hypertarget{li-82}{}\(3 \in C\).\item\hypertarget{li-83}{}\(3 \subset C\).\item\hypertarget{li-84}{}\(\{3\} \subset C\).\end{enumerate}
+\item\hypertarget{li-186}{}\(A \subset B\).\item\hypertarget{li-187}{}\(B \subset A\).\item\hypertarget{li-188}{}\(B \in C\).\item\hypertarget{li-189}{}\(\emptyset \in A\).\item\hypertarget{li-190}{}\(\emptyset \subset A\).\item\hypertarget{li-191}{}\(A \lt  D\).\item\hypertarget{li-192}{}\(3 \in C\).\item\hypertarget{li-193}{}\(3 \subset C\).\item\hypertarget{li-194}{}\(\{3\} \subset C\).\end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-85}{}
+\item\hypertarget{li-195}{}
               False. For example, \(1\in A\) but \(1 \notin B\).
             %
-\item\hypertarget{li-86}{}
+\item\hypertarget{li-196}{}
               True. Every element in \(B\) is an element in \(A\).
             %
-\item\hypertarget{li-87}{}
+\item\hypertarget{li-197}{}
               False. The elements in \(C\) are 1, 2, and 3. The \emph{set} \(B\) is not equal to 1, 2, or 3.
             %
-\item\hypertarget{li-88}{}
+\item\hypertarget{li-198}{}
               False. \(A\) has exactly 6 elements, and none of them are the empty set.
             %
-\item\hypertarget{li-89}{}
+\item\hypertarget{li-199}{}
               True. Everything in the empty set (nothing) is also an element of \(A\). Notice that the empty set is a subset of every set.
             %
-\item\hypertarget{li-90}{}
+\item\hypertarget{li-200}{}
               Meaningless. A set cannot be less than another set.
             %
-\item\hypertarget{li-91}{}
+\item\hypertarget{li-201}{}
               True. \(3\) is one of the elements of the set \(C\).
             %
-\item\hypertarget{li-92}{}
+\item\hypertarget{li-202}{}
               Meaningless. \(3\) is not a set, so it cannot be a subset of another set.
             %
-\item\hypertarget{li-93}{}
+\item\hypertarget{li-203}{}
               True. \(3\) is the only element of the set \(\{3\}\), and is an element of \(C\), so every element in \(\{3\}\) is an element of \(C\).
             %
 \end{enumerate}
@@ -1343,39 +1737,37 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
         %
 \par
 
-          What does a subset of \(\pow(A)\) look like? Notice that \(\{2\} \not\subseteq \pow(A)\) because not everything in \(\{2\}\) is in \(\pow(A)\). But we do have \(\{ \{2\} \} \subseteq \pow(A)\). The only element of \(\{\{2\}\}\)          is the set \(\{2\}\) which is also an element of \(\pow(A)\). We could take the collection of all subsets of \(\pow(A)\) and call that \(\pow(\pow(A))\). Or even the power set of that set of sets of sets.
+          What does a subset of \(\pow(A)\) look like? Notice that \(\{2\} \not\subseteq \pow(A)\) because not everything in \(\{2\}\) is in \(\pow(A)\). But we do have \(\{ \{2\} \} \subseteq \pow(A)\). The only element of \(\{\{2\}\}\) is the set \(\{2\}\) which is also an element of \(\pow(A)\). We could take the collection of all subsets of \(\pow(A)\) and call that \(\pow(\pow(A))\). Or even the power set of that set of sets of sets.
         %
 \end{example}
 \par
 
       Another way to compare sets is by their size. Notice that in the example above, \(A\) has 6 elements, \(B\), \(C\), and \(D\) all have 3 elements. The size of a set is called the set's \emph{cardinality}
-      \index{cardinality}. We would write \(|A| = 6\), \(|B| = 3\), and so on. For sets that have a finite number of elements, the cardinality of the set is simply the number of elements in the set. Note that the cardinality of \(\{ 1, 2, 3, 2, 1\}\)      is 3. We do not count repeats (in fact, \(\{1, 2, 3, 2, 1\}\) is exactly the same set as \(\{1, 2, 3\}\)). There are sets with infinite cardinality, such as \(\N\), the set of rational numbers (written \(\mathbb Q\)), the set of even
-      natural numbers, and the set of real numbers (\(\mathbb R\)). It is possible to distinguish between different infinite cardinalities, but that is beyond the scope of this text. For us, a set will either be infinite, or finite; if it is finite,
-      the we can determine its cardinality by counting elements.
+      \index{cardinality}. We would write \(|A| = 6\), \(|B| = 3\), and so on. For sets that have a finite number of elements, the cardinality of the set is simply the number of elements in the set. Note that the cardinality of \(\{ 1, 2, 3, 2, 1\}\) is 3. We do not count repeats (in fact, \(\{1, 2, 3, 2, 1\}\) is exactly the same set as \(\{1, 2, 3\}\)). There are sets with infinite cardinality, such as \(\N\), the set of rational numbers (written \(\mathbb Q\)), the set of even natural numbers, and the set of real numbers (\(\mathbb R\)). It is possible to distinguish between different infinite cardinalities, but that is beyond the scope of this text. For us, a set will either be infinite, or finite; if it is finite, the we can determine its cardinality by counting elements.
     %
 \begin{example}[]\label{example-13}
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-94}{}
+\item\hypertarget{li-204}{}
               Find the cardinality of \(A = \{23, 24, \ldots, 37, 38\}\).
             %
-\item\hypertarget{li-95}{}
+\item\hypertarget{li-205}{}
               Find the cardinality of \(B = \{1, \{2, 3, 4\}, \emptyset\}\).
             %
-\item\hypertarget{li-96}{}
+\item\hypertarget{li-206}{}
               If \(C = \{1,2,3\}\), what is the cardinality of \(\pow(C)\)?
             %
 \end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-97}{}
+\item\hypertarget{li-207}{}
               Since \(38 - 23 = 15\), we can conclude that the cardinality of the set is \(|A| = 16\) (you need to add one since 23 is included).
             %
-\item\hypertarget{li-98}{}
+\item\hypertarget{li-208}{}
               Here \(|B| = 3\). The three elements are the number 1, the set \(\{2,3,4\}\), and the empty set.
             %
-\item\hypertarget{li-99}{}
+\item\hypertarget{li-209}{}
               We wrote out the elements of the power set \(\pow(C)\) above, and there are 8 elements (each of which is a set). So \(|\pow(C)| = 8\).\footnotemark
             %
 \end{enumerate}
@@ -1383,14 +1775,14 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \typeout{************************************************}
 \typeout{Subsection 1.3.3 Operations On Sets}
 \typeout{************************************************}
-\subsection[Operations On Sets]{Operations On Sets}\label{subsection-5}
+\subsection[Operations On Sets]{Operations On Sets}\label{subsection-6}
 
       Is it possible to add two sets? Not really, however there is something similar. If we want to combine two sets to get the collection of objects that are in either set, then we can take the \emph{union}
       \index{union} of the two sets. Symbolically,
       \begin{equation*}
         C = A \cup B,
       \end{equation*}
-      read, ``\(C\) is the union of \(A\) and \(B\),'' means that the elements of \(C\) are exactly the elements which are either an element of \(A\) or an element of \(B\) (or an element of both). For example, if \(A = \{1, 2, 3\}\)      and \(B = \{2, 3, 4\}\), then \(A \cup B = \{1, 2, 3, 4\}\).
+      read, ``\(C\) is the union of \(A\) and \(B\),'' means that the elements of \(C\) are exactly the elements which are either an element of \(A\) or an element of \(B\) (or an element of both). For example, if \(A = \{1, 2, 3\}\) and \(B = \{2, 3, 4\}\), then \(A \cup B = \{1, 2, 3, 4\}\).
     %
 \par
 
@@ -1403,8 +1795,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
     %
 \par
 
-      Often when dealing with sets, we will have some understanding as to what ``everything'' is. Perhaps we are only concerned with natural numbers. In this case we would say that our \emph{universe} is \(\N\). Sometimes we denote this universe
-      by \(\U\). Given this context, we might wish to speak of all the elements which are \emph{not} in a particular set. We say \(B\) is the \emph{complement}
+      Often when dealing with sets, we will have some understanding as to what ``everything'' is. Perhaps we are only concerned with natural numbers. In this case we would say that our \emph{universe} is \(\N\). Sometimes we denote this universe by \(\U\). Given this context, we might wish to speak of all the elements which are \emph{not} in a particular set. We say \(B\) is the \emph{complement}
       \index{complement} of \(A\), and write,
       \begin{equation*}
         B = \bar A
@@ -1429,8 +1820,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
     %
 \par
 
-      It is important to remember that these operations (union, intersection, complement, and difference) on sets produce other sets. Don't confuse these with the symbols from the previous section (element of and subset of). \(A \cap B\) is a set,
-      while \(A \subseteq B\) is true or false. This is the same difference as between \(3 + 2\) (which is a number) and \(3 \le 2\) (which is false).
+      It is important to remember that these operations (union, intersection, complement, and difference) on sets produce other sets. Don't confuse these with the symbols from the previous section (element of and subset of). \(A \cap B\) is a set, while \(A \subseteq B\) is true or false. This is the same difference as between \(3 + 2\) (which is a number) and \(3 \le 2\) (which is false).
     %
 \begin{example}[]\label{example-14}
 
@@ -1438,16 +1828,15 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
         %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-100}{}\(A \cup B\).\item\hypertarget{li-101}{}\(A \cap B\).\item\hypertarget{li-102}{}\(B \cap C\).\item\hypertarget{li-103}{}\(A \cap D\).\item\hypertarget{li-104}{}\(\bar{B \cup C}\).\item\hypertarget{li-105}{}\(A \setminus B\).\item\hypertarget{li-106}{}\((D \cap \bar C) \cup \bar{A \cap B}\).\item\hypertarget{li-107}{}\(\emptyset \cup C\).\item\hypertarget{li-108}{}\(\emptyset \cap C\).\end{enumerate}
+\item\hypertarget{li-210}{}\(A \cup B\).\item\hypertarget{li-211}{}\(A \cap B\).\item\hypertarget{li-212}{}\(B \cap C\).\item\hypertarget{li-213}{}\(A \cap D\).\item\hypertarget{li-214}{}\(\bar{B \cup C}\).\item\hypertarget{li-215}{}\(A \setminus B\).\item\hypertarget{li-216}{}\((D \cap \bar C) \cup \bar{A \cap B}\).\item\hypertarget{li-217}{}\(\emptyset \cup C\).\item\hypertarget{li-218}{}\(\emptyset \cap C\).\end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-109}{}\(A \cup B = \{1, 2, 3, 4, 5, 6\} = A\) since everything in \(B\) is already in \(A\).\item\hypertarget{li-110}{}\(A \cap B = \{2, 4, 6\} = B\) since everything in \(B\) is in \(A\).\item\hypertarget{li-111}{}\(B \cap C = \{2\}\) as the only element of both \(B\) and \(C\) is 2.\item\hypertarget{li-112}{}\(A \cap D = \emptyset\) since \(A\) and \(D\) have no common elements.\item\hypertarget{li-113}{}\(\bar{B \cup C} = \{5, 7, 8, 9, 10\}\). First we find that \(B \cup C = \{1, 2, 3, 4, 6\}\), then we take everything not in that set.\item\hypertarget{li-114}{}\(A \setminus B = \{1, 3, 5\}\) since the elements 1, 3, and 5 are in \(A\) but not in \(B\). This is the same as \(A \cap \bar B\).\item\hypertarget{li-115}{}\((D \cap \bar C) \cup \bar{A \cap B} = \{1, 3, 5, 7, 8, 9, 10\}.\) The set contains all elements that are either in \(D\) but not in \(C\) (\(\{7,8,9\}\)), or not in both \(A\) and \(B\) (\(\{1,3,5,7,8,9,10\}\)).\item\hypertarget{li-116}{}\(\emptyset \cup C = C\) since nothing is added by the empty set.\item\hypertarget{li-117}{}\(\emptyset \cap C = \emptyset\) since nothing can be both in a set and in the empty set.\end{enumerate}
+\item\hypertarget{li-219}{}\(A \cup B = \{1, 2, 3, 4, 5, 6\} = A\) since everything in \(B\) is already in \(A\).\item\hypertarget{li-220}{}\(A \cap B = \{2, 4, 6\} = B\) since everything in \(B\) is in \(A\).\item\hypertarget{li-221}{}\(B \cap C = \{2\}\) as the only element of both \(B\) and \(C\) is 2.\item\hypertarget{li-222}{}\(A \cap D = \emptyset\) since \(A\) and \(D\) have no common elements.\item\hypertarget{li-223}{}\(\bar{B \cup C} = \{5, 7, 8, 9, 10\}\). First we find that \(B \cup C = \{1, 2, 3, 4, 6\}\), then we take everything not in that set.\item\hypertarget{li-224}{}\(A \setminus B = \{1, 3, 5\}\) since the elements 1, 3, and 5 are in \(A\) but not in \(B\). This is the same as \(A \cap \bar B\).\item\hypertarget{li-225}{}\((D \cap \bar C) \cup \bar{A \cap B} = \{1, 3, 5, 7, 8, 9, 10\}.\) The set contains all elements that are either in \(D\) but not in \(C\) (\(\{7,8,9\}\)), or not in both \(A\) and \(B\) (\(\{1,3,5,7,8,9,10\}\)).\item\hypertarget{li-226}{}\(\emptyset \cup C = C\) since nothing is added by the empty set.\item\hypertarget{li-227}{}\(\emptyset \cap C = \emptyset\) since nothing can be both in a set and in the empty set.\end{enumerate}
 \end{example}
 \par
 
-      You might notice that the symbols for union and intersection slightly resemble the logic symbols for ``or'' and ``and.'' This is no accident. What does it mean for \(x\) to be an element of \(A\cup B\)? It means that \(x\) is an element
-      of \(A\emph{or}x\) is an element of \(B\) (or both). That is,
+      You might notice that the symbols for union and intersection slightly resemble the logic symbols for ``or'' and ``and.'' This is no accident. What does it mean for \(x\) to be an element of \(A\cup B\)? It means that \(x\) is an element of \(A\emph{or}x\) is an element of \(B\) (or both). That is,
       \begin{equation*}
         x \in A \cup B \qquad \Iff \qquad x \in A \vee x \in B.
       \end{equation*}
@@ -1469,14 +1858,11 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
     %
 \par
 
-      There is one more way to combine sets which will be useful for us: the \emph{Cartesian product}, \(A \times B\). This sounds fancy but is nothing you haven't seen before. When you graph a function in calculus, you graph it in the Cartesian
-      plane. This is the set of all ordered pairs of real numbers \((x,y)\). We can do this for \emph{any} pair of sets, not just the real numbers with themselves.
+      There is one more way to combine sets which will be useful for us: the \emph{Cartesian product}, \(A \times B\). This sounds fancy but is nothing you haven't seen before. When you graph a function in calculus, you graph it in the Cartesian plane. This is the set of all ordered pairs of real numbers \((x,y)\). We can do this for \emph{any} pair of sets, not just the real numbers with themselves.
     %
 \par
 
-      Put another way, \(A \times B = \{(a,b) \st a \in A \wedge b \in B\}\). The first coordinate comes from the first set and the second coordinate comes from the second set. Sometimes we will want to take the Cartesian product of a set with itself,
-      and this is fine: \(A \times A = \{(a,b) \st a, b \in A\}\) (we might also write \(A^2\) for this set). Notice that in \(A \times A\), we still want \emph{all} ordered pairs, not just the ones where the first and second coordinate are
-      the same. We can also take products of 3 or more sets, getting ordered triples, or quadruples, and so on.
+      Put another way, \(A \times B = \{(a,b) \st a \in A \wedge b \in B\}\). The first coordinate comes from the first set and the second coordinate comes from the second set. Sometimes we will want to take the Cartesian product of a set with itself, and this is fine: \(A \times A = \{(a,b) \st a, b \in A\}\) (we might also write \(A^2\) for this set). Notice that in \(A \times A\), we still want \emph{all} ordered pairs, not just the ones where the first and second coordinate are the same. We can also take products of 3 or more sets, getting ordered triples, or quadruples, and so on.
     %
 \begin{example}[]\label{example-15}
 
@@ -1498,33 +1884,27 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \typeout{************************************************}
 \typeout{Subsection 1.3.4 Venn Diagrams}
 \typeout{************************************************}
-\subsection[Venn Diagrams]{Venn Diagrams}\label{subsection-6}
+\subsection[Venn Diagrams]{Venn Diagrams}\label{subsection-7}
 
-      \index{Venn diagram} There is a very nice visual tool we can use to represent operations on sets. Venn diagrams display sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality
-      of a particular set by putting the number in the corresponding region.
+      \index{Venn diagram} There is a very nice visual tool we can use to represent operations on sets. Venn diagrams display sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality of a particular set by putting the number in the corresponding region.
     %
 \leavevmode%
 \begin{figure}
 \centering
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
 {
-          \begin{tikzpicture}[fill=gray!50,scale=0.85]
+            \begin{tikzpicture}[fill=gray!50,scale=0.85]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\end{figure}
+\leavevmode%
+\begin{figure}
+\centering
 {
-        \begin{tikzpicture}[scale=.60, fill=gray!50]
+            \begin{tikzpicture}[scale=.60, fill=gray!50]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\popValignCaptionBottom
 \end{figure}
 \par
 
@@ -1572,8 +1952,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 }
 \par
 
-      Notice that the shaded regions above could also be arrived at in another way. We could have started with all of \(C\), then excluded the region where \(C\) and \(A\) overlap outside of \(B\). That region is \((A \cap C) \cap \bar B\).
-      So the above Venn diagram also represents \(C \cap \bar{\left((A\cap C)\cap \bar B\right)}.\) So using just the picture, we have determined that
+      Notice that the shaded regions above could also be arrived at in another way. We could have started with all of \(C\), then excluded the region where \(C\) and \(A\) overlap outside of \(B\). That region is \((A \cap C) \cap \bar B\). So the above Venn diagram also represents \(C \cap \bar{\left((A\cap C)\cap \bar B\right)}.\) So using just the picture, we have determined that
       \begin{equation*}
         (B \cap C) \cup (C \cap \bar A) = C \cap \bar{\left((A\cap C)\cap \bar B\right)}.
       \end{equation*}
@@ -1581,141 +1960,140 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \typeout{************************************************}
 \typeout{Exercises 1.3.4.1 Exercises}
 \typeout{************************************************}
-\subsubsection[Exercises]{Exercises}\label{exercises-1}
+\subsubsection[Exercises]{Exercises}\label{exercises-2}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-1}{}
+\item[1.]\hypertarget{exercise-11}{}
             Let \(A = \{1,2,3,4,5\}\), \(B = \{3,4,5,6,7\}\), and \(C = \{2,3,5\}\).
           %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-118}{}
+\item\hypertarget{li-228}{}
                 Find \(A \cap B\).
               %
-\item\hypertarget{li-119}{}
+\item\hypertarget{li-229}{}
                 Find \(A \cup B\).
               %
-\item\hypertarget{li-120}{}
+\item\hypertarget{li-230}{}
                 Find \(A \setminus B\).
               %
-\item\hypertarget{li-121}{}
+\item\hypertarget{li-231}{}
                 Find \(A \cap \overline{(B \cup C)}\).
               %
-\item\hypertarget{li-122}{}
+\item\hypertarget{li-232}{}
                 Find \(A \times C\).
               %
-\item\hypertarget{li-123}{}
+\item\hypertarget{li-233}{}
                 Is \(C \subseteq A\)? Explain.
               %
-\item\hypertarget{li-124}{}
+\item\hypertarget{li-234}{}
                 Is \(C \subseteq B\)? Explain.
               %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-1}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-23}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-125}{}\(A \cap B = \{3,4,5\}\).\item\hypertarget{li-126}{}\(A \cup B = \{1,2,3,4,5,6,7\}\).\item\hypertarget{li-127}{}\(A \setminus B = \{1,2\}\).\item\hypertarget{li-128}{}\(A \cap \bar{(B \cup C)} = \{1\}\).\item\hypertarget{li-129}{}\(A \times B = \{(1,2), (1,3), (1,5), (2,2), (2,3), (2,5), (3,2), (3,3), (3,5), (4,2), (4,3), (4,5), (5,2), (5,3), (5,5)\}\).\item\hypertarget{li-130}{}
+\item\hypertarget{li-235}{}\(A \cap B = \{3,4,5\}\).\item\hypertarget{li-236}{}\(A \cup B = \{1,2,3,4,5,6,7\}\).\item\hypertarget{li-237}{}\(A \setminus B = \{1,2\}\).\item\hypertarget{li-238}{}\(A \cap \bar{(B \cup C)} = \{1\}\).\item\hypertarget{li-239}{}\(A \times B = \{(1,2), (1,3), (1,5), (2,2), (2,3), (2,5), (3,2), (3,3), (3,5), (4,2), (4,3), (4,5), (5,2), (5,3), (5,5)\}\).\item\hypertarget{li-240}{}
                 Yes.
               %
-\item\hypertarget{li-131}{}
+\item\hypertarget{li-241}{}
                 No.
               %
 \end{enumerate}
-\item[2.]\hypertarget{exercise-2}{}
+\item[2.]\hypertarget{exercise-12}{}
             Let \(A = \{x \in \N \st 3 \le x \le 13\}\), \(B = \{x \in \N \st x \mbox{ is even} \}\), and \(C = \{x \in \N \st x \mbox{ is odd} \}\).
           %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-132}{}
+\item\hypertarget{li-242}{}
                 Find \(A \cap B\).
               %
-\item\hypertarget{li-133}{}
+\item\hypertarget{li-243}{}
                 Find \(A \cup B\).
               %
-\item\hypertarget{li-134}{}
+\item\hypertarget{li-244}{}
                 Find \(B \cap C\).
               %
-\item\hypertarget{li-135}{}
+\item\hypertarget{li-245}{}
                 Find \(B \cup C\).
               %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-2}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-24}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-136}{}\(A \cap B = \{4,6,8,10,12\}\)\item\hypertarget{li-137}{}\(A \cup B = \{x \in \N \st (3 \le x \le 13) \vee x \mbox{ is even} \}.\) (the set of all natural numbers which are either even or between 3 and 13 inclusive).\item\hypertarget{li-138}{}\(B \cap C = \emptyset\).\item\hypertarget{li-139}{}\(B \cup C = \N\).\end{enumerate}
-\item[3.]\hypertarget{exercise-3}{}
+\item\hypertarget{li-246}{}\(A \cap B = \{4,6,8,10,12\}\)\item\hypertarget{li-247}{}\(A \cup B = \{x \in \N \st (3 \le x \le 13) \vee x \mbox{ is even} \}.\) (the set of all natural numbers which are either even or between 3 and 13 inclusive).\item\hypertarget{li-248}{}\(B \cap C = \emptyset\).\item\hypertarget{li-249}{}\(B \cup C = \N\).\end{enumerate}
+\item[3.]\hypertarget{exercise-13}{}
             Find an example of sets \(A\) and \(B\) such that \(A\cap B = \{3, 5\}\) and \(A \cup B = \{2, 3, 5, 7, 8\}\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-3}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-25}{}\quad
 
             For example, \(A = \{2,3,5,7,8\}\) and \(B = \{3,5\}\).
           %
-\item[4.]\hypertarget{exercise-4}{}
+\item[4.]\hypertarget{exercise-14}{}
             Find an example of sets \(A\) and \(B\) such that \(A \subseteq B\) and \(A \in B\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-4}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-26}{}\quad
 
             Let \(A = \{1,2,3\}\) and \(B = \{1,2,3,4,5,\{1,2,3\}\}\)
           %
-\item[5.]\hypertarget{exercise-5}{}
+\item[5.]\hypertarget{exercise-15}{}
             Recall \(\Z = \{\ldots,-2,-1,0, 1,2,\ldots\}\) (the integers). Let \(\Z^+ = \{1, 2, 3, \ldots\}\) be the positive integers. Let \(2\Z\) be the even integers, \(3\Z\) be the multiples of 3, and so on.
           %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-140}{}
+\item\hypertarget{li-250}{}
                 Is \(\Z^+ \subseteq 2\Z\)? Explain.
               %
-\item\hypertarget{li-141}{}
+\item\hypertarget{li-251}{}
                 Is \(2\Z \subseteq \Z^+\)? Explain.
               %
-\item\hypertarget{li-142}{}
+\item\hypertarget{li-252}{}
                 Find \(2\Z \cap 3\Z\). Describe the set in words, and also in symbols (using a \(\st\) symbol).
               %
-\item\hypertarget{li-143}{}
+\item\hypertarget{li-253}{}
                 Express \(\{x \in \Z \st \exists y\in \Z (x = 2y \vee x = 3y)\}\) as a union or intersection of two sets above.
               %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-5}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-27}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-144}{}
+\item\hypertarget{li-254}{}
                 No.
               %
-\item\hypertarget{li-145}{}
+\item\hypertarget{li-255}{}
                 No.
               %
-\item\hypertarget{li-146}{}\(2\Z \cap 3\Z\) is the set of all integers which are multiples of both 2 and 3 (so multiples of 6). Therefore \(2\Z \cap 3\Z = \{x \in \Z \st \exists y\in \Z(x = 6y)\}\).\item\hypertarget{li-147}{}\(2\Z \cup 3\Z\).\end{enumerate}
-\item[6.]\hypertarget{exercise-6}{}
-            Let \(A_2\) be the set of all multiples of 2 except for \(2\). Let \(A_3\) be the set of all multiples of 3 except for 3. And so on, so that \(A_n\) is the set of all multiple of \(n\) except for \(n\), for any \(n \ge 2\).
-            Describe (in words) the set \(\bar{A_2 \cup A_3 \cup A_4 \cup \cdots}\).
+\item\hypertarget{li-256}{}\(2\Z \cap 3\Z\) is the set of all integers which are multiples of both 2 and 3 (so multiples of 6). Therefore \(2\Z \cap 3\Z = \{x \in \Z \st \exists y\in \Z(x = 6y)\}\).\item\hypertarget{li-257}{}\(2\Z \cup 3\Z\).\end{enumerate}
+\item[6.]\hypertarget{exercise-16}{}
+            Let \(A_2\) be the set of all multiples of 2 except for \(2\). Let \(A_3\) be the set of all multiples of 3 except for 3. And so on, so that \(A_n\) is the set of all multiple of \(n\) except for \(n\), for any \(n \ge 2\). Describe (in words) the set \(\bar{A_2 \cup A_3 \cup A_4 \cup \cdots}\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-6}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-28}{}\quad
 
             The set of primes.
           %
-\item[7.]\hypertarget{exercise-7}{}
+\item[7.]\hypertarget{exercise-17}{}
             Draw a Venn diagram to represent each of the following:
           %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-148}{}\(A \cup \bar B\)\item\hypertarget{li-149}{}\(\bar{(A \cup B)}\)\item\hypertarget{li-150}{}\(A \cap (B \cup C)\)\item\hypertarget{li-151}{}\((A \cap B) \cup C\)\item\hypertarget{li-152}{}\(\bar A \cap B \cap \bar C\)\item\hypertarget{li-153}{}\((A \cup B) \setminus C\)\end{enumerate}
+\item\hypertarget{li-258}{}\(A \cup \bar B\)\item\hypertarget{li-259}{}\(\bar{(A \cup B)}\)\item\hypertarget{li-260}{}\(A \cap (B \cup C)\)\item\hypertarget{li-261}{}\((A \cap B) \cup C\)\item\hypertarget{li-262}{}\(\bar A \cap B \cap \bar C\)\item\hypertarget{li-263}{}\((A \cup B) \setminus C\)\end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-7}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-29}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-154}{}\(A \cup \bar B\):
+\item\hypertarget{li-264}{}\(A \cup \bar B\):
               {
                \begin{tikzpicture}[fill=gray!50]
 
@@ -1728,7 +2106,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-\item\hypertarget{li-155}{}\(\bar{(A \cup B)}\):
+\item\hypertarget{li-265}{}\(\bar{(A \cup B)}\):
               {
                \begin{tikzpicture}[fill=gray!50]
   \fill \twosetbox;
@@ -1736,7 +2114,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-\item\hypertarget{li-156}{}\(A \cap (B \cup C)\):
+\item\hypertarget{li-266}{}\(A \cap (B \cup C)\):
               {
                \begin{tikzpicture}[fill=gray!50]
 \begin{scope}
@@ -1746,7 +2124,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-\item\hypertarget{li-157}{}\((A \cap B) \cup C\):
+\item\hypertarget{li-267}{}\((A \cap B) \cup C\):
               {
                \begin{tikzpicture}[fill=gray!50]
 \begin{scope}
@@ -1757,7 +2135,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-\item\hypertarget{li-158}{}\(\bar A \cap B \cap \bar C\):
+\item\hypertarget{li-268}{}\(\bar A \cap B \cap \bar C\):
               {
                \begin{tikzpicture}[fill=gray!50]
 \fill \circleB;
@@ -1769,7 +2147,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-\item\hypertarget{li-159}{}\((A \cup B) \setminus C\):
+\item\hypertarget{li-269}{}\((A \cup B) \setminus C\):
               {
                \begin{tikzpicture}[fill=gray!50]
 \fill \circleA;
@@ -1779,7 +2157,7 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 \end{tikzpicture}
 }
 \end{enumerate}
-\item[8.]\hypertarget{exercise-8}{}
+\item[8.]\hypertarget{exercise-18}{}
             Describe a set in terms of \(A\) and \(B\) which has the following Venn diagram:
           %
 {
@@ -1801,92 +2179,91 @@ Symbol:&Read:&Example:\tabularnewline\hrulethick
 }
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-8}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-30}{}\quad
 
             For example, \(A \cup B \cap \bar{(A \cap B)}\). Note that \(\bar{A \cap B}\) would almost work, but also contain the area outside of both circles.
           %
-\item[9.]\hypertarget{exercise-9}{}
+\item[9.]\hypertarget{exercise-19}{}
             Find the following cardinalities:
           %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-160}{}\(|A|\) when \(A = \{4,5,6,\ldots,37\}\)\item\hypertarget{li-161}{}\(|A|\) when \(A = \{x \in \Z \st -2 \le x \le 100\}\)\item\hypertarget{li-162}{}\(|A \cap B|\) when \(A = \{x \in \N \st x \le 20\}\) and \(B = \{x \in \N \st x \mbox{ is prime} \}\)\end{enumerate}
+\item\hypertarget{li-270}{}\(|A|\) when \(A = \{4,5,6,\ldots,37\}\)\item\hypertarget{li-271}{}\(|A|\) when \(A = \{x \in \Z \st -2 \le x \le 100\}\)\item\hypertarget{li-272}{}\(|A \cap B|\) when \(A = \{x \in \N \st x \le 20\}\) and \(B = \{x \in \N \st x \mbox{ is prime} \}\)\end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-9}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-31}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-163}{}
+\item\hypertarget{li-273}{}
                 34.
               %
-\item\hypertarget{li-164}{}
+\item\hypertarget{li-274}{}
                 103.
               %
-\item\hypertarget{li-165}{}
+\item\hypertarget{li-275}{}
                 8.
               %
 \end{enumerate}
-\item[10.]\hypertarget{exercise-10}{}
+\item[10.]\hypertarget{exercise-20}{}
             Let \(A = \{a, b, c\}\). Find \(\pow(A)\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-10}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-32}{}\quad
 
             \(\pow(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\}\}\).
           %
-\item[11.]\hypertarget{exercise-11}{}
+\item[11.]\hypertarget{exercise-21}{}
             Let \(A = \{1,2,\ldots, 10\}\). How many subsets of \(A\) contain exactly one element (i.e., how many \emph{singleton} subsets are there). How many \emph{doubleton} (containing exactly two elements) are there?
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-11}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-33}{}\quad
 
             There are 10 singletons. There are 45 doubletons (because \(45 = 9+8+7+\cdots+2+1\)).
           %
-\item[12.]\hypertarget{exercise-12}{}
+\item[12.]\hypertarget{exercise-22}{}
             Let \(A = \{1,2,3,4,5,6\}\). Find all sets \(B \in \pow(A)\) which have the property \(\{2,3,5\} \subseteq B\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-12}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-34}{}\quad
 
             \(\{2,3,5\}\), \(\{1,2,3,5\}\), \(\{2,3,4,5\}\), \(\{2,3,5,6\}\), \(\{1,2,3,4,5\}\), \(\{1,2,3,5,6\}\), \(\{2,3,4,5,6\}\), and \(\{1,2,3,4,5,6\}\).
           %
-\item[13.]\hypertarget{exercise-13}{}
+\item[13.]\hypertarget{exercise-23}{}
             Find an example of sets \(A\) and \(B\) such that \(|A| = 4\), \(|B| = 5\), and \(|A \cup B| = 9\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-13}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-35}{}\quad
 
             For example \(A = \{1,2,3,4\}\) and \(B = \{5,6,7,8,9\}\).
           %
-\item[14.]\hypertarget{exercise-14}{}
+\item[14.]\hypertarget{exercise-24}{}
             Find an example of sets \(A\) and \(B\) such that \(|A| = 3\), \(|B| = 4\), and \(|A \cup B| = 5\).
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-14}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-36}{}\quad
 
             For example, \(A = \{1,2,3\}\) and \(B = \{2,3,4,5\}\).
           %
-\item[15.]\hypertarget{exercise-15}{}
+\item[15.]\hypertarget{exercise-25}{}
             Are there sets \(A\) and \(B\) such that \(|A| = |B|\), \(|A\cup B| = 10\), and \(|A\cap B| = 5\)? Explain.
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-15}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-37}{}\quad
 
-            No. There must be 5 elements in common to both sets. Since there are 10 distinct elements all together in \(A\) and \(B\), this means that between \(A\) and \(B\), there must be 5 elements which they do not have in common (some
-            in \(A\) but not in \(B\), some in \(B\) but not in \(A\)). But 5 is odd, so to have \(|A| = |B|\), we would need 7.5 elements in each set, which is impossible.
+            No. There must be 5 elements in common to both sets. Since there are 10 distinct elements all together in \(A\) and \(B\), this means that between \(A\) and \(B\), there must be 5 elements which they do not have in common (some in \(A\) but not in \(B\), some in \(B\) but not in \(A\)). But 5 is odd, so to have \(|A| = |B|\), we would need 7.5 elements in each set, which is impossible.
           %
-\item[16.]\hypertarget{exercise-16}{}
+\item[16.]\hypertarget{exercise-26}{}
             In a regular deck of playing cards there are 26 red cards and 12 face cards. Explain, using sets and what you have learned about cardinalities, why there are only 32 cards which are either red or a face card.
           %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-16}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-38}{}\quad
 
             If \(R\) is the set of red cards and \(F\) is the set of face cards, we want to find \(|R \cup F|\). This is not simply \(|R| + |F|\) because there are 6 cards which are both red and a face card; \(|R \cap F| = 6\). We find
             \(|R \cup F| = 32\).
@@ -1908,7 +2285,7 @@ The key thing that makes a rule actually a \emph{function} is that there is \emp
 %
 \par
 
-To specify the name of the function, as well as the domain and codomain, we write \(f:X \to Y\)\label{notation-10}
+To specify the name of the function, as well as the domain and codomain, we write \(f:X \to Y\)\label{notation-4}
 . The function is called \(f\), the domain is the set \(X\), and the codomain is the set \(Y\). This, however, does not describe the rule. To do that, we say something like this:
 %
 \begin{quote}
@@ -1928,7 +2305,7 @@ The following are all examples of functions:
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-166}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).  The domain and codomain are both the set of integers.  However, the range is only the set of integer multiples of 3.\item\hypertarget{li-167}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).  The domain is the set \(\{1,2,3\}\), the codomain is the set \(\{a,b,c\}\) and the range is the set \(\{a,c\}\).  Note that \(g(2)\) and \(g(3)\) are the same element of the codomain.  This is okay since each element in the domain still has only one output.\item\hypertarget{li-168}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
+\item\hypertarget{li-276}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).  The domain and codomain are both the set of integers.  However, the range is only the set of integer multiples of 3.\item\hypertarget{li-277}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).  The domain is the set \(\{1,2,3\}\), the codomain is the set \(\{a,b,c\}\) and the range is the set \(\{a,c\}\).  Note that \(g(2)\) and \(g(3)\) are the same element of the codomain.  This is okay since each element in the domain still has only one output.\item\hypertarget{li-278}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
 {
 \begin{tikzpicture}[scale=0.85]
         \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
@@ -2019,7 +2396,7 @@ However, \(h\) is not a function. In fact, it fails for two reasons. First, the 
 \typeout{************************************************}
 \typeout{Subsection 1.4.1 Surjections, Injections, and Bijections}
 \typeout{************************************************}
-\subsection[Surjections, Injections, and Bijections]{Surjections, Injections, and Bijections}\label{subsection-7}
+\subsection[Surjections, Injections, and Bijections]{Surjections, Injections, and Bijections}\label{subsection-8}
 
 We now turn to investigating special properties functions might or might not possess.
 %
@@ -2057,7 +2434,7 @@ Which functions are surjective (i.e., onto)?
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-169}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).\item\hypertarget{li-170}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).\item\hypertarget{li-171}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
+\item\hypertarget{li-279}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).\item\hypertarget{li-280}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).\item\hypertarget{li-281}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
 {
 \begin{tikzpicture}
         \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
@@ -2069,7 +2446,7 @@ Which functions are surjective (i.e., onto)?
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-172}{}\(f\) is not surjective.  There are elements in the codomain which are not in the range.  For example, no \(n \in \Z\) gets mapped to the number 1 (the rule would say that \(\frac{1}{3}\) would be sent to 1, but \(\frac{1}{3}\) is not in the domain).  In fact, the range of the function is \(3\Z\) (the integer multiples of 3), which is not equal to \(\Z\).\item\hypertarget{li-173}{}\(g\) is not surjective.  There is no \(x \in \{1,2,3\}\) (the domain) for which \(g(x) = b\),  so \(b\), which is in the codomain, is not in the range.\item\hypertarget{li-174}{}\(h\) is surjective.  Every element of the codomain is also in the range.  Nothing in the codomain is missed.\end{enumerate}
+\item\hypertarget{li-282}{}\(f\) is not surjective.  There are elements in the codomain which are not in the range.  For example, no \(n \in \Z\) gets mapped to the number 1 (the rule would say that \(\frac{1}{3}\) would be sent to 1, but \(\frac{1}{3}\) is not in the domain).  In fact, the range of the function is \(3\Z\) (the integer multiples of 3), which is not equal to \(\Z\).\item\hypertarget{li-283}{}\(g\) is not surjective.  There is no \(x \in \{1,2,3\}\) (the domain) for which \(g(x) = b\),  so \(b\), which is in the codomain, is not in the range.\item\hypertarget{li-284}{}\(h\) is surjective.  Every element of the codomain is also in the range.  Nothing in the codomain is missed.\end{enumerate}
 \end{example}
 \par
 
@@ -2105,7 +2482,7 @@ Which functions are injective (i.e., one-to-one)?
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-175}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).\item\hypertarget{li-176}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).\item\hypertarget{li-177}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
+\item\hypertarget{li-285}{}\(f:\Z \to \Z\) defined by \(f(n) = 3n\).\item\hypertarget{li-286}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\).\item\hypertarget{li-287}{}\(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:
 {
 \begin{tikzpicture}
         \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
@@ -2117,7 +2494,7 @@ Which functions are injective (i.e., one-to-one)?
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-178}{}\(f\) is injective.  Each element in the codomain is assigned to at \emph{most} one element from the domain.  If \(x\) is a multiple of three, then only \(x/3\) is mapped to \(x\).  If \(x\) is not a multiple of 3, then there is no input corresponding to the output \(x\).\item\hypertarget{li-179}{}\(g\) is not injective.  Both inputs \(2\) and \(3\) are assigned the output \(a\).\item\hypertarget{li-180}{}\(h\) is injective.  Each output is only an output once.\end{enumerate}
+\item\hypertarget{li-288}{}\(f\) is injective.  Each element in the codomain is assigned to at \emph{most} one element from the domain.  If \(x\) is a multiple of three, then only \(x/3\) is mapped to \(x\).  If \(x\) is not a multiple of 3, then there is no input corresponding to the output \(x\).\item\hypertarget{li-289}{}\(g\) is not injective.  Both inputs \(2\) and \(3\) are assigned the output \(a\).\item\hypertarget{li-290}{}\(h\) is injective.  Each output is only an output once.\end{enumerate}
 \end{example}
 \par
 
@@ -2126,7 +2503,7 @@ From the examples above, it should be clear that there are functions which are s
 \typeout{************************************************}
 \typeout{Subsection 1.4.2 Inverse Image}
 \typeout{************************************************}
-\subsection[Inverse Image]{Inverse Image}\label{subsection-8}
+\subsection[Inverse Image]{Inverse Image}\label{subsection-9}
 
 When discussing functions, we have notation for talking about an element of the domain (say \(x\)) and its corresponding element in the codomain (we write \(f(x)\)). It would also be nice to start with some element of the codomain (say \(y\)) and talk about which element or elements (if any) from the domain get sent to it. We could write ``those \(x\) in the domain such that \(f(x) = y\),'' but this is a lot of writing. Here is some notation to make our lives easier.
 %
@@ -2190,32 +2567,32 @@ Find a function \(f:\{1,2,3,4,5\} \to \N\) such that \(|f\inv(7)| = 5\).
 There is only one such function. We need five elements of the domain to map to the number \(7 \in \N\). Since there are only five elements in the domain, all of them must map to 7. So \(f(1) = 7\), \(f(2) = 7\), \(f(3) = 7\), \(f(4) = 7\), and \(f(5) = 7\).
 %
 \end{example}
-\begin{assemblage}{Function Definitions}\label{assemblage-12}\par\medskip
+\begin{assemblage}{Function Definitions}\label{assemblage-11}\par\medskip
 \end{assemblage}
 \typeout{************************************************}
 \typeout{Exercises 1.4.2.1 Exercises}
 \typeout{************************************************}
-\subsubsection[Exercises]{Exercises}\label{exercises-2}
+\subsubsection[Exercises]{Exercises}\label{exercises-3}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-17}{}
+\item[1.]\hypertarget{exercise-27}{}
 Write out all functions \(f: \{1,2,3\} \to \{a,b\}\). How many are there? How many are injective? How many are surjective? How many are both?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-17}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-45}{}\quad
 
 There are 8 different functions. For example, \(f(1) = a\), \(f(2) = a\), \(f(3) = a\); or \(f(1) = a\), \(f(2) = b\), \(f(3) = a\), and so on. None of the functions are injective. Exactly 6 of the functions are surjective. No functions are both (since no functions here are injective).
 %
-\item[2.]\hypertarget{exercise-18}{}
+\item[2.]\hypertarget{exercise-28}{}
 Write out all functions \(f: \{1,2\} \to \{a,b,c\}\). How many are there? How many are injective? How many are surjective? How many are both?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-18}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-46}{}\quad
 
 There are nine functions \textendash{} you have a choice of three outputs for \(f(1)\), and for each, you have three choices for the output \(f(2)\). Of these functions, 6 are injective, 0 are surjective, and 0 are both.
 %
-\item[3.]\hypertarget{exercise-19}{}
+\item[3.]\hypertarget{exercise-29}{}
 Consider the function \(f:\{1,2,3,4,5\} \to \{1,2,3,4\}\) given by the table below:
 %
 \begin{tabular}{llllll}
@@ -2225,20 +2602,20 @@ Consider the function \(f:\{1,2,3,4,5\} \to \{1,2,3,4\}\) given by the table bel
 \end{tabular}
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-189}{}
+\item\hypertarget{li-299}{}
 Is \(f\) injective?  Explain.
 %
-\item\hypertarget{li-190}{}
+\item\hypertarget{li-300}{}
 Is \(f\) surjective?  Explain.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-19}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-47}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-191}{}\(f\) is not injective, since \(f(2) = f(5)\) - two different inputs have the same output.\item\hypertarget{li-192}{}\(f\) is surjective, since every element of the codomain is an element of the range.\end{enumerate}
-\item[4.]\hypertarget{exercise-20}{}
+\item\hypertarget{li-301}{}\(f\) is not injective, since \(f(2) = f(5)\) - two different inputs have the same output.\item\hypertarget{li-302}{}\(f\) is surjective, since every element of the codomain is an element of the range.\end{enumerate}
+\item[4.]\hypertarget{exercise-30}{}
 Consider the function \(f:\{1,2,3,4\} \to \{1,2,3,4\}\) given by the graph below.
 %
 {
@@ -2252,189 +2629,189 @@ Consider the function \(f:\{1,2,3,4\} \to \{1,2,3,4\}\) given by the graph below
 }
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-193}{}
+\item\hypertarget{li-303}{}
 Is \(f\) injective?  Explain.
 %
-\item\hypertarget{li-194}{}
+\item\hypertarget{li-304}{}
 Is \(f\) surjective?  Explain.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-20}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-48}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-195}{}\(f\) is not injective, since \(f(1) = 3\) and \(f(4) = 3\).\item\hypertarget{li-196}{}\(f\) is not surjective, since there is no input which gives 2 as an output.\end{enumerate}
-\item[5.]\hypertarget{exercise-21}{}
+\item\hypertarget{li-305}{}\(f\) is not injective, since \(f(1) = 3\) and \(f(4) = 3\).\item\hypertarget{li-306}{}\(f\) is not surjective, since there is no input which gives 2 as an output.\end{enumerate}
+\item[5.]\hypertarget{exercise-31}{}
 For each function given below, determine whether or not the function is injective and whether or not the function is surjective.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-197}{}\(f:\N \to \N\) given by \(f(n) = n+4\).\item\hypertarget{li-198}{}\(f:\Z \to \Z\) given by \(f(n) = n+4\).\item\hypertarget{li-199}{}\(f:\Z \to \Z\) given by \(f(n) = 5n - 8\).\item\hypertarget{li-200}{}\(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n/2 \amp  \mbox{ if  is even} \\
+\item\hypertarget{li-307}{}\(f:\N \to \N\) given by \(f(n) = n+4\).\item\hypertarget{li-308}{}\(f:\Z \to \Z\) given by \(f(n) = n+4\).\item\hypertarget{li-309}{}\(f:\Z \to \Z\) given by \(f(n) = 5n - 8\).\item\hypertarget{li-310}{}\(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n/2 \amp  \mbox{ if  is even} \\
                                          (n+1)/2 \amp  \mbox{ if  is odd} .
 \end{cases}\)\end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-21}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-49}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-201}{}\(f\) is injective, but not surjective.\item\hypertarget{li-202}{}\(f\) is injective and surjective.\item\hypertarget{li-203}{}\(f\) is injective, but not surjective.\item\hypertarget{li-204}{}\(f\) is not injective, but is surjective.\end{enumerate}
-\item[6.]\hypertarget{exercise-22}{}
+\item\hypertarget{li-311}{}\(f\) is injective, but not surjective.\item\hypertarget{li-312}{}\(f\) is injective and surjective.\item\hypertarget{li-313}{}\(f\) is injective, but not surjective.\item\hypertarget{li-314}{}\(f\) is not injective, but is surjective.\end{enumerate}
+\item[6.]\hypertarget{exercise-32}{}
 Let \(A = \{1,2,3,\ldots,10\}\). Consider the function \(f:\pow(A) \to \N\) given by \(f(B) = |B|\). That is, \(f\) takes a subset of \(A\) as an input and outputs the cardinality of that set.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-205}{}
+\item\hypertarget{li-315}{}
 Is \(f\) injective?  Prove your answer.
 %
-\item\hypertarget{li-206}{}
+\item\hypertarget{li-316}{}
 Is \(f\) surjective?  Prove your answer.
 %
-\item\hypertarget{li-207}{}
+\item\hypertarget{li-317}{}
 Find \(f\inv(1)\).
 %
-\item\hypertarget{li-208}{}
+\item\hypertarget{li-318}{}
 Find \(f\inv(0)\).
 %
-\item\hypertarget{li-209}{}
+\item\hypertarget{li-319}{}
 Find \(f\inv(12)\).
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-22}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-50}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-210}{}\(f\) is not injective.  To prove this, we must simply find two different elements of the domain which map to the same element of the codomain.  Since \(f(\{1\}) = 1\) and \(f(\{2\}) = 1\), we see that \(f\) is not injective.\item\hypertarget{li-211}{}\(f\) is not surjective.  The largest subset of \(A\) is \(A\) itself, and \(|A| = 10\).  So no natural number greater than 10 will ever be an output.\item\hypertarget{li-212}{}\(f\inv(1) = \{\{1\}, \{2\}, \{3\}, \ldots \{10\}\}\) (the set of all the singleton subsets of \(A\)).\item\hypertarget{li-213}{}\(f\inv(0) = \{\emptyset\}\).  Note, it would be wrong to write \(f\inv(0) = \emptyset\) - that would claim that there is no input which has 0 as an output.\item\hypertarget{li-214}{}\(f\inv(12) = \emptyset\), since there are no subsets of \(A\) with cardinality 12.\end{enumerate}
-\item[7.]\hypertarget{exercise-23}{}
+\item\hypertarget{li-320}{}\(f\) is not injective.  To prove this, we must simply find two different elements of the domain which map to the same element of the codomain.  Since \(f(\{1\}) = 1\) and \(f(\{2\}) = 1\), we see that \(f\) is not injective.\item\hypertarget{li-321}{}\(f\) is not surjective.  The largest subset of \(A\) is \(A\) itself, and \(|A| = 10\).  So no natural number greater than 10 will ever be an output.\item\hypertarget{li-322}{}\(f\inv(1) = \{\{1\}, \{2\}, \{3\}, \ldots \{10\}\}\) (the set of all the singleton subsets of \(A\)).\item\hypertarget{li-323}{}\(f\inv(0) = \{\emptyset\}\).  Note, it would be wrong to write \(f\inv(0) = \emptyset\) - that would claim that there is no input which has 0 as an output.\item\hypertarget{li-324}{}\(f\inv(12) = \emptyset\), since there are no subsets of \(A\) with cardinality 12.\end{enumerate}
+\item[7.]\hypertarget{exercise-33}{}
 Let \(A = \{n \in \N \st 0 \le n \le 999\}\) be the set of all numbers with three or fewer digits. Define the function \(f:A \to \N\) by \(f(abc) = a+b+c\), where \(a\), \(b\), and \(c\) are the digits of the number in \(A\). For example, \(f(253) = 2 + 5 + 3 =  10\).
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-215}{}
+\item\hypertarget{li-325}{}
 Find \(f\inv(3)\).
 %
-\item\hypertarget{li-216}{}
+\item\hypertarget{li-326}{}
 Find \(f\inv(28)\).
 %
-\item\hypertarget{li-217}{}
+\item\hypertarget{li-327}{}
 Is \(f\) injective.  Explain.
 %
-\item\hypertarget{li-218}{}
+\item\hypertarget{li-328}{}
 Is \(f\) surjective. Explain.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-23}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-51}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-219}{}\(f\inv(3) = \{003, 030, 300, 012, 021, 102, 201, 120, 210, 111\}\)\item\hypertarget{li-220}{}\(f\inv(28) = \emptyset\) (since the largest sum of three digits is \(9+9+9 = 27\))\item\hypertarget{li-221}{}
+\item\hypertarget{li-329}{}\(f\inv(3) = \{003, 030, 300, 012, 021, 102, 201, 120, 210, 111\}\)\item\hypertarget{li-330}{}\(f\inv(28) = \emptyset\) (since the largest sum of three digits is \(9+9+9 = 27\))\item\hypertarget{li-331}{}
 Part (a) proves that \(f\) is not injective - the output 3 is assigned to 10 different inputs.
 %
-\item\hypertarget{li-222}{}
+\item\hypertarget{li-332}{}
 Part (b) proves that \(f\) is not surjective - there is an element of the codomain (28) which is assigned to no inputs.
 %
 \end{enumerate}
-\item[8.]\hypertarget{exercise-24}{}
+\item[8.]\hypertarget{exercise-34}{}
 Let \(f:X \to Y\) be some function. Suppose \(3 \in Y\). What can you say about \(f\inv(3)\) if you know,
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-223}{}\(f\) is injective? Explain.\item\hypertarget{li-224}{}\(f\) is surjective? Explain.\item\hypertarget{li-225}{}\(f\) is bijective? Explain.\end{enumerate}
+\item\hypertarget{li-333}{}\(f\) is injective? Explain.\item\hypertarget{li-334}{}\(f\) is surjective? Explain.\item\hypertarget{li-335}{}\(f\) is bijective? Explain.\end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-24}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-52}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-226}{}\(|f\inv(3)| \le 1\).  In other words, either \(f\inv(3)\) is the emptyset or is a set containing exactly one element.  Injective functions cannot have two elements from the domain both map to 3.\item\hypertarget{li-227}{}\(|f\inv(3)| \ge 1\).  In other words, \(f\inv(3)\) is a set containing at least one elements, possibly more.  Surjective functions cannot have nothing mapping to 3.\item\hypertarget{li-228}{}\(|f\inv(3)| = 1\).  There is exactly one element from \(X\) which gets mapped to 3, so \(f\inv(3)\) is the set containing that one element.\end{enumerate}
-\item[9.]\hypertarget{exercise-25}{}
+\item\hypertarget{li-336}{}\(|f\inv(3)| \le 1\).  In other words, either \(f\inv(3)\) is the emptyset or is a set containing exactly one element.  Injective functions cannot have two elements from the domain both map to 3.\item\hypertarget{li-337}{}\(|f\inv(3)| \ge 1\).  In other words, \(f\inv(3)\) is a set containing at least one elements, possibly more.  Surjective functions cannot have nothing mapping to 3.\item\hypertarget{li-338}{}\(|f\inv(3)| = 1\).  There is exactly one element from \(X\) which gets mapped to 3, so \(f\inv(3)\) is the set containing that one element.\end{enumerate}
+\item[9.]\hypertarget{exercise-35}{}
 Find a set \(X\) and a function \(f:X \to \N\) so that \(f\inv(0) \cup f\inv(1) = X\).
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-25}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-53}{}\quad
 
 \(X\) can really be any set, as long as \(f(x) = 0\) or \(f(x) = 1\) for every \(x \in X\). For example, \(X = \N\) and \(f(n) = 0\) works.
 %
-\item[10.]\hypertarget{exercise-26}{}
+\item[10.]\hypertarget{exercise-36}{}
 What can you deduce about the sets \(X\) and \(Y\) if you know\dots{}
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-229}{}
+\item\hypertarget{li-339}{}
 there is an injective function \(f:X \to Y\)?  Explain.
 %
-\item\hypertarget{li-230}{}
+\item\hypertarget{li-340}{}
 there is a surjective function \(f:X \to Y\)?  Explain.
 %
-\item\hypertarget{li-231}{}
+\item\hypertarget{li-341}{}
 there is a bijectitve function \(f:X \to Y\)?  Explain.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-26}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-54}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-232}{}\(|X| \le |Y|\). Otherwise two or more of the elements of \(X\) would need to map to the same element of \(Y\).\item\hypertarget{li-233}{}\(|X| \ge |Y|\). Otherwise there would be one or more elements of \(Y\) which were never an output.\item\hypertarget{li-234}{}\(|X| = |Y|\).  This is the only way for both of the above to occur.\end{enumerate}
-\item[11.]\hypertarget{exercise-27}{}
+\item\hypertarget{li-342}{}\(|X| \le |Y|\). Otherwise two or more of the elements of \(X\) would need to map to the same element of \(Y\).\item\hypertarget{li-343}{}\(|X| \ge |Y|\). Otherwise there would be one or more elements of \(Y\) which were never an output.\item\hypertarget{li-344}{}\(|X| = |Y|\).  This is the only way for both of the above to occur.\end{enumerate}
+\item[11.]\hypertarget{exercise-37}{}
 Suppose \(f:X \to Y\) is a function. Which of the following are possible? Explain.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-235}{}\(f\) is injective but not surjective.\item\hypertarget{li-236}{}\(f\) is surjective but not injective.\item\hypertarget{li-237}{}\(|X| = |Y|\) and \(f\) is injective but not surjective.\item\hypertarget{li-238}{}\(|X| = |Y|\) and \(f\) is surjective but not injective.\item\hypertarget{li-239}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is injective but not surjective.\item\hypertarget{li-240}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is surjective but not injective.\end{enumerate}
+\item\hypertarget{li-345}{}\(f\) is injective but not surjective.\item\hypertarget{li-346}{}\(f\) is surjective but not injective.\item\hypertarget{li-347}{}\(|X| = |Y|\) and \(f\) is injective but not surjective.\item\hypertarget{li-348}{}\(|X| = |Y|\) and \(f\) is surjective but not injective.\item\hypertarget{li-349}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is injective but not surjective.\item\hypertarget{li-350}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is surjective but not injective.\end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-27}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-55}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-241}{}
+\item\hypertarget{li-351}{}
 Yes. (Can you give an example?)
 %
-\item\hypertarget{li-242}{}
+\item\hypertarget{li-352}{}
 Yes.
 %
-\item\hypertarget{li-243}{}
+\item\hypertarget{li-353}{}
 Yes.
 %
-\item\hypertarget{li-244}{}
+\item\hypertarget{li-354}{}
 Yes.
 %
-\item\hypertarget{li-245}{}
+\item\hypertarget{li-355}{}
 No.
 %
-\item\hypertarget{li-246}{}
+\item\hypertarget{li-356}{}
 No.
 %
 \end{enumerate}
-\item[12.]\hypertarget{exercise-28}{}
+\item[12.]\hypertarget{exercise-38}{}
 Consider the function \(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n+1 \amp  \mbox{ if  is even} \\
                                                                  n-3 \amp  \mbox{ if  is odd} .
 \end{cases}\)
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-247}{}
+\item\hypertarget{li-357}{}
 Is \(f\) injective?  Prove your answer.
 %
-\item\hypertarget{li-248}{}
+\item\hypertarget{li-358}{}
 Is \(f\) surjective?  Prove your answer.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-28}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-56}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-249}{}\(f\) is injective.
+\item\hypertarget{li-359}{}\(f\) is injective.
 
 \begin{proof}\hypertarget{proof-1}{}
 
 Let \(x\) and \(y\) be elements of the domain \(\Z\). Assume \(f(x) = f(y)\). If \(x\) and \(y\) are both even, then \(f(x) = x+1\) and \(f(y) = y+1\). Since \(f(x) = f(y)\), we have \(x + 1 = y + 1\) which implies that \(x = y\). Similarly, if \(x\) and \(y\) are both odd, then \(x - 3 = y-3\) so again \(x = y\). The only other possibility is that \(x\) is even an \(y\) is odd (or visa-versa). But then \(x + 1\) would be odd and \(y - 3\) would be even, so it cannot be that \(f(x) = f(y)\). Therefore if \(f(x) = f(y)\) we then have \(x = y\), which proves that \(f\) is injective.
 %
 \end{proof}
-\item\hypertarget{li-250}{}\(f\) is surjective.
+\item\hypertarget{li-360}{}\(f\) is surjective.
 
 \begin{proof}\hypertarget{proof-2}{}
 
@@ -2442,30 +2819,30 @@ Let \(y\) be an element of the codomain \(\Z\). We will show there is an element
 %
 \end{proof}
 \end{enumerate}
-\item[13.]\hypertarget{exercise-29}{}
+\item[13.]\hypertarget{exercise-39}{}
 At the end of the semester a teacher assigns letter grades to each of her students. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-29}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-57}{}\quad
 
 Yes, this is a function, if you choose the domain and codomain correctly. The domain will be the set of students, and the codomain will be the set of possible grades. The function is almost certainly not injective, because it is likely that two students will get the same grade. The function might be surjective \textendash{} it will be if there is at least one student who gets each grade.
 %
-\item[14.]\hypertarget{exercise-30}{}
+\item[14.]\hypertarget{exercise-40}{}
 In the game of \emph{Hearts}, four players are each dealt 13 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-30}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-58}{}\quad
 
 Yes, as long as the set of cards is the domain and the set of players is the codomain. The function is not injective because multiple cards go to each player. It is surjective since all players get cards.
 %
-\item[15.]\hypertarget{exercise-31}{}
+\item[15.]\hypertarget{exercise-41}{}
 Suppose 7 players are playing 5-card stud. Each player initially receives 5 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-31}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-59}{}\quad
 
 This cannot be a function. If the domain were the set of cards, then it is not a function because not every card gets dealt to a player. If the domain were the set of players, it would not be a function because a single player would get mapped to multiple cards. Since this is not a function, it doesn't make sense to say whether it is injective/surjective/bijective.
 %
@@ -2506,23 +2883,23 @@ Before tackling these difficult questions, let's look at the basics of counting.
 \typeout{************************************************}
 \typeout{Introduction  }
 \typeout{************************************************}
-\begin{investigation}[]\label{investigation-3}
+\begin{investigation}[]\label{investigation-5}
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-255}{}A restaurant offers 8 appetizers and 14 entrées. How many choices do you have if:
+\item\hypertarget{li-365}{}A restaurant offers 8 appetizers and 14 entrées. How many choices do you have if:
 
 \begin{enumerate}
-\item\hypertarget{li-256}{} you will eat one dish, either an appetizer or an entrée?
-\item\hypertarget{li-257}{}
+\item\hypertarget{li-366}{} you will eat one dish, either an appetizer or an entrée?
+\item\hypertarget{li-367}{}
 you are extra hungry and want to eat both an appetizer and an entrée?
 \end{enumerate}
-\item\hypertarget{li-258}{}Think about the methods you used to solve question 1. Write down the rules for these methods.
-\item\hypertarget{li-259}{}Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.\item\hypertarget{li-260}{}\begin{enumerate}
-\item\hypertarget{li-261}{}
+\item\hypertarget{li-368}{}Think about the methods you used to solve question 1. Write down the rules for these methods.
+\item\hypertarget{li-369}{}Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.\item\hypertarget{li-370}{}\begin{enumerate}
+\item\hypertarget{li-371}{}
 How many ways can you select a card which is either red or a face card?
-\item\hypertarget{li-262}{}
+\item\hypertarget{li-372}{}
 How many ways can you select a card which is both red and a face card?
-\item\hypertarget{li-263}{}
+\item\hypertarget{li-373}{}
 How many ways can you select two cards so that the first one is red and the second one is a face card?
 \end{enumerate}
 \end{enumerate}
@@ -2530,7 +2907,7 @@ How many ways can you select two cards so that the first one is red and the seco
 
 Consider this rather simple counting problem: at Red Dogs and Donuts, there are 14 varieties of donuts, and 16 types of hot dogs. If you want either a donut or a dog, how many options do you have? This isn't too hard, you just add 14 and 16. Will that always work? What is important here?
 %
-\begin{assemblage}{Additive Principle}\label{assemblage-13}\par\medskip
+\begin{assemblage}{Additive Principle}\label{assemblage-12}\par\medskip
 
 The \terminology{additive principle}\index{additive principle} states that if event \(A\) can occur in \(m\) ways, and event \(B\) can occur in \(n\) \terminology{disjoint}\index{disjoint} ways, then the event ``\(A\) or \(B\)'' can occur in \(m + n\) ways.
 %
@@ -2569,7 +2946,7 @@ Break your choices up into disjoint events: \(A\) are the choices with the first
 
 Note that in both of the previous examples, when using the additive principle on a bunch of events all the same size, it is quicker to multiply. This really is the same, and not just because \(6 + 6 + 6 + 6 = 4\cdot 6\). We can first select the topping in 4 ways (that is, we first select which of the disjoint events we will take). For each of those first 4 choices, we now have 6 choices of yogurt. We have:
 %
-\begin{assemblage}{Multiplicative Principle}\label{assemblage-14}\par\medskip
+\begin{assemblage}{Multiplicative Principle}\label{assemblage-13}\par\medskip
 
 The \terminology{multiplicative principle}\index{multiplicative principle} states that if event \(A\) can occur in \(m\) ways, and each possibility for \(A\) allows for exactly \(n\) ways for event \(B\), then the event ``\(A\) and \(B\)'' can occur in \(m \cdot n\) ways.
 %
@@ -2632,10 +3009,10 @@ Suppose you own 9 shirts and 5 pairs of pants.
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-264}{}
+\item\hypertarget{li-374}{}
 How many outfits can you make?
 %
-\item\hypertarget{li-265}{}
+\item\hypertarget{li-375}{}
 If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?
 %
 \end{enumerate}
@@ -2652,7 +3029,7 @@ Now look at this using sets. There are two sets, call them \(S\) and \(P\). The 
 
 From this example we can see right away how to rephrase our additive principle in terms of sets:
 %
-\begin{assemblage}{Additive Principle (with sets)}\label{assemblage-15}\par\medskip
+\begin{assemblage}{Additive Principle (with sets)}\label{assemblage-14}\par\medskip
 
 \index{additive principle}
 Given two sets \(A\) and \(B\), if \(A \cap B = \emptyset\) (that is, if there is no element in common to both \(A\) and \(B\)), then
@@ -2669,7 +3046,7 @@ This hardly needs a proof. To find \(A \cup B\), you take everything in \(A\) an
 
 From the example above, we see that in order to investigate the multiplicative principle carefully, we need to consider ordered pairs. We should define this carefully:
 %
-\begin{assemblage}{Cartesian Product}\label{assemblage-16}\par\medskip
+\begin{assemblage}{Cartesian Product}\label{assemblage-15}\par\medskip
 
 Given sets \(A\) and \(B\), we can form the \terminology{set} \(A \times B = \{(x,y) \st x \in A \wedge y \in B\}\) to be the set of all ordered pairs \((x,y)\) where \(x\) is an element of \(A\) and \(y\) is an element of \(B\). We call \(A \times B\) the \terminology{Cartesian product}\index{Cartesian product} of \(A\) and \(B\).
 %
@@ -2708,7 +3085,7 @@ So \(A \times B\) is really the union of \(m\) disjoint sets. Each of those sets
 
 To summarize:
 %
-\begin{assemblage}{Multiplicative Principle (with sets)}\label{assemblage-17}\par\medskip
+\begin{assemblage}{Multiplicative Principle (with sets)}\label{assemblage-16}\par\medskip
 
 \index{multiplicative principle}
 Given two sets \(A\) and \(B\), we have \(|A \times B| = |A| \cdot |B|\).
@@ -2754,7 +3131,7 @@ This works for this one example. Will it always work? Think about what we are do
 
 In other words, we have:
 %
-\begin{assemblage}{Cardinality of a union (2 sets)}\label{assemblage-18}\par\medskip
+\begin{assemblage}{Cardinality of a union (2 sets)}\label{assemblage-17}\par\medskip
 
 For any finite sets \(A\) and \(B\),
 \begin{equation*}
@@ -2831,7 +3208,7 @@ Note that we can also answer other questions. For example, now many students fai
 
 Could we have solved the problem above in an algebraic way? While the additive principle generalizes to any number of sets, when we add a third set here, we must be careful. With two sets, we needed to know the cardinalities of \(A\), \(B\), and \(A \cap B\) in order to find the cardinality of \(A \cup B\). With three sets we need more information. There are more ways the sets can combine. Not surprisingly then, the formula for cardinality of the union of three non-disjoint sets is more complicated:
 %
-\begin{assemblage}{Cardinality of a union (3 sets)}\label{assemblage-19}\par\medskip
+\begin{assemblage}{Cardinality of a union (3 sets)}\label{assemblage-18}\par\medskip
 
 For any finite sets \(A\), \(B\), and \(C\),
 \begin{equation*}
@@ -2861,142 +3238,142 @@ This process of adding in, then taking out, then adding back in, and so on is ca
 \typeout{************************************************}
 \typeout{Exercises 2.1.2.1 Exercises}
 \typeout{************************************************}
-\subsubsection[Exercises]{Exercises}\label{exercises-3}
+\subsubsection[Exercises]{Exercises}\label{exercises-4}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-32}{}
+\item[1.]\hypertarget{exercise-42}{}
 Your wardrobe consists of 5 shirts, 3 pairs of pants, and 17 bow ties\index{bow ties}. How many different outfits can you make?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-32}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-65}{}\quad
 
 255.
 %
-\item[2.]\hypertarget{exercise-33}{}
+\item[2.]\hypertarget{exercise-43}{}
 For your college interview, you must wear a tie. You own 3 regular (boring) ties and 5 (cool) bow ties. How many choices do you have for your neck-wear?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-33}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-66}{}\quad
 
 8.
 %
-\item[3.]\hypertarget{exercise-34}{}
+\item[3.]\hypertarget{exercise-44}{}
 You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-34}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-67}{}\quad
 
 15.
 %
-\item[4.]\hypertarget{exercise-35}{}
+\item[4.]\hypertarget{exercise-45}{}
 For the rest of your outfit, you have 5 shirts, 4 skirts, 3 pants, and 7 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-35}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-68}{}\quad
 
 \(5\cdot (4+3) + 7 = 42\).
 %
-\item[5.]\hypertarget{exercise-36}{}
+\item[5.]\hypertarget{exercise-46}{}
 Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an example of a question for which the answer is:
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-266}{}
+\item\hypertarget{li-376}{}
 16.
 %
-\item\hypertarget{li-267}{}
+\item\hypertarget{li-377}{}
 63.
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-36}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-69}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-268}{}
+\item\hypertarget{li-378}{}
 16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.
 %
-\item\hypertarget{li-269}{}
+\item\hypertarget{li-379}{}
 63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.
 %
 \end{enumerate}
-\item[6.]\hypertarget{exercise-37}{}
+\item[6.]\hypertarget{exercise-47}{}
 If \(|A| = 10\) and \(|B| = 15\), what is the largest possible value for \(|A \cap B|\)? What is the smallest? What are the possible values for \(|A \cup B|\)?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-37}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-70}{}\quad
 
 \(0 \le |A \cap B| \le 10\) and \(15 \le |A \cup B| \le 25\).
 %
-\item[7.]\hypertarget{exercise-38}{}
+\item[7.]\hypertarget{exercise-48}{}
 If \(|A| = 8\) and \(|B| = 5\), what is \(|A \cup B| + |A \cap B|\)?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-38}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-71}{}\quad
 
 \(|A \cup B| + |A \cap B| = 13\).
 %
-\item[8.]\hypertarget{exercise-39}{}
+\item[8.]\hypertarget{exercise-49}{}
 A group of college students were asked about their TV watching habits. Of those surveyed, 28 students watch \emph{The Walking Dead}, 19 watch \emph{The Blacklist}, and 24 watch \emph{Game of Thrones}. Additionally, 16 watch \emph{The Walking Dead} and \emph{The Blacklist}, 14 watch \emph{The Walking Dead} and \emph{Game of Thrones}, and 10 watch \emph{The Blacklist} and \emph{Game of Thrones}. There are 8 students who watch all three shows. How many students surveyed watched at least one of the shows?
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-39}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-72}{}\quad
 
 39.
 %
-\item[9.]\hypertarget{exercise-40}{}
+\item[9.]\hypertarget{exercise-50}{}
 Find \(|(A \cup C)\setminus B|\) provided \(|A| = 50\), \(|B| = 45\), \(|C| = 40\), \(|A\cap B| = 20\), \(|A \cap C| = 15\), \(|B \cap C| = 23\), and \(|A \cap B \cap C| = 12\).
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-40}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-73}{}\quad
 
 \(|(A \cup C)\setminus B| = 44\). Use a Venn diagram.
 %
-\item[10.]\hypertarget{exercise-41}{}
+\item[10.]\hypertarget{exercise-51}{}
 Using the same data as the previous question, describe a set with cardinality 26.
 %
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-41}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-74}{}\quad
 
 One possibility: \((A \cup B) \cap C\).
 %
-\item[11.]\hypertarget{exercise-42}{}
+\item[11.]\hypertarget{exercise-52}{}
 Consider all 5 letter ``words'' made from the letters \(a\) through \(h\). (Recall, words are just strings of letters, not necessarily actual Elglish words.)
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-270}{}
+\item\hypertarget{li-380}{}
 How many of these words are there total?
 %
-\item\hypertarget{li-271}{}
+\item\hypertarget{li-381}{}
 How many of these words contain no repeated letters?
 %
-\item\hypertarget{li-272}{}
+\item\hypertarget{li-382}{}
 How many of these words (repetitions allowed) start with the sub-word ``aha''?
 %
-\item\hypertarget{li-273}{}
+\item\hypertarget{li-383}{}
 How many of these words (repetitions allowed) either start with ``aha'' or end with ``bah'' or both?
 %
-\item\hypertarget{li-274}{}
+\item\hypertarget{li-384}{}
 How many of the words containing no repeats also do not contain the sub-word ``bad'' (in consecutive letters)?
 %
 \end{enumerate}
 \par\smallskip
 \par\smallskip
-\noindent\textbf{Answer.}\hypertarget{answer-42}{}\quad
+\noindent\textbf{Solution.}\hypertarget{solution-75}{}\quad
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-275}{}\(8^5\), since you select from 8 letters 5 times.\item\hypertarget{li-276}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4\).  After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-277}{}
+\item\hypertarget{li-385}{}\(8^5\), since you select from 8 letters 5 times.\item\hypertarget{li-386}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4\).  After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-387}{}
 64 - you need to select the 4th and 5th letters.
 %
-\item\hypertarget{li-278}{}\(64 + 64 - 0 = 128\).  There are 64 words which start with ``aha'' and another 64 words that end with ``bah.''  Perhaps we over counted the words that both start with ``aha'' and end with ``bah'' but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-279}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\). All the words minus the bad ones.  The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
+\item\hypertarget{li-388}{}\(64 + 64 - 0 = 128\).  There are 64 words which start with ``aha'' and another 64 words that end with ``bah.''  Perhaps we over counted the words that both start with ``aha'' and end with ``bah'' but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-389}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\). All the words minus the bad ones.  The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
 \end{exerciselist}
 \end{document}
