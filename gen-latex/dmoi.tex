@@ -1,11 +1,11 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-07-29T13:06:22-06:00    *%
+%*    on 2016-07-29T14:50:23-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
 %**************************************%
-\documentclass[10pt,]{book}
+\documentclass[10pt,]{memoir}
 %% Load geometry package to allow page margin adjustments
 \usepackage{geometry}
 \geometry{letterpaper,total={5.0in,9.0in}}
@@ -18,6 +18,7 @@
 %% and read "Fewer fragile commands" in distribution's  latexchanges.pdf
 \IfFileExists{latexrelease.sty}{}{\usepackage{fixltx2e}}
 %% Page Layout Adjustments (latex.geometry)
+\geometry{letterpaper,total={6.5in,9in}}
 %% This LaTeX file may be compiled with pdflatex or xelatex
 %% The following provides engine-specific capabilities
 %% Generally, xelatex will do better languages other than US English
@@ -50,7 +51,7 @@
 %% xelatex: add StylisticSet 1 for shapely \ell
 %% xelatex: add StylisticSet 2 for plain zero
 %% xelatex: we add StylisticSet 3 for upright quotes
-%% 
+%%
 \ifthenelse{\boolean{xetex}}{%
 %% begin: xelatex-specific monospace font
 \usepackage{zi4}
@@ -84,7 +85,7 @@
 %% The latex default is 3.  If a larger number is present here, then
 %% removing this command may make some cross-references ambiguous
 %% The precursor variable $numbering-maxlevel is checked for consistency in the common XSL file
-\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{1}
 %% Environments with amsthm package
 %% Theorem-like environments in "plain" style, with or without proof
 \usepackage{amsthm}
@@ -93,7 +94,7 @@
 %% Controlled by  numbering.theorems.level  processing parameter
 %% Always need a theorem environment to set base numbering scheme
 %% even if document has no theorems (but has other environments)
-\newtheorem{theorem}{Theorem}[section]
+\newtheorem{theorem}{Theorem}[chapter]
 %% Only variants actually used in document appear here
 %% Style is like a theorem, and for statements without proofs
 %% Numbering: all theorem-like numbered consecutively
@@ -106,8 +107,7 @@
 %% Controlled by  numbering.projects.level  processing parameter
 %% Always need a project environment to set base numbering scheme
 %% even if document has no projectss (but has other blocks)
-\newtheorem{project}{Project}[section]
-%% Project-like environments, normal text
+\newtheorem{project}{Project}%% Project-like environments, normal text
 \theoremstyle{definition}
 \newtheorem{investigation}[project]{\emph{Investigate!}}
 %% assemblage: minimally structured content, high visibility presentation
@@ -124,10 +124,11 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 \newtheorem{exercise}[theorem]{Exercise}
 %% Localize LaTeX supplied names (possibly none)
 \renewcommand*{\proofname}{Proof}
+\renewcommand*{\appendixname}{Appendix}
 \renewcommand*{\chaptername}{Chapter}
 %% Equation Numbering
 %% Controlled by  numbering.equations.level  processing parameter
-\numberwithin{equation}{section}
+\numberwithin{equation}{chapter}
 %% For improved tables
 \usepackage{array}
 %% Some extra height on each row is desirable, especially with horizontal rules
@@ -171,13 +172,13 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 %% You can remove all this figure/table setup, to restore standard LaTeX behavior
 %% HOWEVER, numbering of figures/tables AND theorems/examples/remarks, etc
 %% WILL ALL de-synchronize with the numbering in the HTML version
-%% You can remove the [H] argument of the \newfloat command, to allow flotation and 
+%% You can remove the [H] argument of the \newfloat command, to allow flotation and
 %% preserve numbering, BUT the numbering may then appear "out-of-order"
 \usepackage{float}
-\usepackage[bf]{caption} % http://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 
+\usepackage[bf]{caption} % http://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment
 \usepackage{newfloat}
-% Side-by-side elements need careful treatement for aligning captions, see: 
-% http://tex.stackexchange.com/questions/230335/vertically-aligning-minipages-subfigures-and-subtables-not-with-baseline 
+% Side-by-side elements need careful treatement for aligning captions, see:
+% http://tex.stackexchange.com/questions/230335/vertically-aligning-minipages-subfigures-and-subtables-not-with-baseline
 \usepackage{stackengine,ifthen}
 \newcounter{figstack}
 \newcounter{figindex}
@@ -220,20 +221,17 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 \hfill%
 }
 % Figure environment setup so that it no longer floats
-\SetupFloatingEnvironment{figure}{fileext=lof,placement={H},within=section,name=Figure}
-% figures have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme 
+\SetupFloatingEnvironment{figure}{fileext=lof,placement={H},within=chapter,name=Figure}
+% figures have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme
 \makeatletter
 \let\c@figure\c@theorem
 \makeatother
 % Table environment setup so that it no longer floats
-\SetupFloatingEnvironment{table}{fileext=lot,placement={H},within=section,name=Table}
-% tables have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme 
+\SetupFloatingEnvironment{table}{fileext=lot,placement={H},within=chapter,name=Table}
+% tables have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme
 \makeatletter
 \let\c@table\c@theorem
 \makeatother
-%% Footnote Numbering
-%% We reset the footnote counter, as given by numbering.footnotes.level
-\makeatletter\@addtoreset{footnote}{section}\makeatother
 %% Raster graphics inclusion, wrapped figures in paragraphs
 \usepackage{graphicx}
 %%
@@ -243,6 +241,13 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 %% Lists of exercises in their own section, maximum depth 4
 \newlist{exerciselist}{description}{4}
 \setlist[exerciselist]{leftmargin=0pt,itemsep=1.0ex,topsep=1.0ex,partopsep=0pt,parsep=0pt}
+%% Support for index creation
+%% imakeidx package does not require extra pass (as with makeidx)
+%% We set the title of the "Index" section via a keyword
+%% And we provide language support for the "see" phrase
+\usepackage{imakeidx}
+\makeindex[title=Index, intoc=true]
+\renewcommand{\seename}{see}
 %% Package for tables spanning several pages
 \usepackage{longtable}
 %% hyperref driver does not need to be specified
@@ -258,8 +263,6 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 \usetikzlibrary{positioning,matrix,arrows}
 
 \usetikzlibrary{shapes,decorations,shadows,fadings}
-
-\tikzset{every axis/.append style={width = {ifthenelse(.9\linewidth>20pt,20pt,3\linewidth)}}}
 %% If tikz has been loaded, replace ampersand with \amp macro
 \ifdefined\tikzset
     \tikzset{ampersand replacement = \amp}
@@ -267,15 +270,18 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 %% extpfeil package for certain extensible arrows,
 %% as also provided by MathJax extension of the same name
 %% NB: this package loads mtools, which loads calc, which redefines
-%%     \setlength, so it can be removed if it seems to be in the 
+%%     \setlength, so it can be removed if it seems to be in the
 %%     way and your math does not use:
-%%     
+%%
 %%     \xtwoheadrightarrow, \xtwoheadleftarrow, \xmapsto, \xlongequal, \xtofrom
-%%     
+%%
 %%     we have had to be extra careful with variable thickness
 %%     lines in tables, and so also load this package late
 \usepackage{extpfeil}
 %% Custom Preamble Entries, late (use latex.preamble.late)
+%This should load all the style information that mbx does not.
+\input{latex-preamble-styles-memoir}
+
 %% Begin: Author-provided macros
 %% (From  docinfo/macros  element)
 %% Plus three from MBX for XML characters
@@ -488,7 +494,7 @@ University of Northern Colorado, 2016
     %
 %% end:   preface
 %% begin: table of contents
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 \renewcommand*\contentsname{Contents}
 \tableofcontents
 %% end:   table of contents
@@ -583,7 +589,7 @@ University of Northern Colorado, 2016
     the framework of discrete mathematics.
   %
 \typeout{************************************************}
-\typeout{Section 1.2 
+\typeout{Section 1.2
     Mathematical Statements
   }
 \typeout{************************************************}
@@ -620,7 +626,7 @@ Troll 3: Either we are all knaves or at least one of us is a knight.%
       Communication in mathematics requires more precision than many other subjects, and thus we should take a few pages here to consider the basic building blocks: \emph{mathematical statements}.
     %
 \typeout{************************************************}
-\typeout{Subsection 1.2.1 Atomic and Molecular Statements}
+\typeout{Subsection  Atomic and Molecular Statements}
 \typeout{************************************************}
 \subsection[Atomic and Molecular Statements]{Atomic and Molecular Statements}\label{atomic-molecular-statements}
 
@@ -774,7 +780,7 @@ Troll 3: Either we are all knaves or at least one of us is a knight.%
       \(P \imp Q\) which has a slightly different meaning in mathematics than it does in ordinary usage. However, implications are so common and useful in mathematics, that we must develop fluency with their use, and as such, they deserve their own subsection.
     %
 \typeout{************************************************}
-\typeout{Subsection 1.2.2 Implications}
+\typeout{Subsection  Implications}
 \typeout{************************************************}
 \subsection[Implications]{Implications}\label{subsec_implications}
 
@@ -855,7 +861,7 @@ Decide which of the following statements are true and which are false. Briefly e
 
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           All four of the statements are true. Remember, the only way for an implication to be false is for the
           \emph{if} part to be true and the
           \emph{then} part to be false.
@@ -893,7 +899,7 @@ Decide which of the following statements are true and which are false. Briefly e
           \(a+b\) is even.
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           Suppose the numbers
           \(a\) and
           \(b\) are even. This means that
@@ -960,7 +966,7 @@ Decide which of the following statements are true and which are false. Briefly e
 \begin{example}[]\label{example-5}
 True or false: If you draw any nine playing cards from a regular deck, then you will have at least three cards all of the same suit. Is the converse true?%
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           True. The original implication is a little hard to analyze because there are so many different combinations of nine cards. But consider the contrapositive: If you
           \emph{don't} have at least three cards all of the same suit, then you don't have nine cards. It is easy to see why this is true: you can at most have two cards of each of the four suits, for a total of eight cards (or fewer).
         %
@@ -981,7 +987,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}
 \item\hypertarget{li-35}{}Sue gets a 93\% on her final.\item\hypertarget{li-36}{}Sue gets an A in the class.\item\hypertarget{li-37}{}Sue does not get a 93\% on her final.\item\hypertarget{li-38}{}Sue does not get an A in the class.\end{enumerate}
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           Note first that whenever
           \(P \imp Q\) and
           \(P\) are both true statements,
@@ -1088,7 +1094,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           ``if I dream, then I am asleep'' in as many different ways as possible. Then do the same for the converse.
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           The following are all equivalent to the original implication:
         %
 \leavevmode%
@@ -1168,7 +1174,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           \(f(x) = |x|\) at the point 0). Restate this fact using necessary and sufficient language.
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           It is true that in order for a function to be differentiable at a point
           \(c\), it is necessary for the function to be continuous at
           \(c\). However, it is not necessary that a function be differentiable at
@@ -1190,7 +1196,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
       \emph{be enough} (be sufficient) to prove your fact. If you have an assumption, think about what must also be necessary if that hypothesis is true.
     %
 \typeout{************************************************}
-\typeout{Subsection 1.2.3 Quantifiers}
+\typeout{Subsection  Quantifiers}
 \typeout{************************************************}
 \subsection[Quantifiers]{Quantifiers}\label{subsec_quantifiers}
 \typeout{************************************************}
@@ -1327,7 +1333,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
       Essentially, we can pass the negation symbol over a quantifier, but that causes the quantifier to switch type. This should not be surprising: if not everything is a property, then something doesn't have that property. And if there is not something with a property, then everything doesn't have that property.
     %
 \typeout{************************************************}
-\typeout{Exercises 1.2.4 Exercises}
+\typeout{Exercises  Exercises}
 \typeout{************************************************}
 \subsection[Exercises]{Exercises}\label{exercises-1}
 \begin{exerciselist}
@@ -1338,11 +1344,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-7}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-67}{}This is not a statement; it does not make sense to say it is true or false.\item\hypertarget{li-68}{}This is an atomic statement (there are some quantifiers, but no connectives).\item\hypertarget{li-69}{}This is a molecular statement, specifically a disjunction.  Although if we read into it a bit more, what the speaker is really saying is that if the Broncos do not win the super bowl, then he will eat his hat, which would be a conditional.\item\hypertarget{li-70}{}This is a molecular statement, a conditional.\item\hypertarget{li-71}{}This is an atomic statement.  Even though there is an ``or'' in the statement, it would not make sense to consider the two halves of the disjuction.  This is because we quantified \emph{over} the disjunction.  In symbols, we have \(\forall x (x > 1 \imp (P(x) \vee C(x)))\).  If we drop the quantifier, we are not left with a statement, since there is a free variable.\item\hypertarget{li-72}{}This is not a statement, although it certainly looks like one.  Remember that statements must be true or false.  If this sentence were true, that would make it false.  If it were false, that would make it true.  Examples like this are rare and usually arise from some sort of self reference.\end{enumerate}
 \item[2.]\hypertarget{exercise-2}{}
     Suppose \(P\) and \(Q\) are the statements:
     \(P\): Jack passed math.
@@ -1361,22 +1362,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
      %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-8}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-80}{}\(P \wedge Q\).\item\hypertarget{li-81}{}\(P \imp \neg Q\).\item\hypertarget{li-82}{}
-    Jack passed math or Jill passed math (or both).
-    %
-\item\hypertarget{li-83}{}
-    If Jack and Jill did not both pass math, then Jill did.
-    %
-\item\hypertarget{li-84}{}
-    \begin{enumerate}[label=\roman*.]
-\item\hypertarget{li-85}{} Nothing else. \item\hypertarget{li-86}{} Jack did not pass math either.\end{enumerate}
-
-    %
-\end{enumerate}
 \item[3.]\hypertarget{exercise-3}{}
     Geoff Poshingten is out at a fancy pizza joint, and decides to order a calzone. When the waiter asks what he would like in it, he replies, ``I want either pepperoni or sausage. Also, if I have sausage, then I must also include quail. Oh, and if I have pepperoni or quail then I must also have ricotta cheese.''
     %
@@ -1387,14 +1372,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-89}{} What, if anything, can the waiter conclude about the ingredients in Geoff's desired calzone? %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-9}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-90}{} Three statements: \(P \vee S\), \(S \imp Q\), \((P \vee Q) \imp R\).  You could also connect the first two with a \(\wedge\). %
-\item\hypertarget{li-91}{} He cannot be lying about all three sentences, so he is telling the truth. %
-\item\hypertarget{li-92}{} No matter what, Geoff wants ricotta.  If he doesn't have quail, then he must have pepperoni but not sausage. %
-\end{enumerate}
 \item[4.]\hypertarget{exercise-4}{} Consider the statement ``If Oscar eats Chinese food, then he drinks milk.'' %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
@@ -1405,16 +1382,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-97}{} Suppose the original statement is true, and that Oscar does not drink milk. Can you conclude anything (about his eating Chinese food)? Explain. %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-10}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-98}{} If Oscar drinks milk, then he eats Chinese food. %
-\item\hypertarget{li-99}{} If Oscar does not drink milk, then he does not eat Chinese food. %
-\item\hypertarget{li-100}{} Yes. The original statement would be false too. %
-\item\hypertarget{li-101}{} Nothing. The converse need not be true. %
-\item\hypertarget{li-102}{} He does not eat Chinese food. The contrapositive would be true. %
-\end{enumerate}
 \item[5.]\hypertarget{exercise-5}{}
           Which of the following statements are equivalent to the implication, ``if you win the lottery, then you will be rich,'' and which are equivalent to the converse of the implication?
         %
@@ -1434,35 +1401,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-114}{} You will win the lottery if and only if you are rich. %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-11}{}\quad
-
-          The statements are equivalent to the\dots{}
-        %
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-115}{} converse. %
-\item\hypertarget{li-116}{} implication. %
-\item\hypertarget{li-117}{} neither. %
-\item\hypertarget{li-118}{} implication. %
-\item\hypertarget{li-119}{} converse. %
-\item\hypertarget{li-120}{} converse. %
-\item\hypertarget{li-121}{} implication. %
-\item\hypertarget{li-122}{} converse. %
-\item\hypertarget{li-123}{} converse. %
-\item\hypertarget{li-124}{} converse (in fact, this IS the converse). %
-\item\hypertarget{li-125}{} implication (the statement is the contrapositive of the implication). %
-\item\hypertarget{li-126}{} neither. %
-\end{enumerate}
 \item[6.]\hypertarget{exercise-6}{}
           Consider the implication, ``if you clean your room, then you can watch TV.'' Rephrase the implication in as many ways as possible. Then do the same for the converse.
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-12}{}\quad
-
-          Hint: of course there are many answers. It helps to assume that the statement is true and the converse is NOT true. Think about what that means in the real world and then start saying it in different ways. Some ideas: use necessary and sufficient language, use ``only if,'' consider negations, use ``or else'' language.
-        %
 \item[7.]\hypertarget{exercise-7}{}
           Translate into symbols. Use \(E(x)\) for ``\(x\) is even'' and \(O(x)\) for ``\(x\) is odd.''
         %
@@ -1475,11 +1417,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-131}{} There is no number between a number and one more than that number. %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-13}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-132}{}\(\neg \exists x (E(x) \wedge O(x))\).\item\hypertarget{li-133}{}\(\forall x (E(x) \imp O(x+1))\).\item\hypertarget{li-134}{}\(\exists x(P(x) \wedge E(x))\) (where \(P(x)\) means ``\(x\) is prime'').\item\hypertarget{li-135}{}\(\forall x \forall y \exists z(x \lt  z \lt  y \vee y \lt  z \lt  x)\).\item\hypertarget{li-136}{}\(\forall x \neg \exists y (x \lt  y \lt  x+1)\).\end{enumerate}
 \item[8.]\hypertarget{exercise-8}{}
           Translate into English:
         %
@@ -1487,24 +1424,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-137}{}\(\forall x (E(x) \imp E(x +2))\).\item\hypertarget{li-138}{}\(\forall x \exists y (\sin(x) = y)\).\item\hypertarget{li-139}{}\(\forall y \exists x (\sin(x) = y)\).\item\hypertarget{li-140}{}\(\forall x \forall y (x^3 = y^3 \imp x = y)\).\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-14}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-141}{} Any even number plus 2 is an even number. %
-\item\hypertarget{li-142}{} For any \(x\) there is a \(y\) such that \(\sin(x) = y\). In other words, every number \(x\) is in the domain of sine. %
-\item\hypertarget{li-143}{} For every \(y\) there is an \(x\) such that \(\sin(x) = y\). In other words, every number \(y\) is in the range of sine (which is false). %
-\item\hypertarget{li-144}{} For any numbers, if the cubes of two numbers are equal, then the numbers are equal. %
-\end{enumerate}
 \item[9.]\hypertarget{exercise-9}{}
           Suppose \(P(x)\) is some predicate for which the statement \(\forall x P(x)\) is true. Is it also the case that \(\exists x P(x)\) is true? In other words, is the statement \(\forall x P(x) \imp \exists x P(x)\) always true? Is the converse always true? Explain.
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-15}{}\quad
-
-          If \(P(x)\) is true of every \(x\), then in particular it is true of \(x = 0\) (or any fixed element of the universe). So then there is definitely some \(x\) (namely 0) for which \(P(x)\) holds. Thus \(\forall x P(x) \imp \exists x P(x)\) is always true. The converse is not always true though. Consider the predicate \(x = 5\). So \(P(x)\) is true if and only if \(x = 5\). Certainly it is true that \(\exists x P(x)\) (since we can take \(x = 5\)), but false that \(\forall x P(x)\).
-        %
 \item[10.]\hypertarget{exercise-10}{}
           For each of the statements below, give a domain of discourse for which the statement is true, and a domain for which the statement is false.
         %
@@ -1512,20 +1435,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-145}{}\(\forall x \exists y (y^2 = x)\).\item\hypertarget{li-146}{}\(\forall x \forall y \exists z (x \lt  z \lt  y)\).\item\hypertarget{li-147}{}\(\exists x \forall y \forall z (y \lt  z \imp y \le x \le z)\) Hint: domains need not be infinite.\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-16}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-148}{}
-              This says that everything has a square root (every element is the square of something). This is true of the positive real numbers, and also of the complex numbers. It is false of the natural numbers though, as for \(x = 2\) there is no natural number \(y\) such that \(y^2 = 2\).
-            %
-\item\hypertarget{li-149}{}
-              This asserts that between every pair of numbers there is some number strictly between them. This is true of the rationals (and reals) but false of the integers. If \(x = 1\) and \(y = 2\), then there is nothing we can take for \(z\).
-            %
-\item\hypertarget{li-150}{}
-              Here we are saying that something is between every pair of numbers. For almost every domain, this is false. In fact, if the domain contains \(\{1,2,3, 4\}\), then no matter what we take \(x\) to be, there will be a pair that \(x\) is NOT between. However, the set \(\{1,2,3\}\) as our domain makes the statement true. Let \(x = 2\). Then no matter what \(y\) and \(z\) we pick, if \(y \lt  z\), then 2 is between them.
-            %
-\end{enumerate}
 \end{exerciselist}
 \typeout{************************************************}
 \typeout{Section 1.3 Sets}
@@ -1544,7 +1453,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
       For us, a set will simply be an unordered collection of objects. Two examples: we could consider the set of all actors who have played \emph{The Doctor} on \emph{Doctor Who}\index{Doctor Who}, or the set of natural numbers between 1 and 10 inclusive. In the first case, Tom Baker is a element (or member) of the set, while Idris Elba, among many others, is not an element of the set. Also, the two examples are of different sets. Two sets are equal exactly if they contain the exact same elements. For example, the set containing all of the vowels in the declaration of independence is precisely the same set as the set of vowels in the word ``questionably'' (namely, all of them); we do not care about order or repetitions, just whether the element is in the set or not.
     %
 \typeout{************************************************}
-\typeout{Subsection 1.3.1 Notation}
+\typeout{Subsection  Notation}
 \typeout{************************************************}
 \subsection[Notation]{Notation}\label{subsec_notation}
 
@@ -1691,7 +1600,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
         \end{enumerate}
 \end{investigation}
 \typeout{************************************************}
-\typeout{Subsection 1.3.2 Relationships Between Sets}
+\typeout{Subsection  Relationships Between Sets}
 \typeout{************************************************}
 \subsection[Relationships Between Sets]{Relationships Between Sets}\label{subsection-5}
 
@@ -1762,7 +1671,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           Let \(A = \{1,2,3\}\). Find \(\pow(A)\).
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           \(\pow(A)\) is a set of sets, all of which are subsets of \(A\). So
           \begin{equation*}
             \pow(A) = \{ \emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1, 3\}, \{2,3\}, \{1,2,3\}\}.
@@ -1810,7 +1719,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \end{enumerate}
 \end{example}
 \typeout{************************************************}
-\typeout{Subsection 1.3.3 Operations On Sets}
+\typeout{Subsection  Operations On Sets}
 \typeout{************************************************}
 \subsection[Operations On Sets]{Operations On Sets}\label{subsection-6}
 
@@ -1906,7 +1815,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           Let \(A = \{1,2\}\) and \(B = \{3,4,5\}\). Find \(A \times B\) and \(A \times A\). How many elements do you expect to be in \(B \times B\)?
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           \(A \times B = \{(1,3), (1,4), (1,5), (2,3), (2,4), (2,5)\}\).
         %
 \par
@@ -1919,7 +1828,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
         %
 \end{example}
 \typeout{************************************************}
-\typeout{Subsection 1.3.4 Venn Diagrams}
+\typeout{Subsection  Venn Diagrams}
 \typeout{************************************************}
 \subsection[Venn Diagrams]{Venn Diagrams}\label{subsection-7}
 
@@ -1929,23 +1838,23 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{figure}
 \centering
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
             \begin{tikzpicture}[fill=gray!50,scale=0.85]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
             \begin{tikzpicture}[scale=.60, fill=gray!50]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \popValignCaptionBottom
 \end{figure}
 \par
@@ -2012,7 +1921,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
       \end{equation*}
     %
 \typeout{************************************************}
-\typeout{Exercises 1.3.5 Exercises}
+\typeout{Exercises  Exercises}
 \typeout{************************************************}
 \subsection[Exercises]{Exercises}\label{exercises-2}
 \begin{exerciselist}
@@ -2030,13 +1939,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-234}{} Is \(C \subseteq B\)? Explain. %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-23}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-235}{}\(A \cap B = \{3,4,5\}\).\item\hypertarget{li-236}{}\(A \cup B = \{1,2,3,4,5,6,7\}\).\item\hypertarget{li-237}{}\(A \setminus B = \{1,2\}\).\item\hypertarget{li-238}{}\(A \cap \bar{(B \cup C)} = \{1\}\).\item\hypertarget{li-239}{}\(A \times C = \{(1,2), (1,3), (1,5), (2,2), (2,3), (2,5), (3,2), (3,3), (3,5), (4,2), (4,3), (4,5), (5,2), (5,3), (5,5)\}\).\item\hypertarget{li-240}{}Yes.%
-\item\hypertarget{li-241}{}No.%
-\end{enumerate}
 \item[2.]\hypertarget{exercise-12}{}
           Let \(A = \{x \in \N \st 3 \le x \le 13\}\), \(B = \{x \in \N \st x \mbox{ is even} \}\), and \(C = \{x \in \N \st x \mbox{ is odd} \}\).
         %
@@ -2048,29 +1950,14 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-245}{} Find \(B \cup C\). %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-24}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-246}{}\(A \cap B = \{4,6,8,10,12\} = \{x \in \N \st (3 \le x \le 13) \wedge x \mbox{ is even}\).\item\hypertarget{li-247}{}\(A \cup B = \{3, 4, 5, \ldots, 12, 13\} = \{x \in \N \st (3 \le x \le 13) \vee x \mbox{ is even} \}\). \item\hypertarget{li-248}{}\(B \cap C = \emptyset\).\item\hypertarget{li-249}{}\(B \cup C = \N\).\end{enumerate}
 \item[3.]\hypertarget{exercise-13}{}
           Find an example of sets \(A\) and \(B\) such that \(A\cap B = \{3, 5\}\) and \(A \cup B = \{2, 3, 5, 7, 8\}\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-25}{}\quad
-
-          For example, \(A = \{2,3,5,7,8\}\) and \(B = \{3,5\}\).
-        %
 \item[4.]\hypertarget{exercise-14}{}
           Find an example of sets \(A\) and \(B\) such that \(A \subseteq B\) and \(A \in B\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-26}{}\quad
-
-          For example, \(A = \{1,2,3\}\) and \(B = \{1,2,3,4,5,\{1,2,3\}\}\)
-        %
 \item[5.]\hypertarget{exercise-15}{}
           Recall \(\Z = \{\ldots,-2,-1,0, 1,2,\ldots\}\) (the integers). Let \(\Z^+ = \{1, 2, 3, \ldots\}\) be the positive integers. Let \(2\Z\) be the even integers, \(3\Z\) be the multiples of 3, and so on.
         %
@@ -2082,22 +1969,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-253}{} Express \(\{x \in \Z \st \exists y\in \Z (x = 2y \vee x = 3y)\}\) as a union or intersection of two sets already described in this problem. %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-27}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-254}{} No. %
-\item\hypertarget{li-255}{} No. %
-\item\hypertarget{li-256}{}\(2\Z \cap 3\Z\) is the set of all integers which are multiples of both 2 and 3 (so multiples of 6). Therefore \(2\Z \cap 3\Z = \{x \in \Z \st \exists y\in \Z(x = 6y)\}\).\item\hypertarget{li-257}{}\(2\Z \cup 3\Z\).\end{enumerate}
 \item[6.]\hypertarget{exercise-16}{}
           Let \(A_2\) be the set of all multiples of 2 except for \(2\). Let \(A_3\) be the set of all multiples of 3 except for 3. And so on, so that \(A_n\) is the set of all multiple of \(n\) except for \(n\), for any \(n \ge 2\). Describe (in words) the set \(\bar{A_2 \cup A_3 \cup A_4 \cup \cdots}\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-28}{}\quad
-
-          The set of primes.
-        %
 \item[7.]\hypertarget{exercise-17}{}
           Draw a Venn diagram to represent each of the following:
         %
@@ -2105,97 +1980,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-258}{}\(A \cup \bar B\)\item\hypertarget{li-259}{}\(\bar{(A \cup B)}\)\item\hypertarget{li-260}{}\(A \cap (B \cup C)\)\item\hypertarget{li-261}{}\((A \cap B) \cup C\)\item\hypertarget{li-262}{}\(\bar A \cap B \cap \bar C\)\item\hypertarget{li-263}{}\((A \cup B) \setminus C\)\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-29}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-264}{}\(A \cup \bar B\):
-
-            \leavevmode%
-\begin{figure}
-\centering
-{
-\begin{tikzpicture}[fill=gray!50]
-    \fill \circleA;
-      \begin{scope}
-      \clip \circleB \twosetbox;
-      \fill \twosetbox;
-      \end{scope}
-      \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
-    \end{tikzpicture}
-}
-\end{figure}
-\item\hypertarget{li-265}{}\(\bar{(A \cup B)}\):
-            \leavevmode%
-\begin{figure}
-\centering
-{
-              \begin{tikzpicture}[fill=gray!50]
-  \fill \twosetbox;
-  \fill[white] \circleA \circleB;
-  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
-\end{tikzpicture}
-}
-\end{figure}
-\item\hypertarget{li-266}{}\(A \cap (B \cup C)\):
-            \leavevmode%
-\begin{figure}
-\centering
-{
-              \begin{tikzpicture}[fill=gray!50]
-\begin{scope}
-  \clip \circleA;
-  \fill \circleB \circleC;
-\end{scope}
-\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-\end{tikzpicture}
-}
-\end{figure}
-\item\hypertarget{li-267}{}\((A \cap B) \cup C\):
-            \leavevmode%
-\begin{figure}
-\centering
-{
-\begin{tikzpicture}[fill=gray!50]
-  \begin{scope}
-    \clip \circleA;
-    \fill \circleB;
-  \end{scope}
-  \fill \circleC;
-  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-  \end{tikzpicture}
-}
-\end{figure}
-\item\hypertarget{li-268}{}\(\bar A \cap B \cap \bar C\):
-            \leavevmode%
-\begin{figure}
-\centering
-{
-\begin{tikzpicture}[fill=gray!50]
-  \fill \circleB;
-  \begin{scope}
-    \clip \circleB;
-    \fill[white] \circleA \circleC;
-  \end{scope}
-
-  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-  \end{tikzpicture}
-}
-\end{figure}
-\item\hypertarget{li-269}{}\((A \cup B) \setminus C\):
-            \leavevmode%
-\begin{figure}
-\centering
-{
-\begin{tikzpicture}[fill=gray!50]
-\fill \circleA;
-\fill \circleB;
-\fill[white] \circleC;
-\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-\end{tikzpicture}
-}
-\end{figure}
-\end{enumerate}
 \item[8.]\hypertarget{exercise-18}{}
           Describe a set in terms of \(A\) and \(B\) (using set notation) which has the following Venn diagram:
         %
@@ -2221,11 +2005,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 }
 \end{figure}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-30}{}\quad
-
-          For example, \(A \cup B \cap \bar{(A \cap B)}\). Note that \(\bar{A \cap B}\) would almost work, but it also contains the area outside of both circles.
-        %
 \item[9.]\hypertarget{exercise-19}{}
           Find the following cardinalities:
         %
@@ -2233,78 +2012,34 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-270}{}\(|A|\) when \(A = \{4,5,6,\ldots,37\}\)\item\hypertarget{li-271}{}\(|A|\) when \(A = \{x \in \Z \st -2 \le x \le 100\}\)\item\hypertarget{li-272}{}\(|A \cap B|\) when \(A = \{x \in \N \st x \le 20\}\) and \(B = \{x \in \N \st x \mbox{ is prime} \}\)\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-31}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-273}{} 34. %
-\item\hypertarget{li-274}{} 103. %
-\item\hypertarget{li-275}{} 8. %
-\end{enumerate}
 \item[10.]\hypertarget{exercise-20}{}
           Let \(A = \{a, b, c, d\}\). Find \(\pow(A)\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-32}{}\quad
-
-          \(\pow(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{d\}, \{a,b\}, \{a,c\}, \{a,d\}, \{b,c\}, \{b,d\}, \{c,d\} \{a,b,c\}, \{a,b,d\}, \{a,c,d\}, \{b,c,d\}, \{a,b,c,d\}\}\).
-        %
 \item[11.]\hypertarget{exercise-21}{}
           Let \(A = \{1,2,\ldots, 10\}\). How many subsets of \(A\) contain exactly one element (i.e., how many \emph{singleton} subsets are there). How many \emph{doubleton} (containing exactly two elements) are there?
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-33}{}\quad
-
-          There are 10 singletons. There are 45 doubletons: nine that include 1, eight that include 2 (but not 1), 7 that include 3 (but not 1 or 2) and so on. \(9+8+7+\cdots+2+1 = 45\); ).
-        %
 \item[12.]\hypertarget{exercise-22}{}
           Let \(A = \{1,2,3,4,5,6\}\). Find all sets \(B \in \pow(A)\) which have the property \(\{2,3,5\} \subseteq B\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-34}{}\quad
-
-          \(\{2,3,5\}\), \(\{1,2,3,5\}\), \(\{2,3,4,5\}\), \(\{2,3,5,6\}\), \(\{1,2,3,4,5\}\), \(\{1,2,3,5,6\}\), \(\{2,3,4,5,6\}\), and \(\{1,2,3,4,5,6\}\).
-        %
 \item[13.]\hypertarget{exercise-23}{}
           Find an example of sets \(A\) and \(B\) such that \(|A| = 4\), \(|B| = 5\), and \(|A \cup B| = 9\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-35}{}\quad
-
-          For example, \(A = \{1,2,3,4\}\) and \(B = \{5,6,7,8,9\}\) gives \(A \cup B = \{1,2,3,4,5,6,7,8,9\}\).
-        %
 \item[14.]\hypertarget{exercise-24}{}
           Find an example of sets \(A\) and \(B\) such that \(|A| = 3\), \(|B| = 4\), and \(|A \cup B| = 5\).
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-36}{}\quad
-
-          For example, \(A = \{1,2,3\}\) and \(B = \{2,3,4,5\}\) gives \(A\cup B = \{1,2,3,4,5\}\).
-        %
 \item[15.]\hypertarget{exercise-25}{}
           Are there sets \(A\) and \(B\) such that \(|A| = |B|\), \(|A\cup B| = 10\), and \(|A\cap B| = 5\)? Explain.
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-37}{}\quad
-
-          No. There must be 5 elements in common to both sets. Since there are 10 distinct elements all together in \(A\) and \(B\), this means that between \(A\) and \(B\), there must be 5 elements which they do not have in common (some in \(A\) but not in \(B\), some in \(B\) but not in \(A\)). But to have \(|A| = |B|\), we would need to exclude the same number of elements from both sets.  Since 5 is odd, we would need to exclude 2.5 elements from each set making \(|A| = |B| = 7.5\) which is impossible.
-        %
 \item[16.]\hypertarget{exercise-26}{}
           In a regular deck of playing cards there are 26 red cards and 12 face cards. Explain, using sets and what you have learned about cardinalities, why there are only 32 cards which are either red or a face card.
         %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-38}{}\quad
-
-          If \(R\) is the set of red cards and \(F\) is the set of face cards, we want to find \(|R \cup F|\). This is not simply \(|R| + |F|\) because there are 6 cards which are both red and a face card; \(|R \cap F| = 6\). We find
-          \(|R \cup F| = 32\).
-        %
 \end{exerciselist}
 \typeout{************************************************}
 \typeout{Section 1.4 Functions}
@@ -2407,7 +2142,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{figure}
 \centering
 \pushValignCaptionBottom[b]{minipage}{.33333\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
         \begin{tikzpicture}[scale=0.9]
   \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
@@ -2417,10 +2152,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
             \node[above] at (0,1.5) {$f:X \to Y$};
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \pushValignCaptionBottom[b]{minipage}{.33333\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
         \begin{tikzpicture}[scale=0.9]
   \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
@@ -2431,10 +2166,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \node[above] at (0,1.5) { $g:X \to Y$};
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \pushValignCaptionBottom[b]{minipage}{.33333\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
         \begin{tikzpicture}[scale=0.9]
   \draw (-1.5,1) node[above] {1};
@@ -2446,12 +2181,12 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
             \node[above] at (0,1.5) {$h:X \to Y$};
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \popValignCaptionBottom
 \end{figure}
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           \(f\) is a function. So is \(g\). There is no problem with an element of the codomain not being the output for any input, and there is no problem with \(a\) from the codomain being the output of both 2 and 3 from the domain. We could use our two-line matrix notation to write these as
           \begin{equation*}
             f= \begin{pmatrix} 1 \amp 2 \amp 3 \amp 4 \\ d \amp a \amp c \amp b \end{pmatrix} \qquad g = \begin{pmatrix} 1 \amp 2 \amp 3 \amp 4 \\ d \amp a \amp a \amp b \end{pmatrix}.
@@ -2466,7 +2201,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{figure}
 \centering
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
         \begin{tikzpicture}[scale=0.9]
   \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
@@ -2475,10 +2210,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
        \begin{tikzpicture}[scale=0.9]
   \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
@@ -2489,8 +2224,8 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
+}% end body
+{}% caption
 \popValignCaptionBottom
 \end{figure}
 \par
@@ -2503,7 +2238,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
         %
 \end{example}
 \typeout{************************************************}
-\typeout{Subsection 1.4.1 Surjections, Injections, and Bijections}
+\typeout{Subsection  Surjections, Injections, and Bijections}
 \typeout{************************************************}
 \subsection[Surjections, Injections, and Bijections]{Surjections, Injections, and Bijections}\label{subsec_surj-inj-bij}
 
@@ -2524,7 +2259,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{figure}
 \centering
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
@@ -2535,11 +2270,11 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
+}% end body
 {\captionof{figure}{Surjective.\label{figure-21}}
-}% caption 
+}% caption
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
@@ -2550,9 +2285,9 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
+}% end body
 {\captionof{figure}{Not surjective.\label{figure-22}}
-}% caption 
+}% caption
 \popValignCaptionBottom
 \end{figure}
 \begin{example}[]\label{example-18}
@@ -2594,7 +2329,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{figure}
 \centering
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
@@ -2605,11 +2340,11 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
+}% end body
 {\captionof{figure}{Injective.\label{figure-24}}
-}% caption 
+}% caption
 \pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
+\centering% horizontal alignment
 {
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
@@ -2620,11 +2355,11 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
+}% end body
 {\captionof{figure}{
             Not injective.
         \label{figure-25}}
-}% caption 
+}% caption
 \popValignCaptionBottom
 \end{figure}
 \begin{example}[]\label{example-19}
@@ -2658,7 +2393,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
       \terminology{bijective} function.
     %
 \typeout{************************************************}
-\typeout{Subsection 1.4.2 Inverse Image}
+\typeout{Subsection  Inverse Image}
 \typeout{************************************************}
 \subsection[Inverse Image]{Inverse Image}\label{subsection-9}
 
@@ -2683,7 +2418,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           Find the complete inverse image of each element in the codomain.
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           Remember, we are looking for sets.
           \begin{equation*}
             f\inv(a) = \{1,2\}
@@ -2701,7 +2436,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           Consider the function \(g:\Z \to \Z\) defined by \(g(n) = n^2 + 1\). Find \(g\inv(1)\), \(g\inv(2)\), \(g\inv(3)\) and \(g\inv(10)\).
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           To find \(g\inv(1)\), we need to find all integers \(n\) such that \(n^2 + 1 = 1\). Clearly only 0 works, so \(g\inv(1) = \{0\}\) (note that even though there is only one element, we still write it as a set with one element in it).
         %
 \par
@@ -2726,7 +2461,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           Find a function \(f:\{1,2,3,4,5\} \to \N\) such that \(\card{f\inv(7)} = 5\).
         %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
           There is only one such function. We need five elements of the domain to map to the number \(7 \in \N\). Since there are only five elements in the domain, all of them must map to 7. So
           \begin{equation*}
             f = \begin{pmatrix}1 \amp 2 \amp 3 \amp 4 \amp 5 \\ 7 \amp 7 \amp 7 \amp 7 \amp 7\end{pmatrix}.
@@ -2788,7 +2523,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
       %
 \end{assemblage}
 \typeout{************************************************}
-\typeout{Exercises 1.4.2.1 Exercises}
+\typeout{Exercises  Exercises}
 \typeout{************************************************}
 \subsubsection[Exercises]{Exercises}\label{exercises-3}
 \begin{exerciselist}
@@ -2796,42 +2531,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
             Write out all functions \(f: \{1,2,3\} \to \{a,b\}\) (using two-line notation). How many are there? How many are injective? How many are surjective? How many are both?
           %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-45}{}\quad
-
-            There are 8 different functions. In two-line notation these are:
-
-            
-              \begin{equation*} f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp a\amp a \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp b \amp b \end{pmatrix}\end{equation*}
-              \begin{equation*} f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp a\amp b \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp b \amp a \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp a\amp a \end{pmatrix}
-              \end{equation*}
-              \begin{equation*}
-                \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp b \amp a \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp a\amp b \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp b \amp b \end{pmatrix} \end{equation*}
-
-            %
-
-
-            None of the functions are injective. Exactly 6 of the functions are surjective. No functions are both (since no functions here are injective).
-          %
 \item[2.]\hypertarget{exercise-28}{}
             Write out all functions \(f: \{1,2\} \to \{a,b,c\}\) (in two-line notation). How many are there? How many are injective? How many are surjective? How many are both?
           %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-46}{}\quad
-
-            There are 9 functions: you have a choice of three outputs for \(f(1)\), and for each, you have three choices for the output \(f(2)\). Of these functions, 6 are injective, 0 are surjective, and 0 are both:
-
-            \begin{equation*}
-              f = \twoline{1 \amp 2}{a\amp a} \quad f = \twoline{1 \amp 2}{b \amp b} \quad f = \twoline{1 \amp 2}{c \amp c}
-            \end{equation*}
-             \begin{equation*}
-               f = \twoline{1 \amp 2}{a\amp b} \quad f = \twoline{1 \amp 2}{a \amp c} \quad f = \twoline{1 \amp 2}{b \amp c}
-             \end{equation*}
-             \begin{equation*}
-               f = \twoline{1 \amp 2}{b \amp a} \quad f = \twoline{1 \amp 2}{c \amp a} \quad f = \twoline{1 \amp 2}{c \amp b}
-             \end{equation*}
-          %
 \item[3.]\hypertarget{exercise-29}{}
             Consider the function \(f:\{1,2,3,4,5\} \to \{1,2,3,4\}\) given by the table below:
           %
@@ -2856,11 +2559,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
               %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-47}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-303}{}\(f\) is not injective, since \(f(2) = f(5)\) - two different inputs have the same output.\item\hypertarget{li-304}{}\(f\) is surjective, since every element of the codomain is an element of the range.\item\hypertarget{li-305}{}\(f=\begin{pmatrix}1 \amp 2 \amp 3 \amp 4 \amp 5 \\ 3 \amp 2 \amp 4 \amp 1 \amp 2\end{pmatrix}\).\end{enumerate}
 \item[4.]\hypertarget{exercise-30}{}
             Consider the function \(f:\{1,2,3,4\} \to \{1,2,3,4\}\) given by the graph below.
           %
@@ -2890,11 +2588,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
               %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-48}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-309}{}\(f\) is not injective, since \(f(1) = 3\) and \(f(4) = 3\).\item\hypertarget{li-310}{}\(f\) is not surjective, since there is no input which gives 2 as an output.\item\hypertarget{li-311}{}\(f=\begin{pmatrix} 1 \amp 2 \amp 3 \amp 4 \\ 3 \amp 4 \amp 1 \amp 3\end{pmatrix}\).\end{enumerate}
 \item[5.]\hypertarget{exercise-31}{}
             For each function given below, determine whether or not the function is injective and whether or not the function is surjective.
           %
@@ -2903,11 +2596,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \item\hypertarget{li-312}{}\(f:\N \to \N\) given by \(f(n) = n+4\).\item\hypertarget{li-313}{}\(f:\Z \to \Z\) given by \(f(n) = n+4\).\item\hypertarget{li-314}{}\(f:\Z \to \Z\) given by \(f(n) = 5n - 8\).\item\hypertarget{li-315}{}\(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n/2 \amp  \mbox{ if  is even} \\ (n+1)/2 \amp \mbox{ if  is odd} . \end{cases}
               \)\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-49}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-316}{}\(f\) is injective, but not surjective (since 0, for example, is never an output).\item\hypertarget{li-317}{}\(f\) is injective and surjective. Unlike in the previous question, every integers is an output (of the integer 4 less than it).\item\hypertarget{li-318}{}\(f\) is injective, but not surjective (10 is not 8 less than a multiple of 5, for example).\item\hypertarget{li-319}{}\(f\) is not injective, but is surjective. Every integer is an output (of twice itself, for example) but some integers are outputs of more than one input: \(f(5) = 3 = f(6)\).\end{enumerate}
 \item[6.]\hypertarget{exercise-32}{}
             Let \(A = \{1,2,3,\ldots,10\}\). Consider the function \(f:\pow(A) \to \N\) given by \(f(B) = |B|\). That is, \(f\) takes a subset of \(A\) as an input and outputs the cardinality of that set.
           %
@@ -2930,11 +2618,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
               %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-50}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-325}{}\(f\) is not injective. To prove this, we must simply find two different elements of the domain which map to the same element of the codomain. Since \(f(\{1\}) = 1\) and \(f(\{2\}) = 1\), we see that \(f\) is not injective.\item\hypertarget{li-326}{}\(f\) is not surjective. The largest subset of \(A\) is \(A\) itself, and \(|A| = 10\). So no natural number greater than 10 will ever be an output.\item\hypertarget{li-327}{}\(f\inv(1) = \{\{1\}, \{2\}, \{3\}, \ldots \{10\}\}\) (the set of all the singleton subsets of \(A\)).\item\hypertarget{li-328}{}\(f\inv(0) = \{\emptyset\}\). Note, it would be wrong to write \(f\inv(0) = \emptyset\) - that would claim that there is no input which has 0 as an output.\item\hypertarget{li-329}{}\(f\inv(12) = \emptyset\), since there are no subsets of \(A\) with cardinality 12.\end{enumerate}
 \item[7.]\hypertarget{exercise-33}{}
             Let \(A = \{n \in \N \st 0 \le n \le 999\}\) be the set of all numbers with three or fewer digits. Define the function \(f:A \to \N\) by \(f(abc) = a+b+c\), where \(a\), \(b\), and \(c\) are the digits of the number in \(A\). For example, \(f(253) = 2 + 5 + 3 =  10\).
           %
@@ -2954,17 +2637,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
               %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-51}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-334}{}\(f\inv(3) = \{003, 030, 300, 012, 021, 102, 201, 120, 210, 111\}\)\item\hypertarget{li-335}{}\(f\inv(28) = \emptyset\) (since the largest sum of three digits is \(9+9+9 = 27\))\item\hypertarget{li-336}{}
-                Part (a) proves that \(f\) is not injective. The output 3 is assigned to 10 different inputs.
-              %
-\item\hypertarget{li-337}{}
-                Part (b) proves that \(f\) is not surjective. There is an element of the codomain (28) which is not assigned to any inputs.
-              %
-\end{enumerate}
 \item[8.]\hypertarget{exercise-34}{}
             Let \(f:X \to Y\) be some function. Suppose \(3 \in Y\). What can you say about \(f\inv(3)\) if you know,
           %
@@ -2972,20 +2644,10 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-338}{}\(f\) is injective? Explain.\item\hypertarget{li-339}{}\(f\) is surjective? Explain.\item\hypertarget{li-340}{}\(f\) is bijective? Explain.\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-52}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-341}{}\(|f\inv(3)| \le 1\). In other words, either \(f\inv(3)\) is the emptyset or is a set containing exactly one element. Injective functions cannot have two elements from the domain both map to 3.\item\hypertarget{li-342}{}\(|f\inv(3)| \ge 1\). In other words, \(f\inv(3)\) is a set containing at least one elements, possibly more. Surjective functions must have something map to 3.\item\hypertarget{li-343}{}\(|f\inv(3)| = 1\). There is exactly one element from \(X\) which gets mapped to 3, so \(f\inv(3)\) is the set containing that one element.\end{enumerate}
 \item[9.]\hypertarget{exercise-35}{}
             Find a set \(X\) and a function \(f:X \to \N\) so that \(f\inv(0) \cup f\inv(1) = X\).
           %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-53}{}\quad
-
-            \(X\) can really be any set, as long as \(f(x) = 0\) or \(f(x) = 1\) for every \(x \in X\). For example, \(X = \N\) and \(f(n) = 0\) works.
-          %
 \item[10.]\hypertarget{exercise-36}{}
             What can you deduce about the sets \(X\) and \(Y\) if you know
             \dots{}
@@ -3003,11 +2665,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
               %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-54}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-347}{}\(|X| \le |Y|\). Otherwise two or more of the elements of \(X\) would need to map to the same element of \(Y\).\item\hypertarget{li-348}{}\(|X| \ge |Y|\). Otherwise there would be one or more elements of \(Y\) which were never an output.\item\hypertarget{li-349}{}\(|X| = |Y|\). This is the only way for both of the above to occur.\end{enumerate}
 \item[11.]\hypertarget{exercise-37}{}
             Suppose \(f:X \to Y\) is a function. Which of the following are possible? Explain.
           %
@@ -3015,17 +2672,6 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-350}{}\(f\) is injective but not surjective.\item\hypertarget{li-351}{}\(f\) is surjective but not injective.\item\hypertarget{li-352}{}\(|X| = |Y|\) and \(f\) is injective but not surjective.\item\hypertarget{li-353}{}\(|X| = |Y|\) and \(f\) is surjective but not injective.\item\hypertarget{li-354}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is injective but not surjective.\item\hypertarget{li-355}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is surjective but not injective.\end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-55}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-356}{} Possible. For example, let \(X=\{1,2\}\) and \(Y = \{1,2,3\}\) and consider \(f=\begin{pmatrix}1 \amp 2 \\ 1 \amp 3\end{pmatrix}\). %
-\item\hypertarget{li-357}{} Possible. For example, let \(X = \{1,2\}\) and \(Y = \{1\}\) with \(f(1) = f(2) = 1\).%
-\item\hypertarget{li-358}{} Possible. This is possible, but only if both \(X\) and \(Y\) are infinite. For example, if \(X = Y = \Z\), consider \(f(x) = 2x\).%
-\item\hypertarget{li-359}{} Possible. For example, again take \(X = Y = \N\) and consider \(f(x) = \begin{cases} 0 \amp \mathrm{ if } x = 0 \\ x-1 \amp \mathrm{ if } x \ge 1\end{cases}\)%
-\item\hypertarget{li-360}{} Not possible. If \(f\) is injective, then each input corresponds to a different output, so the range is the size of \(X\), which is the size of \(Y\), so the range is all of \(Y\).%
-\item\hypertarget{li-361}{} Not possible. If \(f\) is surjective, then every element of the codomain is an output. If more than one output corresponded to a single input, we would not have enough inputs to cover all the outputs.%
-\end{enumerate}
 \item[12.]\hypertarget{exercise-38}{}
             Consider the function \(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n+1 \amp  \mbox{ if  is even} \\ n-3 \amp \mbox{ if  is odd} . \end{cases}
             \)
@@ -3040,52 +2686,18 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
               %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-56}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-364}{}\(f\) is injective.
-
-              \begin{proof}\hypertarget{proof-1}{}
-
-                  Let \(x\) and \(y\) be elements of the domain \(\Z\). Assume \(f(x) = f(y)\). If \(x\) and \(y\) are both even, then \(f(x) = x+1\) and \(f(y) = y+1\). Since \(f(x) = f(y)\), we have \(x + 1 = y + 1\) which implies that \(x = y\). Similarly, if \(x\) and \(y\) are both odd, then \(x - 3 = y-3\) so again \(x = y\). The only other possibility is that \(x\) is even an \(y\) is odd (or visa-versa). But then \(x + 1\) would be odd and \(y - 3\) would be even, so it cannot be that \(f(x) = f(y)\). Therefore if \(f(x) = f(y)\) we then have \(x = y\), which proves that \(f\) is injective.
-                %
-\end{proof}
-\item\hypertarget{li-365}{}\(f\) is surjective.
-
-              \begin{proof}\hypertarget{proof-2}{}
-
-                  Let \(y\) be an element of the codomain \(\Z\). We will show there is an element \(n\) of the domain (\(\Z\)) such that \(f(n) = y\). There are two cases: First, if \(y\) is even, then let \(n = y+3\). Since \(y\) is even, \(n\) is odd, so \(f(n) = n-3 = y+3-3 = y\) as desired. Second, if \(y\) is odd, then let \(n = y-1\). Since \(y\) is odd, \(n\) is even, so \(f(n) = n+1 = y-1+1 = y\) as needed. Therefore \(f\) is surjective.
-                %
-\end{proof}
-\end{enumerate}
 \item[13.]\hypertarget{exercise-39}{}
             At the end of the semester a teacher assigns letter grades to each of her students. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
           %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-57}{}\quad
-
-            Yes, this is a function, if you choose the domain and codomain correctly. The domain will be the set of students, and the codomain will be the set of possible grades. The function is almost certainly not injective, because it is likely that two students will get the same grade. The function might be surjective \textendash{} it will be if there is at least one student who gets each grade.
-          %
 \item[14.]\hypertarget{exercise-40}{}
             In the game of \emph{Hearts}, four players are each dealt 13 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
           %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-58}{}\quad
-
-            Yes, as long as the set of cards is the domain and the set of players is the codomain. The function is not injective because multiple cards go to each player. It is surjective since all players get cards.
-          %
 \item[15.]\hypertarget{exercise-41}{}
             Suppose 7 players are playing 5-card stud. Each player initially receives 5 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?
           %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-59}{}\quad
-
-            This cannot be a function. If the domain were the set of cards, then it is not a function because not every card gets dealt to a player. If the domain were the set of players, it would not be a function because a single player would get mapped to multiple cards. Since this is not a function, it doesn't make sense to say whether it is injective/surjective/bijective.
-          %
 \end{exerciselist}
 \typeout{************************************************}
 \typeout{Chapter 2 Counting}
@@ -3165,7 +2777,7 @@ The additive principle works with more than two events. Say, in addition to your
 How many two letter ``words''\index{words} start with either A or B? How many start with one of the 5 vowels? (A word is just a strings of letters; it doesn't have to be English, or even pronounceable.)
 %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
 First, how many two letter words start with A? We just need to select the second letter, which can be accomplished in 26 ways. So there are 26 words starting with A. There are also 26 words that start with B. To select a word which starts with either A or B, we can pick the word from the first 26 or the second 26, for a total of 52 words. The additive principle is at work here.
 %
 \par
@@ -3178,7 +2790,7 @@ Now what about all the two letter words starting with a vowel? There are 26 star
 Suppose you are going for some fro-yo. You can pick one of 6 yogurt choices, and one of 4 toppings. How many choices do you have?
 %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
 Break your choices up into disjoint events: \(A\) are the choices with the first topping, \(B\) the choices featuring the second topping, and so on. There are four events; each can occur in 6 ways (one for each yogurt flavor). The events are disjoint, so the total number of choices is \(6 + 6 + 6 + 6 = 24\).
 %
 \end{example}
@@ -3200,7 +2812,7 @@ The multiplicative principle generalizes to more than two events as well.
 How many license plates can you make out of three letters followed by three numerical digits?
 %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
 Here we have six events: the first letter, the second letter, the third letter, the first digit, the second digit, and the third digit. The first three events can each happen in 26 ways; the last three can each happen in 10 ways. So the total number of license plates will be \(26\cdot 26\cdot 26 \cdot 10 \cdot 10 \cdot 10\), using the multiplicative principle.
 %
 \par
@@ -3229,7 +2841,7 @@ Careful: ``and'' doesn't mean ``times.'' For example, how many playing cards are
 Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the multiplicative principle (you are counting two separate events) but the answer is not \(26 \cdot 12\) here either. The problem is that while there are 26 ways for the first card to be selected, it is not the case that \emph{for each} of those there are 12 ways to select the second card. If the first card was both red and a face card, then there would be only 11 choices for the second card. The moral of this story is that the multiplicative principle only works if the events are independent.\footnote{To solve this problem, you could break it into two cases. First, count how many ways there are to select the two cards when the first card is a red non-face card. Second, count how many ways when the first card is a red face card.  Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.\label{fn-1}}
 %
 \typeout{************************************************}
-\typeout{Subsection 2.1.1 Counting With Sets}
+\typeout{Subsection  Counting With Sets}
 \typeout{************************************************}
 \subsection[Counting With Sets]{Counting With Sets}\label{subsec_countingWithSets}
 
@@ -3257,7 +2869,7 @@ If today is half-naked-day, and you will wear only a shirt or only a pair of pan
 %
 \end{enumerate}
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
 By now you should agree that the answer to the first question is \(9 \cdot 5 = 45\) and the answer to the second question is \(9 + 5 = 14\). These are the multiplicative and additive principles. There are two events: picking a shirt and picking a pair of pants. The first event can happen in 9 ways and the second event can happen in 5 ways. To get both a shirt and a pair of pants, you multiply. To get just one article of clothing, you add.
 %
 \par
@@ -3336,7 +2948,7 @@ Given two sets \(A\) and \(B\), we have \(|A \times B| = |A| \cdot |B|\).
 Again, we can easily extend this to any number of sets.
 %
 \typeout{************************************************}
-\typeout{Subsection 2.1.2 Principle of Inclusion/Exclusion}
+\typeout{Subsection  Principle of Inclusion/Exclusion}
 \typeout{************************************************}
 \subsection[Principle of Inclusion/Exclusion]{Principle of Inclusion/Exclusion}\label{sec_PIE}
 
@@ -3401,7 +3013,7 @@ Failed:&12&5&8&2&6&3&1\tabularnewline[0pt]
 How many students failed at least one subject?
 %
 \par\medskip\noindent%
-\textbf{Solution.}\quad 
+\textbf{Solution.}\quad
 The answer is not 37, even though the sum of the numbers above is 37. For example, while 12 students failed Algebra, 2 of those students also failed Biology, 6 also failed Chemestry, and 1 of those failed all three subjects. In fact, that 1 student who failed all three subjects is counted a total of 7 times in the total 37. To clarify things, let us think of the students who failed Algebra as the elements of the set \(A\), and similarly for sets \(B\) and \(C\). The one student who failed all three subjects is the lone element of the set \(A \cap B \cap C\). Thus, in Venn diagrams:
 %
 {
@@ -3476,7 +3088,7 @@ This is what we got when we solved the problem using Venn diagrams.
 This process of adding in, then taking out, then adding back in, and so on is called the \emph{Principle of Inclusion/Exclusion}, or simply PIE. We will return to this counting technique later to solve for more complicated problems (involving more than 3 sets).
 %
 \typeout{************************************************}
-\typeout{Exercises 2.1.2.1 Exercises}
+\typeout{Exercises  Exercises}
 \typeout{************************************************}
 \subsubsection[Exercises]{Exercises}\label{exercises-4}
 \begin{exerciselist}
@@ -3484,38 +3096,18 @@ This process of adding in, then taking out, then adding back in, and so on is ca
 Your wardrobe consists of 5 shirts, 3 pairs of pants, and 17 bow ties\index{bow ties}. How many different outfits can you make?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-65}{}\quad
-
-255.
-%
 \item[2.]\hypertarget{exercise-43}{}
 For your college interview, you must wear a tie. You own 3 regular (boring) ties and 5 (cool) bow ties. How many choices do you have for your neck-wear?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-66}{}\quad
-
-8.
-%
 \item[3.]\hypertarget{exercise-44}{}
 You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-67}{}\quad
-
-15.
-%
 \item[4.]\hypertarget{exercise-45}{}
 For the rest of your outfit, you have 5 shirts, 4 skirts, 3 pants, and 7 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-68}{}\quad
-
-\(5\cdot (4+3) + 7 = 42\).
-%
 \item[5.]\hypertarget{exercise-46}{}
 Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an example of a question for which the answer is:
 %
@@ -3529,62 +3121,26 @@ Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an exam
 %
 \end{enumerate}
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-69}{}\quad
-\leavevmode%
-\begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-383}{}
-16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.
-%
-\item\hypertarget{li-384}{}
-63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.
-%
-\end{enumerate}
 \item[6.]\hypertarget{exercise-47}{}
 If \(|A| = 10\) and \(|B| = 15\), what is the largest possible value for \(|A \cap B|\)? What is the smallest? What are the possible values for \(|A \cup B|\)?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-70}{}\quad
-
-\(0 \le |A \cap B| \le 10\) and \(15 \le |A \cup B| \le 25\).
-%
 \item[7.]\hypertarget{exercise-48}{}
 If \(|A| = 8\) and \(|B| = 5\), what is \(|A \cup B| + |A \cap B|\)?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-71}{}\quad
-
-\(|A \cup B| + |A \cap B| = 13\).
-%
 \item[8.]\hypertarget{exercise-49}{}
 A group of college students were asked about their TV watching habits. Of those surveyed, 28 students watch \emph{The Walking Dead}, 19 watch \emph{The Blacklist}, and 24 watch \emph{Game of Thrones}. Additionally, 16 watch \emph{The Walking Dead} and \emph{The Blacklist}, 14 watch \emph{The Walking Dead} and \emph{Game of Thrones}, and 10 watch \emph{The Blacklist} and \emph{Game of Thrones}. There are 8 students who watch all three shows. How many students surveyed watched at least one of the shows?
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-72}{}\quad
-
-39.
-%
 \item[9.]\hypertarget{exercise-50}{}
 Find \(|(A \cup C)\setminus B|\) provided \(|A| = 50\), \(|B| = 45\), \(|C| = 40\), \(|A\cap B| = 20\), \(|A \cap C| = 15\), \(|B \cap C| = 23\), and \(|A \cap B \cap C| = 12\).
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-73}{}\quad
-
-\(|(A \cup C)\setminus B| = 44\). Use a Venn diagram.
-%
 \item[10.]\hypertarget{exercise-51}{}
 Using the same data as the previous question, describe a set with cardinality 26.
 %
 \par\smallskip
-\par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-74}{}\quad
-
-One possibility: \((A \cup B) \cap C\).
-%
 \item[11.]\hypertarget{exercise-52}{}
 Consider all 5 letter ``words'' made from the letters \(a\) through \(h\). (Recall, words are just strings of letters, not necessarily actual Elglish words.)
 %
@@ -3607,13 +3163,460 @@ How many of the words containing no repeats also do not contain the sub-word ``b
 %
 \end{enumerate}
 \par\smallskip
+\end{exerciselist}
+%
+%% A lineskip in table of contents as transition to appendices, backmatter
+\addtocontents{toc}{\vspace{\normalbaselineskip}}
+%
+%
+\appendix
+%
+\typeout{************************************************}
+\typeout{Appendix A Solutions to Exercises}
+\typeout{************************************************}
+\chapter[Solutions to Exercises]{Solutions to Exercises}\label{appendix-1}
+\subsection*{ Exercises}
+\noindent\textbf{1.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-67}{}This is not a statement; it does not make sense to say it is true or false.\item\hypertarget{li-68}{}This is an atomic statement (there are some quantifiers, but no connectives).\item\hypertarget{li-69}{}This is a molecular statement, specifically a disjunction.  Although if we read into it a bit more, what the speaker is really saying is that if the Broncos do not win the super bowl, then he will eat his hat, which would be a conditional.\item\hypertarget{li-70}{}This is a molecular statement, a conditional.\item\hypertarget{li-71}{}This is an atomic statement.  Even though there is an ``or'' in the statement, it would not make sense to consider the two halves of the disjuction.  This is because we quantified \emph{over} the disjunction.  In symbols, we have \(\forall x (x > 1 \imp (P(x) \vee C(x)))\).  If we drop the quantifier, we are not left with a statement, since there is a free variable.\item\hypertarget{li-72}{}This is not a statement, although it certainly looks like one.  Remember that statements must be true or false.  If this sentence were true, that would make it false.  If it were false, that would make it true.  Examples like this are rare and usually arise from some sort of self reference.\end{enumerate}
 \par\smallskip
-\noindent\textbf{Solution.}\hypertarget{solution-75}{}\quad
+\noindent\textbf{2.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-80}{}\(P \wedge Q\).\item\hypertarget{li-81}{}\(P \imp \neg Q\).\item\hypertarget{li-82}{}
+    Jack passed math or Jill passed math (or both).
+    %
+\item\hypertarget{li-83}{}
+    If Jack and Jill did not both pass math, then Jill did.
+    %
+\item\hypertarget{li-84}{}
+    \begin{enumerate}[label=\roman*.]
+\item\hypertarget{li-85}{} Nothing else. \item\hypertarget{li-86}{} Jack did not pass math either.\end{enumerate}
+
+    %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{3.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-90}{} Three statements: \(P \vee S\), \(S \imp Q\), \((P \vee Q) \imp R\).  You could also connect the first two with a \(\wedge\). %
+\item\hypertarget{li-91}{} He cannot be lying about all three sentences, so he is telling the truth. %
+\item\hypertarget{li-92}{} No matter what, Geoff wants ricotta.  If he doesn't have quail, then he must have pepperoni but not sausage. %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{4.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-98}{} If Oscar drinks milk, then he eats Chinese food. %
+\item\hypertarget{li-99}{} If Oscar does not drink milk, then he does not eat Chinese food. %
+\item\hypertarget{li-100}{} Yes. The original statement would be false too. %
+\item\hypertarget{li-101}{} Nothing. The converse need not be true. %
+\item\hypertarget{li-102}{} He does not eat Chinese food. The contrapositive would be true. %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{5.}\quad{}
+          The statements are equivalent to the\dots{}
+        %
 \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-115}{} converse. %
+\item\hypertarget{li-116}{} implication. %
+\item\hypertarget{li-117}{} neither. %
+\item\hypertarget{li-118}{} implication. %
+\item\hypertarget{li-119}{} converse. %
+\item\hypertarget{li-120}{} converse. %
+\item\hypertarget{li-121}{} implication. %
+\item\hypertarget{li-122}{} converse. %
+\item\hypertarget{li-123}{} converse. %
+\item\hypertarget{li-124}{} converse (in fact, this IS the converse). %
+\item\hypertarget{li-125}{} implication (the statement is the contrapositive of the implication). %
+\item\hypertarget{li-126}{} neither. %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{6.}\quad{}
+          Hint: of course there are many answers. It helps to assume that the statement is true and the converse is NOT true. Think about what that means in the real world and then start saying it in different ways. Some ideas: use necessary and sufficient language, use ``only if,'' consider negations, use ``or else'' language.
+        %
+\par\smallskip
+\noindent\textbf{7.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-132}{}\(\neg \exists x (E(x) \wedge O(x))\).\item\hypertarget{li-133}{}\(\forall x (E(x) \imp O(x+1))\).\item\hypertarget{li-134}{}\(\exists x(P(x) \wedge E(x))\) (where \(P(x)\) means ``\(x\) is prime'').\item\hypertarget{li-135}{}\(\forall x \forall y \exists z(x \lt  z \lt  y \vee y \lt  z \lt  x)\).\item\hypertarget{li-136}{}\(\forall x \neg \exists y (x \lt  y \lt  x+1)\).\end{enumerate}
+\par\smallskip
+\noindent\textbf{8.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-141}{} Any even number plus 2 is an even number. %
+\item\hypertarget{li-142}{} For any \(x\) there is a \(y\) such that \(\sin(x) = y\). In other words, every number \(x\) is in the domain of sine. %
+\item\hypertarget{li-143}{} For every \(y\) there is an \(x\) such that \(\sin(x) = y\). In other words, every number \(y\) is in the range of sine (which is false). %
+\item\hypertarget{li-144}{} For any numbers, if the cubes of two numbers are equal, then the numbers are equal. %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{9.}\quad{}
+          If \(P(x)\) is true of every \(x\), then in particular it is true of \(x = 0\) (or any fixed element of the universe). So then there is definitely some \(x\) (namely 0) for which \(P(x)\) holds. Thus \(\forall x P(x) \imp \exists x P(x)\) is always true. The converse is not always true though. Consider the predicate \(x = 5\). So \(P(x)\) is true if and only if \(x = 5\). Certainly it is true that \(\exists x P(x)\) (since we can take \(x = 5\)), but false that \(\forall x P(x)\).
+        %
+\par\smallskip
+\noindent\textbf{10.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-148}{}
+              This says that everything has a square root (every element is the square of something). This is true of the positive real numbers, and also of the complex numbers. It is false of the natural numbers though, as for \(x = 2\) there is no natural number \(y\) such that \(y^2 = 2\).
+            %
+\item\hypertarget{li-149}{}
+              This asserts that between every pair of numbers there is some number strictly between them. This is true of the rationals (and reals) but false of the integers. If \(x = 1\) and \(y = 2\), then there is nothing we can take for \(z\).
+            %
+\item\hypertarget{li-150}{}
+              Here we are saying that something is between every pair of numbers. For almost every domain, this is false. In fact, if the domain contains \(\{1,2,3, 4\}\), then no matter what we take \(x\) to be, there will be a pair that \(x\) is NOT between. However, the set \(\{1,2,3\}\) as our domain makes the statement true. Let \(x = 2\). Then no matter what \(y\) and \(z\) we pick, if \(y \lt  z\), then 2 is between them.
+            %
+\end{enumerate}
+\par\smallskip
+\subsection*{ Exercises}
+\noindent\textbf{1.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-235}{}\(A \cap B = \{3,4,5\}\).\item\hypertarget{li-236}{}\(A \cup B = \{1,2,3,4,5,6,7\}\).\item\hypertarget{li-237}{}\(A \setminus B = \{1,2\}\).\item\hypertarget{li-238}{}\(A \cap \bar{(B \cup C)} = \{1\}\).\item\hypertarget{li-239}{}\(A \times C = \{(1,2), (1,3), (1,5), (2,2), (2,3), (2,5), (3,2), (3,3), (3,5), (4,2), (4,3), (4,5), (5,2), (5,3), (5,5)\}\).\item\hypertarget{li-240}{}Yes.%
+\item\hypertarget{li-241}{}No.%
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{2.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-246}{}\(A \cap B = \{4,6,8,10,12\} = \{x \in \N \st (3 \le x \le 13) \wedge x \mbox{ is even}\).\item\hypertarget{li-247}{}\(A \cup B = \{3, 4, 5, \ldots, 12, 13\} = \{x \in \N \st (3 \le x \le 13) \vee x \mbox{ is even} \}\). \item\hypertarget{li-248}{}\(B \cap C = \emptyset\).\item\hypertarget{li-249}{}\(B \cup C = \N\).\end{enumerate}
+\par\smallskip
+\noindent\textbf{3.}\quad{}
+          For example, \(A = \{2,3,5,7,8\}\) and \(B = \{3,5\}\).
+        %
+\par\smallskip
+\noindent\textbf{4.}\quad{}
+          For example, \(A = \{1,2,3\}\) and \(B = \{1,2,3,4,5,\{1,2,3\}\}\)
+        %
+\par\smallskip
+\noindent\textbf{5.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-254}{} No. %
+\item\hypertarget{li-255}{} No. %
+\item\hypertarget{li-256}{}\(2\Z \cap 3\Z\) is the set of all integers which are multiples of both 2 and 3 (so multiples of 6). Therefore \(2\Z \cap 3\Z = \{x \in \Z \st \exists y\in \Z(x = 6y)\}\).\item\hypertarget{li-257}{}\(2\Z \cup 3\Z\).\end{enumerate}
+\par\smallskip
+\noindent\textbf{6.}\quad{}
+          The set of primes.
+        %
+\par\smallskip
+\noindent\textbf{7.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-264}{}\(A \cup \bar B\):
+
+            \leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}[fill=gray!50]
+    \fill \circleA;
+      \begin{scope}
+      \clip \circleB \twosetbox;
+      \fill \twosetbox;
+      \end{scope}
+      \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+    \end{tikzpicture}
+}
+\end{figure}
+\item\hypertarget{li-265}{}\(\bar{(A \cup B)}\):
+            \leavevmode%
+\begin{figure}
+\centering
+{
+              \begin{tikzpicture}[fill=gray!50]
+  \fill \twosetbox;
+  \fill[white] \circleA \circleB;
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+\end{tikzpicture}
+}
+\end{figure}
+\item\hypertarget{li-266}{}\(A \cap (B \cup C)\):
+            \leavevmode%
+\begin{figure}
+\centering
+{
+              \begin{tikzpicture}[fill=gray!50]
+\begin{scope}
+  \clip \circleA;
+  \fill \circleB \circleC;
+\end{scope}
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\end{figure}
+\item\hypertarget{li-267}{}\((A \cap B) \cup C\):
+            \leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}[fill=gray!50]
+  \begin{scope}
+    \clip \circleA;
+    \fill \circleB;
+  \end{scope}
+  \fill \circleC;
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+  \end{tikzpicture}
+}
+\end{figure}
+\item\hypertarget{li-268}{}\(\bar A \cap B \cap \bar C\):
+            \leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}[fill=gray!50]
+  \fill \circleB;
+  \begin{scope}
+    \clip \circleB;
+    \fill[white] \circleA \circleC;
+  \end{scope}
+
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+  \end{tikzpicture}
+}
+\end{figure}
+\item\hypertarget{li-269}{}\((A \cup B) \setminus C\):
+            \leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}[fill=gray!50]
+\fill \circleA;
+\fill \circleB;
+\fill[white] \circleC;
+\draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+\end{tikzpicture}
+}
+\end{figure}
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{8.}\quad{}
+          For example, \(A \cup B \cap \bar{(A \cap B)}\). Note that \(\bar{A \cap B}\) would almost work, but it also contains the area outside of both circles.
+        %
+\par\smallskip
+\noindent\textbf{9.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-273}{} 34. %
+\item\hypertarget{li-274}{} 103. %
+\item\hypertarget{li-275}{} 8. %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{10.}\quad{}
+          \(\pow(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{d\}, \{a,b\}, \{a,c\}, \{a,d\}, \{b,c\}, \{b,d\}, \{c,d\} \{a,b,c\}, \{a,b,d\}, \{a,c,d\}, \{b,c,d\}, \{a,b,c,d\}\}\).
+        %
+\par\smallskip
+\noindent\textbf{11.}\quad{}
+          There are 10 singletons. There are 45 doubletons: nine that include 1, eight that include 2 (but not 1), 7 that include 3 (but not 1 or 2) and so on. \(9+8+7+\cdots+2+1 = 45\); ).
+        %
+\par\smallskip
+\noindent\textbf{12.}\quad{}
+          \(\{2,3,5\}\), \(\{1,2,3,5\}\), \(\{2,3,4,5\}\), \(\{2,3,5,6\}\), \(\{1,2,3,4,5\}\), \(\{1,2,3,5,6\}\), \(\{2,3,4,5,6\}\), and \(\{1,2,3,4,5,6\}\).
+        %
+\par\smallskip
+\noindent\textbf{13.}\quad{}
+          For example, \(A = \{1,2,3,4\}\) and \(B = \{5,6,7,8,9\}\) gives \(A \cup B = \{1,2,3,4,5,6,7,8,9\}\).
+        %
+\par\smallskip
+\noindent\textbf{14.}\quad{}
+          For example, \(A = \{1,2,3\}\) and \(B = \{2,3,4,5\}\) gives \(A\cup B = \{1,2,3,4,5\}\).
+        %
+\par\smallskip
+\noindent\textbf{15.}\quad{}
+          No. There must be 5 elements in common to both sets. Since there are 10 distinct elements all together in \(A\) and \(B\), this means that between \(A\) and \(B\), there must be 5 elements which they do not have in common (some in \(A\) but not in \(B\), some in \(B\) but not in \(A\)). But to have \(|A| = |B|\), we would need to exclude the same number of elements from both sets.  Since 5 is odd, we would need to exclude 2.5 elements from each set making \(|A| = |B| = 7.5\) which is impossible.
+        %
+\par\smallskip
+\noindent\textbf{16.}\quad{}
+          If \(R\) is the set of red cards and \(F\) is the set of face cards, we want to find \(|R \cup F|\). This is not simply \(|R| + |F|\) because there are 6 cards which are both red and a face card; \(|R \cap F| = 6\). We find
+          \(|R \cup F| = 32\).
+        %
+\par\smallskip
+\subsubsection*{ Exercises}
+\noindent\textbf{1.}\quad{}
+            There are 8 different functions. In two-line notation these are:
+
+
+              \begin{equation*} f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp a\amp a \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp b \amp b \end{pmatrix}\end{equation*}
+              \begin{equation*} f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp a\amp b \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp b \amp a \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp a\amp a \end{pmatrix}
+              \end{equation*}
+              \begin{equation*}
+                \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp b \amp a \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ b \amp a\amp b \end{pmatrix} \quad f = \begin{pmatrix} 1 \amp 2 \amp 3 \\ a \amp b \amp b \end{pmatrix} \end{equation*}
+
+            %
+
+
+            None of the functions are injective. Exactly 6 of the functions are surjective. No functions are both (since no functions here are injective).
+          %
+\par\smallskip
+\noindent\textbf{2.}\quad{}
+            There are 9 functions: you have a choice of three outputs for \(f(1)\), and for each, you have three choices for the output \(f(2)\). Of these functions, 6 are injective, 0 are surjective, and 0 are both:
+
+            \begin{equation*}
+              f = \twoline{1 \amp 2}{a\amp a} \quad f = \twoline{1 \amp 2}{b \amp b} \quad f = \twoline{1 \amp 2}{c \amp c}
+            \end{equation*}
+             \begin{equation*}
+               f = \twoline{1 \amp 2}{a\amp b} \quad f = \twoline{1 \amp 2}{a \amp c} \quad f = \twoline{1 \amp 2}{b \amp c}
+             \end{equation*}
+             \begin{equation*}
+               f = \twoline{1 \amp 2}{b \amp a} \quad f = \twoline{1 \amp 2}{c \amp a} \quad f = \twoline{1 \amp 2}{c \amp b}
+             \end{equation*}
+          %
+\par\smallskip
+\noindent\textbf{3.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-303}{}\(f\) is not injective, since \(f(2) = f(5)\) - two different inputs have the same output.\item\hypertarget{li-304}{}\(f\) is surjective, since every element of the codomain is an element of the range.\item\hypertarget{li-305}{}\(f=\begin{pmatrix}1 \amp 2 \amp 3 \amp 4 \amp 5 \\ 3 \amp 2 \amp 4 \amp 1 \amp 2\end{pmatrix}\).\end{enumerate}
+\par\smallskip
+\noindent\textbf{4.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-309}{}\(f\) is not injective, since \(f(1) = 3\) and \(f(4) = 3\).\item\hypertarget{li-310}{}\(f\) is not surjective, since there is no input which gives 2 as an output.\item\hypertarget{li-311}{}\(f=\begin{pmatrix} 1 \amp 2 \amp 3 \amp 4 \\ 3 \amp 4 \amp 1 \amp 3\end{pmatrix}\).\end{enumerate}
+\par\smallskip
+\noindent\textbf{5.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-316}{}\(f\) is injective, but not surjective (since 0, for example, is never an output).\item\hypertarget{li-317}{}\(f\) is injective and surjective. Unlike in the previous question, every integers is an output (of the integer 4 less than it).\item\hypertarget{li-318}{}\(f\) is injective, but not surjective (10 is not 8 less than a multiple of 5, for example).\item\hypertarget{li-319}{}\(f\) is not injective, but is surjective. Every integer is an output (of twice itself, for example) but some integers are outputs of more than one input: \(f(5) = 3 = f(6)\).\end{enumerate}
+\par\smallskip
+\noindent\textbf{6.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-325}{}\(f\) is not injective. To prove this, we must simply find two different elements of the domain which map to the same element of the codomain. Since \(f(\{1\}) = 1\) and \(f(\{2\}) = 1\), we see that \(f\) is not injective.\item\hypertarget{li-326}{}\(f\) is not surjective. The largest subset of \(A\) is \(A\) itself, and \(|A| = 10\). So no natural number greater than 10 will ever be an output.\item\hypertarget{li-327}{}\(f\inv(1) = \{\{1\}, \{2\}, \{3\}, \ldots \{10\}\}\) (the set of all the singleton subsets of \(A\)).\item\hypertarget{li-328}{}\(f\inv(0) = \{\emptyset\}\). Note, it would be wrong to write \(f\inv(0) = \emptyset\) - that would claim that there is no input which has 0 as an output.\item\hypertarget{li-329}{}\(f\inv(12) = \emptyset\), since there are no subsets of \(A\) with cardinality 12.\end{enumerate}
+\par\smallskip
+\noindent\textbf{7.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-334}{}\(f\inv(3) = \{003, 030, 300, 012, 021, 102, 201, 120, 210, 111\}\)\item\hypertarget{li-335}{}\(f\inv(28) = \emptyset\) (since the largest sum of three digits is \(9+9+9 = 27\))\item\hypertarget{li-336}{}
+                Part (a) proves that \(f\) is not injective. The output 3 is assigned to 10 different inputs.
+              %
+\item\hypertarget{li-337}{}
+                Part (b) proves that \(f\) is not surjective. There is an element of the codomain (28) which is not assigned to any inputs.
+              %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{8.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-341}{}\(|f\inv(3)| \le 1\). In other words, either \(f\inv(3)\) is the emptyset or is a set containing exactly one element. Injective functions cannot have two elements from the domain both map to 3.\item\hypertarget{li-342}{}\(|f\inv(3)| \ge 1\). In other words, \(f\inv(3)\) is a set containing at least one elements, possibly more. Surjective functions must have something map to 3.\item\hypertarget{li-343}{}\(|f\inv(3)| = 1\). There is exactly one element from \(X\) which gets mapped to 3, so \(f\inv(3)\) is the set containing that one element.\end{enumerate}
+\par\smallskip
+\noindent\textbf{9.}\quad{}
+            \(X\) can really be any set, as long as \(f(x) = 0\) or \(f(x) = 1\) for every \(x \in X\). For example, \(X = \N\) and \(f(n) = 0\) works.
+          %
+\par\smallskip
+\noindent\textbf{10.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-347}{}\(|X| \le |Y|\). Otherwise two or more of the elements of \(X\) would need to map to the same element of \(Y\).\item\hypertarget{li-348}{}\(|X| \ge |Y|\). Otherwise there would be one or more elements of \(Y\) which were never an output.\item\hypertarget{li-349}{}\(|X| = |Y|\). This is the only way for both of the above to occur.\end{enumerate}
+\par\smallskip
+\noindent\textbf{11.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-356}{} Possible. For example, let \(X=\{1,2\}\) and \(Y = \{1,2,3\}\) and consider \(f=\begin{pmatrix}1 \amp 2 \\ 1 \amp 3\end{pmatrix}\). %
+\item\hypertarget{li-357}{} Possible. For example, let \(X = \{1,2\}\) and \(Y = \{1\}\) with \(f(1) = f(2) = 1\).%
+\item\hypertarget{li-358}{} Possible. This is possible, but only if both \(X\) and \(Y\) are infinite. For example, if \(X = Y = \Z\), consider \(f(x) = 2x\).%
+\item\hypertarget{li-359}{} Possible. For example, again take \(X = Y = \N\) and consider \(f(x) = \begin{cases} 0 \amp \mathrm{ if } x = 0 \\ x-1 \amp \mathrm{ if } x \ge 1\end{cases}\)%
+\item\hypertarget{li-360}{} Not possible. If \(f\) is injective, then each input corresponds to a different output, so the range is the size of \(X\), which is the size of \(Y\), so the range is all of \(Y\).%
+\item\hypertarget{li-361}{} Not possible. If \(f\) is surjective, then every element of the codomain is an output. If more than one output corresponded to a single input, we would not have enough inputs to cover all the outputs.%
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{12.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-364}{}\(f\) is injective.
+
+              \begin{proof}\hypertarget{proof-1}{}
+
+                  Let \(x\) and \(y\) be elements of the domain \(\Z\). Assume \(f(x) = f(y)\). If \(x\) and \(y\) are both even, then \(f(x) = x+1\) and \(f(y) = y+1\). Since \(f(x) = f(y)\), we have \(x + 1 = y + 1\) which implies that \(x = y\). Similarly, if \(x\) and \(y\) are both odd, then \(x - 3 = y-3\) so again \(x = y\). The only other possibility is that \(x\) is even an \(y\) is odd (or visa-versa). But then \(x + 1\) would be odd and \(y - 3\) would be even, so it cannot be that \(f(x) = f(y)\). Therefore if \(f(x) = f(y)\) we then have \(x = y\), which proves that \(f\) is injective.
+                %
+\end{proof}
+\item\hypertarget{li-365}{}\(f\) is surjective.
+
+              \begin{proof}\hypertarget{proof-2}{}
+
+                  Let \(y\) be an element of the codomain \(\Z\). We will show there is an element \(n\) of the domain (\(\Z\)) such that \(f(n) = y\). There are two cases: First, if \(y\) is even, then let \(n = y+3\). Since \(y\) is even, \(n\) is odd, so \(f(n) = n-3 = y+3-3 = y\) as desired. Second, if \(y\) is odd, then let \(n = y-1\). Since \(y\) is odd, \(n\) is even, so \(f(n) = n+1 = y-1+1 = y\) as needed. Therefore \(f\) is surjective.
+                %
+\end{proof}
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{13.}\quad{}
+            Yes, this is a function, if you choose the domain and codomain correctly. The domain will be the set of students, and the codomain will be the set of possible grades. The function is almost certainly not injective, because it is likely that two students will get the same grade. The function might be surjective \textendash{} it will be if there is at least one student who gets each grade.
+          %
+\par\smallskip
+\noindent\textbf{14.}\quad{}
+            Yes, as long as the set of cards is the domain and the set of players is the codomain. The function is not injective because multiple cards go to each player. It is surjective since all players get cards.
+          %
+\par\smallskip
+\noindent\textbf{15.}\quad{}
+            This cannot be a function. If the domain were the set of cards, then it is not a function because not every card gets dealt to a player. If the domain were the set of players, it would not be a function because a single player would get mapped to multiple cards. Since this is not a function, it doesn't make sense to say whether it is injective/surjective/bijective.
+          %
+\par\smallskip
+\subsubsection*{ Exercises}
+\noindent\textbf{1.}\quad{}
+255.
+%
+\par\smallskip
+\noindent\textbf{2.}\quad{}
+8.
+%
+\par\smallskip
+\noindent\textbf{3.}\quad{}
+15.
+%
+\par\smallskip
+\noindent\textbf{4.}\quad{}
+\(5\cdot (4+3) + 7 = 42\).
+%
+\par\smallskip
+\noindent\textbf{5.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-383}{}
+16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.
+%
+\item\hypertarget{li-384}{}
+63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.
+%
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{6.}\quad{}
+\(0 \le |A \cap B| \le 10\) and \(15 \le |A \cup B| \le 25\).
+%
+\par\smallskip
+\noindent\textbf{7.}\quad{}
+\(|A \cup B| + |A \cap B| = 13\).
+%
+\par\smallskip
+\noindent\textbf{8.}\quad{}
+39.
+%
+\par\smallskip
+\noindent\textbf{9.}\quad{}
+\(|(A \cup C)\setminus B| = 44\). Use a Venn diagram.
+%
+\par\smallskip
+\noindent\textbf{10.}\quad{}
+One possibility: \((A \cup B) \cap C\).
+%
+\par\smallskip
+\noindent\textbf{11.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-390}{}\(8^5\), since you select from 8 letters 5 times.\item\hypertarget{li-391}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4\).  After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-392}{}
 64 - you need to select the 4th and 5th letters.
 %
 \item\hypertarget{li-393}{}\(64 + 64 - 0 = 128\).  There are 64 words which start with ``aha'' and another 64 words that end with ``bah.''  Perhaps we over counted the words that both start with ``aha'' and end with ``bah'' but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-394}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\). All the words minus the bad ones.  The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
-\end{exerciselist}
+\par\smallskip
+\typeout{************************************************}
+\typeout{Appendix B Notation}
+\typeout{************************************************}
+\chapter[Notation]{Notation}\label{appendix-2}
+\begin{longtable}[l]{llr}
+\textbf{Symbol}&\textbf{Description}&\textbf{Page}\\[1em]
+\endfirsthead
+\textbf{Symbol}&\textbf{Description}&\textbf{Page}\\[1em]
+\endhead
+\multicolumn{3}{r}{(Continued on next page)}\\
+\endfoot
+\endlastfoot
+$
+                    P, Q, R, S, \ldots
+                $&Propositional (sentential) variables&\pageref{notation-1}\\
+$\N$&The set of natural numbers&\pageref{notation-2}\\
+$\st$&``such that''&\pageref{notation-3}\\
+$f\inv(y)$&The complete inverse image of \(y\) under \(f\).&\pageref{notation-4}\\
+\end{longtable}
+%
+\backmatter
+%
+%
+%% The index is here, setup is all in preamble
+\printindex
+%
+\cleardoublepage
+\pagestyle{empty}
+\vspace*{\stretch{1}}
+\centerline{
+    This book was authored in MathBook XML.
+  %
+}
+\vspace*{\stretch{2}}
 \end{document}
