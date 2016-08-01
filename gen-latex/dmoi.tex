@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-07-31T22:28:06-06:00    *%
+%*    on 2016-08-01T14:25:35-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -98,7 +98,7 @@
 %% The latex default is 3.  If a larger number is present here, then
 %% removing this command may make some cross-references ambiguous
 %% The precursor variable $numbering-maxlevel is checked for consistency in the common XSL file
-\setcounter{secnumdepth}{2}
+\setcounter{secnumdepth}{3}
 %% Environments with amsthm package
 %% Theorem-like environments in "plain" style, with or without proof
 \usepackage{amsthm}
@@ -237,7 +237,9 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 
 \usetikzlibrary{positioning,matrix,arrows}
 
-\usetikzlibrary{shapes,decorations,shadows,fadings}
+\usetikzlibrary{shapes,decorations,shadows,fadings,patterns}
+
+\usepackage{skak} %for chessboards etc.
 %% If tikz has been loaded, replace ampersand with \amp macro
 \ifdefined\tikzset
     \tikzset{ampersand replacement = \amp}
@@ -308,7 +310,6 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 \def\Imp{\Rightarrow}
 \def\Fi{\Leftarrow}
 \def\var{\mbox{var}}
-\def\r{.5}
 \def\Th{\mbox{Th}}
 \def\entry{\entry}
 \def\sat{\mbox{Sat}}
@@ -335,6 +336,12 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 \def\ansfilename{practice-answers}
 \def\shadowprops{{fill=black!50,shadow xshift=0.5ex,shadow yshift=0.5ex,path fading={circle with fuzzy edge 10 percent}}}
 \def\sb{.6}
+\newcommand{\hexbox}[3]{
+  \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+  \def\y{-\r*#1-sin{30}*\r*#1}
+  \draw (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+  \draw (\x,\y) node{#3};
+}
 \renewcommand{\bar}{\overline}
 \newcommand{\card}[1]{\left| #1 \right|}
 \newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
@@ -349,7 +356,7 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 School of Mathematical Science\\
 University of Northern Colorado
 }
-\date{July 31, 2016}
+\date{August 1, 2016}
 \begin{document}
 \frontmatter
 %% begin: half-title
@@ -375,7 +382,7 @@ University of Northern Colorado
 {\LARGE An Open Introduction}\\[3\baselineskip]
 {\Large Oscar Levin}\\[0.5\baselineskip]
 {\Large University of Northern Colorado}\\[3\baselineskip]
-{\Large July 31, 2016}\\}
+{\Large August 1, 2016}\\}
 \clearpage
 %% end:   title page
 %% begin: copyright-page
@@ -473,7 +480,7 @@ University of Northern Colorado, 2016
     %
 %% end:   preface
 %% begin: table of contents
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3}
 \renewcommand*\contentsname{Contents}
 \tableofcontents
 %% end:   table of contents
@@ -978,14 +985,14 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
           ``Sue will get an A in the class.''
         %
 \leavevmode%
-\begin{itemize}[label=\textbullet]
-\item{}We have
+\begin{enumerate}
+\item\hypertarget{li-39}{}We have
             \(P \imp Q\) and
             \(P\) so
-            \(Q\) follows. Sue gets an A.\item{}You cannot conclude anything. Sue could have gotten the A because she did extra credit for example. Notice that we do not know that if Sue gets an
-            \(A\), then she gets a 93\% on her final. That is the converse of the original implication, so it might or might not be true.\item{}The inverse of
+            \(Q\) follows. Sue gets an A.\item\hypertarget{li-40}{}You cannot conclude anything. Sue could have gotten the A because she did extra credit for example. Notice that we do not know that if Sue gets an
+            \(A\), then she gets a 93\% on her final. That is the converse of the original implication, so it might or might not be true.\item\hypertarget{li-41}{}The inverse of
             \(P \imp Q\) is
-            \(\neg P \imp \neg Q\), which states that if Sue does not get a 93\% on the final then she will not get an A in the class. But this does not follow from the original implication. Again, we can conclude nothing. Sue could have done extra credit.\item{}What would happen if Sue does not get an A but
+            \(\neg P \imp \neg Q\), which states that if Sue does not get a 93\% on the final then she will not get an A in the class. But this does not follow from the original implication. Again, we can conclude nothing. Sue could have done extra credit.\item\hypertarget{li-42}{}What would happen if Sue does not get an A but
             \emph{did} get a 93\% on the final. Then
             \(P\) would be true and
             \(Q\) would be false. But this makes the implication
@@ -993,7 +1000,7 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
             \(\neg Q \imp \neg P\) which is the contrapositive of
             \(P \imp Q\). Since
             \(P \imp Q\) is assumed to be true, we know
-            \(\neg Q \imp \neg P\) is true as well.\end{itemize}
+            \(\neg Q \imp \neg P\) is true as well.\end{enumerate}
 \end{example}
 \par
 
@@ -2850,7 +2857,7 @@ Before tackling these difficult questions, let's look at the basics of counting.
 \end{example}
 \par
 
-    The additive principle works with more than two events. Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles? How many choices do you have now? You would have \(14 + 16 + 15 = 45\) options.
+    The additive principle also works with more than two events. Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles? How many choices do you have now? You would have \(14 + 16 + 15 = 45\) options.
   %
 \begin{example}[]\label{example-24}
 
@@ -3294,6 +3301,518 @@ Before tackling these difficult questions, let's look at the basics of counting.
 \end{enumerate}
 \par\smallskip
 \end{exerciselist}
+\typeout{************************************************}
+\typeout{Section 2.2 Binomial Coefficients}
+\typeout{************************************************}
+\section[Binomial Coefficients]{Binomial Coefficients}\label{sec_binom}
+\begin{investigation}[]\label{investigation-7}
+
+      In Chess, a rook can move only in straight lines (not diagonally). Fill in each square of the chess board below with the number of different shortest paths the rook, in the upper left corner, can take to get to that square. For example, one square is already filled in. There are six different paths from the rook to the square: DDRR (down down right right), DRDR, DRRD, RDDR, RDRD and RRDD.
+    %
+\leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}[scale=.6]
+\foreach \row in {0, 2, 4,6}{
+  \foreach \col in {0,2,4,6}{
+  \draw[fill=gray!30] (\row,\col) rectangle (\row+1, \col+1) rectangle (\row+2, \col+2);
+  }
+}
+\draw[thick] (0,0) rectangle (8,8);
+\node at (0.5,7.5) {\Large \symrook};
+\node at (2.5,5.5) {$6$};
+\end{tikzpicture}
+}
+\end{figure}
+\end{investigation}
+
+    Here are some apparently different discrete objects we can count: subsets, bit strings, lattice paths, and binomial coefficients. We will give an example of each type of counting problem (and say what these things even are). As we will see, these counting problems are surprisingly similar.
+  %
+\typeout{************************************************}
+\typeout{Subsection 2.2.1 Subsets}
+\typeout{************************************************}
+\subsection[Subsets]{Subsets}\label{subsection-12}
+
+        Subsets should be familiar, otherwise read over
+        \hyperref[sec_intro-sets]{Section~\ref{sec_intro-sets}} again. Suppose we look at the set \(A = \{1,2,3,4,5\}\). How many subsets of \(A\) contain exactly 3 elements?
+      %
+\par
+
+        First, a simpler question. How many subsets of \(A\) are there total? In other words, what is \(|\pow(A)|\) (the cardinality of the power set of \(A\))? Think about how we would build a subset. We need to decide, for each of the elements of \(A\), whether or not to include the element in our subset. So we need to decide ``yes'' or ``no'' for the element 1. And for each choice we make, we need to decide ``yes'' or ``no'' for the element 2. And so on. For each of the 5 elements, we have 2 choices. Therefore the number of subsets is simply \(2\cdot 2\cdot 2 \cdot 2\cdot 2 = 2^5\) (by the multiplicative principle).
+      %
+\par
+
+        Of those 32 subsets, how many have 3 elements? This is not obvious. Note that we cannot just use the multiplicative principle. Maybe we want to say we have 2 choices (yes/no) for the first element, 2 choices for the second, 2 choices for the third, and then only 1 choice for the other two. But what if we said ``no'' to one of the first three elements? Then we would have two choices for the 4th element. What a mess!
+      %
+\par
+
+        Another (bad) idea: we need to pick three elements to be in our subset. There are 5 elements to choose from. So there are 5 choices for the first element, and for each of those 4 choices for the second, and then 3 for the third (last) element. The multiplicative principle would say then that there are a total of \(5 \cdot 4 \cdot 3 = 60\) ways to select the 3 element subset. But this cannot be correct (\(60 > 32\) for one thing). One of the outcomes we would get from these choices would be the set \(\{3,2,5\}\), by choosing the element 3 first, then the element 2, then the element 5. Another outcome would be \(\{5,2,3\}\) by choosing the element 5 first, then the element 2, then the element 3. But these are the same set! We can correct this by dividing: for each set of three elements, there are 6 outcomes counted amoung our 60 (since there are 3 choices for which element we list first, 2 for which we list second, and 1 for which we list last). So we expect there to be
+        10 3-element subsets of \(A\).
+      %
+\par
+
+        Is this right? Well, we could list out all 10 of them, being very systematic in doing so, to make sure we don't miss any or list any twice. Or we could try to count how many subsets of \(A\) \emph{don't} have 3 elements in them. How many have no elements? Just 1 (the empty set). How many have 5? Again, just 1. These are the cases in which we say ``no'' to all elements, or ``yes'' to all elements. Okay, what about the subsets which contain a single element? There are 5 of these. We must say ``yes'' to exactly one element, and there are 5 to choose from. This is also the number of subsets containing 4 elements. Those are the ones for which we must say ``no'' to exactly one element.
+      %
+\par
+
+        So far we have counted 12 of the 32 subsets. We have not yet counted the subsets with cardinality 2 and with cardinality 3. There are a total of 20 subsets left to split up between these two groups. But the number of each must be the same! If we say ``yes'' to exactly two elements, that can be accomplished in exactly the same number of ways as the number of ways we can say ``no'' to exactly two elements. So the number of 2-element subsets is equal to the number of 3-element subsets. Together there are 20 of these subsets, so 10 each.
+      %
+\leavevmode%
+\begin{table}
+\centering
+\begin{tabular}{lllllll}
+\multicolumn{1}{c}{Number of elements:}&\multicolumn{1}{c}{0}&\multicolumn{1}{c}{1}&\multicolumn{1}{c}{2}&\multicolumn{1}{c}{3}&\multicolumn{1}{c}{4}&\multicolumn{1}{c}{5}\tabularnewline\hrulethin
+\multicolumn{1}{c}{Number of subsets:}&\multicolumn{1}{c}{1}&\multicolumn{1}{c}{5}&\multicolumn{1}{c}{10}&\multicolumn{1}{c}{10}&\multicolumn{1}{c}{5}&\multicolumn{1}{c}{1}
+\end{tabular}
+\end{table}
+\typeout{************************************************}
+\typeout{Subsection 2.2.2 
+        Bit Strings
+      }
+\typeout{************************************************}
+\subsection[
+        Bit Strings
+      ]{
+        Bit Strings
+      }\label{subsection-13}
+ ``Bit'' is short for ``binary digit,'' so a bit string is a string of binary digits. The binary digits are simply the numbers 0 and 1. All of the following are bit strings:
+      \begin{equation*}
+        1001 \quad 0 \quad 1111 \quad 1010101010
+      \end{equation*}
+      %
+\par
+
+        The number of bits (0's or 1's) in the string is the \emph{length} of the string; the strings above have lengths 4, 1, 4, and 10 respectively. We also can ask how many of the bits are 1's. The number of 1's in a bit string is the \emph{weight} of the string; the weights of the above strings are 2, 0, 4, and 5 respectively.
+      %
+\begin{assemblage}{Bit Strings}\label{assemblage-19}\par\medskip
+
+          \index{bit string}
+
+
+          \leavevmode%
+\begin{itemize}[label=\textbullet]
+\item{}
+A \(n\)-bit string is a bit string of length \(n\).  That is, it is a string containing \(n\) symbols, each of which is a bit, either 0 or 1.
+%
+\item{}
+The \emph{weight}\index{weight, of a string} of a bit string is the number of 1's in it.
+%
+\item{}\(\B^n\)\label{notation-5}
+ is the \emph{set} of all \(n\)-bit strings.\item{}\(\B^n_k\)\label{notation-6}
+ is the set of all \(n\)-bit strings of weight \(k\).\end{itemize}
+
+        %
+\end{assemblage}
+\par
+
+        For example, the elements of the set \(\B^3_2\) are the bit strings 011, 101, and 110. Those are the only strings containing three bits exactly two of which are 1's.
+      %
+\par
+
+        The counting questions: How many bit strings have length 5? How many of those have weight 3? In other words, we are asking for the cardinalities \(|\B^5|\) and \(|\B^5_3|\).
+      %
+\par
+
+        To find the number of 5-bit strings is straight forward. We have 5 bits, and each can either be a 0 or a 1. So there are 2 choices for the first bit, 2 choices for the second, and so on. By the multiplicative principle, there are \(2 \cdot 2 \cdot 2\cdot 2 \cdot 2 = 2^5 = 32\) such strings.
+      %
+\par
+
+        Finding the number of 5-bit strings of weight 3 is harder. Think about how such a string could start. The first bit must be either a 0 or a 1. In the first case (the string starts with a 0), we must then decide on four more bits. To have a total of three 1's, among those four remaining bits there must be three 1's. To count all of these strings, we must include all 4-bit strings of weight 3. In the second case (the string starts with a 1), we still have four bits to choose, but now only two of them can be 1's, so we should look at all the 4-bit strings of weight 2. So the strings in \(\B^5_3\) all have the form \(1\B^4_2\) (that is, a 1 followed by a string from \(\B^4_2\)) or \(0\B^4_3\). These two sets are disjoint, so we can use the additive principle:
+        \begin{equation*}
+          |\B^5_3| = |\B^4_2| + |\B^4_3|.
+        \end{equation*}
+      %
+\par
+
+        This is an example of a \emph{recurrence relation}. We represented one instance of our counting problem in terms of two simpler instances of the problem. If only we knew the cardinalities of \(\B^4_2\) and \(\B^4_3\). Repeating the same reasoning,
+        \begin{equation*}
+          |\B^4_2| = |\B^3_1| + |\B^3_2| \quad \mbox{and} \quad |\B^4_3| = |\B^3_2| + |\B^3_3|.
+        \end{equation*}
+      %
+\par
+
+        We can keep going down, but this should be good enough. Both \(\B^3_1\) and \(\B^3_2\) contain 3 bit strings: we must pick one of the three bits to be a 1 (three ways to do that) or one of the three bits to be a 0 (three ways to do that). Also, \(\B^3_3\) contains just one string: 111. Thus \(|\B^4_2| = 6\) and \(|\B^4_3| = 4\), which puts \(\B^5_3\) at a total of 10 strings.
+      %
+\par
+
+        But wait
+        \textemdash{}32 and 10 were the answers to the counting questions about subsets. Coincidence? Not at all. Each bit string can be thought of as a \emph{code} for a subset. For the set \(A = \{1,2,3,4,5\}\), we would use 5-bit strings, one bit for each element of \(A\). Each bit in the string is a 0 if its corresponding element of \(A\) is not in the subset, and a 1 if the element of \(A\) is in the subset. Remember, deciding the subset amounted to a sequence of five yes/no votes for the elements of \(A\). Instead of yes, we put a 1; instead of no, we put a 0.
+      %
+\par
+
+        For example, the bit string \(11001\) represents the subset \(\{1,2,5\}\) since the first, second and fifth bits are 1's. The subset \(\{3,5\}\) would be coded by the string \(00101\). What we really have here is a bijection from \(\pow(A)\) to \(\B^5\).
+      %
+\par
+
+        Now for a subset to contain exactly three elements, the corresponding bit string must contain exactly three 1's. In other words, the weight must be 3. Thus counting the number of 3-element subsets of \(A\) is the same as counting the number 5-bit strings of weight 3.
+      %
+\typeout{************************************************}
+\typeout{Subsection 2.2.3  Lattice Paths}
+\typeout{************************************************}
+\subsection[ Lattice Paths]{ Lattice Paths}\label{subsection-14}
+
+        The \emph{integer lattice} is the set of all points in the Cartesian plane for which both the \(x\) and \(y\) coordinates are integers. If you like to draw graphs on graph paper, the lattice is the set of all the intersections of the grid lines.
+      %
+\par
+
+        A \emph{lattice path}\index{lattice path} is one of the shortest possible paths connecting two points on the lattice, moving only horizontally and vertically. For example, here are three possible lattice paths from the points \((0,0)\) to \((3,2)\):
+      %
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxAGimage}
+\savebox{\panelboxAGimage}{
+\resizebox{0.3\linewidth}{!}{{
+      \begin{tikzpicture}
+  \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+  \foreach \x in {0,...,3}
+  \foreach \y in {0,...,2}
+  \fill (\x,\y) circle (1.5pt);
+  \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+  \draw[very thick] (0,0) -- (2,0) -- (2,2) -- (3,2);
+\end{tikzpicture}
+}
+}}
+\newlength{\phAGimage}\setlength{\phAGimage}{\ht\panelboxAGimage+\dp\panelboxAGimage}
+\settototalheight{\phAGimage}{\usebox{\panelboxAGimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phAGimage}}
+\newsavebox{\panelboxAHimage}
+\savebox{\panelboxAHimage}{
+\resizebox{0.3\linewidth}{!}{{
+      \begin{tikzpicture}
+  \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+  \foreach \x in {0,...,3}
+  \foreach \y in {0,...,2}
+  \fill (\x,\y) circle (1.5pt);
+  \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+  \draw[very thick] (0,0) -- (0,2) -- (3,2);
+\end{tikzpicture}
+}
+}}
+\newlength{\phAHimage}\setlength{\phAHimage}{\ht\panelboxAHimage+\dp\panelboxAHimage}
+\settototalheight{\phAHimage}{\usebox{\panelboxAHimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phAHimage}}
+\newsavebox{\panelboxAIimage}
+\savebox{\panelboxAIimage}{
+\resizebox{0.3\linewidth}{!}{{
+      \begin{tikzpicture}
+  \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+  \foreach \x in {0,...,3}
+  \foreach \y in {0,...,2}
+  \fill (\x,\y) circle (1.5pt);
+  \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+  \draw[very thick] (0,0) -- (1,0) -- (1,1) -- (3,1) -- (3,2);
+\end{tikzpicture}
+}
+}}
+\newlength{\phAIimage}\setlength{\phAIimage}{\ht\panelboxAIimage+\dp\panelboxAIimage}
+\settototalheight{\phAIimage}{\usebox{\panelboxAIimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phAIimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.0166666666666667\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.0166666666666667\textwidth}%
+\begin{tabular}{@{}*{3}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxAGimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxAHimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxAIimage}\end{minipage}\end{tabular}
+\end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
+\par
+
+        Notice to ensure the path is the \emph{shortest} possible, each move must be either to the right or up. Additionally, in this case, note that no matter what path we take, we must make three steps right and two steps up. No matter what order we make these steps, there will always be 5 steps. Thus each path has \terminology{length} 5.
+      %
+\par
+
+        The counting question: how many lattice paths are there between \((0,0)\) and \((3,2)\)? We could try to draw all of these, or instead of drawing them, maybe just list which direction we travel on each of the 5 steps. One path might be RRUUR, or maybe UURRR, or perhaps RURRU (those correspond to the three paths drawn above). So how many such strings of R's and U's are there?
+      %
+\par
+
+        Notice that each of these strings must contain 5 symbols. Exactly 3 of them must be R's (since our destination is 3 units to the right). This seems awfully familiar. In fact, what if we used \(1\)'s instead of R's and 0's instead of U's? Then we would just have 5-bit strings of weight 3. There are 10 of those, so there are 10 lattice paths from (0,0) to (3,2).
+      %
+\par
+
+        The correspondence between bit strings and lattice paths does not stop there. Here is another way to count lattice paths. Consider the lattice shown below:
+      %
+\leavevmode%
+\begin{figure}
+\centering
+{
+      \begin{tikzpicture}
+  \draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+  \foreach \x in {0,...,3}
+  \foreach \y in {0,...,2}
+  \fill (\x,\y) circle (1.5pt);
+  \draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+  \draw (3,1) node[above right] { \(B\)} (2,2) node[above right]{ \(A\)};
+\end{tikzpicture}
+}
+\end{figure}
+\par
+
+        Any lattice path from (0,0) to (3,2) must pass through exactly one of \(A\) and \(B\). The point \(A\) is 4 steps away from (0,0) and two of them are towards the right. The number of lattice paths to \(A\) is the same as the number of 4-bit strings of weight 2, namely 6. The point \(B\) is 4 steps away from (0,0), but now 3 of them are towards the right. So the number of paths to point \(B\) is the same as the number of 4-bit strings of weight 3, namely 4. So the total number of paths to (3,2) is just \(6+4\). This is the same way we calculated the number of 5-bit strings of weight 3. The point: the exact same recurrence relation exists for bit strings and for lattice paths.
+      %
+\typeout{************************************************}
+\typeout{Subsection 2.2.4 Binomial Coefficients}
+\typeout{************************************************}
+\subsection[Binomial Coefficients]{Binomial Coefficients}\label{subsection-15}
+
+        Binomial coefficients are the coefficients in the expanded version of a binomial, such as \((x+y)^5\). What happens when we multiply such a binomial out? We will expand \((x+y)^n\) for various values of \(n\). Each of these are done by multiplying everything out (i.e., FOIL-ing) and then collecting like terms.
+        \begin{equation*}
+          (x+y)^1 = x + y
+        \end{equation*}
+      %
+\begin{equation*}
+        (x+y)^2 = x^2 + 2xy + y^2
+      \end{equation*}\begin{equation*}
+        (x+y)^3 = x^3 + 3x^2y + 3xy^2 + y^3
+      \end{equation*}\begin{equation*}
+        (x+y)^4 = x^4 + 4x^3y + 6x^2y^2 + 4xy^3 + y^4.
+      \end{equation*}\par
+
+        In fact, there is a quicker way to expand the above binomials. For example, consider the next one, \((x+y)^5\). What we are really doing is multiplying out,
+        \begin{equation*}
+          (x+y)(x+y)(x+y)(x+y)(x+y).
+        \end{equation*}
+      %
+\par
+If that looks daunting, go back to the case of \((x+y)^3 = (x+y)(x+y)(x+y)\). Why do we only have one \(x^3\) and \(y^3\) but three \(x^2y\) and \(xy^2\) terms? Every time we distribute over an \((x+y)\) we create two copies of what is left, one multiplied by \(x\), the other multiplied by \(y\). To get \(x^3\), we need to pick the ``multiplied by \(x\)'' side every time (we don't have any \(y\)'s in the term). This will only happen once. On the other hand, to get \(x^2y\) we need to select the \(x\) side twice and the \(y\) side once. In other words, we need to pick one of the three \((x+y)\) terms to ``contribute'' their \(y\).
+      %
+\par
+
+        Similarly, in the expansion of \((x+y)^5\), there will be only one \(x^5\) term and one \(y^5\) term. This is because to get an \(x^5\), we need to use the \(x\) term in each of the copies of the binomial \((x+y)\), and similarly for \(y^5\). What about \(x^4y\)? To get terms like this, we need to use four \(x\)'s and one \(y\), so we need exactly one of the five binomials to contribute a \(y\). There are 5 choices for this, so there are 5 ways to get \(x^4y\), so the coefficient of \(x^4y\) is 5. This is also the coefficient for \(xy^4\) for the same (but opposite) reason: there are 5 ways to pick which of the 5 binomials contribute the single \(x\). So far we have
+        \begin{equation*}
+          (x+y)^5 = x^5 + 5x^4y + \underline{~?~}~x^3y^2 + \underline{~?~}~x^2y^3 + 5 xy^4 + y^5.
+        \end{equation*}
+      %
+\par
+
+        We still need the coefficients of \(x^3y^2\) and \(x^2y^3\). In both cases, we need to pick exactly 3 of the 5 binomials to contribute one variable, the other two to contribute the other. Wait. This sounds familiar. We have 5 things, each can be one of two things, and we need a total of 3 of one of them. That's just like taking 5 bits and making sure exactly 3 of them are 1's. So the coefficient of \(x^3y^2\) (and also \(x^2y^3\)) will be exactly the same as the number of bit strings of length 5 and weight 3, which we found earlier to be 10. So we have:
+        \begin{equation*}
+          (x+y)^5 = x^5 + 5x^4y + 10x^3y^2 + 10x^2y^3 + 5 xy^4 + y^5.
+        \end{equation*}
+      %
+\par
+
+        These numbers we keep seeing over and over again. They are the number of subsets of a particular size, the number of bit strings of a particular weight, the number of lattice paths, and the coefficients of these binomial products. We will call them \emph{binomial coefficients}. We even have a special symbol for them: \({n \choose k}\).
+      %
+\begin{assemblage}{Binomial Coefficients}\label{assemblage-20}\par\medskip
+
+          \index{binomial coefficients} For each integer \(n \ge 0\) and integer \(k\) with \(0 \le k \le n\) there is a number
+          \begin{equation*}
+            {n\choose k}
+          \end{equation*}
+          read ``\(n\) choose \(k\).'' We have:
+
+
+          \leavevmode%
+\begin{itemize}[label=\textbullet]
+\item{}\({n\choose k} = |\B^n_k|\), the number of \(n\)-bit strings of weight \(k\).\item{}\({n \choose k}\) is the number of subsets of a set of size \(n\) each with cardinality \(k\).\item{}\({n \choose k}\) is the number of lattice paths of length \(n\) containing \(k\) steps to the right.\item{}\({n \choose k}\) is the coefficient of \(x^ky^{n-k}\) in the expansion of \((x+y)^n\).\item{}\({n \choose k}\) is the number of ways to select \(k\) objects from a total of \(n\) objects.\end{itemize}
+
+        %
+\end{assemblage}
+\par
+
+        The last bullet point is usually taken as the definition of \({n \choose k}\). Out of \(n\) objects we must choose \(k\) of them, so there are \(n\) choose \(k\) ways of doing this. Each of our counting problems above can be viewed in this way:
+      %
+\leavevmode%
+\begin{itemize}[label=\textbullet]
+\item{}
+How many subsets of \(\{1,2,3,4,5\}\) contain exactly 3 elements?  We must choose \(3\) of the 5 elements to be in our subset.  There are \({5 \choose 3}\) ways to do this, so there are \({5 \choose 3}\) such subsets.
+%
+\item{}
+How many bit strings have length 5 and weight 3?  We must choose \(3\) of the 5 bits to be 1's.  There are \({5 \choose 3}\) ways to do this, so there are \({5 \choose 3}\) such bit strings.
+%
+\item{}
+How many lattice paths are there from (0,0) to (3,2)?  We must choose 3 of the 5 steps to be towards the right.  There are \({5 \choose 3}\) ways to do this, so there are \({5 \choose 3}\) such lattice paths.
+%
+\item{}
+What is the coefficient of \(x^3y^2\) in the expansion of \((x+y)^5\)?  We must choose 3 of the 5 copies of the binomial to contribute an \(x\).  There are \({5 \choose 3}\) ways to do this, so the coefficient is \({5 \choose 3}\).
+%
+\end{itemize}
+\par
+
+        It should be clear that in each case above, we have the right answer. All we had to do is phrase the question correctly and it became obvious that \({5 \choose 3}\) is correct. However, this does not tell us that the answer is in fact 10 in each case. We will eventually find a formula for \({n \choose k}\), but for now, look back at how we arrived at the answer 10 in our counting problems above. It all came down to bit strings, and we have a recurrence relation for bit strings:
+        \begin{equation*}
+          |\B^n_k| = |\B^{n-1}_{k-1}| + |\B^{n-1}_k|.
+        \end{equation*}
+      %
+\par
+
+        Remember, this is because we can start the bit string with either a 1 or a 0. In both cases, we have \(n-1\) more bits to pick. The strings starting with 1 must contain \(k-1\) more 1's, while the strings starting with 0 still need \(k\) more 1's.
+      %
+\par
+
+        Since \(|\B^n_k| = {n \choose k}\), the same recurrence relation holds for binomial coefficients:
+      %
+\begin{assemblage}{Recurrence relation for \({n \choose k}\)}\label{assemblage-21}\par\medskip
+
+          \begin{equation*}
+            {n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}
+          \end{equation*}
+        %
+\end{assemblage}
+\typeout{************************************************}
+\typeout{Subsection 2.2.5 Pascal's Triangle}
+\typeout{************************************************}
+\subsection[Pascal's Triangle]{Pascal's Triangle}\label{subsec_Pascal}
+
+        Let's arrange the binomial coefficients \({n \choose k}\) into a triangle like follows:
+      %
+\leavevmode%
+\begin{figure}
+\centering
+{
+        \begin{tikzpicture}
+  \foreach \n in {0,...,4}
+  \foreach \k in {0,...,\n}
+  \draw (-\n+2*\k, -\n) node {\(\displaystyle{\n \choose \k}\)};
+\end{tikzpicture}
+}
+\end{figure}
+\par
+
+        This can continue as far down as we like. The recurrence relation for \({n \choose k}\) tells us that each entry in the triangle is the sum of the two entries above it. The entries on the sides of the triangle are always 1. This is because \({n \choose 0} = 1\) for all \(n\) since there is only one way to pick 0 of \(n\) objects and \({n \choose n} = 1\) since there is one way to select all \(n\) out of \(n\) objects. Using the recurrence relation, and the fact that the sides of the triangle are 1's, we can easily replace all the entries above with the correct values of \({n \choose k}\). Doing so gives us \emph{Pascal's triangle}.
+      %
+\par
+
+        We can use Pascal's triangle to calculate binomial coefficients. For example, using the triangle on the next page, we can find \({12 \choose 6} = 924\).
+      %
+\index{Pascal's triangle}% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxALimage}
+\savebox{\panelboxALimage}{
+\resizebox{1\linewidth}{!}{{
+  \begin{tikzpicture}
+\def\r{.55}
+\foreach \row in {0,...,16} {
+  \hexbox{\row}{0}{\large 1}
+}
+%fill in the rest of the triangle:
+\foreach \row in {1,...,16} {
+  \pgfmathsetmacro{\entry}{1};
+  \foreach \col in {1,...,\row} {
+    % iterative formula : val = precval * (row-col+1)/col
+    % (+ 0.5 to bypass rounding errors)
+    \pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
+    \global\let\entry=\entry
+    \ifnum \entry<100
+\hexbox{\row}{\col}{\large \entry}
+    \else \ifnum \entry<1000
+\hexbox{\row}{\col}{\entry}
+    \else \ifnum \entry<10000
+\hexbox{\row}{\col}{\footnotesize \entry}
+\else
+\hexbox{\row}{\col}{\scriptsize \entry}
+\fi
+    \fi
+    \fi
+  }
+}
+\node[above] at (0,3) {\Huge Pascal's Triangle};
+\end{tikzpicture}
+}
+}}
+\newlength{\phALimage}\setlength{\phALimage}{\ht\panelboxALimage+\dp\panelboxALimage}
+\settototalheight{\phALimage}{\usebox{\panelboxALimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phALimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\begin{tabular}{@{}*{1}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{1\textwidth}\usebox{\panelboxALimage}\end{minipage}\end{tabular}
+\end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
+\typeout{************************************************}
+\typeout{Exercises 2.2.6 Exercises}
+\typeout{************************************************}
+\subsection[Exercises]{Exercises}\label{exercises-5}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-50}{}
+            Let \(S = \{1, 2, 3, 4, 5, 6\}\)
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-423}{} How many subsets are there total? %
+\item\hypertarget{li-424}{} How many subsets have \(\{2,3,5\}\) as a subset? %
+\item\hypertarget{li-425}{} How many subsets contain at least one odd number? %
+\item\hypertarget{li-426}{} How many subsets contain exactly one even number? %
+\end{enumerate}
+\par\smallskip
+\item[2.]\hypertarget{exercise-51}{}
+            Let \(S = \{1, 2, 3, 4, 5, 6\}\)
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-431}{} How many subsets are there of cardinality 4? %
+\item\hypertarget{li-432}{} How many subsets of cardinality 4 have \(\{2,3,5\}\) as a subset? %
+\item\hypertarget{li-433}{} How many subsets of cardinality 4 contain at least one odd number? %
+\item\hypertarget{li-434}{} How many subsets of cardinality 4 contain exactly one even number? %
+\end{enumerate}
+\par\smallskip
+\item[3.]\hypertarget{exercise-52}{}
+            You break your piggy-bank to discover lots of pennies and nickels. You start arranging these in rows of 6 coins.
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-439}{} You find yourself making rows containing an equal number of pennies and nickels.  For fun, you decide to lay out every possible such row.  How many coins will you need? %
+\item\hypertarget{li-440}{} How many coins would you need to make all possible rows of 6 coins (not necessarily with equal number of pennies and nickels)? %
+\end{enumerate}
+\par\smallskip
+\item[4.]\hypertarget{exercise-53}{}
+            How many 10-bit strings contain 6 or more 1's?
+          %
+\par\smallskip
+\item[5.]\hypertarget{exercise-54}{}
+            How many subsets of \(\{0,1,\ldots, 9\}\) have cardinality 6 or more?
+          %
+\par\smallskip
+\item[6.]\hypertarget{exercise-55}{}
+            What is the coefficient of \(x^{12}\) in \((x+2)^{15}\)?
+          %
+\par\smallskip
+\item[7.]\hypertarget{exercise-56}{}
+            What is the coefficient of \(x^9\) in the expansion of \((x+1)^{14} + x^3(x+2)^{15}\)?
+          %
+\par\smallskip
+\item[8.]\hypertarget{exercise-57}{}
+            How many shortest lattice paths start at (3,3) and
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-443}{} end at (10,10)? %
+\item\hypertarget{li-444}{} end at (10,10) and pass through (5,7)? %
+\item\hypertarget{li-445}{} end at (10,10) and avoid (5,7)? %
+\end{enumerate}
+\par\smallskip
+\item[9.]\hypertarget{exercise-58}{}
+            Suppose you are ordering a large pizza from \emph{D.P.~Dough}. You want 3 distinct toppings, chosen from their list of 11 vegetarian toppings.
+          %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-449}{} How many choices do you have for your pizza? %
+\item\hypertarget{li-450}{} How many choices do you have for your pizza if you refuse to have pineapple as one of your toppings? %
+\item\hypertarget{li-451}{} How many choices do you have for your pizza if you \emph{insist} on having pineapple as one of your toppings? %
+\item\hypertarget{li-452}{} How do the three questions above relate to each other? %
+\end{enumerate}
+\par\smallskip
+\item[10.]\hypertarget{exercise-59}{}
+            Explain why the coefficient of \(x^5y^3\) the same as the coefficient of \(x^3y^5\) in the expansion of \((x+y)^8\)?
+          %
+\par\smallskip
+\end{exerciselist}
 %
 %% A lineskip in table of contents as transition to appendices, backmatter
 \addtocontents{toc}{\vspace{\normalbaselineskip}}
@@ -3715,6 +4234,49 @@ Before tackling these difficult questions, let's look at the basics of counting.
             %
 \item\hypertarget{li-408}{}\(64 + 64 - 0 = 128\) words. There are 64 words which start with ``aha'' and another 64 words that end with ``bah.'' Perhaps we over counted the words that both start with ``aha'' and end with ``bah'', but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-409}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\) words. All the words minus the bad ones. The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
 \par\smallskip
+\subsection*{2.2.6 Exercises}
+\noindent\textbf{1.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-427}{}\(2^6 = 64\) subsets. We need to select yes/no for each of the six elements.\item\hypertarget{li-428}{}\(2^3 = 8\) subsets.  We need to select yes/no for each of the remaining three elements.\item\hypertarget{li-429}{}\(2^6 - 2^3 = 56\) subsets.  There are 8 subsets which do not contain any odd numbers (select yes/no for each even number).\item\hypertarget{li-430}{}\(3\cdot 2^3 = 24\) subsets.  First pick the even number.  Then say yes or no to each of the odd numbers.\end{enumerate}
+\par\smallskip
+\noindent\textbf{2.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-435}{}\({6\choose 4} = 15\).\item\hypertarget{li-436}{}\({3 \choose 1} = 3\).  We need to select 1 of the 3 remaining elements to be in the subset.\item\hypertarget{li-437}{}\({6 \choose 4} = 15\).  All subsets of cardinality 4 must contain at least one odd number.\item\hypertarget{li-438}{}\({3 \choose 1} = 3\).  Select 1 of the 3 even numbers.  The remaining three odd numbers of \(S\) must all be in the set.\end{enumerate}
+\par\smallskip
+\noindent\textbf{3.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-441}{} We can think of each row as a 6-bit string of weight 3 (since of the 6 coins, we require 3 to be pennies).  Thus there are \({6 \choose 3} = 20\) rows possible.  Each row requires 6 coins, so if we want to make all the rows at the same time, we will need 120 coins (60 of each). %
+\item\hypertarget{li-442}{} Now there are \(2^6 = 64\) rows possible, which is also \({6 \choose 0} + {6\choose 1} + {6 \choose 2} + {6 \choose 3} + {6 \choose 4} + {6 \choose 5} + {6 \choose 6}\), if you break them up into rows containing 0, 1, 2, etc. pennies.  Thus we need \(6 \cdot 64 = 384\) coins (192 of each). %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{4.}\quad{}
+            \({10 \choose 6} + {10\choose 7} + {10\choose 8} + {10 \choose 9} + {10\choose 10} = 386\) strings.  Count the number of strings with each permissible number of 1's separately, then add them up.
+          %
+\par\smallskip
+\noindent\textbf{5.}\quad{}
+            \({10 \choose 6} + {10\choose 7} + {10\choose 8} + {10 \choose 9} + {10\choose 10} = 386\) subsets. This is the same as the previous question, since we can think of each subset as a 10-bit string with a 1 representing that we include that element in the subset.
+          %
+\par\smallskip
+\noindent\textbf{6.}\quad{}
+            To get an \(x^{12}\), we must pick 12 of the 15 factors to contribute an \(x\), leaving the other 3 to contribute a 2. There are \({15 \choose 12}\) ways to select these 12 factors. So the term containing an \(x^{12}\) will be \({15 \choose 12}x^{12}2^{3}\). In other words, the coefficient of \(x^{12}\) is \({15\choose 12}2^3 = 3640\).
+          %
+\par\smallskip
+\noindent\textbf{7.}\quad{}
+            Reason as in the previous question. We get \({14\choose 9} + {15 \choose 6}2^9\).
+          %
+\par\smallskip
+\noindent\textbf{8.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-446}{}\({14 \choose 7} = 3432\) paths.  The paths all have length 14 (7 steps up and 7 steps right), we just select which 7 of those 14 should be up.\item\hypertarget{li-447}{}\({6 \choose 2}{8\choose 5} = 840\) paths.  First travel to (5,7), and then continue on to (10,10).\item\hypertarget{li-448}{}\({14 \choose 7} - {6\choose 2}{8 \choose 5}\) paths.  Remove all the paths that you found in part (b).\end{enumerate}
+\par\smallskip
+\noindent\textbf{9.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-453}{}\({11 \choose 3} = 165\) choices, since you have to select a 3-element subset of the set of 11 toppings.\item\hypertarget{li-454}{}\({10 \choose 3} = 120\) choices, since you must select 3 of the 10 non-pineapple toppings.\item\hypertarget{li-455}{}\({10 \choose 2} = 45\) choices, since you must select 2 of the remaining 10 non-pineapple toppings to have in addition to the pineapple.\item\hypertarget{li-456}{}\(165  = 120 + 45\) choices, which makes sense because every 3-topping pizza either has pineapple or does not have pineapple as a topping.\end{enumerate}
+\par\smallskip
+\noindent\textbf{10.}\quad{}
+            The coefficient of \(x^5y^3\) is \({8\choose 5}\), since we must pick 5 of the 8 factors to contribute an \(x\). The coefficient of \(x^3y^5\) is \({8 \choose 3}\), since we pick 3 out of the 8 factors to contribute an \(x\). But \({8 \choose 5} = {8\choose 3}\), because we could just as easily have picked 5 out of the 8 factors to contribute a \(y\).
+          %
+\par\smallskip
 \typeout{************************************************}
 \typeout{Appendix B Notation}
 \typeout{************************************************}
@@ -3733,6 +4295,8 @@ $
 $\N$&The set of natural numbers&\pageref{notation-2}\\
 $\st$&``such that''&\pageref{notation-3}\\
 $f\inv(y)$&The complete inverse image of \(y\) under \(f\).&\pageref{notation-4}\\
+$\B^n$&The set of length \(n\) bit strings&\pageref{notation-5}\\
+$\B^n_k$&The set of legth \(n\) bit strings with weight \(k\).&\pageref{notation-6}\\
 \end{longtable}
 %
 \backmatter
