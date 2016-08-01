@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-08-01T14:25:35-06:00    *%
+%*    on 2016-08-01T16:17:24-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -3813,6 +3813,338 @@ What is the coefficient of \(x^3y^2\) in the expansion of \((x+y)^5\)?  We must 
           %
 \par\smallskip
 \end{exerciselist}
+\typeout{************************************************}
+\typeout{Section 2.3 Combinations and Permutations}
+\typeout{************************************************}
+\section[Combinations and Permutations]{Combinations and Permutations}\label{sec_comb-perm}
+\begin{investigation}[]\label{investigation-8}
+
+      You have a bunch of chips which come in five different colors: red, blue, green, purple and yellow.
+
+      \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-457}{}
+            How many different two-chip stacks can you make if the bottom chip must be red or blue? Explain your answer using both the additive and multiplicative principles.
+          %
+\item\hypertarget{li-458}{}
+            How many different three-chip stacks can you make if the bottom chip must be red or blue and the top chip must be green, purple or yellow? How does this problem relate to the previous one?
+          %
+\item\hypertarget{li-459}{}
+            How many different three-chip stacks are there in which no color is repeated? What about four-chip stacks?
+          %
+\item\hypertarget{li-460}{}
+            Suppose you wanted to take three different colored chips and put them in your pocket. How many different choices do you have? What if you wanted four different colored chips? How do these problems relate to the previous one?
+          %
+\end{enumerate}
+
+    %
+\end{investigation}
+
+    A \terminology{permutation} is a (possible) rearrangement of objects. For example, there are 6 permutations of the letters \emph{a, b, c}:
+    \begin{equation*}
+      abc, ~~ acb, ~~ bac, ~~bca, ~~ cab, ~~ cba.
+    \end{equation*}
+  %
+\par
+
+    We know that we have them all listed above
+    \textemdash{}there are 3 choices for which letter we put first, then 2 choices for which letter comes next, which leaves only 1 choice for the last letter. The multiplicative principle says we multiply \(3\cdot 2 \cdot 1\).
+  %
+\begin{example}[]\label{example-30}
+
+        How many permutations are there of the letters \emph{a, b, c, d, e, f}?
+      %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+        We do NOT want to try to list all of these out. However, if we did, we would need to pick a letter to write down first. There are 6 choices for that letter. For each choice of first letter, there are 5 choices for the second letter (we cannot repeat the first letter; we are rearranging letters and only have one of each), and for each of those, there are 4 choices for the third, 3 choices for the fourth, 2 choices for the fifth and finally only 1 choice for the last letter. So there are \(6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720\) permutations of the 6 letters.
+      %
+\end{example}
+\par
+ A piece of notation is helpful here: \(n!\), read ``\(n\) factorial'',\index{factorial} is the product of all positive integers less than or equal to \(n\) (for reasons of convenience, we also define 0! to be 1). So the number of permutation of 6 letters, as seen in the previous example is \(6! = 6\cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1\). This generalizes:%
+\begin{assemblage}{Permutations of \(n\) elements}\label{assemblage-22}\par\medskip
+
+        There are \(n! = n\cdot (n-1)\cdot (n-2)\cdot \cdots \cdot 2\cdot 1\) permutations of \(n\) (distinct) elements.
+      %
+\end{assemblage}
+\begin{example}[]\label{example-31}
+
+          How many functions \(f:\{1,2,\ldots,8\} \to \{1,2,\ldots, 8\}\) are \emph{bijective}?
+        %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+          Remember what it means for a function to be bijective: each element in the codomain must be the image of exactly one element of the domain. Using two line notation, we could write one of these bijections as
+          \begin{equation*}
+            f = \twoline{1 \amp 2 \amp 3 \amp 4 \amp 5 \amp 6 \amp 7 \amp 8} {3 \amp 1 \amp 5 \amp 8 \amp 7 \amp 6 \amp 2 \amp 4}
+          \end{equation*}
+          What we are really doing is just rearranging the elements of the codomain, so we are creating a permutation of 8 elements. In fact, ``permutation'' is another term used to describe bijective functions from a finite set to itself.
+        %
+\par
+
+          If you believe this, then you see the answer must be \(8! = 8 \cdot 7 \cdot\cdots\cdot 1 = 40320\). You can see this directly as well: for each element of the domain, we must pick a distinct element of the codomain to map to. There are 8 choices for where to send 1, then 7 choices for where to send 2, and so on. We multiply using the multiplicative principle.
+        %
+\end{example}
+\par
+
+        Sometimes we do not want to permute all of the letters/numbers/elements we are givin.
+      %
+\begin{example}[]\label{example-32}
+
+            How many 4 letter ``words'' can you make from the letters \emph{a} through \emph{f}, with no repeated letters?
+          %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+            This is just like the problem of permuting 4 letters, only now we have more choices for each letter. For the first letter, there are 6 choices. For each of those, there are 5 choices for the second letter. Then there are 4 choices for the third letter, and 3 choices for the last letter. The total number of words is \(6\cdot 5\cdot 4 \cdot 3 = 360\). This is not \(6!\) because we never multiplied by 2 and 1. We could start with \(6!\) and then cancel the 2 and 1, and thus write \(\frac{6!}{2!}\).
+          %
+\end{example}
+\par
+
+        In general, we can ask how many permutations exist of \(k\) objects choosing those objects from a larger collection of \(n\) objects. (In the example above, \(k = 4\), and \(n = 6\).) We write this number \(P(n,k)\) and sometimes call it a \terminology{\(k\)-permutation of \(n\) elements}. From the example above, we see that to compute \(P(n,k)\) we must apply the multiplicative principle to \(k\) numbers, starting with \(n\) and counting backwards. So for example
+        \begin{equation*}
+          P(10, 4) = 10\cdot 9 \cdot 8 \cdot 7.
+        \end{equation*}
+      %
+\par
+
+        Notice again that \(P(10,4)\) starts out looking like \(10!\), but we stop after 7. We can formally account for this ``stopping'' by dividing away the part of the factorial we do not want:
+        \begin{equation*}
+          P(10,4) = \frac{10\cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}{6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = \frac{10!}{6!}.
+        \end{equation*}
+      %
+\par
+
+        Careful: The factorial in the denominator is not \(4!\) but rather \((10-4)!\).
+      %
+\begin{assemblage}{\(k\)-permutations of \(n\) elements}\label{assemblage-23}\par\medskip
+
+          \index{\(k\)-permutation}\index{permutation}
+          \(P(n,k)\) is the number of \terminology{\(k\)-permutations} of \(n\) elements, the number of ways to \emph{arrange} \(k\) objects chosen from \(n\) distinct objects.
+          \begin{equation*}
+            P(n,k) = \frac{n!}{(n-k)!}.
+          \end{equation*}
+        %
+\end{assemblage}
+\par
+
+        Note that when \(n = k\), we have \(P(n,n) = \frac{n!}{(n-n)!} = n!\) (since we defined \(0!\) to be 1). This makes sense
+        \textemdash{}we already know \(n!\) gives the number of permutations of all \(n\) objects.
+      %
+\begin{example}[]\label{example-33}
+How many functions \(f:\{1,2,3\} \to \{1,2,3,4,5,6,7\}\) are \emph{injective}?%
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+            Note that it doesn't make sense to ask for the number of \emph{bijections} here, as there are none (because the codomain is larger than the domain, there are no surjections). But for a function to be injective, we just can't use an element of the codomain more than once.
+          %
+\par
+
+            We need to pick an element from the codomain to be the image of 1. There are 8 choices. Then we need to pick one of the remaining 7 elements to be the image of 2. Finally, one of the remaining 6 elements must be the image of 3. So the total number of functions is \(8\cdot 7 \cdot 6 = P(8,3)\).
+          %
+\par
+
+            What this demonstrates in general is that the number of injections \(f:A \to B\), where \(\card{A} = k\) and \(\card{B} = n\), is \(P(n,k)\).
+          %
+\end{example}
+\par
+
+          Here is another way to find the number of \(k\)-permutations of \(n\) elements: first select which \(k\) elements will be in the permutation, then count how many ways there are to arrange them. Once you have selected the \(k\) objects, we know there are \(k!\) ways to arrange (permute) them. But how do you select \(k\) objects from the \(n\)? You have \(n\) objects, and you need to \emph{choose} \(k\) of them. You can do that in \({n \choose k}\) ways. Then for each choice of those \(k\) elements, we can permute \emph{them} in \(k!\) ways. Using the multiplicative principle, we get another formula for \(P(n,k)\):
+          \begin{equation*}
+            P(n,k) = {n \choose k}\cdot k!.
+          \end{equation*}
+        %
+\par
+
+          Now since we have a closed formula for \(P(n,k)\) already, we can substitute that in:
+          \begin{equation*}
+            \frac{n!}{(n-k)!} = {n \choose k} \cdot k!.
+          \end{equation*}
+        %
+\par
+
+          If we divide both sides by \(k!\) we get a closed formula for \({n \choose k}\).
+        %
+\begin{assemblage}{Closed formula for \({n \choose k}\)}\label{assemblage-24}\par\medskip
+
+            \begin{equation*}
+              {n \choose k} = \frac{n!}{(n-k)!k!}
+            \end{equation*}
+          %
+\end{assemblage}
+\par
+
+          We say \(P(n,k)\) counts permutations, and \({n \choose k}\) counts \emph{combinations}\index{combination}. The formulas for each are very similar, there is just an extra \(k!\) in the denominator of \({n \choose k}\). That extra \(k!\) accounts for the fact that \({n \choose k}\) does not distinguish between the different orders that the \(k\) objects can appear in. We are just selecting (or choosing) the \(k\) objects, not arranging them. Perhaps ``combination'' is a misleading label. We don't mean it like a combination lock (where the order would definitely matter). Perhaps a better metaphor is a combination of flavors
+          \textemdash{} you just need to decide which flavors to combine, not the order in which to combine them.
+        %
+\par
+
+          To further illustrate the connection between combinations and permutations, we close with an example.
+        %
+\begin{example}[]\label{example-34}
+
+              You decide to have a dinner party. Even though you are incredibly popular and have 14 different friends, you only have enough chairs to invite 6 of them.
+            %
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-461}{}
+How many choices do you have for which 6 friends to invite?
+%
+\item\hypertarget{li-462}{}
+What if you need to decide not only which friends to invite but also where to seat them along your long table?  How many choices do you have then?
+%
+\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-463}{}
+You must simply choose 6 friends from a group of 14.  This can be done in \({14 \choose 6}\) ways.  We can find this number either by using Pascal's triangle or the closed formula: \(\frac{14!}{8!\cdot 6!} = 3003\).
+%
+\item\hypertarget{li-464}{}
+Here you must count all the ways you can permute 6 friends chosen from a group of 14.  So the answer is \(P(14, 6)\), which can be calculated as \(\frac{14!}{8!} = 2192190\).
+%
+\par
+
+  Notice that we can think of this counting problem as a question about counting functions: how many injective functions are there from your set of 6 chairs to your set of 14 friends (the functions are injective because you can't have a single chair go to two of your friends).
+%
+\end{enumerate}
+
+              How are these numbers related? Notice that \(P(14,6)\) is \emph{much} larger than \({14 \choose 6}\). This makes sense. \({14 \choose 6}\) picks 6 friends, but \(P(14,6)\) arranges the 6 friends as well as picks them. In fact, we can say exactly how much larger \(P(14,6)\) is. In both counting problems we choose 6 out of 14 friends. For the first one, we stop there, at 3003 ways. But for the second counting problem, each of those 3003 choices of 6 friends can be arranged in exactly \(6!\) ways. So now we have \(3003\cdot 6!\) choices and that is exactly \(2192190\).
+            %
+\par
+
+              Alternatively, look at the first problem another way. We want to select 6 out of 14 friends, but we do not care about the order they are selected in. To select 6 out of 14 friends, we might try this:
+              \begin{equation*}
+                14 \cdot 13 \cdot 12 \cdot 11 \cdot 10 \cdot 9.
+              \end{equation*}
+            %
+\par
+
+              This is a reasonable guess, since we have 14 choices for the first guest, then 13 for the second, and so on. But the guess is wrong (in fact, that product is exactly \(2192190 = P(14,6)\)). It distinguishes between the different orders in which we could invite the guests. To correct for this, we could divide by the number of different arrangements of the 6 guests (so that all of these would count as just one outcome). There are precisely \(6!\) ways to arrange 6 guests, so the correct answer to the first question is
+              \begin{equation*}
+                \frac{14 \cdot 13 \cdot 12 \cdot 11\cdot 10 \cdot 9}{6!}.
+              \end{equation*}
+            %
+\par
+
+              Note that another way to write this is
+              \begin{equation*}
+                \frac{14!}{8!\cdot 6!}.
+              \end{equation*}
+              which is what we had originally.
+            %
+\end{example}
+\typeout{************************************************}
+\typeout{Exercises 2.3.1 Exercises}
+\typeout{************************************************}
+\subsection[Exercises]{Exercises}\label{exercises-6}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-60}{}
+                A pizza parlor offers 10 toppings.
+              %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-465}{} How many 3-topping pizzas could they put on their menu?  Assume double toppings are not allowed. %
+\item\hypertarget{li-466}{} How many total pizzas are possible, with between zero and ten toppings (but not double toppings) allowed? %
+\item\hypertarget{li-467}{} The pizza parlor will list the 10 toppings in two equal-sized columns on their menu.  How many ways can they arrange the toppings in the left column? %
+\end{enumerate}
+\par\smallskip
+\item[2.]\hypertarget{exercise-61}{}
+                A combination lock consists of a dial with 40 numbers on it. To open the lock, you turn the dial to the right until you reach a first number, then to the left until you get to second number, then to the right again to the third number. The numbers must be distinct. How many different combinations are possible?
+              %
+\par\smallskip
+\item[3.]\hypertarget{exercise-62}{}
+                Using the digits 2 through 8, find the number of different 5-digit numbers such that:
+              %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-471}{} Digits can be used more than once. %
+\item\hypertarget{li-472}{} Digits cannot be repeated, but can come in any order. %
+\item\hypertarget{li-473}{} Digits cannot be repeated and must be written in increasing order. %
+\item\hypertarget{li-474}{} Which of the above counting questions is a combination and which is a permutation?  Explain why this makes sense. %
+\end{enumerate}
+\par\smallskip
+\item[4.]\hypertarget{exercise-63}{}
+                How many quadrilaterals can you draw using the dots below as vertices (corners)?
+              %
+\leavevmode%
+\begin{figure}
+\centering
+{
+                 \begin{tikzpicture}[scale=.9]
+ \foreach \x in {-3,...,3}
+ \foreach \y in {-1,1}
+ \fill (\x,\y) circle (3pt);
+\end{tikzpicture}
+}
+\end{figure}
+\par\smallskip
+\item[5.]\hypertarget{exercise-64}{}
+                How many of the quadrilaterals possible in the previous problem are:
+              %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-479}{} Squares? %
+\item\hypertarget{li-480}{} Rectangles? %
+\item\hypertarget{li-481}{} Parallelograms? %
+\item\hypertarget{li-482}{} Trapezoids?\footnote{Here, as in calculus, a trapezoid is defined as a quadrilateral with \emph{at least} one pair of parallel sides.  In particular, parallelograms are trapezoids.\label{fn-2}} %
+\item\hypertarget{li-483}{} Trapezoids that are not parallelograms? %
+\end{enumerate}
+\par\smallskip
+\item[6.]\hypertarget{exercise-65}{}
+                An \emph{anagram} of a word is just a rearrangement of its letters. How many different anagrams of ``uncopyrightable'' are there? (This happens to be the longest common English word without any repeated letters.)
+              %
+\par\smallskip
+\item[7.]\hypertarget{exercise-66}{}
+                How many anagrams are there of the word ``assesses'' that start with the letter ``a''?
+              %
+\par\smallskip
+\item[8.]\hypertarget{exercise-67}{}
+                How many anagrams are there of ``anagram''?
+              %
+\par\smallskip
+\item[9.]\hypertarget{exercise-68}{}
+                On a business retreat, your company of 20 businessmen and businesswomen go golfing.
+              %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-489}{}
+You need to divide up into foursomes (groups of 4 people): a first foursome, a second foursome, and so on.  How many ways can you do this?
+%
+\item\hypertarget{li-490}{}
+After all your hard work, you realize that in fact, you want each foursome to include one of the five Board members.  How many ways can you do this?
+%
+\end{enumerate}
+\par\smallskip
+\item[10.]\hypertarget{exercise-69}{}
+                How many different seating arrangements are possible for King Arthur and his 9 knights around their round table?
+              %
+\par\smallskip
+\item[11.]\hypertarget{exercise-70}{}
+                Consider sets \(A\) and \(B\) with \(|A| = 10\) and \(|B| = 17\).
+              %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-493}{}
+    How many functions \(f: A \to B\) are there?
+    %
+\item\hypertarget{li-494}{}
+    How many functions \(f: A \to B\) are injective?
+    %
+\end{enumerate}
+\par\smallskip
+\item[12.]\hypertarget{exercise-71}{}
+                Consider functions \(f: \{1,2,3,4\} \to \{1,2,3,4,5,6\}\).
+              %
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-497}{}
+    How many functions are there total?
+    %
+\item\hypertarget{li-498}{}
+    How many functions are injective?
+    %
+\item\hypertarget{li-499}{} How many of the injective functions are \emph{increasing}?  To be increasing means that if \(a \lt b\) then \(f(a) \lt f(b)\), or in other words, the outputs get larger as the inputs get larger.
+  %
+\end{enumerate}
+\par\smallskip
+\end{exerciselist}
 %
 %% A lineskip in table of contents as transition to appendices, backmatter
 \addtocontents{toc}{\vspace{\normalbaselineskip}}
@@ -4276,6 +4608,66 @@ What is the coefficient of \(x^3y^2\) in the expansion of \((x+y)^5\)?  We must 
 \noindent\textbf{10.}\quad{}
             The coefficient of \(x^5y^3\) is \({8\choose 5}\), since we must pick 5 of the 8 factors to contribute an \(x\). The coefficient of \(x^3y^5\) is \({8 \choose 3}\), since we pick 3 out of the 8 factors to contribute an \(x\). But \({8 \choose 5} = {8\choose 3}\), because we could just as easily have picked 5 out of the 8 factors to contribute a \(y\).
           %
+\par\smallskip
+\subsection*{2.3.1 Exercises}
+\noindent\textbf{1.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-468}{}\({10 \choose 3} = 120\) pizzas.  We must choose (in no particular order) 3 out of the 10 toppings.\item\hypertarget{li-469}{}\(2^{10} = 1024\) pizzas.  Say yes or no to each topping.\item\hypertarget{li-470}{}\(P(10,5) 30240\) ways.  Assign each of the 5 spots in the left column to a unique pizza topping.\end{enumerate}
+\par\smallskip
+\noindent\textbf{2.}\quad{}
+                Despite its name, we are not looking for a combination here. The order in which the three numbers appears matters. There are \(P(40,3) = 40\cdot 39 \cdot 38\) different possibilities for the ``combination''. This is assuming you cannot repeat any of the numbers (if you could, the answer would be \(40^3\)).
+              %
+\par\smallskip
+\noindent\textbf{3.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-475}{} This is just the multiplicative principle.  There are 7 digits which we can select for each of the 5 positions, so we have \(7^5 = 16807\) such numbers. %
+\item\hypertarget{li-476}{} Now we have 7 choices for the first number, 6 for the second, etc.  So there are \(7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 = P(7,5) = 2520\) such numbers. %
+\item\hypertarget{li-477}{} To build such a number we simply must select 5 different digits.  After doing so, there will only be one way to arrange them into a 5-digit number.  Thus there are \({7 \choose 5} = 21\) such numbers. %
+\item\hypertarget{li-478}{} The permutation is in part (b), while the combination is in part (c).  At first this seems backwards, since usually we use combinations for when order does not matter.  Here it looks like in part (c) that order does matter.  The better way to distinguish between combinations and permutations is to ask whether we are counting different arrangements as different outcomes.  In part (c), there is only one arrangement of any set of 5 digits, while in part (b) each set of 5 digits gives \(5!\) different outcomes. %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{4.}\quad{}
+                \({7\choose 2}{7\choose 2} = 441\) quadrilaterals. We must pick two of the seven dots from the top row and two of the seven dots on the bottom row. However, it does not make a difference which of the two (on each row) we pick first because once these four dots are selected, there is exactly one quadrilateral that they determine.
+              %
+\par\smallskip
+\noindent\textbf{5.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-484}{} 5 squares. You need to skip exactly one dot on the top and on the bottom to make the side lengths equal.  Once you pick a dot on the top, the other three dots are determined. %
+\item\hypertarget{li-485}{}\({7 \choose 2}\) rectangles.  Once you select the two dots on the top, the bottom two are determined.\item\hypertarget{li-486}{} This is tricky since you need to worry about running out of space.  One way to count: break into cases by the location of the top left corner.  You get \({7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91\) parallelograms. %
+\item\hypertarget{li-487}{} All of them %
+\item\hypertarget{li-488}{} All of them, except the parallelograms.  So \({7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]\). %
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{6.}\quad{}
+                Since there are 15 different letters, we have 15 choices for the first letter, 14 for the next, and so on. Thus there are \(15!\) anagrams.
+              %
+\par\smallskip
+\noindent\textbf{7.}\quad{}
+                After the first letter (a), we must rearrange the remaining 7 letters. There are only two letters (s and e), so this is really just a bit-string question (think of s as 1 and e as 0). Thus there \({7 \choose 2} = 21\) anagrams starting with ``a''.
+              %
+\par\smallskip
+\noindent\textbf{8.}\quad{}
+                First, decide where to put the ``a''s. There are 7 positions, and we must choose 3 of them to fill with an ``a''. This can be done in \({7 \choose 3}\) ways. The remaining 4 spots all get a different letter, so there are \(4!\) ways to finish off the anagram. This gives a total of \({7 \choose 3}\cdot 4!\) anagrams. Strangely enough, this is 840, which is also equal to \(P(7,4)\). To get the answer that way, start by picking one of the 7 \emph{positions} to be filled by the ``n'', one of the remaining 6 positions to be filled by the ``g'', one of the remaining 5 positions to be filled by the ``r'', one of the remaining 4 positions to be filled by the ``m'' and then put ``a''s in the remaining 3 positions.
+              %
+\par\smallskip
+\noindent\textbf{9.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-491}{}\({20 \choose 4}{16 \choose 4}{12 \choose 4}{8 \choose 4}{4 \choose 4}\) ways. Pick 4 out of 20 people to be in the first foursome, then 4 of the remaining 16 for the second foursome, and so on (use the multiplicative principle to combine).\item\hypertarget{li-492}{}\(5!{15 \choose 3}{12 \choose 3}{9 \choose 3}{6 \choose 3}{3 \choose 3}\) ways.  First determine the tee time of the 5 board members, then select 3 of the 15 non board members to golf with the first board member, then 3 of the remaining 12 to golf with the second, and so on.\end{enumerate}
+\par\smallskip
+\noindent\textbf{10.}\quad{}
+                \(9!\) (there are 10 people seated around the table, but it does not matter where King Arthur sits, only who sits to his left, two seats to his left, and so on).
+              %
+\par\smallskip
+\noindent\textbf{11.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-495}{}\(17^{10}\) functions.  There are 17 choices for the image of each element in the domain.\item\hypertarget{li-496}{}\(P(17, 10)\) injective functions.  There are 17 choices for image of the first element of the domain, then only 16 choices for the second, and so on.\end{enumerate}
+\par\smallskip
+\noindent\textbf{12.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-500}{}\(6^4 = 1296\)functions, since there are six choices of where to send each of the 4 elements of the domain.%
+\item\hypertarget{li-501}{}\(P(6, 4) = 6 \cdot 5 \cdot 4 \cdot 3 = 360\)functions, since outputs cannot be repeated.%
+\item\hypertarget{li-502}{}\({6 \choose 4} = 15\) functions. Since the function must be injective and increasing, we just need to select the four distinct elements of the range from the six elements of the codomain.  Once selected, we must put the smallest as the image of 1, the next smallest as  the image of 2, and so on (doing this does not increase the number of functions, since there is one choice for how this event can occur).  %
+\end{enumerate}
 \par\smallskip
 \typeout{************************************************}
 \typeout{Appendix B Notation}
