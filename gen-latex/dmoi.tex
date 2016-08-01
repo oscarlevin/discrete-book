@@ -1,11 +1,11 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-07-29T22:51:45-06:00    *%
+%*    on 2016-07-31T22:28:06-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
 %**************************************%
-\documentclass[10pt,]{memoir}
+\documentclass[10pt,]{book}
 %% Load geometry package to allow page margin adjustments
 \usepackage{geometry}
 \geometry{letterpaper,total={5.0in,9.0in}}
@@ -18,18 +18,31 @@
 %% and read "Fewer fragile commands" in distribution's  latexchanges.pdf
 \IfFileExists{latexrelease.sty}{}{\usepackage{fixltx2e}}
 %% Page Layout Adjustments (latex.geometry)
-%% This LaTeX file may be compiled with pdflatex or xelatex
+\geometry{papersize={6in,9in}, hmargin={0.75in, 0.75in}, height=7.5in, top=0.75in, twoside, ignoreheadfoot}
+%% This LaTeX file may be compiled with pdflatex, xelatex, or lualatex
 %% The following provides engine-specific capabilities
-%% Generally, xelatex will do better languages other than US English
+%% Generally, xelatex and lualatex will do better languages other than US English
 %% You can pick from the conditional if you will only ever use one engine
 \usepackage{ifthen}
-\usepackage{ifxetex}
-\ifthenelse{\boolean{xetex}}{%
-%% begin: xelatex-specific configuration
+\usepackage{ifxetex,ifluatex}
+\ifthenelse{\boolean{xetex} \or \boolean{luatex}}{%
+%% begin: xelatex and lualatex-specific configuration
 %% fontspec package will make Latin Modern (lmodern) the default font
-\usepackage{xltxtra}
+\ifxetex\usepackage{xltxtra}\fi
 \usepackage{fontspec}
-%% end: xelatex-specific configuration
+%% realscripts is the only part of xltxtra relevant to lualatex 
+\ifluatex\usepackage{realscripts}\fi
+%% 
+%% Extensive support for other languages
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+%% Magyar (Hungarian)
+\setotherlanguage{magyar}
+%% Spanish
+\setotherlanguage{spanish}
+%% Vietnamese
+\setotherlanguage{vietnamese}
+%% end: xelatex and lualatex-specific configuration
 }{%
 %% begin: pdflatex-specific configuration
 %% translate common Unicode to their LaTeX equivalents
@@ -47,15 +60,15 @@
 %% Upright quotes might come from the  textcomp  package, which we also use
 %% We employ the shapely \ell to match Google Font version
 %% pdflatex: "varqu" option produces best upright quotes
-%% xelatex: add StylisticSet 1 for shapely \ell
-%% xelatex: add StylisticSet 2 for plain zero
-%% xelatex: we add StylisticSet 3 for upright quotes
+%% xelatex,lualatex: add StylisticSet 1 for shapely \ell
+%% xelatex,lualatex: add StylisticSet 2 for plain zero
+%% xelatex,lualatex: we add StylisticSet 3 for upright quotes
 %% 
-\ifthenelse{\boolean{xetex}}{%
-%% begin: xelatex-specific monospace font
+\ifthenelse{\boolean{xetex} \or \boolean{luatex}}{%
+%% begin: xelatex and lualatex-specific monospace font
 \usepackage{zi4}
 \setmonofont[BoldFont=Inconsolatazi4-Bold.otf,StylisticSet={1,3}]{Inconsolatazi4-Regular.otf}
-%% end: xelatex-specific monospace font
+%% end: xelatex and lualatex-specific monospace font
 }{%
 %% begin: pdflatex-specific monospace font
 \usepackage[varqu]{zi4}
@@ -71,7 +84,8 @@
 %% Color support, xcolor package
 %% Always loaded.  Used for:
 %% mdframed boxes, add/delete text, author tools
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\PassOptionsToPackage{usenames,dvipsnames,svgnames,table}{xcolor}
+\usepackage{xcolor}
 %%
 %% Semantic Macros
 %% To preserve meaning in a LaTeX file
@@ -177,49 +191,6 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 \usepackage{float}
 \usepackage[bf]{caption} % http://tex.stackexchange.com/questions/95631/defining-a-new-type-of-floating-environment 
 \usepackage{newfloat}
-% Side-by-side elements need careful treatement for aligning captions, see: 
-% http://tex.stackexchange.com/questions/230335/vertically-aligning-minipages-subfigures-and-subtables-not-with-baseline 
-\usepackage{stackengine,ifthen}
-\newcounter{figstack}
-\newcounter{figindex}
-\newlength\fight
-\newcommand\pushValignCaptionBottom[5][b]{%
-\stepcounter{figstack}%
-\expandafter\def\csname %
-figalign\romannumeral\value{figstack}\endcsname{#1}%
-\expandafter\def\csname %
-figtype\romannumeral\value{figstack}\endcsname{#2}%
-\expandafter\def\csname %
-figwd\romannumeral\value{figstack}\endcsname{#3}%
-\expandafter\def\csname %
-figcontent\romannumeral\value{figstack}\endcsname{#4}%
-\expandafter\def\csname %
-figcap\romannumeral\value{figstack}\endcsname{#5}%
-\setbox0=\hbox{%
-\begin{#2}{#3}#4\end{#2}}%
-\ifdim\dimexpr\ht0+\dp0\relax>\fight\global\setlength{\fight}{%
-\dimexpr\ht0+\dp0\relax}\fi%
-}
-\newcommand\popValignCaptionBottom{%
-\setcounter{figindex}{0}%
-\hfill%
-\whiledo{\value{figindex}<\value{figstack}}{%
-\stepcounter{figindex}%
-\def\tmp{\csname figwd\romannumeral\value{figindex}\endcsname}%
-\begin{\csname figtype\romannumeral\value{figindex}\endcsname}[t]{\tmp}%
-\centering%
-\stackinset{c}{}%
-{\csname figalign\romannumeral\value{figindex}\endcsname}{}%
-{\csname figcontent\romannumeral\value{figindex}\endcsname}%
-{\rule{0pt}{\fight}}\par%
-\csname figcap\romannumeral\value{figindex}\endcsname%
-\end{\csname figtype\romannumeral\value{figindex}\endcsname}%
-\hfill%
-}%
-\setcounter{figstack}{0}%
-\setlength{\fight}{0pt}%
-\hfill%
-}
 % Figure environment setup so that it no longer floats
 \SetupFloatingEnvironment{figure}{fileext=lof,placement={H},within=section,name=Figure}
 % figures have the same number as theorems: http://tex.stackexchange.com/questions/16195/how-to-make-equations-figures-and-theorems-use-the-same-numbering-scheme 
@@ -236,6 +207,7 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 %% We reset the footnote counter, as given by numbering.footnotes.level
 \makeatletter\@addtoreset{footnote}{section}\makeatother
 %% Raster graphics inclusion, wrapped figures in paragraphs
+%% \resizebox sometimes used for images in side-by-side layout
 \usepackage{graphicx}
 %%
 %% More flexible list management, esp. for references and exercises
@@ -270,6 +242,10 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 \ifdefined\tikzset
     \tikzset{ampersand replacement = \amp}
 \fi
+%% NB: calc redefines \setlength
+\usepackage{calc}
+%% used repeatedly for vertical dimensions of sidebyside panels
+\newlength{\panelmax}
 %% extpfeil package for certain extensible arrows,
 %% as also provided by MathJax extension of the same name
 %% NB: this package loads mtools, which loads calc, which redefines
@@ -283,7 +259,7 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 \usepackage{extpfeil}
 %% Custom Preamble Entries, late (use latex.preamble.late)
 %This should load all the style information that mbx does not.
-\input{latex-preamble-styles-memoir}
+\input{latex-preamble-styles}
 
 %% Begin: Author-provided macros
 %% (From  docinfo/macros  element)
@@ -373,7 +349,7 @@ figcap\romannumeral\value{figstack}\endcsname{#5}%
 School of Mathematical Science\\
 University of Northern Colorado
 }
-\date{July 29, 2016}
+\date{July 31, 2016}
 \begin{document}
 \frontmatter
 %% begin: half-title
@@ -399,7 +375,7 @@ University of Northern Colorado
 {\LARGE An Open Introduction}\\[3\baselineskip]
 {\Large Oscar Levin}\\[0.5\baselineskip]
 {\Large University of Northern Colorado}\\[3\baselineskip]
-{\Large July 29, 2016}\\}
+{\Large July 31, 2016}\\}
 \clearpage
 %% end:   title page
 %% begin: copyright-page
@@ -448,7 +424,7 @@ While I (currently) believe this selection and order of topics is optimal, you s
 \typeout{************************************************}
 \typeout{Paragraphs  Previous and future editions}
 \typeout{************************************************}
-\paragraph[Previous and future editions]{Previous and future editions}\label{pref_editions}
+\paragraph[Previous and future editions]{Previous and future editions}\hypertarget{pref_editions}{}
 
 This current Fall 2015 edition of the text is essentially the first edition of the book. I have previously compiled many of the sections in a book format for easy distribution, but those were mostly just lecture notes and exercises (there was no index or Investigate problems; very little in the way of consistent formatting).
 %
@@ -470,28 +446,28 @@ University of Northern Colorado, 2016
 \typeout{************************************************}
 \typeout{Paragraphs  \emph{Investigate!} activities}
 \typeout{************************************************}
-\paragraph[\emph{Investigate!} activities]{\emph{Investigate!} activities}\label{paragraphs-2}
+\paragraph[\emph{Investigate!} activities]{\emph{Investigate!} activities}\hypertarget{paragraphs-2}{}
 
   Sprinkled throughout the sections (usually at the very beginning of a topic) you will find activities designed to get you acquainted with the topic soon to be discussed. These are similar (sometimes identical) to group activities I give students to introduce material. You really should spend some time thinking about, or even working through, these problems before reading the section. By priming yourself to the types of issues involved in the material you are about to read, you will better understand what is to come. There are no solutions provided for these problems, but don't worry if you can't solve them or are not confident in your answers. My hope is that you will take this frustration with you while you read the proceeding section. By the time you are done with the section, things should be much clearer.
   %
 \typeout{************************************************}
 \typeout{Paragraphs  Examples}
 \typeout{************************************************}
-\paragraph[Examples]{Examples}\label{paragraphs-3}
+\paragraph[Examples]{Examples}\hypertarget{paragraphs-3}{}
 
   I have tried to include the ``correct'' number of examples. For those examples which include \emph{problems}, full solutions are included. Before reading the solution, try to at least have an understanding of what the problem is asking. Unlike some textbooks, the examples are not meant to be all inclusive for problems you will see in the exercises. They should not be used as a blueprint for solving other problems. Instead, use the examples to deepen our understanding of the concepts and techniques discussed in each section. Then use this understanding to solve the exercises at the end of each section.
   %
 \typeout{************************************************}
 \typeout{Paragraphs  Exercises}
 \typeout{************************************************}
-\paragraph[Exercises]{Exercises}\label{paragraphs-4}
+\paragraph[Exercises]{Exercises}\hypertarget{paragraphs-4}{}
 
   You get good at math through practice. Each section concludes with a small number of exercises meant to solidify concepts and basic skills presented in that section. At the end of each chapter, a larger collection of similar exercises is included (as a sort of ``chapter review'') which might bridge material of different sections in that chapter. Every exercise has either a hint, answer or full solution (which in the pdf version of the text can be found by clicking on the exercises number \textendash{} clicking on the solution number will bring you back to the exercise). Readers are encouraged to try these exercises before looking at the solution. When I teach with this book, I assign these exercises as practice and then use them, or similar problems, on quizzes and exams.
   %
 \typeout{************************************************}
 \typeout{Paragraphs  Homework Problems}
 \typeout{************************************************}
-\paragraph[Homework Problems]{Homework Problems}\label{paragraphs-5}
+\paragraph[Homework Problems]{Homework Problems}\hypertarget{paragraphs-5}{}
 
        Each chapter includes a small number of more involved problems \textendash{} the type I would assign as homework to be written up and collected each week. As many of these are problems I assign, solutions are not included. If you are using this book for self study, consider these additional \emph{Investigate!} problems.
     %
@@ -1553,18 +1529,18 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
   \leavevmode%
 \begin{description}
-\item[\(\{, \}\)]{} We use these \emph{braces} to enclose the elements of a set. So \(\{1,2,3\}\) is the set containing 1, 2, and 3. %
-\item[\(\st\)]{}\(\{x \st x > 2\}\) is the set of all \(x\) \emph{such that} \(x\) is greater than 2.%
-\item[\(\in\)]{} \(2 \in \{1,2,3\}\) asserts that 2 is \emph{an elements of} the set \(\{1,2,3\}\). %
-\item[\(\not\in\)]{} \(4 \notin \{1,2,3\}\) because 4 \emph{is not an element of} the set \(\{1,2,3\}\). %
-\item[\(\subseteq\)]{}\(A \subseteq B\) asserts that \emph{\(A\) is a subset of \(B\)}: every element of \(A\) is also an element of \(B\).%
-\item[\(\subset\)]{}\(A \subset B\) asserts that  \emph{\(A\) is a proper subset of \(B\)}: every element of \(A\) is also an element of \(B\), but \(A \ne B\).%
-\item[\(\cap\)]{}\(A \cap B\), is the \emph{intersection of \(A\) and \(B\)}: the set containing all elements which are elements of both \(A\) and \(B\).%
-\item[\(\cup\)]{}\(A \cup B\) is the \emph{union of \(A\) and \(B\)}: is the set containing all elements which are elements of \(A\) or \(B\) or both.%
-\item[\(\times\)]{}\(A \times B\) is the \emph{Cartesian product of \(A\) and   \(B\)}: the set of all ordered pairs \((a,b)\) with \(a \in A\) and \(b \in B\).%
-\item[\(\setminus\)]{}\(A \setminus B\) is \emph{\(A\) set-minus \(B\)}: the set containing all elements of \(A\) which are not elements of \(B\).%
-\item[\(\bar{A}\)]{}The \emph{complement of \(A\)} is the set of everything which is not an element of \(A\). %
-\item[\(\left|A\right|\)]{}The \emph{cardinality (or size) of \(A\)} is the number of elements in \(A\).%
+\item[\(\{, \}\)]\hypertarget{li-159}{} We use these \emph{braces} to enclose the elements of a set. So \(\{1,2,3\}\) is the set containing 1, 2, and 3. %
+\item[\(\st\)]\hypertarget{li-160}{}\(\{x \st x > 2\}\) is the set of all \(x\) \emph{such that} \(x\) is greater than 2.%
+\item[\(\in\)]\hypertarget{li-161}{} \(2 \in \{1,2,3\}\) asserts that 2 is \emph{an elements of} the set \(\{1,2,3\}\). %
+\item[\(\not\in\)]\hypertarget{li-162}{} \(4 \notin \{1,2,3\}\) because 4 \emph{is not an element of} the set \(\{1,2,3\}\). %
+\item[\(\subseteq\)]\hypertarget{li-163}{}\(A \subseteq B\) asserts that \emph{\(A\) is a subset of \(B\)}: every element of \(A\) is also an element of \(B\).%
+\item[\(\subset\)]\hypertarget{li-164}{}\(A \subset B\) asserts that  \emph{\(A\) is a proper subset of \(B\)}: every element of \(A\) is also an element of \(B\), but \(A \ne B\).%
+\item[\(\cap\)]\hypertarget{li-165}{}\(A \cap B\), is the \emph{intersection of \(A\) and \(B\)}: the set containing all elements which are elements of both \(A\) and \(B\).%
+\item[\(\cup\)]\hypertarget{li-166}{}\(A \cup B\) is the \emph{union of \(A\) and \(B\)}: is the set containing all elements which are elements of \(A\) or \(B\) or both.%
+\item[\(\times\)]\hypertarget{li-167}{}\(A \times B\) is the \emph{Cartesian product of \(A\) and   \(B\)}: the set of all ordered pairs \((a,b)\) with \(a \in A\) and \(b \in B\).%
+\item[\(\setminus\)]\hypertarget{li-168}{}\(A \setminus B\) is \emph{\(A\) set-minus \(B\)}: the set containing all elements of \(A\) which are not elements of \(B\).%
+\item[\(\bar{A}\)]\hypertarget{li-169}{}The \emph{complement of \(A\)} is the set of everything which is not an element of \(A\). %
+\item[\(\left|A\right|\)]\hypertarget{li-170}{}The \emph{cardinality (or size) of \(A\)} is the number of elements in \(A\).%
 \end{description}
 
 %
@@ -1573,13 +1549,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
         \leavevmode%
 \begin{description}
-\item[\(\emptyset\)]{}The \emph{empty set} is the set which contains no elements.%
-\item[\(\U\)]{}The \emph{universe set} is the set of all elements.%
-\item[\(\N\)]{}The set of natural numbers. That is, \(\N = \{0, 1, 2, 3\ldots\}\).%
-\item[\(\Z\)]{}The set of integers. That is, \(\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}\).%
-\item[\(\Q\)]{}The set of rational numbers.%
-\item[\(\R\)]{}The set of real numbers.%
-\item[\(\pow(A)\)]{}The \emph{power set} of any set \(A\) is the set of all subsets of \(A\).%
+\item[\(\emptyset\)]\hypertarget{li-171}{}The \emph{empty set} is the set which contains no elements.%
+\item[\(\U\)]\hypertarget{li-172}{}The \emph{universe set} is the set of all elements.%
+\item[\(\N\)]\hypertarget{li-173}{}The set of natural numbers. That is, \(\N = \{0, 1, 2, 3\ldots\}\).%
+\item[\(\Z\)]\hypertarget{li-174}{}The set of integers. That is, \(\Z = \{\ldots, -2, -1, 0, 1, 2, 3, \ldots\}\).%
+\item[\(\Q\)]\hypertarget{li-175}{}The set of rational numbers.%
+\item[\(\R\)]\hypertarget{li-176}{}The set of real numbers.%
+\item[\(\pow(A)\)]\hypertarget{li-177}{}The \emph{power set} of any set \(A\) is the set of all subsets of \(A\).%
 \end{description}
 
       %
@@ -1837,29 +1813,45 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
       \index{Venn diagram} There is a very nice visual tool we can use to represent operations on sets. Venn diagrams display sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality of a particular set by putting the number in the corresponding region.
     %
-\leavevmode%
-\begin{figure}
-\centering
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxBimage}
+\savebox{\panelboxBimage}{
+\resizebox{0.34\linewidth}{!}{{
             \begin{tikzpicture}[fill=gray!50,scale=0.85]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+}}
+\newlength{\phBimage}\setlength{\phBimage}{\ht\panelboxBimage+\dp\panelboxBimage}
+\settototalheight{\phBimage}{\usebox{\panelboxBimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phBimage}}
+\newsavebox{\panelboxCimage}
+\savebox{\panelboxCimage}{
+\resizebox{0.34\linewidth}{!}{{
             \begin{tikzpicture}[scale=.60, fill=gray!50]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\popValignCaptionBottom
+}}
+\newlength{\phCimage}\setlength{\phCimage}{\ht\panelboxCimage+\dp\panelboxCimage}
+\settototalheight{\phCimage}{\usebox{\panelboxCimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.08\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.08\textwidth}%
+\begin{tabular}{@{}*{2}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.34\textwidth}\usebox{\panelboxBimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.34\textwidth}\usebox{\panelboxCimage}\end{minipage}\end{tabular}
 \end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
 \par
 
       Each circle represents a set. The rectangle containing the circles represents the universe. To represent combinations of these sets, we shade the corresponding region. For example, we could draw \(A \cap B\) as:
@@ -2141,12 +2133,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
           Which of the following diagrams represent a function? Let \(X = \{1,2,3,4\}\) and \(Y = \{a,b,c,d\}\).
         %
-\leavevmode%
-\begin{figure}
-\centering
-\pushValignCaptionBottom[b]{minipage}{.33333\textwidth}{%
-\centering% horizontal alignment 
-{
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxPimage}
+\savebox{\panelboxPimage}{
+\resizebox{0.3\linewidth}{!}{{
         \begin{tikzpicture}[scale=0.9]
   \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
   \draw[->] (-.5,1) node[above] {2} -- (-1.5,0) node[below] {\(a\)};
@@ -2155,11 +2148,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
             \node[above] at (0,1.5) {$f:X \to Y$};
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\pushValignCaptionBottom[b]{minipage}{.33333\textwidth}{%
-\centering% horizontal alignment 
-{
+}}
+\newlength{\phPimage}\setlength{\phPimage}{\ht\panelboxPimage+\dp\panelboxPimage}
+\settototalheight{\phPimage}{\usebox{\panelboxPimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phPimage}}
+\newsavebox{\panelboxQimage}
+\savebox{\panelboxQimage}{
+\resizebox{0.3\linewidth}{!}{{
         \begin{tikzpicture}[scale=0.9]
   \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
   \draw[->] (-.5,1) node[above] {2} -- (-1.6,0) node[below] {\(a\)};
@@ -2169,11 +2164,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \node[above] at (0,1.5) { $g:X \to Y$};
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\pushValignCaptionBottom[b]{minipage}{.33333\textwidth}{%
-\centering% horizontal alignment 
-{
+}}
+\newlength{\phQimage}\setlength{\phQimage}{\ht\panelboxQimage+\dp\panelboxQimage}
+\settototalheight{\phQimage}{\usebox{\panelboxQimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phQimage}}
+\newsavebox{\panelboxRimage}
+\savebox{\panelboxRimage}{
+\resizebox{0.3\linewidth}{!}{{
         \begin{tikzpicture}[scale=0.9]
   \draw (-1.5,1) node[above] {1};
   \draw[->] (-.5,1) node[above] {2} (-.6,1) -- (-1.5,0) node[below] {\(a\)};
@@ -2184,10 +2181,24 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
             \node[above] at (0,1.5) {$h:X \to Y$};
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\popValignCaptionBottom
+}}
+\newlength{\phRimage}\setlength{\phRimage}{\ht\panelboxRimage+\dp\panelboxRimage}
+\settototalheight{\phRimage}{\usebox{\panelboxRimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phRimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.0166666666666667\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.0166666666666667\textwidth}%
+\begin{tabular}{@{}*{3}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxPimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxQimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxRimage}\end{minipage}\end{tabular}
 \end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
           \(f\) is a function. So is \(g\). There is no problem with an element of the codomain not being the output for any input, and there is no problem with \(a\) from the codomain being the output of both 2 and 3 from the domain. We could use our two-line matrix notation to write these as
@@ -2200,12 +2211,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
           However, \(h\) is not a function. In fact, it fails for two reasons. First, the element 1 from the domain has not been mapped to any element from the codomain. Second, the element 2 from the domain has been mapped to more than one element from the codomain (\(a\) and \(c\)). Note that either one of these problems is enough to make a rule not a function. In general, neither of the following mappings are functions:
         %
-\leavevmode%
-\begin{figure}
-\centering
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxSimage}
+\savebox{\panelboxSimage}{
+\resizebox{0.18\linewidth}{!}{{
         \begin{tikzpicture}[scale=0.9]
   \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
   \draw[->] (-1, 1) -- (-.5,0);
@@ -2213,11 +2225,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+}}
+\newlength{\phSimage}\setlength{\phSimage}{\ht\panelboxSimage+\dp\panelboxSimage}
+\settototalheight{\phSimage}{\usebox{\panelboxSimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phSimage}}
+\newsavebox{\panelboxTimage}
+\savebox{\panelboxTimage}{
+\resizebox{0.27\linewidth}{!}{{
        \begin{tikzpicture}[scale=0.9]
   \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
   \draw[->] (-1.1, 1) -- (-1.5, 0);
@@ -2227,10 +2241,23 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{}% caption 
-\popValignCaptionBottom
+}}
+\newlength{\phTimage}\setlength{\phTimage}{\ht\panelboxTimage+\dp\panelboxTimage}
+\settototalheight{\phTimage}{\usebox{\panelboxTimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phTimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.1375\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.1375\textwidth}%
+\begin{tabular}{@{}*{2}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.18\textwidth}\usebox{\panelboxSimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.27\textwidth}\usebox{\panelboxTimage}\end{minipage}\end{tabular}
 \end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
 \par
 
           It might also be helpful to think about how you would write the two-line notation for \(h\). We would have something like:
@@ -2258,12 +2285,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
       In pictures:
     %
-\leavevmode%
-\begin{figure}
-\centering
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxUimage}
+\savebox{\panelboxUimage}{
+\resizebox{0.3\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-1,0);
@@ -2273,12 +2301,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{\captionof{figure}{Surjective.\label{figure-21}}
-}% caption 
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+}}
+\newlength{\phUimage}\setlength{\phUimage}{\ht\panelboxUimage+\dp\panelboxUimage}
+\settototalheight{\phUimage}{\usebox{\panelboxUimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phUimage}}
+\newsavebox{\panelboxVimage}
+\savebox{\panelboxVimage}{
+\resizebox{0.3\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-1.1,0);
@@ -2288,11 +2317,27 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-1, -0.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{\captionof{figure}{Not surjective.\label{figure-22}}
-}% caption 
-\popValignCaptionBottom
+}}
+\newlength{\phVimage}\setlength{\phVimage}{\ht\panelboxVimage+\dp\panelboxVimage}
+\settototalheight{\phVimage}{\usebox{\panelboxVimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phVimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.1\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.1\textwidth}%
+\begin{tabular}{@{}*{2}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxUimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxVimage}\end{minipage}\tabularnewline
+\parbox[t]{0.3\textwidth}{\captionof{figure}{Surjective.\label{figure-19}}
+}&
+\parbox[t]{0.3\textwidth}{\captionof{figure}{Not surjective.\label{figure-20}}
+}\end{tabular}
 \end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
 \begin{example}[]\label{example-18}
 
           Which functions are surjective (i.e., onto)?
@@ -2328,12 +2373,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
 
       In pictures:
     %
-\leavevmode%
-\begin{figure}
-\centering
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxXimage}
+\savebox{\panelboxXimage}{
+\resizebox{0.4\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-2,0);
@@ -2343,12 +2389,13 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{\captionof{figure}{Injective.\label{figure-24}}
-}% caption 
-\pushValignCaptionBottom[b]{minipage}{.50\textwidth}{%
-\centering% horizontal alignment 
-{
+}}
+\newlength{\phXimage}\setlength{\phXimage}{\ht\panelboxXimage+\dp\panelboxXimage}
+\settototalheight{\phXimage}{\usebox{\panelboxXimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phXimage}}
+\newsavebox{\panelboxYimage}
+\savebox{\panelboxYimage}{
+\resizebox{0.4\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-2,0);
@@ -2358,13 +2405,29 @@ True or false: If you draw any nine playing cards from a regular deck, then you 
   \draw (-2, -0.2) circle (.1) (-1, -.2) circle (.1) (0, -0.2) circle (.1) (1, -0.2) circle (.1) (2, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}% end body 
-{\captionof{figure}{
+}}
+\newlength{\phYimage}\setlength{\phYimage}{\ht\panelboxYimage+\dp\panelboxYimage}
+\settototalheight{\phYimage}{\usebox{\panelboxYimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phYimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.05\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.05\textwidth}%
+\begin{tabular}{@{}*{2}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.4\textwidth}\usebox{\panelboxXimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.4\textwidth}\usebox{\panelboxYimage}\end{minipage}\tabularnewline
+\parbox[t]{0.4\textwidth}{\captionof{figure}{Injective.\label{figure-22}}
+}&
+\parbox[t]{0.4\textwidth}{\captionof{figure}{
             Not injective.
-        \label{figure-25}}
-}% caption 
-\popValignCaptionBottom
+        \label{figure-23}}
+}\end{tabular}
 \end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
 \begin{example}[]\label{example-19}
 
           Which functions are injective (i.e., one-to-one)?
@@ -2743,427 +2806,491 @@ Before tackling these difficult questions, let's look at the basics of counting.
 \begin{enumerate}
 \item\hypertarget{li-370}{}A restaurant offers 8 appetizers and 14 entrées. How many choices do you have if:
 
-\begin{enumerate}
+          \begin{enumerate}
 \item\hypertarget{li-371}{} you will eat one dish, either an appetizer or an entrée?
-\item\hypertarget{li-372}{}
-you are extra hungry and want to eat both an appetizer and an entrée?
-\end{enumerate}
+            \item\hypertarget{li-372}{}
+              you are extra hungry and want to eat both an appetizer and an entrée?
+            \end{enumerate}
 \item\hypertarget{li-373}{}Think about the methods you used to solve question 1. Write down the rules for these methods.
-\item\hypertarget{li-374}{}Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.\item\hypertarget{li-375}{}\begin{enumerate}
-\item\hypertarget{li-376}{}
-How many ways can you select a card which is either red or a face card?
-\item\hypertarget{li-377}{}
-How many ways can you select a card which is both red and a face card?
-\item\hypertarget{li-378}{}
-How many ways can you select two cards so that the first one is red and the second one is a face card?
-\end{enumerate}
+        \item\hypertarget{li-374}{}Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.
+
+
+          \begin{enumerate}
+\item\hypertarget{li-375}{}
+              How many ways can you select a card which is either red or a face card?
+            \item\hypertarget{li-376}{}
+              How many ways can you select a card which is both red and a face card?
+            \item\hypertarget{li-377}{}
+              How many ways can you select two cards so that the first one is red and the second one is a face card?
+            \end{enumerate}
 \end{enumerate}
 \end{investigation}
 
-Consider this rather simple counting problem: at Red Dogs and Donuts, there are 14 varieties of donuts, and 16 types of hot dogs. If you want either a donut or a dog, how many options do you have? This isn't too hard, you just add 14 and 16. Will that always work? What is important here?
-%
+    Consider this rather simple counting problem: at Red Dogs and Donuts, there are 14 varieties of donuts, and 16 types of hot dogs. If you want either a donut or a dog, how many options do you have? This isn't too hard, you just add 14 and 16. Will that always work? What is important here?
+  %
 \begin{assemblage}{Additive Principle}\label{assemblage-12}\par\medskip
 
-The \terminology{additive principle}\index{additive principle} states that if event \(A\) can occur in \(m\) ways, and event \(B\) can occur in \(n\) \terminology{disjoint}\index{disjoint} ways, then the event ``\(A\) or \(B\)'' can occur in \(m + n\) ways.
-%
+      The
+      \terminology{additive principle}\index{additive principle} states that if event \(A\) can occur in \(m\) ways, and event \(B\) can occur in \(n\)
+      \terminology{disjoint}\index{disjoint} ways, then the event ``\(A\) or \(B\)'' can occur in \(m + n\) ways.
+    %
 \end{assemblage}
 \par
 
-It is important that the events be disjoint. For example, a standard deck of 52 cards contains \(26\) red cards and \(12\) face cards. However, the number of ways to select a card which is either red or a face card is not \(26 + 12 = 38\). This is because there are 6 cards which are both red and face cards.
-%
-\par
-
-The additive principle works with more than two events. Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles? How many choices do you have now? You would have \(14 + 16 + 15 = 45\) options.
-%
+    It is important that the events be disjoint: i.e., that there is no way for \(A\) and \(B\) to both happen at the same time. For example, a standard deck of 52 cards contains \(26\) red cards and \(12\) face cards. However, the number of ways to select a card which is either red or a face card is not \(26 + 12 = 38\). This is because there are 6 cards which are both red and face cards.
+  %
 \begin{example}[]\label{example-23}
 
-How many two letter ``words''\index{words} start with either A or B? How many start with one of the 5 vowels? (A word is just a strings of letters; it doesn't have to be English, or even pronounceable.)
-%
+        How many two letter ``words''\index{words} start with either A or B? (A word is just a strings of letters; it doesn't have to be English, or even pronounceable.)
+      %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-First, how many two letter words start with A? We just need to select the second letter, which can be accomplished in 26 ways. So there are 26 words starting with A. There are also 26 words that start with B. To select a word which starts with either A or B, we can pick the word from the first 26 or the second 26, for a total of 52 words. The additive principle is at work here.
-%
+        First, how many two letter words start with A? We just need to select the second letter, which can be accomplished in 26 ways. So there are 26 words starting with A. There are also 26 words that start with B. To select a word which starts with either A or B, we can pick the word from the first 26 or the second 26, for a total of 52 words.
+      %
+\end{example}
 \par
 
-Now what about all the two letter words starting with a vowel? There are 26 starting with A, another 26 starting with E, and so on. We will have 5 groups of 26. So we add 26 to itself 5 times. Of course it would be easier to just multiply \(5\cdot 26\). We are really using the additive principle again, just using multiplication as a shortcut.
-%
-\end{example}
+    The additive principle works with more than two events. Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles? How many choices do you have now? You would have \(14 + 16 + 15 = 45\) options.
+  %
 \begin{example}[]\label{example-24}
 
-Suppose you are going for some fro-yo. You can pick one of 6 yogurt choices, and one of 4 toppings. How many choices do you have?
-%
+        How many two letter words start with one of the 5 vowels?
+      %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-Break your choices up into disjoint events: \(A\) are the choices with the first topping, \(B\) the choices featuring the second topping, and so on. There are four events; each can occur in 6 ways (one for each yogurt flavor). The events are disjoint, so the total number of choices is \(6 + 6 + 6 + 6 = 24\).
-%
+        There are 26 two letter words starting with A, another 26 starting with E, and so on. We will have 5 groups of 26. So we add 26 to itself 5 times. Of course it would be easier to just multiply \(5\cdot 26\). We are really using the additive principle again, just using multiplication as a shortcut.
+      %
+\end{example}
+\begin{example}[]\label{example-25}
+
+        Suppose you are going for some fro-yo. You can pick one of 6 yogurt choices, and one of 4 toppings. How many choices do you have?
+      %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+        Break your choices up into disjoint events: \(A\) are the choices with the first topping, \(B\) the choices featuring the second topping, and so on. There are four events; each can occur in 6 ways (one for each yogurt flavor). The events are disjoint, so the total number of choices is \(6 + 6 + 6 + 6 = 24\).
+      %
 \end{example}
 \par
 
-Note that in both of the previous examples, when using the additive principle on a bunch of events all the same size, it is quicker to multiply. This really is the same, and not just because \(6 + 6 + 6 + 6 = 4\cdot 6\). We can first select the topping in 4 ways (that is, we first select which of the disjoint events we will take). For each of those first 4 choices, we now have 6 choices of yogurt. We have:
-%
+    Note that in both of the previous examples, when using the additive principle on a bunch of events all the same size, it is quicker to multiply. This really is the same, and not just because \(6 + 6 + 6 + 6 = 4\cdot 6\). We can first select the topping in 4 ways (that is, we first select which of the disjoint events we will take). For each of those first 4 choices, we now have 6 choices of yogurt. We have:
+  %
 \begin{assemblage}{Multiplicative Principle}\label{assemblage-13}\par\medskip
 
-The \terminology{multiplicative principle}\index{multiplicative principle} states that if event \(A\) can occur in \(m\) ways, and each possibility for \(A\) allows for exactly \(n\) ways for event \(B\), then the event ``\(A\) and \(B\)'' can occur in \(m \cdot n\) ways.
-%
+      The
+      \terminology{multiplicative principle}\index{multiplicative principle} states that if event \(A\) can occur in \(m\) ways, and each possibility for \(A\) allows for exactly \(n\) ways for event \(B\), then the event ``\(A\) and \(B\)'' can occur in \(m \cdot n\) ways.
+    %
 \end{assemblage}
 \par
 
-The multiplicative principle generalizes to more than two events as well.
-%
-\begin{example}[]\label{example-25}
+    The multiplicative principle generalizes to more than two events as well.
+  %
+\begin{example}[]\label{example-26}
 
-How many license plates can you make out of three letters followed by three numerical digits?
-%
+        How many license plates can you make out of three letters followed by three numerical digits?
+      %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-Here we have six events: the first letter, the second letter, the third letter, the first digit, the second digit, and the third digit. The first three events can each happen in 26 ways; the last three can each happen in 10 ways. So the total number of license plates will be \(26\cdot 26\cdot 26 \cdot 10 \cdot 10 \cdot 10\), using the multiplicative principle.
-%
+        Here we have six events: the first letter, the second letter, the third letter, the first digit, the second digit, and the third digit. The first three events can each happen in 26 ways; the last three can each happen in 10 ways. So the total number of license plates will be \(26\cdot 26\cdot 26 \cdot 10 \cdot 10 \cdot 10\), using the multiplicative principle.
+      %
 \par
 
-Does this make sense? Think about how we would pick a license plate. How many choices we would have? First, we need to pick the first letter. There are 26 choices. Now for each of those, there are 26 choices for the second letter: 26 second letters with first letter A, 26 second letters with first letter B, and so on. We add 26 to itself 26 times. Or quicker: there are \(26 \cdot 26\) choices for the first two letters.
-%
+        Does this make sense? Think about how we would pick a license plate. How many choices we would have? First, we need to pick the first letter. There are 26 choices. Now for each of those, there are 26 choices for the second letter: 26 second letters with first letter A, 26 second letters with first letter B, and so on. We add 26 to itself 26 times. Or quicker: there are \(26 \cdot 26\) choices for the first two letters.
+      %
 \par
 
-Now for each choice of the first two letters, we have 26 choices for the third letter. That is, 26 third letters for the first two letters AA, 26 choices for the third letter after starting AB, and so on. There are \(26 \cdot 26\) of these \(26\) third letter choices, for a total of \((26\cdot26)\cdot 26\) choices for the first three letters. And for each of these \(26\cdot26\cdot26\) choices of letters, we have a bunch of choices for the remaining digits.
-%
+        Now for each choice of the first two letters, we have 26 choices for the third letter. That is, 26 third letters for the first two letters AA, 26 choices for the third letter after starting AB, and so on. There are \(26 \cdot 26\) of these \(26\) third letter choices, for a total of \((26\cdot26)\cdot 26\) choices for the first three letters. And for each of these \(26\cdot26\cdot26\) choices of letters, we have a bunch of choices for the remaining digits.
+      %
 \par
 
-In fact, there are going to be exactly 1000 choices for the numbers. We can see this because there are 1000 three-digit numbers (000 through 999). This is 10 choices for the first digit, 10 for the second, and 10 for the third. The multiplicative principle says we multiply: \(10\cdot 10 \cdot 10 = 1000\).
-%
+        In fact, there are going to be exactly 1000 choices for the numbers. We can see this because there are 1000 three-digit numbers (000 through 999). This is 10 choices for the first digit, 10 for the second, and 10 for the third. The multiplicative principle says we multiply: \(10\cdot 10 \cdot 10 = 1000\).
+      %
 \par
 
-All together, there were \(26^3\) choices for the three letters, and \(10^3\) choices for the numbers, so we have a total of \(26^3 \cdot 10^3\) choices of license plates.
-%
+        All together, there were \(26^3\) choices for the three letters, and \(10^3\) choices for the numbers, so we have a total of \(26^3 \cdot 10^3\) choices of license plates.
+      %
 \end{example}
 \par
 
-Careful: ``and'' doesn't mean ``times.'' For example, how many playing cards are both red and a face card? Not \(26 \cdot 12\). The answer is 6, and we needed to know something about cards to answer that question.
-%
+    Careful: ``and'' doesn't mean ``times.'' For example, how many playing cards are both red and a face card? Not \(26 \cdot 12\). The answer is 6, and we needed to know something about cards to answer that question.
+  %
 \par
 
-Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the multiplicative principle (you are counting two separate events) but the answer is not \(26 \cdot 12\) here either. The problem is that while there are 26 ways for the first card to be selected, it is not the case that \emph{for each} of those there are 12 ways to select the second card. If the first card was both red and a face card, then there would be only 11 choices for the second card. The moral of this story is that the multiplicative principle only works if the events are independent.\footnote{To solve this problem, you could break it into two cases. First, count how many ways there are to select the two cards when the first card is a red non-face card. Second, count how many ways when the first card is a red face card.  Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.\label{fn-1}}
-%
+    Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the multiplicative principle (you are counting two separate events) but the answer is not \(26 \cdot 12\) here either. The problem is that while there are 26 ways for the first card to be selected, it is not the case that \emph{for each} of those there are 12 ways to select the second card. If the first card was both red and a face card, then there would be only 11 choices for the second card.
+    \footnote{To solve this problem, you could break it into two cases. First, count how many ways there are to select the two cards when the first card is a red non-face card. Second, count how many ways when the first card is a red face card. Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.\label{fn-1}}
+  %
 \typeout{************************************************}
 \typeout{Subsection 2.1.1 Counting With Sets}
 \typeout{************************************************}
 \subsection[Counting With Sets]{Counting With Sets}\label{subsec_countingWithSets}
 
-Do you believe the additive and multiplicative principles? How would you convince someone they are correct? This is surprisingly difficult. They seem so simple, so obvious. But why do they work?
-%
+      Do you believe the additive and multiplicative principles? How would you convince someone they are correct? This is surprisingly difficult. They seem so simple, so obvious. But why do they work?
+    %
 \par
 
-To make things clearer, and more mathematically rigorous, we will use sets. Do not skip this section! It might seem like we are just trying to give a proof of these principles, but we are doing a lot more. If we understand the additive and multiplicative principles rigorously, we will be better at applying them, and knowing when and when not to apply them at all.
-%
+      To make things clearer, and more mathematically rigorous, we will use sets. Do not skip this section! It might seem like we are just trying to give a proof of these principles, but we are doing a lot more. If we understand the additive and multiplicative principles rigorously, we will be better at applying them, and knowing when and when not to apply them at all.
+    %
 \par
 
-We will look at the additive and multiplicative principles in a slightly different way. Instead of thinking about event \(A\) and event \(B\), we want to think of a set \(A\) and a set \(B\). The sets will contain all the different ways the event can happen. (It will be helpful to be able to switch back and forth between these two models when checking that we have counted correctly.) Here's what we mean:
-%
-\begin{example}[]\label{example-26}
+      We will look at the additive and multiplicative principles in a slightly different way. Instead of thinking about event \(A\) and event \(B\), we want to think of a set \(A\) and a set \(B\). The sets will contain all the different ways the event can happen. (It will be helpful to be able to switch back and forth between these two models when checking that we have counted correctly.) Here's what we mean:
+    %
+\begin{example}[]\label{example-27}
 
-Suppose you own 9 shirts and 5 pairs of pants.
-%
+          Suppose you own 9 shirts and 5 pairs of pants.
+        %
 \leavevmode%
 \begin{enumerate}
+\item\hypertarget{li-378}{}
+              How many outfits can you make?
+            %
 \item\hypertarget{li-379}{}
-How many outfits can you make?
-%
-\item\hypertarget{li-380}{}
-If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?
-%
+              If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?
+            %
 \end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-By now you should agree that the answer to the first question is \(9 \cdot 5 = 45\) and the answer to the second question is \(9 + 5 = 14\). These are the multiplicative and additive principles. There are two events: picking a shirt and picking a pair of pants. The first event can happen in 9 ways and the second event can happen in 5 ways. To get both a shirt and a pair of pants, you multiply. To get just one article of clothing, you add.
-%
+          By now you should agree that the answer to the first question is \(9 \cdot 5 = 45\) and the answer to the second question is \(9 + 5 = 14\). These are the multiplicative and additive principles. There are two events: picking a shirt and picking a pair of pants. The first event can happen in 9 ways and the second event can happen in 5 ways. To get both a shirt and a pair of pants, you multiply. To get just one article of clothing, you add.
+        %
 \par
 
-Now look at this using sets. There are two sets, call them \(S\) and \(P\). The set \(S\) contains all 9 shirts so \(|S| = 9\) while \(|P| = 5\), since there are 5 elements in the set \(P\) (namely your 5 pairs of pants). What are we asking in terms of these sets? Well in question 2, we really want \(|S \cup P|\), the number of elements in the union of shirts and pants. This is just \(|S| + |P|\) (since there is no overlap; \(|S \cap P| = 0\)). Question 1 is slightly more complicated. Your first guess might be to find \(|S \cap P|\), but this is not right (there is nothing in the intersection). We are not asking for how many clothing items are both a shirt and a pair of pants. Instead, we want one of each. We could think of this as asking how many pairs \((x,y)\) there are, where \(x\) is a shirt and \(y\) is a pair of pants. As we will soon verify, this number is \(|S| \cdot |P|\).
-%
+          Now look at this using sets. There are two sets, call them \(S\) and \(P\). The set \(S\) contains all 9 shirts so \(|S| = 9\) while \(|P| = 5\), since there are 5 elements in the set \(P\) (namely your 5 pairs of pants). What are we asking in terms of these sets? Well in question 2, we really want \(|S \cup P|\), the number of elements in the union of shirts and pants. This is just \(|S| + |P|\) (since there is no overlap; \(|S \cap P| = 0\)). Question 1 is slightly more complicated. Your first guess might be to find \(|S \cap P|\), but this is not right (there is nothing in the intersection). We are not asking for how many clothing items are both a shirt and a pair of pants. Instead, we want one of each. We could think of this as asking how many pairs \((x,y)\) there are, where \(x\) is a shirt and \(y\) is a pair of pants. As we will soon verify, this number is \(|S| \cdot |P|\).
+        %
 \end{example}
 \par
 
-From this example we can see right away how to rephrase our additive principle in terms of sets:
-%
+      From this example we can see right away how to rephrase our additive principle in terms of sets:
+    %
 \begin{assemblage}{Additive Principle (with sets)}\label{assemblage-14}\par\medskip
 
-\index{additive principle}
-Given two sets \(A\) and \(B\), if \(A \cap B = \emptyset\) (that is, if there is no element in common to both \(A\) and \(B\)), then
-\begin{equation*}
-  |A \cup B| = |A| + |B|.
-\end{equation*}
-%
+        \index{additive principle} Given two sets \(A\) and \(B\), if \(A \cap B = \emptyset\) (that is, if there is no element in common to both \(A\) and \(B\)), then
+        \begin{equation*}
+          \card{A \cup B} = \card{A} + \card{B}.
+        \end{equation*}
+      %
 \end{assemblage}
 \par
 
-This hardly needs a proof. To find \(A \cup B\), you take everything in \(A\) and throw in everything in \(B\). Since there is no element in both sets already, you will have \(|A|\) things and add \(|B|\) new things to it. This is what adding does! Of course, we can easily extend this to any number of disjoint sets.
-%
+      This hardly needs a proof. To find \(A \cup B\), you take everything in \(A\) and throw in everything in \(B\). Since there is no element in both sets already, you will have \(\card{A}\) things and add \(\card{B}\) new things to it. This is what adding does! Of course, we can easily extend this to any number of disjoint sets.
+    %
 \par
 
-From the example above, we see that in order to investigate the multiplicative principle carefully, we need to consider ordered pairs. We should define this carefully:
-%
+      From the example above, we see that in order to investigate the multiplicative principle carefully, we need to consider ordered pairs. We should define this carefully:
+    %
 \begin{assemblage}{Cartesian Product}\label{assemblage-15}\par\medskip
 
-Given sets \(A\) and \(B\), we can form the \terminology{set} \(A \times B = \{(x,y) \st x \in A \wedge y \in B\}\) to be the set of all ordered pairs \((x,y)\) where \(x\) is an element of \(A\) and \(y\) is an element of \(B\). We call \(A \times B\) the \terminology{Cartesian product}\index{Cartesian product} of \(A\) and \(B\).
-%
+        Given sets \(A\) and \(B\), we can form the
+        \terminology{set} \(A \times B = \{(x,y) \st x \in A \wedge y \in B\}\) to be the set of all ordered pairs \((x,y)\) where \(x\) is an element of \(A\) and \(y\) is an element of \(B\). We call \(A \times B\) the
+        \terminology{Cartesian product}\index{Cartesian product} of \(A\) and \(B\).
+      %
 \end{assemblage}
+\begin{example}[]\label{example-28}
+
+          Let \(A = \{1,2\}\) and \(B=\{3,4,5\}\). Find \(A \times B\).
+        %
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+        We want to find ordered pairs \((a,b)\) where \(a\) can be either \(1\) or \(2\) and \(b\) can be either 3, 4, or 5. \(A \times B\) is the set of all of these pairs:
+        \begin{equation*}
+          A \times B = \{(1,3), (1,4), (1,5), (2,3), (2,4), (2,5)\}
+        \end{equation*}\end{example}
 \par
 
-The question is, what is \(|A \times B|\)? To figure this out, write out \(A \times B\).
-%
+      The question is, what is \(\card{A \times B}\)? To figure this out, write out \(A \times B\).
+    %
 \par
 
-Let \(A = \{a_1,a_2, a_3, \ldots, a_m\}\) and \(B = \{b_1,b_2, b_3, \ldots, b_n\}\) (so \(|A| = m\) and \(|B| = n\)). The set \(A \times B\) contains all pairs with the first half of the pair being \(a_i\) for some \(i\) and the second being \(b_j\) for some \(j\). In other words:
-\begin{align*}
-  A \times B = \{ \amp  (a_1, b_1), (a_1, b_2), (a_1, b_3), \ldots (a_1, b_n),\\
-  \amp  (a_2, b_1), (a_2, b_2), (a_2, b_3), \ldots, (a_2, b_n),\\
-  \amp  (a_3, b_1), (a_3, b_2), (a_3, b_3), \ldots, (a_3, b_n),\\
-  \amp  \vdots\\
-  \amp  (a_m, b_1), (a_m, b_2), (a_m, b_3), \ldots, (a_m, b_n)\}.
+      Let \(A = \{a_1,a_2, a_3, \ldots, a_m\}\) and \(B = \{b_1,b_2, b_3, \ldots, b_n\}\) (so \(\card{A} = m\) and \(\card{B} = n\)). The set \(A \times B\) contains all pairs with the first half of the pair being some \(a_i \in A\) and the second being one of the \(b_j \in B\). In other words:
+      \begin{align*}
+ A \times B = \{ \amp (a_1, b_1), (a_1, b_2), (a_1, b_3), \ldots (a_1, b_n),\\
+ \amp (a_2, b_1), (a_2, b_2), (a_2, b_3), \ldots, (a_2, b_n),\\
+ \amp (a_3, b_1), (a_3, b_2), (a_3, b_3), \ldots, (a_3, b_n),\\
+ \amp \vdots\\
+ \amp (a_m, b_1), (a_m, b_2), (a_m, b_3), \ldots, (a_m, b_n)\}.
 \end{align*}
-%
+    %
 \par
 
-Notice what we have done here: we made \(m\) rows of \(n\) pairs, for a total of \(m \cdot n\) pairs.
-%
+      Notice what we have done here: we made \(m\) rows of \(n\) pairs, for a total of \(m \cdot n\) pairs.
+    %
 \par
 
-Each row above is really \(\{a_i\} \times B\) for some \(a_i \in A\). That is, we fixed the \(A\)-element. Broken up this way, we have
-\begin{equation*}
-  A \times B = (\{a_1\} \times B) \cup (\{a_2\} \times B) \cup (\{a_3\}\times B) \cup \cdots \cup (\{a_m\} \times B).
-\end{equation*}
-%
+      Each row above is really \(\{a_i\} \times B\) for some \(a_i \in A\). That is, we fixed the \(A\)-element. Broken up this way, we have
+      \begin{equation*}
+        A \times B = (\{a_1\} \times B) \cup (\{a_2\} \times B) \cup (\{a_3\}\times B) \cup \cdots \cup (\{a_m\} \times B).
+      \end{equation*}
+    %
 \par
 
-So \(A \times B\) is really the union of \(m\) disjoint sets. Each of those sets has \(n\) elements in them. The total (using the additive principle) is \(n + n + n + \cdots + n = m \cdot n\).
-%
+      So \(A \times B\) is really the union of \(m\) disjoint sets. Each of those sets has \(n\) elements in them. The total (using the additive principle) is \(n + n + n + \cdots + n = m \cdot n\).
+    %
 \par
 
-To summarize:
-%
+      To summarize:
+    %
 \begin{assemblage}{Multiplicative Principle (with sets)}\label{assemblage-16}\par\medskip
 
-\index{multiplicative principle}
-Given two sets \(A\) and \(B\), we have \(|A \times B| = |A| \cdot |B|\).
-%
+        \index{multiplicative principle} Given two sets \(A\) and \(B\), we have \(\card{A \times B} = \card{A} \cdot \card{B}\).
+      %
 \end{assemblage}
 \par
 
-Again, we can easily extend this to any number of sets.
-%
+      Again, we can easily extend this to any number of sets.
+    %
 \typeout{************************************************}
 \typeout{Subsection 2.1.2 Principle of Inclusion/Exclusion}
 \typeout{************************************************}
 \subsection[Principle of Inclusion/Exclusion]{Principle of Inclusion/Exclusion}\label{sec_PIE}
+\begin{investigation}[]\label{investigation-6}
+ A recent buzz marketing campaign for \emph{Village Inn} surveyed patrons on their pie preferences. People were asked whether they enjoyed (A) Apple, (B) Blueberry or (C) Cherry pie (respondents answered yes or no to each type of pie, and could say yes to more than one type). The following table shows the results of the survey.%
+\leavevmode%
+\begin{table}
+\centering
+\begin{tabular}{cccccccc}
+\multicolumn{1}{rA}{Pies enjoyed:}&A&B&C&AB&AC&BC&ABC\tabularnewline\hrulethin
+\multicolumn{1}{rA}{Number of people:}&20&13&26&9&15&7&5
+\end{tabular}
+\end{table}
+\par
 
-\index{principle of inclusion/exclusion}\index{PIE} While we are thinking about sets, consider what happens to the additive principle when the sets are NOT disjoint. Suppose we want to find \(|A \cup B|\) and know that \(|A| = 10\) and \(|B| = 8\). This is not enough information though. We do not know how many of the 8 elements in \(B\) are also elements of \(A\). However, if we also know that \(|A \cap B| = 6\), then we can say exactly how many elements are in \(A\), and, of those, how many are in \(B\) and how many are not (6 of the 10 elements are in \(B\), so 4 are in \(A\) but not in \(B\)). We could fill in a Venn diagram \index{Venn diagram} as follows:
-%
+        How many of those asked enjoy at least one of the kinds of pie? Also, explain why the answer is not 95.
+      %
+\end{investigation}
+
+      \index{principle of inclusion/exclusion}\index{PIE} While we are thinking about sets, consider what happens to the additive principle when the sets are NOT disjoint. Suppose we want to find \(\card{A \cup B}\) and know that \(\card{A} = 10\) and \(\card{B} = 8\). This is not enough information though. We do not know how many of the 8 elements in \(B\) are also elements of \(A\). However, if we also know that \(\card{A \cap B} = 6\), then we can say exactly how many elements are in \(A\), and, of those, how many are in \(B\) and how many are not (6 of the 10 elements are in \(B\), so 4 are in \(A\) but not in \(B\)). We could fill in a Venn diagram \index{Venn diagram} as follows:
+    %
+\leavevmode%
+\begin{figure}
+\centering
 {
-\begin{tikzpicture}
-   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
-   \draw (0,0) node{6} (-1,0) node{4} (1,0) node{2};
- \end{tikzpicture}
+       \begin{tikzpicture}
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+  \draw (0,0) node{6} (-1,0) node{4} (1,0) node{2};
+\end{tikzpicture}
 }
+\end{figure}
 \par
 
-This says there are 6 elements in \(A \cap B\), 4 elements in \(A \setminus B\) and 2 elements in \(B \setminus A\). Now \emph{these} three sets \emph{are} disjoint, so we can use the additive principle to find the number of elements in \(A \cup B\). It is \(6 + 4 + 2 = 12\).
-%
+      This says there are 6 elements in \(A \cap B\), 4 elements in \(A \setminus B\) and 2 elements in \(B \setminus A\). Now \emph{these} three sets \emph{are} disjoint, so we can use the additive principle to find the number of elements in \(A \cup B\). It is \(6 + 4 + 2 = 12\).
+    %
 \par
 
-This will always work, but drawing a Venn diagram is more than we need to do. In fact, it would be nice to relate this problem to the case where \(A\) and \(B\) are disjoint. Is there one rule we can make that works in either case?
-%
+      This will always work, but drawing a Venn diagram is more than we need to do. In fact, it would be nice to relate this problem to the case where \(A\) and \(B\) are disjoint. Is there one rule we can make that works in either case?
+    %
 \par
 
-Here is another way to get the answer to the problem above. Start by just adding \(|A| + |B|\). This is \(10 + 8 = 18\), which would be the answer if \(|A \cap B| = 0\). We see that we are off by exactly 6, which just so happens to be \(|A \cap B|\). So perhaps we guess,
-\begin{equation*}
-  |A \cup B| = |A| + |B| - |A \cap B|.
-\end{equation*}
-%
+      Here is another way to get the answer to the problem above. Start by just adding \(\card{A} + \card{B}\). This is \(10 + 8 = 18\), which would be the answer if \(\card{A \cap B} = 0\). We see that we are off by exactly 6, which just so happens to be \(\card{A \cap B}\). So perhaps we guess,
+      \begin{equation*}
+        \card{A \cup B} = \card{A} + \card{B} - \card{A \cap B}.
+      \end{equation*}
+    %
 \par
 
-This works for this one example. Will it always work? Think about what we are doing here. We want to know how many things are either in \(A\) or \(B\) (or both). We can throw in everything in \(A\), and everything in \(B\). This would give \(|A| + |B|\) many elements. But of course when you actually take the union, you do not repeat elements that are in both. So far we have counted every element in \(A \cap B\) exactly twice: once when we put in the elements from \(A\) and once when we included the elements from \(B\). We correct by subtracting out the number of elements we have counted twice. So we added them in twice, subtracted once, leaving them counted only one time.
-%
+      This works for this one example. Will it always work? Think about what we are doing here. We want to know how many things are either in \(A\) or \(B\) (or both). We can throw in everything in \(A\), and everything in \(B\). This would give \(\card{A} + \card{B}\) many elements. But of course when you actually take the union, you do not repeat elements that are in both. So far we have counted every element in \(A \cap B\) exactly twice: once when we put in the elements from \(A\) and once when we included the elements from \(B\). We correct by subtracting out the number of elements we have counted twice. So we added them in twice, subtracted once, leaving them counted only one time.
+    %
 \par
 
-In other words, we have:
-%
+      In other words, we have:
+    %
 \begin{assemblage}{Cardinality of a union (2 sets)}\label{assemblage-17}\par\medskip
 
-For any finite sets \(A\) and \(B\),
-\begin{equation*}
-  |A \cup B| = |A| + |B| - |A \cap B|.
-\end{equation*}
-%
+        For any finite sets \(A\) and \(B\),
+        \begin{equation*}
+          \card{A \cup B} = \card{A} + \card{B} - \card{A \cap B}.
+        \end{equation*}
+      %
 \end{assemblage}
 \par
 
-We can do something similar with three sets.
-%
-\begin{example}[]\label{example-27}
+      We can do something similar with three sets.
+    %
+\begin{example}[]\label{example-29}
 
-An examination in three subjects, Algebra, Biology, and Chemistry, was taken
-by 41 students. The following table shows how many students failed in each
-single subject and in their various combinations:
-%
-\begin{tabular}{llllllll}
-&&&&&&&\tabularnewline\hrulethin
-Subject:&A&B&C&AB&AC&BC&ABC\tabularnewline[0pt]
-&&&&&&&\tabularnewline\hrulethin
-Failed:&12&5&8&2&6&3&1\tabularnewline[0pt]
-&&&&&&&\tabularnewline\hrulethin
+          An examination in three subjects, Algebra, Biology, and Chemistry, was taken by 41 students. The following table shows how many students failed in each single subject and in their various combinations:
+        %
+\leavevmode%
+\begin{table}
+\centering
+\begin{tabular}{cccccccc}\hrulethin
+\multicolumn{1}{A}{Subject:}&A&B&C&AB&AC&BC&ABC\tabularnewline\hrulethin
+\multicolumn{1}{rA}{Failed:}&12&5&8&2&6&3&1\tabularnewline\hrulethin
 \end{tabular}
+\end{table}
 \par
 
-How many students failed at least one subject?
-%
+          How many students failed at least one subject?
+        %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-The answer is not 37, even though the sum of the numbers above is 37. For example, while 12 students failed Algebra, 2 of those students also failed Biology, 6 also failed Chemestry, and 1 of those failed all three subjects. In fact, that 1 student who failed all three subjects is counted a total of 7 times in the total 37. To clarify things, let us think of the students who failed Algebra as the elements of the set \(A\), and similarly for sets \(B\) and \(C\). The one student who failed all three subjects is the lone element of the set \(A \cap B \cap C\). Thus, in Venn diagrams:
-%
+          The answer is not 37, even though the sum of the numbers above is 37. For example, while 12 students failed Algebra, 2 of those students also failed Biology, 6 also failed Chemestry, and 1 of those failed all three subjects. In fact, that 1 student who failed all three subjects is counted a total of 7 times in the total 37. To clarify things, let us think of the students who failed Algebra as the elements of the set \(A\), and similarly for sets \(B\) and \(C\). The one student who failed all three subjects is the lone element of the set \(A \cap B \cap C\). Thus, in Venn diagrams:
+        %
+\leavevmode%
+\begin{figure}
+\centering
 {
-\begin{tikzpicture}[scale=0.9]
-   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-   \draw (0,-.35) node{1};
- \end{tikzpicture}
+           \begin{tikzpicture}[scale=0.9]
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+  \draw (0,-.35) node{1};
+\end{tikzpicture}
 }
+\end{figure}
 \par
 
-Now let's fill in the other intersections. We know \(A\cap B\) contains 2 elements, but 1 element has already been counted. So we should put a 1 in the region where \(A\) and \(B\) intersect (but \(C\) does not). Similarly, we calculate the cardinality of \((A\cap C) \setminus B\), and \((B \cap C) \setminus A\):
-%
+          Now let's fill in the other intersections. We know \(A\cap B\) contains 2 elements, but 1 element has already been counted. So we should put a 1 in the region where \(A\) and \(B\) intersect (but \(C\) does not). Similarly, we calculate the cardinality of \((A\cap C) \setminus B\), and \((B \cap C) \setminus A\):
+        %
+\leavevmode%
+\begin{figure}
+\centering
 {
-\begin{tikzpicture}[scale=0.9]
-   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-   \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
- \end{tikzpicture}
+           \begin{tikzpicture}[scale=0.9]
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+  \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
+\end{tikzpicture}
 }
+\end{figure}
 \par
 
-Next, we determine the numbers which should go in the remaining regions, including outside of all three circles. This last number is the number of students who did not fail any subject:
-%
+          Next, we determine the numbers which should go in the remaining regions, including outside of all three circles. This last number is the number of students who did not fail any subject:
+        %
+\leavevmode%
+\begin{figure}
+\centering
 {
-\begin{tikzpicture}[scale=0.9]
-   \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
-   \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
-   \draw (-1,.3) node{5} (1,.3) node{1} (0,-1.5) node{0} (-1.5,-1.75) node{26};
- \end{tikzpicture}
+           \begin{tikzpicture}[scale=0.9]
+  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+  \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
+  \draw (-1,.3) node{5} (1,.3) node{1} (0,-1.5) node{0} (-1.5,-1.75) node{26};
+\end{tikzpicture}
 }
+\end{figure}
 \par
 
-We found 5 goes in the ``\(A\) only'' region because the entire circle for \(A\) needed to have a total of 12, and 7 were already accounted for.
-%
+          We found 5 goes in the ``\(A\) only'' region because the entire circle for \(A\) needed to have a total of 12, and 7 were already accounted for. Similarly, we calculate the ``\(B\) only'' region to contain only 1 student and the ``\(C\) only'' region to contain no students.
+        %
 \par
 
-Thus the number of students who passed all three classes is 26. The number who failed at least one class is 15.
-%
+          Thus the number of students who failed at least one class is 15 (the sum of the numbers in each of the eight disjoint regions). The number of students who passed all three classes is 26: the total number of students, 41, less the 15 who failed at least one class.
+        %
 \par
 
-Note that we can also answer other questions. For example, now many students failed just Chemistry? None. How many passed Biology but failed both Algebra and Chemistry? 5.
-%
+          Note that we can also answer other questions. For example, now many students failed just Chemistry? None. How many passed Algebra but failed both Biology and Chemistry? This corresponds to the region inside both \(B\) and \(C\) but outside of \(A\), containing 2 students.
+        %
 \end{example}
 \par
 
-Could we have solved the problem above in an algebraic way? While the additive principle generalizes to any number of sets, when we add a third set here, we must be careful. With two sets, we needed to know the cardinalities of \(A\), \(B\), and \(A \cap B\) in order to find the cardinality of \(A \cup B\). With three sets we need more information. There are more ways the sets can combine. Not surprisingly then, the formula for cardinality of the union of three non-disjoint sets is more complicated:
-%
+      Could we have solved the problem above in an algebraic way? While the additive principle generalizes to any number of sets, when we add a third set here, we must be careful. With two sets, we needed to know the cardinalities of \(A\), \(B\), and \(A \cap B\) in order to find the cardinality of \(A \cup B\). With three sets we need more information. There are more ways the sets can combine. Not surprisingly then, the formula for cardinality of the union of three non-disjoint sets is more complicated:
+    %
 \begin{assemblage}{Cardinality of a union (3 sets)}\label{assemblage-18}\par\medskip
 
-For any finite sets \(A\), \(B\), and \(C\),
-\begin{equation*}
-  |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|
-\end{equation*}
-%
+        For any finite sets \(A\), \(B\), and \(C\),
+        \begin{equation*}
+          \card{A \cup B \cup C} = \card{A} + \card{B} + \card{C} - \card{A \cap B} - \card{A \cap C} - \card{B \cap C} + \card{A \cap B \cap C}
+        \end{equation*}
+      %
 \end{assemblage}
 \par
 
-To determine how many elements are in at least one of \(A\), \(B\), or \(C\) we add up all the elements in each of those sets. However, when we do that, any element in both \(A\) and \(B\) is counted twice. Also, each element in both \(A\) and \(C\) is counted twice, as are elements in \(B\) and \(C\), so we take each of those out of our sum once. But now what about the elements which are in \(A \cap B \cap C\) (in all three sets)? We added them in three times, but also removed them three times. They have not yet been counted. Thus we add those elements back in at the end.
-%
+      To determine how many elements are in at least one of \(A\), \(B\), or \(C\) we add up all the elements in each of those sets. However, when we do that, any element in both \(A\) and \(B\) is counted twice. Also, each element in both \(A\) and \(C\) is counted twice, as are elements in \(B\) and \(C\), so we take each of those out of our sum once. But now what about the elements which are in \(A \cap B \cap C\) (in all three sets)? We added them in three times, but also removed them three times. They have not yet been counted. Thus we add those elements back in at the end.
+    %
 \par
 
-Returning to our example above, we have \(|A| = 12\), \(|B| = 5\), \(|C| = 8\). We also have \(|A \cap B| = 2\), \(|A \cap C| = 6\), \(|B \cap C| = 3\), and \(|A \cap B \cap C| = 1\). Therefore:
-\begin{equation*}
-  |A \cup B \cup C| = 12 + 5 + 8 - 2 - 6 - 3 + 1 = 15
-\end{equation*}
-%
+      Returning to our example above, we have \(\card{A} = 12\), \(\card{B} = 5\), \(\card{C} = 8\). We also have \(\card{A \cap B} = 2\), \(\card{A \cap C} = 6\), \(\card{B \cap C} = 3\), and \(\card{A \cap B \cap C} = 1\). Therefore:
+      \begin{equation*}
+        \card{A \cup B \cup C} = 12 + 5 + 8 - 2 - 6 - 3 + 1 = 15
+      \end{equation*}
+    %
 \par
 
-This is what we got when we solved the problem using Venn diagrams.
-%
+      This is what we got when we solved the problem using Venn diagrams.
+    %
 \par
 
-This process of adding in, then taking out, then adding back in, and so on is called the \emph{Principle of Inclusion/Exclusion}, or simply PIE. We will return to this counting technique later to solve for more complicated problems (involving more than 3 sets).
-%
+      This process of adding in, then taking out, then adding back in, and so on is called the \emph{Principle of Inclusion/Exclusion}, or simply PIE. We will return to this counting technique later to solve for more complicated problems (involving more than 3 sets).
+    %
 \typeout{************************************************}
-\typeout{Exercises  Exercises}
+\typeout{Exercises 2.1.3 Exercises}
 \typeout{************************************************}
-\subsubsection[Exercises]{Exercises}\label{exercises-4}
+\subsection[Exercises]{Exercises}\label{exercises-4}
 \begin{exerciselist}
 \item[1.]\hypertarget{exercise-42}{}
-Your wardrobe consists of 5 shirts, 3 pairs of pants, and 17 bow ties\index{bow ties}. How many different outfits can you make?
-%
+          Your wardrobe consists of 5 shirts, 3 pairs of pants, and 17 bow ties\index{bow ties}. How many different outfits can you make?
+        %
 \par\smallskip
 \item[2.]\hypertarget{exercise-43}{}
-For your college interview, you must wear a tie. You own 3 regular (boring) ties and 5 (cool) bow ties. How many choices do you have for your neck-wear?
-%
+          For your college interview, you must wear a tie. You own 3 regular (boring) ties and 5 (cool) bow ties.
+
+
+          \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-380}{}
+              How many choices do you have for your neck-wear?
+            \item\hypertarget{li-381}{}
+                You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
+              %
+\item\hypertarget{li-382}{}
+                For the rest of your outfit, you have 5 shirts, 4 skirts, 3 pants, and 7 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from?
+              %
+\end{enumerate}
+
+        %
 \par\smallskip
 \item[3.]\hypertarget{exercise-44}{}
-You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
-%
-\par\smallskip
-\item[4.]\hypertarget{exercise-45}{}
-For the rest of your outfit, you have 5 shirts, 4 skirts, 3 pants, and 7 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from?
-%
-\par\smallskip
-\item[5.]\hypertarget{exercise-46}{}
-Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an example of a question for which the answer is:
-%
+          Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an example of a question for which the answer is:
+        %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-381}{}
-16.
-%
-\item\hypertarget{li-382}{}
-63.
-%
+\item\hypertarget{li-386}{}
+              16.
+            %
+\item\hypertarget{li-387}{}
+              63.
+            %
 \end{enumerate}
 \par\smallskip
+\item[4.]\hypertarget{exercise-45}{}
+          Suppose you have sets \(A\) and \(B\) with \(\card{A} = 10\) and \(\card{B} = 15\).
+          \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-390}{}What is the largest possible value for \(\card{A \cap B}\)?\item\hypertarget{li-391}{} What is the smallest possible value for \(\card{A \cap B}\)?\item\hypertarget{li-392}{} What are the possible values for \(\card{A \cup B}\)?\end{enumerate}
+
+        %
+\par\smallskip
+\item[5.]\hypertarget{exercise-46}{}
+          If \(\card{A} = 8\) and \(\card{B} = 5\), what is \(\card{A \cup B} + \card{A \cap B}\)?
+        %
+\par\smallskip
 \item[6.]\hypertarget{exercise-47}{}
-If \(|A| = 10\) and \(|B| = 15\), what is the largest possible value for \(|A \cap B|\)? What is the smallest? What are the possible values for \(|A \cup B|\)?
-%
+          A group of college students were asked about their TV watching habits. Of those surveyed, 28 students watch \emph{The Walking Dead}, 19 watch \emph{The Blacklist}, and 24 watch \emph{Game of Thrones}. Additionally, 16 watch \emph{The Walking Dead} and \emph{The Blacklist}, 14 watch \emph{The Walking Dead} and \emph{Game of Thrones}, and 10 watch \emph{The Blacklist} and \emph{Game of Thrones}. There are 8 students who watch all three shows. How many students surveyed watched at least one of the shows?
+        %
 \par\smallskip
 \item[7.]\hypertarget{exercise-48}{}
-If \(|A| = 8\) and \(|B| = 5\), what is \(|A \cup B| + |A \cap B|\)?
-%
+          \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-396}{}
+              Find \(\card{(A \cup C)\setminus B}\) provided \(\card{A} = 50\), \(\card{B} = 45\), \(\card{C} = 40\), \(\card{A\cap B} = 20\), \(\card{A \cap C} = 15\), \(\card{B \cap C} = 23\), and \(\card{A \cap B \cap C} = 12\).
+            \item\hypertarget{li-397}{}
+              Describe a set in terms of \(A\), \(B\), and \(C\) with cardinality 26.
+            \end{enumerate}
+
+        %
 \par\smallskip
 \item[8.]\hypertarget{exercise-49}{}
-A group of college students were asked about their TV watching habits. Of those surveyed, 28 students watch \emph{The Walking Dead}, 19 watch \emph{The Blacklist}, and 24 watch \emph{Game of Thrones}. Additionally, 16 watch \emph{The Walking Dead} and \emph{The Blacklist}, 14 watch \emph{The Walking Dead} and \emph{Game of Thrones}, and 10 watch \emph{The Blacklist} and \emph{Game of Thrones}. There are 8 students who watch all three shows. How many students surveyed watched at least one of the shows?
-%
-\par\smallskip
-\item[9.]\hypertarget{exercise-50}{}
-Find \(|(A \cup C)\setminus B|\) provided \(|A| = 50\), \(|B| = 45\), \(|C| = 40\), \(|A\cap B| = 20\), \(|A \cap C| = 15\), \(|B \cap C| = 23\), and \(|A \cap B \cap C| = 12\).
-%
-\par\smallskip
-\item[10.]\hypertarget{exercise-51}{}
-Using the same data as the previous question, describe a set with cardinality 26.
-%
-\par\smallskip
-\item[11.]\hypertarget{exercise-52}{}
-Consider all 5 letter ``words'' made from the letters \(a\) through \(h\). (Recall, words are just strings of letters, not necessarily actual Elglish words.)
-%
+          Consider all 5 letter ``words'' made from the letters \(a\) through \(h\). (Recall, words are just strings of letters, not necessarily actual English words.)
+        %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-385}{}
-How many of these words are there total?
-%
-\item\hypertarget{li-386}{}
-How many of these words contain no repeated letters?
-%
-\item\hypertarget{li-387}{}
-How many of these words (repetitions allowed) start with the sub-word ``aha''?
-%
-\item\hypertarget{li-388}{}
-How many of these words (repetitions allowed) either start with ``aha'' or end with ``bah'' or both?
-%
-\item\hypertarget{li-389}{}
-How many of the words containing no repeats also do not contain the sub-word ``bad'' (in consecutive letters)?
-%
+\item\hypertarget{li-400}{}
+              How many of these words are there total?
+            %
+\item\hypertarget{li-401}{}
+              How many of these words contain no repeated letters?
+            %
+\item\hypertarget{li-402}{}
+              How many of these words start with the sub-word ``aha''?
+            %
+\item\hypertarget{li-403}{}
+              How many of these words either start with ``aha'' or end with ``bah'' or both?
+            %
+\item\hypertarget{li-404}{}
+              How many of the words containing no repeats also do not contain the sub-word ``bad''?%
 \end{enumerate}
 \par\smallskip
 \end{exerciselist}
@@ -3534,59 +3661,59 @@ How many of the words containing no repeats also do not contain the sub-word ``b
             This cannot be a function. If the domain were the set of cards, then it is not a function because not every card gets dealt to a player. If the domain were the set of players, it would not be a function because a single player would get mapped to multiple cards. Since this is not a function, it doesn't make sense to say whether it is injective/surjective/bijective.
           %
 \par\smallskip
-\subsubsection*{ Exercises}
+\subsection*{2.1.3 Exercises}
 \noindent\textbf{1.}\quad{}
-255.
-%
+          There are 255 outfits. Use the multiplicative principle.
+        %
 \par\smallskip
-\noindent\textbf{2.}\quad{}
-8.
-%
-\par\smallskip
-\noindent\textbf{3.}\quad{}
-15.
-%
-\par\smallskip
-\noindent\textbf{4.}\quad{}
-\(5\cdot (4+3) + 7 = 42\).
-%
-\par\smallskip
-\noindent\textbf{5.}\quad{}\leavevmode%
+\noindent\textbf{2.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-383}{}
-16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.
-%
-\item\hypertarget{li-384}{}
-63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.
-%
+              8 ties.  Use the additive principle.
+            %
+\item\hypertarget{li-384}{}15 ties. Use the multiplicative principle\item\hypertarget{li-385}{}\(5\cdot (4+3) + 7 = 42\) outfits.\end{enumerate}
+\par\smallskip
+\noindent\textbf{3.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-388}{}
+              For example, 16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.
+            %
+\item\hypertarget{li-389}{}
+              For example, 63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.
+            %
 \end{enumerate}
 \par\smallskip
+\noindent\textbf{4.}\quad{}
+          \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-393}{}\(A\) and \(B\) might have no elements in common, giving \(\card{A\cap B} = 0\).\item\hypertarget{li-394}{}To maximize the number of elements in common between \(A\) and \(B\), make \(A \subset B\).  This would give \(\card{A \cap B} = 10\).\item\hypertarget{li-395}{}\(15 \le \card{A \cup B} \le 25\).  In fact, when \(\card{A \cap B} = 0\) then \(\card{A \cup B} = 25\) and when \(\card{A \cap B} = 10\) then \(\card{A \cup B} = 15\). \end{enumerate}
+
+        %
+\par\smallskip
+\noindent\textbf{5.}\quad{}
+          \(\card{A \cup B} + \card{A \cap B} = 13\).  Use PIE: we know \(\card{A \cup B} = 8 + 5 - \card{A \cap B}\).
+        %
+\par\smallskip
 \noindent\textbf{6.}\quad{}
-\(0 \le |A \cap B| \le 10\) and \(15 \le |A \cup B| \le 25\).
-%
+          39 students.  Use PIE or a Venn diagram.
+        %
 \par\smallskip
 \noindent\textbf{7.}\quad{}
-\(|A \cup B| + |A \cap B| = 13\).
-%
-\par\smallskip
-\noindent\textbf{8.}\quad{}
-39.
-%
-\par\smallskip
-\noindent\textbf{9.}\quad{}
-\(|(A \cup C)\setminus B| = 44\). Use a Venn diagram.
-%
-\par\smallskip
-\noindent\textbf{10.}\quad{}
-One possibility: \((A \cup B) \cap C\).
-%
-\par\smallskip
-\noindent\textbf{11.}\quad{}\leavevmode%
+          \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-390}{}\(8^5\), since you select from 8 letters 5 times.\item\hypertarget{li-391}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4\).  After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-392}{}
-64 - you need to select the 4th and 5th letters.
-%
-\item\hypertarget{li-393}{}\(64 + 64 - 0 = 128\).  There are 64 words which start with ``aha'' and another 64 words that end with ``bah.''  Perhaps we over counted the words that both start with ``aha'' and end with ``bah'' but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-394}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\). All the words minus the bad ones.  The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
+\item\hypertarget{li-398}{}\(\card{(A \cup C)\setminus B} = 44\). Use PIE or a Venn diagram.
+            \item\hypertarget{li-399}{}
+              One possibility: \((A \cup B) \cap C\).  Here using a Venn diagram is quite a bit easier.
+            \end{enumerate}
+
+        %
+\par\smallskip
+\noindent\textbf{8.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-405}{}\(8^5 = 32768\) words, since you select from 8 letters 5 times.\item\hypertarget{li-406}{}\(8\cdot 7\cdot 6\cdot 5\cdot 4 = 6720\) words. After selecting a letter, you have fewer letters to select for the next one.\item\hypertarget{li-407}{}
+              \(8 \cdot 8 =64\)words: you need to select the 4th and 5th letters.
+            %
+\item\hypertarget{li-408}{}\(64 + 64 - 0 = 128\) words. There are 64 words which start with ``aha'' and another 64 words that end with ``bah.'' Perhaps we over counted the words that both start with ``aha'' and end with ``bah'', but since the words are only 5 letters long, there are no such words.\item\hypertarget{li-409}{}\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\) words. All the words minus the bad ones. The taboo word can be in any of three positions (starting with letter 1, 2, or 3) and for each position we must choose the other two letters (from the remaining 5 letters).\end{enumerate}
 \par\smallskip
 \typeout{************************************************}
 \typeout{Appendix B Notation}

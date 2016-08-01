@@ -41,7 +41,7 @@
 <!-- Pass a string with any of geometry's options  -->
 <!-- Default is empty and thus ineffective         -->
 <!-- Otherwise, happens early in preamble template -->
-<xsl:param name="latex.geometry" select="''"/>
+<xsl:param name="latex.geometry" select="'papersize={6in,9in}, hmargin={0.75in, 0.75in}, height=7.5in, top=0.75in, twoside, ignoreheadfoot'"/>
 <!--  -->
 <!-- PDF Watermarking                    -->
 <!-- Non-empty string makes it happen    -->
@@ -100,10 +100,11 @@
 
 
 
-<!-- List Chapters and Sections in Table of Contents -->
-<xsl:param name="toc.level" select="'3'" />
 
-<xsl:param name="latex.geometry">letterpaper,total={6.5in,9in}</xsl:param>
+
+<!-- List Chapters and Sections in Table of Contents -->
+<xsl:param name="toc.level" select="'4'" />
+
 
 <!-- Exercises have "solution"s which should be put in the back. -->
 <!-- Not sure what to do for homework solutions -->
@@ -118,6 +119,6 @@
 
 <xsl:param name="latex.preamble.late">
   <xsl:text>%This should load all the style information that mbx does not.&#xa;</xsl:text>
-    <xsl:text>\input{latex-preamble-styles-memoir}&#xa;</xsl:text>
+    <xsl:text>\input{latex-preamble-styles}&#xa;</xsl:text>
 </xsl:param>
 </xsl:stylesheet>

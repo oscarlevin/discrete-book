@@ -56,14 +56,14 @@
 % \usepackage{multicol}
 
 % \usepackage{docmute}
-\usepackage{answers}
+% \usepackage{answers}
 % \usepackage{pdfpages}
 % \usepackage{chessboard}
 
 %\usepackage[titletoc]{appendix}
-\usepackage{bookmark}
-\usepackage{titlesec} % to create better chapter header layout
-\usepackage{booktabs}
+% \usepackage{bookmark}
+% \usepackage{titlesec} % to create better chapter header layout
+% \usepackage{booktabs}
 % \usepackage{import}
 % \usepackage{etoolbox} % to create toggles
 % \usepackage{makeidx}
@@ -87,107 +87,43 @@
 
 
 %Number subsections:
-\setsecnumdepth{section} %It might look better to turn this off, but then I should change the headings.
-\settocdepth{subsection}
+% \setsecnumdepth{section} %It might look better to turn this off, but then I should change the headings.
+% \settocdepth{subsection}
 
 
-%Margins and such:
-%\setstocksize{11in}{8.5in}
-%\settrimmedsize{11in}{8.5in}{*}
-%\settypeblocksize{8in}{6in}{*}
-%\setbinding{1in}
-\setlrmarginsandblock{1.5in}{1in}{*} %we have 1.5in margins on the ``inside'' of the page, for hole punch or binding, 1 inch on outside.
-\setulmarginsandblock{1in}{1.5in}{*}
-\setheadfoot{.75in}{1in}
-\setheaderspaces{*}{.25in}{*}
-\checkandfixthelayout
-\fixpdflayout
-
-
-
-
-\newtoggle{includeanswers} %this toggle will change the behavior of the question environment depending on whether we want to include answers to the questions or not.
-\def\withanswers{\toggletrue{includeanswers}} % putting \withanswers will turn on the includeanswers toggle until the end of the next questions environment.
-\def\noanswers{\togglefalse{includeanswers}}
-
-\newtoggle{showsolutions} %for hiding solutions to homework.
-\newcommand{\showsolutions}{\toggletrue{showsolutions}}
-\newcommand{\hidesolutions}{\togglefalse{showsolutions}}
-
-\newtoggle{instructoredition}
-\newcommand{\showinstnotes}{\toggletrue{instructoredition}}
-\newcommand{\hideinstnotes}{\togglefalse{instructoredition}}
-
-\newtoggle{hwsol}
-\newcommand{\starthwsol}{\toggletrue{hwsol}}
-\newcommand{\finishhwsol}{\togglefalse{hwsol}}
-
-%new list environments
-\newcounter{question}
-\newcounter{pcounter}
-\newcounter{spcounter}
-\newenvironment{questions}{%
-	\iftoggle{includeanswers}{\WriteAnsFileStart}{}
-	\begin{list}{\iftoggle{includeanswers}{\hyperlink{ans.\thesection.\Currentlabel.}}{ }{\arabic{question}.~}}{
-	\usecounter{question}\setlength\labelwidth{3em}}
-	}{%
-	\end{list} \iftoggle{includeanswers}{\WriteAnsFileStop}{}
-	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
-	}
-
-%\newenvironment{questions}{%
-%	\iftoggle{includeanswers}{%
-%	\WriteAnsFileStart \begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}}{\arabic{question}.~}{
-%		\usecounter{question}}
-%	}{ %else
-%	\begin{enumerate}
-%	}
-%	}{%end of environment commands:
-%	 \iftoggle{includeanswers}{\end{list}\WriteAnsFileStop}{\end{enumerate}}
-%	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
-%	}
-
-\newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
+% %Margins and such:
+% %\setstocksize{11in}{8.5in}
+% %\settrimmedsize{11in}{8.5in}{*}
+% %\settypeblocksize{8in}{6in}{*}
+% %\setbinding{1in}
+% \setlrmarginsandblock{1.5in}{1in}{*} %we have 1.5in margins on the ``inside'' of the page, for hole punch or binding, 1 inch on outside.
+% \setulmarginsandblock{1in}{1.5in}{*}
+% \setheadfoot{.75in}{1in}
+% \setheaderspaces{*}{.25in}{*}
+% \checkandfixthelayout
+% \fixpdflayout
 
 
 
 
 %
-% \newcommand{\question}{%
-% 	\iftoggle{includeanswers}{%
-% 		\item\hypertarget{ques.\thesection.\Currentlabel.}{}}{\item}
+% \newenvironment{ans}[1]{\item[\hyperlink{ques.#1}{#1}]\hypertarget{ans.#1}{}}{}
+%
+% \newcommand{\ansparams}{{\thesection.\Currentlabel.}}
+%
+% \def\WriteAnsFileStart{%
+% 	\Writetofile{\ansfilename}{ %
+% 		\protect \vskip 2em
+% 		\protect\subsection*{Solutions for Section \thesection}
+% 		%\noindent{\textsc{\bfseries Solutions for Section \thesection}}
+% 		\protect\markright{Solutions for \thesection}
+% 		%\subsubsection*{Solutions for Section \thesection\markright{Section \thesection ~ Solutions}}
+%
+% 	%	\protect\heading{}{}{Section \thesection\ Solutions}
+% 		\protect\begin{itemize}
 % 	}
-%
-% \def\bonusquestion{\question}
-%
-% \newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
-%
-% \renewcommand{\part}[1]{\item #1}
-%
-% \newenvironment{subparts}{\begin{list}{(\alph{spcounter})~}{\usecounter{spcounter}}}{\end{list}}
-%
-% \newcommand{\subpart}[1]{\item #1}
-
-%\newcounter{answer}
-%\newenvironment{answers}{\begin{list}{\hyperref[ques.\thesection.\Currentlabel.]{\arabic{answer}.~}}{\usecounter{answer}}}{\end{list}}
-
-\newenvironment{ans}[1]{\item[\hyperlink{ques.#1}{#1}]\hypertarget{ans.#1}{}}{}
-
-\newcommand{\ansparams}{{\thesection.\Currentlabel.}}
-
-\def\WriteAnsFileStart{%
-	\Writetofile{\ansfilename}{ %
-		\protect \vskip 2em
-		\protect\subsection*{Solutions for Section \thesection}
-		%\noindent{\textsc{\bfseries Solutions for Section \thesection}}
-		\protect\markright{Solutions for \thesection}
-		%\subsubsection*{Solutions for Section \thesection\markright{Section \thesection ~ Solutions}}
-
-	%	\protect\heading{}{}{Section \thesection\ Solutions}
-		\protect\begin{itemize}
-	}
-	\subsection*{Exercises\markright{\thesection ~ Exercises}}\addcontentsline{toc}{subsection}{Exercises}
-	}
+% 	\subsection*{Exercises\markright{\thesection ~ Exercises}}\addcontentsline{toc}{subsection}{Exercises}
+% 	}
 
 %\def\WriteAnsFileStartAlt{%
 %	\Writetofile{\ansfilename}{\protect\clearpage \protect\noindent{\textbf{Solutions for Chapter \thesection}}
@@ -196,9 +132,9 @@
 %	\subsection{Sample Questions\markright{Sample Questions}}\addcontentsline{toc}{subsection}{Sample Questions}
 %	}
 
-\def\WriteAnsFileStop{%
-	\Writetofile{\ansfilename}{\protect\end{itemize}}
-	}
+% \def\WriteAnsFileStop{%
+% 	\Writetofile{\ansfilename}{\protect\end{itemize}}
+% 	}
 
 % \theoremstyle{plain}
 % \newtheorem*{theorem}{Theorem}
@@ -220,65 +156,53 @@
 
 %create a mdframe style for examples:
 \mdfdefinestyle{examplestyle}{%
-	skipabove=2em,
-	skipbelow=1em,
+	% skipabove=1em,
+	% skipbelow=5em,
 	leftmargin=1.5ex, %left/right margins for oneside
 	rightmargin=1.5ex,
 	outermargin=1.5ex, %inner/outer margins for twoside
 	innermargin=1.5ex,
+	innertopmargin=0pt,
 	roundcorner=0pt,
 	topline=false,
 	%bottomline=false,
 	rightline=false,
-    frametitleaboveskip=5pt,
-	frametitlebelowskip=0pt,
+  frametitleaboveskip=2pt,
+	frametitlebelowskip=2pt,
 	needspace=3em,
-	frametitle={Example:}
+	% frametitlebackgroundcolor=black!05
 }
+
+% \let\example\relax
+% let\exampleend\relax %undefine current example theorem env.
 
 %Create indented ``example'' environment:
-\renewmdenv[style=examplestyle]{example}
+\mdtheorem[style=examplestyle]{mdexample}[theorem]{Example}
+\LetLtxMacro\example\mdexample
+\let\endexample\endmdexample
+% \surroundwithmdframed[style=examplestyle]{example}
 
-
-%\newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}\textbf{Example}: }{\end{adjustwidth}\vskip 1em}
 
 %Create ``solution'' environment:  This can be used for solutions in examples (which will always be shown) or after homework problems, which will only be shown in the instructor edition.
-\newenvironment{solution}{%
-	\iftoggle{hwsol}{%
-		\iftoggle{instructoredition}{\color{purple!50!blue} \vskip 1ex \noindent {\itshape\bfseries Solution}:}{\comment}
-	}{%
-		\vskip 1ex \noindent{\itshape\bfseries Solution}:%
-	}
-}{%
-\iftoggle{hwsol}{%
-		\iftoggle{instructoredition}{}{\endcomment}
-	}{}
-}
+% \newenvironment{solution}{%
+% 	\iftoggle{hwsol}{%
+% 		\iftoggle{instructoredition}{\color{purple!50!blue} \vskip 1ex \noindent {\itshape\bfseries Solution}:}{\comment}
+% 	}{%
+% 		\vskip 1ex \noindent{\itshape\bfseries Solution}:%
+% 	}
+% }{%
+% \iftoggle{hwsol}{%
+% 		\iftoggle{instructoredition}{}{\endcomment}
+% 	}{}
+% }
 
-
-%Create ``defbox'' environment to highlight important definitions
-\newenvironment{defbox}[1]{%
-\mdfsetup{%
-    frametitle={\colorbox{blue!20}{\space#1\space}},
-%	frametitle={\fbox{#1}},
-	frametitlealignment={\hspace*{1ex}},
-    frametitleaboveskip=-1.5ex,
-    frametitlebelowskip=0pt,
-    roundcorner=1pt,
-    leftmargin=3pt,
-    rightmargin=3pt,
-  	backgroundcolor=blue!5,
-  	linecolor=blue!75!black,
-    }
-  \begin{mdframed}%
-  }
-  {\end{mdframed}}
 
 
 %Create ``investigation'' environment for in-text worksheet type problems:
 \renewenvironment{investigation}{%
 \mdfsetup{%
-	frametitle={\colorbox{white}{\Large\space\space Investigate! \hspace{4.17in}} },
+	frametitle={\colorbox{white}{\large\space\space \textit{Investigate!} \space} },
+	frametitlealignment=\centering,
 	frametitleaboveskip=-1.5ex,
 	frametitlealignment={\hspace*{2pt}},
 	innerbottommargin=2em,
@@ -294,12 +218,33 @@
 	skipbelow=2em,
 	roundcorner=15pt,
 	needspace=6em,
-	splittopskip=2em,
+	% splittopskip=2em,
 }
 \vskip 1em
 \begin{mdframed}
 }{%
-\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the activity above} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}
+\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Attempt the above activity before proceeding} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}
+}
+
+
+
+\renewenvironment{assemblage}[1]{%
+	\mdfsetup{%
+	frametitle={\colorbox{blue!20}{\space#1\space}},
+	% frametitlealignment={\hspace*{1ex}},
+	frametitleaboveskip=-1.5ex,
+	frametitlebelowskip=0pt,
+	skipabove=1.5ex
+	roundcorner=1pt,
+	leftmargin=3pt,
+	rightmargin=3pt,
+	backgroundcolor=blue!5,
+	linecolor=blue!30,
+	linewidth=1.5pt,
+}
+\begin{mdframed}
+}{%
+\end{mdframed}
 }
 
 
@@ -317,81 +262,91 @@
 \raggedbottom
 
 
-% % % % % % % % % % My modified page style: % % % % % % % % % % % % % % % % % % % %
-\copypagestyle{mypagestyle}{ruled}
-\makeevenhead{ruled}{{\footnotesize \textsl{\thepage}}~~ \textsc{\scriptsize \leftmark}}{}{}
-\makeoddhead{ruled}{}{}{\textsc{\scriptsize \rightmark} ~~ {\footnotesize \textsl{\thepage}}}
-\makeevenfoot{ruled}{}{}{}
-\makeoddfoot{ruled}{}{}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%  Headers and footers %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}} %Removes word "chapter" from the \leftmark.
+
+\fancyhead{} % clear header fields
+\fancyhead[LE]{{\footnotesize \textsl{\thepage}}~~ \textsc{\scriptsize \nouppercase{\leftmark}}}
+\fancyhead[RO]{\textsc{\scriptsize \nouppercase{\rightmark}} ~~ {\footnotesize \textsl{\thepage}}  }
+\fancyfoot{}
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%    Chapter headings  %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% % % % % % % % % % My chapter style (based on VZ14: % % % % % % % % % % % % % % % %
+\usepackage[bf,sc,small,center,outermarks]{titlesec}
+
+
+%%%%% FIX FOR BUG IN TITLESEC %%%%%%%%%%%
+\usepackage{etoolbox}
+
 \makeatletter
-\setlength\midchapskip{1pt}
-\makechapterstyle{mychapstyle}{%
-\renewcommand\chapternamenum{}
-	\renewcommand\printchaptername{}
-	\renewcommand\chapnamefont{\Large\scshape}
-	\renewcommand\printchapternum{%
-		\vskip -1.25in
-		\centering\chapnamefont\null\rule[4pt]{2in}{2pt}\quad
-		\@chapapp\space\thechapter\quad\rule[4pt]{2in}{2pt}
-	}
-	\renewcommand\printchapternonum{%
-%		\par\thickhrulefill\par\vskip\midchapskip
-		\vskip -1.25in
-		\hrule\vskip\midchapskip
-	}
-	\renewcommand\chaptitlefont{\Huge\scshape\centering}
-	\renewcommand\afterchapternum{%
-		\par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip
-	}
-	\renewcommand\afterchaptertitle{%
-		\par\vskip\midchapskip\hrule\nobreak\vskip\afterchapskip
-	}
-}
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
 \makeatother
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
-
-% % % % % Styles for section headings: % % % % % % % % % % %
-\setbeforesecskip{-5.5ex plus -1ex minus -.2ex}
-\setaftersecskip{2ex plus .5ex}
-%\newcommand{\ruledsec}[1]{%
-%	\Large\centering\scshape #1 \rule{\textwidth}{1pt}
-%}
-\setsecheadstyle{\Large\bfseries\scshape\centering}
-\setsubsecheadstyle{\large\bfseries\scshape\centering}
-\setsubsubsecheadstyle{\scshape\bfseries\raggedright}
-%to flush left, replace \centering with \raggedright.
+%%%%% END FIX %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+% \titleformat{\section}[hang]{}{\thesection.~}{0pt}{}{}
 
-% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\titleformat{\chapter}[display]
+	{\normalfont\Large\filcenter\sffamily}
+	{\vskip -1.25in \rule[4pt]{1in}{2pt} \quad \large\textsc{\chaptertitlename} \thechapter \quad \rule[4pt]{1in}{2pt} }
+	{1pc}
+	{\titlerule\vspace{1ex}\huge\textsc}
+	[\vspace{.75ex}\titlerule]
 
-% % % % % Glossaries style for list of symbols % % % % % % % % % % % % % % %
-% \newglossarystyle{myglosses}{%
-%     \renewenvironment{theglossary}{%
-%       \setlength{\parindent}{0pt}%
-%       \setlength{\parskip}{7pt}
-% %      \begin{multicols}{2}%
-%     }{%
-% %      \end{multicols}%
-%     }%
-%     \renewcommand*{\glossaryheader}{}%
-%     \renewcommand*{\glsgroupheading}[1]{}%
-% %    \renewcommand*{\glsclearpage}{\columnbreak}%
-%      % set how each entry should appear:
-%       \renewcommand*{\glossentry}[2]{%
-%         \parbox{.15\linewidth}{\glstarget{##1}{\textsc{\glossentryname{##1}}}\hskip \fill}%
-%         \hspace{.05\linewidth}%
-%         \parbox{.8\linewidth}{\glossentrydesc{##1}, \space ##2 \hskip \fill}\par%
-%     }%
-%     \renewcommand*{\subglossentry}[3]{%
-%         \glossentry{##2}{##3}%
-%     }%
+%
+% % % % % % % % % % % My chapter style (based on VZ14: % % % % % % % % % % % % % % % %
+% \makeatletter
+% \setlength\midchapskip{1pt}
+% \makechapterstyle{mychapstyle}{%
+% \renewcommand\chapternamenum{}
+% 	\renewcommand\printchaptername{}
+% 	\renewcommand\chapnamefont{\Large\scshape}
+% 	\renewcommand\printchapternum{%
+% 		\vskip -1.25in
+% 		\centering\chapnamefont\null\rule[4pt]{2in}{2pt}\quad
+% 		\@chapapp\space\thechapter\quad\rule[4pt]{2in}{2pt}
+% 	}
+% 	\renewcommand\printchapternonum{%
+% %		\par\thickhrulefill\par\vskip\midchapskip
+% 		\vskip -1.25in
+% 		\hrule\vskip\midchapskip
+% 	}
+% 	\renewcommand\chaptitlefont{\Huge\scshape\centering}
+% 	\renewcommand\afterchapternum{%
+% 		\par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip
+% 	}
+% 	\renewcommand\afterchaptertitle{%
+% 		\par\vskip\midchapskip\hrule\nobreak\vskip\afterchapskip
+% 	}
 % }
+% \makeatother
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%
+% % % % % % Styles for section headings: % % % % % % % % % % %
+% \setbeforesecskip{-5.5ex plus -1ex minus -.2ex}
+% \setaftersecskip{2ex plus .5ex}
+% %\newcommand{\ruledsec}[1]{%
+% %	\Large\centering\scshape #1 \rule{\textwidth}{1pt}
+% %}
+% \setsecheadstyle{\Large\bfseries\scshape\centering}
+% \setsubsecheadstyle{\large\bfseries\scshape\centering}
+% \setsubsubsecheadstyle{\scshape\bfseries\raggedright}
+% %to flush left, replace \centering with \raggedright.
+%
+
+
 
 
 
