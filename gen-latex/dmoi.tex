@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-08-02T14:48:58-06:00    *%
+%*    on 2016-08-02T15:58:08-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -4720,6 +4720,337 @@ The sum of all entries on a given row is a power of 2. (You should check this!)
         %
 \par\smallskip
 \end{exerciselist}
+\typeout{************************************************}
+\typeout{Section 2.5 Stars and Bars}
+\typeout{************************************************}
+\section[Stars and Bars]{Stars and Bars}\label{sec_stars-and-bars}
+
+\index{stars and bars}
+%
+\begin{investigation}[]\label{investigation-10}
+
+  Suppose you have some number of identical Rubik's cubes to distribute to your friends. Imagine you start with a single row of the cubes.
+
+
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-556}{}
+ Find the number of different ways you can distribute the cubes provided:
+%
+\begin{enumerate}
+\item\hypertarget{li-557}{}
+you have 3 cubes to give to 2 people.
+%
+\item\hypertarget{li-558}{}
+you have 4 cubes to give to 2 people.
+%
+\item\hypertarget{li-559}{}
+you have 5 cubes to give to 2 people.
+%
+\item\hypertarget{li-560}{}
+you have 3 cubes to give to 3 people.
+%
+\item\hypertarget{li-561}{}
+you have 4 cubes to give to 3 people.
+%
+\item\hypertarget{li-562}{}
+you have 5 cubes to give to 3 people.
+%
+\end{enumerate}
+\item\hypertarget{li-563}{}
+Make a conjecture about how many different ways you could distribute 7 cubes to 4 people. Explain.
+%
+\item\hypertarget{li-564}{}
+What if each person were required to get \emph{at least one} cube? How would your answers change?
+%
+\end{enumerate}
+
+%
+\end{investigation}
+\par
+
+Consider the following counting problem:
+%
+\begin{quote}
+You have 7 cookies to give to 4 kids.  How many ways can you do this?
+\end{quote}
+\par
+
+Take a moment to think about how you might solve this problem. You may assume that it is acceptable to give a kid no cookies. Also, the cookies are all identical and the order in which you give out the cookies does not matter.
+%
+\par
+
+Before solving the problem, here is a wrong answer: You might guess that the answer should be \(4^7\) because for each of the 7 cookies, there are 4 choices of kids to which you can give the cookie. This is reasonable, but wrong. To see why, consider a few possible outcomes: we could assign the first six cookies to kid A, and the seventh cookie to kid B. Another outcome would assign the first cookie to kid B and the six remaining cookies to kid A. Both outcomes are included in the \(4^7\) answer. But for our counting problem, both outcomes are really the same \textendash{} kid A gets six cookies and kid B gets one cookie.
+%
+\par
+
+What do outcomes actually look like? How can we represent them? One approach would be to write a outcome as a string of four numbers like this:
+\begin{equation*}
+  3112,
+\end{equation*}
+which represent the outcome in which the first kid gets 3 cookies, the second and third kid each get 1 cookie, and the fourth kid gets 2 cookies. Represented this way, the order in which the numbers occur matters. 1312 is a different outcome, because the first kid gets a one cookie instead of 3. Each number in the string can be any integer between 0 and 7. But the answer is not \(7^4\). We need the \emph{sum} of the numbers to be 7.
+%
+\par
+
+Another way we might represent outcomes is to write a string of seven letters:
+\begin{equation*}
+  \mbox{ABAADCD} ,
+\end{equation*}
+which represents that the first cookie goes to kid A, the second cookie goes to kid B, the third and fourth cookies go to kid A, and so on. In fact, this outcome is identical to the previous one\textemdash{}A gets 3 cookies, B and C get 1 each and D gets 2. Each of the seven letters in the string can be any of the 4 possible letters (one for each kid), but the number of such strings is not \(4^7\), because here order does \emph{not} matter. In fact, another way to write the same outcome is
+\begin{equation*}
+  \mbox{AAABCDD} .
+\end{equation*}
+%
+\par
+
+This will be the preferred representation of the outcome. Since we can write the letters in any order, we might as well write them in \emph{alphabetical} order for the purposes of counting. So we will write all the A's first, then all the B's, and so on.
+%
+\par
+
+Now think about how you could specify such an outcome. All we really need to do is say when to switch from one letter to the next. In terms of cookies, we need to say after how many cookies do we stop giving cookies to the first kid and start giving cookies to the second kid. And then after how many do we switch to the third kid? And after how many do we switch to the fourth? So yet another way to represent an outcome is like this:
+\begin{equation*}
+  ***|*|*|**
+\end{equation*}
+%
+\par
+
+Three cookies go to the first kid, then we switch and give one cookie to the second kid, then switch, one to the third kid, switch, two to the fourth kid. Notice that we need 7 stars and 3 bars \textendash{} one star for each cookie, and one bar for each switch between kids, so one fewer bars than there are kids (we don't need to switch after the last kid \textendash{} we are done).
+%
+\par
+
+Why have we done all of this? Simple: to count the number of ways to distribute 7 cookies to 4 kids, all we need to do is count how many \emph{stars and bars} charts there are. But a stars and bars chart is just a string of symbols, some stars and some bars. If instead of stars and bars we would use 0's and 1's, it would just be a bit string. We know how to count those.
+%
+\par
+
+Before we get too excited, we should make sure that really \emph{any} string of (in our case) 7 stars and 3 bars corresponds to a different way to distribute cookies to kids. In particular consider a string like this:
+\begin{equation*}
+  |***||****
+\end{equation*}
+%
+\par
+
+Does that correspond to a cookie distribution? Yes. It represents the distribution in which kid A gets 0 cookies (because we switch to kid B before any stars), kid B gets three cookies (three stars before the next bar), kid C gets 0 cookies (no stars before the next bar) and kid D gets the remaining 4 cookies. No matter how the stars and bars are arranged, we can distribute cookies in that way. Also, given any way to distribute cookies, we can represent that with a stars and bars chart. For example, the distribution in which kid A gets 6 cookies and kid B gets 1 cookie has the following chart:
+\begin{equation*}
+  ******|*||
+\end{equation*}
+%
+\par
+
+After all that work we are finally ready to count. Each way to distribute cookies corresponds to a stars and bars chart with 7 stars and 3 bars. So there are 10 symbols, and we must choose 3 of them to be bars. Thus:
+\begin{equation*}
+  \mbox{ There are } {10 \choose 3}\mbox{ ways to distribute 7 cookies to 4 kids.}
+\end{equation*}
+%
+\par
+
+While we are at it, we can also answer a related question: how many ways are there to distribute 7 cookies to 4 kids so that each kid gets at least one cookie? What can you say about the corresponding stars and bars charts? The charts must start and end with at least one star (so that kids A and D) get cookies, and also no two bars can be adjacent (so that kids B and C are not skipped). One way to assure this is to only place bars in the spaces \emph{between} the stars. With 7 stars, there are 6 spots between the stars, so we must choose 3 of those 6 spots to fill with bars. Thus there are \({6 \choose 3}\) ways to distribute 7 cookies to 4 kids giving at least one cookie to each kid.
+%
+\par
+
+Another (and more general) way to approach this modified problem is to first give each kid one cookie. Now the remaining 3 cookies can be distributed to the 4 kids without restrictions. So we have 3 stars and 3 bars for a total of 6 symbols, 3 of which must be bars. So again we see that there are \({6 \choose 3}\) ways to distribute the cookies.
+%
+\par
+
+Stars and bars can be used in counting problems other than kids and cookies. Here are a few examples:
+%
+\begin{example}[]\label{example-42}
+
+Your favorite mathematical pizza chain offers 10 toppings. How many pizzas can you make if you are allowed 6 toppings? The order of toppings does not matter but now you are allowed repeats. So one possible pizza is triple sausage, double pineapple, and onions.
+%
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+We get 6 toppings (counting possible repeats). Represent each of these toppings as a star. Think of going down the menu one topping at a time: you see anchovies first, and skip to the next, sausage. You say yes to sausage 3 times (use 3 stars), then switch to the next topping on the list. You keep skipping until you get to pineapple, which you say yes to twice. Another switch and you are at onions. You say yes once. Then you keep switching until you get to the last topping, never saying yes again (since you already have said yes 6 times. There are 10 toppings to choose from, so we must switch from considering one topping to the next 9 times. These are the bars.
+%
+\par
+
+Now that we are confident that we have the right number of stars and bars, we answer the question simply: there are 6 stars and 9 bars, so 15 symbols. We need to pick 9 of them to be bars, so there number of pizzas possible is
+\begin{equation*}
+  {15 \choose 9}.
+\end{equation*}
+%
+\end{example}
+\begin{example}[]\label{example-43}
+
+How many 7 digit phone numbers are there in which the digits are non-increasing? That is, every digit is less than or equal to the previous one.
+%
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+We need to decide on 7 digits so we will use 7 stars. The bars will represent a switch from each possible single digit number down the next smaller one. So the phone number 866-5221 is represented by the stars and bars chart
+\begin{equation*}
+  |*||**|*|||**|*|
+\end{equation*}
+%
+\par
+
+There are 10 choices for each digit (0-9) so we must switch between choices 9 times. We have 7 stars and 9 bars, so the total number of phone numbers is
+\begin{equation*}
+  {16 \choose 9}.
+\end{equation*}
+%
+\end{example}
+\begin{example}[]\label{example-44}
+
+How many integer solutions are there to the equation
+\begin{equation*}
+  x_1 + x_2 + x_3 + x_4 + x_5 = 13.
+\end{equation*}
+%
+\par
+
+(An integer solution to an equation is a solution in which the unknown must have an integer value.)
+%
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-565}{}
+where \(x_i \ge 0\) for each \(x_i\)?
+%
+\item\hypertarget{li-566}{}
+where \(x_i > 0\) for each \(x_i\)?
+%
+\item\hypertarget{li-567}{}
+where \(x_i \ge 2\) for each \(x_i\)?
+%
+\end{enumerate}
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+This problem is just like giving 13 cookies to 5 kids. We need to say how many of the 13 units go to each of the 5 variables. In other words, we have 13 stars and 4 bars (the bars are like the ``+'' signs in the equation).
+%
+\leavevmode%
+\begin{enumerate}
+\item\hypertarget{li-568}{}
+If \(x_i\) can be 0 or greater, we are in the standard case with no restrictions.  So 13 stars and 4 bars can be arranged in \({17 \choose 4}\) ways.
+%
+\item\hypertarget{li-569}{}
+Now each variable must be at least 1.  So give one unit to each variable to satisfy that restriction.  Now there are 8 stars left, and still 4 bars, so the number of solutions is \({12 \choose 4}\).
+%
+\item\hypertarget{li-570}{}
+Now each variable must be 2 or greater.  So before any counting, give each variable 2 units.  We now have 3 remaining stars and 4 bars, so there are \({7 \choose 4}\) solutions.
+%
+\end{enumerate}
+\end{example}
+\typeout{************************************************}
+\typeout{Exercises 2.5.1 Exercises}
+\typeout{************************************************}
+\subsection[Exercises]{Exercises}\label{exercises-8}
+\begin{exerciselist}
+\item[1.]\hypertarget{exercise-82}{}
+A \emph{multiset} is a collection of objects, just like a set, but can contain an object more than once (the order of the elements still doesn't matter). For example, \(\{1,1, 2, 5, 5, 7\}\) is a multiset of size 6.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-571}{}
+How many sets of size 5 can be made using the 10 numeric digits 0 through 9?
+%
+\item\hypertarget{li-572}{}
+How many \emph{multi}sets of size 5 can be made using the 10 numeric digits 0 through 9?
+%
+\end{enumerate}
+\par\smallskip
+\item[2.]\hypertarget{exercise-83}{}
+Each of the counting problems below can be solved with stars and bars. For each, say what outcome the diagram
+\begin{equation*}
+  ***|*||**|
+\end{equation*}
+represents, if there are the correct number of stars and bars for the problem. Otherwise, say why the diagram does not represent any outcome, and what a correct diagram would look like.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-575}{}
+How many ways are there to select a handful of 6 jellybeans from a jar that contains 5 different flavors?
+%
+\item\hypertarget{li-576}{}
+How many ways can you distribute 5 identical lollipops to 6 kids?
+%
+\item\hypertarget{li-577}{}
+How many 6-letter words can you make using the 5 vowels?
+%
+\item\hypertarget{li-578}{}
+How many solutions are there to the equation \(x_1 + x_2 + x_3 + x_4 = 6\).
+%
+\end{enumerate}
+\par\smallskip
+\item[3.]\hypertarget{exercise-84}{}
+After gym class you are tasked with putting the 14 identical dodgeballs away into 5 bins.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-583}{}
+How many ways can you do this if there are no restrictions?
+%
+\item\hypertarget{li-584}{}
+How many ways can you do this if each bin must contain at least one dodgeball?
+%
+\end{enumerate}
+\par\smallskip
+\item[4.]\hypertarget{exercise-85}{}
+How many integer solutions are there to the equation \(x + y + z = 8\)
+for which
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-587}{}\(x\), \(y\), and \(z\) are all positive?\item\hypertarget{li-588}{}\(x\), \(y\), and \(z\) are all non-negative?\item\hypertarget{li-589}{}\(x\), \(y\), and \(z\) are all greater than \(-3\).\end{enumerate}
+\par\smallskip
+\item[5.]\hypertarget{exercise-86}{}
+Using the digits 2 through 8, find the number of different 5-digit numbers such that:
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-593}{}
+Digits cannot be repeated and must be written in increasing order.  For example, 23678 is okay, but 32678 is not.
+%
+\item\hypertarget{li-594}{}
+Digits \emph{can} be repeated and must be written in \emph{non-decreasing} order.  For example, 24448 is okay, but 24484 is not.
+%
+\end{enumerate}
+\par\smallskip
+\item[6.]\hypertarget{exercise-87}{}
+When playing Yahtzee, you roll five regular 6-sided dice. How many different outcomes are possible from a single roll? The order of the dice does not matter.
+%
+\par\smallskip
+\item[7.]\hypertarget{exercise-88}{}
+Your friend tells you she has 7 coins in her hand (just pennies, nickels, dimes and quarters). If you guess how many of each kind of coin she has, she will give them to you. If you guess randomly, what is the probability that you will be correct?
+%
+\par\smallskip
+\item[8.]\hypertarget{exercise-89}{}
+How many integer solutions to \(x_1 + x_2 + x_3 + x_4  = 25\) are there for which \(x_1 \ge 1\), \(x_2 \ge 2\), \(x_3 \ge 3\) and \(x_4 \ge 4\)?
+%
+\par\smallskip
+\item[9.]\hypertarget{exercise-90}{}
+Solve the three counting problems below. Then say why it makes sense that they all have the same answer. That is, say how you can interpret them as each other.
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-597}{}
+How many ways are there to distribute 8 cookies to 3 kids?
+%
+\item\hypertarget{li-598}{}
+How many solutions in non-negative integers are there to \(x+y+z = 8\)?
+%
+\item\hypertarget{li-599}{}
+How many different packs of 8 crayons can you make using crayons that come in red, blue and yellow?
+%
+\end{enumerate}
+\par\smallskip
+\item[10.]\hypertarget{exercise-91}{}
+\emph{Conic}, your favorite math themed fast food drive-in offers 20 flavors which can be added to your soda. You have enough money to buy a large soda with 4 added flavors. How many different soda concoctions can you order if:
+%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-600}{}
+You refuse to use any of the flavors more than once?
+%
+\item\hypertarget{li-601}{}
+You refuse repeats but care about the order the flavors are added?
+%
+\item\hypertarget{li-602}{}
+You allow yourself multiple shots of the same flavor?
+%
+\item\hypertarget{li-603}{}
+You allow yourself multiple shots, and care about the order the flavors are added?
+%
+\end{enumerate}
+\par\smallskip
+\end{exerciselist}
 %
 %% A lineskip in table of contents as transition to appendices, backmatter
 \addtocontents{toc}{\vspace{\normalbaselineskip}}
@@ -5421,6 +5752,68 @@ The sum of all entries on a given row is a power of 2. (You should check this!)
             \end{equation*}
           %
 \end{proof}
+\par\smallskip
+\subsection*{2.5.1 Exercises}
+\noindent\textbf{1.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-573}{}\({10\choose 5}\) sets.  We must select 5 of the 10 digits to put in the set.\item\hypertarget{li-574}{}
+Use stars and bars: each star represents one of the 5 elements of the set, each bar represents a switch between digits.  So there are 5 stars and 9 bars, giving us \({14 \choose 9}\) sets.
+%
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{2.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-579}{}
+You take 3 strawberry, 1 lime, 0 licorice, 2 blueberry and 0 bubblegum.
+%
+\item\hypertarget{li-580}{}
+This is backwards.  We don't want the stars to represent the kids because the kids are not identical, but the stars are.  Instead we should use 5 stars (for the lollipops) and use 5 bars to switch between the 6 kids.  For example, **||***||| would represent the outcome with the first kid getting 2 lollipops, the third kid getting 3, and the rest of the kids getting none.
+%
+\item\hypertarget{li-581}{}
+This is the word AAAEOO.
+%
+\item\hypertarget{li-582}{}
+This doesn't represent a solution.  Each star should represent one of the 6 units that add up to 6, and the bars should \emph{switch} between the different variables.  We have one too many bars.  An example of a correct diagram would be *|**||***, representing that \(x_1 = 1\), \(x_2 = 2\), \(x_3 = 0\), and   \(x_4 = 3\).
+%
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{3.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-585}{}\({18 \choose 4}\) ways.  Each outcome can be represented by a sequence of 14 stars and 4 bars.\item\hypertarget{li-586}{}\({13 \choose 4}\) ways.  First put one ball in each bin.  This leaves 9 stars and 4 bars.\end{enumerate}
+\par\smallskip
+\noindent\textbf{4.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-590}{}\({7 \choose 2}\) solutions.  After each variable gets 1 star for free, we are left with 5 stars and 2 bars.\item\hypertarget{li-591}{}\({10 \choose 2}\) solutions.  We have 8 stars and 2 bars.\item\hypertarget{li-592}{}\({19 \choose 2}\) solutions.  This problem is equivalent to finding the number of solutions to \(x' + y' + z' = 17\) where \(x'\), \(y'\) and \(z'\) are non-negative.  (In fact, we really just do a substitution.  Let \(x = x'- 3\), \(y = y' - 3\) and \(z = z' - 3\)).\end{enumerate}
+\par\smallskip
+\noindent\textbf{5.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-595}{}
+There are \({7 \choose 5}\) numbers.  We simply choose five of the seven digits and once chosen put them in increasing order.
+%
+\item\hypertarget{li-596}{}
+This requires stars and bars.  Use a star to represent each of the 5 digits in the number, and use their position relative to the bars to say what numeral fills that spot.  So we will have 5 stars and 6 bars, giving \({11 \choose 6}\) numbers.
+%
+\end{enumerate}
+\par\smallskip
+\noindent\textbf{6.}\quad{}
+\({10 \choose 5}\) outcomes. We have 5 stars (the five dice) and 5 bars (the five switches between the numbers 1-6).
+%
+\par\smallskip
+\noindent\textbf{7.}\quad{}
+We must figure out how many different combinations of 7 coins are possible. Let a star represent each coin, and a bar represent switching between type of coin. For example, **|*||**** represents 2 pennies, one nickel, no dimes and 4 quarters. The number of such star and bar diagrams (with 7 stars and 3 bars) is \({10 \choose 3} = 120\). Thus you have a 1 in 120 chance of guessing correctly.
+%
+\par\smallskip
+\noindent\textbf{8.}\quad{}
+\({18 \choose 3}\) solutions. Distribute 10 units to the variables before finding all solutions to \(x_1' + x_2' + x_3' + x_4' = 15\) in non-negative integers.
+%
+\par\smallskip
+\noindent\textbf{9.}\quad{}
+The answer to each of the counting questions is \({10 \choose 2}\), using 8 stars and 2 bars. The bars separate the kids, the variables, and the colors. To see why these are really the same, notice that we can think of the 3 kids as named \(x\), \(y\), and \(z\). Or think of \(x\) as red, \(y\) as blue and \(z\) as yellow. Notice that in each case, the three things are distinguishable, while the 8 things (cookies, units, crayons) are all identical.
+%
+\par\smallskip
+\noindent\textbf{10.}\quad{}\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-604}{}\({20 \choose 4}\) sodas (order does not matter and repeats are not allowed).\item\hypertarget{li-605}{}\(P(20, 4) = 20\cdot 19\cdot 18 \cdot 17\) sodas (order matters and repeats are not allowed).\item\hypertarget{li-606}{}\({23 \choose 19}\) sodas (order does not matter and repeats are allowed; 4 stars and 19 bars).\item\hypertarget{li-607}{}\(20^4\) sodas (order matters and repeats are allowed; 20 choices 4 times).\end{enumerate}
 \par\smallskip
 \typeout{************************************************}
 \typeout{Appendix B Notation}
