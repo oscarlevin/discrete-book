@@ -41,7 +41,7 @@
 <!-- Pass a string with any of geometry's options  -->
 <!-- Default is empty and thus ineffective         -->
 <!-- Otherwise, happens early in preamble template -->
-<xsl:param name="latex.geometry" select="'papersize={6in,9in}, hmargin={0.75in, 0.75in}, height=7.5in, top=0.75in, twoside, ignoreheadfoot'"/>
+<xsl:param name="latex.geometry" select="'papersize={6in,9in}, hmargin={0.75in, 0.65in}, height=7.5in, top=0.75in, twoside, ignoreheadfoot'"/>
 <!--  -->
 <!-- PDF Watermarking                    -->
 <!-- Non-empty string makes it happen    -->
