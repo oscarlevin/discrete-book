@@ -21,11 +21,8 @@
 <xsl:import href="dmoi-common.xsl" />
 
 <!-- List Chapters and Sections in sidebar Table of Contents -->
-<xsl:param name="toc.level" select="'2'" />
+<xsl:param name="toc.level" select="''" />
 
-<!-- Examples are knowlized by default -->
-<!-- With no titles, we turn this off  -->
-<xsl:param name="html.knowl.example" select="'no'" />
 
 <!-- Exercises have "hint" and "solution"s -->
 <!--   Hints: for a backmatter section     -->
@@ -73,7 +70,7 @@
 <!-- PROJECT-LIKE gets own switch here           -->
 
 <xsl:param name="html.knowl.theorem" select="'no'" />
-<xsl:param name="html.knowl.proof" select="'yes'" />
+<xsl:param name="html.knowl.proof" select="'no'" />
 <xsl:param name="html.knowl.definition" select="'no'" />
 <xsl:param name="html.knowl.example" select="'no'" />
 <xsl:param name="html.knowl.project" select="'no'" />
@@ -100,7 +97,7 @@
 <xsl:param name="html.css.server" select="'https://aimath.org'" />
 <xsl:param name="html.css.file"   select="'mathbook-3.css'" />
 <!-- A space-separated list of CSS URLs (points to servers or local files) -->
-<xsl:param name="html.css.extra"  select="''" />
+<xsl:param name="html.css.extra"  select="'custom-styles.css'" />
 
 <!-- Navigation -->
 <!-- Navigation may follow two different logical models:                     -->
@@ -144,7 +141,7 @@
 <!-- 'none' - no permalinks anywhere                       -->
 <!-- 'stable' - only stable links (see paragraph above)    -->
 <!-- 'all' - every section heading, even if links are poor -->
-<xsl:param name="html.permalink"  select="'none'" />
+<xsl:param name="html.permalink"  select="'all'" />
 
 
 

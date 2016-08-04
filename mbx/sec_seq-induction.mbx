@@ -1,15 +1,19 @@
-<section xml:id="sec_induction">
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<section xml:id="sec_seq-induction" xmlns:xi="http://www.w3.org/2001/XInclude">
 <title>Induction</title>
 
 
 <introduction>
 <p>
-<index><main>induction</main></index> Mathematical induction is a proof technique, not unlike direct proof or proof by contradiction or combinatorial proof.<fn>You might or might not be familiar with these yet, but you will be soon.</fn> In other words, induction is a style of argument we use to convince ourselves and others that a mathematical statement is always true. Many mathematical statements can be proved by simply explaining what they mean. Others are very difficult to prove <ndash /> in fact, there are relatively simple mathematical statements which nobody yet knows how to prove. To facilitate the discovery of proofs, it is important to be familiar with some standard styles of arguments. Induction is one such style. Let's start with an example.
+<index><main>induction</main></index> Mathematical induction is a proof technique, not unlike direct proof or proof by contradiction or combinatorial proof.<fn>You might or might not be familiar with these yet, but you will be soon.</fn> In other words, induction is a style of argument we use to convince ourselves and others that a mathematical statement is always true. Many mathematical statements can be proved by simply explaining what they mean. Others are very difficult to prove<mdash />in fact, there are relatively simple mathematical statements which nobody yet knows how to prove. To facilitate the discovery of proofs, it is important to be familiar with some standard styles of arguments. Induction is one such style. Let's start with an example.
 </p>
 </introduction>
 
 
-<subsection>
+<subsection xml:id="subsec_induction-stamps">
 <title>Stamps</title>
 <investigation>
 <p>
@@ -18,12 +22,14 @@ a large supply of 8-cent stamps and 5-cent stamps. Which amounts of postage can 
 exactly using these stamps? Which amounts are impossible to make?
 </p>
 </investigation>
+
+
 <p>
 Perhaps in investigating the problem above you picked some amounts of postage, and then figured out whether you could make that amount using just 8-cent and 5-cent stamps. Perhaps you did this in order: can you make 1 cent of postage? Can you make 2 cents? 3 cents? And so on. If this is what you did, you were actually answering a <em>sequence</em> of questions. We have methods for dealing with sequences. Let's see if that helps.
 </p>
 
 <p>
-Actually, we will not make a sequence of questions, but rather a sequence of statements. Let <m>\pofn</m><index><main><m>\pofn</m></main></index> be the statement <q>you can make <m>n</m> cents of postage using just 8-cent and 5-cent stamps.</q> Since each <m>P(n)</m> is a statement, it is either true or false. So if we form the sequence of statements
+Actually, we will not make a sequence of questions, but rather a sequence of statements. Let <m>P(n)</m><notation><usage><m>P(n)</m></usage><description>The <m>n</m>th case we are trying to prove by induction</description></notation> be the statement <q>you can make <m>n</m> cents of postage using just 8-cent and 5-cent stamps.</q> Since for each value of <m>n</m>, <m>P(n)</m> is a statement, it is either true or false. So if we form the sequence of statements
 <me>
   P(1), P(2), P(3), P(4), \ldots
 </me>
@@ -43,13 +49,11 @@ Suppose I told you that <m>P(43)</m> was true (it is). Can you determine from th
 </p>
 
 <p>
-Notice that we have not said how to make 44 cents, just that we can, on the basis that we can make 43 cents. How do we know we can make 43 cents? Perhaps because we know we can make <m>\fortytwo</m><index><main><m>\fortytwo</m></main></index> cents, which we know we can do because we know we can make 41 cents, and so on. It's a recursion! As with a recursive definition of a numerical sequence, we must specify our initial value. In this case, the initial value is <q><m>P(1)</m> is false.</q> That's not good, since our recurrence relation just says that <m>P(k+1)</m> is true <em>if</em> <m>P(k)</m> is also true. We need to start the process with a true <m>P(k)</m>. So instead, we might want to use <q><m>P(31)</m> is true</q> as the initial condition.
+Notice that we have not said how to make 44 cents, just that we can, on the basis that we can make 43 cents. How do we know we can make 43 cents? Perhaps because we know we can make <m>42</m><notation><usage><m>42</m></usage><description>The ultimate answer to life, the universe, and everything.</description></notation> cents, which we know we can do because we know we can make 41 cents, and so on. It's a recursion! As with a recursive definition of a numerical sequence, we must specify our initial value. In this case, the initial value is <q><m>P(1)</m> is false.</q> That's not good, since our recurrence relation just says that <m>P(k+1)</m> is true <em>if</em> <m>P(k)</m> is also true. We need to start the process with a true <m>P(k)</m>. So instead, we might want to use <q><m>P(31)</m> is true</q> as the initial condition.
 </p>
 
 <p>
 Putting this all together we arrive at the following fact: it is possible to (exactly) make any amount of postage greater than 27 cents using just 5-cent and 8-cent stamps.<fn>This is not claiming that there are no amounts less than 27 cents which can also be made.</fn> In other words, <m>P(k)</m> is true for any <m>k \ge 28</m>. To prove this, we could do the following:
-</p>
-
 <ol>
 <li>
 <p>
@@ -62,6 +66,7 @@ Prove that if <m>P(k)</m> is true, then <m>P(k+1)</m> is true (for any <m>k \ge 
 </p>
 </li>
 </ol>
+</p>
 
 <p>
 Suppose we have done this. Then we know that the 28th term of the sequence above is a <m>T</m> (using step 1, the initial condition or <em>base case</em>), and that every term after the 28th is <m>T</m> also (using step 2, the recursive part or <em>inductive case</em>). Here is what the proof would actually look like.
@@ -87,7 +92,7 @@ Therefore, by the principle of mathematical induction, <m>P(n)</m> is true for a
 </subsection>
 
 
-<subsection>
+<subsection xml:id="subsec_induction-formproofs">
 <title>Formalizing Proofs</title>
 <p>
 What we did in the stamp example above works for many types of problems. Proof by induction is useful when trying to prove statements about all natural numbers, or all natural numbers greater than some fixed first case (like 28 in the example above), and in some other situations too. In particular, induction should be used when there is some way to go from one case to the next <ndash /> when you can see how to always <q>do one more.</q>
@@ -110,8 +115,6 @@ Here is the general structure of a proof by mathematical induction:
 <index><main>induction</main></index>
 Start by saying what the statement is that you want to prove: <q>Let <m>P(n)</m> be the statement<ellipsis /></q>
 To prove that <m>P(n)</m> is true for all <m>n \ge 0</m>, you must prove two facts:
-</p>
-
 <ol>
 <li>
 <p>
@@ -124,6 +127,7 @@ Inductive case: Prove that <m>P(k) \imp P(k+1)</m> for all <m>k \ge 0</m>.  That
 </p>
 </li>
 </ol>
+</p>
 
 <p>
 Assuming you are successful on both parts above, you can conclude, <q>Therefore by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \ge 0</m>.</q>
@@ -151,7 +155,7 @@ When you are asked to prove a statement by mathematical induction, you should fi
 </subsection>
 
 
-<subsection>
+<subsection xml:id="subsec_induction-examples">
 <title>Examples</title>
 
 
@@ -159,6 +163,7 @@ When you are asked to prove a statement by mathematical induction, you should fi
 <p>
 Here are some examples of proof by mathematical induction.
 </p>
+</introduction>
 <example>
 <statement>
 <p>
@@ -204,9 +209,11 @@ Thus <m>P(k+1)</m> is true, so by the principle of mathematical induction <m>P(n
 
 </solution>
 </example>
+
 <p>
 Note that in the part of the proof in which we proved <m>P(k+1)</m> from <m>P(k)</m>, we used the equation <m>P(k)</m>. This was the inductive hypothesis. Seeing how to use the inductive hypotheses is usually straight forward when proving a fact about a sum like this. In other proofs, it can be less obvious where it fits in.
 </p>
+
 <example>
 <statement>
 <p>
@@ -256,6 +263,8 @@ Therefore <m>6^{k+1} - 1</m> is a multiple of 5, or in other words, <m>P(k+1)</m
 
 </solution>
 </example>
+
+
 <p>
 We had to be a little bit clever (i.e., use some algebra) to locate the <m>6^k - 1</m> inside of <m>6^{k+1} - 1</m> before we could apply the inductive hypothesis. This is what can make inductive proofs challenging.
 </p>
@@ -315,7 +324,6 @@ Following the equalities and inequalities through, we get <m>(k+1)^2 \lt  2^{k+1
 <p>
 The previous example might remind you of the <em>racetrack principle</em> from calculus, which says that if <m>f(a) \lt  g(a)</m>, and <m>f'(x) \lt  g'(x)</m> for <m>x > a</m>, then <m>f(x) \lt  g(x)</m> for <m>x > a</m>. Same idea: the larger function is increasing at a faster rate than the smaller function, so the larger function will stay larger. In discrete math, we don't have derivatives, so we look at differences. Thus induction is the way to go.
 </p>
-</introduction>
 
 
 <subsubsection>
@@ -336,19 +344,24 @@ Clearly something went wrong. The problem is that the proof that <m>P(k)</m> imp
 </subsection>
 
 
-<subsection>
+<subsection xml:id="subsec_induction-strong">
 <title>Strong Induction</title>
 <investigation>
 <p>
 Start with a square piece of paper. You want to cut this square into smaller squares, leaving no waste (every piece of paper you end up with must be a square). Obviously it is possible to cut the square into 4 squares. You can also cut it into 9 squares. It turns out you can cut the square into 7 squares (although not all the same size). What other numbers of squares could you end up with?
 </p>
 </investigation>
+
 <p>
-Sometimes, to prove that <m>P(k+1)</m> is true, it would be helpful to know that <m>P(k)\emph{and}P(k-1)\emph{and}P(k-2)</m> are all true. Consider the following classic puzzle:
+Sometimes, to prove that <m>P(k+1)</m> is true, it would be helpful to know that <m>P(k)</m> <em>and</em> <m>P(k-1)</m> <em>and</em> <m>P(k-2)</m> are all true. Consider the following classic puzzle:
 </p>
+
+<p>
 <blockquote>
 You have 9 coins which all look identical.  However, you know that one of the coins is counterfeit, and weighs slightly less than the other coins (which all have the same weight).  The weight difference is not great enough to tell by holding the coins, but luckily you have an old-fashioned balance scale (like the one held by Lady Justice).  What is the smallest number of weighings needed to find the counterfeit coin?
 </blockquote>
+</p>
+
 <p>
 Need a hint? The answer is 2. Why?
 </p>
@@ -361,9 +374,11 @@ Here's what you do. Put 3 coins on each side of the balance scale, leaving 3 off
 Let's generalize? If you had more than 9 coins to start with, say you had <m>n</m> coins, how many weighings would you need? A reasonable guess would be that each time you weigh the coins, you can eliminate <m>2/3</m> of them. So using 3 weighings, you could find the counterfeit coin among up to 27 coins. A forth weighing would be required for 28 to 81 coins.
 </p>
 <conjecture>
+  <statement>
 <p>
 The minimum number of weighings required to find the counterfeit coin among <m>n</m> coins is <m>\log_3(n)</m>, rounded up. In other words, if <m>x</m> is the smallest integer such that <m>n \le 3^x</m>, then the minimum number of weighings is <m>x</m>.
 </p>
+</statement>
 </conjecture>
 <p>
 How do we know this is true? If you have <m>n</m> coins, divide them into 3 equal piles (if this is not possible, make two piles the same size, and the third pile one more or less as needed). Put one pile on each side of the scale, leaving one pile off (if the piles were not equal, weigh the piles with an equal number of coins against each other). If the scales balance, the counterfeit coin is in the unweighed pile. If the scales tip, the counterfeit coin is in the light pile. In any event, we have now reduced the number of coins to roughly <m>n/3</m>.
@@ -388,7 +403,7 @@ It is slightly easier if we change our variables for strong induction. Here is w
 <title>Strong Induction Proof Structure</title>
 <p>
 <index><main>induction</main><sub>strong induction</sub></index>
-	Again, start by saying what you want to prove: ``Let <m>P(n)</m> be the statement<ellipsis />" Then establish two facts:
+	Again, start by saying what you want to prove: <q>Let <m>P(n)</m> be the statement<ellipsis /></q> Then establish two facts:
 </p>
 
 <ol>
@@ -405,7 +420,7 @@ Inductive case: Assume <m>P(k)</m> is true for all <m>k \lt  n</m>.  Prove that 
 </ol>
 
 <p>
-Conclude, <q>therefore, by strong induction, <m>P(n)</m> is true for all <m>n > 0</m>.</q>
+Conclude, <q>therefore, by strong induction, <m>P(n)</m> is true for all <m>n \gt 0</m>.</q>
 </p>
 </assemblage>
 <p>
@@ -479,6 +494,11 @@ Whether you use regular induction or strong induction depends on the statement y
 <p>
 As a final contrast between the two forms of induction, consider once more the stamp problem. Regular induction worked by showing how to increase postage by one cent (either replacing three 5-cent stamps with two 8-cent stamps, or three 8-cent stamps with five 5-cent stamps). We could give a slightly different proof using strong induction. First, we could show <em>five</em> base cases: it is possible to make 28, 29, 30, 31, and 32 cents (we would actually say how each of these is made). Now assume that it is possible to make <m>k</m> cents of postage for all <m>k \lt  n</m> as long as <m>k \ge 28</m>. As long as <m>n > 32</m>, this means in particular we can make <m>k = n-5</m> cents. Now add a 5-cent stamp to get make <m>n</m> cents.
 </p>
+
+</subsection>
+
+
+
 <exercises>
 
 <exercise>
@@ -802,7 +822,7 @@ Use induction to prove <m>{4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots
 <solution>
 <p>
 To see why this works, try it on a copy of Pascal's triangle. We are adding up the entries along a diagonal, starting with the 1 on the left hand side of the 4th row. Suppose we add up the first 5 entries on this diagonal. The claim is that the sum is the entry below and to the left of the last of these 5 entries. Note that if this is true, and we instead add up the first 6 entries, we will need to add the entry one spot to the right of the previous sum. But these two together give the entry below them, which is below and left of the last of the 6 entries on the diagonal.
-		
+
 		If you follow that, you can see what is going on. But it is not a great proof. A formal induction proof is needed:
 </p>
 
@@ -820,7 +840,7 @@ But <m>{5+k \choose k} + {5+k \choose k+1} = {5+k+1 \choose k+1}</m>. In other w
   {4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+k \choose k} + {5+k \choose k+1} = {5+k+1 \choose k+1}
 </me>
 which is to say that <m>P(k+1)</m> is true.
-			
+
 			Therefore, by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \ge 0</m>.
 </p>
 </proof>
@@ -842,13 +862,13 @@ The idea here is that if we take the logarithm of <m>a^n</m>, we can increase <m
 <proof>
 <p>
 Let <m>P(n)</m> be the statement <m>\log(a^n) = n \log(a)</m>. The base case, <m>P(2)</m> is true, because <m>\log(a^2) = \log(a\cdot a) = \log(a) + \log(a) = 2\log(a)</m>, by the product rule for logarithms.
-			
+
 			Now assume, for induction, that <m>P(k)</m> is true. That is, <m>\log(a^k) = k\log(a)</m>. Consider <m>\log(a^{k+1})</m>. We have
 <me>
   \log(a^{k+1}) = \log(a^k\cdot a) = \log(a^k) + \log(a) = k\log(a) + \log(a)
 </me>
 with the last equality due to the inductive hypothesis. But this simplifies to <m>(k+1) \log(a)</m>, establishing <m>P(k+1)</m>.
-			
+
 			Therefore by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \ge 2</m>.
 </p>
 </proof>
@@ -904,6 +924,5 @@ Then use the inductive hypothesis on the first summand, and distribute.
 </exercise>
 
 </exercises>
-</subsection>
 
 </section>

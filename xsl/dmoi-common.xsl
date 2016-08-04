@@ -72,25 +72,25 @@
 <!-- How many levels to table of contents  -->
 <!-- Not peculiar to HTML or LaTeX or etc. -->
 <!-- Sentinel indicates no choice made     -->
-<xsl:param name="toc.level" select="''" />
+<xsl:param name="toc.level" select="'4'" />
 <!-- How many levels in numbering of theorems, etc     -->
 <!-- Followed by a sequential number across that level -->
 <!-- For example "2" implies Theorem 5.3.12 is         -->
 <!-- 12-th theorem, lemma, etc in 5.2                  -->
-<xsl:param name="numbering.theorems.level" select="''" />
+<xsl:param name="numbering.theorems.level" select="'2'" />
 <!-- How many levels in numbering of projects, etc     -->
 <!-- PROJECT-LIKE gets independent numbering -->
-<xsl:param name="numbering.projects.level" select="''" />
+<xsl:param name="numbering.projects.level" select="'0'" />
 <!-- How many levels in numbering of equations     -->
 <!-- Analagous to numbering theorems, but distinct -->
-<xsl:param name="numbering.equations.level" select="''" />
+<xsl:param name="numbering.equations.level" select="'1'" />
 <!-- Level where footnote numbering resets                                -->
 <!-- For example, "2" would be sections in books, subsections in articles -->
-<xsl:param name="numbering.footnotes.level" select="''" />
+<xsl:param name="numbering.footnotes.level" select="'1'" />
 <!-- Last level where subdivision (section) numbering takes place     -->
 <!-- For example, "2" would mean subsections of a book are unnumbered -->
 <!-- N.B.: the levels above cannot be numerically larger              -->
-<xsl:param name="numbering.maximum.level" select="'4'" />
+<xsl:param name="numbering.maximum.level" select="'3'" />
 <!-- Image files, media files and knowls are placed in directories    -->
 <!-- The defaults are relative to wherever principal output goes      -->
 <!-- These can be overridden at the command-line or in customizations -->
