@@ -111,7 +111,8 @@
 
       <solution>
         <p>
-          To answer this, we will subtract all the outcomes in which a kid gets 3 or more cookies. How many outcomes are there like that? We can force kid A to eat 3 or more cookies by giving him 3 cookies before we start. Doing so reduces the problem to one in which we have 7 cookies to give to 4 kids without any restrictions. In that case, we have 7 stars (the 7 remaining cookies) and 3 bars (one less than the number of kids) so we can distribute the cookies in <m>{10 \choose 3}</m> ways. Of course we could choose any one of the 4 kids to give too many cookies, so it would appear that there are <m>{4 \choose 1}{10 \choose 3}</m> ways to distribute the cookies giving too many to one kid. But in fact, we have over counted.
+          There are <m>{13 \choose 3}</m> ways to distribute 10 cookies to 4 kids (using 10 stars and 3 bars).  We will subtract all the outcomes in which a kid gets 3 or more cookies. How many outcomes are there like that? We can force kid A to eat 3 or more cookies by giving him 3 cookies before we start. Doing so reduces the problem to one in which we have 7 cookies to give to 4 kids without any restrictions. In that case, we have 7 stars (the 7 remaining cookies) and 3 bars (one less than the number of kids) so we can distribute the cookies in
+          <m>{10 \choose 3}</m> ways. Of course we could choose any one of the 4 kids to give too many cookies, so it would appear that there are <m>{4 \choose 1}{10 \choose 3}</m> ways to distribute the cookies giving too many to one kid. But in fact, we have over counted.
         </p>
 
         <p>
@@ -150,10 +151,11 @@
     <example>
       <statement>
         <p>
-          Earlier we counted the number of solutions to the equation
+          Earlier (<xref ref="ex_stars-bars-int-sol" />) we counted the number of solutions to the equation
           <me>
-            x_1 + x_2 + x_3 + x_4 + x_5 = 13.
+            x_1 + x_2 + x_3 + x_4 + x_5 = 13
           </me>
+        where <m>x_i \ge 0</m> for each <m>x_i</m>.
         </p>
 
         <p>
@@ -194,7 +196,7 @@
         </ul>
 
         <p>
-          We also need to account for the fact that we could choose any of the five variables in the place of <m>x_1</m> above, any pair of variables in the place of <m>x_1</m> and <m>x_2</m> and so on. It is because of this that the double counting occurs, so we need to use PIE. All together we have that the number of solutions with <m>0 \le x_i \le 3</m> is
+          We also need to account for the fact that we could choose any of the five variables in the place of <m>x_1</m> above (so there will be <m>{5 \choose 1}</m> outcomes like this), any pair of variables in the place of <m>x_1</m> and <m>x_2</m> (<m>{5 \choose 2}</m> outcomes) and so on. It is because of this that the double counting occurs, so we need to use PIE. All together we have that the number of solutions with <m>0 \le x_i \le 3</m> is
           <me>
             {17 \choose 4} - \left[{5\choose 1}{13 \choose 4} - {5 \choose 2}{9 \choose 4} + {5 \choose 3}{5 \choose 4}\right] = 15.
           </me>
@@ -216,9 +218,9 @@
       <me>
         123 ~~ 132 ~~ 213 ~~ 231 ~~ 312 ~~ 321.
       </me>
-      but most of these have one or more elements fixed: <m>123</m> has all three elements fixed, <m>132</m> has the first element fixed (1 is in its original first position), and so on. In fact, the only derangements of three elements are
+      but most of these have one or more elements fixed: <m>123</m> has all three elements fixed since all three elements are in their original positions, <m>132</m> has the first element fixed (1 is in its original first position), and so on. In fact, the only derangements of three elements are
       <me>
-        231 \mbox{ and } 312.
+        231 \text{ and } 312.
       </me>
     </p>
 
@@ -251,7 +253,7 @@
       </statement>
       <solution>
         <p>
-          We are counting derangements on 5 elements. There are <m>5!</m> ways for the gentlemen to grab hats in any order - but many of these permutations will result in someone getting their own hat. So we subtract all the ways in which one or more of the men get their own hat. In other words, we subtract the non-derangements. Doing so requires PIE. Thus the answer is:
+          We are counting derangements on 5 elements. There are <m>5!</m> ways for the gentlemen to grab hats in any order<mdash />but many of these permutations will result in someone getting their own hat. So we subtract all the ways in which one or more of the men get their own hat. In other words, we subtract the non-derangements. Doing so requires PIE. Thus the answer is:
           <me>
             5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right].
           </me>
@@ -259,6 +261,7 @@
       </solution>
     </example>
 
+    <!-- TODO: Here or in the homework, it would be nice to illustrate the more general closed formula for an n-derangement -->
 
   </subsection>
 
@@ -442,6 +445,13 @@
     </me>
     We took the total number of functions <m>5^5</m> and subtracted all that were not surjective.  There were <m>{5 \choose 1}</m> ways to select a single element from the codomain to exclude from the range, and for each there were <m>4^5</m> functions.  But this double counts, so we use PIE and subtract functions excluding two elements from the range: there are <m>{5 \choose 2}</m> choices for the two elements to exclude, and for each pair, <m>3^5</m> functions.  This takes out too many functions, so we add back in functions which exclude 3 elements from the range: <m>{5 \choose 3}</m> choices for which three to exclude, and then <m>2^5</m> functions for each choice of elements.  Finally we take back out the 1 function which excludes 4 elements for each of the <m>{5 \choose 4}</m> choices of 4 elements.
     </p>
+
+    <p>
+      If you happen to calculate this number precisely, you will get 120 surjections.  That happens to also be the value of <m>5!</m>.  This might seem like an amazing coincidence until you realize that every surjective function <m>f:X \to Y</m> with <m>\card{X} = \card{Y}</m> finite must necessarily be a bijection.  The number of bijections is always <m>\card{X}!</m> in this case.  What we have here is a <em>combinatorial proof</em> of the following identity:
+      <me>
+        n^n - \langle[{n\choose 1}(n-1)^n - {n \choose 2}(n-2)^n + \cdots + {n \choose n-1}1^n \rangle] = n!.
+      </me>
+    </p>
     </li>
     </ol>
     </solution>
@@ -550,9 +560,9 @@
           </p>
 
           <ol>
-            <li><m>{9 \choose 6}</m>.</li>
-            <li><m>{16 \choose 6}</m>.</li>
-            <li><m>{16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]</m>.</li>
+            <li><m>{9 \choose 6}</m> meals.</li>
+            <li><m>{16 \choose 6}</m> meals.</li>
+            <li><m>{16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]</m> meals.  Use PIE to subtract all the meals in which you get 3 or more of a particular item.</li>
           </ol>
         </solution>
       </exercise>
@@ -582,14 +592,15 @@
           </p>
 
           <p>
-            Now all the ways to distribute the 7 units to the four <m>y_i</m> variables can be found using stars and bars, specifically 7 stars and 3 bars, so <m>{10 \choose 3}</m>. But this includes the ways that one or more <m>y_i</m> variables can be assigned more than 3 units. So subtract, using PIE. We get
+            Now all the ways to distribute the 7 units to the four <m>y_i</m> variables can be found using stars and bars, specifically 7 stars and 3 bars,
+            so <m>{10 \choose 3}</m> ways. But this includes the ways that one or more <m>y_i</m> variables can be assigned more than 3 units. So subtract, using PIE. We get
             <me>
               {10 \choose 3} - {4\choose 1} {6 \choose 3}.
             </me>
           </p>
 
           <p>
-            Note that this is the final answer because it is not possible to have two variables both get 4 units.
+            The <m>{4 \choose 1}</m> counts the number of ways to pick one variable to be over-assigned, the <m>{6 \choose 3}</m> is the number of ways to assign the remaining 3 units to the 4 variables.  Note that this is the final answer because it is not possible to have two variables both get 4 units.
           </p>
         </solution>
       </exercise>
@@ -651,7 +662,7 @@
         </statement>
         <solution>
           <p>
-            <m>{10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)</m>. We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.
+            <m>{10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)</m> ways. We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.
           </p>
         </solution>
       </exercise>
@@ -660,7 +671,7 @@
 
 
 
-      <!-- used part of this in 2.3 -->
+
       <exercise>
       <statement>
       <p>
@@ -691,7 +702,7 @@
       </statement>
       <solution>
       <p>
-      <m>5^{10} - \left[{5 \choose 1}4^{10} - {5 \choose 2}3^{10} + {5 \choose 3}2^{10} - {5 \choose 4}1^{10}\right]</m>
+      <m>5^{10} - \left[{5 \choose 1}4^{10} - {5 \choose 2}3^{10} + {5 \choose 3}2^{10} - {5 \choose 4}1^{10}\right]</m> functions.  The <m>5^{10}</m> is all the functions from <m>A</m> to <m>B</m>.  We subtract those that aren't surjective.  Pick one of the five elements in <m>B</m> to not have in the range (in <m>{5 \choose 1}</m> ways) and count all those functions (<m>4^{10}</m>).  But this overcounts the functions where two elements from <m>B</m> are excluded from the range, so subtract those.  And so on, using PIE.
       </p>
       </solution>
       </exercise>
@@ -704,7 +715,7 @@
       </statement>
       <solution>
       <p>
-      <m>5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right]</m>. This is a sneaky way to as for the number of derangements on 5 elements.
+      <m>5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right]</m> functions. This is a sneaky way to ask for the number of derangements on 5 elements.
       </p>
       </solution>
       </exercise>
