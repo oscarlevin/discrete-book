@@ -328,6 +328,7 @@
           </p>
           <table>
           <tabular>
+            <col halign="right" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" />
             <row>
               <cell><m>S  =</m></cell>
               <cell><m>2</m></cell>
@@ -397,9 +398,9 @@
 
           <p>
             Now reverse and add:
-          </p>
           <table>
             <tabular>
+              <col halign="right" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" />
               <row>
                 <cell><m>S  =</m></cell>
                 <cell><m>6</m></cell>
@@ -438,6 +439,7 @@
               </row>
             </tabular>
           </table>
+        </p>
           <p>
             Since there are <m>n-2</m> terms, we get
             <me>
@@ -447,15 +449,78 @@
         </solution>
       </example>
       <p>
-        The previous example could be used to find the closed formula for <m>2, 6, 16, 30, \ldots</m>, since it is the sequence of partial sums.
+        Besides finding sums, we can use this technique to find closed formulas for sequences we recognize as sequences of partial sums.
       </p>
 
-      <example>
-        <statement><p>Use partial sums to find a closed formula for <m>(a_n)_{n\ge 0}</m> which starts <m>2, 6, 16, 30, 48, \ldots</m></p></statement>
+      <example xml:id="ex_sum-of-arithmetic">
+        <statement><p>Use partial sums to find a closed formula for <m>(a_n)_{n\ge 0}</m> which starts <m>2,3,7,17, 30, 43,\ldots \ldots</m></p></statement>
 
         <solution>
           <p>
-            Note that <m>a_1 = 6</m>, <m>a_2 = 6+10</m>, <m>a_3 = 6+10+14</m> and so on.  In 
+            First, if you look at the differences between terms, you get a sequence of differences: <m>1,4,7,10,13, \ldots</m>, which is an arithmetic sequence.  Written another way:
+            <md>
+              <mrow>a_0 \amp = 2</mrow>
+              <mrow>a_1 \amp = 2+1</mrow>
+              <mrow>a_2 \amp = 2+1+4</mrow>
+              <mrow>a_3 \amp = 2+1+4+7</mrow>
+            </md>
+            and so on. We can write the general term of <m>(a_n)</m> in terms of the arithmetic sequence as follows:
+            <me>
+              a_n = 2 + 1 + 4 + 7 + 10 + \cdots + (1+3(n-1))
+            </me>
+            (we use <m>1+3(n-1)</m> instead of <m>1+3n</m> to get the indices to line up correctly; for <m>a_3</m> we add up to 7, which is <m>1+3(3-1)</m>).
+          </p>
+          <p>
+            We can reverse and add, but the initial 2 does not fit our pattern.  This just means we need to keep the 2 out of the reverse part:
+            <table>
+              <tabular>
+                <col halign="right" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" /><col halign="center" />
+                <row>
+                  <cell><m>a_n  =</m></cell>
+                  <cell><m>2</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>1</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>4</m></cell>
+                  <cell><m>7</m></cell>
+                  <cell><m>+ \cdots +</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>1+3(n-1)</m></cell>
+                </row>
+                  <row bottom="minor">
+                  <cell><m>+ ~ a_n  =</m></cell>
+                  <cell><m>2</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>1+3(n-1)</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>1+3(n-2)</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>1+3(n-3)</m></cell>
+                  <cell><m>+ \cdots +</m></cell>
+                  <cell><m>1</m></cell>
+                </row>
+                <row>
+                  <cell><m>2a_n =</m></cell>
+                  <cell><m>4</m></cell>
+                  <cell><m>2+3(n-1)</m></cell>
+                  <cell><m></m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>2+3(n-1)</m></cell>
+                  <cell><m>+</m></cell>
+                  <cell><m>2+3(n-1)</m></cell>
+                  <cell><m>+ \cdots +</m></cell>
+                  <cell><m>2+3(n-1)</m></cell>
+                </row>
+              </tabular>
+            </table>
+            Not counting the first term (the 4) there are <m>n</m> summands of <m>2+3(n-1) = 3n-1</m> so the right-hand side becomes <m>2+(3n-1)n</m>.
+          </p>
+
+          <p>
+            Finally, solving for <m>a_n</m> we get <me>
+              a_n = \d \frac{4+(3n-1)n}{2}.
+            </me>
+            Just to be sure, we check <m>a_0 = \frac{4}{2} = 2</m>, <m>a_1 = \frac{4+2}{2} = 3</m>, etc.  We have the correct closed formula.
           </p>
         </solution>
 
@@ -485,17 +550,24 @@
       </p>
       <table>
         <tabular>
+          <col halign="right" /><col /><col halign="left"/><col />
           <row>
-            <cell><m>S</m></cell>
-            <cell><m>= 3 + 6 + 12 + 24 + \cdots + 12288</m></cell>
+            <cell><m>S=</m></cell>
+            <cell><m>3 \, +</m></cell>
+            <cell><m>6 + 12 + 24 + \cdots + 12288</m></cell>
+            <cell></cell>
           </row>
           <row bottom="minor">
-            <cell><m>-~~2S</m></cell>
-            <cell><m>= ~~~~~~6 + 12 + 24 + \cdots + 12288 + 24576</m></cell>
+            <cell><m>-~2S=</m></cell>
+            <cell></cell>
+            <cell><m>6 + 12 + 24 + \cdots + 12288</m></cell>
+            <cell><m> + 24576</m></cell>
           </row>
           <row>
-            <cell><m>-S</m></cell>
-            <cell><m>= 3 + 0 ~+~ 0 ~+~ 0 ~ +  \cdots + ~~0 ~~ - 24576</m></cell>
+            <cell><m>-S = </m></cell>
+            <cell><m>3 \, +</m></cell>
+            <cell><m>0 + 0 + 0 +  \cdots + 0 </m></cell>
+            <cell><m>-24576</m></cell>
           </row>
         </tabular>
       </table>
@@ -514,6 +586,7 @@
           </p>
           <table>
             <tabular>
+              <col halign="right"/><col />
               <row>
                 <cell><m>S</m></cell>
                 <cell><m>= 2 + 10 + 50 + \cdots + 2\cdot 5^n</m></cell>
@@ -548,6 +621,7 @@
           </p>
           <table>
             <tabular>
+              <col halign="right"/><col/>
               <row>
                 <cell><m>N</m></cell>
                 <cell><m>= 0.4646464\ldots</m></cell>
