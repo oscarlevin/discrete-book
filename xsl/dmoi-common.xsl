@@ -101,4 +101,16 @@
 <xsl:param name="address.html" select="''" />
 <xsl:param name="address.pdf" select="''" />
 
+
+
+<!-- Redefine chapter numbering to start at 0 -->
+<xsl:template match="chapter" mode="raw-serial-number">
+    <xsl:variable name="n">
+      <xsl:number count="chapter|references|exercises"/>
+    </xsl:variable>
+    <xsl:number value="$n - 1" format="1" />
+</xsl:template>
+
+
+
 </xsl:stylesheet>
