@@ -95,9 +95,9 @@
 <!-- N.B.:  without warning and without any deprecation indicators -->
 <xsl:param name="html.js.server"  select="'https://aimath.org'" />
 <xsl:param name="html.css.server" select="'https://aimath.org'" />
-<xsl:param name="html.css.file"   select="'mathbook-3.css'" />
+<xsl:param name="html.css.file"   select="'mathbook-1.css'" />
 <!-- A space-separated list of CSS URLs (points to servers or local files) -->
-<xsl:param name="html.css.extra"  select="'custom-styles.css'" />
+<xsl:param name="html.css.extra"  select="'custom-styles.css title-period-fix.css'" />
 
 <!-- Navigation -->
 <!-- Navigation may follow two different logical models:                     -->
