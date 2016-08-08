@@ -1,6 +1,6 @@
 %**************************************%
 %* Generated from MathBook XML source *%
-%*    on 2016-08-07T23:16:01-06:00    *%
+%*    on 2016-08-08T15:31:14-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -242,8 +242,13 @@ linecolor=blue!75!black,} \begin{mdframed}}{\end{mdframed}}
 \usetikzlibrary{positioning,matrix,arrows}
 
 \usetikzlibrary{shapes,decorations,shadows,fadings,patterns}
+\usetikzlibrary{decorations.markings}
 
 \usepackage{skak} %for chessboards etc.
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
 
 
 %% Imported from https://upload.wikimedia.org/wikipedia/commons/3/32/Blank_US_Map.svg
@@ -1684,7 +1689,7 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
 School of Mathematical Science\\
 University of Northern Colorado
 }
-\date{August 7, 2016}
+\date{August 8, 2016}
 \begin{document}
 \frontmatter
 %% begin: half-title
@@ -1710,7 +1715,7 @@ University of Northern Colorado
 {\LARGE An Open Introduction}\\[3\baselineskip]
 {\Large Oscar Levin}\\[0.5\baselineskip]
 {\Large University of Northern Colorado}\\[3\baselineskip]
-{\Large August 7, 2016}\\}
+{\Large August 8, 2016}\\}
 \clearpage
 %% end:   title page
 %% begin: copyright-page
@@ -4337,7 +4342,7 @@ Before tackling these difficult questions, let's look at the basics of counting.
     Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the multiplicative principle (you are counting two separate events) but the answer is not \(26 \cdot 12\) here either. The problem is that while there are 26 ways for the first card to be selected, it is not the case that \emph{for each} of those there are 12 ways to select the second card. If the first card was both red and a face card, then there would be only 11 choices for the second card.
     \footnote{To solve this problem, you could break it into two cases. First, count how many ways there are to select the two cards when the first card is a red non-face card. Second, count how many ways when the first card is a red face card. Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.\label{fn-1}}
   %
-\begin{example}[Counting functions]\label{ex_counting-functions-all}
+\begin{example}[Counting functions]\label{example-counting-functions-all}
 
       How many functions \(f:\{1,2,3,4,5\} \to \{a,b,c,d\}\) are there?
     \par\medskip\noindent%
@@ -5303,7 +5308,7 @@ What is the coefficient of \(x^3y^2\) in the expansion of \((x+y)^5\)?  We must 
         There are \(n! = n\cdot (n-1)\cdot (n-2)\cdot \cdots \cdot 2\cdot 1\) permutations of \(n\) (distinct) elements.
       %
 \end{assemblage}
-\begin{example}[Counting Bijective Functions]\label{ex_counting-functions-bijective}
+\begin{example}[Counting Bijective Functions]\label{example-counting-functions-bijective}
 
           How many functions \(f:\{1,2,\ldots,8\} \to \{1,2,\ldots, 8\}\) are \emph{bijective}?
         %
@@ -5365,7 +5370,7 @@ What is the coefficient of \(x^3y^2\) in the expansion of \((x+y)^5\)?  We must 
         Note that when \(n = k\), we have \(P(n,n) = \frac{n!}{(n-n)!} = n!\) (since we defined \(0!\) to be 1). This makes sense
         \textemdash{}we already know \(n!\) gives the number of permutations of all \(n\) objects.
       %
-\begin{example}[Counting injective functions]\label{ex_counting-functions-injective}
+\begin{example}[Counting injective functions]\label{example-counting-functions-injective}
 How many functions \(f:\{1,2,3\} \to \{1,2,3,4,5,6,7\}\) are \emph{injective}?%
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
@@ -5717,29 +5722,31 @@ The sum of all entries on a given row is a power of 2. (You should check this!)
             {n \choose k} = {n-1\choose k-1} + {n-1 \choose k}.
           \end{equation*}
         %
-\begin{proof}\hypertarget{proof-3}{}
+\par\medskip\noindent%
+\textbf{Solution.}\quad \begin{proof}\hypertarget{proof-3}{}
 
-          By the definition of \({n \choose k}\), we have
-          \begin{equation*}
-            {n-1 \choose k-1} = \frac{(n-1)!}{(n-1-(k-1))!(k-1)!} = \frac{(n-1)!}{(n-k)!(k-1)!} \hfill\end{equation*} and
-          \begin{equation*} {n-1 \choose k} = \frac{(n-1)!}{(n-1-k)!k!}.
-          \end{equation*}
-        %
+            By the definition of \({n \choose k}\), we have
+            \begin{equation*}
+              {n-1 \choose k-1} = \frac{(n-1)!}{(n-1-(k-1))!(k-1)!} = \frac{(n-1)!}{(n-k)!(k-1)!}\end{equation*}
+              and
+            \begin{equation*} {n-1 \choose k} = \frac{(n-1)!}{(n-1-k)!k!}.
+            \end{equation*}
+          %
 \par
 
-          Thus, starting with the right-hand side of the equation:
-          \begin{align*}
+            Thus, starting with the right-hand side of the equation:
+            \begin{align*}
  {n-1 \choose k-1} + {n-1 \choose k} \amp = \frac{(n-1)!}{(n-k)!(k-1)!}+ \frac{(n-1)!}{(n-1-k)!\,k!}\\
  \amp = \frac{(n-1)!k}{(n-k)!\,k!} + \frac{(n-1)!(n-k)}{(n-k)!\,k!}\\
  \amp = \frac{(n-1)!(k+n-k)}{(n-k)!\,k!}\\
  \amp = \frac{n!}{(n-k)!\, k!}\\
  \amp = {n \choose k}.
 \end{align*}
-        %
+          %
 \par
 
-          The second line (where the common denominator is found) works because \(k(k-1)! = k!\) and \((n-k)(n-k-1)! = (n-k)!\).
-        %
+            The second line (where the common denominator is found) works because \(k(k-1)! = k!\) and \((n-k)(n-k-1)! = (n-k)!\).
+          %
 \end{proof}
 \end{example}
 \par
@@ -5781,7 +5788,7 @@ The sum of all entries on a given row is a power of 2. (You should check this!)
           You can also explain (prove) this identity by counting subsets, or even lattice paths.
         %
 \end{example}
-\begin{example}[]\label{ex_symmetry-formula}
+\begin{example}[]\label{example-symmetry-formula}
 
           Prove the binomial identity \({n \choose k} = {n \choose n-k}\).
         %
@@ -6025,7 +6032,7 @@ The sum of all entries on a given row is a power of 2. (You should check this!)
 \par
 
             This is not quite the left-hand side \dots{} yet. Notice that \({n \choose n} = {n \choose 0}\) and \({n \choose n-1} = {n  \choose 1}\) and so on, by the identity in
-            \hyperref[ex_symmetry-formula]{Example~\ref{ex_symmetry-formula}}. Thus we do indeed get
+            \hyperref[example-symmetry-formula]{Example~\ref{example-symmetry-formula}}. Thus we do indeed get
             \begin{equation*}
               {n \choose 0}^2 + {n \choose 1}^2 + {n \choose 2}^2 + \cdots + {n \choose n}^2.
             \end{equation*}
@@ -6336,7 +6343,7 @@ There are 10 choices for each digit (0-9) so we must switch between choices 9 ti
 \end{equation*}
 %
 \end{example}
-\begin{example}[]\label{ex_stars-bars-int-sol}
+\begin{example}[]\label{example-stars-bars-int-sol}
 
 How many integer solutions are there to the equation
 \begin{equation*}
@@ -6651,7 +6658,7 @@ You allow yourself multiple shots, and care about the order the flavors are adde
     %
 \begin{example}[]\label{example-48}
 
-          Earlier (\hyperref[ex_stars-bars-int-sol]{Example~\ref{ex_stars-bars-int-sol}}) we counted the number of solutions to the equation
+          Earlier (\hyperref[example-stars-bars-int-sol]{Example~\ref{example-stars-bars-int-sol}}) we counted the number of solutions to the equation
           \begin{equation*}
             x_1 + x_2 + x_3 + x_4 + x_5 = 13
           \end{equation*}
@@ -6811,7 +6818,7 @@ You allow yourself multiple shots, and care about the order the flavors are adde
 \end{example}
 \par
 
-      In \hyperref[ex_counting-functions-all]{Example~\ref{ex_counting-functions-all}} we saw how to count all functions (using the multiplicative principle) and in \hyperref[ex_counting-functions-injective]{Example~\ref{ex_counting-functions-injective}} we learned how to count injective functions (using permutations).  Surjective functions are not as easily counted (unless the size of the domain is smaller than the codomain, in which case there are none).
+      In \hyperref[example-counting-functions-all]{Example~\ref{example-counting-functions-all}} we saw how to count all functions (using the multiplicative principle) and in \hyperref[example-counting-functions-injective]{Example~\ref{example-counting-functions-injective}} we learned how to count injective functions (using permutations).  Surjective functions are not as easily counted (unless the size of the domain is smaller than the codomain, in which case there are none).
     %
 \par
 
@@ -8435,7 +8442,7 @@ If you look at other textbooks or online, you might find that their closed formu
 
         Besides finding sums, we can use this technique to find closed formulas for sequences we recognize as sequences of partial sums.
       %
-\begin{example}[]\label{ex_sum-of-arithmetic}
+\begin{example}[]\label{example-sum-of-arithmetic}
 Use partial sums to find a closed formula for \((a_n)_{n\ge 0}\) which starts \(2,3,7,17, 30, 43,\ldots \ldots\)%
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
@@ -8706,7 +8713,7 @@ a_3 \amp = 2+1+4+7
     which \emph{is} an arithmetic sequence (with constant difference 2). Notice that our original sequence had \emph{third differences} (that is, differences of differences of differences of the original) constant. We will call such a sequence \(\Delta^3\)-constant. The sequence \(1, 4, 9, 16, \ldots\) has second differences constant, so it will be a \(\Delta^2\)-constant sequence. In general, we will say a sequence is a \emph{\(\Delta^k\)-constant}\label{notation-10}
 \index{\(\Delta^k\)-constant} sequence if the \(k\)th differences are constant.
   %
-\begin{example}[]\label{ex_deltak}
+\begin{example}[]\label{example-deltak}
 
         Which of the following sequences are \(\Delta^k\)-constant for some value of \(k\)?
         \leavevmode%
@@ -8722,7 +8729,7 @@ a_3 \amp = 2+1+4+7
         \leavevmode%
 \begin{enumerate}
 \item\hypertarget{li-928}{}This is the sequence from
-            \hyperref[ex_sum-of-arithmetic]{Example~\ref{ex_sum-of-arithmetic}}, in which we found a closed formula by recognizing the sequence as the sequence of partial sums of an arithmetic sequence. Indeed, the sequence of first differences is \(1,4,7, 10, 13,\ldots\), which itself has differences \(3,3,3,3,\ldots\). Thus \(2,3,7,17,30, 43,\ldots\) is a \(\Delta^2\)-constant sequence.%
+            \hyperref[example-sum-of-arithmetic]{Example~\ref{example-sum-of-arithmetic}}, in which we found a closed formula by recognizing the sequence as the sequence of partial sums of an arithmetic sequence. Indeed, the sequence of first differences is \(1,4,7, 10, 13,\ldots\), which itself has differences \(3,3,3,3,\ldots\). Thus \(2,3,7,17,30, 43,\ldots\) is a \(\Delta^2\)-constant sequence.%
 \item\hypertarget{li-929}{}These are the perfect cubes. The sequence of first differences is \(7, 19, 37, 61, 91, \ldots\); the sequence of second differences is \(12, 18, 24, 30,\ldots\); the sequence of third differences is constant: \(6,6,6,\ldots\). Thus the perfect cubes are a \(\Delta^3\)-constant sequence.%
 \item\hypertarget{li-930}{}If we take first differences we get \(1,2,4,8,16,\ldots\). Wait, what? That's the sequence we started with. So taking second differences will give us the same sequence again. No matter how many times we repeat this we will always have the same sequence, which in particular means no finite number of differences will be constant. Thus this sequence is not \(\Delta^k\)-constant for any \(k\).%
 \end{enumerate}
@@ -8829,7 +8836,7 @@ a_3 \amp = 2+1+4+7
 \begin{enumerate}
 \item\hypertarget{li-934}{}
               As we saw in
-              \hyperref[ex_deltak]{Example~\ref{ex_deltak}}, this sequence is not \(\Delta^k\)-constant for any \(k\). Therefore the closed formula for the sequence is not a polynomial. In fact, we know the closed formula is \(a_n = 2^n\), which grows faster than any polynomial (so is not a polynomial).
+              \hyperref[example-deltak]{Example~\ref{example-deltak}}, this sequence is not \(\Delta^k\)-constant for any \(k\). Therefore the closed formula for the sequence is not a polynomial. In fact, we know the closed formula is \(a_n = 2^n\), which grows faster than any polynomial (so is not a polynomial).
             %
 \item\hypertarget{li-935}{}
               The sequence of first differences is \(7, 43, 133, 301, 571,\ldots\). The second differences are: \(36, 90, 168, 270,\ldots\). Third difference: \(54, 78, 102,\ldots\). Fourth differences: \(24, 24, \ldots\). As far as we can tell, this sequence of differences is constant so the sequence is \(\Delta^4\)-constant and as such the closed formula is a degree 4 polynomial.
@@ -10189,7 +10196,7 @@ a_3 \amp = 2+1+4+7
 \setlength{\panelmax}{0pt}
 \newsavebox{\panelboxAVimage}
 \savebox{\panelboxAVimage}{
-\resizebox{0.2\linewidth}{!}{{
+\resizebox{0.16\linewidth}{!}{{
               \begin{tikzpicture}[scale=.8]
 \draw[line width=1.8pt] (90:1) -- (-30:1) -- (210:1) -- (90:1);
 \fill[color=white] (90:1) circle (3pt);
@@ -10203,7 +10210,7 @@ a_3 \amp = 2+1+4+7
 \setlength{\panelmax}{\maxof{\panelmax}{\phAVimage}}
 \newsavebox{\panelboxAWimage}
 \savebox{\panelboxAWimage}{
-\resizebox{0.3\linewidth}{!}{{
+\resizebox{0.28\linewidth}{!}{{
               \begin{tikzpicture}[scale=.8]
 \draw[line width = 1.8pt] (-90:1) -- (210:2) -- (150:1) -- (-90:1) -- (-30:2) -- (30:1) -- (150:1) -- (90:2) -- (30:1) -- (-90:1);
 \fill[color=white] (-90:1) circle (3pt);
@@ -10221,13 +10228,13 @@ a_3 \amp = 2+1+4+7
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
-\setlength{\tabcolsep}{0.125\textwidth}
+\setlength{\tabcolsep}{0.14\textwidth}
 % @{} suppress \tabcolsep at extremes, so margins behave as intended
 \begin{figure}
-\hspace*{0.125\textwidth}%
+\hspace*{0.14\textwidth}%
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxAVimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxAWimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.16\textwidth}\usebox{\panelboxAVimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.28\textwidth}\usebox{\panelboxAWimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -10288,7 +10295,7 @@ a_3 \amp = 2+1+4+7
 \setlength{\panelmax}{0pt}
 \newsavebox{\panelboxAXimage}
 \savebox{\panelboxAXimage}{
-\resizebox{0.15\linewidth}{!}{{
+\resizebox{0.08\linewidth}{!}{{
               \begin{tikzpicture}
 \draw (0,0) circle (10pt);
 \draw[very thin, color=brown!15] (0,0) circle (10pt);
@@ -10301,7 +10308,7 @@ a_3 \amp = 2+1+4+7
 \setlength{\panelmax}{\maxof{\panelmax}{\phAXimage}}
 \newsavebox{\panelboxAYimage}
 \savebox{\panelboxAYimage}{
-\resizebox{0.25\linewidth}{!}{{
+\resizebox{0.18\linewidth}{!}{{
               \begin{tikzpicture}
 \foreach \pos in {(-.32, .2), (.32,.2), (0,.55), (0,0)}{
 \draw[very thin, color=brown!15] \pos circle (10pt);
@@ -10315,7 +10322,7 @@ a_3 \amp = 2+1+4+7
 \setlength{\panelmax}{\maxof{\panelmax}{\phAYimage}}
 \newsavebox{\panelboxAZimage}
 \savebox{\panelboxAZimage}{
-\resizebox{0.35\linewidth}{!}{{
+\resizebox{0.26\linewidth}{!}{{
               \begin{tikzpicture}
 \foreach \pos in {(-.64, .4), (.64,.4), (-.37, .75), (.37,.75), (0, 1.2), (-.32, .2), (.32,.2), (0,.6), (0,0)}{
 \draw[very thin, color=brown!15] \pos circle (10pt);
@@ -10330,14 +10337,14 @@ a_3 \amp = 2+1+4+7
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
-\setlength{\tabcolsep}{0.0416666666666667\textwidth}
+\setlength{\tabcolsep}{0.08\textwidth}
 % @{} suppress \tabcolsep at extremes, so margins behave as intended
 \begin{figure}
-\hspace*{0.0416666666666667\textwidth}%
+\hspace*{0.08\textwidth}%
 \begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.15\textwidth}\usebox{\panelboxAXimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.25\textwidth}\usebox{\panelboxAYimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.35\textwidth}\usebox{\panelboxAZimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.08\textwidth}\usebox{\panelboxAXimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.18\textwidth}\usebox{\panelboxAYimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.26\textwidth}\usebox{\panelboxAZimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -12396,13 +12403,13 @@ For all integers \(a\) and \(b\), if \(a^2 + b^2\) is odd, then \(a\) or \(b\) i
 \typeout{************************************************}
 \begin{investigation}[]\label{investigation-28}
 
-In the time of Euler, in the town of Königsberg in Prussia, there was a river containing two islands. The islands were connected to the banks of the river by seven bridges (as seen below). The bridges were very beautiful, and on their days off, townspeople would spend time walking over the bridges. As time passed, a question arose: was it possible to plan a walk so that you cross each bridge once and only once? Euler was able to answer this question. Are you?
-%
+        In the time of Euler, in the town of Königsberg in Prussia, there was a river containing two islands. The islands were connected to the banks of the river by seven bridges (as seen below). The bridges were very beautiful, and on their days off, townspeople would spend time walking over the bridges. As time passed, a question arose: was it possible to plan a walk so that you cross each bridge once and only once? Euler was able to answer this question. Are you?
+      %
 \leavevmode%
 \begin{figure}
 \centering
 {
-\begin{tikzpicture}[scale=0.9]
+            \begin{tikzpicture}[scale=0.9]
 \definecolor{land}{HTML}{BCC3A6}
 \definecolor{water}{HTML}{92A2FF}
 \definecolor{bridge}{HTML}{D3AC6B}
@@ -12438,20 +12445,20 @@ In the time of Euler, in the town of Königsberg in Prussia, there was a river c
 \end{figure}
 \end{investigation}
 
-Graph Theory is a relatively new area of mathematics, first studied by the super famous mathematician Leonhard Euler in 1735. Since then it has blossomed in to a powerful tool used in nearly every branch of science and is currently an active area of mathematics research.
-%
+      Graph Theory is a relatively new area of mathematics, first studied by the super famous mathematician Leonhard Euler in 1735. Since then it has blossomed in to a powerful tool used in nearly every branch of science and is currently an active area of mathematics research.
+    %
 \par
 
-The problem above, known as the \emph{Seven Bridges of Königsberg}\index{Königsberg}, is the problem that originally inspired graph theory. Consider a ``different'' problem: Below is a drawing of four dots connected by some lines. Is it possible to trace over each line once and only once (without lifting up your pencil, starting and ending on a dot)?
-%
+      The problem above, known as the \emph{Seven Bridges of Königsberg}\index{Königsberg}, is the problem that originally inspired graph theory. Consider a ``different'' problem: Below is a drawing of four dots connected by some lines. Is it possible to trace over each line once and only once (without lifting up your pencil, starting and ending on a dot)?
+    %
 \par
 
 
-\leavevmode%
+      \leavevmode%
 \begin{figure}
 \centering
 {
-\begin{tikzpicture}[scale=0.9, yscale=.5]
+            \begin{tikzpicture}[scale=0.9, yscale=.5]
 \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
 \draw (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
 \end{tikzpicture}
@@ -12459,53 +12466,55 @@ The problem above, known as the \emph{Seven Bridges of Königsberg}\index{König
 \end{figure}
 
 
-%
+    %
 \par
 
-There is an obvious connection between these two problems. Any path in the dot and line drawing corresponds exactly to a path over the bridges of Königsberg.
-%
+      There is an obvious connection between these two problems. Any path in the dot and line drawing corresponds exactly to a path over the bridges of Königsberg.
+    %
 \par
 
-Pictures like the dot and line drawing are called \emph{graphs}.
-Graphs are made up of a collection of dots called \emph{vertices}\index{vertices} and lines connecting those dots called \emph{edges}\index{edges}. When two vertices are connected by an edge, we say they are \emph{adjacent}\index{adjacent}. The nice thing about looking at graphs instead of pictures of rivers, islands and bridges is that we now have a mathematical object to study: a \emph{set} containing of a set of vertices and a set of edges (in fact, we can take the set of edges to be a set of two element subsets from the set of vertices). We have distilled the ``important'' parts of the bridge picture for the purposes of the problem. It does not matter how big the islands are, what the bridges are made out of, if the river contains alligators, etc. All that matters is which land masses are connected to which other land masses, and how many times. This was the great insight that Euler had.
-%
+      Pictures like the dot and line drawing are called \emph{graphs}. Graphs are made up of a collection of dots called \emph{vertices}\index{vertices} and lines connecting those dots called \emph{edges}\index{edges}. When two vertices are connected by an edge, we say they are \emph{adjacent}\index{adjacent}. The nice thing about looking at graphs instead of pictures of rivers, islands and bridges is that we now have a mathematical object to study: a \emph{set} containing of a set of vertices and a set of edges (in fact, we can take the set of edges to be a set of two element subsets from the set of vertices). We have distilled the ``important'' parts of the bridge picture for the purposes of the problem. It does not matter how big the islands are, what the bridges are made out of, if the river contains alligators, etc. All that matters is which land masses are connected to which other land masses, and how many times.
+      This was the great insight that Euler had.
+    %
 \par
 
-We will return to the question of finding paths through graphs later. But first, here are a few other situations you can represent with graphs.
-%
+      We will return to the question of finding paths through graphs later. But first, here are a few other situations you can represent with graphs.
+    %
 \begin{example}[]\label{example-101}
 
-Al, Bob, Cam, Dan, and Euclid are all members of the social networking website \emph{Facebook}. The site allows members to be ``friends'' with each other. It turns out that Al and Cam are friends, as are Bob and Dan. Euclid is friends with everyone. Represent this situation with a graph.
-%
+          Al, Bob, Cam, Dan, and Euclid are all members of the social networking website \emph{Facebook}. The site allows members to be ``friends'' with each other. It turns out that Al and Cam are friends, as are Bob and Dan. Euclid is friends with everyone. Represent this situation with a graph.
+        %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-Each person will be represented by a vertex and each friendship will be represented by an edge. That is, there will be an edge between two vertices if and only if the people represented by those vertices are friends. We get the following graph:
-%
+          Each person will be represented by a vertex and each friendship will be represented by an edge. That is, two vertices will be adjacent (there will be an edge between them) if and only if the people represented by those vertices are friends. We get the following graph:
+        %
 \leavevmode%
 \begin{figure}
 \centering
 {
-\begin{tikzpicture}[scale=0.7]
-        \draw(-1, 0) \vl{C} -- (0,1) \vb{E} -- (-1,2) \vl{A} -- (-1,0)(1,0) \vr{D} -- (0,1)  -- (1,2) \vr{B} -- (1,0);
-      \end{tikzpicture}
+        \begin{tikzpicture}[scale=0.7]
+  \draw(-1, 0) \vl{C} -- (0,1) \vb{E} -- (-1,2) \vl{A} -- (-1,0)(1,0) \vr{D} -- (0,1)  -- (1,2) \vr{B} -- (1,0);
+\end{tikzpicture}
 }
 \end{figure}
 \end{example}
 \begin{example}[]\label{example-102}
 
-Each of three houses must be connected to each of three utilities. Is it possible to do this without any of the utility lines crossing?
-%
+          Each of three houses must be connected to each of three utilities. Is it possible to do this without any of the utility lines crossing?
+        %
 \par\medskip\noindent%
 \textbf{Solution.}\quad 
-We will answer this question later. For now, notice how we would ask this question in the context of graph theory. We are really asking whether it is possible to redraw the graph below without any edges crossing (except at vertices).
-%
-
+          We will answer this question later. For now, notice how we would ask this question in the context of graph theory. We are really asking whether it is possible to redraw the graph below without any edges crossing (except at vertices).  Think of the top row as the houses, bottom row as the utilities.
+        %
+\leavevmode%
+\begin{figure}
+\centering
 {
-\begin{tikzpicture}[yscale=.8]
-        \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
-      \end{tikzpicture}
+        \begin{tikzpicture}[yscale=.8]
+  \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
+\end{tikzpicture}
 }
-
+\end{figure}
 \end{example}
 \typeout{************************************************}
 \typeout{Section 4.1 Basics}
@@ -12842,7 +12851,7 @@ We will answer this question later. For now, notice how we would ask this questi
 }% end: group for a single side-by-side
 \par
 
-		We should be careful about what it means for two graphs to be ``the same.'' Remember, as mathematical objects, graphs are just sets. Two sets are equal if they have the exact same members. However, even if two graphs are not \emph{equal}, they might be \emph{basically} the same. Graphs that are basically the same (but perhaps not equal) are called \emph{isomorphic}. We will give a precise definition of this term after a quick example:
+		We should be careful about what it means for two graphs to be ``the same.'' Remember, as mathematical objects, graphs are just sets. Two sets are equal if they have the exact same members. However, even if two graphs are not \emph{equal}, they might be \emph{basically} the same. Graphs that are basically the same (but perhaps not equal) are called \terminology{isomorphic}. We will give a precise definition of this term after a quick example:
 	%
 \begin{example}[]\label{example-103}
 
@@ -12905,12 +12914,12 @@ We will answer this question later. For now, notice how we would ask this questi
 }% end: group for a single side-by-side
 \par
 
-				Clearly we want to say these graphs are basically the same, so while they are not equal, they will be \emph{isomorphic}. The reason is we can rename the vertices of one graph and get the second graph as the result.
+				Clearly we want to say these graphs are basically the same, so while they are not equal, they will be \terminology{isomorphic}. The reason is we can rename the vertices of one graph and get the second graph as the result.
 			%
 \end{example}
 \par
 
-		Intuitively, graphs are \emph{isomorphic}\index{isomorphic} if they are basically the same, or better yet, if they are the same except for the names of the vertices. To make the concept of renaming vertices precise, we give the following definitions:
+		Intuitively, graphs are isomorphic \index{isomorphic} if they are basically the same, or better yet, if they are the same except for the names of the vertices. To make the concept of renaming vertices precise, we give the following definitions:
 	%
 \begin{assemblage}{Isomorphic Graphs}\label{assemblage-43}\par\medskip
 
@@ -12949,7 +12958,65 @@ We will answer this question later. For now, notice how we would ask this questi
 			%
 \par
 
-				Not all hope is lost, however. Just because \(f\) is not an isomorphism does not mean that there is no isomorphism at all. We can try again. At this point it might be helpful to draw the graphs to see how they should match up. Alternatively, notice that in \(G_1\), the vertex \(a\) is adjacent to every other vertex. In \(G_2\), there is also a vertex with this property: \(c\). So build the bijection \(g:V_1 \to V_2\) by defining \(g(a) = c\) to start with. Next, where should we send \(b\)? In \(G_1\), the vertex \(b\) is only adjacent to vertex \(a\). There is exactly one vertex like this in \(G_2\), namely \(d\). So let \(g(b) = d\). As for the last two, in this example, we have a free choice: let \(g(c) = b\) and \(g(d) = a\) (switching these would be fine as well).
+				Not all hope is lost, however. Just because \(f\) is not an isomorphism does not mean that there is no isomorphism at all. We can try again. At this point it might be helpful to draw the graphs to see how they should match up.
+
+				% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxBUimage}
+\savebox{\panelboxBUimage}{
+\resizebox{0.23\linewidth}{!}{{
+\begin{tikzpicture}
+	\coordinate (a) at (90:1);
+	\coordinate (b) at (0:1);
+	\coordinate (c) at (-90:1);
+	\coordinate (d) at (180:1);
+
+	\draw (a) -- (b) (a) -- (c) (a) -- (d) (c) --(d);
+	\draw (a) \va{\footnotesize $a$} (b) \vr{\footnotesize $b$} (c)\vb{\footnotesize $c$} (d) \vl{\footnotesize $d$};
+	\node at (-1,1) {$G_1$:};
+\end{tikzpicture}
+}
+}}
+\newlength{\phBUimage}\setlength{\phBUimage}{\ht\panelboxBUimage+\dp\panelboxBUimage}
+\settototalheight{\phBUimage}{\usebox{\panelboxBUimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phBUimage}}
+\newsavebox{\panelboxBVimage}
+\savebox{\panelboxBVimage}{
+\resizebox{0.23\linewidth}{!}{{
+\begin{tikzpicture}
+	\coordinate (a) at (90:1);
+	\coordinate (b) at (0:1);
+	\coordinate (c) at (-90:1);
+	\coordinate (d) at (180:1);
+
+	\draw (a) -- (b) (a) -- (c) (b) -- (c) (c) --(d);
+	\draw (a) \va{\footnotesize $a$} (b) \vr{\footnotesize $b$} (c)\vb{\footnotesize $c$} (d) \vl{\footnotesize $d$};
+	\node at (-1,1) {$G_2$:};
+\end{tikzpicture}
+}
+}}
+\newlength{\phBVimage}\setlength{\phBVimage}{\ht\panelboxBVimage+\dp\panelboxBVimage}
+\settototalheight{\phBVimage}{\usebox{\panelboxBVimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phBVimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.135\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.135\textwidth}%
+\begin{tabular}{@{}*{2}{c}@{}}
+\begin{minipage}[c][\panelmax][b]{0.23\textwidth}\usebox{\panelboxBUimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.23\textwidth}\usebox{\panelboxBVimage}\end{minipage}\end{tabular}
+\end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
+
+
+
+				Alternatively, notice that in \(G_1\), the vertex \(a\) is adjacent to every other vertex. In \(G_2\), there is also a vertex with this property: \(c\). So build the bijection \(g:V_1 \to V_2\) by defining \(g(a) = c\) to start with. Next, where should we send \(b\)? In \(G_1\), the vertex \(b\) is only adjacent to vertex \(a\). There is exactly one vertex like this in \(G_2\), namely \(d\). So let \(g(b) = d\). As for the last two, in this example, we have a free choice: let \(g(c) = b\) and \(g(d) = a\) (switching these would be fine as well).
 			%
 \par
 
@@ -12974,32 +13041,44 @@ We will answer this question later. For now, notice how we would ask this questi
 \end{example}
 \par
 
-		Sometimes we will talk about a graph with a special name (like \(K_n\) or the \emph{Peterson graph}) or perhaps draw a graph without any labels. In this case we are really referring to \emph{all} graphs isomorphic to any copy of that particular graph. A collection of isomorphic graphs is often called an \emph{isomorphism class}\index{isomorphism class}.
+		Sometimes we will talk about a graph with a special name (like \(K_n\) or the \emph{Peterson graph}) or perhaps draw a graph without any labels. In this case we are really referring to \emph{all} graphs isomorphic to any copy of that particular graph. A collection of isomorphic graphs is often called an \terminology{isomorphism class}\index{isomorphism class}.
 		\footnote{This is not unlike geometry, where we might have more than one copy of a particular triangle. There instead of \emph{isomorphic} we say \emph{congruent}.\label{fn-13}}
 	%
 \par
 
-		Back to some basic graph theory definitions. Notice that the graphs above have the property that no pair of vertices is connected more than once, and no vertex is connected to itself. Graphs like these are sometimes called \emph{simple}, although we will just call them \emph{graphs}. This is because our definition for a graph says that the edges form a set of 2-element subsets of the vertices. Remember that it doesn't make sense to say a set contains an element more than once. So no pair of vertices can be connected by an edge more than once. Also, since each edge must be a set containing two vertices, we cannot have a single vertex connected to itself by an edge.
+		Back to some basic graph theory definitions. Notice that the graphs above have the property that no pair of vertices is connected more than once, and no vertex is connected to itself. Graphs like these are sometimes called \terminology{simple}, although we will just call them \emph{graphs}. This is because our definition for a graph says that the edges form a set of 2-element subsets of the vertices. Remember that it doesn't make sense to say a set contains an element more than once. So no pair of vertices can be connected by an edge more than once. Also, since each edge must be a set containing two vertices, we cannot have a single vertex connected to itself by an edge.
 	%
 \par
 
-		That said, there are times we want to consider double (or more) edges and single edge loops. For example, the ``graph'' we drew for the Bridges of Königsberg problem had double edges because there really are two bridges connecting a particular island to the near shore. We will call these objects \emph{multigraphs}\index{multigraph}. This is a good name: a \emph{multiset} is a set in which we are allowed to include a single element multiple times.
+		That said, there are times we want to consider double (or more) edges and single edge loops. For example, the ``graph'' we drew for the Bridges of Königsberg problem had double edges because there really are two bridges connecting a particular island to the near shore. We will call these objects \terminology{multigraphs}\index{multigraph}. This is a good name: a \emph{multiset} is a set in which we are allowed to include a single element multiple times.
 	%
 \par
 
-		The graphs above are also \emph{connected}\index{connected}: you can get from any vertex to any other vertex by following some path of edges. A graph that is not connected can be thought of as two separate graphs drawn close together. Unless otherwise stated, we will assume all our graphs are connected.
+		The graphs above are also \terminology{connected}\index{connected}: you can get from any vertex to any other vertex by following some path of edges. A graph that is not connected can be thought of as two separate graphs drawn close together. For example, the following graph is NOT connected because there is no path from \(a\) to \(b\):
+		\leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}
+	\draw (-1.5,0) \vl{\footnotesize $a$} -- (-.5, 1) \v -- (.5, 0) \v -- (-.5,-1) \v -- cycle;
+	\draw (-.5,0) \v -- (.5,1) \v -- (1.5,0) \vr{\footnotesize $b$} -- (.5,-1) \v -- cycle;
+\end{tikzpicture}
+}
+\end{figure}
+
+	 Most of the time, it makes sense to treat non-connected graphs as separate graphs (think of the above graph as two squares), so unless otherwise stated, we will assume all our graphs are connected.
 	%
 \par
 
-		Vertices in a graph do not always have edges between them. If we add all possible edges, then the resulting graph is called \emph{complete}\index{complete graph}. That is, a graph is complete if every pair of vertices is connected by an edge. Since a graph is determined completely by which vertices are adjacent to which other vertices, there is only one complete graph with a given number of vertices. We give these a special name: \(K_n\)\index{\(K_n\)} is the complete graph on \(n\) vertices.
+		Vertices in a graph do not always have edges between them. If we add all possible edges, then the resulting graph is called \terminology{complete}\index{complete graph}. That is, a graph is complete if every pair of vertices is connected by an edge. Since a graph is determined completely by which vertices are adjacent to which other vertices, there is only one complete graph with a given number of vertices. We give these a special name: \(K_n\)\index{\(K_n\)} is the complete graph on \(n\) vertices.
 	%
 \par
 
-		Each vertex in \(K_n\) is adjacent to \(n-1\) other vertices. We call the number of edges emanating from a given vertex the \emph{degree} of that vertex. So every vertex in \(K_n\) has degree \(n-1\). How many edges does \(K_n\) have? One might think the answer should be \(n(n-1)\), since we count \(n-1\) edges \(n\) times (once for each vertex). However, each edge is incident to 2 vertices, so we counted every edge exactly twice. Thus there are \(n(n-1)/2\) edges in \(K_n\). Alternatively, we can say there are \({n \choose 2}\) edges, since to draw an edge we must choose 2 of the \(n\) vertices.
+		Each vertex in \(K_n\) is adjacent to \(n-1\) other vertices. We call the number of edges emanating from a given vertex the \terminology{degree} of that vertex. So every vertex in \(K_n\) has degree \(n-1\). How many edges does \(K_n\) have? One might think the answer should be \(n(n-1)\), since we count \(n-1\) edges \(n\) times (once for each vertex). However, each edge is incident to 2 vertices, so we counted every edge exactly twice. Thus there are \(n(n-1)/2\) edges in \(K_n\). Alternatively, we can say there are \({n \choose 2}\) edges, since to draw an edge we must choose 2 of the \(n\) vertices.
 	%
 \par
 
-		In general, if we know the degrees of all the vertices in a graph, we can find the number of edges. The sum of the degrees of all vertices will always be twice the number of edges, since each edge adds to the degree of two vertices. Notice this means that the sum of the degrees of all vertices in any graph must be even!
+		In general, if we know the degrees of all the vertices in a graph, we can find the number of edges. The sum of the degrees of all vertices will always be \emph{twice} the number of edges, since each edge adds to the degree of two vertices. Notice this means that the sum of the degrees of all vertices in any graph must be even!
 	%
 \begin{example}[]\label{example-105}
 
@@ -13012,7 +13091,7 @@ We will answer this question later. For now, notice how we would ask this questi
 \end{example}
 \par
 
-		One final definition: we say a graph is \emph{bipartite}\index{bipartite} if the vertices can be divided into two sets, \(A\) and \(B\), with no two vertices in \(A\) adjacent and no two vertices in \(B\) adjacent. The vertices in \(A\) can be adjacent to some or all of the vertices in \(B\). If each vertex in \(A\) is adjacent to all the vertices in \(B\), then the graph is a \emph{complete bipartite graph}, and gets a special name: \(K_{m,n}\), where \(|A| = m\) and \(|B| = n\). The graph in the houses and utilities puzzle is \(K_{3,3}\).
+		One final definition: we say a graph is \terminology{bipartite}\index{bipartite} if the vertices can be divided into two sets, \(A\) and \(B\), with no two vertices in \(A\) adjacent and no two vertices in \(B\) adjacent. The vertices in \(A\) can be adjacent to some or all of the vertices in \(B\). If each vertex in \(A\) is adjacent to all the vertices in \(B\), then the graph is a \terminology{complete bipartite graph}, and gets a special name: \(K_{m,n}\), where \(|A| = m\) and \(|B| = n\). The graph in the houses and utilities puzzle is \(K_{3,3}\).
 	%
 \begin{assemblage}{Named Graphs}\label{assemblage-44}\par\medskip
 
@@ -13026,8 +13105,8 @@ We will answer this question later. For now, notice how we would ask this questi
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxBUimage}
-\savebox{\panelboxBUimage}{
+\newsavebox{\panelboxBXimage}
+\savebox{\panelboxBXimage}{
 \resizebox{0.2\linewidth}{!}{{
 				\begin{tikzpicture}[scale=1]
   \path (0,.9) +(18:1) coordinate (a);
@@ -13040,11 +13119,11 @@ We will answer this question later. For now, notice how we would ask this questi
 \end{tikzpicture}
 }
 }}
-\newlength{\phBUimage}\setlength{\phBUimage}{\ht\panelboxBUimage+\dp\panelboxBUimage}
-\settototalheight{\phBUimage}{\usebox{\panelboxBUimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBUimage}}
-\newsavebox{\panelboxBVimage}
-\savebox{\panelboxBVimage}{
+\newlength{\phBXimage}\setlength{\phBXimage}{\ht\panelboxBXimage+\dp\panelboxBXimage}
+\settototalheight{\phBXimage}{\usebox{\panelboxBXimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phBXimage}}
+\newsavebox{\panelboxBYimage}
+\savebox{\panelboxBYimage}{
 \resizebox{0.2\linewidth}{!}{{
 			\begin{tikzpicture}[scale=.6, xscale=1.5]
 \draw  (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
@@ -13052,11 +13131,11 @@ We will answer this question later. For now, notice how we would ask this questi
  \end{tikzpicture}
 }
 }}
-\newlength{\phBVimage}\setlength{\phBVimage}{\ht\panelboxBVimage+\dp\panelboxBVimage}
-\settototalheight{\phBVimage}{\usebox{\panelboxBVimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBVimage}}
-\newsavebox{\panelboxBWimage}
-\savebox{\panelboxBWimage}{
+\newlength{\phBYimage}\setlength{\phBYimage}{\ht\panelboxBYimage+\dp\panelboxBYimage}
+\settototalheight{\phBYimage}{\usebox{\panelboxBYimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phBYimage}}
+\newsavebox{\panelboxBZimage}
+\savebox{\panelboxBZimage}{
 \resizebox{0.15\linewidth}{!}{{
 				\begin{tikzpicture}[scale=.6]
   \draw  (0:1) \v -- (60:1) \v -- (120:1) \v -- (180:1) \v -- (240:1) \v -- (300:1) \v -- cycle;
@@ -13064,11 +13143,11 @@ We will answer this question later. For now, notice how we would ask this questi
 \end{tikzpicture}
 }
 }}
-\newlength{\phBWimage}\setlength{\phBWimage}{\ht\panelboxBWimage+\dp\panelboxBWimage}
-\settototalheight{\phBWimage}{\usebox{\panelboxBWimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBWimage}}
-\newsavebox{\panelboxBXimage}
-\savebox{\panelboxBXimage}{
+\newlength{\phBZimage}\setlength{\phBZimage}{\ht\panelboxBZimage+\dp\panelboxBZimage}
+\settototalheight{\phBZimage}{\usebox{\panelboxBZimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phBZimage}}
+\newsavebox{\panelboxCAimage}
+\savebox{\panelboxCAimage}{
 \resizebox{0.24\linewidth}{!}{{
 				\begin{tikzpicture}[scale=.6]
   \draw  (-2,0) \v -- (-1,.5) \v -- (0,0) \v -- (1,.75) \v -- (.5,1.5) \v -- (2,2) \v;
@@ -13076,9 +13155,9 @@ We will answer this question later. For now, notice how we would ask this questi
 \end{tikzpicture}
 }
 }}
-\newlength{\phBXimage}\setlength{\phBXimage}{\ht\panelboxBXimage+\dp\panelboxBXimage}
-\settototalheight{\phBXimage}{\usebox{\panelboxBXimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBXimage}}
+\newlength{\phCAimage}\setlength{\phCAimage}{\ht\panelboxCAimage+\dp\panelboxCAimage}
+\settototalheight{\phCAimage}{\usebox{\panelboxCAimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCAimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -13087,14 +13166,18 @@ We will answer this question later. For now, notice how we would ask this questi
 \begin{figure}
 \hspace*{0.02625\textwidth}%
 \begin{tabular}{@{}*{4}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxBUimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxBVimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.15\textwidth}\usebox{\panelboxBWimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.24\textwidth}\usebox{\panelboxBXimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxBXimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxBYimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.15\textwidth}\usebox{\panelboxBZimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.24\textwidth}\usebox{\panelboxCAimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
 \end{assemblage}
+\par
+
+  There are a lot of definitions to keep track of in graph theory.  Here is a glossary of the terms we have already used and will soon encounter.
+%
 \begin{assemblage}{Graph Theory Definitions}\label{assemblage-45}\par\medskip
 
 			\leavevmode%
@@ -13153,7 +13236,7 @@ We will answer this question later. For now, notice how we would ask this questi
 				%
 \par\smallskip
 \item[4.]\hypertarget{exercise-268}{}
-					Are the two graphs below equal? Are they isomorphic? If they are isomorphic, give the isomorphism.
+					Are the two graphs below equal? Are they isomorphic? If they are isomorphic, give the isomorphism.  If not, explain.
 				%
 \par
 
@@ -13174,47 +13257,47 @@ We will answer this question later. For now, notice how we would ask this questi
 				%
 \par\smallskip
 \item[5.]\hypertarget{exercise-269}{}
-					Which of the graphs below are bipartite?
+					Which of the graphs below are bipartite?  Justify your answers.
 				%
 % group protects changes to lengths, releases boxes (?)
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCBimage}
-\savebox{\panelboxCBimage}{
+\newsavebox{\panelboxCEimage}
+\savebox{\panelboxCEimage}{
 \resizebox{0.2\linewidth}{!}{{
 				\begin{tikzpicture}
   \draw (-1,1) \v -- (0,2) \v -- (1,1) \v -- (0,0) \v -- (-1,1) -- (0,1) \v -- (1,1);
 \end{tikzpicture}
 }
 }}
-\newlength{\phCBimage}\setlength{\phCBimage}{\ht\panelboxCBimage+\dp\panelboxCBimage}
-\settototalheight{\phCBimage}{\usebox{\panelboxCBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCBimage}}
-\newsavebox{\panelboxCCimage}
-\savebox{\panelboxCCimage}{
+\newlength{\phCEimage}\setlength{\phCEimage}{\ht\panelboxCEimage+\dp\panelboxCEimage}
+\settototalheight{\phCEimage}{\usebox{\panelboxCEimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCEimage}}
+\newsavebox{\panelboxCFimage}
+\savebox{\panelboxCFimage}{
 \resizebox{0.2\linewidth}{!}{{
 				\begin{tikzpicture}
   \draw (0:1) \v -- (120:1) \v -- (60:1) \v -- (300:1) \v -- (180:1) \v -- (240:1) \v -- cycle;
 \end{tikzpicture}
 }
 }}
-\newlength{\phCCimage}\setlength{\phCCimage}{\ht\panelboxCCimage+\dp\panelboxCCimage}
-\settototalheight{\phCCimage}{\usebox{\panelboxCCimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCCimage}}
-\newsavebox{\panelboxCDimage}
-\savebox{\panelboxCDimage}{
+\newlength{\phCFimage}\setlength{\phCFimage}{\ht\panelboxCFimage+\dp\panelboxCFimage}
+\settototalheight{\phCFimage}{\usebox{\panelboxCFimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCFimage}}
+\newsavebox{\panelboxCGimage}
+\savebox{\panelboxCGimage}{
 \resizebox{0.2\linewidth}{!}{{
 				\begin{tikzpicture}
   \draw (360/7:1) \v -- (2*360/7:1) \v -- (3*360/7:1) \v -- (4*360/7:1) \v -- (5*360/7:1) \v -- (6*360/7:1) \v -- (0:1) \v -- cycle;
 \end{tikzpicture}
 }
 }}
-\newlength{\phCDimage}\setlength{\phCDimage}{\ht\panelboxCDimage+\dp\panelboxCDimage}
-\settototalheight{\phCDimage}{\usebox{\panelboxCDimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCDimage}}
-\newsavebox{\panelboxCEimage}
-\savebox{\panelboxCEimage}{
+\newlength{\phCGimage}\setlength{\phCGimage}{\ht\panelboxCGimage+\dp\panelboxCGimage}
+\settototalheight{\phCGimage}{\usebox{\panelboxCGimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCGimage}}
+\newsavebox{\panelboxCHimage}
+\savebox{\panelboxCHimage}{
 \resizebox{0.2\linewidth}{!}{{
 				\begin{tikzpicture}
   \draw (0,0) \v;
@@ -13223,9 +13306,9 @@ We will answer this question later. For now, notice how we would ask this questi
 \end{tikzpicture}
 }
 }}
-\newlength{\phCEimage}\setlength{\phCEimage}{\ht\panelboxCEimage+\dp\panelboxCEimage}
-\settototalheight{\phCEimage}{\usebox{\panelboxCEimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCEimage}}
+\newlength{\phCHimage}\setlength{\phCHimage}{\ht\panelboxCHimage+\dp\panelboxCHimage}
+\settototalheight{\phCHimage}{\usebox{\panelboxCHimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCHimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -13234,10 +13317,10 @@ We will answer this question later. For now, notice how we would ask this questi
 \begin{figure}
 \hspace*{0.025\textwidth}%
 \begin{tabular}{@{}*{4}{c}@{}}
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCBimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCCimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCDimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCEimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCEimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCFimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCGimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCHimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -13333,19 +13416,19 @@ A warning: you can only count faces when the graph is drawn in a planar way. For
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCJimage}
-\savebox{\panelboxCJimage}{
+\newsavebox{\panelboxCMimage}
+\savebox{\panelboxCMimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture}
       \draw (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1) (135:1) -- (315:1);
     \end{tikzpicture}
 }
 }}
-\newlength{\phCJimage}\setlength{\phCJimage}{\ht\panelboxCJimage+\dp\panelboxCJimage}
-\settototalheight{\phCJimage}{\usebox{\panelboxCJimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCJimage}}
-\newsavebox{\panelboxCKimage}
-\savebox{\panelboxCKimage}{
+\newlength{\phCMimage}\setlength{\phCMimage}{\ht\panelboxCMimage+\dp\panelboxCMimage}
+\settototalheight{\phCMimage}{\usebox{\panelboxCMimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCMimage}}
+\newsavebox{\panelboxCNimage}
+\savebox{\panelboxCNimage}{
 \resizebox{0.25\linewidth}{!}{{
 \begin{tikzpicture}
       \draw (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1);
@@ -13353,9 +13436,9 @@ A warning: you can only count faces when the graph is drawn in a planar way. For
     \end{tikzpicture}
 }
 }}
-\newlength{\phCKimage}\setlength{\phCKimage}{\ht\panelboxCKimage+\dp\panelboxCKimage}
-\settototalheight{\phCKimage}{\usebox{\panelboxCKimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCKimage}}
+\newlength{\phCNimage}\setlength{\phCNimage}{\ht\panelboxCNimage+\dp\panelboxCNimage}
+\settototalheight{\phCNimage}{\usebox{\panelboxCNimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCNimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -13364,8 +13447,8 @@ A warning: you can only count faces when the graph is drawn in a planar way. For
 \begin{figure}
 \hspace*{0.1375\textwidth}%
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCJimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.25\textwidth}\usebox{\panelboxCKimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCMimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.25\textwidth}\usebox{\panelboxCNimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -13407,8 +13490,8 @@ Any connected graph (besides just a single isolated vertex) must contain this su
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCMimage}
-\savebox{\panelboxCMimage}{
+\newsavebox{\panelboxCPimage}
+\savebox{\panelboxCPimage}{
 \resizebox{0.3\linewidth}{!}{{
 \begin{tikzpicture}
       \draw (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
@@ -13416,11 +13499,11 @@ Any connected graph (besides just a single isolated vertex) must contain this su
     \end{tikzpicture}
 }
 }}
-\newlength{\phCMimage}\setlength{\phCMimage}{\ht\panelboxCMimage+\dp\panelboxCMimage}
-\settototalheight{\phCMimage}{\usebox{\panelboxCMimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCMimage}}
-\newsavebox{\panelboxCNimage}
-\savebox{\panelboxCNimage}{
+\newlength{\phCPimage}\setlength{\phCPimage}{\ht\panelboxCPimage+\dp\panelboxCPimage}
+\settototalheight{\phCPimage}{\usebox{\panelboxCPimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCPimage}}
+\newsavebox{\panelboxCQimage}
+\savebox{\panelboxCQimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture}
       \draw (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
@@ -13428,9 +13511,9 @@ Any connected graph (besides just a single isolated vertex) must contain this su
     \end{tikzpicture}
 }
 }}
-\newlength{\phCNimage}\setlength{\phCNimage}{\ht\panelboxCNimage+\dp\panelboxCNimage}
-\settototalheight{\phCNimage}{\usebox{\panelboxCNimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCNimage}}
+\newlength{\phCQimage}\setlength{\phCQimage}{\ht\panelboxCQimage+\dp\panelboxCQimage}
+\settototalheight{\phCQimage}{\usebox{\panelboxCQimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCQimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -13439,8 +13522,8 @@ Any connected graph (besides just a single isolated vertex) must contain this su
 \begin{figure}
 \hspace*{0.125\textwidth}%
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxCMimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCNimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxCPimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCQimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -13450,7 +13533,7 @@ What do these ``moves'' do? When adding the spike, the number of edges increases
 %
 \par
 
-Since we can build any graph using a combination of these two moves, and doing so never changes the quantity \(v - e + f\), that quantity will be the same for all graphs. But notice that our starting graph \(P_2\) has \(v = 2\), \(e = 1\) and \(f = 1\), so \(v - e + f = 2\). This argument is essentially a proof by induction. A good exercises would be to rewrite it as a formal induction proof.
+Since we can build any graph using a combination of these two moves, and doing so never changes the quantity \(v - e + f\), that quantity will be the same for all graphs. But notice that our starting graph \(P_2\) has \(v = 2\), \(e = 1\) and \(f = 1\), so \(v - e + f = 2\). This argument is essentially a proof by induction. A good exercise would be to rewrite it as a formal induction proof.
 %
 \typeout{************************************************}
 \typeout{Subsection 4.2.1 Non-planar Graphs}
@@ -13628,7 +13711,7 @@ How many edges would such polyhedra have? For the first proposed polyhedron, the
 %
 \par
 
-The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagons give a total of 74/2 = 37 edges. So far so good. Now how many vertices does this supposed polyhedron have? We can use Euler's formula. There are 14 faces, so we have \(v - 37 + 14 = 2\) or equivalently \(v = 25\). But now use the vertices to count the edges again. Each vertex must have degree \emph{at least} three (that is, each vertex joins at least three faces), so the sum of the degrees is at least 75. Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges. Again, there is no such polyhedron.
+The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagons give a total of 74/2 = 37 edges. So far so good. Now how many vertices does this supposed polyhedron have? We can use Euler's formula. There are 14 faces, so we have \(v - 37 + 14 = 2\) or equivalently \(v = 25\). But now use the vertices to count the edges again. Each vertex must have degree \emph{at least} three (that is, each vertex joins at least three faces since the interior angle of all the polygons must be less that \(180^\circ\)), so the sum of the degrees of vertices is at least 75. Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges. Again, there is no such polyhedron.
 %
 \end{example}
 \par
@@ -13711,30 +13794,26 @@ Is it possible for a planar graph to have 6 vertices, 10 edges and 5 faces? Expl
 %
 \par\smallskip
 \item[2.]\hypertarget{exercise-273}{}
-The graph \(G\) has 6 vertices with degrees \(2, 2, 3, 4, 4, 5\). How many edges does \(G\) have? Could \(G\) be planar? If so, how many faces would it have.
+The graph \(G\) has 6 vertices with degrees \(2, 2, 3, 4, 4, 5\). How many edges does \(G\) have? Could \(G\) be planar? If so, how many faces would it have.  If not, explain.
 %
 \par\smallskip
 \item[3.]\hypertarget{exercise-274}{}
-If a graph has 10 vertices and 10 edges and contains an Euler circuit, must it be planar? How many faces would it have?
+I'm thinking of a polyhedron containing 12 faces. Seven are triangles and four are squares. The polyhedron has 11 vertices other than those around the mystery face. How many sides does the last face have?
 %
 \par\smallskip
 \item[4.]\hypertarget{exercise-275}{}
-I'm think of a polyhedron containing 12 faces. Seven are triangles and four are squares. The polyhedron has 11 vertices other than those around the mystery face. How many sides does the last face have?
-%
-\par\smallskip
-\item[5.]\hypertarget{exercise-276}{}
 Prove Euler's formula using induction on the number of edges in the graph.
 %
 \par\smallskip
-\item[6.]\hypertarget{exercise-277}{}
+\item[5.]\hypertarget{exercise-276}{}
 Euler's formula (\(v - e + f = 2\)) holds for all \emph{connected} planar graphs. What if a graph is not connected? Suppose a planar graph has two components. What is the value of \(v - e + f\) now? What if it has \(k\) components?
 %
 \par\smallskip
-\item[7.]\hypertarget{exercise-278}{}
+\item[6.]\hypertarget{exercise-277}{}
 Prove that any planar graph with \(v\) vertices and \(e\) edges satisfies \(e \le 3v - 6\).
 %
 \par\smallskip
-\item[8.]\hypertarget{exercise-279}{}
+\item[7.]\hypertarget{exercise-278}{}
 Prove that any planar graph must have a vertex of degree 5 or less.
 %
 \par\smallskip
@@ -13798,8 +13877,8 @@ Find the chromatic number of the graphs below.
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCSimage}
-\savebox{\panelboxCSimage}{
+\newsavebox{\panelboxCVimage}
+\savebox{\panelboxCVimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture}
 	      \foreach \x in {0,...,6}
@@ -13807,31 +13886,31 @@ Find the chromatic number of the graphs below.
 	    \end{tikzpicture}
 }
 }}
-\newlength{\phCSimage}\setlength{\phCSimage}{\ht\panelboxCSimage+\dp\panelboxCSimage}
-\settototalheight{\phCSimage}{\usebox{\panelboxCSimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCSimage}}
-\newsavebox{\panelboxCTimage}
-\savebox{\panelboxCTimage}{
+\newlength{\phCVimage}\setlength{\phCVimage}{\ht\panelboxCVimage+\dp\panelboxCVimage}
+\settototalheight{\phCVimage}{\usebox{\panelboxCVimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCVimage}}
+\newsavebox{\panelboxCWimage}
+\savebox{\panelboxCWimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture}[yscale=.8]
 	      \draw  (-1,0) \v -- (0,0) \v -- (1,0) \v -- (.5,1) \v -- (0,0) -- (-.5,1) \v -- (0,2) \v -- (.5,1) -- (-.5,1) -- (-1,0);
 	    \end{tikzpicture}
 }
 }}
-\newlength{\phCTimage}\setlength{\phCTimage}{\ht\panelboxCTimage+\dp\panelboxCTimage}
-\settototalheight{\phCTimage}{\usebox{\panelboxCTimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCTimage}}
-\newsavebox{\panelboxCUimage}
-\savebox{\panelboxCUimage}{
+\newlength{\phCWimage}\setlength{\phCWimage}{\ht\panelboxCWimage+\dp\panelboxCWimage}
+\settototalheight{\phCWimage}{\usebox{\panelboxCWimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCWimage}}
+\newsavebox{\panelboxCXimage}
+\savebox{\panelboxCXimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture}[yscale=.8, xscale=1.5]
 	 \draw  (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
 	  \end{tikzpicture}
 }
 }}
-\newlength{\phCUimage}\setlength{\phCUimage}{\ht\panelboxCUimage+\dp\panelboxCUimage}
-\settototalheight{\phCUimage}{\usebox{\panelboxCUimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCUimage}}
+\newlength{\phCXimage}\setlength{\phCXimage}{\ht\panelboxCXimage+\dp\panelboxCXimage}
+\settototalheight{\phCXimage}{\usebox{\panelboxCXimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCXimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -13840,9 +13919,9 @@ Find the chromatic number of the graphs below.
 \begin{figure}
 \hspace*{0.0666666666666667\textwidth}%
 \begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCSimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCTimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCUimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCVimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCWimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][c]{0.2\textwidth}\usebox{\panelboxCXimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -13869,7 +13948,7 @@ There is no way to color it with just two colors, since there are three vertices
 %
 \par
 
-The graph on the right is just \(K_{2,3}\). As with all bipartite graphs, this graph has chromatic number 2. Color the vertices on the top row red and the vertices on the bottom row blue.
+The graph on the right is just \(K_{2,3}\). As with all bipartite graphs, this graph has chromatic number 2: color the vertices on the top row red and the vertices on the bottom row blue.
 %
 \end{example}
 \par
@@ -13882,7 +13961,7 @@ The key observation is that while it is true that for any number \(n\), there is
 %
 \par
 
-So the question is, what is the largest chromatic number of any planar graph? The answer is one of the best known theorems of mathematics:
+So the question is, what is the largest chromatic number of any planar graph? The answer is the best known theorem of graph theory:
 %
 \begin{theorem}[The Four Color Theorem]\label{theorem-5}
 
@@ -13943,8 +14022,8 @@ Suppose 10 new radio stations are to be set up in a currently unpopulated (by ra
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCWimage}
-\savebox{\panelboxCWimage}{
+\newsavebox{\panelboxCZimage}
+\savebox{\panelboxCZimage}{
 \resizebox{1\linewidth}{!}{{
 \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|}
  & {\tiny KQEA}&{\tiny KQEB}&{\tiny KQEC}&{\tiny KQED}&{\tiny KQEE}&{\tiny KQEF}&{\tiny KQEG}&{\tiny  KQEH}&{\tiny  KQEI}&{\tiny KQEJ } \\ \hline
@@ -13961,9 +14040,9 @@ Suppose 10 new radio stations are to be set up in a currently unpopulated (by ra
 \end{tabular}
 }
 }}
-\newlength{\phCWimage}\setlength{\phCWimage}{\ht\panelboxCWimage+\dp\panelboxCWimage}
-\settototalheight{\phCWimage}{\usebox{\panelboxCWimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCWimage}}
+\newlength{\phCZimage}\setlength{\phCZimage}{\ht\panelboxCZimage+\dp\panelboxCZimage}
+\settototalheight{\phCZimage}{\usebox{\panelboxCZimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCZimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -13971,7 +14050,7 @@ Suppose 10 new radio stations are to be set up in a currently unpopulated (by ra
 % @{} suppress \tabcolsep at extremes, so margins behave as intended
 \begin{figure}
 \begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{1\textwidth}\usebox{\panelboxCWimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][t]{1\textwidth}\usebox{\panelboxCZimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -13987,8 +14066,8 @@ This graph has chromatic number 5. A proper 5-coloring is shown on the right. No
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCXimage}
-\savebox{\panelboxCXimage}{
+\newsavebox{\panelboxDAimage}
+\savebox{\panelboxDAimage}{
 \resizebox{0.35\linewidth}{!}{{
 \begin{tikzpicture}[scale=.9]
 	\coordinate (A) at (90:2);
@@ -14008,11 +14087,11 @@ This graph has chromatic number 5. A proper 5-coloring is shown on the right. No
 	\end{tikzpicture}
 }
 }}
-\newlength{\phCXimage}\setlength{\phCXimage}{\ht\panelboxCXimage+\dp\panelboxCXimage}
-\settototalheight{\phCXimage}{\usebox{\panelboxCXimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCXimage}}
-\newsavebox{\panelboxCYimage}
-\savebox{\panelboxCYimage}{
+\newlength{\phDAimage}\setlength{\phDAimage}{\ht\panelboxDAimage+\dp\panelboxDAimage}
+\settototalheight{\phDAimage}{\usebox{\panelboxDAimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDAimage}}
+\newsavebox{\panelboxDBimage}
+\savebox{\panelboxDBimage}{
 \resizebox{0.3\linewidth}{!}{{
 \begin{tikzpicture}[scale=.9]
 	\coordinate (A) at (90:2);
@@ -14033,9 +14112,9 @@ This graph has chromatic number 5. A proper 5-coloring is shown on the right. No
 	\end{tikzpicture}
 }
 }}
-\newlength{\phCYimage}\setlength{\phCYimage}{\ht\panelboxCYimage+\dp\panelboxCYimage}
-\settototalheight{\phCYimage}{\usebox{\panelboxCYimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCYimage}}
+\newlength{\phDBimage}\setlength{\phDBimage}{\ht\panelboxDBimage+\dp\panelboxDBimage}
+\settototalheight{\phDBimage}{\usebox{\panelboxDBimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDBimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -14043,8 +14122,8 @@ This graph has chromatic number 5. A proper 5-coloring is shown on the right. No
 % @{} suppress \tabcolsep at extremes, so margins behave as intended
 \begin{figure}
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.35\textwidth}\usebox{\panelboxCXimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxCYimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][t]{0.35\textwidth}\usebox{\panelboxDAimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.3\textwidth}\usebox{\panelboxDBimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -14089,7 +14168,7 @@ In fact, there are examples of graphs for which \(\chi(G) = \Delta(G) + 1\). For
 \begin{theorem}[Brooks' Theorem]\label{theorem-7}
 
 \index{Brooks' Theorem}
-Any graph \(G\) with maximal degree \(\Delta(G)\) satisfies \(\chi(G) \le \Delta(G)\), unless \(G\) is a complete graph or an odd cycle, in which case \(\chi(G) = \Delta(G) + 1\).
+Any graph \(G\) satisfies \(\chi(G) \le \Delta(G)\), unless \(G\) is a complete graph or an odd cycle, in which case \(\chi(G) = \Delta(G) + 1\).
 %
 \end{theorem}
 \par
@@ -14166,70 +14245,17 @@ The answer to the above problem is known and is a fun problem to do as an exerci
 \typeout{************************************************}
 \subsubsection[Exercises]{Exercises}\label{exercises-27}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-280}{}
+\item[1.]\hypertarget{exercise-279}{}
 What is the smallest number of colors you need to properly color the vertices of \(K_{4,5}\). That is, find the chromatic number of the graph.
 %
 \par\smallskip
-\item[2.]\hypertarget{exercise-281}{}
+\item[2.]\hypertarget{exercise-280}{}
 Draw a graph with chromatic number 6 (i.e., which requires 6 colors to properly color the vertices). Could your graph be planar? Explain.
 %
 \par\smallskip
-\item[3.]\hypertarget{exercise-282}{}
+\item[3.]\hypertarget{exercise-281}{}
 Find the chromatic number of each of the following graphs.
 %
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\newsavebox{\panelboxDAimage}
-\savebox{\panelboxDAimage}{
-\resizebox{0.2\linewidth}{!}{{
-\begin{tikzpicture}
-	    \draw  (-1,1) \v -- (0,2) \v -- (1,1) \v -- (0,0) \v -- (-1,1) -- (0,1) \v -- (1,1);
-	  \end{tikzpicture}
-}
-}}
-\newlength{\phDAimage}\setlength{\phDAimage}{\ht\panelboxDAimage+\dp\panelboxDAimage}
-\settototalheight{\phDAimage}{\usebox{\panelboxDAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDAimage}}
-\newsavebox{\panelboxDBimage}
-\savebox{\panelboxDBimage}{
-\resizebox{0.2\linewidth}{!}{{
-\begin{tikzpicture}
-	    \draw  (360/7:1) \v -- (2*360/7:1) \v -- (3*360/7:1) \v -- (4*360/7:1) \v -- (5*360/7:1) \v -- (6*360/7:1) \v -- (0:1) \v -- cycle;
-	  \end{tikzpicture}
-}
-}}
-\newlength{\phDBimage}\setlength{\phDBimage}{\ht\panelboxDBimage+\dp\panelboxDBimage}
-\settototalheight{\phDBimage}{\usebox{\panelboxDBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDBimage}}
-\newsavebox{\panelboxDCimage}
-\savebox{\panelboxDCimage}{
-\resizebox{0.2\linewidth}{!}{{
-\begin{tikzpicture}
-	    \draw (0,0) \v;
-	    \foreach \x in {0,...,4}
-	    \draw  (0,0) -- (\x*360/5:1) \v -- (\x*360/5+72:1);
-	  \end{tikzpicture}
-}
-}}
-\newlength{\phDCimage}\setlength{\phDCimage}{\ht\panelboxDCimage+\dp\panelboxDCimage}
-\settototalheight{\phDCimage}{\usebox{\panelboxDCimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDCimage}}
-\leavevmode%
-% begin: side-by-side as figure/tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0.0666666666666665\textwidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\begin{figure}
-\hspace*{0.0666666666666667\textwidth}%
-\begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDAimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDBimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDCimage}\end{minipage}\end{tabular}
-\end{figure}
-% end: side-by-side as tabular/figure
-}% end: group for a single side-by-side
 % group protects changes to lengths, releases boxes (?)
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
@@ -14238,8 +14264,7 @@ Find the chromatic number of each of the following graphs.
 \savebox{\panelboxDDimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture}
-	    \foreach \x in {0,...,4}
-	    \draw  (\x*72+18:1) \v -- (\x*72+90:1) -- (\x*72-54:1);
+	    \draw  (-1,1) \v -- (0,2) \v -- (1,1) \v -- (0,0) \v -- (-1,1) -- (0,1) \v -- (1,1);
 	  \end{tikzpicture}
 }
 }}
@@ -14248,8 +14273,62 @@ Find the chromatic number of each of the following graphs.
 \setlength{\panelmax}{\maxof{\panelmax}{\phDDimage}}
 \newsavebox{\panelboxDEimage}
 \savebox{\panelboxDEimage}{
-\resizebox{0.35\linewidth}{!}{{
-\begin{tikzpicture}[scale=.6]
+\resizebox{0.2\linewidth}{!}{{
+\begin{tikzpicture}
+	    \draw  (360/7:1) \v -- (2*360/7:1) \v -- (3*360/7:1) \v -- (4*360/7:1) \v -- (5*360/7:1) \v -- (6*360/7:1) \v -- (0:1) \v -- cycle;
+	  \end{tikzpicture}
+}
+}}
+\newlength{\phDEimage}\setlength{\phDEimage}{\ht\panelboxDEimage+\dp\panelboxDEimage}
+\settototalheight{\phDEimage}{\usebox{\panelboxDEimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDEimage}}
+\newsavebox{\panelboxDFimage}
+\savebox{\panelboxDFimage}{
+\resizebox{0.2\linewidth}{!}{{
+\begin{tikzpicture}
+	    \draw (0,0) \v;
+	    \foreach \x in {0,...,4}
+	    \draw  (0,0) -- (\x*360/5:1) \v -- (\x*360/5+72:1);
+	  \end{tikzpicture}
+}
+}}
+\newlength{\phDFimage}\setlength{\phDFimage}{\ht\panelboxDFimage+\dp\panelboxDFimage}
+\settototalheight{\phDFimage}{\usebox{\panelboxDFimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDFimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.0666666666666665\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.0666666666666667\textwidth}%
+\begin{tabular}{@{}*{3}{c}@{}}
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDDimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDEimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDFimage}\end{minipage}\end{tabular}
+\end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxDGimage}
+\savebox{\panelboxDGimage}{
+\resizebox{0.2\linewidth}{!}{{
+\begin{tikzpicture}
+	    \foreach \x in {0,...,4}
+	    \draw  (\x*72+18:1) \v -- (\x*72+90:1) -- (\x*72-54:1);
+	  \end{tikzpicture}
+}
+}}
+\newlength{\phDGimage}\setlength{\phDGimage}{\ht\panelboxDGimage+\dp\panelboxDGimage}
+\settototalheight{\phDGimage}{\usebox{\panelboxDGimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDGimage}}
+\newsavebox{\panelboxDHimage}
+\savebox{\panelboxDHimage}{
+\resizebox{0.2\linewidth}{!}{{
+\begin{tikzpicture}[scale=.5]
 	    \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
 	    \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
 	    \foreach \x in {18, 90, 162, 234, 306}
@@ -14257,40 +14336,40 @@ Find the chromatic number of each of the following graphs.
 	  \end{tikzpicture}
 }
 }}
-\newlength{\phDEimage}\setlength{\phDEimage}{\ht\panelboxDEimage+\dp\panelboxDEimage}
-\settototalheight{\phDEimage}{\usebox{\panelboxDEimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDEimage}}
+\newlength{\phDHimage}\setlength{\phDHimage}{\ht\panelboxDHimage+\dp\panelboxDHimage}
+\settototalheight{\phDHimage}{\usebox{\panelboxDHimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDHimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
-\setlength{\tabcolsep}{0.1125\textwidth}
+\setlength{\tabcolsep}{0.15\textwidth}
 % @{} suppress \tabcolsep at extremes, so margins behave as intended
 \begin{figure}
-\hspace*{0.1125\textwidth}%
+\hspace*{0.15\textwidth}%
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDDimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.35\textwidth}\usebox{\panelboxDEimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxDGimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxDHimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
 \par\smallskip
-\item[4.]\hypertarget{exercise-283}{}
+\item[4.]\hypertarget{exercise-282}{}
 What is the smallest number of colors that can be used to color the vertices of a cube so that no two adjacent vertices are colored identically?
 %
 \par\smallskip
-\item[5.]\hypertarget{exercise-284}{}
+\item[5.]\hypertarget{exercise-283}{}
 Not all graphs are perfect. Give an example of a graph with chromatic number 4 that does not contain a copy of \(K_4\). That is, there should be no 4 vertices all pairwise adjacent.
 %
 \par\smallskip
-\item[6.]\hypertarget{exercise-285}{}
+\item[6.]\hypertarget{exercise-284}{}
 Prove by induction on vertices that any graph \(G\) which contains at least one vertex of degree less than \(\Delta(G)\) (the maximal degree of all vertices in \(G\)) has chromatic number at most \(\Delta(G)\).
 %
 \par\smallskip
-\item[7.]\hypertarget{exercise-286}{}
+\item[7.]\hypertarget{exercise-285}{}
 You have a set of magnetic alphabet letters (one of each of the 26 letters in the alphabet) that you need to put into boxes. For obvious reasons, you don't want to put two consecutive letters in the same box. What is the fewest number of boxes you need (assuming the boxes are able to hold as many letters as they need to)?
 %
 \par\smallskip
-\item[8.]\hypertarget{exercise-287}{}
+\item[8.]\hypertarget{exercise-286}{}
 Prove that if you color every edge of \(K_6\) either red or blue, you are guaranteed a monochromatic triangle.
 %
 \par\smallskip
@@ -14315,8 +14394,8 @@ Which of the graphs below have Euler paths? Which have Euler circuits?
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxDHimage}
-\savebox{\panelboxDHimage}{
+\newsavebox{\panelboxDKimage}
+\savebox{\panelboxDKimage}{
 \resizebox{0.18\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
     \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
@@ -14324,22 +14403,22 @@ Which of the graphs below have Euler paths? Which have Euler circuits?
   \end{tikzpicture}
 }
 }}
-\newlength{\phDHimage}\setlength{\phDHimage}{\ht\panelboxDHimage+\dp\panelboxDHimage}
-\settototalheight{\phDHimage}{\usebox{\panelboxDHimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDHimage}}
-\newsavebox{\panelboxDIimage}
-\savebox{\panelboxDIimage}{
+\newlength{\phDKimage}\setlength{\phDKimage}{\ht\panelboxDKimage+\dp\panelboxDKimage}
+\settototalheight{\phDKimage}{\usebox{\panelboxDKimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDKimage}}
+\newsavebox{\panelboxDLimage}
+\savebox{\panelboxDLimage}{
 \resizebox{0.18\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
     \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
   \end{tikzpicture}
 }
 }}
-\newlength{\phDIimage}\setlength{\phDIimage}{\ht\panelboxDIimage+\dp\panelboxDIimage}
-\settototalheight{\phDIimage}{\usebox{\panelboxDIimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDIimage}}
-\newsavebox{\panelboxDJimage}
-\savebox{\panelboxDJimage}{
+\newlength{\phDLimage}\setlength{\phDLimage}{\ht\panelboxDLimage+\dp\panelboxDLimage}
+\settototalheight{\phDLimage}{\usebox{\panelboxDLimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDLimage}}
+\newsavebox{\panelboxDMimage}
+\savebox{\panelboxDMimage}{
 \resizebox{0.36\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
     \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
@@ -14347,11 +14426,11 @@ Which of the graphs below have Euler paths? Which have Euler circuits?
   \end{tikzpicture}
 }
 }}
-\newlength{\phDJimage}\setlength{\phDJimage}{\ht\panelboxDJimage+\dp\panelboxDJimage}
-\settototalheight{\phDJimage}{\usebox{\panelboxDJimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDJimage}}
-\newsavebox{\panelboxDKimage}
-\savebox{\panelboxDKimage}{
+\newlength{\phDMimage}\setlength{\phDMimage}{\ht\panelboxDMimage+\dp\panelboxDMimage}
+\settototalheight{\phDMimage}{\usebox{\panelboxDMimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDMimage}}
+\newsavebox{\panelboxDNimage}
+\savebox{\panelboxDNimage}{
 \resizebox{0.22\linewidth}{!}{{
 \begin{tikzpicture}[yscale=.45]
    \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
@@ -14359,9 +14438,9 @@ Which of the graphs below have Euler paths? Which have Euler circuits?
     \end{tikzpicture}
 }
 }}
-\newlength{\phDKimage}\setlength{\phDKimage}{\ht\panelboxDKimage+\dp\panelboxDKimage}
-\settototalheight{\phDKimage}{\usebox{\panelboxDKimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDKimage}}
+\newlength{\phDNimage}\setlength{\phDNimage}{\ht\panelboxDNimage+\dp\panelboxDNimage}
+\settototalheight{\phDNimage}{\usebox{\panelboxDNimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDNimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -14370,10 +14449,10 @@ Which of the graphs below have Euler paths? Which have Euler circuits?
 \begin{figure}
 \hspace*{0.0075\textwidth}%
 \begin{tabular}{@{}*{4}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.18\textwidth}\usebox{\panelboxDHimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.18\textwidth}\usebox{\panelboxDIimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.36\textwidth}\usebox{\panelboxDJimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.22\textwidth}\usebox{\panelboxDKimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.18\textwidth}\usebox{\panelboxDKimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.18\textwidth}\usebox{\panelboxDLimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.36\textwidth}\usebox{\panelboxDMimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.22\textwidth}\usebox{\panelboxDNimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -14480,38 +14559,112 @@ The converse is also true: if all the vertices of a graph have even degree, then
 \end{assemblage}
 \par
 
-Since the bridges of Königsberg graph has all four vertices with odd degree, there is no Euler path through the graph.
+Since the bridges of Königsberg graph has all four vertices with odd degree, there is no Euler path through the graph.  Thus there is no way for the townspeople to cross every bridge exactly once.
 %
 \typeout{************************************************}
 \typeout{Subsection 4.4.1 Hamilton Paths}
 \typeout{************************************************}
 \subsection[Hamilton Paths]{Hamilton Paths}\label{subsection-41}
 
-Suppose you wanted to tour Königsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a \emph{Hamilton path} (or Hamiltonian path)\index{Hamilton path}. It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete\index{NP-complete}.
+Suppose you wanted to tour Königsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a \terminology{Hamilton path} (or Hamiltonian path)\index{Hamilton path}.  We could also consider \terminology{Hamilton cycles}, which are Hamliton paths which start and stop at the same vertex.
+%
+\begin{example}[]\label{example-110}
+
+      Determine whether the graphs below have a Hamilton path.
+    %
+% group protects changes to lengths, releases boxes (?)
+{% begin: group for a single side-by-side
+% set panel max height to practical minimum, created in preamble
+\setlength{\panelmax}{0pt}
+\newsavebox{\panelboxDRimage}
+\savebox{\panelboxDRimage}{
+\resizebox{0.2\linewidth}{!}{{
+\begin{tikzpicture}[scale=.5]
+\draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+\draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+\foreach \x in {18, 90, 162, 234, 306}
+\draw  (\x:1) \v -- (\x:2) \v;
+\end{tikzpicture}
+}
+}}
+\newlength{\phDRimage}\setlength{\phDRimage}{\ht\panelboxDRimage+\dp\panelboxDRimage}
+\settototalheight{\phDRimage}{\usebox{\panelboxDRimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDRimage}}
+\newsavebox{\panelboxDSimage}
+\savebox{\panelboxDSimage}{
+\resizebox{0.2\linewidth}{!}{{
+\begin{tikzpicture}{scale=.5}
+\draw  (18:1) -- (90:1) -- (162:1)  -- (234:1) -- (306:1) -- cycle;
+\draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+\foreach \x in {18, 90, 162, 234, 306}
+\draw  (\x:1) \v -- (\x:2) \v;
+\end{tikzpicture}
+}
+}}
+\newlength{\phDSimage}\setlength{\phDSimage}{\ht\panelboxDSimage+\dp\panelboxDSimage}
+\settototalheight{\phDSimage}{\usebox{\panelboxDSimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDSimage}}
+\leavevmode%
+% begin: side-by-side as figure/tabular
+% \tabcolsep change local to group
+\setlength{\tabcolsep}{0.15\textwidth}
+% @{} suppress \tabcolsep at extremes, so margins behave as intended
+\begin{figure}
+\hspace*{0.15\textwidth}%
+\begin{tabular}{@{}*{2}{c}@{}}
+\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxDRimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][t]{0.2\textwidth}\usebox{\panelboxDSimage}\end{minipage}\end{tabular}
+\end{figure}
+% end: side-by-side as tabular/figure
+}% end: group for a single side-by-side
+\par\medskip\noindent%
+\textbf{Solution.}\quad 
+      The graph on the left has a Hamilton path (many different ones, actually), as shown here:
+    %
+\leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}[scale=.5]
+\draw[very thick, ->-] (90:2) -- (90:1) (90:1) -- (234:1) (234:1)  -- (234:2) -- (162:2) -- (162:1) -- (18:1) -- (18:2) -- (306:2) -- (306:1);
+\draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+\draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+\foreach \x in {18, 90, 162, 234, 306}
+\draw  (\x:1) \v -- (\x:2) \v;
+\end{tikzpicture}
+}
+\end{figure}
+
+    The graph on the right does not have a Hamilton path.  You would need to visit each of the ``outside'' vertices, but as soon as you visit one, you get stuck.  Note that this graph does not have an Euler path, although there are graphs with Euler paths but no Hamilton paths.
+  %
+\end{example}
+\par
+
+It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete\index{NP-complete}.
 %
 \typeout{************************************************}
-\typeout{Exercises  Exercises}
+\typeout{Exercises 4.4.2 Exercises}
 \typeout{************************************************}
-\subsubsection[Exercises]{Exercises}\label{exercises-28}
+\subsection[Exercises]{Exercises}\label{exercises-28}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-288}{}
+\item[1.]\hypertarget{exercise-287}{}
 You and your friends want to tour the southwest by car. You will visit the nine states below, with the following rather odd rule: you must cross each border between neighboring states exactly once (so, for example, you must cross the Colorado-Utah border exactly once). Can you do it? If so, does it matter where you start your road trip? What fact about graph theory solves this problem?
 %
 % group protects changes to lengths, releases boxes (?)
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxDOimage}
-\savebox{\panelboxDOimage}{
+\newsavebox{\panelboxDUimage}
+\savebox{\panelboxDUimage}{
 \resizebox{0.4\linewidth}{!}{{
 \begin{tikzpicture}
-  \USA[every state={draw=white, line width = .7pt, fill=black!10}, CA={fill=gray}, NV={fill=gray},NM={fill=gray},AZ={fill=gray},UT={fill=gray},CO={fill=gray},TX={fill=gray},KS={fill=gray},OK={fill=gray}]
+  \USA[every state={draw=white, line width = .7pt, fill=black!15}, CA={fill=gray}, NV={fill=gray},NM={fill=gray},AZ={fill=gray},UT={fill=gray},CO={fill=gray},TX={fill=gray},KS={fill=gray},OK={fill=gray}]
   \end{tikzpicture}
 }
 }}
-\newlength{\phDOimage}\setlength{\phDOimage}{\ht\panelboxDOimage+\dp\panelboxDOimage}
-\settototalheight{\phDOimage}{\usebox{\panelboxDOimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDOimage}}
+\newlength{\phDUimage}\setlength{\phDUimage}{\ht\panelboxDUimage+\dp\panelboxDUimage}
+\settototalheight{\phDUimage}{\usebox{\panelboxDUimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phDUimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -14520,12 +14673,12 @@ You and your friends want to tour the southwest by car. You will visit the nine 
 \begin{figure}
 \hspace*{0.3\textwidth}%
 \begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.4\textwidth}\usebox{\panelboxDOimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][t]{0.4\textwidth}\usebox{\panelboxDUimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
 \par\smallskip
-\item[2.]\hypertarget{exercise-289}{}
+\item[2.]\hypertarget{exercise-288}{}
 Which of the following graphs contain an Euler path? Which contain an Euler circuit?
 %
 \leavevmode%
@@ -14538,19 +14691,19 @@ Which of the following graphs contain an Euler path? Which contain an Euler circ
 \item\hypertarget{li-1251}{}\(P_7\)%
 \end{enumerate}
 \par\smallskip
-\item[3.]\hypertarget{exercise-290}{}
+\item[3.]\hypertarget{exercise-289}{}
 For which \(n\) does the graph \(K_n\) contain an Euler circuit? Explain.
 %
 \par\smallskip
-\item[4.]\hypertarget{exercise-291}{}
+\item[4.]\hypertarget{exercise-290}{}
 For which \(m\) and \(n\) does the graph \(K_{m,n}\) contain an Euler path? An Euler circuit? Explain.
 %
 \par\smallskip
-\item[5.]\hypertarget{exercise-292}{}
+\item[5.]\hypertarget{exercise-291}{}
 A bridge builder has come to Königsberg and would like to add bridges so that it \emph{is} possible to travel over every bridge exactly once. How many bridges must be built?
 %
 \par\smallskip
-\item[6.]\hypertarget{exercise-293}{}
+\item[6.]\hypertarget{exercise-292}{}
 Below is a graph representing friendships between a group of students (each vertex is a student and each edge is a friendship). Is it possible for the students to sit around a round table in such a way that every student sits between two friends? What does this question have to do with paths?
 %
 \leavevmode%
@@ -14665,7 +14818,7 @@ There are quite a few different proofs of this theorem \textendash{} a quick int
 
 In addition to its application to marriage and student presentation topics, matchings have applications all over the place. We conclude with one such example.
 %
-\begin{example}[]\label{example-110}
+\begin{example}[]\label{example-111}
 
 Suppose you deal 52 regular playing cards into 13 piles of 4 cards each. Prove that you can always select one card from each pile to get one of each of the 13 card values Ace, 2, 3, \dots{}, 10, Jack, Queen, and King.
 %
@@ -14760,37 +14913,37 @@ Can you give a recurrence relation that fits the problem?
 \typeout{************************************************}
 \subsubsection[Exercises]{Exercises}\label{exercises-29}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-294}{}
+\item[1.]\hypertarget{exercise-293}{}
             Which (if any) of the graphs below are the same? Which are different? Explain.
           %
 % group protects changes to lengths, releases boxes (?)
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxDUimage}
-\savebox{\panelboxDUimage}{
+\newsavebox{\panelboxEAimage}
+\savebox{\panelboxEAimage}{
 \resizebox{0.28\linewidth}{!}{{
             \begin{tikzpicture}[yscale=.7]
   \draw (-2,0) \v -- (0,0) \v -- (2,0) \v -- (-1,2) \v -- (1,2) \v -- (0,0) -- (-1,2) (1,2) -- (-2,0);
 \end{tikzpicture}
 }
 }}
-\newlength{\phDUimage}\setlength{\phDUimage}{\ht\panelboxDUimage+\dp\panelboxDUimage}
-\settototalheight{\phDUimage}{\usebox{\panelboxDUimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDUimage}}
-\newsavebox{\panelboxDVimage}
-\savebox{\panelboxDVimage}{
+\newlength{\phEAimage}\setlength{\phEAimage}{\ht\panelboxEAimage+\dp\panelboxEAimage}
+\settototalheight{\phEAimage}{\usebox{\panelboxEAimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEAimage}}
+\newsavebox{\panelboxEBimage}
+\savebox{\panelboxEBimage}{
 \resizebox{0.28\linewidth}{!}{{
             \begin{tikzpicture}[yscale=.7]
   \draw (-2,0) \v -- (0,0) \v -- (2,0) \v -- (0,1) \v -- (-2,0) -- (0,2) \v -- (2,0) (0,2) -- (0,1);
 \end{tikzpicture}
 }
 }}
-\newlength{\phDVimage}\setlength{\phDVimage}{\ht\panelboxDVimage+\dp\panelboxDVimage}
-\settototalheight{\phDVimage}{\usebox{\panelboxDVimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDVimage}}
-\newsavebox{\panelboxDWimage}
-\savebox{\panelboxDWimage}{
+\newlength{\phEBimage}\setlength{\phEBimage}{\ht\panelboxEBimage+\dp\panelboxEBimage}
+\settototalheight{\phEBimage}{\usebox{\panelboxEBimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEBimage}}
+\newsavebox{\panelboxECimage}
+\savebox{\panelboxECimage}{
 \resizebox{0.2\linewidth}{!}{{
             \begin{tikzpicture}[yscale=1]
   \draw (-1, 0) \v -- (-1,1) \v -- (0,1) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0);
@@ -14798,9 +14951,9 @@ Can you give a recurrence relation that fits the problem?
 \end{tikzpicture}
 }
 }}
-\newlength{\phDWimage}\setlength{\phDWimage}{\ht\panelboxDWimage+\dp\panelboxDWimage}
-\settototalheight{\phDWimage}{\usebox{\panelboxDWimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDWimage}}
+\newlength{\phECimage}\setlength{\phECimage}{\ht\panelboxECimage+\dp\panelboxECimage}
+\settototalheight{\phECimage}{\usebox{\panelboxECimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phECimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -14809,26 +14962,30 @@ Can you give a recurrence relation that fits the problem?
 \begin{figure}
 \hspace*{0.04\textwidth}%
 \begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.28\textwidth}\usebox{\panelboxDUimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.28\textwidth}\usebox{\panelboxDVimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDWimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.28\textwidth}\usebox{\panelboxEAimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.28\textwidth}\usebox{\panelboxEBimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxECimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
 \par\smallskip
-\item[2.]\hypertarget{exercise-295}{}
+\item[2.]\hypertarget{exercise-294}{}
             Which of the graphs in the previous question contain Euler paths or circuits? Which of the graphs are planar?
           %
 \par\smallskip
-\item[3.]\hypertarget{exercise-296}{}
+\item[3.]\hypertarget{exercise-295}{}
             Draw a graph which has an Euler circuit but is not planar.
           %
 \par\smallskip
-\item[4.]\hypertarget{exercise-297}{}
+\item[4.]\hypertarget{exercise-296}{}
             Draw a graph which does not have an Euler path and is also not planar.
           %
 \par\smallskip
-\item[5.]\hypertarget{exercise-298}{}
+\item[5.]\hypertarget{exercise-297}{}
+      If a graph has 10 vertices and 10 edges and contains an Euler circuit, must it be planar? How many faces would it have?
+      %
+\par\smallskip
+\item[6.]\hypertarget{exercise-298}{}
             Suppose \(G\) is a graph with \(n\) vertices, each having degree 5.
           %
 \leavevmode%
@@ -14844,7 +15001,7 @@ Can you give a recurrence relation that fits the problem?
               %
 \end{enumerate}
 \par\smallskip
-\item[6.]\hypertarget{exercise-299}{}
+\item[7.]\hypertarget{exercise-299}{}
             At a school dance, 6 girls and 4 boys take turns dancing (as couples) with each other.
           %
 \leavevmode%
@@ -14860,11 +15017,11 @@ Can you give a recurrence relation that fits the problem?
               %
 \end{enumerate}
 \par\smallskip
-\item[7.]\hypertarget{exercise-300}{}
+\item[8.]\hypertarget{exercise-300}{}
             Among a group of \(n\) people, is it possible for everyone to be friends with an odd number of people in the group? If so, what can you say about \(n\)?
           %
 \par\smallskip
-\item[8.]\hypertarget{exercise-301}{}
+\item[9.]\hypertarget{exercise-301}{}
             Your friend has challenged you to create a convex polyhedron containing 9 triangles and 6 pentagons.
           %
 \leavevmode%
@@ -14880,27 +15037,27 @@ Can you give a recurrence relation that fits the problem?
               %
 \end{enumerate}
 \par\smallskip
-\item[9.]\hypertarget{exercise-302}{}
+\item[10.]\hypertarget{exercise-302}{}
             Is there a convex polyhedron which requires 5 colors to properly color the vertices of the polyhedron? Explain.
           %
 \par\smallskip
-\item[10.]\hypertarget{exercise-303}{}
+\item[11.]\hypertarget{exercise-303}{}
             How many edges does the graph \(K_{n,n}\) have? For which values of \(n\) does the graph contain an Euler circuit? For which values of \(n\) is the graph planar?
           %
 \par\smallskip
-\item[11.]\hypertarget{exercise-304}{}
+\item[12.]\hypertarget{exercise-304}{}
             The graph \(G\) has 6 vertices with degrees \(1, 2, 2, 3, 3, 5\). How many edges does \(G\) have? If \(G\) was planar how many faces would it have? Does \(G\) have an Euler path?
           %
 \par\smallskip
-\item[12.]\hypertarget{exercise-305}{}
+\item[13.]\hypertarget{exercise-305}{}
             What is the smallest number of colors you need to properly color the vertices of \(K_{7}\). Can you say whether \(K_7\) is planar based on your answer?
           %
 \par\smallskip
-\item[13.]\hypertarget{exercise-306}{}
+\item[14.]\hypertarget{exercise-306}{}
             What is the smallest number of colors you need to properly color the vertices of \(K_{3,4}\)? Can you say whether \(K_{3,4}\) is planar based on your answer?
           %
 \par\smallskip
-\item[14.]\hypertarget{exercise-307}{}
+\item[15.]\hypertarget{exercise-307}{}
             A dodecahedron is a regular convex polyhedron made up of 12 regular pentagons.
           %
 \leavevmode%
@@ -14916,11 +15073,11 @@ Can you give a recurrence relation that fits the problem?
               %
 \end{enumerate}
 \par\smallskip
-\item[15.]\hypertarget{exercise-308}{}
+\item[16.]\hypertarget{exercise-308}{}
             If a planar graph \(G\) with \(7\) vertices divides the plane into 8 regions, how many edges must \(G\) have?
           %
 \par\smallskip
-\item[16.]\hypertarget{exercise-309}{}
+\item[17.]\hypertarget{exercise-309}{}
             Consider the graph below:
           %
 \leavevmode%
@@ -14948,7 +15105,7 @@ Can you give a recurrence relation that fits the problem?
               %
 \end{enumerate}
 \par\smallskip
-\item[17.]\hypertarget{exercise-310}{}
+\item[18.]\hypertarget{exercise-310}{}
             For each part below, say whether the statement is true or false. Explain why the true statements are true, and given counter-examples for the false statements.
           %
 \leavevmode%
@@ -14970,7 +15127,7 @@ Can you give a recurrence relation that fits the problem?
               %
 \end{enumerate}
 \par\smallskip
-\item[18.]\hypertarget{exercise-311}{}
+\item[19.]\hypertarget{exercise-311}{}
             Find a matching of the bipartite graphs below or explain why no matching exists.
           %
 \par
@@ -14980,8 +15137,8 @@ Can you give a recurrence relation that fits the problem?
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxDYimage}
-\savebox{\panelboxDYimage}{
+\newsavebox{\panelboxEEimage}
+\savebox{\panelboxEEimage}{
 \resizebox{0.2\linewidth}{!}{{
                 \begin{tikzpicture}
 \coordinate (a) at (0,0);
@@ -14994,11 +15151,11 @@ Can you give a recurrence relation that fits the problem?
 \end{tikzpicture}
 }
 }}
-\newlength{\phDYimage}\setlength{\phDYimage}{\ht\panelboxDYimage+\dp\panelboxDYimage}
-\settototalheight{\phDYimage}{\usebox{\panelboxDYimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDYimage}}
-\newsavebox{\panelboxDZimage}
-\savebox{\panelboxDZimage}{
+\newlength{\phEEimage}\setlength{\phEEimage}{\ht\panelboxEEimage+\dp\panelboxEEimage}
+\settototalheight{\phEEimage}{\usebox{\panelboxEEimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEEimage}}
+\newsavebox{\panelboxEFimage}
+\savebox{\panelboxEFimage}{
 \resizebox{0.3\linewidth}{!}{{
                 \begin{tikzpicture}
 \coordinate (a) at (0,0);
@@ -15014,11 +15171,11 @@ Can you give a recurrence relation that fits the problem?
 \end{tikzpicture}
 }
 }}
-\newlength{\phDZimage}\setlength{\phDZimage}{\ht\panelboxDZimage+\dp\panelboxDZimage}
-\settototalheight{\phDZimage}{\usebox{\panelboxDZimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phDZimage}}
-\newsavebox{\panelboxEAimage}
-\savebox{\panelboxEAimage}{
+\newlength{\phEFimage}\setlength{\phEFimage}{\ht\panelboxEFimage+\dp\panelboxEFimage}
+\settototalheight{\phEFimage}{\usebox{\panelboxEFimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEFimage}}
+\newsavebox{\panelboxEGimage}
+\savebox{\panelboxEGimage}{
 \resizebox{0.4\linewidth}{!}{{
                 \begin{tikzpicture}
 \coordinate (a) at (0,0);
@@ -15036,9 +15193,9 @@ Can you give a recurrence relation that fits the problem?
 \end{tikzpicture}
 }
 }}
-\newlength{\phEAimage}\setlength{\phEAimage}{\ht\panelboxEAimage+\dp\panelboxEAimage}
-\settototalheight{\phEAimage}{\usebox{\panelboxEAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phEAimage}}
+\newlength{\phEGimage}\setlength{\phEGimage}{\ht\panelboxEGimage+\dp\panelboxEGimage}
+\settototalheight{\phEGimage}{\usebox{\panelboxEGimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEGimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -15047,9 +15204,9 @@ Can you give a recurrence relation that fits the problem?
 \begin{figure}
 \hspace*{0.0166666666666667\textwidth}%
 \begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxDYimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxDZimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.4\textwidth}\usebox{\panelboxEAimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxEEimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxEFimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.4\textwidth}\usebox{\panelboxEGimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -15057,7 +15214,7 @@ Can you give a recurrence relation that fits the problem?
 
           %
 \par\smallskip
-\item[19.]\hypertarget{exercise-312}{}
+\item[20.]\hypertarget{exercise-312}{}
             Consider the statement ``If a graph is planar, then it has an Euler path.''
           %
 \leavevmode%
@@ -15332,6 +15489,34 @@ Can you give a recurrence relation that fits the problem?
 \end{enumerate}
 \par\smallskip
 \item[9.]\hypertarget{exercise-321}{}
+            Consider the following graph:
+          %
+\leavevmode%
+\begin{figure}
+\centering
+{
+\begin{tikzpicture}
+\foreach \x in {0, 45, ..., 315}
+  \draw  (\x:2) \v -- (\x+45:2);
+\draw (0,0) \v -- (45:2) (0,0) -- (135:2) (0,0) -- (225:2) (0,0) -- (315:2);
+\draw (-1,0) \v -- (90:2) (-1,0) -- (180:2) (-1,0) -- (270:2);
+\draw (1,0) \v -- (90:2) (1,0) -- (0:2) (1,0) -- (270:2);
+\end{tikzpicture}
+}
+\end{figure}
+\par
+
+            \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-1343}{}Find a Hamilton path.  Can your path be extended to a Hamilton cycle?%
+\item\hypertarget{li-1344}{}Is the graph bipartite? If so, how many vertices are in each ``part''?%
+\item\hypertarget{li-1345}{}Use your answer to part (b) to prove that the graph has no Hamilton cycle.%
+\item\hypertarget{li-1346}{}Suppose you have a bipartite graph \(G\) in which one part has at least two more vertices than the other.  Prove that \(G\) does not have a Hamilton path.%
+\end{enumerate}
+
+          %
+\par\smallskip
+\item[10.]\hypertarget{exercise-322}{}
             BONUS: King Arthur has hired a consultant, Sir Cumference, to plan a seating arrangement for Arthur and nine of his knights to sit around the round table. This would not be a difficult task, were it not for the jealousies and petty rivalries that exist among the knights. Arthur insists that Lancelot should sit on his right and that Kay should sit on his left; Bedivere refuses to sit next to anyone but Lionel and Tristan; Gawain won't sit next to Tristan, Lancelot, or Lionel; Gareth won't sit next to Galahad, Lancelot, or Kay; Perceval objects to sitting next to Galahad, Lancelot, or Lionel; Tristan refuses to sit next to Lancelot, Perceval or Kay; Galahad will sit next to anyone except Gawain and Kay; and Lionel will not sit next to Galahad. The other two knights are not particular about whom they sit next to.
           %
 \par
@@ -15377,7 +15562,7 @@ When viewed in the context of generating functions, we call such a power series 
 
 In other words, the sequence generated by a generating series is simply the sequence of \emph{coefficients} of the infinite polynomial.
 %
-\begin{example}[]\label{example-111}
+\begin{example}[]\label{example-112}
 
 What sequence is represented by the generating series \(3 + 8x^2 + x^3 + \frac{x^5}{7} + 100x^6 + \cdots\)?
 %
@@ -15527,7 +15712,7 @@ For example, consider the sequence \(2, 4, 10, 28, 82, \ldots\). How could we mo
 
 While we don't get exactly the sequence of differences, we do get something close. In this particular case, we already know the generating function \(A\) (we found it in the previous section) but most of the time we will use this differencing technique to \emph{find} \(A\): if we have the generating function for the sequence of differences, we can then solve for \(A\).
 %
-\begin{example}[]\label{example-112}
+\begin{example}[]\label{example-113}
 
 Find a generating function for \(1, 3, 5, 7, 9,\ldots\).
 %
@@ -15563,7 +15748,7 @@ Does this makes sense? Before we simplified the two fractions into one, we were 
 
 Now that we have a generating function for the odd numbers, we can use that to find the generating function for the squares:
 %
-\begin{example}[]\label{example-113}
+\begin{example}[]\label{example-114}
 
 Find the generating function for \(1, 4, 9, 16, \ldots\). Note we take \(1 = a_0\).
 %
@@ -15585,7 +15770,7 @@ Since \(1 + 3x + 5x^2 + 7x^3 + \cdots = \d\frac{1+x}{(1-x)^2}\) we have \(A = \d
 
 In each of the examples above, we found the difference between consecutive terms which gave us a sequence of differences for which we knew a generating function. We can generalize this to more complicated relationships between terms of the sequence. For example, if we know that the sequence satisfies the recurrence relation \(a_n = 3a_{n-1} - 2a_{n-2}\)? In other words, if we take a term of the sequence and subtract 3 times the previous term and then add 2 times the term before that, we get 0 (since \(a_n - 3a_{n-1} + 2a_{n-2} = 0\)). That will hold for all but the first two terms of the sequence. So after the first two terms, the sequence of results of these calculations would be a sequence of 0's, for which we definitely know a generating function.
 %
-\begin{example}[]\label{example-114}
+\begin{example}[]\label{example-115}
 
 The sequence \(1, 3, 7, 15, 31, 63, \ldots\) satisfies the recurrence relation \(a_n = 3a_{n-1} - 2a_{n-2}\). Find the generating function for the sequence.
 %
@@ -15621,7 +15806,7 @@ What happens to the sequences when you multiply two generating functions? Let's 
   AB = a_0b_0 + (a_0b_1 + a_1b_0)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2 + (a_0b_3 + a_1b_2 + a_2b_1 + a_3b_0)x^3 + \cdots
 \end{equation*}
 %
-\begin{example}[]\label{example-115}
+\begin{example}[]\label{example-116}
 
 ``Multiply'' the sequence \(1, 2, 3, 4, \ldots\) by the sequence \(1, 2, 4, 8, 16, \ldots\).
 %
@@ -15653,7 +15838,7 @@ The point is, if you need to find a generating function for the sum of the first
 
 We conclude with an example of one of the many reasons studying generating functions is helpful. We can use generating functions to solve recurrence relations.
 %
-\begin{example}[]\label{example-116}
+\begin{example}[]\label{example-117}
 
 Solve the recurrence relation \(a_n = 3a_{n-1} - 2a_{n-2}\) with initial conditions \(a_0 = 1\) and \(a_1 = 3\).
 %
@@ -15719,122 +15904,122 @@ We can now add generating functions to our list of methods for solving recurrenc
 \typeout{************************************************}
 \subsection[Exercises]{Exercises}\label{exercises-31}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-322}{}
+\item[1.]\hypertarget{exercise-323}{}
 Find the generating function for each of the following sequences by relating them back to a sequence with known generating function.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1343}{}\(4,4,4,4,4,\ldots\).%
-\item\hypertarget{li-1344}{}\(2, 4, 6, 8, 10, \ldots\).%
-\item\hypertarget{li-1345}{}\(0,0,0,2,4,6,8,10,\ldots\).%
-\item\hypertarget{li-1346}{}\(1, 5, 25, 125, \ldots\).%
-\item\hypertarget{li-1347}{}\(1, -3, 9, -27, 81, \ldots\).%
-\item\hypertarget{li-1348}{}\(1, 0, 5, 0, 25, 0, 125, 0, \ldots\).%
-\item\hypertarget{li-1349}{}\(0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, \ldots\).%
+\item\hypertarget{li-1347}{}\(4,4,4,4,4,\ldots\).%
+\item\hypertarget{li-1348}{}\(2, 4, 6, 8, 10, \ldots\).%
+\item\hypertarget{li-1349}{}\(0,0,0,2,4,6,8,10,\ldots\).%
+\item\hypertarget{li-1350}{}\(1, 5, 25, 125, \ldots\).%
+\item\hypertarget{li-1351}{}\(1, -3, 9, -27, 81, \ldots\).%
+\item\hypertarget{li-1352}{}\(1, 0, 5, 0, 25, 0, 125, 0, \ldots\).%
+\item\hypertarget{li-1353}{}\(0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, \ldots\).%
 \end{enumerate}
 \par\smallskip
-\item[2.]\hypertarget{exercise-323}{}
+\item[2.]\hypertarget{exercise-324}{}
 Find the sequence generated by the following generating functions:
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1357}{}\(\dfrac{4x}{1-x}\).%
-\item\hypertarget{li-1358}{}\(\dfrac{1}{1-4x}\).%
-\item\hypertarget{li-1359}{}\(\dfrac{x}{1+x}\).%
-\item\hypertarget{li-1360}{}\(\dfrac{3x}{(1+x)^2}\).%
-\item\hypertarget{li-1361}{}\(\dfrac{1+x+x^2}{(1-x)^2}\) (Hint: multiplication).%
+\item\hypertarget{li-1361}{}\(\dfrac{4x}{1-x}\).%
+\item\hypertarget{li-1362}{}\(\dfrac{1}{1-4x}\).%
+\item\hypertarget{li-1363}{}\(\dfrac{x}{1+x}\).%
+\item\hypertarget{li-1364}{}\(\dfrac{3x}{(1+x)^2}\).%
+\item\hypertarget{li-1365}{}\(\dfrac{1+x+x^2}{(1-x)^2}\) (Hint: multiplication).%
 \end{enumerate}
 \par\smallskip
-\item[3.]\hypertarget{exercise-324}{}
+\item[3.]\hypertarget{exercise-325}{}
 Show how you can get the generating function for the triangular numbers in three different ways:
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1367}{}
+\item\hypertarget{li-1371}{}
 Take two derivatives of the generating function for \(1,1,1,1,1, \ldots\)
 %
-\item\hypertarget{li-1368}{}
+\item\hypertarget{li-1372}{}
 Use differencing.
 %
-\item\hypertarget{li-1369}{}
+\item\hypertarget{li-1373}{}
 Multiply two known generating functions.
 %
 \end{enumerate}
 \par\smallskip
-\item[4.]\hypertarget{exercise-325}{}
+\item[4.]\hypertarget{exercise-326}{}
 Use differencing to find the generating function for \(4, 5, 7, 10, 14, 19, 25, \ldots\).
 %
 \par\smallskip
-\item[5.]\hypertarget{exercise-326}{}
+\item[5.]\hypertarget{exercise-327}{}
 Find a generating function for the sequence with recurrence relation \(a_n = 3a_{n-1} - a_{n-2}\) with initial terms \(a_0 = 1\) and \(a_1 = 5\).
 %
 \par\smallskip
-\item[6.]\hypertarget{exercise-327}{}
+\item[6.]\hypertarget{exercise-328}{}
 Use the recurrence relation for the Fibonacci numbers to find the generating function for the Fibonacci sequence.
 %
 \par\smallskip
-\item[7.]\hypertarget{exercise-328}{}
+\item[7.]\hypertarget{exercise-329}{}
 Use multiplication to find the generating function for the sequence of partial sums of Fibonacci numbers, \(S_0, S_1, S_2, \ldots\) where \(S_0 = F_0\), \(S_1 = F_0 + F_1\), \(S_2 = F_0 + F_1 + F_2\), \(S_3 = F_0 + F_1 + F_2 + F_3\) and so on.
 %
 \par\smallskip
-\item[8.]\hypertarget{exercise-329}{}
+\item[8.]\hypertarget{exercise-330}{}
 Find the generating function for the sequence with closed formula \(a_n = 2(5^n) + 7(-3)^n\).
 %
 \par\smallskip
-\item[9.]\hypertarget{exercise-330}{}
+\item[9.]\hypertarget{exercise-331}{}
 Find a closed formula for the \(n\)th term of the sequence with generating function \(\dfrac{3x}{1-4x} + \dfrac{1}{1-x}\).
 %
 \par\smallskip
-\item[10.]\hypertarget{exercise-331}{}
+\item[10.]\hypertarget{exercise-332}{}
 Find \(a_7\) for the sequence with generating function \(\dfrac{2}{(1-x)^2}\cdot\dfrac{x}{1-x-x^2}\).
 %
 \par\smallskip
-\item[11.]\hypertarget{exercise-332}{}
+\item[11.]\hypertarget{exercise-333}{}
 Explain how we know that \(\dfrac{1}{(1-x)^2}\) is the generating function for \(1, 2, 3, 4, \ldots\).
 %
 \par\smallskip
-\item[12.]\hypertarget{exercise-333}{}
+\item[12.]\hypertarget{exercise-334}{}
 Starting with the generating function for \(1,2,3,4, \ldots\), find a generating function for each of the following sequences.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1373}{}\(1, 0, 2, 0, 3, 0, 4,\ldots\).%
-\item\hypertarget{li-1374}{}\(1, -2, 3, -4, 5, -6, \ldots\).%
-\item\hypertarget{li-1375}{}\(0, 3, 6, 9, 12, 15, 18, \ldots\).%
-\item\hypertarget{li-1376}{}\(0, 3, 9, 18, 30, 45, 63,\ldots\). (Hint: relate this sequence to the previous one.)%
+\item\hypertarget{li-1377}{}\(1, 0, 2, 0, 3, 0, 4,\ldots\).%
+\item\hypertarget{li-1378}{}\(1, -2, 3, -4, 5, -6, \ldots\).%
+\item\hypertarget{li-1379}{}\(0, 3, 6, 9, 12, 15, 18, \ldots\).%
+\item\hypertarget{li-1380}{}\(0, 3, 9, 18, 30, 45, 63,\ldots\). (Hint: relate this sequence to the previous one.)%
 \end{enumerate}
 \par\smallskip
-\item[13.]\hypertarget{exercise-334}{}
+\item[13.]\hypertarget{exercise-335}{}
 You may assume that \(1, 1, 2, 3, 5, 8,\ldots\) has generating function \(\dfrac{1}{1-x-x^2}\) (because it does). Use this fact to find the sequence generated by each of the following generating functions.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1381}{}\(\frac{x^2}{1-x-x^2}\).%
-\item\hypertarget{li-1382}{}\(\frac{1}{1-x^2-x^4}\).%
-\item\hypertarget{li-1383}{}\(\frac{1}{1-3x-9x^2}\).%
-\item\hypertarget{li-1384}{}\(\frac{1}{(1-x-x^2)(1-x)}\).%
+\item\hypertarget{li-1385}{}\(\frac{x^2}{1-x-x^2}\).%
+\item\hypertarget{li-1386}{}\(\frac{1}{1-x^2-x^4}\).%
+\item\hypertarget{li-1387}{}\(\frac{1}{1-3x-9x^2}\).%
+\item\hypertarget{li-1388}{}\(\frac{1}{(1-x-x^2)(1-x)}\).%
 \end{enumerate}
 \par\smallskip
-\item[14.]\hypertarget{exercise-335}{}
+\item[14.]\hypertarget{exercise-336}{}
 Find the generating function for the sequence \(1, -2, 4, -8, 16, \ldots\).
 %
 \par\smallskip
-\item[15.]\hypertarget{exercise-336}{}
+\item[15.]\hypertarget{exercise-337}{}
 Find the generating function for the sequence \(1, 1, 1, 2, 3, 4, 5, 6, \ldots\).
 %
 \par\smallskip
-\item[16.]\hypertarget{exercise-337}{}
+\item[16.]\hypertarget{exercise-338}{}
 Suppose \(A\) is the generating function for the sequence \(3, 5, 9, 15, 23, 33, \ldots\).
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1389}{}
+\item\hypertarget{li-1393}{}
 Find a generating function (in terms of \(A\)) for the sequence of differences between terms.
 %
-\item\hypertarget{li-1390}{}
+\item\hypertarget{li-1394}{}
 Write the sequence of differences between terms and find a generating function for it (without referencing \(A\)).
 %
-\item\hypertarget{li-1391}{}
+\item\hypertarget{li-1395}{}
 Use your answers to parts (a) and (b) to find the generating function for the original sequence.
 %
 \end{enumerate}
@@ -15902,50 +16087,50 @@ provided \(n \div m\) is an integer. Thus the following assertions mean the same
 
 Notice that \(m \mid n\) is a statement. It is either true or false. On the other hand, \(n \div m\) or \(n/m\) is some number. If we want to claim that \(n/m\) is not an integer, so \(m\) does not divide \(n\), then we can write \(m \nmid n\).
 %
-\begin{example}[]\label{example-117}
+\begin{example}[]\label{example-118}
 
 Decide whether each of the statements below are true or false.
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-1399}{}\(4 \mid 20\)%
-\item\hypertarget{li-1400}{}\(20 \mid 4\)%
-\item\hypertarget{li-1401}{}\(0 \mid 5\)%
-\item\hypertarget{li-1402}{}\(5 \mid 0\)%
-\item\hypertarget{li-1403}{}\(7 \mid 7\)%
-\item\hypertarget{li-1404}{}\(1 \mid 37\)%
-\item\hypertarget{li-1405}{}\(-3 \mid 12\)%
-\item\hypertarget{li-1406}{}\(8 \mid 12\)%
-\item\hypertarget{li-1407}{}\(1642 \mid 136299\)%
+\item\hypertarget{li-1403}{}\(4 \mid 20\)%
+\item\hypertarget{li-1404}{}\(20 \mid 4\)%
+\item\hypertarget{li-1405}{}\(0 \mid 5\)%
+\item\hypertarget{li-1406}{}\(5 \mid 0\)%
+\item\hypertarget{li-1407}{}\(7 \mid 7\)%
+\item\hypertarget{li-1408}{}\(1 \mid 37\)%
+\item\hypertarget{li-1409}{}\(-3 \mid 12\)%
+\item\hypertarget{li-1410}{}\(8 \mid 12\)%
+\item\hypertarget{li-1411}{}\(1642 \mid 136299\)%
 \end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-1408}{}
+\item\hypertarget{li-1412}{}
 True.  4 ``goes into'' 20 five times without remainder.  In other words, \(20 \div 4 = 5\), an integer. We could also justify this by saying that \(20\) is a multiple of 4: \(20 = 4\cdot 5\).
 %
-\item\hypertarget{li-1409}{}
+\item\hypertarget{li-1413}{}
 False. While 20 is a multiple of 4, it is false that \(4\) is a multiple of 20.
 %
-\item\hypertarget{li-1410}{}
+\item\hypertarget{li-1414}{}
 False.  \(5 \div 0\) is not even defined, let alone an integer.
 %
-\item\hypertarget{li-1411}{}
+\item\hypertarget{li-1415}{}
 True.  In fact, \(x \mid 0\) is true for all \(x\).  This is because 0 is a multiple of every number: \(0 = x\cdot 0\).
 %
-\item\hypertarget{li-1412}{}
+\item\hypertarget{li-1416}{}
 True.  In fact, \(x \mid x\) is true for all \(x\).
 %
-\item\hypertarget{li-1413}{}
+\item\hypertarget{li-1417}{}
 True.  1 divides every number (other than 0).
 %
-\item\hypertarget{li-1414}{}
+\item\hypertarget{li-1418}{}
 True.  Negative numbers work just fine for the divisibility relation.  Here \(12 = -3 \cdot 4\).	It is also true that \(3 \mid -12\) and that \(-3 \mid -12\).
 %
-\item\hypertarget{li-1415}{}
+\item\hypertarget{li-1419}{}
 False.  Both 8 and 12 are divisible by 4, but this does not mean that \(12\) is divisible by \(8\).
 %
-\item\hypertarget{li-1416}{}
+\item\hypertarget{li-1420}{}
 False. See below.
 %
 \end{enumerate}
@@ -16015,7 +16200,7 @@ The idea is that we can always take a large enough multiple of \(b\) so that the
 
 The division algorithm tells us that there are only \(b\) possible remainders when dividing by \(b\). If we fix this divisor, we can group integers by the remainder. Each group is called a \emph{remainder class modulo \(b\)} (or sometimes \emph{residue class}).
 %
-\begin{example}[]\label{example-118}
+\begin{example}[]\label{example-119}
 
 Describe the remainder classes modulo \(5\).
 %
@@ -16201,7 +16386,7 @@ The other two facts can be proved in a similar way.
 
 One of the important consequences of these facts about congruences, is that we can basically replace any number in a congruence with any other number it is congruent to. Here are some examples to see how (and why) that works:
 %
-\begin{example}[]\label{example-119}
+\begin{example}[]\label{example-120}
 
 Find the remainder of \(3491\) divided by \(9\).
 %
@@ -16241,7 +16426,7 @@ The above example should convince you that the well known divisibility test for 
 
 Let's try another:
 %
-\begin{example}[]\label{example-120}
+\begin{example}[]\label{example-121}
 
 Find the remainder when \(3^{123}\) is divided by 7.
 %
@@ -16303,7 +16488,7 @@ Suppose \(ad \equiv bd \pmod n\). Then \(a \equiv b \pmod{\frac{n}{\gcd(d,n)}}\)
 If \(d\) and \(n\) have no common factors then \(\gcd(d,n) = 1\), so \(a \equiv b \pmod n\).
 %
 \end{assemblage}
-\begin{example}[]\label{example-121}
+\begin{example}[]\label{example-122}
 
 Simplify the following congruences using division: (a) \(24 \equiv 39 \pmod 5\) and (b) \(24 \equiv 39 \pmod{15}\).
 %
@@ -16366,20 +16551,20 @@ Now divide both sides by 3. Since \(\gcd(3,5) = 1\), we do not need to change th
 
 Notice that this in fact gives the \emph{general solution}: not only can \(x = 4\), but \(x\) can be any number which is congruent to 4. We can leave it like this, or write ``\(x = 4 + 5k\) for any integer \(k\).''
 %
-\begin{example}[]\label{example-122}
+\begin{example}[]\label{example-123}
 
 Solve the following congruences for \(x\).
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-1423}{}\(7x \equiv 12 \pmod{13}\).%
-\item\hypertarget{li-1424}{}\(84x - 38 \equiv 79 \pmod{15}\).%
-\item\hypertarget{li-1425}{}\(20x \equiv 23 \pmod{14}\).%
+\item\hypertarget{li-1427}{}\(7x \equiv 12 \pmod{13}\).%
+\item\hypertarget{li-1428}{}\(84x - 38 \equiv 79 \pmod{15}\).%
+\item\hypertarget{li-1429}{}\(20x \equiv 23 \pmod{14}\).%
 \end{enumerate}
 \par\medskip\noindent%
 \textbf{Solution.}\quad \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-1426}{}
+\item\hypertarget{li-1430}{}
 All we need to do here is divide both sides by 7.  We add 13 to the right-hand side repeatedly until we get a multiple of 7 (adding 13 is the same as adding 0, so this is legal).  We get \(25\), \(38\), \(51\), \(64\), \(77\) \textendash{} got it.  So we have:
 \begin{equation*}
   \begin{aligned}7x \amp  \equiv 12 \pmod{13} \\
@@ -16388,7 +16573,7 @@ All we need to do here is divide both sides by 7.  We add 13 to the right-hand s
 \end{aligned}
 \end{equation*}
 %
-\item\hypertarget{li-1427}{}
+\item\hypertarget{li-1431}{}
 Here, since we have numbers larger than the modulus, we can reduce them prior to applying any algebra.  We have \(84 \equiv 9\), \(38 \equiv 8\) and \(79 \equiv 4\).  Thus,
 \begin{equation*}
   \begin{aligned}84x - 38 \amp  \equiv 79 \pmod{15} \\
@@ -16406,7 +16591,7 @@ So the solutions are those values which are congruent to 8, or equivalently 3, m
   x \equiv 3 \pmod{15}; ~~ x \equiv 8 \pmod{15}; ~~x \equiv 13 \pmod{15}.
 \end{equation*}
 %
-\item\hypertarget{li-1428}{}
+\item\hypertarget{li-1432}{}
 First, reduce modulo 14:
 \begin{equation*}
   20x \equiv 23 \pmod{14}
@@ -16522,10 +16707,10 @@ To summarize this process, to solve \(ax + by = c\), we,
 %
 \leavevmode%
 \begin{enumerate}
-\item\hypertarget{li-1429}{}
+\item\hypertarget{li-1433}{}
 Divide both sides of the equation by \(\gcd(a,b)\) (if this does not leave the right-hand side as an integer, there are no solutions).  Let's assume that \(ax + by = c\) has already been reduced in this way.
 %
-\item\hypertarget{li-1430}{}
+\item\hypertarget{li-1434}{}
 Pick the smaller of \(a\) and \(b\) (here, assume it is \(b\)), and convert to a congruence modulo \(b\):
 \begin{equation*}
   ax + by \equiv c \pmod{b}.
@@ -16535,16 +16720,16 @@ This will reduce to a congruence with one variable, \(x\):
   ax \equiv c \pmod{b}.
 \end{equation*}
 %
-\item\hypertarget{li-1431}{}
+\item\hypertarget{li-1435}{}
 Solve the congruence as we did in the previous section.  Write your solution as an equation, such as,
 \begin{equation*}
   x = n + kb
 \end{equation*}
 %
-\item\hypertarget{li-1432}{}
+\item\hypertarget{li-1436}{}
 Plug this into the original Diophantine equation, and solve for \(y\).
 %
-\item\hypertarget{li-1433}{}
+\item\hypertarget{li-1437}{}
 If we want to know solutions in a particular range (for example, \(0 \le x, y \le 20\)), pick different values of \(k\) until you have all required solutions.
 %
 \end{enumerate}
@@ -16552,7 +16737,7 @@ If we want to know solutions in a particular range (for example, \(0 \le x, y \l
 
 Here is another example:
 %
-\begin{example}[]\label{example-123}
+\begin{example}[]\label{example-124}
 
 How can you make \textdollar{}6.37 using just 5-cent and 8-cent stamps? What is the smallest and largest number of stamps you could use?
 %
@@ -16645,80 +16830,80 @@ Of course you could do this switching back and forth between congruences and Dio
 \typeout{************************************************}
 \subsection[Exercises]{Exercises}\label{exercises-32}
 \begin{exerciselist}
-\item[1.]\hypertarget{exercise-338}{}
+\item[1.]\hypertarget{exercise-339}{}
 Suppose \(a\), \(b\), and \(c\) are integers. Prove that if \(a \mid b\), then \(a \mid bc\).
 %
 \par\smallskip
-\item[2.]\hypertarget{exercise-339}{}
+\item[2.]\hypertarget{exercise-340}{}
 Suppose \(a\), \(b\), and \(c\) are integers. Prove that if \(a \mid b\) and \(a \mid c\) then \(a \mid b+c\) and \(a \mid b-c\).
 %
 \par\smallskip
-\item[3.]\hypertarget{exercise-340}{}
+\item[3.]\hypertarget{exercise-341}{}
 Write out the remainder classes for \(n = 4\).
 %
 \par\smallskip
-\item[4.]\hypertarget{exercise-341}{}
+\item[4.]\hypertarget{exercise-342}{}
 Let \(a\), \(b\), \(c\), and \(n\) be integers. Prove that if \(a \equiv b \pmod{n}\) and \(c \equiv d \pmod{n}\), then \(a-c \equiv b-d \pmod{n}\).
 %
 \par\smallskip
-\item[5.]\hypertarget{exercise-342}{}
+\item[5.]\hypertarget{exercise-343}{}
 Find the remainder of \(3^{456}\) when divided by
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1434}{}
+\item\hypertarget{li-1438}{}
 2.
 %
-\item\hypertarget{li-1435}{}
+\item\hypertarget{li-1439}{}
 5.
 %
-\item\hypertarget{li-1436}{}
+\item\hypertarget{li-1440}{}
 7.
 %
-\item\hypertarget{li-1437}{}
+\item\hypertarget{li-1441}{}
 9.
 %
 \end{enumerate}
 \par\smallskip
-\item[6.]\hypertarget{exercise-343}{}
+\item[6.]\hypertarget{exercise-344}{}
 Determine which of the following congruences have solutions, and find any solutions (between 0 and the modulus) by trial and error.
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1442}{}\(4x \equiv 5 \pmod 6\).%
-\item\hypertarget{li-1443}{}\(4x \equiv 5 \pmod 7\).%
-\item\hypertarget{li-1444}{}\(6x \equiv 3 \pmod 9\).%
-\item\hypertarget{li-1445}{}\(6x \equiv 4 \pmod 9\).%
-\item\hypertarget{li-1446}{}\(x^2 \equiv 2 \pmod 4\).%
-\item\hypertarget{li-1447}{}\(x^2 \equiv 2 \pmod 7\).%
+\item\hypertarget{li-1446}{}\(4x \equiv 5 \pmod 6\).%
+\item\hypertarget{li-1447}{}\(4x \equiv 5 \pmod 7\).%
+\item\hypertarget{li-1448}{}\(6x \equiv 3 \pmod 9\).%
+\item\hypertarget{li-1449}{}\(6x \equiv 4 \pmod 9\).%
+\item\hypertarget{li-1450}{}\(x^2 \equiv 2 \pmod 4\).%
+\item\hypertarget{li-1451}{}\(x^2 \equiv 2 \pmod 7\).%
 \end{enumerate}
 \par\smallskip
-\item[7.]\hypertarget{exercise-344}{}
+\item[7.]\hypertarget{exercise-345}{}
 Solve the following congruences (describe the general solution).
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1454}{}\(5x + 8 \equiv 11 \pmod{22}\).%
-\item\hypertarget{li-1455}{}\(6x \equiv 4 \pmod{10}\).%
-\item\hypertarget{li-1456}{}\(4x \equiv 24 \pmod{30}\).%
-\item\hypertarget{li-1457}{}\(341x \equiv 2941 \pmod{9}\).%
+\item\hypertarget{li-1458}{}\(5x + 8 \equiv 11 \pmod{22}\).%
+\item\hypertarget{li-1459}{}\(6x \equiv 4 \pmod{10}\).%
+\item\hypertarget{li-1460}{}\(4x \equiv 24 \pmod{30}\).%
+\item\hypertarget{li-1461}{}\(341x \equiv 2941 \pmod{9}\).%
 \end{enumerate}
 \par\smallskip
-\item[8.]\hypertarget{exercise-345}{}
+\item[8.]\hypertarget{exercise-346}{}
 I'm thinking of a number. If you multiply my number by 7, add 5, and divide the result by 11, you will be left with a remainder of 2. What remainder would you get if you divided my original number by 11?
 %
 \par\smallskip
-\item[9.]\hypertarget{exercise-346}{}
+\item[9.]\hypertarget{exercise-347}{}
 Solve the following linear Diophantine equations, using modular arithmetic (describe the general solutions).
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1462}{}\(6x + 10y = 32\).%
-\item\hypertarget{li-1463}{}\(17x + 8y = 31\).%
-\item\hypertarget{li-1464}{}\(35x + 47y = 1\).%
+\item\hypertarget{li-1466}{}\(6x + 10y = 32\).%
+\item\hypertarget{li-1467}{}\(17x + 8y = 31\).%
+\item\hypertarget{li-1468}{}\(35x + 47y = 1\).%
 \end{enumerate}
 \par\smallskip
-\item[10.]\hypertarget{exercise-347}{}
+\item[10.]\hypertarget{exercise-348}{}
 You have a 13 oz. bottle and a 20 oz. bottle, with which you wish to measure exactly 2 oz. However, you have a limited supply of water. If any water enters either bottle and then gets dumped out, it is gone forever. What is the least amount of water you can start with and still complete the task?
 %
 \par\smallskip
@@ -18968,19 +19153,19 @@ F&F&F&T&T&T
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxBYimage}
-\savebox{\panelboxBYimage}{
+\newsavebox{\panelboxCBimage}
+\savebox{\panelboxCBimage}{
 \resizebox{0.4\linewidth}{!}{{
 		\begin{tikzpicture}
  \draw[thick] (-2,0) \v -- (-1,0) \v -- (-1.5,1) \v -- (-2,0) (-1.5,1) -- (1.5, 1) \v -- (1,0) \v -- (2,0) \v -- (1.5,1);
 \end{tikzpicture}
 }
 }}
-\newlength{\phBYimage}\setlength{\phBYimage}{\ht\panelboxBYimage+\dp\panelboxBYimage}
-\settototalheight{\phBYimage}{\usebox{\panelboxBYimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBYimage}}
-\newsavebox{\panelboxBZimage}
-\savebox{\panelboxBZimage}{
+\newlength{\phCBimage}\setlength{\phCBimage}{\ht\panelboxCBimage+\dp\panelboxCBimage}
+\settototalheight{\phCBimage}{\usebox{\panelboxCBimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCBimage}}
+\newsavebox{\panelboxCCimage}
+\savebox{\panelboxCCimage}{
 \resizebox{0.2\linewidth}{!}{{
 		\begin{tikzpicture}
 \foreach \x in {0,...,5}
@@ -18989,9 +19174,9 @@ F&F&F&T&T&T
 \end{tikzpicture}
 }
 }}
-\newlength{\phBZimage}\setlength{\phBZimage}{\ht\panelboxBZimage+\dp\panelboxBZimage}
-\settototalheight{\phBZimage}{\usebox{\panelboxBZimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBZimage}}
+\newlength{\phCCimage}\setlength{\phCCimage}{\ht\panelboxCCimage+\dp\panelboxCCimage}
+\settototalheight{\phCCimage}{\usebox{\panelboxCCimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCCimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -19000,8 +19185,8 @@ F&F&F&T&T&T
 \begin{figure}
 \hspace*{0.1\textwidth}%
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.4\textwidth}\usebox{\panelboxBYimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxBZimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.4\textwidth}\usebox{\panelboxCBimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCCimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -19012,6 +19197,7 @@ F&F&F&T&T&T
 \par\smallskip
 \noindent\textbf{5.}\quad{}
 					Three of the graphs are bipartite. The one which is not is \(C_7\) (second from the right).
+					
 				%
 \par\smallskip
 \noindent\textbf{6.}\quad{}
@@ -19026,28 +19212,28 @@ F&F&F&T&T&T
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxCFimage}
-\savebox{\panelboxCFimage}{
+\newsavebox{\panelboxCIimage}
+\savebox{\panelboxCIimage}{
 \resizebox{0.2\linewidth}{!}{{
 							\begin{tikzpicture}
 	\draw (0,0) \v -- (-1,1) \v (0,0) -- (0,1) \v (0,0) -- (1,1) \v;
 \end{tikzpicture}
 }
 }}
-\newlength{\phCFimage}\setlength{\phCFimage}{\ht\panelboxCFimage+\dp\panelboxCFimage}
-\settototalheight{\phCFimage}{\usebox{\panelboxCFimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCFimage}}
-\newsavebox{\panelboxCGimage}
-\savebox{\panelboxCGimage}{
+\newlength{\phCIimage}\setlength{\phCIimage}{\ht\panelboxCIimage+\dp\panelboxCIimage}
+\settototalheight{\phCIimage}{\usebox{\panelboxCIimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCIimage}}
+\newsavebox{\panelboxCJimage}
+\savebox{\panelboxCJimage}{
 \resizebox{0.2\linewidth}{!}{{
 							\begin{tikzpicture}
 	\draw (0,0) \v -- (-1,1) \v (0,0) -- (.5,.5) \v -- (1,1) \v;
 \end{tikzpicture}
 }
 }}
-\newlength{\phCGimage}\setlength{\phCGimage}{\ht\panelboxCGimage+\dp\panelboxCGimage}
-\settototalheight{\phCGimage}{\usebox{\panelboxCGimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCGimage}}
+\newlength{\phCJimage}\setlength{\phCJimage}{\ht\panelboxCJimage+\dp\panelboxCJimage}
+\settototalheight{\phCJimage}{\usebox{\panelboxCJimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phCJimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -19056,8 +19242,8 @@ F&F&F&T&T&T
 \begin{figure}
 \hspace*{0.15\textwidth}%
 \begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCFimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCGimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCIimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxCJimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -19081,18 +19267,14 @@ No. A (connected) planar graph must satisfy Euler's formula: \(v - e + f = 2\). 
 %
 \par\smallskip
 \noindent\textbf{2.}\quad{}
-\(G\) has 10 edges. It could be planar, and then it would have 6 faces.
+\(G\) has 10 edges. It could be planar, and then it would have 6 faces, using Euler's formula.
 %
 \par\smallskip
 \noindent\textbf{3.}\quad{}
-Yes. According to Euler's formula it would have 2 faces. It does. The only such graph is \(C_{10}\).
-%
-\par\smallskip
-\noindent\textbf{4.}\quad{}
 Say the last polyhedron has \(n\) edges, and also \(n\) vertices. The total number of edges the polyhedron has then is \((7 \cdot 3 + 4 \cdot 4 + n)/2 = (37 + n)/2\). In particular, we know the last face must have an odd number of edges. By Euler's formula, we have \(v - (37+n)/2 + 12 = 2\), so \(v = (17 + n)/2\). But we also know that \(v = 11 + n\). Putting these together we get \(n = 5\), so the last face is a pentagon.
 %
 \par\smallskip
-\noindent\textbf{5.}\quad{}\begin{proof}\hypertarget{proof-61}{}
+\noindent\textbf{4.}\quad{}\begin{proof}\hypertarget{proof-61}{}
 
 Let \(P(n)\) be the statement, ``every planar graph containing \(n\) edges satisfies \(v - n + f = 2\).'' We will show \(P(n)\) is true for all \(n \ge 0\).
 
@@ -19104,7 +19286,7 @@ Let \(P(n)\) be the statement, ``every planar graph containing \(n\) edges satis
 %
 \end{proof}
 \par\smallskip
-\noindent\textbf{6.}\quad{}
+\noindent\textbf{5.}\quad{}
 Say the first component has \(v_1\) vertices, \(e_1\) edges and \(f_1\) faces. The second graph has \(v_2\) vertices, \(e_2\) edges and \(f_2\) faces. Thinking of each of these separately, we have
 \begin{equation*}
   v_1 - e_1 + f_1 = 2,
@@ -19131,7 +19313,7 @@ Adding these two equations gives
 In general, a planar graph with \(k\) components will satisfy \(v - e + f = 1 + k\).
 %
 \par\smallskip
-\noindent\textbf{7.}\quad{}\begin{proof}\hypertarget{proof-62}{}
+\noindent\textbf{6.}\quad{}\begin{proof}\hypertarget{proof-62}{}
 
 We know in any planar graph the number of faces \(f\) satisfies \(3f \le 2e\) since each face is bounded by at least three edges, but each edge borders two faces. Combine this with Euler's formula:
 \begin{equation*}
@@ -19146,7 +19328,7 @@ We know in any planar graph the number of faces \(f\) satisfies \(3f \le 2e\) si
   3v - 6 \ge e.
 \end{equation*}\end{proof}
 \par\smallskip
-\noindent\textbf{8.}\quad{}\begin{proof}\hypertarget{proof-63}{}
+\noindent\textbf{7.}\quad{}\begin{proof}\hypertarget{proof-63}{}
 
 Suppose this were not the case. Then there would be a graph with \(v\) vertices, each with degree 6 or more. At a minimum then, there would be \(6v/2 = 3v\) edges, so \(e \ge 3v\). By the previous exercise, we also have that \(e \le 3v - 6\). But these two facts are contradictory.
 %
@@ -19222,7 +19404,7 @@ Start with a single vertex of \(K_6\), call it \(v_0\). There are five edges inc
 %
 \end{proof}
 \par\smallskip
-\subsubsection*{ Exercises}
+\subsection*{4.4.2 Exercises}
 \noindent\textbf{1.}\quad{}
 This is a question about finding Euler paths. Draw a graph with a vertex in each state, and connect vertices if their states share a border. Exactly two vertices will have odd degree: the vertices for Nevada and Utah. Thus you must start your road trip at in one of those states and end it in the other.
 %
@@ -19298,7 +19480,11 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
             For example, \(K_{3,3}\).
           %
 \par\smallskip
-\noindent\textbf{5.}\quad{}\leavevmode%
+\noindent\textbf{5.}\quad{}
+      Yes. According to Euler's formula it would have 2 faces. It does. The only such graph is \(C_{10}\).
+      %
+\par\smallskip
+\noindent\textbf{6.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-1269}{}
                 Only if \(n \ge 6\) and is even.
@@ -19311,7 +19497,7 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
               %
 \end{enumerate}
 \par\smallskip
-\noindent\textbf{6.}\quad{}\leavevmode%
+\noindent\textbf{7.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-1275}{}
                 There were 24 couples: 6 choices for the girl and 4 choices for the boy.
@@ -19324,11 +19510,11 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
               %
 \end{enumerate}
 \par\smallskip
-\noindent\textbf{7.}\quad{}
+\noindent\textbf{8.}\quad{}
             Yes, as long as \(n\) is even. If \(n\) were odd, then corresponding graph would have an odd number of odd degree vertices, which is impossible.
           %
 \par\smallskip
-\noindent\textbf{8.}\quad{}\leavevmode%
+\noindent\textbf{9.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-1281}{}
                 No. The 9 triangles each contribute 3 edges, and the 6 pentagons contribute 5 edges. This gives a total of 57, which is exactly twice the number of edges, since each edge borders exactly 2 faces. But 57 is odd, so this is impossible.
@@ -19341,27 +19527,27 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
               %
 \end{enumerate}
 \par\smallskip
-\noindent\textbf{9.}\quad{}
+\noindent\textbf{10.}\quad{}
             No. Every polyhedron can be represented as a planar graph, and the Four Color Theorem says that every planar graph has chromatic number at most 4.
           %
 \par\smallskip
-\noindent\textbf{10.}\quad{}
+\noindent\textbf{11.}\quad{}
             \(K_{n,n}\) has \(n^2\) edges. The graph will have an Euler circuit when \(n\) is even. The graph will be planar only when \(n \lt  3\).
           %
 \par\smallskip
-\noindent\textbf{11.}\quad{}
+\noindent\textbf{12.}\quad{}
             \(G\) has 8 edges (since the sum of the degrees is 16). If \(G\) is planar, then it will have 4 faces (since \(6 - 8 + 4 = 2\)). \(G\) does not have an Euler path since there are more than 2 vertices of odd degree.
           %
 \par\smallskip
-\noindent\textbf{12.}\quad{}
+\noindent\textbf{13.}\quad{}
             \(7\) colors. Thus \(K_7\) is not planar (by the contrapositive of the Four Color Theorem).
           %
 \par\smallskip
-\noindent\textbf{13.}\quad{}
+\noindent\textbf{14.}\quad{}
             The chromatic number of \(K_{3,4}\) is 2, since the graph is bipartite. You cannot say whether the graph is planar based on this coloring (the converse of the Four Color Theorem is not true). In fact, the graph is \emph{not} planar, since it contains \(K_{3,3}\) as a subgraph.
           %
 \par\smallskip
-\noindent\textbf{14.}\quad{}
+\noindent\textbf{15.}\quad{}
             For all these questions, we are really coloring the vertices of a graph. You get the graph by first drawing a planar representation of the polyhedron and then taking its planar dual: put a vertex in the center of each face (including the outside) and connect two vertices if their faces share an edge.
           %
 \leavevmode%
@@ -19377,11 +19563,11 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
               %
 \end{enumerate}
 \par\smallskip
-\noindent\textbf{15.}\quad{}
+\noindent\textbf{16.}\quad{}
             \(G\) has \(13\) edges, since we need \(7 - e + 8 = 2\).
           %
 \par\smallskip
-\noindent\textbf{16.}\quad{}\leavevmode%
+\noindent\textbf{17.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-1294}{}
                 The graph does have an Euler path, but not an Euler circuit. There are exactly two vertices with odd degree. The path starts at one and ends at the other.
@@ -19397,7 +19583,7 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
               %
 \end{enumerate}
 \par\smallskip
-\noindent\textbf{17.}\quad{}\leavevmode%
+\noindent\textbf{18.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-1303}{}
                 False. For example, \(K_{3,3}\) is not planar.
@@ -19416,7 +19602,7 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
               %
 \end{enumerate}
 \par\smallskip
-\noindent\textbf{18.}\quad{}
+\noindent\textbf{19.}\quad{}
             The first and third graphs have a matching, shown in bold (there are other matchings as well). The middle graph does not have a matching. If you look at the three circled vertices, you see that they only have two neighbors, which violates the matching condition \(|N(S)| \ge S\) (the three circled vertices form the set \(S\)).
           %
 \par
@@ -19426,33 +19612,33 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
 {% begin: group for a single side-by-side
 % set panel max height to practical minimum, created in preamble
 \setlength{\panelmax}{0pt}
-\newsavebox{\panelboxEBimage}
-\savebox{\panelboxEBimage}{
+\newsavebox{\panelboxEHimage}
+\savebox{\panelboxEHimage}{
 \resizebox{0.2\linewidth}{!}{{
 \begin{tikzpicture} \coordinate (a) at (0,0); \coordinate (A) at (0,1); \coordinate (b) at (1,0); \coordinate (B) at (1,1); \coordinate (c) at (2,0); \coordinate (C) at (2,1); \draw (a) \v -- (B) \v -- (c) \v -- (C) \v -- (a) \v -- (A)\v -- (b) \v; \draw[very thick] (a) -- (C) (A) -- (b) (c) -- (B); \end{tikzpicture}
 }
 }}
-\newlength{\phEBimage}\setlength{\phEBimage}{\ht\panelboxEBimage+\dp\panelboxEBimage}
-\settototalheight{\phEBimage}{\usebox{\panelboxEBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phEBimage}}
-\newsavebox{\panelboxECimage}
-\savebox{\panelboxECimage}{
+\newlength{\phEHimage}\setlength{\phEHimage}{\ht\panelboxEHimage+\dp\panelboxEHimage}
+\settototalheight{\phEHimage}{\usebox{\panelboxEHimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEHimage}}
+\newsavebox{\panelboxEIimage}
+\savebox{\panelboxEIimage}{
 \resizebox{0.3\linewidth}{!}{{
 \begin{tikzpicture} \coordinate (a) at (0,0); \coordinate (A) at (0,1); \coordinate (b) at (1,0); \coordinate (B) at (1,1); \coordinate (c) at (2,0); \coordinate (C) at (2,1); \coordinate (d) at (3,0); \coordinate (D) at (3,1); \draw (a) \v -- (A) \v (b) \v -- (B) \v (c) \v -- (C) \v (d) \v (D)\v; \draw (a) -- (C) -- (b) -- (D) (A) -- (c) (A) -- (d) -- (C); \draw[dashed] (a) circle (7pt) (c) circle (7pt) (d) circle (7pt); \end{tikzpicture}
 }
 }}
-\newlength{\phECimage}\setlength{\phECimage}{\ht\panelboxECimage+\dp\panelboxECimage}
-\settototalheight{\phECimage}{\usebox{\panelboxECimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phECimage}}
-\newsavebox{\panelboxEDimage}
-\savebox{\panelboxEDimage}{
+\newlength{\phEIimage}\setlength{\phEIimage}{\ht\panelboxEIimage+\dp\panelboxEIimage}
+\settototalheight{\phEIimage}{\usebox{\panelboxEIimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEIimage}}
+\newsavebox{\panelboxEJimage}
+\savebox{\panelboxEJimage}{
 \resizebox{0.4\linewidth}{!}{{
 \begin{tikzpicture} \coordinate (a) at (0,0); \coordinate (A) at (0,1); \coordinate (b) at (1,0); \coordinate (B) at (1,1); \coordinate (c) at (2,0); \coordinate (C) at (2,1); \coordinate (d) at (3,0); \coordinate (D) at (3,1); \coordinate (e) at (4,0); \coordinate (E) at (4,1); \draw (a) \v (A) \v (b) \v (B) \v (c) \v (C) \v (d) \v (D)\v (e)\v (E) \v; \draw (a) -- (A) (a) -- (B) (A) -- (b) (A) -- (c) (b) -- (C) (B) -- (c) -- (D) (c) -- (E) (C) -- (d) -- (E) (D) -- (e) -- (E); \draw[very thick] (a) -- (A) (b) -- (C) (c) -- (B) (d) -- (E) (e) -- (D); \end{tikzpicture}
 }
 }}
-\newlength{\phEDimage}\setlength{\phEDimage}{\ht\panelboxEDimage+\dp\panelboxEDimage}
-\settototalheight{\phEDimage}{\usebox{\panelboxEDimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phEDimage}}
+\newlength{\phEJimage}\setlength{\phEJimage}{\ht\panelboxEJimage+\dp\panelboxEJimage}
+\settototalheight{\phEJimage}{\usebox{\panelboxEJimage}}
+\setlength{\panelmax}{\maxof{\panelmax}{\phEJimage}}
 \leavevmode%
 % begin: side-by-side as figure/tabular
 % \tabcolsep change local to group
@@ -19461,9 +19647,9 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
 \begin{figure}
 \hspace*{0.0166666666666667\textwidth}%
 \begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxEBimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxECimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][b]{0.4\textwidth}\usebox{\panelboxEDimage}\end{minipage}\end{tabular}
+\begin{minipage}[c][\panelmax][b]{0.2\textwidth}\usebox{\panelboxEHimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.3\textwidth}\usebox{\panelboxEIimage}\end{minipage}&
+\begin{minipage}[c][\panelmax][b]{0.4\textwidth}\usebox{\panelboxEJimage}\end{minipage}\end{tabular}
 \end{figure}
 % end: side-by-side as tabular/figure
 }% end: group for a single side-by-side
@@ -19471,7 +19657,7 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
 
           %
 \par\smallskip
-\noindent\textbf{19.}\quad{}\leavevmode%
+\noindent\textbf{20.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
 \item\hypertarget{li-1314}{}
                 If a graph has an Euler path, then it is planar.
@@ -19496,33 +19682,33 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
 \subsection*{5.1.5 Exercises}
 \noindent\textbf{1.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1350}{}\(\dfrac{4}{1-x}\).%
-\item\hypertarget{li-1351}{}\(\dfrac{2}{(1-x)^2}\).%
-\item\hypertarget{li-1352}{}\(\dfrac{2x^3}{(1-x}^2\).%
-\item\hypertarget{li-1353}{}\(\dfrac{1}{1-5x}\).%
-\item\hypertarget{li-1354}{}\(\dfrac{1}{1+3x}\).%
-\item\hypertarget{li-1355}{}\(\dfrac{1}{1-5x^2}\).%
-\item\hypertarget{li-1356}{}\(\dfrac{x}{(1-x^3)^2}\).%
+\item\hypertarget{li-1354}{}\(\dfrac{4}{1-x}\).%
+\item\hypertarget{li-1355}{}\(\dfrac{2}{(1-x)^2}\).%
+\item\hypertarget{li-1356}{}\(\dfrac{2x^3}{(1-x}^2\).%
+\item\hypertarget{li-1357}{}\(\dfrac{1}{1-5x}\).%
+\item\hypertarget{li-1358}{}\(\dfrac{1}{1+3x}\).%
+\item\hypertarget{li-1359}{}\(\dfrac{1}{1-5x^2}\).%
+\item\hypertarget{li-1360}{}\(\dfrac{x}{(1-x^3)^2}\).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{2.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1362}{}\(0, 4, 4, 4, 4, 4, \ldots\).%
-\item\hypertarget{li-1363}{}\(1, 4, 16, 64, 256, \ldots\).%
-\item\hypertarget{li-1364}{}\(0, 1, -1, 1, -1, 1, -1, \ldots\).%
-\item\hypertarget{li-1365}{}\(0, 3, -6, 9, -12, 15, -18, \ldots\).%
-\item\hypertarget{li-1366}{}\(1, 3, 6, 9, 12, 15, \ldots\).%
+\item\hypertarget{li-1366}{}\(0, 4, 4, 4, 4, 4, \ldots\).%
+\item\hypertarget{li-1367}{}\(1, 4, 16, 64, 256, \ldots\).%
+\item\hypertarget{li-1368}{}\(0, 1, -1, 1, -1, 1, -1, \ldots\).%
+\item\hypertarget{li-1369}{}\(0, 3, -6, 9, -12, 15, -18, \ldots\).%
+\item\hypertarget{li-1370}{}\(1, 3, 6, 9, 12, 15, \ldots\).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{3.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1370}{}
+\item\hypertarget{li-1374}{}
 The second derivative of \(\dfrac{1}{1-x}\) is \(\dfrac{2}{(1-x)^3}\) which expands to \(2 + 6x + 12x^2 + 20x^3 + 30x^4 + \cdots\).  Dividing by 2 gives the generating function for the triangular numbers.
 %
-\item\hypertarget{li-1371}{}
+\item\hypertarget{li-1375}{}
 Compute \(A - xA\) and you get \(1 + 2x + 3x^2 + 4x^3 + \cdots\) which can be written as \(\dfrac{1}{(1-x)^2}\).  Solving for \(A\) gives the correct generating function.
 %
-\item\hypertarget{li-1372}{}
+\item\hypertarget{li-1376}{}
 The triangular numbers are the sum of the first \(n\) numbers \(1,2,3,4, \ldots\).  To get the sequence of partial sums, we multiply by \(\frac{1}{1-x}\). so this gives the correct generating function again.
 %
 \end{enumerate}
@@ -19561,18 +19747,18 @@ Starting with \(\frac{1}{1-x} = 1 + x + x^2 + x^3 +\cdots\), we can take derivat
 \par\smallskip
 \noindent\textbf{12.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1377}{}\(\frac{1}{(1-x^2)^2}\).%
-\item\hypertarget{li-1378}{}\(\frac{1}{(1+x)^2}\).%
-\item\hypertarget{li-1379}{}\(\frac{3x}{(1-x)^2}\).%
-\item\hypertarget{li-1380}{}\(\frac{3x}{(1-x)^3}\).  (partial sums).%
+\item\hypertarget{li-1381}{}\(\frac{1}{(1-x^2)^2}\).%
+\item\hypertarget{li-1382}{}\(\frac{1}{(1+x)^2}\).%
+\item\hypertarget{li-1383}{}\(\frac{3x}{(1-x)^2}\).%
+\item\hypertarget{li-1384}{}\(\frac{3x}{(1-x)^3}\).  (partial sums).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{13.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1385}{}\(0,0,1,1,2,3,5,8, \ldots\).%
-\item\hypertarget{li-1386}{}\(1, 0, 1, 0, 2, 0, 3, 0, 5, 0, 8, 0, \ldots\).%
-\item\hypertarget{li-1387}{}\(1, 3, 18, 81, 405, \ldots\).%
-\item\hypertarget{li-1388}{}\(1, 2, 4, 7, 12, 20\).%
+\item\hypertarget{li-1389}{}\(0,0,1,1,2,3,5,8, \ldots\).%
+\item\hypertarget{li-1390}{}\(1, 0, 1, 0, 2, 0, 3, 0, 5, 0, 8, 0, \ldots\).%
+\item\hypertarget{li-1391}{}\(1, 3, 18, 81, 405, \ldots\).%
+\item\hypertarget{li-1392}{}\(1, 2, 4, 7, 12, 20\).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{14.}\quad{}
@@ -19585,12 +19771,12 @@ Starting with \(\frac{1}{1-x} = 1 + x + x^2 + x^3 +\cdots\), we can take derivat
 \par\smallskip
 \noindent\textbf{16.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1392}{}\((1-x)A = 3 + 2x + 4x^2 + 6x^3 + \cdots\) which is almost right.  We can fix it like this:
+\item\hypertarget{li-1396}{}\((1-x)A = 3 + 2x + 4x^2 + 6x^3 + \cdots\) which is almost right.  We can fix it like this:
 		 \(2 + 4x + 6x^2 + \cdots = \frac{(1-x)A - 3}{x}\).%
-\item\hypertarget{li-1393}{}
+\item\hypertarget{li-1397}{}
 We know \(2 + 4x + 6x^3 + \cdots = \frac{2}{(1-x)^2}\).
 %
-\item\hypertarget{li-1394}{}\(A = \frac{2x}{(1-x)^3} + \frac{3}{1-x} = \frac{3 -4x + 3x^2}{(1-x)^3}\).%
+\item\hypertarget{li-1398}{}\(A = \frac{2x}{(1-x)^3} + \frac{3}{1-x} = \frac{3 -4x + 3x^2}{(1-x)^3}\).%
 \end{enumerate}
 \par\smallskip
 \subsection*{5.2.6 Exercises}
@@ -19628,10 +19814,10 @@ In other words, \(a-c\) is \(b-d\) more than some multiple of \(n\), so \(a-c \e
 \par\smallskip
 \noindent\textbf{5.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1438}{}\(3^{456} \equiv 1^{456} = 1 \pmod 2\).%
-\item\hypertarget{li-1439}{}\(3^{456} = 9^{228} \equiv (-1)^{228} = 1 \pmod{5}\).%
-\item\hypertarget{li-1440}{}\(3^{456} = 9^{228} \equiv 2^{228} = 8^{76} \equiv 1^{76} = 1 \pmod 7\).%
-\item\hypertarget{li-1441}{}\(3^{456} = 9^{228} \equiv 0^{228} = 0 \pmod{9}\).%
+\item\hypertarget{li-1442}{}\(3^{456} \equiv 1^{456} = 1 \pmod 2\).%
+\item\hypertarget{li-1443}{}\(3^{456} = 9^{228} \equiv (-1)^{228} = 1 \pmod{5}\).%
+\item\hypertarget{li-1444}{}\(3^{456} = 9^{228} \equiv 2^{228} = 8^{76} \equiv 1^{76} = 1 \pmod 7\).%
+\item\hypertarget{li-1445}{}\(3^{456} = 9^{228} \equiv 0^{228} = 0 \pmod{9}\).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{6.}\quad{}
@@ -19639,26 +19825,26 @@ For all of these, just plug in all integers between 0 and the modulus to see whi
 %
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1448}{}
-No solutions.
-%
-\item\hypertarget{li-1449}{}\(x = 3\).%
-\item\hypertarget{li-1450}{}\(x = 2\), \(x = 5\), \(x = 8\).%
-\item\hypertarget{li-1451}{}
-No solutions.
-%
 \item\hypertarget{li-1452}{}
 No solutions.
 %
 \item\hypertarget{li-1453}{}\(x = 3\).%
+\item\hypertarget{li-1454}{}\(x = 2\), \(x = 5\), \(x = 8\).%
+\item\hypertarget{li-1455}{}
+No solutions.
+%
+\item\hypertarget{li-1456}{}
+No solutions.
+%
+\item\hypertarget{li-1457}{}\(x = 3\).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{7.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1458}{}\(x = 5+22k\) for \(k \in \Z\).%
-\item\hypertarget{li-1459}{}\(x = 4 + 5k\) for \(k \in \Z\).%
-\item\hypertarget{li-1460}{}\(x = 6 + 15k\) for \(k \in \Z\).%
-\item\hypertarget{li-1461}{}
+\item\hypertarget{li-1462}{}\(x = 5+22k\) for \(k \in \Z\).%
+\item\hypertarget{li-1463}{}\(x = 4 + 5k\) for \(k \in \Z\).%
+\item\hypertarget{li-1464}{}\(x = 6 + 15k\) for \(k \in \Z\).%
+\item\hypertarget{li-1465}{}
 Hint: first reduce each number modulo 9, which can be done by adding up the digits of the numbers.  Answer: \(x = 2 + 9k\) for \(k \in \Z\).
 %
 \end{enumerate}
@@ -19669,11 +19855,11 @@ We must solve \(7x + 5 \equiv 2 \pmod{11}\). This gives \(x \equiv 9 \pmod{11}\)
 \par\smallskip
 \noindent\textbf{9.}\quad{}\leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-1465}{}
+\item\hypertarget{li-1469}{}
 Divide through by 2: \(3x + 5y = 16\).  Convert to a congruence, modulo 3: \(5y \equiv 16 \pmod 3\), which reduces to \(2y \equiv 1 \pmod 3\).  So \(y \equiv 2 \pmod 3\) or \(y = 2 + 3k\).  Plug this back into \(3x + 5y = 16\) and solve for \(x\), to get \(x = 2-5k\).  So the general solution is \(x = 2-5k\) and \(y = 2+3k\) for \(k \in \Z\).
 %
-\item\hypertarget{li-1466}{}\(x = 7+8k\) and \(y = -11 - 17k\) for \(k \in \Z\).%
-\item\hypertarget{li-1467}{}\(x = -4-47k\) and \(y = 3 + 35k\) for \(k \in \Z\).%
+\item\hypertarget{li-1470}{}\(x = 7+8k\) and \(y = -11 - 17k\) for \(k \in \Z\).%
+\item\hypertarget{li-1471}{}\(x = -4-47k\) and \(y = 3 + 35k\) for \(k \in \Z\).%
 \end{enumerate}
 \par\smallskip
 \noindent\textbf{10.}\quad{}

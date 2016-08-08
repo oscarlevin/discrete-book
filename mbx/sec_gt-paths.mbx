@@ -1,4 +1,6 @@
-<section xml:id="sec_paths">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec_paths" xmlns:xi="http://www.w3.org/2001/XInclude">
 <title>Euler Paths and Circuits</title>
 
 
@@ -145,7 +147,7 @@ The converse is also true: if all the vertices of a graph have even degree, then
 </p>
 </assemblage>
 <p>
-Since the bridges of K&#xf6;nigsberg graph has all four vertices with odd degree, there is no Euler path through the graph.
+Since the bridges of K&#xf6;nigsberg graph has all four vertices with odd degree, there is no Euler path through the graph.  Thus there is no way for the townspeople to cross every bridge exactly once.
 </p>
 </introduction>
 
@@ -153,8 +155,83 @@ Since the bridges of K&#xf6;nigsberg graph has all four vertices with odd degree
 <subsection>
 <title>Hamilton Paths</title>
 <p>
-Suppose you wanted to tour K&#xf6;nigsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a <em>Hamilton path</em> (or Hamiltonian path)<index><main>Hamilton path</main></index>. It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete<index><main>NP-complete</main></index>.
+Suppose you wanted to tour K&#xf6;nigsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a <term>Hamilton path</term> (or Hamiltonian path)<index><main>Hamilton path</main></index>.  We could also consider <term>Hamilton cycles</term>, which are Hamliton paths which start and stop at the same vertex.
 </p>
+
+<example>
+  <statement>
+    <p>
+      Determine whether the graphs below have a Hamilton path.
+    </p>
+
+    <sidebyside widths="20% 20%" margins="auto">
+      <image>
+        <latex-image-code>
+          <![CDATA[
+          \begin{tikzpicture}[scale=.5]
+          \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+          \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+          \foreach \x in {18, 90, 162, 234, 306}
+          \draw  (\x:1) \v -- (\x:2) \v;
+          \end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+      <image>
+        <latex-image-code>
+          <![CDATA[
+          \begin{tikzpicture}{scale=.5}
+          \draw  (18:1) -- (90:1) -- (162:1)  -- (234:1) -- (306:1) -- cycle;
+          \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+          \foreach \x in {18, 90, 162, 234, 306}
+          \draw  (\x:1) \v -- (\x:2) \v;
+          \end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+
+    </sidebyside>
+
+  </statement>
+
+  <solution>
+    <p>
+      The graph on the left has a Hamilton path (many different ones, actually), as shown here:
+    </p>
+
+    <figure>
+      <image width="20%">
+        <latex-image-code>
+          <![CDATA[
+          \begin{tikzpicture}[scale=.5]
+          \draw[very thick, ->-] (90:2) -- (90:1) (90:1) -- (234:1) (234:1)  -- (234:2) -- (162:2) -- (162:1) -- (18:1) -- (18:2) -- (306:2) -- (306:1);
+          \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+          \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+          \foreach \x in {18, 90, 162, 234, 306}
+          \draw  (\x:1) \v -- (\x:2) \v;
+          \end{tikzpicture}
+          ]]>
+        </latex-image-code>
+      </image>
+    </figure>
+  </solution>
+
+  <p>
+    The graph on the right does not have a Hamilton path.  You would need to visit each of the <q>outside</q> vertices, but as soon as you visit one, you get stuck.  Note that this graph does not have an Euler path, although there are graphs with Euler paths but no Hamilton paths.
+  </p>
+
+</example>
+
+
+
+<p>
+It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete<index><main>NP-complete</main></index>.
+</p>
+
+</subsection>
+
+
+
 <exercises>
 
 <exercise>
@@ -233,6 +310,33 @@ If both <m>m</m> and <m>n</m> are even, then <m>K_{m,n}</m> has an Euler circuit
 </solution>
 </exercise>
 
+
+<exercise>
+  <statement>
+    <p>
+      For which <m>n</m> does <m>K_n</m> contain a Hamilton path? A Hamilton cycle?  Explain.
+    </p>
+  </statement>
+  <solution>
+    All values of <m>n</m>.  In particular, <m>K_n</m> contains <m>C_n</m> as a subgroup, which is a cycle that includes every vertex.
+  </solution>
+
+</exercise>
+
+<exercise>
+<statement>
+<p>
+For which <m>m</m> and <m>n</m> does the graph <m>K_{m,n}</m> contain a Hamilton path? A Hamilton cycle? Explain.
+</p>
+</statement>
+<solution>
+<p>
+As long as <m>|m-n| \le 1</m>, the graph <m>K_{m,n}</m> will have a Hamilton path.  To have a Hamilton cycle, we must have <m>m=n</m>.
+</p>
+</solution>
+</exercise>
+
+
 <exercise>
 <statement>
 <p>
@@ -295,7 +399,11 @@ We are looking for a Hamiltonian cycle, and this graph does have one:
 </solution>
 </exercise>
 
+
+
+
+
+
 </exercises>
-</subsection>
 
 </section>
