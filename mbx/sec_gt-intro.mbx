@@ -715,7 +715,7 @@
 							<![CDATA[\begin{tikzpicture}
 	\foreach \x in {0,...,4} {
 		\coordinate (v\x) at (90-72*\x:.75);}
-	\draw (v3) \vl{\(d\)} -- (v0) \vr{\(a\)} -- (v2) \vr{\(c\)} -- (v1) \vr{\(b\)} -- (v4) \vl{\(e\)} -- (v3) -- (v2);
+	\draw (v3) \vl{\footnotesize \(d\)} -- (v0) \vr{\footnotesize \(a\)} -- (v2) \vr{\footnotesize \(c\)} -- (v1) \vr{\footnotesize \(b\)} -- (v4) \vl{\footnotesize \(e\)} -- (v3) -- (v2);
 	\end{tikzpicture}]]>
 						</latex-image-code>
 					</image>
@@ -761,7 +761,7 @@
 							<![CDATA[\begin{tikzpicture}
 	    \draw (0,0) \v;
 	    \foreach \x in {0,...,7}
-	    \draw (0,0) -- (\x*360/8:1) \v;
+	    \draw (0,0) -- (\x*360/8+22.5:1) \v;
 	  \end{tikzpicture}]]>
 						</latex-image-code>
 					</image>
@@ -769,8 +769,35 @@
 			</statement>
 			<solution>
 				<p>
-					Three of the graphs are bipartite. The one which is not is <m>C_7</m> (second from the right).
+					Three of the graphs are bipartite. The one which is not is <m>C_7</m> (second from the right).  To see that the three graphs are bipartite, we can just give the bipartition into two sets <m>A</m> and <m>B</m>, as labeled below:
 					<!-- TODO: justify these answers a little better -->
+					<sidebyside widths="20% 20% 20%" margins="auto" valign="middle">
+						<image>
+							<latex-image-code>
+								<![CDATA[\begin{tikzpicture}
+				\draw (-1,1) \vb{\footnotesize $A$} -- (0,2) \vb{\footnotesize $B$} -- (1,1) \vb{\footnotesize $A$} -- (0,0) \vb{\footnotesize $B$} -- (-1,1) -- (0,1) \vb{\footnotesize $B$} -- (1,1);
+			\end{tikzpicture}]]>
+							</latex-image-code>
+						</image>
+						<image>
+							<latex-image-code>
+								<![CDATA[\begin{tikzpicture}
+				\draw (0:1) \vr{\footnotesize $A$} -- (120:1) \vl{\footnotesize $B$} -- (60:1) \vr{\footnotesize $B$} -- (300:1) \vr{\footnotesize $A$} -- (180:1) \vl{\footnotesize $B$} -- (240:1) \vl{\footnotesize $A$} -- cycle;
+			\end{tikzpicture}]]>
+							</latex-image-code>
+						</image>
+
+						<image>
+							<latex-image-code>
+								<![CDATA[\begin{tikzpicture}
+				\draw (0,0) \vtx{}{\footnotesize $B$};
+				\foreach \x in {0,...,7}
+				\draw (0,0) -- (\x*360/8+22.5:1) \vtx{}{\footnotesize $A$};
+			\end{tikzpicture}]]>
+							</latex-image-code>
+						</image>
+					</sidebyside>
+					The graph <m>C_7</m> is not bipartite because it is an <em>odd</em> cycle.  You would want to put every other vertex into the set <m>A</m>, but if you travel clockwise in this fashion, the last vertex will also be put into the set <m>A</m>, leaving two <m>A</m> vertices adjacent (which makes it not a bipartition).
 				</p>
 			</solution>
 		</exercise>
@@ -778,12 +805,12 @@
 		<exercise>
 			<statement>
 				<p>
-					For which <m>n</m> is the graph <m>C_n</m> bipartite?
+					For which <m>n \ge 3</m> is the graph <m>C_n</m> bipartite?
 				</p>
 			</statement>
 			<solution>
 				<p>
-					<m>C_n</m> is bipartite if and only if <m>n = 1</m> or is even.
+					<m>C_n</m> is bipartite if and only if <m>n</m> or is even.  Put every other vertex into the first part, the others into the second.
 				</p>
 			</solution>
 		</exercise>
