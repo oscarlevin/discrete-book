@@ -132,79 +132,63 @@
   </p>
 
 
+  <p>
+  All we are really saying here is that mathematics is interesting.  The truth value of statements in mathematics is determined by more than <em>just</em> the logical form of the statements.  Even with propositional logic, there are lots of true mathematical statements of the form <m>P \imp Q</m> even though <m>P \imp Q</m> is not a tautology.  But it is still helpful to inspect the logical form of statements: it is the skeleton that the body of mathematics is built around.
+  </p>
+</subsection>
 
 
-<!-- TODO: finish the section -->
+<subsection>
+  <title>Logical Equivalence and Deductions (for Predicate Logic)</title>
+
+<p>
+  In <xref ref="sec_logic-prop"/> we said that two (propositional) statements were logically equivalent when they were true in exactly the same cases of our truth table.  Put slightly differently, no matter what truth value we assign the propositional variables, logically equivalent statements will have the same truth values as each other.
+</p>
+
+  <p>
+    We would like to do the same for predicate logic.  For example, consider the following two statements:
+    <ol>
+      <li>
+        There is a number such that there does not exist any number is less than it.
+      </li>
+      <li>There is a number which all numbers are not less than.</li>
+    </ol>
+
+    We might translate these into symbols like this:
+
+    <ol>
+      <li>
+        <m>\exsits x \neg \exists y (y \lt x)</m>
+      </li>
+      <li><m>\exists x \forall y \neg (y \lt x)</m></li>
+    </ol>
+  </p>
+
+  <p>
+    Note that there is no hope of using a truth table to decide whether these are logically equivalent (we would have to use the entire statement as a single propositional variable).  But they are logically equivalent.  No matter how we <em>interpret</em> the <m>\lt</m> symbol (even if it meant <q>greater than</q> or <q>is not as purple as</q>), and no matter what domain of discourse we considered, these two statements should always have the same truth value as each other.
+  </p>
+
+  <p>
+    This relies on an observation we made in <xref ref="sec_intro-statements" /> about how negation and quantifiers interact.  Specifically, if <m>\varphi(x)</m> is any logical formula, we have
+    <me>
+      \neg \forall x \varphi(x) \text{ is logically equivalent to } \exists x \neg \varphi(x)
+    </me>
+    and
+    <me>
+      \neg \exists x \varphi(x) \text{ is logically equivalent to } \forall x \neg \varphi(x).
+    </me>
+    (We use <m>\varphi</m>, the greek letter <q>phi</q>, to stand for any formula, which might include more than one predicate, logical connectives, as well as other quantifiers.  Later we will use <m>\psi</m>, <q>psi</q> when we need a second formula variable.)
+  </p>
+
+<p>
+  How do we know these equivalences are correct? This gets to the meaning of the quantifiers.  If not everything, then something.  If not something, then nothing!
+</p>
 
 
+<p>
+  Here are some more examples.
+</p>
 
-
-    <p>
-      Some more examples: To say <q>every natural number is either even or odd,</q> we would write, using <m>E</m> and <m>O</m> as the predicates for even and odd respectively:
-      <me>
-        \forall x (E(x) \vee O(x)).
-      </me>
-    </p>
-
-    <p>
-      To say <q>there is a number such that no number is less than it</q> we would write:
-      <me>
-        \exists x \forall y (y \ge x).
-      </me>
-    </p>
-
-    <p>
-      Actually, I did a little translation before I wrote that down. The above statement would be literally read <q>there is a number such that every number is greater than or equal to it.</q> This of course amounts to the same thing. However, if I wanted to have a literal translation, I could have also written:
-      <me>
-        \exists x \neg \exists y (y \lt x).
-      </me>
-    </p>
-
-    <p>
-      Notice also that saying that there is a number for which no number is smaller is equivalent to saying that it is not the case that for every number there is a number smaller than it:
-      <me>
-        \neg \forall x \exists y (y \lt x).
-      </me>
-    </p>
-
-    <p>
-      That these three statements are equivalent is no coincidence. To understand what is going on, we will need to better understand how quantification interacts with the logical connectives, specifically negation.
-    </p>
-  </subsection>
-
-
-  <subsection>
-    <title>Quantifiers and Connectives</title>
-    <p>
-      What does it mean to say that it is false that there is something that has a certain property? Well, it means that everything does not have that property. What does it mean for it to be false that everything has a certain property? It means that there is something that doesn't have the property. So in symbols, we have the following:
-    </p>
-    <assemblage>
-      <title>Quantifiers and Negation</title>
-      <me>
-        \neg \forall x P(x) \mbox{ is equivalent to } \exists x \neg P(x).
-      </me>
-      <me>
-        \neg \exists x P(x)\mbox{ is equivalent to } \forall x \neg P(x).
-      </me>
-    </assemblage>
-    <p>
-      In other words, to move a negation symbol past a quantifier, you must switch the quantifier. This can be done multiple times:
-      <me>
-        \neg \exists x \forall y \exists z P(x,y,z) \mbox{ is equivalent to } \forall x \exists y \forall z \neg P(x,y,z).
-      </me>
-    </p>
-
-    <p>
-      We also know how to move negation symbols through other connectives (using De Morgan's Laws) so it is always possible to rewrite a statement so that the only negation symbols that appear are right in front of a predicate. This hints at the possibility of having a standard form for all predicate statements. To get this, however, we must also understand how to move quantifiers <em>through</em> connectives.
-    </p>
-
-    <p>
-      Before we get too excited, note that we only need to worry about two connectives: <m>\wedge</m> and <m>\vee</m>. This is because we can rewrite <m>p \imp q</m> as <m>\neg p \vee q</m> (they are logically equivalent) and <m>p \iff q</m> as <m>(p \wedge q) \vee (\neg p \wedge \neg q)</m> (also logically equivalent).
-    </p>
-
-    <p>
-      Consider an example to see what can happen:
-    </p>
     <example>
       <statement>
         <p>
