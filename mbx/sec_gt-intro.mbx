@@ -2,7 +2,7 @@
 
 
 <section xml:id="sec_gt-intro" xmlns:xi="http://www.w3.org/2001/XInclude">
-	<title>Basics</title>
+	<title>Definitions</title>
 
 
 
@@ -215,14 +215,26 @@
 
 	</investigation>
 	<p>
-		While we almost always think of graphs as pictures, these are really just visual representations of mathematical objects. In fact, a graph is simply a set of vertices some pairs of which are <q>related</q> by an edge. For example, we can describe a particular graph like this: the vertices are the letters <m>\{a,b,c,d\}</m> and the edges are the pairs
-		<me>
-			\{\{a,b\}, \{a,c\}, \{b,c\}, \{b,d\}, \{c,d\}\}.
-		</me>
-	</p>
+	  Before we start studying graphs, we need to agree upon what a graph is.  		While we almost always think of graphs as pictures (dots connected by lines) this is fairly ambiguous.  Do the lines need to be straight?  Does it matter how long the lines are or how large the dots are?  Can there be two lines connecting the same pair of dots?  Can one line connect three dots?</p>
 
-	<p>
-		We could have described the graph in words as follows: we have four vertices, <m>a</m>, <m>b</m>, <m>c</m>, and <m>d</m>, and <m>a</m> is adjacent to <m>b</m> and <m>c</m>, <m>b</m> is adjacent to both <m>c</m> and <m>d</m>, and <m>c</m> is also adjacent to <m>d</m>. One way to draw this graph is this:
+		<p>
+		  The way we avoid ambiguities in mathematics is to provide concrete and rigorous <em>definitions</em>.  Crafting good definitions is not easy, but it is incredibly important.  The definition is the agreed upon starting point from which all truths in mathematics proceed.  Is there a graph with no edges?  We have to look at the definition to see if this is possible.
+		</p>
+
+		<p>
+		  We want our definition to be precise and unambiguous, but it also must agree with our intuition for the objects we are studying.  It needs to be useful: we <em>could</em> define a graph to be a six legged mammal, but that would not let us solve any problems about bridges.  Instead, here is the (now) standard definition of a graph.
+		</p>
+
+		<definition>
+		<p>	A <term>graph</term> is an ordered pair <m>G = (V, E)</m> consisting of a nonempty set <m>V</m> (called the <term>vertices</term>) and a set <m>E</m> (called the <term>edges</term>) of two-element subsets of <m>V</m>.</p>
+		</definition>
+
+		<p>
+		 Strange.  Nowhere in the definition is there talk of dots or lines.  From the definition, a graph could be <me>(\{a,b,c,d\}, \{\{a,b\}, \{a,c\}, \{b,c\}, \{b,d\}, \{c,d\}\}).</me>
+		 Here we have a graph with four vertices  (the letters <m>a, b, c, d</m>) and four edges (the pairs <m>\{a,b\}, \{a,c\}, \{b,c\}, \{b,d\}, \{c,d\})</m>).
+	 </p>
+
+	 <p>Looking at sets and sets of 2-element sets in difficult to process.  That is why we often draw a representation of these sets.  We put a dot down for each vertex, and connect two dots with a line precisely when those two vertices are one of the 2-element subsets in our set of edges.  Thus one way to draw the graph described above is this:
 	</p>
 	<figure>
 		<image width="25%">
@@ -254,7 +266,40 @@
 		</image>
 	</sidebyside>
 	<p>
-		We should be careful about what it means for two graphs to be <q>the same.</q> Remember, as mathematical objects, graphs are just sets. Two sets are equal if they have the exact same members. However, even if two graphs are not <em>equal</em>, they might be <em>basically</em> the same. Graphs that are basically the same (but perhaps not equal) are called <term>isomorphic</term>. We will give a precise definition of this term after a quick example:
+		We should be careful about what it means for two graphs to be <q>the same.</q>  Actually, given our definition, this is easy: are the vertex sets equal?  Are the edge sets equal?  We know what it means for sets to be equal, and graphs are nothing but a pair of two special sorts of sets. </p>
+
+		<example>
+			<statement>
+				<p>
+					Are the graphs <m>G_1 = (\{a,b,c\}, \{\{a,b\}, \{b,c\}\})</m> and <m>G_2 = (\{a,b,c\}, \{\{a,c\}, \{c, b\}\})</m> equal?
+				</p>
+			</statement>
+			<solution>
+				<p>
+				  No.  Here the vertex sets of each graph are equal, which is a good start.  Also, both graphs have two edges.  In the first graph, we have edges <m>\{a,b\}</m> and <m>\{b,c\}</m>, while in the second graph we have edges	<m>\{a,c\}</m> and 	<m>\{c,b\}</m>.  Now we do have <m>\{b,c\} = \{c,b\}</m>, so that is not the problem.  The issue is that <m>\{a,b\} \ne \{a,c\}</m>.  Since the edge sets of the two graphs are not equal (as sets), the graphs are not the equal (as graphs).
+				</p>
+			</solution>
+
+		</example>
+
+		<p>
+		 Even if two graphs are not <em>equal</em>, they might be <em>basically</em> the same. The graphs in the previous example could be drawn like this:
+		 <figure>
+		 	<image width="60%">
+		 		<latex-image-code>
+		 			<![CDATA[
+					\begin{tikzpicture}
+					\draw (-3,0) \vb{\footnotesize $a$} -- (-2,0) \vb{\footnotesize $b$} -- (-1,0) \vb{\footnotesize $c$}  (3,0) \vb{\footnotesize $b$} -- (2,0) \vb{\footnotesize $c$} -- (1,0) \vb{$\footnotesize a$};
+					\node[above] at (-3,.5) {$G_1$} ;
+					\node[above] at (1, .5) {$G_2$};
+					\end{tikzpicture}
+					]]>
+		 		</latex-image-code>
+
+		 	</image>
+
+		 </figure>
+		 Graphs that are basically the same (but perhaps not equal) are called <term>isomorphic</term>. We will give a precise definition of this term after a quick example:
 	</p>
 	<example>
 		<statement>
@@ -406,13 +451,104 @@
 			</p>
 		</solution>
 	</example>
+
 	<p>
 		Sometimes we will talk about a graph with a special name (like <m>K_n</m> or the <em>Peterson graph</em>) or perhaps draw a graph without any labels. In this case we are really referring to <em>all</em> graphs isomorphic to any copy of that particular graph. A collection of isomorphic graphs is often called an <term>isomorphism class</term><index><main>isomorphism class</main></index>.
 		<fn>This is not unlike geometry, where we might have more than one copy of a particular triangle. There instead of <em>isomorphic</em> we say <em>congruent</em>.</fn>
 	</p>
 
 	<p>
-		Back to some basic graph theory definitions. Notice that the graphs above have the property that no pair of vertices is connected more than once, and no vertex is connected to itself. Graphs like these are sometimes called <term>simple</term>, although we will just call them <em>graphs</em>. This is because our definition for a graph says that the edges form a set of 2-element subsets of the vertices. Remember that it doesn't make sense to say a set contains an element more than once. So no pair of vertices can be connected by an edge more than once. Also, since each edge must be a set containing two vertices, we cannot have a single vertex connected to itself by an edge.
+	  There are other relationships between graphs that we care about, other than equality and being isomorphic.  For example, compare the following pair of graphs.
+
+		<sidebyside width="20%" margins="auto">
+			<image>
+			<latex-image-code><![CDATA[\begin{tikzpicture}
+			      \foreach \x in {0,...,6}
+			      \draw  (\x*60:1) \v -- (\x*60+60:1) -- (\x*60+180:1) -- cycle;
+			    \end{tikzpicture}]]></latex-image-code>
+			</image>
+			<image>
+			<latex-image-code><![CDATA[\begin{tikzpicture}
+			      \foreach \x in {0,...,4}
+			      \draw  (\x*90:1) \v -- (\x*90+90:1) -- (\x*90+180:1) -- cycle;
+			    \end{tikzpicture}]]></latex-image-code>
+			</image>
+		</sidebyside>
+
+		 These are definitely not isomorphic, but notice that the graph on the right looks like it might be part of the graph on the left.  Especially if we draw it like this:
+
+		 <figure>
+			 <image width="20%">
+			 <latex-image-code><![CDATA[\begin{tikzpicture}
+						 \foreach \x in {0,...,6}
+						 \draw[very thin]  (\x*60:1) \v -- (\x*60+60:1) -- (\x*60+180:1) -- cycle;
+						 \draw[very thick] (0:1) -- (60:1) -- (180:1) -- (240:1) -- (0:1) -- (180:1) (60:1) -- (240:1);
+					 \end{tikzpicture}]]></latex-image-code>
+			 </image>
+		 </figure>
+		 We would like to say that the smaller graph is a <em>subgraph</em> of the larger.
+	</p>
+
+	<p>
+	  We should give a careful definition of this.  In fact, there are two reasonable notions for what a subgroup should mean.
+	</p>
+
+	<definition>
+		<p>
+		  We say that <m>G_1 = (V_1, E_1)</m> is a <term>subgraph</term> of <m>G_2 = (V_2, E_2)</m> provided <m>V_1 \subseteq V_2</m> and <m>E_1 \subseteq E_2</m>.
+		</p>
+
+		<p>
+		  We say that <m>G_1 = (V_1, E_1)</m> is an <term>induced subgraph</term> of <m>G_2 = (V_2, E_2)</m> provided <m>V_1 \subseteq V_2</m> and <m>E_2</m> contains all edges of <m>E_1</m> which are subsets of <m>V_2</m>.
+		</p>
+	</definition>
+
+		<p> Notice that every induced subgraph is also an ordinary subgraph, but not conversely.  Think of a subgraph as the result of deleting some vertices and edges from the larger graph.  For the subgraph to be an induced subgraph, we can still delete vertices, but now we only delete those edges at included the deleted vertices.
+		</p>
+
+			<example>
+				<statement>
+					<p> Consider the graphs:
+						<sidebyside width="20%" margins="auto" valign="bottom">
+						<image>
+						<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8]
+						      \draw  (-1,0) \vb{\footnotesize $a$} -- (0,0) \vb{\footnotesize $b$} -- (1,0) \vb{\footnotesize $c$} -- (.5,1) \vb{\footnotesize $e$} -- (0,0) -- (-.5,1) \vb{\footnotesize $d$} -- (0,2) \vb{\footnotesize $f$} -- (.5,1) -- (-.5,1) -- (-1,0);
+									\node[below] at (0,-.5) {$G_1$};
+						    \end{tikzpicture}]]></latex-image-code>
+						</image>
+						<image>
+						<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8]
+									\draw  (-1,0) \vb{\footnotesize $a$} -- (0,0) \vb{\footnotesize $b$} -- (1,0) \vb{\footnotesize $c$}  (0,0) -- (-.5,1) \vb{\footnotesize $d$} (-.5,1) -- (-1,0);
+									\node[below] at (0,-.5) {$G_2$};
+								\end{tikzpicture}]]></latex-image-code>
+						</image>
+						<image>
+						<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8]
+									\draw  (-1,0) \vb{\footnotesize $a$} (0,0) \vb{\footnotesize $b$} -- (1,0) \vb{\footnotesize $c$}  (0,0) -- (-.5,1) \vb{\footnotesize $d$} -- (0,2) \vb{\footnotesize $f$} (-1,0) -- (-.5,1);
+									\node[below] at (0,-.5) {$G_3$};
+								\end{tikzpicture}]]></latex-image-code>
+						</image>
+						<image>
+						<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8]
+									\draw  (-1,0) \vb{\footnotesize $a$} -- (0,0) \vb{\footnotesize $b$} -- (1,0) \vb{\footnotesize $c$} -- (.5,1) (0,0) -- (-.5,1) \vb{\footnotesize $d$} -- (0,2) \vb{\footnotesize $f$} -- (.5,1) (-.5,1) -- (-1,0);
+									\node[below] at (0,-.5) {$G_4$};
+								\end{tikzpicture}]]></latex-image-code>
+						</image>
+					</sidebyside>
+				</p>
+				<p>Here both <m>G_2</m> and <m>G_3</m> are subgraphs of <m>G_1</m>.  But only <m>G_2</m> is an <em>induced</em> subgraph.  Notice that every edge that exists in <m>G_1</m> that can (because its <q>endpoints</q> are still in the graph) still exists in <m>G_2</m> actually does.  In <m>G_3</m>, the edge <m>\{a,b\}</m> is in <m>E_1</m> but not <m>E_3</m>, even though vertices <m>a</m> and <m>b</m> are in <m>V_3</m>.
+				</p>
+				<p>
+				  The graph <m>G_4</m> is NOT a subgraph of <m>G_1</m>, even though it looks like all we did is remove vertex <m>e</m>.  The reason is that in <m>E_4</m> we have the edge <m>\{c,f\}</m> but this is not an element of <m>E_1</m>, so we don't have the required 	<m>E_4 \subseteq E_1</m>.
+				</p>
+				</statement>
+
+			</example>
+
+
+
+	<p>
+		Back to some basic graph theory definitions. Notice that all the graphs we have drawn above have the property that no pair of vertices is connected more than once, and no vertex is connected to itself. Graphs like these are sometimes called <term>simple</term>, although we will just call them <em>graphs</em>. This is because our definition for a graph says that the edges form a set of 2-element subsets of the vertices. Remember that it doesn't make sense to say a set contains an element more than once. So no pair of vertices can be connected by an edge more than once. Also, since each edge must be a set containing two vertices, we cannot have a single vertex connected to itself by an edge.
 	</p>
 
 	<p>
@@ -484,7 +620,7 @@
 		</dl>
 	</p>
 
-		<sidebyside widths="20% 20% 15% 24%" margins="auto" valign="top">
+		<sidebyside widths="20% 20% 15% 24%" margins="auto" valign="bottom">
 			<image>
 				<latex-image-code>
 					<![CDATA[\begin{tikzpicture}[scale=1]
