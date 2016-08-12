@@ -335,7 +335,7 @@
 </xsl:template>
 <xsl:template match="exercise" mode="environment-class">
     <xsl:text>exercise-like</xsl:text>
-</xsl:template> -->
+</xsl:template> 
 
 
 </xsl:stylesheet>
