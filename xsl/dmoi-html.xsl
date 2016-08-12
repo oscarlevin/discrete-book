@@ -146,6 +146,9 @@
 
 
 
+
+
+
 <!-- Hack solution-list to display nicer headers -->
 <xsl:template match="exercises" mode="backmatter">
     <!-- see if an "exercises" section has any solutions -->
@@ -165,20 +168,43 @@
         </section>
     </xsl:if>
 </xsl:template>
-
-
-
-
-<!-- Not Simpler head for sectional exercise -->
-<!-- <xsl:template match="exercises//exercise" mode="head">
-    <h5 class="heading">
-    <span class="codenumber"><xsl:apply-templates select="." mode="number" /></span>
-    <xsl:if test="title">
-        <xsl:text> </xsl:text>
-        <span class="title"><xsl:apply-templates select="." mode="title-full" /></span>
+<!-- Print exercises with some solution component -->
+<!-- Respect switches about visibility            -->
+<xsl:template match="exercise" mode="backmatter">
+    <xsl:if test="hint or answer or solution">
+        <!-- Lead with the problem number and some space -->
+        <xsl:variable name="xref">
+            <xsl:apply-templates select="." mode="internal-id" />
+        </xsl:variable>
+        <article class="exercise-like" id="{$xref}">
+            <h5 class="heading hidden-type">
+            <span class="type"><xsl:apply-templates select="." mode="type-name" /></span>
+            <span class="codenumber"><xsl:apply-templates select="." mode="number" /></span>
+            <xsl:if test="title">
+                <span class="title"><xsl:apply-templates select="." mode="title-full" /></span>
+            </xsl:if>
+            </h5>
+            <xsl:if test="$exercise.backmatter.statement='yes'">
+                <xsl:apply-templates select="statement" />
+            </xsl:if>
+            <!-- default templates will produce inline knowls -->
+            <span class="hidden-knowl-wrapper">
+                <xsl:if test="hint and $exercise.backmatter.hint='yes'">
+                    <xsl:apply-templates select="hint" />
+                </xsl:if>
+                <xsl:if test="answer and $exercise.backmatter.answer='yes'">
+                    <xsl:apply-templates select="answer" />
+                </xsl:if>
+                <xsl:if test="solution and $exercise.backmatter.solution='yes'">
+                    <xsl:apply-templates select="solution" />
+                </xsl:if>
+            </span>
+        </article>
     </xsl:if>
-    </h5>
-</xsl:template> -->
+</xsl:template>
+
+
+
 
 
 <!-- Exercise Group -->
@@ -245,10 +271,10 @@
     </xsl:if>
     </h5>
 </xsl:template>
-<!-- Simpler head for sectional exercise -->
+<!-- CHANGE: NOT Simpler head for sectional exercise -->
 <xsl:template match="exercises//exercise" mode="head">
     <h5 class="heading">
-    <span class="codenumber"><xsl:apply-templates select="." mode="serial-number" /></span>
+    <span class="codenumber"><xsl:apply-templates select="." mode="number" /></span>
     <xsl:if test="title">
         <xsl:text> </xsl:text>
         <span class="title"><xsl:apply-templates select="." mode="title-full" /></span>
@@ -309,7 +335,7 @@
 </xsl:template>
 <xsl:template match="exercise" mode="environment-class">
     <xsl:text>exercise-like</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 
 </xsl:stylesheet>
