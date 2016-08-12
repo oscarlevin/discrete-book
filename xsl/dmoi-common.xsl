@@ -111,6 +111,33 @@
     <xsl:number value="$n - 1" format="1" />
 </xsl:template>
 
+<xsl:template match="exercises|references" mode="raw-serial-number">
+    <xsl:number count="part|chapter|appendix|section|subsection|subsubsection|references|exercises" format="1" />
+</xsl:template>
+
+<!-- Set exercises blocks to be numbered by their parent section   -->
+<xsl:template match="exercises" mode="number">
+    <xsl:variable name="serial">
+        <xsl:apply-templates select="parent::*" mode="serial-number" />
+    </xsl:variable>
+    <xsl:if test="not($serial = '')">
+        <xsl:apply-templates select="parent::*" mode="structure-number" />
+        <xsl:value-of select="$serial" />
+    </xsl:if>
+</xsl:template>
+
+
+<!-- Reload this to get exercise numbers to respect exercise block numbers -->
+<xsl:template match="exercises/exercise|exercises/exercisegroup/exercise" mode="serial-number">
+    <xsl:number from="exercises" level="any" count="exercise" />
+</xsl:template>
+<xsl:template match="exercises/exercise[@number]|exercisegroup/exercise[@number]" mode="serial-number">
+    <xsl:apply-templates select="@number" />
+</xsl:template>
+<!-- Hints, answers, solutions may be numbered (for cross-reference knowls) -->
+<xsl:template match="hint|answer|solution" mode="serial-number">
+    <xsl:number />
+</xsl:template>
 
 
 </xsl:stylesheet>
