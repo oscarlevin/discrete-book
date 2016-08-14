@@ -353,47 +353,51 @@
     </investigation>
 
     <p>
-      Sometimes, to prove that <m>P(k+1)</m> is true, it would be helpful to know that <m>P(k)</m> <em>and</em> <m>P(k-1)</m> <em>and</em> <m>P(k-2)</m> are all true. Consider the following classic puzzle:
+      Sometimes, to prove that <m>P(k+1)</m> is true, it would be helpful to know that <m>P(k)</m> <em>and</em> <m>P(k-1)</m> <em>and</em> <m>P(k-2)</m> are all true. Consider the following puzzle:
     </p>
 
     <p>
       <blockquote>
-        You have 9 coins which all look identical. However, you know that one of the coins is counterfeit, and weighs slightly less than the other coins (which all have the same weight). The weight difference is not great enough to tell by holding the coins, but luckily you have an old-fashioned balance scale (like the one held by Lady Justice). What is the smallest number of weighings needed to find the counterfeit coin?
+        <p>
+          You have a rectangular chocolate bar, made up of <m>n</m> identical squares of chocolate.  You can take such a bar and break it along any row or column.  How many times will you have to break the bar to reduce it to <m>n</m> single chocolate squares?
+        </p>
       </blockquote>
     </p>
 
+<p>
+  At first, this question might seem impossible.  Perhaps I meant to ask for the <em>smallest</em> number of breaks needed?  Let's investigate.
+</p>
+
+<p>
+  Start with some small cases.  If <m>n=2</m>, you must have a <m>1\times 2</m> rectangle, which can be reduced to single pieces in one break.  With <m>n=3</m>, we must have a <m>1\times 3</m> bar, which requires two breaks: the first break creates a single square and a <m>1\times 2</m> bar, which we know takes one (more) break.
+</p>
+
+<p>
+  What about <m>n=4</m>?  Now we could have a <m>2\times 2</m> bar, or a <m>1 \times 4</m> bar.  In the first case, break the bar into two <m>2\times 2</m> bars, each which require one more break (that's a total of three breaks required).  If we started with a <m>1 \times 4</m> bar, we have choices for our first break.  We could break the bar in half, creating two <m>1\times 2</m> bars, or we could break off a single square, leaving a <m>1\times 3</m> bar.  But either way, we still need two more breaks, giving a total of three.
+</p>
+
+<p>
+  It is starting to look like no matter how we break the bar (and no matter how the <m>n</m> squares are arranged into a rectangle), we will always have the same number of breaks required.  It also looks like that number is one less than <m>n</m>:
+</p>
+
+<conjecture>
+  <statement>
     <p>
-      Need a hint? The answer is 2. Why?
+      Given a <m>n</m>-square rectangular chocolate bar, it always takes <m>n-1</m> breaks to reduce the bar to single squares.
     </p>
+  </statement>
+</conjecture>
+
+<p>
+  It makes sense to prove this by induction because after breaking the bar once, you are left with <em>smaller</em> chocolate bars.  Reducing to smaller cases is what induction is all about.  We can inductively assume we already know how to deal with these smaller bars.  The problem is, if we are trying to prove the inductive case about a <m>(k+1)</m>-square bar, we don't know that after the first break the remaining bar will have <m>k</m> squares.  So we really need to assume that our conjecture is true for all cases less than <m>k+1</m>.
+</p>
+
+<p>
+  Is it valid to make this stronger assumption?  Remember, in induction we are attempting to prove that <m>P(n)</m> is true for all <m>n</m>.  What if that were not the case?  Then there would be some first <m>n_0</m> for which <m>P(n_0)</m> was false.  Since <m>n_0</m> is the <em>first</em> counterexample, we know that <m>P(n)</m> is true for all <m>n<n_0</m>.  Now we proceed to prove that <m>P(n_0)</m> is actually true, based on the assumption that <m>P(n)</m> is true for all smaller <m>n</m>.
+</p>
 
     <p>
-      Here's what you do. Put 3 coins on each side of the balance scale, leaving 3 off. Now if the scales are balanced, then the light coin must be one of the 3 you didn't weigh. If the scale tips, then the light coin is one of the three on the higher side. Now you have eliminated all but 3 coins using just one weighing. For the second weighing, put one of the three suspect coins on each side of the scales (leaving one off). Same idea: if the scales balance, then the unweighed coin is the counterfeit. Otherwise, the side of the scale that tipped up contains the light coin. Neat huh?
-    </p>
-
-    <p>
-      Let's generalize? If you had more than 9 coins to start with, say you had <m>n</m> coins, how many weighings would you need? A reasonable guess would be that each time you weigh the coins, you can eliminate <m>2/3</m> of them. So using 3 weighings, you could find the counterfeit coin among up to 27 coins. A forth weighing would be required for 28 to 81 coins.
-    </p>
-    <conjecture>
-      <statement>
-        <p>
-          The minimum number of weighings required to find the counterfeit coin among <m>n</m> coins is <m>\log_3(n)</m>, rounded up. In other words, if <m>x</m> is the smallest integer such that <m>n \le 3^x</m>, then the minimum number of weighings is <m>x</m>.
-        </p>
-      </statement>
-    </conjecture>
-    <p>
-      How do we know this is true? If you have <m>n</m> coins, divide them into 3 equal piles (if this is not possible, make two piles the same size, and the third pile one more or less as needed). Put one pile on each side of the scale, leaving one pile off (if the piles were not equal, weigh the piles with an equal number of coins against each other). If the scales balance, the counterfeit coin is in the unweighed pile. If the scales tip, the counterfeit coin is in the light pile. In any event, we have now reduced the number of coins to roughly <m>n/3</m>.
-    </p>
-
-    <p>
-      What now? Well obviously we do this again. And again, until we find our bad coin. Here is where induction comes in: instead of going through the process over and over again, we can just say that we have reduced the problem to an earlier case, for which we assume our conjecture holds. For example if <m>n =81</m>, we do the weighing as described, leaving us with <m>n/3 = 27</m> coins. By induction, we already know how to complete the problem for <m>27</m> coins, so we are done.
-    </p>
-
-    <p>
-      This <q>reducing to a simpler case</q> is a type of induction. But not exactly the same sort of induction we have encountered so far. In ordinary induction, we assume our result holds for <m>k</m>, and prove that it holds for the next higher case: <m>k+1</m>. There is not much difference in showing that the result holds for the case <m>k</m> assuming that it holds for the previous case (<m>k-1</m>). But what we are doing here, is showing that the result holds for the case <m>k</m>, assuming it works for <em>all</em> smaller cases. Is this okay? In fact, it is. Think of the dominoes: to prove that they all fall down, it is enough to prove that the first one falls, and that if all the dominoes up to the <m>k</m>th one have fallen, then the <m>k</m>th one will fall too.
-    </p>
-
-    <p>
-      The advantage is that we now have a stronger inductive hypothesis. We can assume that <m>P(1)</m>, <m>P(2)</m>, <m>P(3)</m>,
+      This is quite an advantage: we now have a stronger inductive hypothesis. We can assume that <m>P(1)</m>, <m>P(2)</m>, <m>P(3)</m>,
       <ellipsis /> <m>P(k)</m> is true, just to show that <m>P(k+1)</m> is true. Previously, we just assumed <m>P(k)</m> for this purpose.
     </p>
 
@@ -425,21 +429,24 @@
     </p>
 
     <p>
-      Let's prove our conjecture about the coin weighing puzzle:
+      Let's prove our conjecture about the chocolate bar puzzle:
     </p>
 
     <proof>
       <p>
-        Let <m>P(n)</m> be the statement, <q>if <m>x</m> is the smallest natural number such that <m>n \le 3^x</m>, then it is possible to find the light coin in no more than <m>x</m> weighings.</q>
+        Let <m>P(n)</m> be the statement, <q>it takes <m>n-1</m> breaks to reduce a <m>n</m>-square chocolate bar to single squares.</q>
       </p>
 
-      <p>
-        Base case: Consider <m>P(2)</m>. Here <m>x</m> is 1, since <m>2 \le 3^1</m>. It is possible to find the heavy coin using just 1 weighing: just put the coins on the scale.
-      </p>
+      <case>
+        <title>Base case</title> Consider <m>P(2)</m>. The squares must be arranged into a <m>1\times 2</m> rectangle, and we require <m>2-1 = 1</m> breaks to reduce this to single squares.
+      </case>
 
-      <p>
-        Inductive case: Suppose we have <m>n</m> coins, and assume <m>P(k)</m> is true for all <m>k \lt  n</m>. Now divide the <m>n</m> coins into three piles, equal if possible, otherwise two equal with the third either one more or one less than the other two. Put two equal piles on each side of the scales. If the scales balance, then the counterfeit coin is in the unweighed pile. If the scales tip, the coin is in the pile on the lighter side of the scale. In any event, we now know the counterfeit coin is one of <m>k = n/3</m> or <m>k = n/3\pm 1</m> coins. What's more, if <m>x</m> is the smallest number such that <m>n \le 3^x</m>, then <m>k \le 3^{x-1}</m>. By the inductive hypothesis, it is now possible to find the counterfeit coin in <m>x-1</m> more weighings. Thus <m>P(n)</m> is true.
+      <case>
+        <title>Inductive case</title>
+        <p> Fix an arbitrary <m>n\ge 2</m> and assume <m>P(k)</m> is true for all <m>k < n</m>.  Consider a <m>n</m>-square rectangular chocolate bar.  Break the bar once along any row or column.  This results in two chocolate bars, say of sizes <m>a</m> and <m>b</m>.  That is, we have an <m>a</m>-square rectangular chocolate bar, a <m>b</m>-square rectangular chocolate bar, and <m>a+b = n</m>.  </p>
+        <p> We also know that <m>a < n</m> and <m>b < n</m>, so by our inductive hypothesis, <m>P(a)</m> and <m>P(b)</m> are true.  To reduce the <m>a</m>-sqaure bar to single squares takes <m>a-1</m> breaks; to reduce the <m>b</m>-square bar to single squares takes <m>b-1</m> breaks.  Doing this results in our original bar being reduced to single squares.  All together it took the initial break, plus the <m>a-1</m> and <m>b-1</m> breaks, for a total of <m>1+a-1+b-1 = a+b-1 = n-1</m> breaks.  Thus <m>P(n)</m> is true.
       </p>
+      </case>
 
       <p>
         Therefore, by strong induction, <m>P(n)</m> is true for all <m>n \ge 2</m>.
