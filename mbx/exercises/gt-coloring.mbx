@@ -1,397 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<section xml:id="sec_coloring" xmlns:xi="http://www.w3.org/2001/XInclude">
-<title>Coloring</title>
+<exercises xml:id="exercises_gt-coloring" xmlns:xi="http://www.w3.org/2001/XInclude">
 
 
-<introduction>
-<investigation>
-<p>
-Mapmakers in the fictional land of Euleria have drawn the borders of the various dukedoms of the land. To make the map pretty, they wish to color each region. Adjacent regions must be colored differently, but it is perfectly fine to color two distant regions with the same color. What is the fewest colors the mapmakers can use and still accomplish this task?
-</p>
-<figure>
-	<image width="75%">
-	<latex-image-code><![CDATA[\begin{tikzpicture}
-	\draw[thick]
-		plot [smooth] coordinates {(0.1,1) (0,0) (2,0) (4,0.1) (5,0) (6,0) (7,0) (7,1) (7.1,3.5)}
-		plot [smooth] coordinates {(1,1) (0.1,1) (0,5)}
-		plot [smooth] coordinates {(2,5) (1,5) (1,4) (1,1) (1,.5) (3,.5) (3,1.25)}
-		plot [smooth] coordinates {(5,0) (5,1) (6,1) (6,0)}
-		plot [smooth] coordinates {(6,1) (6,3) (6,3.5) (5.5,3.5)}
-		plot [smooth] coordinates {(5,1) (4,1) (4,1.25) (4,1.5) (4,3) (2,3) (2,1) (3,1.25) (4,1.25)}
-		plot [smooth] coordinates {(4,1.5) (5,1.5) (5,3) (5,4) (4,4) (3,3.85) (2,4) (1.5,4) (1.5,3) (2,3)}
-		plot [smooth] coordinates {(5,3) (5.5,3) (5.5,3.5) (5.5, 4.2) (5.5,5) (4,5) (4,4)}
-		plot [smooth] coordinates {(6,3) (7.1, 3.5) (7,5) (5.5,4.2)}
-		plot [smooth] coordinates {(7,5) (5,6.5) (4,7) (1,7) (0,5) (1,4)}
-		plot [smooth] coordinates {(2,4) (2,5) (1.8,5.5) (2,6) (3,6.5) (4,5)}
-		plot [smooth] coordinates {(1,7) (3,6.5)};
-	\end{tikzpicture}]]></latex-image-code>
-	</image>
-</figure>
-</investigation>
-
-<p>
-Perhaps the most famous graph theory problem is how to color maps.
-</p>
-<blockquote>
-Given any map of countries, states, counties, etc., how many colors are needed to color each region on the map so that neighboring regions are colored differently?
-</blockquote>
-<p>
-Actual map makers usually use around seven colors. For one thing, they require watery regions to be a specific color, and with a lot of colors it is easier to find a permissible coloring. We want to know whether there is a smaller palette that will work for any map.
-</p>
-
-<p>
-How is this related to graph theory? Well, if we place a vertex in the center of each region (say in the capital of each state) and then connect two vertices if their states share a border, we get a graph. Coloring regions on the map corresponds to coloring the vertices of the graph. Since neighboring regions cannot be colored the same, our graph cannot have vertices colored the same when those vertices are adjacent.
-</p>
-
-<p>
-In general, given any graph <m>G</m>, a coloring of the vertices is called (not surprisingly) a <em>vertex coloring</em><index><main>vertex coloring</main></index><index><main>coloring</main></index>. If the vertex coloring has the property that adjacent vertices are colored differently, then the coloring is called <em>proper</em>. Every graph has a proper vertex coloring. For example, you could color every vertex with a different color. But often you can do better. The smallest number of colors needed to get a proper vertex coloring is called the <em>chromatic number</em><index><main>chromatic number</main></index> of the graph, written <m>\chi(G)</m><index><main><m>\chi(G)</m></main></index>.
-</p>
-<example>
-<statement>
-<p>
-Find the chromatic number of the graphs below.
-</p>
-
-<sidebyside widths="20% 20% 20%" margins="auto" valign="middle">
-	<image>
-	<latex-image-code><![CDATA[\begin{tikzpicture}
-	      \foreach \x in {0,...,6}
-	      \draw  (\x*60:1) \v -- (\x*60+60:1) -- (\x*60+180:1) -- cycle;
-	    \end{tikzpicture}]]></latex-image-code>
-	</image>
-	<image>
-	<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8]
-	      \draw  (-1,0) \v -- (0,0) \v -- (1,0) \v -- (.5,1) \v -- (0,0) -- (-.5,1) \v -- (0,2) \v -- (.5,1) -- (-.5,1) -- (-1,0);
-	    \end{tikzpicture}]]></latex-image-code>
-	</image>
-	<image>
-	<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8, xscale=1.5]
-	 \draw  (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
-	  \end{tikzpicture}]]></latex-image-code>
-	</image>
-</sidebyside>
-
-</statement>
-<solution>
-<p>
-The graph on the left is <m>K_6</m>. The only way to properly color the graph is to give every vertex a different color (since every vertex is adjacent to every other vertex). Thus the chromatic number is 6.
-</p>
-
-<p>
-The middle graph can be properly colored with just 3 colors (Red, Blue, and Green). For example:
-</p>
-<figure>
-	<image width="25%">
-	<latex-image-code><![CDATA[\begin{tikzpicture}[yscale=.8]
-	      \draw  (-1,0) \vb{R} -- (0,0) \vb{B} -- (1,0) \vb{G} -- (.5,1) \vr{R} -- (0,0) -- (-.5,1) \vl{G} -- (0,2) \va{B} -- (.5,1) -- (-.5,1) -- (-1,0);
-	    \end{tikzpicture}]]></latex-image-code>
-	</image>
-</figure>
-<p>
-There is no way to color it with just two colors, since there are three vertices mutually adjacent (i.e., a triangle). Thus the chromatic number is 3.
-</p>
-
-<p>
-The graph on the right is just <m>K_{2,3}</m>. As with all bipartite graphs, this graph has chromatic number 2: color the vertices on the top row red and the vertices on the bottom row blue.
-</p>
-</solution>
-</example>
-<p>
-It appears that there is no limit to how large chromatic numbers can get. It should not come as a surprise that <m>K_n</m> has chromatic number <m>n</m>. So how could there possibly be an answer to the original map coloring question? If the chromatic number of graph can be arbitrarily large, then it seems like there would be no upper bound to the number of colors needed for any map. But there is.
-</p>
-
-<p>
-The key observation is that while it is true that for any number <m>n</m>, there is a graph with chromatic number <m>n</m>, only some graphs arrive as representations of maps. If you convert a map to a graph, the edges between vertices correspond to borders between the countries. So you should be able to connect vertices in such a way where the edges do not cross. In other words, the graphs representing maps are all <em>planar</em>!
-</p>
-
-<p>
-So the question is, what is the largest chromatic number of any planar graph? The answer is the best known theorem of graph theory:
-</p>
-
-<theorem>
-<title>The Four Color Theorem</title>
-<statement>
-<p>
-<index><main>Four Color Theorem</main></index>
-If <m>G</m> is a planar graph, then the chromatic number of <m>G</m> is less than or equal to 4. Thus any map can be properly colored with 4 or fewer colors.
-</p>
-</statement>
-</theorem>
-
-<p>
-We will not prove this theorem. Really. Even though the theorem is easy to state and understand, the proof is not. In fact, there is currently no <q>easy</q> known proof of the theorem. The current best proof still requires powerful computers to check an <em>unavoidable set</em> of 633 <em>reducible configurations</em>. The idea is that every graph must contain one of these reducible configurations (this fact also needs to be checked by a computer) and that reducible configurations can, in fact, be colored in 4 or fewer colors.
-</p>
-</introduction>
-
-
-<subsection>
-<title>Coloring in General</title>
-<investigation>
-<p>
-The math department plans to offer 10 classes next semester. Some classes cannot run at the same time (perhaps they are taught by the same professor, or are required for seniors).
-</p>
-<table>
-	<tabular>
-		<col right="minor" halign="center"/><col />
-	<row bottom="minor"><cell><b>Class:</b></cell><cell><b>Conflicts with:</b></cell></row>
-	<row><cell>A</cell><cell>D I</cell></row>
-	<row><cell>B</cell><cell>D I J</cell></row>
-	<row><cell>C</cell><cell>E F I</cell></row>
-	<row><cell>D</cell><cell>A B F</cell></row>
-	<row><cell>E</cell><cell>H I</cell></row>
-	<row><cell>F</cell><cell>I</cell></row>
-	<row><cell>G</cell><cell>J</cell></row>
-	<row><cell>H</cell><cell>E I J</cell></row>
-	<row><cell>I</cell><cell>A B C E F H</cell></row>
-	<row><cell>J</cell><cell>B G H</cell></row>
-	</tabular>
-</table>
-<p>
-How many different time slots are needed to teach these classes (and which should be taught at the same time)? More importantly, how could we use graph coloring to answer this question?
-</p>
-</investigation>
-<p>
-Cartography is certainly not the only application of graph coloring. There are plenty of situations in which you might wish partition the objects in question so that related objects are not in the same set. For example, you might wish to store chemicals safely. To avoid explosions, certain pairs of chemicals should not be stored in the same room. By coloring a graph (with vertices representing chemicals and edges representing potential negative interactions), you can determine the smallest number of rooms needed to store the chemicals.
-</p>
-
-<p>
-Here is a further example:
-</p>
-<example>
-<statement>
-<p>
-Radio stations broadcast their signal at certain frequencies. However, there are a limited number of frequencies to choose from, so nationwide many stations use the same frequency. This works because the stations are far enough apart that their signals will not interfere; no one radio could pick them up at the same time.
-</p>
-
-<p>
-Suppose 10 new radio stations are to be set up in a currently unpopulated (by radio stations) region. The radio stations that are close enough to each other to cause interference are recorded in the table below. What is the fewest number of frequencies the stations could use.
-</p>
-
-<!-- Do to spacing concerns, instead of the mbx table, we use a latex table and import it as an image.  In sidebyside, the image gets scaled, even in latex.
-
-<table>
-	<tabular>
-		<col right="minor" /><col right="minor" /><col right="minor" /><col right="minor" /><col right="minor" /><col right="minor" /><col right="minor" /><col right="minor" /><col right="minor" />
-		<col right="minor" /><col/>
-	<row bottom="minor"> <cell></cell><cell>KQEA</cell><cell>KQEB</cell><cell>KQEC</cell><cell>KQED</cell><cell>KQEE</cell> <cell>KQEF</cell> <cell>KQEG</cell><cell> KQEH</cell> <cell>KQEI</cell><cell>KQEJ</cell></row>
-	<row bottom="minor">
-<cell>KQEA</cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell></row>
-	<row bottom="minor"><cell>KQEB</cell><cell></cell><cell></cell><cell>x</cell><cell>x</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell><cell></cell></row>
-	<row bottom="minor"><cell>KQEC</cell><cell>x</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>x</cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell></row>
-	<row bottom="minor"><cell>KQED</cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell><cell>x</cell><cell></cell><cell>x</cell><cell></cell><cell></cell></row>
-	<row bottom="minor"><cell>KQEE</cell><cell></cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>x</cell><cell></cell></row>
-	<row bottom="minor"><cell>KQEF</cell><cell>x</cell><cell></cell><cell>x</cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell></row>
-	<row bottom="minor"><cell>KQEG</cell><cell>x</cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell></cell><cell>x</cell></row>
-	<row bottom="minor"><cell>KQEH </cell><cell></cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>x</cell><cell></cell></row>
-	<row bottom="minor"><cell>KQEI</cell><cell></cell><cell></cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell></cell><cell>x</cell><cell></cell><cell>x</cell></row>
-
-	<row bottom="minor"><cell>KQEJ</cell> <cell>x</cell><cell></cell><cell>x</cell><cell> </cell><cell></cell><cell>x</cell><cell>x</cell> <cell></cell><cell>x</cell><cell></cell></row>
-	</tabular>
-</table> -->
-
-<sidebyside>
-<image>
-	<latex-image-code><![CDATA[
-		\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|}
-		 & {\tiny KQEA}&{\tiny KQEB}&{\tiny KQEC}&{\tiny KQED}&{\tiny KQEE}&{\tiny KQEF}&{\tiny KQEG}&{\tiny  KQEH}&{\tiny  KQEI}&{\tiny KQEJ } \\ \hline
-		{\tiny KQEA }&      &      &   x  &      &      &   x  &   x  &      &      &  x   \\ \hline
-		{\tiny KQEB }&      &      &   x  &   x  &      &      &      &      &      &      \\ \hline
-		{\tiny KQEC }&   x  &      &      &      &      &   x  &   x  &      &      &  x   \\ \hline
-		{\tiny KQED }&      &  x   &      &      &  x   &  x   &      &  x   &      &      \\ \hline
-		{\tiny KQEE }&      &      &      &  x   &      &      &      &      &  x   &      \\ \hline
-		{\tiny KQEF }&  x   &      &  x   &  x   &      &      &   x  &      &      &  x   \\ \hline
-		{\tiny KQEG }&  x   &      &  x   &      &      &  x   &      &      &      &  x   \\ \hline
-		{\tiny KQEH }&      &      &      &  x   &      &      &      &      &  x   &      \\ \hline
-		{\tiny KQEI }&      &      &      &      &  x   &      &      &  x   &      &  x   \\ \hline
-		{\tiny KQEJ }&  x   &      &  x   &      &      &  x   &   x  &      &  x   &      \\ \hline
-		\end{tabular}
-		]]>
-	</latex-image-code>
-</image>
-</sidebyside>
-
-
-
-</statement>
-<solution>
-<p>
-Represent the problem as a graph with vertices as the stations and edges when two stations are close enough to cause interference. We are looking for the chromatic number of the graph. Vertices that are colored identically represent stations that can have the same frequency.
-</p>
-
-<p>
-This graph has chromatic number 5. A proper 5-coloring is shown on the right. Notice that the graph contains a copy of the complete graph <m>K_5</m> so no fewer than 5 colors can be used.
-</p>
-<sidebyside widths="35% 30%" margin="auto" valign="bottom">
-	<image>
-	<latex-image-code><![CDATA[\begin{tikzpicture}[scale=.9]
-	\coordinate (A) at (90:2);
-	\coordinate (B) at (90-36:2);
-	\coordinate (C) at (90-2*36:2);
-	\coordinate (D) at (90-3*36:2);
-	\coordinate (E) at (90-4*36:2);
-	\coordinate (F) at (90-5*36:2);
-	\coordinate (G) at (90-6*36:2);
-	\coordinate (H) at (90-7*36:2);
-	\coordinate (I) at (90-8*36:2);
-	\coordinate (J) at (90-9*36:2);
-
-	\draw (A) -- (F) -- (D) -- (H) -- (I) (G) -- (J) -- (C) -- (F) (C) -- (G) -- (A) -- (J);
-
-	\draw (A) \va{\tiny KQEA} -- (C) \vr{\tiny KQEC} -- (B) \va{\tiny KQEB} -- (D) \vr{\tiny KQED} -- (E) \vb{\tiny KQEE} -- (I) \vl{\tiny KQEI} -- (J) \va{\tiny KQEJ} -- (F) \vb{\tiny KQEF} -- (G) \vl{\tiny KQEG} (H) \vl{\tiny KQEH};
-	\end{tikzpicture}]]></latex-image-code>
-	</image>
-	<image>
-	<latex-image-code><![CDATA[\begin{tikzpicture}[scale=.9]
-	\coordinate (A) at (90:2);
-	\coordinate (B) at (90-36:2);
-	\coordinate (C) at (90-2*36:2);
-	\coordinate (D) at (90-3*36:2);
-	\coordinate (E) at (90-4*36:2);
-	\coordinate (F) at (90-5*36:2);
-	\coordinate (G) at (90-6*36:2);
-	\coordinate (H) at (90-7*36:2);
-	\coordinate (I) at (90-8*36:2);
-	\coordinate (J) at (90-9*36:2);
-
-	\draw (A) -- (F) -- (D) -- (H) -- (I) (G) -- (J) -- (C) -- (F) (C) -- (G) -- (A) -- (J);
-	\draw[line width=1.25pt] (A) -- (C) -- (F) -- (G) -- (J) -- (A) -- (F) -- (J) -- (C) -- (G) -- (A);
-
-	\draw (A) \va{ R} -- (C) \vr{ B} -- (B) \va{ G} -- (D) \vr{ B} -- (E) \vb{ G} -- (I) \vl{ B} -- (J) \va{ P} -- (F) \vb{ G} -- (G) \vl{ Y} (H) \vl{ R};
-	\end{tikzpicture}]]></latex-image-code>
-	</image>
-</sidebyside>
-</solution>
-</example>
-<p>
-In the example above, the chromatic number was 5, but this is not a counterexample to the Four Color Theorem, since the graph representing the radio stations is not planar. It would be nice to have some quick way to find the chromatic number of a (possibly non-planar) graph. It turns out nobody knows whether an efficient algorithm for computing chromatic numbers exists.
-</p>
-
-<p>
-While we might not be able to find the exact chromatic number of graph easily, we can often give a reasonable range for the chromatic number. In other words, we can give upper and lower bounds for chromatic number.
-</p>
-
-<p>
-This is actually not very difficult: for every graph <m>G</m>, the chromatic number of <m>G</m> is at least 1 and at most the number of vertices of <m>G</m>.
-</p>
-
-<p>
-What? You want <em>better</em> bounds on the chromatic number? Well you are in luck.
-</p>
-
-<p>
-A <em>clique</em><index><main>clique</main></index> in a graph is a set of vertices all of which are pairwise adjacent. In other words, a clique of size <m>n</m> is just a copy of the complete graph <m>K_n</m>. We define the <em>clique number</em> of a graph to be the largest <m>n</m> for which the graph contains a clique of size <m>n</m>. Any clique of size <m>n</m> cannot be colored with fewer than <m>n</m> colors, so we have a nice lower bound:
-</p>
-
-<theorem>
-<statement>
-<p>
-The chromatic number of a graph <m>G</m> is at least the clique number of <m>G</m>.
-</p>
-</statement>
-</theorem>
-
-<p>
-There are times when the chromatic number of <m>G</m> is <em>equal</em> to the clique number. These graphs have a special name <ndash /> they are called <em>perfect</em><index><main>perfect graph</main></index>. If you know that a graph is perfect, then finding the chromatic number is simply a matter of searching for the largest clique.<fn>There are special classes of graphs which can be proved to be perfect.  One such class is the set of <em>chordal</em> graphs, which have the property that every cycle in the graph contains a <em>chord</em> <ndash /> an edge between two vertices in of the cycle which are not adjacent in the cycle.</fn> However, not all graphs are perfect.
-</p>
-
-<p>
-For an upper bound, we can improve on <q>the number of vertices</q> by looking to the degrees of vertices. Let <m>\Delta(G)</m><index><main><m>\Delta(G)</m></main></index> be the largest degree of any vertex in the graph <m>G</m>. One reasonable guess for an upper bound on the chromatic number is <m>\chi(G) \le \Delta(G) + 1</m>. Why is this reasonable? Starting with any vertex, it together with all of its neighbors can always be colored in <m>\Delta(G) + 1</m> colors, since at most we are talking about <m>\Delta(G) + 1</m> vertices in this set. Now fan out! At any point, if you consider an already colored vertex, some of its neighbors might be colored, some might not. But no matter what, that vertex and its neighbors could all be colored distinctly, since there are at most <m>\Delta(G)</m> neighbors, plus the one vertex being considered.
-</p>
-
-<p>
-In fact, there are examples of graphs for which <m>\chi(G) = \Delta(G) + 1</m>. For any <m>n</m>, the complete graph <m>K_n</m> has chromatic number <m>n</m>, but <m>\Delta(K_n) = n-1</m> (since every vertex is adjacent to every <em>other</em> vertex). Additionally, any <em>odd</em> cycle will have chromatic number 3, but the degree of every vertex in a cycle is 2. It turns out that these are the only two types of examples where we get equality, a result known as Brooks' Theorem.
-</p>
-
-<theorem>
-<title>Brooks' Theorem</title>
-<statement>
-<p>
-<index><main>Brooks' Theorem</main></index>
-Any graph <m>G</m> satisfies <m>\chi(G) \le \Delta(G)</m>, unless <m>G</m> is a complete graph or an odd cycle, in which case <m>\chi(G) = \Delta(G) + 1</m>.
-</p>
-</statement>
-</theorem>
-
-<p>
-The proof of this theorem is <em>just</em> complicated enough that we will not present it here (although you are asked to prove a special case in the exercises). The adventurous reader is encouraged to find a book on graph theory for suggestions on how to prove the theorem.
-</p>
-</subsection>
-
-
-<subsection>
-<title>Coloring Edges</title>
-<p>
-The chromatic number of a graph tells us about coloring vertices, but we could also ask about coloring edges. Just like with vertex coloring, we might insist that edges that are adjacent must be colored differently. Here, we are thinking of two edges as being adjacent if they are incident to the same vertex. The least number of colors required to properly color the edges of a graph <m>G</m> is called the <em>chromatic index</em><index><main>chromatic index</main></index> of <m>G</m>, written <m>\chi'(G)</m><index><main><m>\chi'(G)</m></main></index>.
-</p>
-<example>
-<statement>
-<p>
-Six friends decide to spend the afternoon playing chess. Everyone will play everyone else once. They have plenty of chess sets but nobody wants to play more than one game at a time. Games will last an hour (thanks to their handy chess clocks). How many hours will the tournament last?
-</p>
-</statement>
-<solution>
-<p>
-Represent each player with a vertex and put an edge between two players if they will play each other. In this case, we get the graph <m>K_6</m>:
-</p>
-<figure>
-	<image width="20%">
-	<latex-image-code><![CDATA[\begin{tikzpicture}
-	\foreach \x in {0,...,5}{
-
-		\foreach \y in {1,...,5}{
-		 \draw (\x*60:1) -- (\x*60+\y*60:1);
-		}
-	\draw (\x*60:1) \v;
-	}
-	\end{tikzpicture}]]></latex-image-code>
-	</image>
-</figure>
-<p>
-We must color the edges; each color represents a different hour. Since different edges incident to the same vertex will be colored differently, no player will be playing two different games (edges) at the same time. Thus we need to know the chromatic index of <m>K_6</m>.
-</p>
-
-<p>
-Notice that for sure <m>\chi'(K_6) \ge 5</m>, since there is a vertex of degree 5. It turns out 5 colors is enough (go find such a coloring). Therefore the friends will play for 5 hours.
-</p>
-</solution>
-</example>
-<p>
-Interestingly, if one of the friends in the above example left, the remaining 5 chess-letes would still need 5 hours: the chromatic index of <m>K_5</m> is also 5.
-</p>
-
-<p>
-In general, what can we say about chromatic index? Certainly <m>\chi'(G) \ge \Delta(G)</m>. But how much higher could it be? Only a little higher.
-</p>
-
-<theorem>
-<title>Vizing's Theorem</title>
-<statement>
-<p>
-<index><main>Vizing's Theorem</main></index>
-For any graph <m>G</m>, the chromatic index <m>\chi'(G)</m> is either <m>\Delta(G)</m> or <m>\Delta(G) + 1</m>.
-</p>
-</statement>
-</theorem>
-
-<p>
-At first this theorem makes it seem like chromatic index might not be very interesting. However, deciding which case a graph is in is not always easy. Graphs for which <m>\chi'(G) = \Delta(G)</m> are called <em>class 1</em>, while the others are called <em>class 2</em>. Bipartite graphs always satisfy <m>\chi'(G) = \Delta(G)</m>, so are class 1 (this was proved by K&#xf6;nig in 1916, decades before Vizing proved his theorem in 1964). In 1965 Vizing proved that all planar graphs with <m>\Delta(G) \ge 8</m> are of class 1, but this does not hold for all planar graphs with <m>2 \le \Delta(G) \le 5</m>. Vizing conjectured that all planar graphs with <m>\Delta(G) = 6</m> or <m>\Delta(G) = 7</m> are class 1; the <m>\Delta(G) = 7</m> case was proved in 2001 by Sanders and Zhao; the <m>\Delta(G) = 6</m> case is still open.
-</p>
-
-<p>
-There is another interesting way we might consider coloring edges, quite different from what we have discussed so far. What if we colored every edge of a graph either red or blue. Can we do so without, say, creating a <em>monochromatic</em><index><main>monochromatic</main></index> triangle (i.e., an all red or all blue triangle)? Certainly for some graphs the answer is yes. Try doing so for <m>K_4</m>. What about <m>K_5</m>? <m>K_6</m>? How far can we go?
-</p>
-
-<p>
-The answer to the above problem is known and is a fun problem to do as an exercise. We could extend the question in a variety of ways. What if we had three colors? What if we were trying to avoid other graphs. The surprising fact is that very little is known about these questions. For example, we know that you need to go up to <m>K_{17}</m> in order to force a monochromatic triangle using three colors, but nobody knows how big you need to go with more colors. Similarly, we know that using two colors <m>K_{18}</m> is the smallest graph that forces a monochromatic copy of <m>K_4</m>, but the best we have to force a monochromatic <m>K_{5}</m> is a range, somewhere from <m>K_{43}</m> to <m>K_{49}</m>. If you are interested in these sorts of questions, this area of graph theory is called Ramsey theory<index><main>Ramsey theory</main></index>. Check it out.
-</p>
-
-</subsection>
-
-
-
-<exercises>
 
 <exercise>
 <statement>
@@ -467,6 +79,84 @@ The chromatic numbers are 2, 3, 4, 5, and 3 respectively from left to right.
 </solution>
 </exercise>
 
+
+
+<exercise>
+	<statement>
+		<p>
+			A group of 10 friends decides to head up to a cabin in the woods (where nothing could possibly go wrong). Unfortunately, a number of these friends have dated each other in the past, and things are still a little awkward. To get the cabin, they need to divide up into some number of cars, and no two people who dated should be in the same car.
+		<ol>
+			<li>
+				<p>
+					What is the smallest number of cars you need if all the relationships were strictly heterosexual? Represent an example of such a situation with a graph. What kind of graph do you get?
+
+					<!-- <solution>
+						<p>
+							2 cars are needed. Since no boys dated boys and no girls dated girls, it is possible to separate the youths into cars by gender. The corresponding graph (with vertices representing people and edges representing the fact that those people dated) would be bipartite - there are no edges between two boys and no edges between two girls.
+						</p>
+					</solution> -->
+				</p>
+			</li>
+			<li>
+				<p>
+					Because a number of these friends dated there are also conflicts between friends of the same gender, listed below. Now what is the smallest number of conflict-free cars they could take to the cabin?
+					<table>
+						<tabular>
+							<row bottom="minor">
+								<cell right="minor">Friend</cell>
+								<cell>A</cell>
+								<cell>B</cell>
+								<cell>C</cell>
+								<cell>D</cell>
+								<cell>E</cell>
+								<cell>F</cell>
+								<cell>G</cell>
+								<cell>H</cell>
+								<cell>I</cell>
+								<cell>J</cell>
+							</row>
+							<row>
+								<cell right="minor">Conflicts with</cell>
+								<cell>BEJ</cell>
+								<cell>ADG</cell>
+								<cell>HJ</cell>
+								<cell>BF</cell>
+								<cell>AI</cell>
+								<cell>DJ</cell>
+								<cell>B</cell>
+								<cell>CI</cell>
+								<cell>EHJ</cell>
+								<cell>ACFI</cell>
+							</row>
+						</tabular>
+					</table>
+					<!-- <solution>
+						<p>
+							Draw the graph where vertices represent the 10 people and edges representing conflicts. Color the graph properly. The chromatic number of the graph is 3 (and you know it can't be smaller because there is an odd cycle present in the graph).
+						</p>
+					</solution> -->
+				</p>
+			</li>
+			<li>
+				<p>
+					What do these questions have to do with coloring?
+
+					<!-- <solution>
+						<p>
+							We are really asking for the chromatic number of the graphs. The smallest number of cars needed is the smallest number of colors needed for a proper vertex coloring.
+						</p>
+					</solution> -->
+				</p>
+			</li>
+		</ol>
+	</p>
+	</statement>
+</exercise>
+
+
+
+
+
 <exercise>
 <statement>
 <p>
@@ -483,7 +173,7 @@ The cube can be represented as a planar graph and colored with two colors as fol
 			\foreach \ang in {45, 135, 225, 315} {
 			\draw (\ang:.4) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.4) -- (\ang+90:.4);
 			}
-			\draw (45:.4) node[right]{ R} (135:.4) node[left]{ B} (225:.4) node[left]{ R} (315:.4) node[right]{ B} (45:1) node[right]{ B} (135:1) node[left]{ R} (225:1) node[left]{ B} (315:1) node[right]{ R};
+			\draw (45:.4) node[right]{\footnotesize R} (135:.4) node[left]{\footnotesize B} (225:.4) node[left]{\footnotesize R} (315:.4) node[right]{\footnotesize B} (45:1) node[right]{\footnotesize B} (135:1) node[left]{\footnotesize R} (225:1) node[left]{\footnotesize B} (315:1) node[right]{\footnotesize R};
 			\end{tikzpicture}]]></latex-image-code>
 	</image>
 </figure>
@@ -492,6 +182,97 @@ Since it would be impossible to color the vertices with a single color, we see t
 </p>
 </solution>
 </exercise>
+
+
+<exercise>
+	<statement>
+		<p>
+			Prove the chromatic number of any tree is two.  Recall, a tree is a connected graph with no cycles.
+		</p>
+
+		<ol>
+			<li>
+				<p>
+					Describe a procedure to color the tree below.
+					<figure>
+						<image width="35%">
+							<latex-image-code>
+								<![CDATA[\begin{tikzpicture}[scale=.7]
+\draw (-1,1) \v -- (-1.5,1.5) \v (-1,1) -- (-.9,2)\v (-1,1) -- (-.2,.5) \v (-1,1) -- (-.5,.2)\v;
+\draw (-1,1) -- (1,1) \v -- (.5,1.3) \v (1,1) -- (1,2)\v (1,1) -- (1.5,1.3) \v (1,1) -- (1.5,1)\v;
+\draw (1,1) -- (0,0) \v -- (-.2,-1) \v (0,0) -- (.2,-1) \v (0,0) -- (2,0) \v -- (2,1) \v -- (2.5,1.5) \v (2,1) -- (2.4,1.1) \v;
+\draw (2,0) -- (2,-1) \v -- (2.4,-.5) \v (2,-1) -- (2.4, -1.4) \v (2,-1) -- (2,-1.7) \v (2,-1) -- (1.6,-1.4) \v (2,-1) -- (1.6,-.6) \v;
+\draw (2,0) -- (3,1) \v -- (3,1.5) \v -- (3.5,2)\v (3,1) -- (3,.5) \v -- (3.5, 0) \v;
+\end{tikzpicture}]]>
+							</latex-image-code>
+						</image>
+					</figure>
+					<!-- <solution>
+						<p>
+							Start with any vertex and color it blue. Then look at all the neighbors of that vertex (i.e., those vertices that are connected to the vertex with and edge) and color all of these red. Then look at all the neighbors of the red vertices and color them blue. Then all the neighbors of the blue vertices (not yet colored) and color those red. Keep going until all of the vertices are colored.
+						</p>
+					</solution> -->
+				</p>
+			</li>
+			<li>
+				<p>
+					The chromatic number of <m>C_n</m> is two when <m>n</m> is even. What goes wrong when <m>n</m> is odd?
+				</p>
+			</li>
+			<li>
+				<p>
+					Prove that your procedure from part (a) always works for any tree.
+
+					<!-- <solution>
+						<p>
+							You can always color the first vertex blue. None of the neighbors of this vertex could be neighbors with each other, for this would create a cycle. So all the neighbors can be colored red. Now all the (uncolored) neighbors of the red vertices can be colored blue <ndash /> the only way this would fail is if one was already adjacent to the first vertex (but this is impossible because we already colored all its neighbors) or adjacent to each other, but this would create a cycle. This continues at every step.
+						</p>
+					</solution> -->
+				</p>
+			</li>
+			<li>
+				<p>
+					Now, prove using induction that every tree has chromatic number 2.
+
+					<!-- <solution>
+						<p>
+							This proof is very similar to showing that every tree is a bipartite graph.
+						</p>
+
+						<proof>
+							<p>
+								Let <m>P(n)</m> be the statement <q>A tree with <m>n</m> vertices has a chromatic number of 2</q>
+							</p>
+
+							<p>
+								Base Case: Consider a tree with <m>3</m> vertices. Since trees cannot have a cycle and two of the vertices are adjacent to the third vertex, we must have a coloring with 2 colors.
+							</p>
+
+							<p>
+								Inductive Case: Assume that <m>P(k)</m> is true for some arbitrary <m>k\lt n</m>. Now, I need to show that <m>P(k+1)</m> is true. So, I can assume that I have a tree with <m>k+1</m> vertices and I must show that it has chromatic number 2. Now, if I remove one of leaf from the tree with <m>k+1</m> vertices I will be removing exactly 1 edge and 1 vertex. Therefore I have a tree with <m>k</m> vertices which I know by my inductive hypothesis must have a chromatic number of 2. Now, I can add that leaf back in, and since it's only attached to exactly one vertex which is colored one of the 2 colors, I can color the added vertex the opposite color and still have a chromatic number of 2. TBTPOMI <m>P(k+1)</m> is true for all <m>n\geq 3</m>.
+							</p>
+						</proof>
+
+					</solution> -->
+				</p>
+			</li>
+		</ol>
+	</statement>
+</exercise>
+
+
+<exercise>
+	<statement>
+		Prove the 6-color theorem: every planar graph has chromatic number 6 or less.  Do not assume the 4-color theorem (whose proof is MUCH harder), but you may assume the fact that every planar graph contains a vertex of degree at most 5.
+	</statement>
+
+</exercise>
+
+
+
+
+
+
 
 <exercise>
 <statement>
@@ -523,7 +304,7 @@ The wheel graph below has this property. The outside of the wheel forms an odd c
 Prove by induction on vertices that any graph <m>G</m> which contains at least one vertex of degree less than <m>\Delta(G)</m> (the maximal degree of all vertices in <m>G</m>) has chromatic number at most <m>\Delta(G)</m>.
 </p>
 </statement>
-<solution>
+<!-- <solution>
 
 <proof>
 <p>
@@ -535,7 +316,7 @@ Let <m>G</m> be a graph with <m>n</m> vertices, maximal degree <m>\Delta(G)</m> 
 </p>
 </proof>
 
-</solution>
+</solution> -->
 </exercise>
 
 <exercise>
@@ -554,10 +335,10 @@ If we drew a graph with each letter representing a vertex, and each edge connect
 <exercise>
 <statement>
 <p>
-Prove that if you color every edge of <m>K_6</m> either red or blue, you are guaranteed a monochromatic triangle.
+Prove that if you color every edge of <m>K_6</m> either red or blue, you are guaranteed a monochromatic triangle (that is, an all red or an all blue triangle).
 </p>
 </statement>
-<solution>
+<!-- <solution>
 
 <proof>
 <p>
@@ -565,9 +346,7 @@ Start with a single vertex of <m>K_6</m>, call it <m>v_0</m>. There are five edg
 </p>
 </proof>
 
-</solution>
+</solution> -->
 </exercise>
 
 </exercises>
-
-</section>
