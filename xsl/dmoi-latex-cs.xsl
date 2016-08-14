@@ -11,54 +11,17 @@
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
 
 
-<!-- DMOI customizations for LaTeX runs -->
+<!-- DMOI customizations for LaTeX runs specifically for createspace -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Assumes current file is in discrete-text/xsl and that the mathbook repository is adjacent -->
-<xsl:import href="../../mathbook/xsl/mathbook-latex.xsl" />
+<!-- <xsl:import href="../../mathbook/xsl/mathbook-latex.xsl" /> -->
 <!-- Assumes next file can be found in discrete-text/xsl -->
-<xsl:import href="dmoi-common.xsl" />
+<xsl:import href="dmoi-latex.xsl" />
 
 
-<!-- Override default frontmatter pages: -->
 
-<!-- Remove "half-title" leading page with -->
-<!-- title only, at about 1:2 split    -->
-<xsl:template match="book" mode="half-title" >
-    <xsl:text>%% no half-title&#xa;</xsl:text>
-</xsl:template>
-
-<!-- Remove Ad card (may contain list of other books        -->
-<!-- Or may be overridden to make title page spread -->
-<!-- Obverse of half-title                          -->
-<xsl:template match="book" mode="ad-card">
-    <xsl:text>%% No adcard&#xa;</xsl:text>
-</xsl:template>
-
-
-<!-- Import custom title page -->
-<xsl:template match="book" mode="title-page">
-    <xsl:text>%% begin: title page&#xa;</xsl:text>
-    <xsl:text>%% my custom page.&#xa;</xsl:text>
-    <xsl:text>\input{frontmatter/title-page}&#xa;</xsl:text>
-    <xsl:text>%% end: title page&#xa;</xsl:text>
-</xsl:template>
-
-<!-- Import custom copyright page -->
-<xsl:template match="book" mode="copyright-page" >
-    <xsl:text>%% begin: copyright-page&#xa;</xsl:text>
-    <xsl:text>\input{frontmatter/copyright-page}&#xa;</xsl:text>
-    <xsl:text>%% end:   copyright-page&#xa;</xsl:text>
-</xsl:template>
-
-<!-- Dedication style -->
-<xsl:template match="dedication/p|dedication/p[1]" priority="1">
-    <xsl:text>\begin{flushright}\large%&#xa;</xsl:text>
-        <xsl:apply-templates />
-    <xsl:text>%&#xa;</xsl:text>
-    <xsl:text>\end{flushright}&#xa;</xsl:text>
-</xsl:template>
 
 
 <!-- Parameters to pass via xsltproc "stringparam" on command-line            -->
