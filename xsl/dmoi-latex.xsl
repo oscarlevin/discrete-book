@@ -21,44 +21,7 @@
 <xsl:import href="dmoi-common.xsl" />
 
 
-<!-- Override default frontmatter pages: -->
 
-<!-- Remove "half-title" leading page with -->
-<!-- title only, at about 1:2 split    -->
-<xsl:template match="book" mode="half-title" >
-    <xsl:text>%% no half-title&#xa;</xsl:text>
-</xsl:template>
-
-<!-- Remove Ad card (may contain list of other books        -->
-<!-- Or may be overridden to make title page spread -->
-<!-- Obverse of half-title                          -->
-<xsl:template match="book" mode="ad-card">
-    <xsl:text>%% No adcard&#xa;</xsl:text>
-</xsl:template>
-
-
-<!-- Import custom title page -->
-<xsl:template match="book" mode="title-page">
-    <xsl:text>%% begin: title page&#xa;</xsl:text>
-    <xsl:text>%% my custom page.&#xa;</xsl:text>
-    <xsl:text>\input{frontmatter/title-page}&#xa;</xsl:text>
-    <xsl:text>%% end: title page&#xa;</xsl:text>
-</xsl:template>
-
-<!-- Import custom copyright page -->
-<xsl:template match="book" mode="copyright-page" >
-    <xsl:text>%% begin: copyright-page&#xa;</xsl:text>
-    <xsl:text>\input{frontmatter/copyright-page}&#xa;</xsl:text>
-    <xsl:text>%% end:   copyright-page&#xa;</xsl:text>
-</xsl:template>
-
-<!-- Dedication style -->
-<xsl:template match="dedication/p|dedication/p[1]" priority="1">
-    <xsl:text>\begin{flushright}\large%&#xa;</xsl:text>
-        <xsl:apply-templates />
-    <xsl:text>%&#xa;</xsl:text>
-    <xsl:text>\end{flushright}&#xa;</xsl:text>
-</xsl:template>
 
 
 <!-- Parameters to pass via xsltproc "stringparam" on command-line            -->
@@ -162,4 +125,116 @@
   <xsl:text>%This should load all the style information that mbx does not.&#xa;</xsl:text>
     <xsl:text>\input{latex-preamble-styles}&#xa;</xsl:text>
 </xsl:param>
+
+
+
+
+
+<!-- Override default frontmatter pages: -->
+
+<!-- Remove "half-title" leading page with -->
+<!-- title only, at about 1:2 split    -->
+<xsl:template match="book" mode="half-title" >
+    <xsl:text>%% no half-title&#xa;</xsl:text>
+</xsl:template>
+
+<!-- Remove Ad card (may contain list of other books        -->
+<!-- Or may be overridden to make title page spread -->
+<!-- Obverse of half-title                          -->
+<xsl:template match="book" mode="ad-card">
+    <xsl:text>%% No adcard&#xa;</xsl:text>
+</xsl:template>
+
+
+<!-- Import custom title page -->
+<xsl:template match="book" mode="title-page">
+    <xsl:text>%% begin: title page&#xa;</xsl:text>
+    <xsl:text>%% my custom page.&#xa;</xsl:text>
+    <xsl:text>\input{frontmatter/title-page}&#xa;</xsl:text>
+    <xsl:text>%% end: title page&#xa;</xsl:text>
+</xsl:template>
+
+<!-- Import custom copyright page -->
+<xsl:template match="book" mode="copyright-page" >
+    <xsl:text>%% begin: copyright-page&#xa;</xsl:text>
+    <xsl:text>\input{frontmatter/copyright-page}&#xa;</xsl:text>
+    <xsl:text>%% end:   copyright-page&#xa;</xsl:text>
+</xsl:template>
+
+<!-- Dedication style -->
+<xsl:template match="dedication/p|dedication/p[1]" priority="1">
+    <xsl:text>\begin{flushright}\large%&#xa;</xsl:text>
+        <xsl:apply-templates />
+    <xsl:text>%&#xa;</xsl:text>
+    <xsl:text>\end{flushright}&#xa;</xsl:text>
+</xsl:template>
+
+
+
+
+<!-- Create a heading for each non-empty collection of solutions -->
+<!-- Format as appropriate LaTeX subdivision for this level      -->
+<!-- But number according to the actual Exercises section        -->
+<xsl:template match="exercises" mode="backmatter">
+    <xsl:variable name="nonempty" select="(.//hint and $exercise.backmatter.hint='yes') or (.//answer and $exercise.backmatter.answer='yes') or (.//solution and $exercise.backmatter.solution='yes')" />
+    <xsl:if test="$nonempty='true'">
+        <xsl:text>\</xsl:text>
+        <xsl:apply-templates select="." mode="subdivision-name" />
+        <xsl:text>*{</xsl:text>
+        <xsl:apply-templates select="." mode="number" />
+        <xsl:text> </xsl:text>
+        <xsl:apply-templates select="." mode="title-full" />
+        <xsl:text>}&#xa;</xsl:text>
+        <xsl:text>\markright{Solutions for Section &#xa;</xsl:text>
+        <xsl:apply-templates select="." mode="number" />
+        <xsl:text>}&#xa;</xsl:text>
+        <xsl:apply-templates select="*" mode="backmatter" />
+    </xsl:if>
+</xsl:template>
+
+
+<!-- Set up solution list -->
+<!-- Print exercises with some solution component -->
+<!-- Respect switches about visibility ("knowl" is assumed to be 'no') -->
+<xsl:template match="exercise" mode="backmatter">
+    <xsl:if test="answer or solution"> <!-- revmoed hint, those are not displayed here.  If I move hints to the back, I need to put it back here too -->
+        <!-- Lead with the problem number and some space -->
+        <xsl:text>\noindent\textbf{</xsl:text>
+        <xsl:apply-templates select="." mode="number" /> <!-- changed serial-number to number -->
+        <xsl:text>.}</xsl:text>
+        <xsl:if test="$exercise.backmatter.statement='yes'">
+            <!-- TODO: not a "backmatter" template - make one possibly? Or not necessary -->
+            <xsl:apply-templates select="statement" />
+            <xsl:text>\par\smallskip&#xa;</xsl:text>
+        </xsl:if>
+        <xsl:if test="hint and $exercise.backmatter.hint='yes'">
+            <xsl:apply-templates select="hint" mode="backmatter" />
+        </xsl:if>
+        <xsl:if test="answer and $exercise.backmatter.answer='yes'">
+            <xsl:apply-templates select="answer" mode="backmatter" />
+        </xsl:if>
+        <xsl:if test="solution and $exercise.backmatter.solution='yes'">
+            <xsl:apply-templates select="solution" mode="backmatter" />
+        </xsl:if>
+    </xsl:if>
+</xsl:template>
+
+
+<xsl:template match="index-list">
+    <xsl:text>%&#xa;</xsl:text>
+    <xsl:text>%% The index is here, setup is all in preamble&#xa;</xsl:text>
+    <!-- Not sure why this is needed, but this will get the headings right -->
+    <xsl:text>\markright{Index}&#xa;</xsl:text>
+    <xsl:text>\renewcommand{\leftmark}{Index}&#xa;</xsl:text>
+    <xsl:text>\printindex&#xa;</xsl:text>
+    <xsl:text>%&#xa;</xsl:text>
+</xsl:template>
+
+
+
+
+
+
+
+
 </xsl:stylesheet>
