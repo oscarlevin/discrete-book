@@ -16,7 +16,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Assumes current file is in discrete-text/xsl and that the mathbook repository is adjacent -->
-<xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
+<xsl:import href="../../mathbook/xsl/mathbook-epub.xsl" />
 <!-- Assumes next file can be found in discrete-text/xsl -->
 <xsl:import href="dmoi-common.xsl" />
 
@@ -24,66 +24,29 @@
 <xsl:param name="toc.level" select="''" />
 
 
-<!-- Exercises -->
-<!-- HTML: knowlize as available/appropriate -->
-<xsl:param name="exercise.text.statement" select="'yes'" />
-<xsl:param name="exercise.text.hint" select="'yes'" />
-<xsl:param name="exercise.text.answer" select="'no'" />
-<xsl:param name="exercise.text.solution" select="'no'" />
-<xsl:param name="exercise.backmatter.statement" select="'no'" />
-<xsl:param name="exercise.backmatter.hint" select="'no'" />
-<xsl:param name="exercise.backmatter.answer" select="'yes'" />
-<xsl:param name="exercise.backmatter.solution" select="'yes'" />
-
-
-<!-- Changes to mimic in HTML via CSS/other changes? -->
-<!-- LaTeX: Bold and italic for terminology macro -->
-<!-- LaTeX: Proof to small caps -->
-<!-- LaTeX: Historical Notes -->
-
-
-
-
-<!-- Here are the options, taken from mathbook-html.xsl, changed as needed -->
-
-<!-- Parameters -->
-<!-- Parameters to pass via xsltproc "stringparam" on command-line            -->
-<!-- Or make a thin customization layer and use 'select' to provide overrides -->
-<!-- See more generally applicable parameters in mathbook-common.xsl file     -->
-
-<!-- Content as Knowls -->
-<!-- These parameters control if content is      -->
-<!-- hidden in a knowl on first appearance       -->
-<!-- The happens automatically sometimes,        -->
-<!-- eg content of a footnote is always hidden   -->
-<!-- Some things never are hidden,               -->
-<!-- eg an entire section (too big),             -->
-<!-- or a bibliographic item (pointless)         -->
-<!-- These switches often control a whole group  -->
-<!-- of similar items, for example the "theorem" -->
-<!-- switch will similarly affect corrolaries,   -->
-<!-- lemmas, etc - anything that can be proved   -->
-<!-- NB: figures and tables inside of            -->
-<!-- side-by-side panels are never born hidden,  -->
-<!-- no matter how the switches below are set.   -->
-<!-- You may elect to have entire side-by-side   -->
-<!-- panels born as knowls, using the switch.    -->
-<!-- PROJECT-LIKE gets own switch here           -->
-
+<!-- Knowls do not function in an ePub,       -->
+<!-- so no content should be born hidden      -->
+<!-- TODO: enable turning off xrefs as knowls -->
 <xsl:param name="html.knowl.theorem" select="'no'" />
 <xsl:param name="html.knowl.proof" select="'no'" />
 <xsl:param name="html.knowl.definition" select="'no'" />
 <xsl:param name="html.knowl.example" select="'no'" />
-<xsl:param name="html.knowl.project" select="'no'" />
-<xsl:param name="html.knowl.list" select="'no'" />
 <xsl:param name="html.knowl.remark" select="'no'" />
 <xsl:param name="html.knowl.figure" select="'no'" />
 <xsl:param name="html.knowl.table" select="'no'" />
-<xsl:param name="html.knowl.listing" select="'no'" />
-<xsl:param name="html.knowl.sidebyside" select="'no'" />
-<xsl:param name="html.knowl.exercise.inline" select="'no'" />
-<xsl:param name="html.knowl.exercise.sectional" select="'no'" />
-<!-- html.knowl.example.solution: always "yes", could be implemented -->
+<xsl:param name="html.knowl.exercise" select="'no'" />
+
+<!-- Hints, solutions, etc are typically knowled   -->
+<!-- We temporarily kill them all as a convenience -->
+<xsl:param name="exercise.text.statement" select="'yes'" />
+<xsl:param name="exercise.text.hint" select="'no'" />
+<xsl:param name="exercise.text.answer" select="'no'" />
+<xsl:param name="exercise.text.solution" select="'no'" />
+<!-- Second, an exercise in a solutions list in backmatter.-->
+<xsl:param name="exercise.backmatter.statement" select="'no'" />
+<xsl:param name="exercise.backmatter.hint" select="'no'" />
+<xsl:param name="exercise.backmatter.answer" select="'no'" />
+<xsl:param name="exercise.backmatter.solution" select="'no'" />
 
 <!-- CSS and Javascript Servers -->
 <!-- We allow processing paramteers to specify new servers   -->
