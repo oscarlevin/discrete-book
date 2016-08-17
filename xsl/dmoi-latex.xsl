@@ -219,7 +219,7 @@
     </xsl:if>
 </xsl:template>
 
-
+<!-- Set up headers for index -->
 <xsl:template match="index-list">
     <xsl:text>%&#xa;</xsl:text>
     <xsl:text>%% The index is here, setup is all in preamble&#xa;</xsl:text>
