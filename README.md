@@ -15,6 +15,7 @@ To compile from source, you will need a copy of the mathbook xsl stylesheets, as
 Open up a terminal and in your preferred directory, clone the mathbook and discrete-book repositories:
 
 `git clone https://github.com/rbeezer/mathbook`
+
 `git clone https://github.com/oscarlevin/discrete-book`
 
 To generate LaTeX, change to the latex directory of the discrete-book folder:
