@@ -28,8 +28,8 @@
 <!-- HTML: knowlize as available/appropriate -->
 <xsl:param name="exercise.text.statement" select="'yes'" />
 <xsl:param name="exercise.text.hint" select="'yes'" />
-<xsl:param name="exercise.text.answer" select="'no'" />
-<xsl:param name="exercise.text.solution" select="'no'" />
+<xsl:param name="exercise.text.answer" select="'yes'" />
+<xsl:param name="exercise.text.solution" select="'yes'" />
 <xsl:param name="exercise.backmatter.statement" select="'no'" />
 <xsl:param name="exercise.backmatter.hint" select="'no'" />
 <xsl:param name="exercise.backmatter.answer" select="'yes'" />
