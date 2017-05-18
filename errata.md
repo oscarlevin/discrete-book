@@ -11,6 +11,7 @@ Starting with the 2nd edition of the book, I will NOT correct errors in each edi
 These are "major" errors in the text.  A list of minor typos follows.
 
 * Sample error.
+* Here is one that uses $math$.
 * Another.
 
 
