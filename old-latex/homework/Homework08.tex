@@ -1,0 +1,217 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx} 
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\renewcommand{\qedsymbol}{\textsc{qed}}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+%\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 8}{Due: Wednesday, April 1}
+
+
+\begin{document}
+\noindent \textbf{Instructions}: Same rules as usual - turn in your work on separate sheets of paper.  You must justify all your answers for full credit.
+
+\begin{questions}
+\question[3] Your ``friend'' has shown you a ``proof'' he wrote to show that $1 = 3$.  Here is the proof:
+
+\begin{proof}
+We want to show that $1 = 3$.  Of course we can do anything to one side of an equation as long as we also do it to the other side.  So subtract 2 from both sides.  This gives $-1 = 1$.  Now square both sides, to get $1 = 1$.  And we all agree this is true. Thus $1=3$.
+\end{proof}
+
+Carefully explain what is wrong with this proof using what we know about logic.  Hint: First identify the implication which follows from the proof.
+
+\begin{solution}
+In the proof we assume that $1=3$ and conclude that $1=1$.  So we have proved the implication
+\[1=3 \imp 1=1\]
+Note that we actually have a valid proof of this, and that the implication is true (for one thing, the ``if'' part is true, so the implication is automatically true).  However, what we really want is to converse of this, that $1=1 \imp 1=3$.  But as we know, the converse is not implied by the original implication (it better not be, otherwise we could conclude that 1 actually was 3).  
+
+Another way to say this: we can never conclude anything about the ``if'' part of an implication, since the ``if'' part can be true or false even if the implication is true.
+\end{solution}
+
+
+
+\question[5] Tommy Flanagan was telling you what he ate yesterday afternoon.  He tells you, ``I had either popcorn or raisins.  Also, if I had cucumber sandwiches, then I had soda.  But I didn't drink soda or tea.''  Of course you know that Tommy is the worlds worst liar, and everything he says is false.  What did Tommy eat?  
+
+Justify your answer by writing all Tommy's statements using sentence variables ($P, Q, R, S, T$), taking their negations, and using these to deduce what Tommy actually ate.
+
+\begin{solution}
+Let $P$ be the statement, ``I had popcorn,'' $Q$ be the statement, ``I had cucumber sandwiches,'' $R$ be the statement, ``I had raisins,'' $S$ be, ``I had soda,'' and $T$ be, ``I had tea.''  Then the statements made by Tommy are:
+\[P \vee R \qquad Q \imp S \qquad \neg(S \vee T)\]
+We need the negation of all of these.  Thus what is true is:
+\[\neg P \wedge \neg R \qquad Q \wedge \neg S \qquad S \vee T\]
+From the first two statements we can conclude that Tommy did not eat popcorn, did not eat raisins, did eat cucumber sandwiches and did not drink soda.  From the last statement $S \vee T$ and the fact that we know $\neg S$ we can conclude $T$, so Tommy did drink tea.
+\end{solution}
+
+
+\question[6] Use De Morgan's Laws, and any other logical equivalence facts you know to simplify the following statements.  Show all your steps.  Your final statements should have negations only appear directly next to the sentence variables or predicates ($P$, $Q$, $E(x)$, etc.), and no double negations.  It would be a good idea to use only conjunctions, disjunctions, and negations.
+\begin{parts}
+  \part $\neg((\neg P \wedge Q) \vee \neg(R \vee \neg S))$.
+  \begin{solution}
+    $\neg((\neg P \wedge Q) \vee \neg(R \vee \neg S))$\\
+    $\neg(\neg P \wedge Q) \wedge \neg\neg(R \vee \neg S)$ by De Morgan's law.\\
+    $\neg(\neg P \wedge Q) \wedge (R \vee \neg S)$ by double negation.\\
+    $(\neg\neg P \vee \neg Q) \wedge (R \vee \neg S)$ by De Morgan's law.\\
+    $(P \vee \neg Q) \wedge (R \vee \neg S)$ by double negation.
+  \end{solution}
+
+  \part $\neg((\neg P \imp \neg Q) \wedge (\neg Q \imp R))$ (careful with the implications).
+  \begin{solution}
+    We will need to convert the implications to disjunctions so we can apply De Morgan's law:
+    
+    $\neg((\neg P \imp \neg Q) \wedge (\neg Q \imp R))$\\
+    $\neg((\neg \neg P \vee \neg Q) \wedge (\neg\neg Q \vee R))$ by implication/disjunction equivalence.\\
+    $\neg((P \vee \neg Q) \wedge (Q \vee R))$ by double negation.\\
+    $\neg(P \vee \neg Q) \vee \neg (Q \vee R)$ by De Morgan's law.\\
+    $(\neg P \wedge \neg \neg Q) \vee (\neg Q \wedge \neg R)$ by De Morgan's law.\\
+    $(\neg P \wedge Q) \vee (\neg Q \wedge \neg R)$ by double negation.
+  \end{solution}
+
+
+%  \part $\neg \forall x \exists y ((E(x) \vee \neg O(y)) \imp \exists z (E(z) \wedge E(y)))$. Here, also put all the quantifiers ``out front.''
+%  \begin{solution}
+%  FIX
+%  \end{solution}
+\end{parts}
+
+
+
+
+\question[8] Can you chain implications together?  That is, if $P \imp Q$ and $Q \imp R$, does that means the $P \imp R$?  Can you chain more implications together?  Let's find out:
+\begin{parts}
+  \part Prove that the following is a valid argument form:
+  \begin{tabular}{rc}
+    & $P \imp Q$ \\
+    & $Q \imp R$ \\ \hline
+    $\therefore$ & $P \imp R$
+  \end{tabular}
+  
+  \begin{solution}
+    Consider the truth table:
+    
+    \begin{tabular}{c|c|c||c|c|c}
+      $P$ & $Q$ & $R$ & $P\imp Q$ & $Q \imp R$ & $P \imp R$ \\ \hline
+      T   &  T  &  T  &     T     &      T     &      T \\
+      T   &  T  &  F  &     T     &      F     &      F \\
+      T   &  F  &  T  &     F     &      T     &      T \\
+      T   &  F  &  F  &     F     &      T     &      F \\
+      F   &  T  &  T  &     T     &      T     &      T \\
+      F   &  T  &  F  &     T     &      F     &      T \\
+      F   &  F  &  T  &     T     &      T     &      T \\
+      F   &  F  &  F  &     T     &      T     &      T \\
+    \end{tabular}
+    Notice that both $P \imp Q$ and $Q \imp R$ are true in rows 1, 5, 7 and 8.  In each of these rows, $P \imp R$ is also true.  So whenever the premises are true, so in the conclusion.  Thus the argument form is valid.
+  \end{solution}
+
+
+\part Prove that the following is a valid argument form for any $n \ge 2$: 
+
+\begin{tabular}{rc}
+  & $P_1 \imp P_2$\\
+  & $P_2 \imp P_3$ \\ 
+  & $\vdots$ \\
+  & $P_{n-1} \imp P_n$ \\ \hline
+  $\therefore$ & $P_1 \imp P_n$.
+\end{tabular}
+
+I suggest you don't go through the trouble of writing out a $2^n$ row truth table.  Instead, you should use part (a) and mathematical induction.
+\begin{solution}
+Part (a) is the inductive case.  Now assume that the deduction rule holds going up to $P_k$.  That is, 
+
+\begin{tabular}{rc}
+  & $P_1 \imp P_2$\\
+  & $P_2 \imp P_3$ \\ 
+  & $\vdots$ \\
+  & $P_{k-1} \imp P_k$ \\ \hline
+  $\therefore$ & $P_1 \imp P_k$.
+\end{tabular}
+
+Now suppose we have
+
+\begin{tabular}{rc}
+  & $P_1 \imp P_2$\\
+  & $P_2 \imp P_3$ \\ 
+  & $\vdots$ \\
+  & $P_{k-1} \imp P_k$ \\ 
+  & $P_k \imp P_{k+1}$
+\end{tabular}
+
+From the first $k-1$ lines, we can conclude $P_1 \imp P_k$.  The combining this with the last line, we can conclude (using part (a) again):
+
+\begin{tabular}{rc}
+  & $P_1 \imp P_k$\\
+  & $P_{k} \imp P_{k+1}$ \\ \hline
+  $\therefore$ & $P_1 \imp P_{k+1}$.
+\end{tabular}
+
+So 
+
+\begin{tabular}{rc}
+  & $P_1 \imp P_2$\\
+  & $P_2 \imp P_3$ \\ 
+  & $\vdots$ \\
+  & $P_{k-1} \imp P_k$ \\ 
+  & $P_k \imp P_{k+1}$\\ \hline
+  $\therefore$ & $P_1 \imp P_{k+1}$.  
+\end{tabular}
+\end{solution}
+
+\end{parts}
+
+
+
+
+
+
+
+\question[8]  Consider the statement: $\forall x \forall y (x-y \ge 2 \imp \exists z (y < z \wedge z < x))$.
+\begin{parts}
+\part Explain what this statement says in words.  Is the statement true?
+\begin{solution}
+ The strictest translation: For all $x$ and for all $y$, if $x - y$ is at least 2, then there is a number $z$ which is larger than $y$ and less than $x$. 
+ 
+ Alternatively, given any two numbers $x$ and $y$, if $x$ is at least two larger than $y$, then there is a number between them.  Or even more loose: For any numbers at least two apart, there is a number between them.
+ 
+ The statement is true! (As long as we are looking at the integers, or real numbers.  If we considered our universe of discourse to be the even numbers say, then the statement would be false.)
+\end{solution}
+
+\part State the contrapositive of the original statement.  Do so both in words and in symbols.
+\begin{solution}
+ The contrapositive: for all $x$ and $y$, if there is no number $z$ larger than $y$ and smaller than $x$, then $x - y < 2$.  Or if you simplify, for all $x$ and $y$, if every $z$ is either not greater than $y$ or not less than $x$, then $x - y$ is less than $2$.
+ 
+ \[\forall x \forall y (\forall z (y \ge z \vee z \ge x) \imp x-y < 2)\]
+\end{solution}
+
+\part State the converse of the original statement.  Is the converse true?
+\begin{solution}
+ The converse is, for all $x$ and for all $y$, if there is some $z$ greater than $y$ and less than $x$, then $x-y \ge 2$.  Or in symbols,
+ \[\forall x \forall y (\exists z (y < z \wedge z < x) \imp x-y \ge 2)\]
+ The converse is true, as long as we consider only the integers, but false if we consider the real numbers (or rationals).
+\end{solution}
+
+\part State the negation of the original statement.  Do so both in words and in symbols (simplifying as much as possible).
+\begin{solution}
+ The negation: there are numbers $x$ and $y$ such that $x - y$ is at least 2, but for all $z$, either $z$ is not larger than $y$ or not less than $x$.
+ 
+ \[\exists x \exists y (x - y \ge 2 \wedge \forall z (y \ge z \vee z \ge x))\]
+\end{solution}
+
+\end{parts}
+
+
+
+
+
+ 
+\end{questions}
+\end{document}
+
+

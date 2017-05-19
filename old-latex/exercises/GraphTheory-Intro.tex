@@ -1,0 +1,169 @@
+\begin{questions}
+\question If 10 people each shake hands with each other, how many handshakes took place?  What does this question have to do with graph theory?
+
+	\begin{answer}
+		This is asking for the number of edges in $K_{10}$.  Each vertex (person) has degree (shook hands with) 9 (people).  So the sum of the degrees is $90$.  However, the degrees count each edge (handshake) twice, so there are 45 edges in the graph.  That is how many handshakes took place.%If 10 people each shake hands with each other, how many handshakes took place?  What does this question have to do with graph theory?
+	\end{answer}
+	
+	
+	
+
+\question Among a group of 5 people, is it possible for everyone to be friends with exactly 2 of the people in the group?  What about 3 of the people in the group?
+
+	\begin{answer}
+		It is possible for everyone to be friends with exactly 2 people.  You could arrange the 5 people in a circle and say that everyone is friends with the two people on either side of them (so you get the graph $C_5$).  However, it is not possible for everyone to be friends with 3 people.  That would lead to a graph with an odd number of odd degree vertices which is impossible since the sum of the degrees must be even.  %Among a group of 5 people, is it possible for everyone to be friends with exactly 2 of the people in the group?  What about 3 of the people in the group?
+	\end{answer}
+	
+	
+
+
+
+\question Is it possible for two {\em different} (non-isomorphic) graphs to have the same number of vertices and the same number of edges?  What if the degrees of the vertices in the two graphs are the same (so both graphs have vertices with degrees 1, 2, 2, 3, and 4, for example)?  Draw two such graphs or explain why not.
+
+	\begin{answer}
+		Yes.  For example, both graphs below contain 6 vertices, 7 edges, and have degrees (2,2,2,2,3,3).
+		\begin{center}
+		  \hfill
+		  \begin{tikzpicture}
+		   \draw[thick] (-2,0) \v -- (-1,0) \v -- (-1.5,1) \v -- (-2,0) (-1.5,1) -- (1.5, 1) \v -- (1,0) \v -- (2,0) \v -- (1.5,1);  
+		  \end{tikzpicture}
+		  \hfill
+		  \begin{tikzpicture}
+		  \foreach \x in {0,...,5}
+		    \draw[thick] (\x*60:1) \v -- (\x*60 + 60:1);
+		    \draw[thick] (0:1) -- (180:1);
+		  \end{tikzpicture}
+		  \hfill ~
+		\end{center}
+	\end{answer}
+	
+	
+	
+	
+
+	
+
+
+\question Are the two graphs below equal?  Are they isomorphic?  If they are isomorphic, give the isomorphism.
+
+Graph 1: $V = \{a,b,c,d,e\}$, $E = \{\{a,b\}, \{a,c\}, \{a,e\}, \{b,d\}, \{b,e\}, \{c,e\}\}$.
+
+Graph 2: \tikz[baseline=-0.4ex]{
+\foreach \x in {0,...,4} {
+	\coordinate (v\x) at (90-72*\x:.75);}
+\draw (v3) \vl{$d$} -- (v0) \vr{$a$} -- (v2) \vr{$c$} -- (v1) \vr{$b$} -- (v4) \vl{$e$} -- (v3) -- (v2);
+}.
+	
+	
+	\begin{answer}
+		The graphs are not equal.  For example, graph 1 has an edge $\{a,b\}$ but graph 2 does not have that edge.  They are isomorphic.  One possible isomorphism is $f:G_1 \to G_2$ defined by $f(a) = d$, $f(b) = c$, $f(c) = e$, $f(d) = b$, $f(e) = a$.
+	\end{answer}
+	
+	
+
+
+	
+	
+
+
+	
+
+
+
+
+
+	
+	
+
+\question Which of the graphs below are bipartite?  
+
+\begin{center}
+  \begin{tikzpicture}
+    \draw (-1,1) \v -- (0,2) \v -- (1,1) \v -- (0,0) \v -- (-1,1) -- (0,1) \v -- (1,1);
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}
+    \draw (0:1) \v -- (120:1) \v -- (60:1) \v -- (300:1) \v -- (180:1) \v -- (240:1) \v -- cycle;
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}
+    \draw (360/7:1) \v -- (2*360/7:1) \v -- (3*360/7:1) \v -- (4*360/7:1) \v -- (5*360/7:1) \v -- (6*360/7:1) \v -- (0:1) \v -- cycle;
+  \end{tikzpicture}
+  \hfill 
+  \begin{tikzpicture}
+    \draw (0,0) \v;
+    \foreach \x in {0,...,7}
+    \draw (0,0) -- (\x*360/8:1) \v;
+  \end{tikzpicture}
+\end{center}
+
+	\begin{answer}
+		Three of the graphs are bipartite.  The one which is not is $C_7$ (second from the right).
+	\end{answer}
+	
+	
+	
+
+
+\question For which $n$ is the graph $C_n$ bipartite?
+
+	\begin{answer}
+		$C_n$ is bipartite if and only if $n = 1$ or is even.
+	\end{answer}
+	
+	
+	
+
+	
+\question For each of the following, try to give two \underline{different} unlabeled graphs with the given properties, or explain why doing so is impossible.
+	\begin{parts}
+	\part Two different trees with the same number of vertices and the same number of edges.  A tree is a connected graph with no cycles.
+	
+	\part Two different graphs with 8 vertices all of degree 2.
+	
+	\part Two different graphs with 5 vertices all of degree 4.
+	\part Two different graphs with 5 vertices all of degree 3.
+	\end{parts}	
+
+
+
+	\begin{answer}
+		\begin{parts}
+		\part For example:
+		
+		\tikz{
+			\draw (0,0) \v -- (-1,1) \v (0,0) -- (0,1) \v (0,0) -- (1,1) \v;
+		} \qquad
+		\tikz{
+			\draw (0,0) \v -- (-1,1) \v (0,0) -- (.5,.5) \v -- (1,1) \v;
+		}
+		
+		\part This is not possible if we require the graphs to be connected.  If not, we could take $C_8$ as one graph and two copies of $C_4$ as the other.
+		
+		\part Not possible.  If you have a graph with 5 vertices all of degree 4, then every vertex must be adjacent to every other vertex.  This is the graph $K_5$.
+		\part This is not possible.  In fact, there is not even one graph with this property (such a graph would have $5\cdot 3/2 = 7.5$ edges).
+		\end{parts}	
+	\end{answer}	
+	
+	
+
+
+
+
+
+
+	
+	
+
+
+
+	
+
+
+	
+
+
+
+
+
+\end{questions}

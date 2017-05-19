@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- This file is not currently part of the book (and is not really complete).  Instead, there is a very short subsection at the end of the sec_logic-prop section which introduces predicate logic.-->
+
+<section xml:id="sec_logic-pred" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Predicate Logic</title>
+
+
+  <introduction>
+
+    <investigation>
+      <p> You come across four trolls playing bridge.  They declare:
+        <blockquote>
+      <p>Troll 1: All trolls here see at least one knave.</p>
+
+      <p>Troll 2: I see at least one troll that sees only knaves.</p>
+
+      <p>Troll 3: Some trolls are scared of goats.</p>
+
+      <p>
+        Troll 4: All trolls are scared of goats.
+      </p>
+    </blockquote>
+      Are there any trolls that are not scared of goats?  Recall, of course, that all trolls are either knights (who always tell the truth) or knaves (who always lie).</p>
+    </investigation>
+
+    <p>
+      Truth tables, logical equivalence and deduction rules allow us to better understand arguments. However, the types of statements our tools have allowed us to analyze have be sorely limited. For example, consider a classic argument:
+
+      <blockquote>
+        <p>All men are mortal. Socrates is a man. Therefore, Socrates is mortal.</p>
+      </blockquote>
+    </p>
+
+    <p>
+      This is clearly a valid argument. It is an example of a <term>syllogism</term><index>syllogism</index>. Historically, the study of logic began with Aristotle who worked out all possible forms of syllogisms and decided which were valid and which were not. We will not do that here. However, this is an important example because it highlights a limitation of the propositional logic we have studied so far. Can we use propositional logic to analyze the argument?
+    </p>
+
+    <p>
+      The trouble is that we don't have a way to translate <q>all men are mortal.</q> It looks like an implication: being a man implies you are mortal. So maybe it is <m>P \imp Q</m>. But what is <m>P</m>? We could rephrase: <q>if Socrates is a man, then Socrates is mortal.</q> Now we have a valid argument form we have seen before. But it is not quite the same. (Suppose the argument was: all men are mortal, all mortals have hair, therefore all men have hair. This is also valid and Socrates has nothing to do with it.) Or perhaps we could go with, <q>for every thing there is, if the thing is a man, then the thing is mortal.</q> Looks promising, but we still can't let <m>P</m> be <q>the thing is a man</q> because that is not a statement (<q>thing</q> is a variable).
+    </p>
+
+    <p>
+      One way to sort this mess out is to introduce a new sort of logic called <term>predicate logic</term>. This is the logic of properties. Doing so will allow us to discuss how properties of various things are related. Above, if a thing has the property of being a man, then it has the property of being mortal. We can then <em>quantify</em> over what things we talk about. In the example above, <em>all</em> things.
+    </p>
+
+    <p>
+      If thinking about properties of things seems too philosophical, rest easy.  We are really talking about elements of sets. We can talk about collections of things, for example the collection of all men and the collection of all mortal things. We can then express <q>all men are mortal</q> by saying that the set of men is a subset of the set of mortals. Then we claim that Socrates is a member of the set of men, so therefore is also a member of the set of mortals.
+    </p>
+
+    <p>
+      One last example to highlight the connection between properties and sets before delving into details. We all agree that all squares are rectangles. The set theory approach would be to consider the set of squares and the set of rectangles, and point out that one is a subset of the other (the squares are a subset of the rectangles). The predicate logic approach would be to consider the properties of <q>being a square</q> and of <q>being a rectangle</q> and assign these to predicates, say <m>S</m> and <m>R</m>. We would then say <m>\forall x (S(x) \imp R(x))</m>: for all things, if the thing is a square, then it is a rectangle. So having the property of being a square implies having the property of being a rectangle.
+    </p>
+
+    <p>
+      It is useful to be able to switch between the set theoretic and predicate logic interpretations.  The advantage of using predicate logic is that this <em>extends</em> propositional logic, so everything we discovered it he previous section still applies; predicate logic simply allows us to do more.
+    </p>
+  </introduction>
+
+
+  <subsection>
+    <title>Predicates</title>
+    <p>
+      We can think of predicates<index><main>predicate</main></index> as properties of objects. For example, consider the predicate <m>E</m> which we will use to mean <q>is even.</q> Being even is a property of some numbers, so <m>E</m> needs to be applied to something. We will adopt the notation <m>E(x)</m> to mean <m>x</m> is even. (Some books would write <m>Ex</m> instead.) Notice that if we put a number in for <m>x</m>, then this becomes a statement, and as such, can be true or false. So <m>E(2)</m> is true, and <m>E(3)</m> is false. A predicate is like a function with codomain equal to the set of truth values <m>\{T, F\}</m>. On the other hand, <m>E(x)</m> is not true or false, since we don't know what <m>x</m> is. If we have a variable floating around like that, we say the expression is merely a formula, and not a statement.
+    </p>
+
+    <p>
+      Since <m>E(2)</m> is a statement (a proposition), we can apply propositional logic to it. Consider
+      <me>
+        E(2) \wedge \neg E(3)
+      </me>
+      which is a true statement, because it is both the case that 2 is even and that 3 is not even. What we have done here is capture the logical form (using connectives) of the statement <q>2 is even and 3 is not</q> as well as the mathematical content (using predicates).
+    </p>
+
+    <p>
+      Notice that we can only assert even-ness of a single number at a time. That is to say, <m>E</m> is a <term>one-place</term> predicate. There are also predicates which assert a property of two or more numbers (or other objects) at the same time. Consider the <term>two-place</term> predicate <q>is less than.</q> Perhaps we will use the variable <m>L</m>. Now we can say <m>L(2,3)</m>, which is true because 2 is less than 3. Of course we are already have a symbol for this: <m>2 \lt  3</m>. However, what about <q>divides evenly into</q> as a predicate? We can say <m>D(2,10)</m> is true because 2 divides evenly into 10, while <m>D(3, 10)</m> is false since there is a remainder when you divide 10 by 3. Incidentally, there is a standard mathematical symbol for this: <m>2 | 10</m> is read <q>2 divides 10.</q>
+    </p>
+
+    <p>
+      Predicates can be as complicated and have as many places as we want or need. For example, we could let <m>R(x,y,z,u,v,w)</m> be the predicate asserting that <m>x</m>, <m>y</m>, <m>z</m> are distinct natural numbers whose only common factor is <m>u</m>, the difference between <m>x</m> and <m>y</m> is <m>v</m> and the difference between <m>y</m> and <m>z</m> is <m>w</m>. This is a silly and most likely useless example, but it is an example of a predicate. It is true of some ordered lists of six numbers (6-tuples), and false of others.
+      Additionally, predicates need not have anything to do with numbers: we could let <m>F(a,b,c,d)</m> be the predicate that asserts that <m>a</m> and <m>b</m> are the only two children of mother <m>c</m> and father <m>d</m>.
+    </p>
+  </subsection>
+
+
+  <subsection>
+    <title>Quantifiers</title>
+    <p>
+      Perhaps the most important reason to use predicate logic is that doing so allows for quantification. We can now express statements like <q>every natural number is either even or odd,</q> and <q>there is a natural number such that no number is less than it.</q> Think back to Calculus and the Mean Value Theorem. It states that for every function <m>f</m> and every interval <m>(a, b)</m>, if <m>f</m> is continuous on the interval <m>[a,b]</m> and differentiable on the interval <m>(a,b)</m>, then there exists a number <m>c</m> such that <m>a \le c \le b</m> and <m>f'(c)(b - a) = f(b) - f(a)</m>. Using the correct predicates and quantifiers, we could express this statement entirely in symbols.
+    </p>
+
+    <p>
+      As we saw in <xref ref="sec_intro-statements" />, there are two sorts of quantifiers we are interested in: universal (for all; in symbols <m>\forall</m>) and existential (there exists; in symbols <m>\exists</m>).  With these quantifiers, we can say a lot!
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Translate the following statements into symbols using quantifiers and the predicates <m>P(x)</m> for <q><m>x</m> is prime</q> and <m>E(x)</m> for <q><m>x</m> is even.</q>
+          <ol>
+            <li>There is an even prime number.</li>
+            <li>All prime numbers are odd.</li>
+            <li>All prime numbers greater than two are odd.</li>
+            <li>There are infinitely many pairs of prime numbers exactly two apart.</li>
+          </ol>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <ol>
+            <li><m>\exists x (E(x) \wedge P(x))</m>.  We are claiming that there is something that has both properties, so it makes sense to use a conjunction here.</li>
+            <li><m>\forall x (P(x) \imp \neg E(x))</m>.  Universal statements like this almost always become an implication.  Take anything you like, <em>if</em> it is prime, <em>then</em> it is odd (i.e., not even).</li>
+            <li><m>\forall x ((x \gt 2 \wedge P(x)) \imp \neg E(x))</m>.  We can always restrict a quantifier in this way.  We might therefore use the shorthand <m>\forall x \gt 2 (P(x) \imp \neg E(x))</m>.</li>
+            <li><m>\forall x \exists y (y \gt x \wedge P(x) \wedge P(x+2))</m>.  There are a couple interesting features here.  First, note that it is acceptable to put <q><m>x+2</m></q> inside a predicate, since that expression names a number (we can apply predicates to functions applied to elements).  Second, look at how we are capturing <q>infinitely many</q>.  If for every natural number, there is a larger number with our desired property, then there must be infinitely many numbers with that property. Sometimes we use the shortcut notation <m>\exists^\infty x</m> for <q>there are infinitely many <m>x</m></q>.</li>
+          </ol>
+        </p>
+      </solution>
+
+    </example>
+
+
+    <p>
+      Are the statements in the previous example true?  Maybe we should make a truth table?  Problem is, that has absolutely no hope of helping us.  The reason is that we are now looking at the logical structure of the individual propositions (<m>P</m>'s, <m>Q</m>'s, etc.), not at how they are related.  In fact, unless we make some assumptions, there is no way for us to determine whether the statements above are true or false.
+    </p>
+
+    <p>Take, for example, the statement <m>\exists x(E(x) \wedge P(x))</m>.  Whether this is true or false completely depends on the <em>interpretation</em> of <m>E(x)</m> and <m>P(x)</m>.  Is there an Emu that is Purple?  Probably not.  Is there an Even Prime, yes.  But even if we agree on the interpretation of the symbols, we are not clear yet.  When we quantify, we must be quantifying over some set.  Suppose our <em>domain of discourse</em> was the set of two digit numbers.  Does there exist (a two digit) number which is even and prime?  No!
+  </p>
+
+  <p>We solve the domain of discourse problem by agreeing that unless we specify otherwise, we will take our domain to be the natural numbers (because we are studying discrete math; in calculus we would take our domain to be the real numbers).
+  </p>
+
+  <p>
+    Even then though, there is not always a straight forward way to determine the truth value of a statement.  For example, as of this writing, nobody knows whether there are infinitely many primes exactly two apart.  This is called the <em>Twin Prime Conjecture</em>, which has been an open problem in mathematics for many years.<fn>There is exciting news on this front though.  In 2013, Yitang Zhang proved that there are infinitely many primes at exactly <m>N</m> apart, for some <m>N</m> less than 70 million.  Since then the bound has been reduced 246.  We live in exciting times.</fn>
+  </p>
+
+
+  <p>
+  All we are really saying here is that mathematics is interesting.  The truth value of statements in mathematics is determined by more than <em>just</em> the logical form of the statements.  Even with propositional logic, there are lots of true mathematical statements of the form <m>P \imp Q</m> even though <m>P \imp Q</m> is not a tautology.  But it is still helpful to inspect the logical form of statements: it is the skeleton that the body of mathematics is built around.
+  </p>
+</subsection>
+
+
+<subsection>
+  <title>Logical Equivalence and Deductions (for Predicate Logic)</title>
+
+<p>
+  In <xref ref="sec_logic-prop"/> we said that two (propositional) statements were logically equivalent when they were true in exactly the same cases of our truth table.  Put slightly differently, no matter what truth value we assign the propositional variables, logically equivalent statements will have the same truth values as each other.
+</p>
+
+  <p>
+    We would like to do the same for predicate logic.  For example, consider the following two statements:
+    <ol>
+      <li>
+        There is a number such that there does not exist any number is less than it.
+      </li>
+      <li>There is a number which all numbers are not less than.</li>
+    </ol>
+
+    We might translate these into symbols like this:
+
+    <ol>
+      <li>
+        <m>\exsits x \neg \exists y (y \lt x)</m>
+      </li>
+      <li><m>\exists x \forall y \neg (y \lt x)</m></li>
+    </ol>
+  </p>
+
+  <p>
+    Note that there is no hope of using a truth table to decide whether these are logically equivalent (we would have to use the entire statement as a single propositional variable).  But they are logically equivalent.  No matter how we <em>interpret</em> the <m>\lt</m> symbol (even if it meant <q>greater than</q> or <q>is not as purple as</q>), and no matter what domain of discourse we considered, these two statements should always have the same truth value as each other.
+  </p>
+
+  <p>
+    This relies on an observation we made in <xref ref="sec_intro-statements" /> about how negation and quantifiers interact.  Specifically, if <m>\varphi(x)</m> is any logical formula, we have
+    <me>
+      \neg \forall x \varphi(x) \text{ is logically equivalent to } \exists x \neg \varphi(x)
+    </me>
+    and
+    <me>
+      \neg \exists x \varphi(x) \text{ is logically equivalent to } \forall x \neg \varphi(x).
+    </me>
+    (We use <m>\varphi</m>, the greek letter <q>phi</q>, to stand for any formula, which might include more than one predicate, logical connectives, as well as other quantifiers.  Later we will use <m>\psi</m>, <q>psi</q> when we need a second formula variable.)
+  </p>
+
+<p>
+  How do we know these equivalences are correct? This gets to the meaning of the quantifiers.  If not everything, then something.  If not something, then nothing!
+</p>
+
+
+<p>
+  Here are some more examples.
+</p>
+
+    <example>
+      <statement>
+        <p>
+          Let <m>E</m> be the predicate for being even, and <m>O</m> for being odd. Consider:
+          <me>
+            \exists x E(x) \wedge \exists x O(x),
+          </me>
+          which says that there is a number which is even and a number which is odd. This is of course true. However there is no number which is both even and odd, so
+          <me>
+            \exists x (E(x) \wedge O(x))
+          </me>
+          is false. Note also that
+          <me>
+            \exists x (E(x) \vee O(x)),
+          </me>
+          while true, is not really the same thing <ndash /> if <m>O</m> is instead the predicate for <q>is less than 0</q> then the original statement is false, but this new one is true (of the natural numbers). Changing the quantifier also doesn't help:
+          <me>
+            \forall x (E(x) \wedge O(x))
+          </me>
+          is false. So what can we do?
+        </p>
+
+        <p>
+          The problem is that in the original sentence, the variable <m>x</m> is doing double duty. We want to express the fact that there is an even number and an odd number. But that even number is in no way related to that odd number. So we might as well have said
+          <me>
+            \exists x E(x) \wedge \exists y O(y).
+          </me>
+        </p>
+
+        <p>
+          Now we can move the quantifiers out:
+          <me>
+            \exists x \exists y (E(x) \wedge O(y)).
+          </me>
+        </p>
+      </statement>
+    </example>
+    <p>
+      The same thing works with <m>\vee</m> and for <m>\forall</m> with either connective. As long as there is no repeat in quantified variables we can move the quantifiers outside of conjunctions and disjunctions.
+    </p>
+
+    <p>
+      A warning though: you cannot do this for <m>\imp</m>, at least not directly.
+      <fn>We must be similarly careful with <m>\iff</m>.</fn> Let's see what happens.
+    </p>
+    <example>
+      <statement>
+        <p>
+          Consider
+          <me>
+            \forall x P(x) \imp \exists y Q(y)
+          </me>
+          for some predicates <m>P</m> and <m>Q</m>. This sentence is <b>not</b> the same as
+          <me>
+            \forall x \exists y (P(x) \imp Q(y)).
+          </me>
+        </p>
+
+        <p>
+          Remember that <m>P \imp Q</m> is the same as <m>\neg P \vee Q</m>. So the original sentence is really
+          <me>
+            \neg \forall x P(x) \vee \exists y Q(y).
+          </me>
+        </p>
+
+        <p>
+          Before we move the quantifiers out, we must move the <m>\forall x</m> past the negation sign, which switches it to a <m>\exists x</m>:
+          <me>
+            \exists x \neg P(x) \vee \exists y Q(y).
+          </me>
+        </p>
+
+        <p>
+          Then we can finish by writing,
+          <me>
+            \exists x \exists y (\neg P(x) \vee Q(y))
+          </me>
+          or equivalently
+          <me>
+            \exists x \exists y (P(x) \imp Q(y)).
+          </me>
+        </p>
+      </statement>
+    </example>
+
+</subsection>
+
+
+
+
+    <exercises>
+
+
+
+      <exercise>
+        <statement>
+          <p>
+            Simplify the statements (so negation appears only directly next to predicates).
+          </p>
+
+          <ol>
+            <li><m>\neg \exists x \forall y (\neg O(x) \vee E(y))</m>.</li>
+            <li><m>\neg \forall x \neg \forall y \neg(x \lt  y \wedge \exists z (x \lt  z \vee y \lt  z))</m>.</li>
+            <li>
+              <p>
+                There is a number <m>n</m> for which no other number is either less <m>n</m> than or equal to <m>n</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                It is false that for every number <m>n</m> there are two other numbers which <m>n</m> is between.
+              </p>
+            </li>
+          </ol>
+        </statement>
+        <solution>
+          <ol>
+            <li><m>\forall x \exists y (O(x) \wedge \neg E(y))</m>.</li>
+            <li><m>\exists x \forall y (x \ge y \vee \forall z (x \ge z \wedge y \ge z))</m>.</li>
+            <li>
+              <p>
+                There is a number <m>n</m> for which every other number is strictly greater than <m>n</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                There is a number <m>n</m> which is not between any other two numbers.
+              </p>
+            </li>
+          </ol>
+        </solution>
+      </exercise>
+
+
+
+
+
+      <exercise>
+        <statement>
+          <p>
+            Can you switch the order of quantifiers? For example, consider the two statements:
+            <me>
+              \forall x \exists y P(x,y) \qquad \mathrm{ and } \qquad \exists y \forall x P(x,y).
+            </me>
+          </p>
+
+          <p>
+            Depending on what the predicate <m>P(x,y)</m> is, each statement might be true or false. Give an example of a predicate for which the first statement is true and the second false of the natural numbers. Can you also give an example of a (different) predicate for which the first statement is false and the second true? Explain.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Let <m>P(x,y)</m> be the predicate <m>x \lt  y</m>. It is true that for all <m>x</m> there is some <m>y</m> greater than it (since there are infinitely many numbers). However, there is not a natural number <m>y</m> which is greater than every number <m>x</m>. We cannot do the reverse of this though. If there is some <m>y</m> for which every <m>x</m> satisfies <m>P(x,y)</m>, then certainly for every <m>x</m> there is some <m>y</m> which satisfies <m>P(x,y)</m>. The first is saying we can find one <m>y</m> that works for every <m>x</m>. The second allows different <m>y</m>'s to work for different <m>x</m>'s, but there is nothing preventing us from using the same <m>y</m> that work for every <m>x</m>.
+          </p>
+        </solution>
+      </exercise>
+
+    </exercises>
+
+</section>

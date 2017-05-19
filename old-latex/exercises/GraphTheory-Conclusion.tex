@@ -1,0 +1,350 @@
+\begin{questions}
+
+
+\question Which (if any) of the graphs below are the same?  Which are different?  Explain.
+
+\begin{center}
+  \begin{tikzpicture}[yscale=.7]
+    \draw (-2,0) \v -- (0,0) \v -- (2,0) \v -- (-1,2) \v -- (1,2) \v -- (0,0) -- (-1,2) (1,2) -- (-2,0);
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}[yscale=.7]
+    \draw (-2,0) \v -- (0,0) \v -- (2,0) \v -- (0,1) \v -- (-2,0) -- (0,2) \v -- (2,0) (0,2) -- (0,1);
+  \end{tikzpicture}
+  \hfill
+  \begin{tikzpicture}[yscale=1]
+    \draw (-1, 0) \v -- (-1,1) \v -- (0,1) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0);
+    \draw (-1,1) to [out=60, in=120] (1,1);
+  \end{tikzpicture}
+\end{center}
+
+	\begin{answer}
+		The first and the third graphs are the same, but the middle graph is different.
+	\end{answer}
+
+
+
+
+
+\question Which of the graphs in the previous question contain Euler paths or circuits?  Which of the graphs are planar?
+
+	\begin{answer}
+		The first (and third) graphs contain an Euler path.  All the graphs are planar.
+	\end{answer}
+
+
+
+
+
+
+\question Draw a graph which has an Euler circuit but is not planar.
+
+	\begin{answer}
+		For example, $K_5$.
+	\end{answer}
+
+
+
+
+
+\question Draw a graph which does not have an Euler path and is also not planar.
+
+	\begin{answer}
+		For example, $K_{3,3}$.
+	\end{answer}
+
+
+
+
+
+\question Suppose $G$ is a graph with $n$ vertices, each having degree 5.
+\begin{parts}
+  \part For which values of $n$ does this make sense?
+  \part For which values of $n$ does the graph have an Euler path?
+  \part What is the smallest value of $n$ for which the graph might be planar? (tricky)
+\end{parts}
+
+	\begin{answer}
+		\begin{parts}
+		  \part Only if $n \ge 6$ and is even.%For which values of $n$ does this make sense?
+		  \part None. %For which values of $n$ does the graph have an Euler path?
+		  \part 12. Such a graph would have $\frac{5n}{2}$ edges.  If the graph is planar, then $n - \frac{5n}{2} + f = 2$ so there would be $\frac{4+3n}{2}$ faces.  Also, we must have $3f \le 2e$, since the graph is simple.  So we must have $3\frac{4 + 3n}{2} \le 5n$.  Solving for $n$ gives $n \ge 12$.%What is the smallest value of $n$ for which the graph might be planar? (tricky)
+		\end{parts}
+	\end{answer}
+
+
+
+
+
+\question At a school dance, 6 girls and 4 boys take turns dancing (as couples) with each other.
+\begin{parts}
+  \part How many couples danced if every girl dances with ever boy?
+  \part How many couples danced if everyone danced with everyone else (regardless of gender)?
+  \part Explain what graphs can be used to represent these situations.
+\end{parts}
+
+  \begin{answer}
+  \begin{parts}
+	 \part There were 24 couples: 6 choices for the girl and 4 choices for the boy.
+	 \part There were 45 couples: ${10 \choose 2}$ since we must choose two of the 10 people to dance together.
+	 \part For part (a), we are counting the number of edges in $K_{4,6}$.  In part (b) we count the edges of $K_{10}$.
+  \end{parts}
+  \end{answer}
+
+
+
+
+
+\question Among a group of $n$ people, is it possible for everyone to be friends with an odd number of people in the group?  If so, what can you say about $n$?
+
+  \begin{answer}
+  Yes, as long as $n$ is even.  If $n$ were odd, then corresponding graph would have an odd number of odd degree vertices, which is impossible.
+  \end{answer}
+
+
+
+\question Your friend has challenged you to create a convex polyhedron containing 9 triangles and 6 pentagons.
+\begin{parts}
+	\part Is it possible to build such a polyhedron using {\em only} these shapes?  Explain.
+	\part You decide to also include one heptagon (seven-sided polygon).  How many vertices does your new convex polyhedron contain?
+	\part Assuming you are successful in building your new 16-faced polyhedron, could every vertex be the joining of the same number of faces?  Could each vertex join either 3 or 4 faces?  If so, how many of each type of vertex would there be?
+\end{parts}
+
+  \begin{answer}
+	  \begin{parts}
+	  \part No.  The 9 triangles each contribute 3 edges, and the 6 pentagons contribute 5 edges.  This gives a total of 57, which is exactly twice the number of edges, since each edge borders exactly 2 faces.  But 57 is odd, so this is impossible.
+	  \part Now adding up all the edges of all the 16 polygons gives a total of 64, meaning there would be 32 edges in the polyhedron.  We can then use Euler's formula $v - e + f = 2$ to deduce that there must be 18 vertices.
+	  \part If you add up all the vertices from each polygon separately, we get a total of 64.  This is not divisible by 3, so it cannot be that each vertex belongs to exactly 3 faces.  Could they all belong to 4 faces?  That would mean there were $64/4 = 16$ vertices, but we know from Euler's formula that there must be 18 vertices.  We can write $64 = 3x + 4y$ and solve for $x$ and $y$ (as integers).  We get that there must be 10 vertices with degree 4 and 8 with degree 3. (Note the number of faces joined at a vertex is equal to its degree in graph theoretic terms.)
+	  \end{parts}
+  \end{answer}
+
+
+ \question Is there a convex polyhedron which requires 5 colors to properly color the vertices of the polyhedron?  Explain.
+
+	 \begin{answer}
+		 No.  Every polyhedron can be represented as a planar graph, and the Four Color Theorem says that every planar graph has chromatic number at most 4.
+	 \end{answer}
+
+
+ \question How many edges does the graph $K_{n,n}$ have?  For which values of $n$ does the graph contain an Euler circuit?  For which values of $n$ is the graph planar?
+
+  \begin{answer}
+  $K_{n,n}$ has $n^2$ edges.  The graph will have an Euler circuit when $n$ is even.  The graph will be planar only when $n < 3$.
+  \end{answer}
+
+
+
+ \question The graph $G$ has 6 vertices with degrees $1, 2, 2, 3, 3, 5$.  How many edges does $G$ have?  If $G$ was planar how many faces would it have?  Does $G$ have an Euler path?
+
+  \begin{answer}
+  $G$ has 8 edges (since the sum of the degrees is 16).  If $G$ is planar, then it will have 4 faces (since $6 - 8 + 4 = 2$).  $G$ does not have an Euler path since there are more than 2 vertices of odd degree.
+  \end{answer}
+
+
+
+\question What is the smallest number of colors you need to properly color the vertices of $K_{7}$.  Can you say whether $K_7$ is planar based on your answer?
+
+  \begin{answer}
+  $7$ colors.  Thus $K_7$ is not planar (by the contrapositive of the Four Color Theorem).
+  \end{answer}
+
+
+\question What is the smallest number of colors you need to properly color the vertices of $K_{3,4}$?  Can you say whether $K_{3,4}$ is planar based on your answer?
+
+  \begin{answer}
+  The chromatic number of $K_{3,4}$ is 2, since the graph is bipartite.  You cannot say whether the graph is planar based on this coloring (the converse of the Four Color Theorem is not true).  In fact, the graph is {\em not} planar, since it contains $K_{3,3}$ as a subgraph.
+  \end{answer}
+
+
+\question A dodecahedron is a regular convex polyhedron made up of 12 regular pentagons.
+\begin{parts}
+\part Suppose you color each pentagon with one of three colors.  Prove that there must be two adjacent pentagons colored identically.
+
+\part What if you use four colors?
+
+\part What if instead of a dodecahedron you colored the faces of a cube?
+\end{parts}
+
+
+	\begin{answer}
+		For all these questions, we are really coloring the vertices of a graph.  You get the graph by first drawing a planar representation of the polyhedron and then taking its planar dual: put a vertex in the center of each face (including the outside) and connect two vertices if their faces share an edge.
+		\begin{parts}
+			\part Since the planar dual of a dodecahedron contains a 5-wheel, it's chromatic number is at least 4.  Alternatively, suppose you could color the faces using 3 colors without any two adjacent faces colored the same.  Take any face and color it blue.  The 5 pentagons bordering this blue pentagon cannot be colored blue.  Color the first one red.  Its two neighbors (adjacent to the blue pentagon) get colored green.  The remaining 2 cannot be blue or green, but also cannot both be red since they are adjacent to each other.  Thus a 4th color is needed.
+			\part The planar dual of the dodecahedron is itself a planar graph.  Thus be the 4-color theorem, it can be colored using only 4 colors without two adjacent vertices (corresponding to the faces of the polyhedron) being colored identically.
+			\part The cube can be properly 3-colored.  Color the ``top'' and ``bottom'' red, the ``front'' and ``back'' blue, and the ``left'' and ``right'' green.
+		\end{parts}
+	\end{answer}
+
+
+
+
+\question If a planar graph $G$ with $7$ vertices divides the plane into 8 regions, how many edges must $G$ have?
+
+  \begin{answer}
+  $G$ has $13$ edges, since we need $7 - e + 8 = 2$.
+  \end{answer}
+
+
+
+\question Consider the graph below:
+\begin{center}
+  \begin{tikzpicture}[scale=.4]
+    \draw (0,0) \v -- (-1.5, .5) \v -- (0,1.5) \v -- (1.5,.5) \v -- (0,0) -- (-1,2) \v -- (0,1.5) -- (1,2) \v -- (0,0) -- (0, 1.5);
+  \end{tikzpicture}
+\end{center}
+
+\begin{parts}
+  \part Does the graph have an Euler path or circuit?  Explain.
+  \part Is the graph planar?  Explain.
+  \part Is the graph bipartite?  Complete?  Complete bipartite?
+  \part What is the chromatic number of the graph.
+\end{parts}
+
+  \begin{answer}
+  \begin{parts}
+	 \part The graph does have an Euler path, but not an Euler circuit.  There are exactly two vertices with odd degree.  The path starts at one and ends at the other.
+	 \part The graph is planar.  Even though as it is drawn edges cross, it is easy to redraw it without edges crossing.
+	 \part The graph is not bipartite (there is an odd cycle), nor complete.
+	 \part The chromatic number of the graph is 3.
+  \end{parts}
+  \end{answer}
+
+
+
+\question For each part below, say whether the statement is true or false.  Explain why the true statements are true, and given counterexamples for the false statements.
+\begin{parts}
+  \part Every bipartite graph is planar.
+  \part Every bipartite graph has chromatic number 2.
+  \part Every bipartite graph has an Euler path.
+  \part Every vertex of a bipartite graph has even degree.
+  \part A graph is bipartite if and only if the sum of the degrees of all the vertices is even.
+\end{parts}
+
+  \begin{answer}
+  \begin{parts}
+	 \part False.  For example, $K_{3,3}$ is not planar.
+	 \part True.  The graph is bipartite so it is possible to divide the vertices into two groups with no edges between vertices in the same group.  Thus we can color all the vertices of one group red and the other group blue.
+	 \part False.  $K_{3,3}$ has 6 vertices with degree 3, so contains no Euler path.
+	 \part False.  $K_{3,3}$ again.
+	 \part False.  The sum of the degrees of all vertices is even for {\em all} graphs so this property does not imply that the graph is bipartite.
+  \end{parts}
+  \end{answer}
+
+
+
+\question Find a matching of the bipartite graphs below or explain why no matching exists.
+
+
+\begin{tikzpicture}
+\coordinate (a) at (0,0);
+\coordinate (A) at (0,1);
+\coordinate (b) at (1,0);
+\coordinate (B) at (1,1);
+\coordinate (c) at (2,0);
+\coordinate (C) at (2,1);
+\draw (a) \v -- (B) \v -- (c) \v -- (C) \v -- (a) \v -- (A)\v -- (b) \v;
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (a) at (0,0);
+\coordinate (A) at (0,1);
+\coordinate (b) at (1,0);
+\coordinate (B) at (1,1);
+\coordinate (c) at (2,0);
+\coordinate (C) at (2,1);
+\coordinate (d) at (3,0);
+\coordinate (D) at (3,1);
+\draw (a) \v -- (A) \v (b) \v -- (B) \v (c) \v -- (C) \v (d) \v  (D)\v;
+\draw (a) -- (C) -- (b) -- (D) (A) -- (c) (A) -- (d) -- (C);
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+\coordinate (a) at (0,0);
+\coordinate (A) at (0,1);
+\coordinate (b) at (1,0);
+\coordinate (B) at (1,1);
+\coordinate (c) at (2,0);
+\coordinate (C) at (2,1);
+\coordinate (d) at (3,0);
+\coordinate (D) at (3,1);
+\coordinate (e) at (4,0);
+\coordinate (E) at (4,1);
+\draw (a) \v (A) \v (b) \v (B) \v (c) \v  (C) \v (d) \v  (D)\v (e)\v (E) \v;
+\draw (a) -- (A) (a) -- (B) (A) -- (b) (A) -- (c) (b) -- (C) (B) -- (c) -- (D) (c) -- (E) (C) -- (d) -- (E) (D) -- (e) -- (E);
+\end{tikzpicture}
+
+
+	\begin{answer}
+	The first and third graphs have a matching, shown in bold (there are other matchings as well).  The middle graph does not have a matching.  If you look at the three circled vertices, you see that they only have two neighbors, which violates the matching condition $|N(S)| \ge S$ (the three circled vertices form the set $S$).
+
+	 \begin{tikzpicture}
+	 \coordinate (a) at (0,0);
+	 \coordinate (A) at (0,1);
+	 \coordinate (b) at (1,0);
+	 \coordinate (B) at (1,1);
+	 \coordinate (c) at (2,0);
+	 \coordinate (C) at (2,1);
+	 \draw (a) \v -- (B) \v -- (c) \v -- (C) \v -- (a) \v -- (A)\v -- (b) \v;
+	 \draw[very thick] (a) -- (C) (A) -- (b) (c) -- (B);
+	 \end{tikzpicture}
+	 \hfill
+	 \begin{tikzpicture}
+	 \coordinate (a) at (0,0);
+	 \coordinate (A) at (0,1);
+	 \coordinate (b) at (1,0);
+	 \coordinate (B) at (1,1);
+	 \coordinate (c) at (2,0);
+	 \coordinate (C) at (2,1);
+	 \coordinate (d) at (3,0);
+	 \coordinate (D) at (3,1);
+	 \draw (a) \v -- (A) \v (b) \v -- (B) \v (c) \v -- (C) \v (d) \v  (D)\v;
+	 \draw (a) -- (C) -- (b) -- (D) (A) -- (c) (A) -- (d) -- (C);
+	 \draw[dashed] (a) circle (7pt) (c) circle (7pt) (d) circle (7pt);
+	 \end{tikzpicture}
+	 \hfill
+	 \begin{tikzpicture}
+	 \coordinate (a) at (0,0);
+	 \coordinate (A) at (0,1);
+	 \coordinate (b) at (1,0);
+	 \coordinate (B) at (1,1);
+	 \coordinate (c) at (2,0);
+	 \coordinate (C) at (2,1);
+	 \coordinate (d) at (3,0);
+	 \coordinate (D) at (3,1);
+	 \coordinate (e) at (4,0);
+	 \coordinate (E) at (4,1);
+	 \draw (a) \v (A) \v (b) \v (B) \v (c) \v  (C) \v (d) \v  (D)\v (e)\v (E) \v;
+	 \draw (a) -- (A) (a) -- (B) (A) -- (b) (A) -- (c) (b) -- (C) (B) -- (c) -- (D) (c) -- (E) (C) -- (d) -- (E) (D) -- (e) -- (E);
+	 \draw[very thick] (a) -- (A) (b) -- (C) (c) -- (B) (d) -- (E) (e) -- (D);
+	 \end{tikzpicture}
+
+	\end{answer}
+
+
+
+
+\question Consider the statement ``If a graph is planar, then it has an Euler path.''
+\begin{parts}
+ \part Write the converse of the statement.
+ \part Write the contrapositive of the statement.
+ \part Write the negation of the statement.
+ \part Is it possible for the contrapositive to be false?  If it was, what would that tell you?
+ \part Is the original statement true or false?  Prove your answer.
+ \part Is the converse of the statement true or false?  Prove your answer.
+\end{parts}
+
+  \begin{answer}
+  \begin{parts}
+  \part If a graph has an Euler path, then it is planar.
+  \part If a graph does not have an Euler path, then it is not planar.
+  \part There is a graph which is planar and does not have an Euler path.
+  \part Yes.  In fact, in this case it is because the original statement is false.
+  \part False.  $K_4$ is planar but does not have an Euler path.
+  \part False.  $K_5$ has an Euler path but is not planar.
+  \end{parts}
+  \end{answer}
+
+
+
+
+\end{questions}

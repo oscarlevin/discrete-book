@@ -1,0 +1,216 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Mathematical Logic} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{Logic} % will be put in the right header
+
+
+\begin{document}
+
+\newpage
+\section{Logical Equivalence}\label{sec:logical-equiv}
+
+\begin{activity} Decide which of the following are valid proofs of the following statement.
+
+\begin{center}
+If $a b$ is an even number, then $a$ or $b$ is even.
+\end{center}
+
+\begin{questions}
+\question
+Suppose $a$ and $b$ are odd.  That is, $a=2k+1$ and $b=2m+1$ for some integers $k$ and $m$. Then
+\begin{align*}
+ab &=(2k+1)(2m+1)\\
+&=4km+2k+2m+1\\
+&=2(2km+k+m)+1.
+\end{align*}
+Therefore $ab$ is odd.
+\vfill
+
+\question
+Assume that $a$ or $b$ is even - say it is $a$ (the case where $b$ is even will be identical). That is, $a=2k$ for some integer $k$. Then
+\begin{align*}
+ab &=(2k)b\\
+&=2(kb).
+\end{align*}
+Thus $ab$ is even.
+\vfill
+
+\question
+Suppose that $ab$ is even but $a$ and $b$ are both odd. Namely, $ab = 2n$, $a=2k+1$ and $b=2j+1$ for some integers $n$, $k$, and $j$. Then
+\begin{align*}
+2n &=(2k+1)(2j+1)\\
+2n &=4kj+2k+2j+1\\
+n &= 2kj+k+j+\frac{1}{2}.
+\end{align*}
+But since $2kj+k+j$ is an integer, this says that the integer $n$ is equal to a non-integer, which is impossible.
+%Therefore, if $ab$ is even then $a$ or $b$ must be even.
+\vfill
+
+\question
+Let $ab$ be an even number, say $ab=2n$, and $a$ be an odd number, say $a=2k+1$. %Then
+\begin{align*}
+ab &=(2k+1)b\\
+2n &=2kb+b\\
+2n-2kb&=b\\
+2(n-kb)&=b.
+\end{align*}
+Therefore $b$ must be even.
+\end{questions}
+\end{activity}
+
+
+
+
+When reading or writing a proof, or even just trying to understand a mathematical statement, it can be very helpful to rephrase the statement.  But how do you know you are doing so correctly?  How do you know the two statements are equivalent?
+
+One way is to make a truth table for each and ensure that the final columns of both are identical.
+We saw earlier that $P \imp Q$ is logically equivalent to $\neg P \vee Q$ because their truth tables agreed.  Now we can just remember this fact.  If we see the statement, ``if Sam is a man then Chris is a woman,'' we can instead think of it as ``Sam is a woman or Chris is a woman.''  You might also be tempted to rephrase further: ``Sam or Chris is a woman.''  This is okay of course, but that this second rephrasing is allowed is due to the meaning of ``is,'' not any of our logical connectives.
+
+Here are some common logical equivalences which can help rephrase mathematical statements:
+
+\begin{defbox}{Double Negation\index{double negation}}
+  \[\neg \neg P \mbox{ is logically equivalent to } P.\]
+  Example: ``It is not the case that $c$ is not odd'' means ``$c$ is odd.''
+\end{defbox}
+
+No surprise there.  Now let's see how negation plays with conjunctions and disjunctions.
+
+\begin{defbox}{De Morgan's Laws\index{De Morgan's laws}}
+  \[\neg(P \wedge Q) \mbox{ is logically equivalent to } \neg P \vee \neg Q.\]
+  \[\neg(P \vee Q) \mbox{ is logically equivalent to } \neg P \wedge \neg Q.\]
+  Example: ``$c$ is not even or $c$ is not prime'' means ``$c$ is not both odd and prime''
+\end{defbox}
+
+Do you believe De Morgan's laws?  If not, make a truth table for each of them.  I think most of us get these right most of the time without thinking about them too hard.  If I told you that I had popcorn and goobers at the movies, but then you found out it was opposite day (so my statement was false) then you would agree, I hope, that I either did not have popcorn {\em or} did not have goobers (or didn't have either).  You would not insist that I could not have had either.
+
+I should warn you that often in English, we are sloppy about our and's, or's and not's.  When you write about mathematics, you should be careful and write what you mean.  If you are not sure what to write, rephrasing carefully using De Morgan's laws can help you make sure that statement matches your intended meaning.
+
+Here are some rules for implications:
+
+\begin{defbox}{Negation of Implication}
+  \[\neg(P \imp Q) \mbox{ is logically equivalent to } P \wedge \neg Q.\]
+  In words: The only way for an implication to be false is for the ``if'' part to be true and the ``then'' part to be false.
+\end{defbox}
+
+This is very important, and not obvious. Implications are tricky.  Look again at the truth table for $P \imp Q$:
+
+\begin{center}
+\begin{tabular}{c|c|c}
+ $P$ & $Q$ & $P\imp Q$ \\ \hline
+ T & T & T\\
+ T & F & F\\
+ F & T & T\\
+ F & F & T
+\end{tabular}
+\end{center}
+
+There is only one way for the implication to be false: $P$ is true and $Q$ is false.  Another way to see that this is true is by using De Morgan's Laws.  We saw earlier that $P \imp Q$ can be rephrased as $\neg P \vee Q$ so we have
+\[\neg (P \imp Q) \mbox{ is logically equivalent to } \neg( \neg P \vee Q).\]
+But by De Morgan's laws, $\neg( \neg P \vee Q)$ is equivalent to $\neg \neg P \wedge \neg Q$.  By double negation $\neg \neg P$ is the same as $P$.
+
+While we are thinking about implications, we should talk about the converse and contrapositive:
+
+\begin{defbox}{Converse and Contrapositive}
+  \begin{itemize}
+    \item The {\em converse}\index{converse} of an implication $P \imp Q$ is the implication $Q \imp P$.  The converse is \textbf{NOT} logically equivalent to the original implication.
+    \item The {\em contrapositive}\index{contrapositive} of an implication $P \imp Q$ is the statement $\neg Q \imp \neg P$.  An implication and its contrapositive are logically equivalent.
+  \end{itemize}
+
+\end{defbox}
+
+A related, but lesser used, term is the {\em inverse}\index{inverse, of an implication} of an implication.  The inverse of $P \imp Q$ is $\neg P \imp \neg Q$.  Notice that the inverse of an implication is the contrapositive of the converse.  Read that one more time.   Good.  Since implications and their contrapositives are logically equivalent, the inverse and converse of an implication are logically equivalent to each other, but not to the original implication.
+
+
+
+\begin{example}
+  Suppose I tell Sue that if she gets a 93\% on her final, she will get an A in the class.  Assuming that what I said is true, what can you conclude in the following cases:
+  \begin{itemize}
+    \item[(a)] Sue gets a 93\% on her final.
+    \item[(b)] Sue gets an A in the class.
+    \item[(c)] Sue does not get a 93\% on her final.
+    \item[(d)] Sue does not get an A in the class.
+  \end{itemize}
+  \begin{solution} Note first that whenever $P \imp Q$ and $P$ are both true statements, $Q$ must be true as well.  For this problem, take $P$ to mean ``Sue gets a 93\% on her final'' and $Q$ to mean ``Sue will get an A in the class.''
+    \begin{itemize}
+      \item[(a)] We have $P \imp Q$ and $P$ so $Q$ follows. Sue gets an A.
+      \item[(b)] You cannot conclude anything. Sue could have gotten the A because she did extra credit for example.  Notice that we do not know that if Sue gets an $A$, then she gets a 93\% on her final. That is the converse of the original implication, so it might or might not be true.
+      \item[(c)] The inverse of $P \imp Q$ is $\neg P \imp \neg Q$, which states that if Sue does not get a 93\% on the final then she will not get an A in the class.  But this does not follow from the original implication.  Again, we can conclude nothing.  Sue could have done extra credit.
+      \item[(d)] What would happen if Sue does not get an A but {\em did} get a 93\% on the final.  Then $P$ would be true and $Q$ would be false.  But this makes the implication $P \imp Q$ false!  So it must be that Sue did not get a 93\% on the final.  Notice now we have the implication $\neg Q \imp \neg P$ which is the contrapositive of $P \imp Q$.  Since $P \imp Q$ is assumed to be true, we know $\neg Q \imp \neg P$ is true as well.
+    \end{itemize}
+  \end{solution}
+\end{example}
+
+As we said above, an implication is not logically equivalent to its converse.  Given particular statements $P$ and $Q$, the statements $P \imp Q$ and $Q \imp P$ could both be true, both be false, or one could be true and the other false (in either order).  Now if both $P \imp Q$ and $Q \imp P$ are true, then we say that $P$ and $Q$ are equivalent.  In fact, we have:
+
+\begin{defbox}{If and only if}
+\[ P \iff Q \mbox{ is logically equivalent to } (P \imp Q) \wedge (Q \imp P).\]
+Example: Given an integer $n$, it is true that $n$ is even if and only if $n^2$ is even.  That is, if $n$ is even, then $n^2$ is even, as well as the converse: if $n^2$ is even, then $n$ is even.
+\end{defbox}
+
+You can think of ``if and only if'' statements as having two parts: an implication and its converse.  We might say one is the ``if'' part, and the other is the ``only if'' part.  We also sometimes say that ``if and only if'' statements have two directions: a forward direction $(P \imp Q)$ and a backwards direction ($P \leftarrow Q$, which is really just sloppy notation for $Q \imp P$).
+
+Let's think a little about which part is which.  Is $P \imp Q$ the ``if'' part or the ``only if'' part?  Perhaps we should look at an example.
+
+\begin{example}
+ Suppose it is true that I sing if and only if I'm in the shower.  We know this means that both if I sing, then I'm in the shower, and also the converse, that if I'm in the shower, then I sing.  Let $P$ be the statement, ``I sing,'' and $Q$ be, ``I'm in the shower.''  So $P \imp Q$ is the statement ``if I sing, then I'm in the shower.''  Which part of the if and only if statement is this?
+
+ What we are really asking is what is the meaning of ``I sing if I'm in the shower'' and ``I sing only if I'm in the shower.''  When is the first one (the ``if'' part) {\em false}?  When I am in the shower but not singing.  That is the same condition on being false as the statement ``if I'm in the shower, then I sing.''  So the ``if'' part is $Q \imp P$.  On the other hand, to say, ``I sing only if I'm in the shower'' is equivalent to saying ``if I sing, then I'm in the shower,'' so the only if part is $P \imp Q$.
+\end{example}
+
+It is not terribly important to know which part is the if or only if part, but this does get at something very, very important: THERE ARE MANY WAYS TO STATE AN IMPLICATION!  The problem is, since these are all different ways of saying the same implication, we cannot use truth tables to analyze the situation.  Instead, we just need good English skills.
+
+\begin{example}
+ Rephrase the implication, ``if I dream, then I am asleep'' in as many different ways as possible.  Then do the same for the converse.
+
+ \begin{solution}
+  The following are all equivalent to the original implication:
+  \begin{enumerate}
+   \item I am asleep if I dream.
+   \item I dream only if I am asleep.
+   \item In order to dream, I must be asleep.
+   \item To dream, it is necessary that I am asleep.
+   \item To be asleep, it is sufficient to dream.
+   \item I am not dreaming unless I am asleep.
+  \end{enumerate}
+The following are equivalent to the converse (if I am asleep, then I dream):
+\begin{enumerate}
+ \item I dream if I am asleep.
+ \item I am asleep only if I dream.
+ \item It is necessary that I dream in order to be asleep.
+ \item It is sufficient that I be asleep in order to dream.
+ \item If I don't dream, then I'm not asleep.
+\end{enumerate}
+
+ \end{solution}
+
+\end{example}
+
+Hopefully you agree with the above example.  We include the ``necessary and sufficient'' versions because those are common when discussing mathematics.  In fact, let's agree once and for all what they mean:
+
+
+\begin{defbox}{Necessary and Sufficient\index{necessary condition}\index{sufficient condition}}
+\begin{itemize}
+\item ``$P$ is necessary for $Q$'' means $Q \imp P$.
+ \item ``$P$ is sufficient for $Q$'' means $P \imp Q$.
+\item If $P$ is necessary and sufficient for $Q$, then $P \iff Q$.
+\end{itemize}
+\end{defbox}
+
+To be honest, I have trouble with these if I'm not very careful.  I find it helps to have an example in mind:
+
+\begin{example}
+ Recall from calculus, if a function is differentiable at a point $c$, then it is continuous at $c$, but that the converse of this statement is not true (for example, $f(x) = |x|$ at the point 0).  Restate this fact using necessary and sufficient language.
+
+ \begin{solution}
+  It is true that in order for a function to be differentiable at a point $c$, it is necessary for the function to be continuous at $c$.  However, it is not necessary that a function be differentiable at $c$ for it to be continuous at $c$.
+
+  It is true that to be continuous at a point $c$, it is sufficient that the function be differentiable at $c$.  However, it is not the case that being continuous at $c$ is sufficient for a function to be differentiable at $c$.
+ \end{solution}
+\end{example}
+
+
+
+\end{document}
