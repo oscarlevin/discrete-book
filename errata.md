@@ -1,21 +1,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 
-# Errata
+# Errata for 2nd Edition
 
-Starting with the 2nd edition of the book, I will NOT correct errors in each edition, so to maintain consistency between print and online versions.  Instead, I will maintain a list of known errors on this page.
+Many errors were fixed in preparation of the 2nd edition, but thanks in part to the careful reading by students and instructors, more have been revealed.  Over Summer 2017, I will correct many of these errors and release a corrected 2nd edition in time for Fall 2017.  Moving forward, as errors are found, I will record them below.
 
-## 2nd Edition
+## Errors not yet corrected
 
-### Known errors
+### Major errors
 
 (updated 5/18/2017)
 
-These are "major" errors in the text.  A list of minor typos follows.
+Page numbers match print and tablet pdf edition.
 
 * Sample error.
 * Here is one that uses \( \int_1^2 \sin(x) dx \).
 * Another.
 
 
-### Known typos
+### Minor typos
+
+##Errors Corrected Summer 2017
+
+In case you have a copy of the book printed prior to July 2017, you will find the following errors that have since been corrected.  Typos are not included below, unless they affect content.
+
+* Exercises 0.4.5d (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
+* Exercises 0.4.13 (page 39): the piecewise definition is missing *n*.
