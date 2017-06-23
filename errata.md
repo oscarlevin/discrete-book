@@ -26,7 +26,11 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 * Exercise 0.4.5(d) (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
 
 * Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
+
+* Exercise 1.4.6 was missing a part before part (a): the first part should ask for the number of strings starting with 1.  The answers were off, because of this.
+
 * Exercise 2.1.5 (page 119): The recurrence relation should be a_n = 7a_{n-1} - 10a_{n-2}.
+
 
 * Exercise 2.2.1(f) solution (page 294): The closed formula is wrong.  it should be 1+(4n+6)n/2.
 
