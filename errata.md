@@ -21,11 +21,14 @@ Page numbers match print and tablet pdf edition.
 
 ## Errors Corrected Summer 2017
 
-In case you have a copy of the book printed prior to July 2017, you will find the following errors that have since been corrected.  Typos are not included below, unless they affect content.
+In case you have a copy of the book printed prior to July 2017, you will find the following errors that have since been corrected.  Typos are not included below, unless they might cause confusion.
 
 * Exercise 0.4.5(d) (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
 
 * Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
+
+* Exercise 1.1.5 solution (page 279): parts (a) and (b) were backwards.
+* Example 1.3.4 (page 66): The codomain should have 8 elements in it.
 
 * Exercise 1.4.6 was missing a part before part (a): the first part should ask for the number of strings starting with 1.  The answers were off, because of this.
 
