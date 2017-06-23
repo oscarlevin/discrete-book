@@ -1,5 +1,4 @@
 
-
 # Errata for 2nd Edition
 
 Many errors were fixed in preparation of the 2nd edition, but thanks in part to the careful reading by students and instructors, more have been revealed.  Over Summer 2017, I will correct many of these errors and release a corrected 2nd edition in time for Fall 2017.  Moving forward, as errors are found, I will record them below.
@@ -27,6 +26,8 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 * Exercise 0.4.5(d) (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
 
 * Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
+
+* Exercise 2.3.1(b) solution (page 296): the formula should be a_n = n^2 + n.
 
 * Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
 
