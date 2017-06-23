@@ -29,6 +29,8 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 
 * Exercise 2.3.1(b) solution (page 296): the formula should be a_n = n^2 + n.
 
+* Exercise 2.4.8 (page 146): The second term should be \beta a_{n-2}.
+
 * Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
 
 * Exercise 4.1.6 solution (page 311): The middle graph was labeled incorrectly.
