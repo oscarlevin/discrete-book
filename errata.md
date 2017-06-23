@@ -12,6 +12,7 @@ Many errors were fixed in preparation of the 2nd edition, but thanks in part to 
 
 Page numbers match print and tablet pdf edition.
 
+* Exercise 4.2.3 (page 218) and its solution (page 312): This problem is broken.  As stated, there is no polyhedron that satisfies the statement of the problem.
 
 
 ### Minor typos
