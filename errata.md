@@ -27,6 +27,8 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 
 * Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
 
+* Exercise 2.2.1(f) solution (page 294): The closed formula is wrong.  it should be 1+(4n+6)n/2.
+
 * Exercise 2.3.1(b) solution (page 296): the formula should be a_n = n^2 + n.
 
 * Exercise 2.4.8 (page 146): The second term should be \beta a_{n-2}.
