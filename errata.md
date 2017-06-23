@@ -8,7 +8,7 @@ Many errors were fixed in preparation of the 2nd edition, but thanks in part to 
 
 ### Major errors
 
-(updated 5/18/2017)
+(updated 6/23/2017)
 
 Page numbers match print and tablet pdf edition.
 
@@ -29,3 +29,5 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 * Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
 
 * Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
+
+* Exercise 4.1.6 solution (page 311): The middle graph was labeled incorrectly.
