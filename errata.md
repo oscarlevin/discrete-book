@@ -1,4 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
 
 
 # Errata for 2nd Edition
@@ -13,14 +12,19 @@ Many errors were fixed in preparation of the 2nd edition, but thanks in part to 
 
 Page numbers match print and tablet pdf edition.
 
-* Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
 
 
 ### Minor typos
 
-##Errors Corrected Summer 2017
+
+
+
+## Errors Corrected Summer 2017
 
 In case you have a copy of the book printed prior to July 2017, you will find the following errors that have since been corrected.  Typos are not included below, unless they affect content.
 
-* Exercise 0.4.5d (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
+* Exercise 0.4.5(d) (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
+
 * Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
+
+* Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
