@@ -30,6 +30,8 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 * Exercise 1.1.5 solution (page 279): parts (a) and (b) were backwards.
 * Example 1.3.4 (page 66): The codomain should have 8 elements in it.
 
+* Exercises in section 1.4: there were two exercises missing due to a production error.  The numbering in the corrected edition is different now.
+
 * Exercise 1.4.6 was missing a part before part (a): the first part should ask for the number of strings starting with 1.  The answers were off, because of this.
 
 * Exercise 2.1.5 (page 119): The recurrence relation should be a_n = 7a_{n-1} - 10a_{n-2}.
