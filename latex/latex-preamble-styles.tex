@@ -83,10 +83,23 @@
 
 %Create indented ``example'' environment:
 \mdtheorem[style=examplestyle]{mdexample}[theorem]{Example}
-\LetLtxMacro\example\mdexample
-\let\endexample\endmdexample
+
+%Redefine ``example'' to call the new mdexample, and put a paragraph break after it.
+\renewenvironment{example}{%
+\mdexample
+}{%
+\endmdexample\par
+}
 
 
+% \LetLtxMacro\mdexample\oldexample
+% \let\endmdexample\endoldexample
+%
+% \newenvironment{mdexample}{%
+% \oldexample
+% }{%
+% \endoldexample\par
+% }
 
 %Create ``investigation'' environment for in-text worksheet type problems:
 \renewenvironment{investigation}{%
@@ -113,7 +126,7 @@
 \vskip 1em
 \begin{mdframed}
 }{%
-\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Attempt the above activity before proceeding} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}
+\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Attempt the above activity before proceeding} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}\par
 }
 
 
@@ -138,7 +151,7 @@
 }
 \begin{mdframed}
 }{%
-\end{mdframed}
+\end{mdframed}\par
 }
 
 %%%%%%%%%%%%%%%%%  End environments %%%%%%%%%%%%%%%%%%%%%%%%%%
