@@ -201,7 +201,7 @@
         <!-- Lead with the problem number and some space -->
         <xsl:text>\noindent\textbf{</xsl:text>
         <xsl:apply-templates select="." mode="number" /> <!-- changed serial-number to number -->
-        <xsl:text>.}</xsl:text>
+        <xsl:text>.} </xsl:text>
         <xsl:if test="$exercise.backmatter.statement='yes'">
             <!-- TODO: not a "backmatter" template - make one possibly? Or not necessary -->
             <xsl:apply-templates select="statement" />
