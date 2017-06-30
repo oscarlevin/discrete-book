@@ -233,7 +233,90 @@
 
 
 
+<!-- Remove leavemode for assemblage -->
+<!-- Lists themselves -->
+<!-- If columns are specified, we        -->
+<!-- wrap in the multicolumn environment -->
+<!-- TODO: fewer \leavevmode might be possible.      -->
+<!-- Test for first node of "p", then test for the   -->
+<!-- "p" being first node of some sectioning element -->
+<xsl:template match="ol">
+    <xsl:choose>
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage)">
+            <xsl:call-template name="leave-vertical-mode" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>%&#xa;</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="@cols">
+        <xsl:text>\begin{multicols}{</xsl:text>
+        <xsl:value-of select="@cols" />
+        <xsl:text>}&#xa;</xsl:text>
+    </xsl:if>
+    <xsl:text>\begin{enumerate}</xsl:text>
+    <!-- override LaTeX defaults as indicated -->
+    <xsl:if test="@label or ancestor::exercises or ancestor::references">
+        <xsl:text>[label=</xsl:text>
+        <xsl:apply-templates select="." mode="latex-list-label" />
+        <xsl:text>]</xsl:text>
+    </xsl:if>
+    <xsl:text>&#xa;</xsl:text>
+     <xsl:apply-templates />
+    <xsl:text>\end{enumerate}&#xa;</xsl:text>
+    <xsl:if test="@cols">
+        <xsl:text>\end{multicols}&#xa;</xsl:text>
+    </xsl:if>
+</xsl:template>
 
+<!-- MBX unordered list scheme is distinct -->
+<!-- from LaTeX's so we write out a label  -->
+<!-- choice for each such list             -->
+<xsl:template match="ul">
+    <xsl:choose>
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage)">
+            <xsl:call-template name="leave-vertical-mode" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>%&#xa;</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="@cols">
+        <xsl:text>\begin{multicols}{</xsl:text>
+        <xsl:value-of select="@cols" />
+        <xsl:text>}&#xa;</xsl:text>
+    </xsl:if>
+    <xsl:text>\begin{itemize}[label=</xsl:text>
+    <xsl:apply-templates select="." mode="latex-list-label" />
+    <xsl:text>]&#xa;</xsl:text>
+    <xsl:apply-templates />
+    <xsl:text>\end{itemize}&#xa;</xsl:text>
+    <xsl:if test="@cols">
+        <xsl:text>\end{multicols}&#xa;</xsl:text>
+    </xsl:if>
+</xsl:template>
+
+<xsl:template match="dl">
+    <xsl:choose>
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage)">
+            <xsl:call-template name="leave-vertical-mode" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>%&#xa;</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="@cols">
+        <xsl:text>\begin{multicols}{</xsl:text>
+        <xsl:value-of select="@cols" />
+        <xsl:text>}&#xa;</xsl:text>
+    </xsl:if>
+    <xsl:text>\begin{description}&#xa;</xsl:text>
+    <xsl:apply-templates />
+    <xsl:text>\end{description}&#xa;</xsl:text>
+    <xsl:if test="@cols">
+        <xsl:text>\end{multicols}&#xa;</xsl:text>
+    </xsl:if>
+</xsl:template>
 
 
 
