@@ -34,6 +34,8 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 
 * Exercise 2.1.5 (page 119): The recurrence relation should be a_n = 7a_{n-1} - 10a_{n-2}.
 
+* Definition of Subgraphs (page 204): The indices were swapped making the definition of induced subgraph incorrect.  The following example was also reworded to account for the correction.
+
 
 * Exercise 2.2.1(f) solution (page 294): The closed formula is wrong.  it should be 1+(4n+6)n/2.
 
