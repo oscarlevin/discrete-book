@@ -242,7 +242,7 @@
 <!-- "p" being first node of some sectioning element -->
 <xsl:template match="ol">
     <xsl:choose>
-        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage)">
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage or ancestor::investigation)">
             <xsl:call-template name="leave-vertical-mode" />
         </xsl:when>
         <xsl:otherwise>
@@ -274,7 +274,7 @@
 <!-- choice for each such list             -->
 <xsl:template match="ul">
     <xsl:choose>
-        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage)">
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage or ancestor::investigation)">
             <xsl:call-template name="leave-vertical-mode" />
         </xsl:when>
         <xsl:otherwise>
@@ -298,7 +298,7 @@
 
 <xsl:template match="dl">
     <xsl:choose>
-        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage)">
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage or ancestor::investigation)">
             <xsl:call-template name="leave-vertical-mode" />
         </xsl:when>
         <xsl:otherwise>
