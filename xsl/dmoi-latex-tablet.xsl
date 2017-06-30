@@ -254,7 +254,7 @@
         <xsl:apply-templates select="." mode="number" />
         <xsl:text>}{</xsl:text>
         <xsl:apply-templates select="." mode="number" />
-        <xsl:text>.}}</xsl:text>
+        <xsl:text>.}}&#xa;</xsl:text>
         <xsl:if test="$exercise.backmatter.statement='yes'">
             <!-- TODO: not a "backmatter" template - make one possibly? Or not necessary -->
             <xsl:apply-templates select="statement" />
