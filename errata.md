@@ -1,7 +1,9 @@
 
 # Errata for 2nd Edition
 
-Many errors were fixed in preparation of the 2nd edition, but thanks in part to the careful reading by students and instructors, more have been revealed.  Over Summer 2017, I will correct many of these errors and release a corrected 2nd edition in time for Fall 2017.  Moving forward, as errors are found, I will record them below.
+Many errors were fixed in preparation of the 2nd edition, but thanks in part to the careful reading by students and instructors, more have been revealed.  Over Summer 2017, I corrected many of these errors and released a corrected 2nd edition in time for Fall 2017.  The corrected edition is marked as such on the copyright page and back cover, and is the version that is available in html.
+
+Moving forward, as errors are found, I will record them below.
 
 ## Errors not yet corrected
 
@@ -11,12 +13,14 @@ Many errors were fixed in preparation of the 2nd edition, but thanks in part to 
 
 Page numbers match print and tablet pdf edition.
 
-* Exercise 4.2.3 (page 218) and its solution (page 312): This problem is broken.  As stated, there is no polyhedron that satisfies the statement of the problem.
+* Example 1.3.5-2 (page 67): the answer is 2162160, not 2192190.
+
+* Page 147, last line: the sequence of F's and T's is off near the end.  The correct sequence is F, F, F, F, T, F, F, T, F, T, F, F, T,...
 
 
 ### Minor typos
 
-
+* Page 200, after the definition of a graph, the example has *five* edges, not four.
 
 
 ## Errors Corrected Summer 2017
@@ -48,3 +52,5 @@ In case you have a copy of the book printed prior to July 2017, you will find th
 * Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
 
 * Exercise 4.1.6 solution (page 311): The middle graph was labeled incorrectly.
+
+* Exercise 4.2.3 (page 218) and its solution (page 312): This problem is broken.  As stated, there is no polyhedron that satisfies the statement of the problem.  One way to fix it: assume the polyhedron has 11 vertices including those around the mystery face.
