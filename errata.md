@@ -15,6 +15,8 @@ Page numbers match print and tablet pdf edition.
 
 * Example 1.3.5-2 (page 67): the answer is 2162160, not 2192190.
 
+* Exercise 1.5.4-c (page 88): the problem should require x, y, and z all be greater than *or equal* to -3.
+
 * Page 147, last line: the sequence of F's and T's is off near the end.  The correct sequence is F, F, F, F, T, F, F, T, F, T, F, F, T,...
 
 
