@@ -9,7 +9,7 @@ Moving forward, as errors are found, I will record them below.
 
 ### Major errors
 
-(updated 6/23/2017)
+(updated 11/27/2017)
 
 Page numbers match print and tablet pdf edition.
 
