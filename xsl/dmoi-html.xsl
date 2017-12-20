@@ -161,7 +161,7 @@
         <section class="exercises" id="">
             <h1 class="heading">
                 <span class="type">Solutions for Section </span>
-                <span class="codenumber"><xsl:apply-templates select="." mode="number" /></span>
+                <span class="codenumber"><xsl:apply-templates select="parent::*" mode="number" /></span>
                 <!-- <span class="title"><xsl:apply-templates select="." mode="title-full" /></span> -->
             </h1>
             <!-- ignore introduction, conclusion, exercise groups -->
