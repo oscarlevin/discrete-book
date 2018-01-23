@@ -84,9 +84,9 @@
 <!-- package's Verbatim clone environment, "console"  -->
 <!-- The defaults are traditional LaTeX, we let any   -->
 <!-- other specification make a document-wide default -->
-<xsl:param name="latex.console.macro-char" select="'\'" />
+<!-- <xsl:param name="latex.console.macro-char" select="'\'" />
 <xsl:param name="latex.console.begin-char" select="'{'" />
-<xsl:param name="latex.console.end-char" select="'}'" />
+<xsl:param name="latex.console.end-char" select="'}'" /> -->
 
 <!-- We have to identify snippets of LaTeX from the server,   -->
 <!-- which we have stored in a directory, because XSLT 1.0    -->
@@ -175,6 +175,7 @@
 <!-- Create a heading for each non-empty collection of solutions -->
 <!-- Format as appropriate LaTeX subdivision for this level      -->
 <!-- But number according to the actual Exercises section        -->
+<!-- This needs to be fixed! -->
 <xsl:template match="exercises" mode="backmatter">
     <xsl:variable name="nonempty" select="(.//hint and $exercise.backmatter.hint='yes') or (.//answer and $exercise.backmatter.answer='yes') or (.//solution and $exercise.backmatter.solution='yes')" />
     <xsl:if test="$nonempty='true'">
