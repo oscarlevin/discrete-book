@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_planar">
+<title>Planar Graphs</title>
+
+
+<introduction>
+<investigation>
+<p>
+When a connected graph can be drawn without any edges crossing, it is called <term>planar</term>. When a planar graph is drawn in this way, it divides the plane into regions called <term>faces</term>.
+<ol>
+<li>
+<p>
+Draw, if possible, two different planar graphs with the same number of vertices, edges, and faces.
+</p>
+</li>
+
+<li>
+<p>
+Draw, if possible, two different planar graphs with the same number of vertices and edges, but a different number of faces.
+</p>
+</li>
+</ol>
+</p>
+</investigation>
+
+<p>
+When is it possible to draw a graph so that none of the edges cross? If this <em>is</em> possible, we say the graph is <term>planar</term><idx><h>planar</h></idx> (since you can draw it on the <em>plane</em>).
+</p>
+
+<p>
+Notice that the definition of planar includes the phrase <q>it is possible to.</q> This means that even if a graph does not look like it is planar, it still might be. Perhaps you can redraw it in a way in which no edges cross. For example, this is a planar graph:
+</p>
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=.7, xscale=1.5]
+   \draw (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+<p>
+That is because we can redraw it like this:
+</p>
+<sidebyside width="25%">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=.7, xscale=1.5]
+       \draw (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (1.5, -1) \v -- (1,0) \v -- (-.5,2) (1.5,-1) -- (-1,0);
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+<p>
+The graphs are the same, so if one is planar, the other must be too. However, the original drawing of the graph was not a <term>planar representation</term> of the graph.
+</p>
+
+<p>
+When a planar graph is drawn without edges crossing, the edges and vertices of the graph divide the plane into regions. We will call each region a <term>face</term><idx><h>faces</h></idx>. The graph above has 3 faces (yes, we <em>do</em> include the <q>outside</q> region as a face). The number of faces does not change no matter how you draw the graph (as long as you do so without the edges crossing), so it makes sense to ascribe the number of faces as a property of the planar graph.
+</p>
+
+<p>
+WARNING: you can only count faces when the graph is drawn in a planar way. For example, consider these two representations of the same graph:
+</p>
+
+<sidebyside widths="20% 25%" margins="auto" valign="bottom">
+  <image>
+  <latex-image>\begin{tikzpicture}
+      \draw (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1) (135:1) -- (315:1);
+    \end{tikzpicture}</latex-image>
+  </image>
+  <image>
+  <latex-image>\begin{tikzpicture}
+      \draw (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1);
+      \draw (135:1) .. controls (70:2) and (20:2) .. (315:1);
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+
+<p>
+If you try to count faces using the graph on the left, you might say there are 5 faces (including the outside). But drawing the graph with a planar representation shows that in fact there are only 4 faces.
+</p>
+
+<p>
+There is a connection between the number of vertices (<m>v</m>), the number of edges (<m>e</m>) and the number of faces (<m>f</m>) in any connected planar graph. This relationship is called Euler's formula.
+</p>
+<assemblage>
+<title>Euler's Formula for Planar Graphs</title>
+<p>
+<idx><h>Euler's formula</h></idx>
+For any (connected) planar graph with <m>v</m> vertices, <m>e</m> edges and <m>f</m> faces, we have
+<me>
+  v-e + f = 2
+</me>
+</p>
+</assemblage>
+<p>
+Why is Euler's formula true? One way to convince yourself of its validity is to draw a planar graph step by step. Start with the graph <m>P_2</m>:
+</p>
+<sidebyside width="10%">
+  <image>
+  <latex-image>\begin{tikzpicture}
+      \draw (-.5,-.5) \v -- (.5,.5)\v;
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+
+<p>
+Any connected graph (besides just a single isolated vertex) must contain this subgraph. Now build up to your graph by adding edges and vertices. Each step will consist of either adding a new vertex connected by a new edge to part of your graph (so creating a new <q>spike</q>) or by connecting two vertices already in the graph with a new edge (completing a circuit).
+</p>
+
+<sidebyside widths="30% 20%" margins="auto" valign="bottom">
+  <image>
+  <latex-image>\begin{tikzpicture}
+      \draw (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
+      \draw[dashed] (1,2) -- (2,1) \v;
+    \end{tikzpicture}</latex-image>
+  </image>
+  <image>
+  <latex-image>\begin{tikzpicture}
+      \draw (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
+      \draw[dashed] (1,0) -- (-1,0);
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+
+<p>
+What do these <q>moves</q> do? When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same. But this means that <m>v - e + f</m> does not change. Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same. So again, <m>v - e + f</m> does not change.
+</p>
+
+<p>
+Since we can build any graph using a combination of these two moves, and doing so never changes the quantity <m>v - e + f</m>, that quantity will be the same for all graphs. But notice that our starting graph <m>P_2</m> has <m>v = 2</m>, <m>e = 1</m> and <m>f = 1</m>, so <m>v - e + f = 2</m>. This argument is essentially a proof by induction. A good exercise would be to rewrite it as a formal induction proof.
+</p>
+</introduction>
+
+
+<subsection>
+<title>Non-planar Graphs</title>
+<investigation>
+
+<p>
+For the complete graphs <m>K_n</m>, we would like to be able to say something about the number of vertices, edges, and (if the graph is planar) faces. Let's first consider <m>K_3</m>:
+<ol>
+<li>
+<p>
+How many vertices does <m>K_3</m> have? How many edges?
+</p>
+</li>
+<li>
+<p>
+If <m>K_3</m> is planar, how many faces should it have?
+</p>
+</li>
+</ol>
+</p>
+
+<p>
+Repeat parts (1) and (2) for <m>K_4</m>, <m>K_5</m>, and <m>K_{23}</m>.
+</p>
+
+<p>
+What about complete bipartite graphs? How many vertices, edges, and faces (if it were planar) does <m>K_{7,4}</m> have?  For which values of <m>m</m> and <m>n</m> are <m>K_n</m> and <m>K_{m,n}</m> planar?
+</p>
+</investigation>
+
+<p>
+Not all graphs are planar. If there are too many edges and too few vertices, then some of the edges will need to intersect. The first time this happens is in <m>K_5</m>.
+</p>
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}
+      \foreach \x in {0,...,4}
+      \draw (\x*72+18:1) \v -- (\x*72+90:1) -- (\x*72-54:1);
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+<p>
+If you try to redraw this without edges crossing, you quickly get into trouble. There seems to be one edge too many. In fact, we can prove that no matter how you draw it, <m>K_5</m> will always have edges crossing.
+</p>
+
+<theorem>
+<statement>
+<p>
+<m>K_5</m> is not planar.
+</p>
+</statement>
+
+</theorem>
+
+<proof>
+  <p>
+    The proof is by contradiction. So assume that <m>K_5</m> is planar. Then the graph must satisfy Euler's formula for planar graphs. <m>K_5</m> has 5 vertices and 10 edges, so we get
+    <me>
+    5 - 10 + f = 2
+    </me>
+    which says that if the graph is drawn without any edges crossing, there would be <m>f = 7</m> faces.
+  </p>
+
+  <p>
+    Now consider how many edges surround each face. Each face must be surrounded by at least 3 edges. Let <m>B</m> be the total number of <em>boundaries</em> around all the faces in the graph. Thus we have that <m>B \ge 3f</m>. But also <m>B = 2e</m>, since each edge is used as a boundary exactly twice. Putting this together we get
+    <me>
+    3f \le 2e
+    </me>
+  </p>
+
+  <p>
+    But this is impossible, since we have already determined that <m>f = 7</m> and <m>e = 10</m>, and <m>21 \not\le 20</m>. This is a contradiction so in fact <m>K_5</m> is not planar.
+  </p>
+</proof>
+
+<p>
+The other simplest graph which is not planar is <m>K_{3,3}</m>
+</p>
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}[yscale=1.2]
+          \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
+        \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+<p>
+Proving that <m>K_{3,3}</m> is not planar answers the houses and utilities puzzle: it is not possible to connect each of three houses to each of three utilities without the lines crossing.
+</p>
+
+<theorem>
+<statement>
+<p>
+<m>K_{3,3}</m> is not planar.
+</p>
+</statement>
+</theorem>
+
+<proof>
+  <p>
+    Again, we proceed by contradiction. Suppose <m>K_{3,3}</m> were planar. Then by Euler's formula there will be 5 faces, since <m>v = 6</m>, <m>e = 9</m>, and <m>6 - 9 + f = 2</m>.
+  </p>
+
+  <p>
+    How many boundaries surround these 5 faces? Let <m>B</m> be this number. Since each edge is used as a boundary twice, we have <m>B = 2e</m>. Also, <m>B \ge 4f</m> since each face is surrounded by 4 or more boundaries. We know this is true because <m>K_{3,3}</m> is bipartite, so does not contain any 3-edge cycles. Thus
+    <me>
+    4f \le 2e.
+    </me>
+  </p>
+
+  <p>
+    But this would say that <m>20 \le 18</m>, which is clearly false. Thus <m>K_{3,3}</m> is not planar.
+  </p>
+</proof>
+
+<p>
+Note the similarities and differences in these proofs. Both are proofs by contradiction, and both start with using Euler's formula to derive the (supposed) number of faces in the graph. Then we find a relationship between the number of faces and the number of edges based on how many edges surround each face. This is the only difference. In the proof for <m>K_5</m>, we got <m>3f \le 2e</m> and for <m>K_{3,3}</m> we go <m>4f \le 2e</m>. The coefficient of <m>f</m> is the key. It is the smallest number of edges which could surround any face. If some number of edges surround a face, then these edges form a cycle. So that number is the size of the smallest cycle in the graph.
+</p>
+
+<p>
+In general, if we let <m>g</m> be the size of the smallest cycle in a graph (<m>g</m> stands for <em>girth</em><idx><h>girth</h></idx>, which is the technical term for this) then for any planar graph we have <m>gf \le 2e</m>. When this disagrees with Euler's formula, we know for sure that the graph cannot be planar.
+</p>
+</subsection>
+
+
+<subsection>
+<title>Polyhedra</title>
+<investigation>
+<p>
+A cube<idx><h>cube</h></idx> is an example of a convex polyhedron. It contains 6 identical squares for its faces, 8 vertices, and 12 edges. The cube is a <term>regular polyhedron</term> (also known as a <term>Platonic solid</term><idx><h>Platonic solids</h></idx>) because each face is an identical regular polygon and each vertex joins an equal number of faces.
+</p>
+
+<p>
+There are exactly four other regular polyhedra: the tetrahedron, octahedron, dodecahedron, and icosahedron with 4, 8, 12 and 20 faces respectively. How many vertices and edges do each of these have?
+</p>
+</investigation>
+<p>
+Another area of mathematics where you might have heard the terms <q>vertex,</q> <q>edge,</q> and <q>face</q> is geometry. A <term>polyhedron</term><idx><h>polyhedron</h></idx> is a geometric solid made up of flat polygonal faces joined at edges and vertices. We are especially interested in <term>convex</term><idx><h>convex</h></idx> polyhedra, which means that any line segment connecting two points on the interior of the polyhedron must be entirely contained inside the polyhedron.<fn>An alternative definition for convex is that the internal angle formed by any two faces must be less than <m>180\deg</m>.</fn>
+</p>
+
+<p>
+Notice that since <m>8 - 12 + 6 = 2</m>, the vertices, edges and faces of a cube satisfy Euler's formula for planar graphs. This is not a coincidence. We can represent a cube as a planar graph by projecting the vertices and edges onto the plane. One such projection looks like this:
+</p>
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}
+  \foreach \ang in {45, 135, 225, 315} {
+  \draw (\ang:.4) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.4) -- (\ang+90:.4);
+  }
+  \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+<p>
+In fact, <em>every</em> convex polyhedron can be projected onto the plane without edges crossing. Think of placing the polyhedron inside a sphere, with a light at the center of the sphere. The edges and vertices of the polyhedron cast a shadow onto the interior of the sphere. You can then cut a hole in the sphere in the middle of one of the projected faces and <q>stretch</q> the sphere to lay down flat on the plane. The face that was punctured becomes the <q>outside</q> face of the planar graph.
+</p>
+
+<p>
+The point is, we can apply what we know about graphs (in particular planar graphs) to convex polyhedra. Since every convex polyhedron can be represented as a planar graph, we see that Euler's formula for planar graphs holds for all convex polyhedra as well. We also can apply the same sort of reasoning we use for graphs in other contexts to convex polyhedra. For example, we know that there is no convex polyhedron with 11 vertices all of degree 3, as this would make 33/2 edges.
+</p>
+<example>
+<statement>
+<p>
+Is there a convex polyhedron consisting of three triangles and six pentagons? What about three triangles, six pentagons and five heptagons (7-sided polygons)?
+</p>
+</statement>
+<solution>
+<p>
+How many edges would such polyhedra have? For the first proposed polyhedron, the triangles would contribute a total of 9 edges, and the pentagons would contribute 30. However, this counts each edge twice (as each edge borders exactly two faces), giving 39/2 edges, an impossibility. There is no such polyhedron.
+</p>
+
+<p>
+The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagons give a total of 74/2 = 37 edges. So far so good. Now how many vertices does this supposed polyhedron have? We can use Euler's formula. There are 14 faces, so we have <m>v - 37 + 14 = 2</m> or equivalently <m>v = 25</m>. But now use the vertices to count the edges again. Each vertex must have degree <em>at least</em> three (that is, each vertex joins at least three faces since the interior angle of all the polygons must be less that <m>180^\circ</m>), so the sum of the degrees of vertices is at least 75. Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges. Again, there is no such polyhedron.
+</p>
+</solution>
+</example>
+<p>
+To conclude this application of planar graphs, consider the regular polyhedra. Above we claimed there are only five. How do we know this is true? We can prove it using graph theory.
+</p>
+
+<theorem>
+<statement>
+<p>
+There are exactly five regular polyhedra.
+</p>
+</statement>
+
+</theorem>
+<proof>
+  <p>
+    Recall that a regular polyhedron has all of its faces identical regular polygons, and that each vertex has the same degree. Consider the cases, broken up by what the regular polygon might be.
+  </p>
+
+  <p>
+    <b>Case 1</b>: Each face is a triangle. Let <m>f</m> be the number of faces. There are then <m>3f/2</m> edges. Using Euler's formula we have <m>v - 3f/2 + f = 2</m> so <m>v = 2 + f/2</m>. Now each vertex has the same degree, say <m>k</m>. So the number of edges is also <m>kv/2</m>. Putting this together gives
+    <me>
+    e = \frac{3f}{2} = \frac{k(2+f/2)}{2}
+    </me>
+    which says
+    <me>
+    k = \frac{6f}{4+f}
+    </me>
+  </p>
+
+  <p>
+    We need <m>k</m> and <m>f</m> to both be positive integers. Note that <m>\frac{6f}{4+f}</m> is an increasing function for positive <m>f</m>, and has a horizontal asymptote at 6. Thus the only possible values for <m>k</m> are 3, 4, and 5. Each of these are possible. To get <m>k = 3</m>, we need <m>f = 4</m> (this is the tetrahedron)<idx><h>tetrahedron</h></idx>. For <m>k = 4</m> we take <m>f = 8</m> (the octahedron)<idx><h>octahedron</h></idx>. For <m>k = 5</m> take <m>f = 20</m> (the icosahedron)<idx><h>icosahedron</h></idx>. Thus there are exactly three regular polyhedra with triangles for faces.
+  </p>
+
+  <p>
+    <b>Case 2</b>: Each face is a square. Now we have <m>e = 4f/2 = 2f</m>. Using Euler's formula we get <m>v = 2 + f</m>, and counting edges using the degree <m>k</m> of each vertex gives us
+    <me>
+    e = 2f = \frac{k(2+f)}{2}
+    </me>
+  </p>
+
+  <p>
+    Solving for <m>k</m> gives
+    <me>
+    k = \frac{4f}{2+f} = \frac{8f}{4+2f}
+    </me>
+  </p>
+
+  <p>
+    This is again an increasing function, but this time the horizontal asymptote is at <m>k = 4</m>, so the only possible value that <m>k</m> could take is 3. This produces 6 faces, and we have a cube. There is only one regular polyhedron with square faces.
+  </p>
+
+  <p>
+    <b>Case 3</b>: Each face is a pentagon. We perform the same calculation as above, this time getting <m>e = 5f/2</m> so <m>v = 2 + 3f/2</m>. Then
+    <me>
+    e = \frac{5f}{2} = \frac{k(2+3f/2)}{2}
+    </me>
+    so
+    <me>
+    k = \frac{10f}{4+3f}
+    </me>
+  </p>
+
+  <p>
+    Now the horizontal asymptote is at <m>\frac{10}{3}</m>. This is less than 4, so we can only hope of making <m>k = 3</m>. We can do so by using 12 pentagons, getting the dodecahedron<idx><h>dodecahedron</h></idx>. This is the only regular polyhedron with pentagons as faces.
+  </p>
+
+  <p>
+    <b>Case 4</b>: Each face is an <m>n</m>-gon with <m>n \ge 6</m>. Following the same procedure as above, we deduce that
+    <me>
+      k = \frac{2nf}{4+(n-2)f}
+    </me>
+    which will be increasing to a horizontal asymptote of <m>\frac{2n}{n-2}</m>. When <m>n = 6</m>, this asymptote is at <m>k = 3</m>. Any larger value of <m>n</m> will give an even smaller asymptote. Therefore no regular polyhedra exist with faces larger than pentagons.<fn>Notice that you can tile the plane with hexagons.  This is an infinite planar graph; each vertex has degree 3.  These infinitely many hexagons correspond to the limit as <m>f \to \infty</m> to make <m>k = 3</m>.</fn>
+  </p>
+</proof>
+
+
+</subsection>
+
+
+<xi:include href="exercises/gt-planar.mbx"/>
+
+</section>

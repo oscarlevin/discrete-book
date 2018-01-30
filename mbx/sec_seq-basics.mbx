@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq_intro">
+  <title>Definitions</title>
+  <introduction>
+  <investigation>
+    <!-- TODO: Make a better intro problem -->
+    <p>
+      What comes next:
+      <me>
+        1, ~~11, ~~21, ~~1211, ~~111221, ~~312211, ~~\ldots
+      </me>
+    </p>
+  </investigation>
+  <p>
+    A <term>sequence</term><idx><h>sequence</h></idx> is simply an ordered list of numbers. For example, here is a sequence: 0, 1, 2, 3, 4, 5, <ellipsis/>. This is different from the set <m>\N</m> because, while the sequence is a complete list of every element in the set of natural numbers, in the sequence we very much care what order the numbers come in. For this reason, when we use variables to represent terms in a sequence they will look like this:
+    <me>
+      a_0, a_1, a_2, a_3, \ldots
+    </me>
+    To refer to the <em>entire</em> sequence at once, we will write <m>(a_n)_{n\in\N}</m> or <m>(a_n)_{n\ge 0}</m>, or sometimes if we are being sloppy, just <m>(a_n)</m> (in which case we assume we start the sequence with <m>a_0</m>). <notation><usage>(a_n)_{n \in \N}</usage><description>the sequence <m>a_0, a_1, a_2, \ldots</m></description></notation>
+  </p>
+
+  <p>
+    We might replace the <m>a</m> with another letter, and sometimes we omit <m>a_0</m>, starting with <m>a_1</m>, in which case we would use <m>(a_n)_{n \ge 1}</m> to refer to the sequence as a whole. The numbers in the subscripts are called <term>indices</term> (the plural of <term>index</term>). </p>
+
+  <p>While we often just think of sequences as an ordered list of numbers, they really are a type of function. Specifically, the sequence <m>(a_n)_{n\ge 0}</m> is a function with domain <m>\N</m> where <m>a_n</m> is the image of the natural number <m>n</m>. Later we will manipulate sequences in much the same way you have manipulated functions in algebra or calculus. We can shift a sequence up or down, add two sequences, or ask for the rate of change of a sequence. These are done exactly as you would for functions.
+  </p>
+
+  <p>
+    That said, while keeping the rigorous mathematical definition in mind is helpful, we often describe sequences by writing out the first few terms.
+  </p>
+  <example>
+    <statement>
+      <p>
+        Can you find the next term in the following sequences?
+      </p>
+      <p>
+        <ol>
+          <li><m>7,7,7,7,7, \ldots</m></li>
+          <li><m>3, -3, 3, -3, 3, \ldots</m></li>
+          <li><m>1, 5, 2, 10, 3, 15, \ldots</m></li>
+          <li><m>1, 2, 4, 8, 16, 32, \ldots</m></li>
+          <li><m>1, 4, 9, 16, 25, 36, \ldots</m></li>
+          <li><m>1, 2, 3, 5, 8, 13, 21, \ldots</m></li>
+          <li><m>1, 3, 6, 10, 15, 21, \ldots</m></li>
+          <li><m>2, 3, 5, 7, 11, 13, \ldots</m></li>
+          <li><m>3, 2, 1, 0, -1, \ldots</m></li>
+          <li><m>1, 1, 2, 6, \ldots</m></li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        No you cannot. You might guess that the next terms are:
+      </p>
+
+      <p>
+        <ol>
+          <li><m>7</m></li>
+          <li><m>-3</m></li>
+          <li><m>4</m></li>
+          <li>
+            <p>
+              64
+            </p>
+          </li>
+          <li>
+            <p>
+              49
+            </p>
+          </li>
+          <li>
+            <p>
+              34
+            </p>
+          </li>
+          <li>
+            <p>
+              28
+            </p>
+          </li>
+          <li>
+            <p>
+              17
+            </p>
+          </li>
+          <li><m>-2</m></li>
+          <li><m>24</m></li>
+        </ol>
+      </p>
+
+      <p>
+        In fact, those are the next terms of the sequences I had in mind when I made up the example, but there is no way to be sure they are correct.
+      </p>
+
+      <p>
+        Still, we will often do this. Given the first few terms of a sequence, we can ask what the pattern in the sequence suggests the next terms are.
+      </p>
+    </solution>
+  </example>
+
+  <p>
+    Given that no number of initial terms in a sequence is enough to say for certain which sequence we are dealing with, we need to find another way to specify a sequence. We consider two ways to do this:
+  </p>
+  <assemblage>
+    <title>Closed formula</title>
+    <p>
+      A <term>closed formula</term><idx><h>closed formula</h></idx> for a sequence <m>(a_n)_{n\in\N}</m> is a formula for <m>a_n</m> using a fixed finite number of operations on <m>n</m>. This is what you normally think of as a formula in <m>n</m>, just like if you were defining a function in terms of <m>n</m> (because that is exactly what you are doing).
+    </p>
+  </assemblage>
+
+  <assemblage>
+    <title>Recursive definition</title>
+    <p>
+      A <term>recursive definition</term><idx><h>recursive definition</h></idx> (sometimes called an <term>inductive definition</term>) for a sequence <m>(a_n)_{n\in\N}</m> consists of a <term>recurrence relation</term><idx><h>recurrence relation</h></idx>: an equation relating a term of the sequence to previous terms (terms with smaller index) and an <term>initial condition</term>: a list of a few terms of the sequence (one less than the number of terms in the recurrence relation).
+    </p>
+  </assemblage>
+  <p>
+    It is easier to understand what is going on here with an example:
+  </p>
+  <example>
+    <statement>
+      <p>
+        Here are a few closed formulas for sequences:
+      <ul>
+        <li><m>a_n = n^2</m>.</li>
+        <li><m>\d a_n = \frac{n(n+1)}{2}</m>.</li>
+        <li><m>\d a_n = \frac{\left(\frac{1 + \sqrt 5}{2}\right)^n - \left(\frac{1 + \sqrt 5}{2}\right)^{-n}}{5}</m>.</li>
+      </ul>
+    </p>
+
+      <p>
+        Note in each case, if you are given <m>n</m>, you can calculate <m>a_n</m> directly: just plug in <m>n</m>.  For example, to find <m>a_3</m> in the second sequence, just compute <m>a_3 = \frac{3(3+1)}{2} = 6</m>.
+      </p>
+
+      <p>
+        Here are a few recursive definitions for sequences:
+      <ul>
+        <li><m>a_n = 2a_{n-1}</m> with <m>a_0 = 1</m>.</li>
+        <li><m>a_n = 2a_{n-1}</m> with <m>a_0 = 27</m>.</li>
+        <li><m>a_n = a_{n-1} + a_{n-2}</m> with <m>a_0 = 0</m> and <m>a_1 = 1</m>.</li>
+      </ul>
+    </p>
+
+      <p>
+        In these cases, if you are given <m>n</m>, you cannot calculate <m>a_n</m> directly, you first need to find <m>a_{n-1}</m> (or <m>a_{n-1}</m> and <m>a_{n-2}</m>). In the second sequence, to find <m>a_3</m> you would take <m>2a_2</m>, but to find <m>a_2 = 2a_1</m> we would need to know <m>a_1 = 2a_0</m>.  We do know this, so we could trace back through these equations to find <m>a_1 = 54</m>, <m>a_2 = 108</m> and finally <m>a_3 = 216</m>.<idx><h>Fibonacci sequence</h></idx>
+      </p>
+    </statement>
+  </example>
+
+  <investigation>
+    <p>
+      You have a large collection of <m>1\times 1</m> squares and <m>1\times 2</m> dominoes. You want to arrange these to make a <m>1 \times 15</m> strip. How many ways can you do this?
+    <ol>
+          <li>
+            <p>
+              Start by collecting data. How many length <m>1\times 1</m> strips can you make? How many <m>1\times 2</m> strips? How many <m>1\times 3</m> strips? And so on.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              How are the <m>1\times 3</m> and <m>1 \times 4</m> strips related to the <m>1\times 5</m> strips?
+            </p>
+          </li>
+
+          <li>
+            <p>
+              How many <m>1\times 15</m> strips can you make?
+            </p>
+          </li>
+
+          <li>
+            <p>
+              What if I asked you to find the number of <m>1\times 1000</m> strips? Would the method you used to calculate the number fo <m>1 \times 15</m> strips be helpful?
+            </p>
+          </li>
+</ol>
+</p>
+  </investigation>
+  <p>
+    You might wonder why we would bother with recursive definitions for sequences. After all, it is harder to find <m>a_n</m> with a recursive definition than with a closed formula. This is true, but it is also harder to find a closed formula for a sequence than it is to find a recursive definition. So to find a useful closed formula, we might first find the recursive definition, then use that to find the closed formula.
+  </p>
+
+  <p>
+    This is not to say that recursive definitions aren't useful in finding <m>a_n</m>. You can always calculate <m>a_n</m> given a recursive definition, it might just take a while.
+  </p>
+  <example>
+    <statement>
+      <p>
+        Find <m>a_6</m> in the sequence defined by <m>a_n = 2a_{n-1} - a_{n-2}</m> with <m>a_0 = 3</m> and <m>a_1 = 4</m>.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We know that <m>a_6 = 2a_5 - a_4</m>. So to find <m>a_6</m> we need to find <m>a_5</m> and <m>a_4</m>. Well
+        <me>
+          a_5 = 2a_4 - a_3 \qquad \text{and} \qquad a_4 = 2a_3 - a_2,
+        </me>
+        so if we can only find <m>a_3</m> and <m>a_2</m> we would be set. Of course
+        <me>
+          a_3 = 2a_2 - a_1 \qquad \text{and} \qquad a_2 = 2a_1 - a_0,
+        </me>
+        so we only need to find <m>a_1</m> and <m>a_0</m>. But we are given these. Thus
+        <md>
+          <mrow> a_0 \amp = 3</mrow>
+          <mrow> a_1 \amp = 4</mrow>
+          <mrow> a_2 \amp = 2\cdot 4 - 3 = 5</mrow>
+          <mrow> a_3 \amp = 2\cdot 5 - 4 = 6</mrow>
+          <mrow> a_4 \amp = 2\cdot 6 - 5 = 7</mrow>
+          <mrow> a_5 \amp = 2\cdot 7 - 6 = 8</mrow>
+          <mrow> a_6 \amp = 2\cdot 8 - 7 = 9.</mrow>
+        </md>
+      </p>
+
+      <p>
+        Note that now we can guess a closed formula for the <m>n</m>th term of the sequence: <m>a_n = n+3</m>. To be sure this will always work, we could plug in this formula into the recurrence relation:
+        <md>
+          <mrow> 2a_{n-1} - a_{n-2} \amp = 2((n-1) + 3) - ((n-2) + 3)</mrow> <mrow> \amp = 2n + 4 - n - 1 </mrow>
+          <mrow> \amp = n + 3</mrow>
+          <mrow> \amp = a_n.</mrow>
+        </md>
+      </p>
+
+      <p>
+        That is not quite enough though, since there can be multiple closed formulas that satisfy the same recurrence relation; we must also check that our closed formula agrees on the initial terms of the sequence.  Since <m>a_0 = 0 + 3 = 3</m> and <m>a_1 = 1+3 = 4</m> are the correct initial conditions, we can now conclude we have the correct closed formula.
+      </p>
+    </solution>
+  </example>
+  <p>
+    Finding closed formulas, or even recursive definitions, for sequences is not trivial. There is no one method for doing this. Just like in evaluating integrals or solving differential equations, it is useful to have a bag of tricks you can apply, but sometimes there is no easy answer.
+  </p>
+
+  <p>
+    One useful method is to relate a given sequence to another sequence for which we already know the closed formula.
+  </p>
+  <example>
+    <statement>
+      <p>
+        Use the formulas <m>T_n = \frac{n(n+1)}{2}</m> and <m>a_n = 2^n</m> to find closed formulas for the following sequences.
+      <ol>
+        <li>
+          <p>
+            <m>(b_n)</m>: <m>1, 2, 4, 7, 11, 16, 22, \ldots </m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(c_n)</m>: <m>3, 5, 9, 17, 33,\ldots </m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(d_n)</m>: <m>0, 2, 6, 12, 20, 30, 42,\ldots </m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(e_n)</m>: <m>3, 6, 10, 15, 21, 28, \ldots</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(f_n)</m>: <m>0, 1, 3, 7, 15, 31, \ldots </m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(g_n)</m> <m>3, 6, 12, 24, 48, \ldots </m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(h_n)</m>: <m>6, 10, 18, 34, 66, \ldots </m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(j_n)</m>: <m>15, 33, 57, 87, 123, \ldots</m>.
+          </p>
+        </li>
+      </ol>
+    </p>
+    </statement>
+    <solution>
+      <p>
+        Before you say this is impossible, what we are asking for is simply to find a closed formula which agrees with all of the initial terms of the sequences. Of course there is no way to read into the mind of the person who wrote the numbers down, but we can at least do this.
+      </p>
+
+      <p>
+        The first few terms of <m>(T_n)_{n\ge 0}</m><notation><usage>T_n</usage><description>the <m>n</m>th triangular number</description></notation> are <m>0, 1, 3, 6, 10, 15, 21, \ldots</m> (these are called the <term>triangular numbers</term>)<idx><h>triangular numbers</h></idx>. The first few terms of <m>(a_n)_{n\ge 0}</m> are <m>1, 2, 4, 8, 16, \ldots</m>.  Let's try to find formulas for the given sequences:
+      <ol>
+        <li>
+          <p>
+            <m>(1, 2, 4, 7, 11, 16, 22, \ldots)</m>. Note that if subtract 1 from each term, we get the sequence <m>(T_n)</m>. So we have <m>b_n = T_n + 1</m>. Therefore a closed formula is <m>b_n = \frac{n(n+1)}{2} + 1</m>. A quick check of the first few <m>n</m> confirms we have it right.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(3, 5, 9, 17, 33, \ldots )</m>. Each term in this sequence is one more than a power of 2, so we might guess the closed formula is <m>c_n = a_n+1 = 2^n + 1</m>. If we try this though, we get <m>c_0 2^0 + 1 = 2</m> and <m>c_1 = 2^1 + 1 = 3</m>. We are off because the indices are shifted.  What we really want is <m>c_n = a_{n+1}+1</m> giving  <m>c_n = 2^{n+1} + 1</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            (<m>0, 2, 6, 12, 20, 30, 42,\ldots </m>). Notice that all these terms are even. What happens if we factor out a 2? We get <m>(T_n)</m>! More precisely, we find that <m>d_n/2 = T_n</m>, so this sequence has closed formula <m>d_n = n(n+1)</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(3, 6, 10, 15, 21, 28, \ldots)</m>. These are all triangular numbers. However, we are starting with 3 as our initial term instead of as our third term. So if we could plug in 2 instead of 0 into the formula for <m>T_n</m>, we would be set. Therefore the closed formula is <m>e_n = \frac{(n+2)(n+3)}{2}</m> (where <m>n+3</m> came from <m>(n+2)+1</m>).  Thinking about sequences as functions, we are doing a horizontal shift by 2: <m>e_n = T_{n+2}</m> which would cause the graph to shift 2 units to the left.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(0, 1, 3, 7, 15, 31, \ldots )</m>. Try adding 1 to each term and we get powers of 2. You might guess this because each term is a little more than twice the previous term (the powers of 2 are <em>exactly</em> twice the previous term). Closed formula: <m>f_n = 2^{n} - 1</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(3, 6, 12, 24, 48, \ldots )</m>. These numbers are also doubling each time, but are also all multiples of 3. Dividing each by 3   gives 1, 2, 4, 8, <ellipsis/>. Aha. We get the closed formula <m>g_n = 3\cdot 2^{n}</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(6, 10, 18, 34, 66, \ldots )</m>. To get from one term to the next, we almost double each term. So maybe we can relate this back to <m>2^n</m>. Yes, each term is 2 more than a power of 2. So we get <m>h_n = 2^{n+2} + 2</m> (the <m>n+2</m> is because the first term is 2 more than <m>2^2</m>, not <m>2^0</m>). Alternatively, we could have related this sequence to the second sequence in this example: starting with 3, 5, 9, 17, <ellipsis/> we see that this sequence is twice the terms from that sequence. That sequence had closed formula <m>c_n = 2^{n+1} + 1</m>. Our sequence here would be twice this, so <m>h_n = 2(2^n + 1)</m>, which is the same as we got before.
+          </p>
+        </li>
+        <li>
+          <p>
+            <m>(15, 33, 57, 87, 123, \ldots)</m>. Try dividing each term by 3. That gives the sequence <m>5, 11, 19, 29, 41,\ldots</m>. Now add 1: <m>6, 12, 20, 30, 42, \ldots</m>, which is <m>(d_n)</m> in this example, except starting with 6 instead of 0. So let's start with the formula <m>d_n= n(n+1)</m>. To start with the 6, we shift: <m>(n+2)(n+3)</m>. But this is one too many, so subtract 1: <m>(n+2)(n+3) - 1</m>. That gives us our sequence, but divided by 3. So we want <m>j_n = 3((n+2)(n+3) - 1)</m>.
+          </p>
+        </li>
+      </ol>
+    </p>
+    </solution>
+  </example>
+
+</introduction>
+<xi:include href="exercises/seq-basics.mbx"/>
+
+
+
+</section>

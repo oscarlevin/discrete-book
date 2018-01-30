@@ -1,0 +1,229 @@
+%%%  This is a set of styles to include in the preamble of the generated latex code for the book Discrete Mathematics: an Open Introduction.
+
+
+\usepackage{bold-extra}
+\usepackage{marvosym} %for stop signs.
+\usepackage{textcomp}
+\usepackage{multicol}
+
+
+% % FONT OPTIONS (pick one group to uncomment):
+
+%newpx is my current favorite.  This should work on a TEXLive distribution, but on MiKTeX it initially gave me problems.  Running the update wizard to update MiKTeX then showed ``newpx'' as an available package (only since 8/11/15).  Perhaps just synchronizing in the package manager would do the same thing.  Even then, needed to run initexmf --mkmaps from the command line.
+%You could always uncomment all of these to use the default computer modern font.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext}
+\usepackage[vvarbb,cmintegrals,cmbraces,bigdelims]{newpxmath}
+\usepackage[scr=rsfso]{mathalfa}% \mathscr is fancier than \mathcal
+\linespread{1.04}         % adds more leading (space between lines)
+% quantifiers look strange, so change those back to normal:
+	\DeclareSymbolFont{mysymbols}{OMS}{cmsy}{b}{n} %note we make the figures bold to better match newpx.  Replace the ``b'' with an ``m'' to undo this.
+	%\SetSymbolFont{mysymbols}  {bold}{OMS}{cmsy}{b}{n}
+	%\DeclareSymbolFont{myoperators}   {OT1}{cmr} {m}{n}
+	%\SetSymbolFont{myoperators}{bold}{OT1}{cmr} {bx}{n}
+	\DeclareMathSymbol{\forall}{\mathord}{mysymbols}{"38}
+	\DeclareMathSymbol{\exists}{\mathord}{mysymbols}{"39}
+	%\DeclareMathSymbol{\pm}{\mathbin}{mysymbols}{"06}
+	%\DeclareMathSymbol{+}{\mathbin}{myoperators}{"2B}
+	%\DeclareMathSymbol{-}{\mathbin}{mysymbols}{"00}
+	%\DeclareMathSymbol{=}{\mathrel}{myoperators}{"3D}
+
+
+
+%\usepackage[T1]{fontenc}
+%\usepackage{newtxtext,newtxmath}
+
+
+%\usepackage[bitstream-charter]{mathdesign}
+%\usepackage[T1]{fontenc}
+
+%\usepackage[proportional,space,scaled=1.064]{erewhon}
+%\usepackage[erewhon,vvarbb,bigdelims]{newtxmath}
+%\usepackage[T1]{fontenc}
+%\renewcommand*\oldstylenums[1]{\textosf{#1}}
+
+
+
+
+
+% % % % % % Other packages % % % % % % % %
+
+\usepackage{docmute}
+\usepackage{pdfpages}
+
+\usepackage{svg}
+
+\usepackage[framemethod=tikz]{mdframed}
+
+
+
+% % % % % % % % % % % % % %  END OF PACKAGES  % % % % % % % % % % % % % % % % % % %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%  Nicely styled environments: %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%create a mdframe style for examples:
+\mdfdefinestyle{examplestyle}{%
+	leftmargin=1.5ex, %left/right margins for oneside
+	rightmargin=1.5ex,
+	outermargin=1.5ex, %inner/outer margins for twoside
+	innermargin=1.5ex,
+	innertopmargin=0pt,
+	innerbottommargin=1.5ex,
+	skipbelow=1.5em,
+	roundcorner=0pt,
+	topline=false,
+	rightline=false,
+  frametitleaboveskip=2pt,
+	frametitlebelowskip=2pt,
+	needspace=3em,
+}
+
+%Create indented ``example'' environment:
+\mdtheorem[style=examplestyle]{mdexample}[theorem]{Example}
+
+%Redefine ``example'' to call the new mdexample, and put a paragraph break after it.
+\renewenvironment{example}{%
+\mdexample
+}{%
+\endmdexample\par
+}
+
+
+% \LetLtxMacro\mdexample\oldexample
+% \let\endmdexample\endoldexample
+%
+% \newenvironment{mdexample}{%
+% \oldexample
+% }{%
+% \endoldexample\par
+% }
+
+%Create ``investigation'' environment for in-text worksheet type problems:
+\renewenvironment{investigation}{%
+\mdfsetup{%
+	frametitle={\colorbox{white}{\large\space\space \textit{Investigate!} \space} },
+	frametitlealignment=\centering,
+	frametitleaboveskip=-1.5ex,
+	frametitlebelowskip=0pt,
+	frametitlealignment={\hspace*{2pt}},
+	innerbottommargin=2em,
+	innermargin=1ex,
+	outermargin=1ex,
+	leftmargin=1ex,
+	rightmargin=1ex,
+%	topline=false,
+%	bottomline=false,
+	linecolor=green!50!black,
+	linewidth=1pt,
+	skipabove=2em,
+	skipbelow=2em,
+	roundcorner=15pt,
+	needspace=2em,
+}
+\vskip 1em
+\begin{mdframed}
+}{%
+\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Attempt the above activity before proceeding} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}\par
+}
+
+
+% redefine the assemblage environment for minor tweaking %
+\renewenvironment{assemblage}[1][]{%
+	\mdfsetup{%
+	frametitle={\colorbox{blue!20}{\space#1\space}},
+	% frametitlealignment={\hspace*{1ex}},
+	frametitleaboveskip=-1.5ex,
+	% frametitlebelowskip=1ex,
+	skipabove=2ex,
+	skipbelow=1em,
+	roundcorner=1pt,
+	leftmargin=3pt,
+	rightmargin=3pt,
+	backgroundcolor=blue!5,
+	linecolor=blue!30,
+	linewidth=1.5pt,
+	innertopmargin=-.5ex,
+	innerbottommargin=1.15em,
+	needspace=2em,
+}
+\begin{mdframed}\par\medskip
+}{%
+\end{mdframed}\par
+}
+
+%%%%%%%%%%%%%%%%%  End environments %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% use QED to end proofs:
+\renewcommand{\qedsymbol}{\textsc{qed}}
+
+
+%%%%%%%% Set description list spacing the way I want %%%%%%%%%%%%%%%
+\setlist[description]{style=nextline, leftmargin=3em}
+
+
+%%%%%%% Set chapters to start at 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{chapter}{-1}
+
+
+%Fix widows and orphans (single lines at top/bottom of page):
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%  Headers and footers %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}} %Removes word "chapter" from the \leftmark.
+
+\fancyhead{} % clear header fields
+\fancyhead[LE]{{\footnotesize \textsl{\thepage}}~~ \textsc{\scriptsize \nouppercase{\leftmark}}}
+\fancyhead[RO]{\textsc{\scriptsize \nouppercase{\rightmark}} ~~ {\footnotesize \textsl{\thepage}}  }
+\fancyfoot{}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%    Chapter headings  %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[bf,sc,center,outermarks]{titlesec}
+
+
+%%%%% FIX FOR BUG IN TITLESEC %%%%%%%%%%%
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+%%%%% END FIX %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\titleformat{\chapter}[display]
+	{\Large\filcenter}
+	{\rule[4pt]{.3\textwidth}{2pt} \hspace{2ex} \large\textsc{\chaptertitlename} \thechapter \hspace{3ex} \rule[4pt]{0.3\textwidth}{2pt} }
+	{1pc}
+	{\titlerule\vspace{1ex}\huge\textsc}
+	[\vspace{.75ex}\titlerule]
+\titlespacing*{\chapter}{0pt}{-2em}{2em}
+
+\titleformat{\paragraph}[block]
+  {\normalfont\bfseries\filcenter}
+  {\theparagraph}
+  {}
+  {\textsc}
+%%%%%%%%%  End chapter/sectio headings %%%%%%%%%%%%%%%%%
+
+%%% End of File.

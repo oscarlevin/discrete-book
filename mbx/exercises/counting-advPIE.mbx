@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_counting-advPIE">
+
+      <exercise>
+        <statement>
+          <p>
+            The dollar menu at your favorite tax-free fast food restaurant has 7 items. You have
+            <dollar/>10 to spend. How many different meals can you buy if you spend all your money and:
+          <ol>
+            <li>
+              <p>
+                Purchase at least one of each item.
+              </p>
+            </li>
+            <li>
+              <p>
+                Possibly skip some items.
+              </p>
+            </li>
+            <li>
+              <p>
+                Don't get more than 2 of any particular item.
+              </p>
+            </li>
+          </ol>
+        </p>
+        </statement>
+        <solution>
+          <p>
+          <ol>
+            <li><m>{9 \choose 6}</m> meals.</li>
+            <li><m>{16 \choose 6}</m> meals.</li>
+            <li><m>{16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]</m> meals.  Use PIE to subtract all the meals in which you get 3 or more of a particular item.</li>
+          </ol>
+        </p>
+        </solution>
+      </exercise>
+
+
+
+
+            <exercise>
+              <statement>
+                <p>
+                  After a late night of math studying, you and your friends decide to go to your favorite tax-free fast food Mexican restaurant, <em>Burrito Chime</em>. You decide to order off of the dollar menu, which has 7 items. Your group has
+                  <dollar/>16 to spend (and will spend all of it).
+                <ol>
+                  <li>
+                    <p>
+                      How many different orders are possible? Explain. (The <em>order</em> in which the order is placed does not matter - just which and how many of each item that is ordered.)
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      How many different orders are possible if you want to get at least one of each item? Explain.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      How many different orders are possible if you don't get more than 4 of any one item? Explain.
+                    </p>
+                  </li>
+                </ol>
+            </p>
+              </statement>
+            </exercise>
+
+
+
+      <exercise>
+        <statement>
+          <p>
+            After another gym class you are tasked with putting the 14 identical dodgeballs away into 5 bins. This time, no bin can hold more than 6 balls. How many ways can you clean up?
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <m>{18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]</m>. Subtract all the distributions for which one or more bins contain 7 or more balls.
+          </p>
+        </solution>
+      </exercise>
+
+      <exercise>
+        <statement>
+          <p>
+            Consider the equation <m>x_1 + x_2 + x_3 + x_4 = 15</m>. How many solutions are there with <m>2 \le x_i \le 5</m> for all <m>i \in \{1,2,3,4\}</m>?
+          </p>
+        </statement>
+        <solution>
+          <p>
+            The easiest way to solve this is to instead count the solutions to <m>y_1 + y_2 + y_3 + y_4 = 7</m> with <m>0 \le y_i \le 3</m>. By taking <m>x_i = y_i+2</m>, each solution to this new equation corresponds to exactly one solution to the original equation.
+          </p>
+
+          <p>
+            Now all the ways to distribute the 7 units to the four <m>y_i</m> variables can be found using stars and bars, specifically 7 stars and 3 bars,
+            so <m>{10 \choose 3}</m> ways. But this includes the ways that one or more <m>y_i</m> variables can be assigned more than 3 units. So subtract, using PIE. We get
+            <me>
+              {10 \choose 3} - {4\choose 1} {6 \choose 3}.
+            </me>
+          </p>
+
+          <p>
+            The <m>{4 \choose 1}</m> counts the number of ways to pick one variable to be over-assigned, the <m>{6 \choose 3}</m> is the number of ways to assign the remaining 3 units to the 4 variables.  Note that this is the final answer because it is not possible to have two variables both get 4 units.
+          </p>
+        </solution>
+      </exercise>
+
+      <exercise>
+        <statement>
+          <p>
+            Suppose you planned on giving 7 gold stars to some of the 13 star students in your class. Each student can receive at most one star. How many ways can you do this? Use PIE, and also an easier method, and compare your results.
+          </p>
+        </statement>
+      </exercise>
+
+      <exercise>
+        <statement>
+          <p>
+            Based on the previous question, give a combinatorial proof for the identity:
+            <me>
+              {n \choose k} = {n+k-1 \choose k} - \sum_{j=1}^n (-1)^{j+1}{n \choose j}{n+k-(2j+1) \choose k}.
+            </me>
+          </p>
+        </statement>
+      </exercise>
+
+      <exercise>
+        <statement>
+          <p>
+            Illustrate how the counting of derangements works by writing all permutations of <m>\{1,2,3,4\}</m> and the crossing out those which are not derangements. Keep track of the permutations you cross out more than once, using PIE.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            The 9 derangements are: 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.
+          </p>
+        </solution>
+      </exercise>
+
+
+      <exercise>
+        <statement>
+          <p>
+            How many permutations of <m>\{1,2,3,4,5\}</m> leave exactly 1 element fixed?
+          </p>
+        </statement>
+        <solution>
+          <p> First pick one of the five elements to be fixed.  For each such choice, derange the remaining four, using the standard advanced PIE formula.  We get
+            <m>{5 \choose 1}\left( 4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4} 0!\right] \right)</m> permutations.
+          </p>
+        </solution>
+      </exercise>
+
+
+      <exercise>
+        <statement>
+          <p>
+            Ten ladies of a certain age drop off their red hats at the hat check of a museum. As they are leaving, the hat check attendant gives the hats back randomly. In how many ways can exactly six of the ladies receive their own hat (and the other four not)?  Explain.
+          </p>
+        </statement>
+      </exercise>
+
+
+
+      <exercise>
+        <statement>
+          <p>
+            The Grinch sneaks into a room with 6 Christmas presents to 6 different people. He proceeds to switch the name-labels on the presents. How many ways could he do this if:
+          <ol>
+            <li>
+              <p>
+                No present is allowed to end up with its original label? Explain what each term in your answer represents.
+              </p>
+            </li>
+            <li>
+              <p>
+                Exactly 2 presents keep their original labels? Explain.
+              </p>
+            </li>
+            <li>
+              <p>
+                Exactly 5 presents keep their original labels? Explain.
+              </p>
+            </li>
+          </ol>
+        </p>
+        </statement>
+      </exercise>
+
+
+
+
+      <exercise>
+      <statement>
+      <p>
+      Consider functions <m>f: \{1,2,3,4\} \to \{a,b,c,d,e,f\}</m>.
+      How many functions have the property that <m>f(1) \ne a</m> or <m>f(2) \ne b</m>, or both?
+      </p>
+
+      </statement>
+      <solution>
+
+      <p>
+      There are <m>5 \cdot 6^3</m> functions for which <m>f(1) \ne a</m> and another <m>5 \cdot 6^3</m> functions for which <m>f(2) \ne b</m>.  There are <m>5^2 \cdot 6^2</m> functions for which both <m>f(1) \ne a</m> and <m>f(2) \ne b</m>.  So the total number of functions for which <m>f(1) \ne a</m> or <m>f(2) \ne b</m> or both is
+      <me>
+        5 \cdot 6^3 + 5 \cdot 6^3 - 5^2 \cdot 6^2 = 1260.
+      </me>
+      </p>
+
+      </solution>
+      </exercise>
+
+
+
+      <exercise>
+      <statement>
+      <p>
+      Consider sets <m>A</m> and <m>B</m> with <m>|A| = 10</m> and <m>|B| = 5</m>. How many functions <m>f: A \to B</m> are surjective?
+      </p>
+      </statement>
+      <solution>
+      <p>
+      <m>5^{10} - \left[{5 \choose 1}4^{10} - {5 \choose 2}3^{10} + {5 \choose 3}2^{10} - {5 \choose 4}1^{10}\right]</m> functions.  The <m>5^{10}</m> is all the functions from <m>A</m> to <m>B</m>.  We subtract those that aren't surjective.  Pick one of the five elements in <m>B</m> to not have in the range (in <m>{5 \choose 1}</m> ways) and count all those functions (<m>4^{10}</m>).  But this overcounts the functions where two elements from <m>B</m> are excluded from the range, so subtract those.  And so on, using PIE.
+      </p>
+      </solution>
+      </exercise>
+
+      <exercise>
+      <statement>
+      <p>
+      Let <m>A = \{1,2,3,4,5\}</m>. How many injective functions <m>f:A \to A</m> have the property that for each <m>x \in A</m>, <m>f(x) \ne x</m>?
+      </p>
+      </statement>
+      </exercise>
+
+
+      <exercise>
+        <statement>
+          <p>
+            Let <m>d_n</m> be the number of derangements of <m>n</m> objects. For example, using the techniques of this section, we find
+            <me>
+              d_3 = 3!-\left({3 \choose 1}2! - {3 \choose 2}1! + {3 \choose 3}0! \right)
+            </me>
+            We can use the formula for <m>{n \choose k}</m> to write this all in terms of factorials.  After simplifying, for <m>d_3</m> we would get
+            <me>
+              d_3 = 3!\left(1 - \frac{1}{1} + \frac{1}{2} - \frac{1}{6} \right)
+            </me>
+            Generalize this to find a nicer formula for <m>d_n</m>.  Bonus: For large <m>n</m>, approximately what fraction of all permutations are derangements?  Use your knowledge of Taylor series from calculus.
+          </p>
+        </statement>
+      </exercise>
+
+
+
+    </exercises>

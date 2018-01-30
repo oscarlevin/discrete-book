@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_advPIE">
+  <title>Advanced Counting Using PIE</title>
+
+
+  <introduction>
+    <investigation>
+      <p>
+        You have 11 identical mini key-lime pies to give to 4 children. However, you don't want any kid to get more than 3 pies. How many ways can you distribute the pies?
+      <ol>
+        <li>
+          <p>
+            How many ways are there to distribute the pies without any restriction?
+          </p>
+        </li>
+        <li>
+          <p>
+            Let's get rid of the ways that one or more kid gets too many pies. How many ways are there to distribute the pies if Al gets too many pies? What if Bruce gets too many? Or Cat? Or Dent?
+          </p>
+        </li>
+        <li>
+          <p>
+            What if two kids get too many pies? How many ways can this happen? Does it matter which two kids you pick to overfeed?
+          </p>
+        </li>
+        <li>
+          <p>
+            Is it possible that three kids get too many pies? If so, how many ways can this happen?
+          </p>
+        </li>
+        <li>
+          <p>
+            How should you combine all the numbers you found above to answer the original question?
+          </p>
+        </li>
+      </ol>
+</p>
+      <p>
+        Suppose now you have 13 pies and 7 children. No child can have more than 2 pies. How many ways can you distribute the pies?
+      </p>
+
+    </investigation>
+
+    <p>
+      Stars and bars allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to <m>x+y+z = 11</m>, for example. A relatively easy modification allows us to put a <em>lower bound</em> restriction on these problems: perhaps each kid must get at least two cookies or <m>x,y,z \ge 2</m>. This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using stars and bars.
+    </p>
+
+    <p>
+      What if we wanted an <em>upper bound</em> restriction? For example, we might insist that no kid gets more than 4 cookies or that <m>x, y, z \le 4</m>. It turns out this is considerably harder, but still possible. The idea is to count all the distributions and then remove those that violate the condition. In other words, we must count the number of ways to distribute 11 cookies to 3 kids in which <em>one or more</em> of the kids gets more than 4 cookies. For any particular kid, this is not a problem; we do this using stars and bars. But how to combine the number of ways for kid A, or B or C? We must use the PIE.
+    </p>
+
+    <p>
+      The Principle of Inclusion/Exclusion (PIE) gives a method for finding the cardinality of the union of not necessarily disjoint sets. We saw in
+      <xref ref="subsec_PIE"/> how this works with three sets. To find how many things are in <em>one or more</em> of the sets <m>A</m>, <m>B</m>, and <m>C</m>, we should just add up the number of things in each of these sets. However, if there is any overlap among the sets, those elements are counted multiple times. So we subtract the things in each intersection of a pair of sets. But doing this removes elements which are in all three sets once too often, so we need to add it back in. In terms of cardinality of sets, we have
+      <me>
+        |A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A\cap B \cap C|.
+      </me>
+    </p>
+    <example>
+      <statement>
+        <p>
+          Three kids, Alberto, Bernadette, and Carlos, decide to share 11 cookies. They wonder how many ways they could split the cookies up provided that none of them receive more than 4 cookies (someone receiving no cookies is for some reason acceptable to these kids).
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Without the <q>no more than 4</q> restriction, the answer would be <m>{13 \choose 2}</m>, using 11 stars and 2 bars (separating the three kids). Now count the number of ways that one or more of the kids violates the condition, i.e., gets at least 4 cookies.
+        </p>
+
+        <p>
+          Let <m>A</m> be the set of outcomes in which Alberto gets more than 4 cookies. Let <m>B</m> be the set of outcomes in which Bernadette gets more than 4 cookies. Let <m>C</m> be the set of outcomes in which Carlos gets more than 4 cookies. We then are looking (for the sake of subtraction) for the size of the set <m>A \cup B \cup C</m>. Using PIE, we must find the sizes of <m>|A|</m>, <m>|B|</m>, <m>|C|</m>, <m>|A\cap B|</m> and so on. Here is what we find.
+        </p>
+
+        <p>
+          <ul>
+            <li><m>|A| = {8 \choose 2}</m>. First give Alberto 5 cookies, then distribute the remaining 6 to the three kids without restrictions, using 6 stars and 2 bars.</li>
+            <li><m>|B| = {8 \choose 2}</m>. Just like above, only now Bernadette gets 5 cookies at the start.</li>
+            <li><m>|C| = {8 \choose 2}</m>. Carlos gets 5 cookies first.</li>
+            <li><m>|A \cap B| = {3 \choose 2}</m>. Give Alberto and Bernadette 5 cookies each, leaving 1 (star) to distribute to the three kids (2 bars).</li>
+            <li><m>|A \cap C| = {3 \choose 2}</m>. Alberto and Carlos get 5 cookies first.</li>
+            <li><m>|B \cap C| = {3 \choose 2}</m>. Bernadette and Carlos get 5 cookies first.</li>
+            <li><m>|A \cap B \cap C| = 0</m>. It is not possible for all three kids to get 4 or more cookies.</li>
+          </ul>
+        </p>
+
+        <p>
+          Combining all of these we see
+          <me>
+            |A \cup B \cup C| = {8 \choose 2} + {8 \choose 2} + {8 \choose 2} - {3 \choose 2} - {3 \choose 2} - {3 \choose 2} + 0 = 75.
+          </me>
+        </p>
+
+        <p>
+          Thus the answer to the original question is <m>{13 \choose 2} - 75 = 78 - 75 = 3</m>. This makes sense now that we see it. The only way to ensure that no kid gets more than 4 cookies is to give two kids 4 cookies and one kid 3; there are three choices for which kid that should be. We could have found the answer much quicker through this observation, but the point of the example is to illustrate that PIE works!
+        </p>
+      </solution>
+    </example>
+
+
+    <p>
+      For four or more sets, we do not write down a formula for PIE. Instead, we just think of the principle: add up all the elements in single sets, then subtract out things you counted twice (elements in the intersection of a <em>pair</em> of sets), then add back in elements you removed too often (elements in the intersection of groups of three sets), then take back out elements you added back in too often (elements in the intersection of groups of four sets), then add back in, take back out, add back in, etc. This would be very difficult if it wasn't for the fact that in these problems, all the cardinalities of the single sets are equal, as are all the cardinalities of the intersections of two sets, and that of three sets, and so on. Thus we can group all of these together and multiply by how many different combinations of 1, 2, 3,
+      <ellipsis/> sets there are.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          How many ways can you distribute 10 cookies to 4 kids so that no kid gets more than 2 cookies?
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          There are <m>{13 \choose 3}</m> ways to distribute 10 cookies to 4 kids (using 10 stars and 3 bars).  We will subtract all the outcomes in which a kid gets 3 or more cookies. How many outcomes are there like that? We can force kid A to eat 3 or more cookies by giving him 3 cookies before we start. Doing so reduces the problem to one in which we have 7 cookies to give to 4 kids without any restrictions. In that case, we have 7 stars (the 7 remaining cookies) and 3 bars (one less than the number of kids) so we can distribute the cookies in
+          <m>{10 \choose 3}</m> ways. Of course we could choose any one of the 4 kids to give too many cookies, so it would appear that there are <m>{4 \choose 1}{10 \choose 3}</m> ways to distribute the cookies giving too many to one kid. But in fact, we have over counted.
+        </p>
+
+        <p>
+          We must get rid of the outcomes in which two kids have too many cookies. There are <m>{4 \choose 2}</m> ways to select 2 kids to give extra cookies. It takes 6 cookies to do this, leaving only 4 cookies. So we have 4 stars and still 3 bars. The remaining 4 cookies can thus be distributed in <m>{7 \choose 3}</m> ways (for each of the <m>{4 \choose 2}</m> choices of which 2 kids to over-feed).
+        </p>
+
+        <p>
+          But now we have removed too much. We must add back in all the ways to give too many cookies to three kids. This uses 9 cookies, leaving only 1 to distribute to the 4 kids using stars and bars, which can be done in <m>{4 \choose 3}</m> ways. We must consider this outcome for every possible choice of which three kids we over-feed, and there are <m>{4 \choose 3}</m> ways of selecting that set of 3 kids.
+        </p>
+
+        <p>
+          Next we would subtract all the ways to give four kids too many cookies, but in this case, that number is 0.
+        </p>
+
+        <p>
+          All together we get that the number of ways to distribute 10 cookies to 4 kids without giving any kid more than 2 cookies is:
+          <me>
+            {13 \choose 3} - \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right]</me>
+            which is <me> 286 - [480 - 210 + 16] = 0.
+          </me>
+        </p>
+
+        <p>
+          This makes sense: there is NO way to distribute 10 cookies to 4 kids and make sure that nobody gets more than 2. It is slightly surprising that
+          <me>
+            {13 \choose 3} = \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right]
+          </me>
+          but since PIE works, this equality must hold.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Just so you don't think that these problems always have easier solutions, consider the following example.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Earlier (<xref ref="example-stars-bars-int-sol"/>) we counted the number of solutions to the equation
+          <me>
+            x_1 + x_2 + x_3 + x_4 + x_5 = 13
+          </me>
+        where <m>x_i \ge 0</m> for each <m>x_i</m>.
+        </p>
+
+        <p>
+          How many of those solutions have <m>0 \le x_i \le 3</m> for each <m>x_i</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We must subtract off the number of solutions in which one or more of the variables has a value greater than 3. We will need to use PIE because counting the number of solutions for which each of the five variables separately are greater than 3 counts solutions multiple times. Here is what we get:
+        </p>
+
+        <p>
+          <ul>
+            <li>
+              <p>
+                Total solutions: <m>{17 \choose 4}</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Solutions where <m>x_1 &gt; 3</m>: <m>{13 \choose 4}</m>. Give <m>x_1</m> 4 units first, then distribute the remaining 9 units to the 5 variables.
+              </p>
+            </li>
+            <li>
+              <p>
+                Solutions where <m>x_1 &gt; 3</m> and <m>x_2 &gt; 3</m>: <m>{9 \choose 4}</m>. After you give 4 units to <m>x_1</m> and another 4 to <m>x_2</m>, you only have 5 units left to distribute.
+              </p>
+            </li>
+            <li>
+              <p>
+                Solutions where <m>x_1 &gt; 3</m>, <m>x_2 &gt; 3</m> and <m>x_3 &gt; 3</m>: <m>{5 \choose 4}</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                Solutions where <m>x_1 &gt; 3</m>, <m>x_2 &gt; 3</m>, <m>x_3 &gt; 3</m>, and <m>x_4 &gt; 3</m>: 0.
+              </p>
+            </li>
+          </ul>
+        </p>
+
+        <p>
+          We also need to account for the fact that we could choose any of the five variables in the place of <m>x_1</m> above (so there will be <m>{5 \choose 1}</m> outcomes like this), any pair of variables in the place of <m>x_1</m> and <m>x_2</m> (<m>{5 \choose 2}</m> outcomes) and so on. It is because of this that the double counting occurs, so we need to use PIE. All together we have that the number of solutions with <m>0 \le x_i \le 3</m> is
+          <me>
+            {17 \choose 4} - \left[{5\choose 1}{13 \choose 4} - {5 \choose 2}{9 \choose 4} + {5 \choose 3}{5 \choose 4}\right] = 15.
+          </me>
+        </p>
+      </solution>
+    </example>
+  </introduction>
+
+
+  <subsection xml:id="subsec_derangements">
+    <title>Counting Derangements</title>
+    <investigation>
+      <p>
+        For your senior prank, you decide to switch the nameplates on your favorite 5 professors' doors. So that none of them feel left out, you want to make sure that all of the nameplates end up on the wrong door. How many ways can this be accomplished?
+      </p>
+    </investigation>
+    <p>
+      The advanced use of PIE has applications beyond stars and bars. A <term>derangement</term><idx><h>derangement</h></idx> of <m>n</m> elements <m>\{1,2,3,\ldots, n\}</m> is a permutation in which no element is fixed. For example, there are <m>6</m> permutations of the three elements <m>\{1,2,3\}</m>:
+      <me>
+        123 ~~ 132 ~~ 213 ~~ 231 ~~ 312 ~~ 321.
+      </me>
+      but most of these have one or more elements fixed: <m>123</m> has all three elements fixed since all three elements are in their original positions, <m>132</m> has the first element fixed (1 is in its original first position), and so on. In fact, the only derangements of three elements are
+      <me>
+        231 \text{ and } 312.
+      </me>
+    </p>
+
+    <p>
+      If we go up to 4 elements, there are 24 permutations (because we have 4 choices for the first element, 3 choices for the second, 2 choices for the third leaving only 1 choice for the last). How many of these are derangements? If you list out all 24 permutations and eliminate those which are not derangements, you will be left with just 9 derangements. Let's see how we can get that number using PIE.
+    </p>
+    <example>
+      <statement>
+        <p>
+          How many derangements are there of 4 elements?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We count all permutations, and subtract those which are not derangements. There are <m>4! = 24</m> permutations of 4 elements. Now for a permutation to <em>not</em> be a derangement, at least one of the 4 elements must be fixed. There are <m>{4 \choose 1}</m> choices for which single element we fix. Once fixed, we need to find a permutation of the other three elements. There are <m>3!</m> permutations on 3 elements. But now we have counted too many non-derangements, so we must subtract those permutations which fix two elements. There are <m>{4 \choose 2}</m> choices for which two elements we fix, and then for each pair, <m>2!</m> permutations of the remaining elements. But this subtracts too many, so add back in permutations which fix 3 elements, all <m>{4 \choose 3}1!</m> of them. Finally subtract the <m>{4 \choose 4}0!</m> permutations (recall <m>0! = 1</m>) which fix all four elements. All together we get that the number of derangements of 4 elements is:
+          <me>
+            4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4}0!\right] = 24 - 15 = 9.
+          </me>
+        </p>
+      </solution>
+    </example>
+    <p>
+      Of course we can use a similar formula to count the derangements of any number of elements. However, the more elements we have, the longer the formula gets. Here is another example:
+    </p>
+    <example>
+      <statement>
+        <p>
+          Five gentlemen attend a party, leaving their hats at the door. At the end of the party, they hastily grab hats on their way out. How many different ways could this happen so that none of the gentlemen leave with their own hat?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We are counting derangements on 5 elements. There are <m>5!</m> ways for the gentlemen to grab hats in any order<mdash/>but many of these permutations will result in someone getting their own hat. So we subtract all the ways in which one or more of the men get their own hat. In other words, we subtract the non-derangements. Doing so requires PIE. Thus the answer is:
+          <me>
+            5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right].
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <!-- TODO: Here or in the homework, it would be nice to illustrate the more general closed formula for an n-derangement -->
+
+  </subsection>
+
+  <subsection>
+    <title>Counting Functions</title>
+    <investigation>
+    <p>
+    <ul>
+    <li>
+    <p>
+    Consider all functions <m>f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}</m>. How many functions are there all together? How many of those are injective? Remember, a function is an injection if every input goes to a different output.
+    </p>
+    </li>
+
+    <li>
+    <p>
+    Consider all functions <m>f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}</m>. How many of the <em>injections</em> have the property that <m>f(x) \ne x</m> for any <m>x \in \{1,2,3,4,5\}</m>?
+    </p>
+
+    <p>
+    Your friend claims that the answer is:
+    <me>
+      5! - \left[ {5\choose 1}4! - {5 \choose 2}3! + {5\choose 3}2! - {5 \choose 4}1! + {5\choose 5}0! \right].
+    </me>
+    </p>
+
+    <p>
+    Explain why this is correct.
+    </p>
+    </li>
+
+    <li>
+    <p>
+    Recall that a <em>surjection</em> is a function for which every element of the codomain is in the range. How many of the functions <m>f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}</m> are surjective? Use PIE!
+    </p>
+    </li>
+    </ul>
+    </p>
+
+    </investigation>
+
+    <p>
+      We have seen throughout this chapter that many counting questions can be rephrased as questions about counting functions with certain properties.  This is reasonable since many counting questions can be thought of as counting the number of ways to assign elements from one set to elements of another.
+    </p>
+
+    <example>
+    <statement>
+    <p>
+    You decide to give away your video game collection so to better spend your time studying advance mathematics. How many ways can you do this, provided:
+      <ol>
+        <li>You want to distribute your 3 different PS4 games among 5 friends, so that no friend gets more than one game?</li>
+
+        <li>You want to distribute your 8 different 3DS games among 5 friends?</li>
+
+        <li>You want to distribute your 8 different SNES games among 5 friends, so that each friend gets at least one game?</li>
+      </ol>
+      In each case, model the counting question as a function counting question.
+    </p>
+    </statement>
+    <solution>
+    <p>
+      <ol>
+        <li><p>We must use the three games (call them 1, 2, 3) as the domain and the 5 friends (a,b,c,d,e) as the codomain (otherwise the function would not be defined for the whole domain when a friend didn't get any game).  So how many functions are there with domain <m>\{1,2,3\}</m> and codomain <m>\{a,b,c,d,e\}</m>?  The answer to this is <m>5^3=125</m>, since we can assign any of 5 elements to be the image of 1, any of 5 elements to be the image of 2 and any of 5 elements to be the image of 3.</p>
+        <p>
+          But this is not the correct answer to our counting problem, because one of these functions is <m>f= \twoline{1\amp 2\amp 3}{a\amp a\amp a}</m>; one friend can get more than one game.  What we really need to do is count <em>injective</em> functions.  This gives <m>P(5,3) = 60</m> functions, which is the answer to our counting question.
+        </p>
+      </li>
+
+      <li><p>
+        Again, we need to use the 8 games as the domain and the 5 friends as the codomain.  We are counting all functions, so the number of ways to distribute the games is <m>5^8</m>.
+      </p></li>
+
+      <li><p>
+        This question is harder.  Use the games as the domain and friends as the codomain (otherwise an element of the domain would have more than one image, which is impossible).  To ensure that every friend gets at least one game means that every element of the codomain is in the range.  In other words, we are looking for <em>surjective</em> functions. How do you count those??
+      </p></li>
+
+      </ol>
+
+</p>
+    </solution>
+    </example>
+
+    <p>
+      In <xref ref="example-counting-functions-all"/> we saw how to count all functions (using the multiplicative principle) and in <xref ref="example-counting-functions-injective"/> we learned how to count injective functions (using permutations).  Surjective functions are not as easily counted (unless the size of the domain is smaller than the codomain, in which case there are none).
+    </p>
+
+    <p>
+    The idea is to count the functions which are <em>not</em> surjective, and then subtract that from the total number of functions. This works very well when the codomain has two elements in it:
+    </p>
+    <example>
+    <statement>
+    <p>
+    How many functions <m>f: \{1,2,3,4,5\} \to \{a,b\}</m> are surjective?
+    </p>
+    </statement>
+    <solution>
+    <p>
+    There are <m>2^5</m> functions all together, two choices for where to send each of the 5 elements of the domain. Now of these, the functions which are <em>not</em> surjective must exclude one or more elements of the codomain from the range. So first, consider functions for which <m>a</m> is not in the range. This can only happen one way: everything gets sent to <m>b</m>. Alternatively, we could exclude <m>b</m> from the range. Then everything gets sent to <m>a</m>, so there is only one function like this. These are the only ways in which a function could not be surjective (no function excludes both <m>a</m> and <m>b</m> from the range) so there are exactly <m>2^5 - 2</m> surjective functions.
+    </p>
+    </solution>
+    </example>
+    <p>
+    When there are three elements in the codomain, there are now three choices for a single element to exclude from the range. Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these. It's PIE time!
+    </p>
+    <example>
+    <statement>
+    <p>
+    How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c\}</m> are surjective?
+    </p>
+    </statement>
+    <solution>
+    <p>
+    Again start with the total number of functions: <m>3^5</m> (as each of the five elements of the domain can go to any of three elements of the codomain). Now we count the functions which are <em>not</em> surjective.
+    </p>
+
+    <p>
+    Start by excluding <m>a</m> from the range. Then we have two choices (<m>b</m> or <m>c</m>) for where to send each of the five elements of the domain. Thus there are <m>2^5</m> functions which exclude <m>a</m> from the range. Similarly, there are <m>2^5</m> functions which exclude <m>b</m>, and another <m>2^5</m> which exclude <m>c</m>. Now have we counted all functions which are not surjective? Yes, but in fact, we have counted some multiple times. For example, the function which sends everything to <m>c</m> was one of the <m>2^5</m> functions we counted when we excluded <m>a</m> from the range, and also one of the <m>2^5</m> functions we counted when we excluded <m>b</m> from the range. We must subtract out all the functions which specifically exclude two elements from the range. There is 1 function when we exclude <m>a</m> and <m>b</m> (everything goes to <m>c</m>), one function when we exclude <m>a</m> and <m>c</m>, and one function when we exclude <m>b</m> and <m>c</m>.
+    </p>
+
+    <p>
+    We are using PIE: to count the functions which are not surjective, we added up the functions which exclude <m>a</m>, <m>b</m>, and <m>c</m> separately, then subtracted the functions which exclude pairs of elements. We would then add back in the functions which exclude groups of three elements, except that there are no such functions. We find that the number of functions which are <em>not</em> surjective is
+    <me>
+      2^5 + 2^5 + 2^5 - 1 - 1 - 1 + 0.
+    </me>
+    </p>
+
+    <p>
+    Perhaps a more descriptive way to write this is
+    <me>
+      {3 \choose 1}2^5 - {3 \choose 2}1^5 + {3 \choose 3}0^5.
+    </me>
+    since each of the <m>2^5</m>'s was the result of choosing 1 of the 3 elements of the codomain to exclude from the range, each of the three <m>1^5</m>'s was the result of choosing 2 of the 3 elements of the codomain to exclude. Writing <m>1^5</m> instead of 1 makes sense too: we have 1 choice of were to send each of the 5 elements of the domain.
+    </p>
+
+    <p>
+    Now we can finally count the number of surjective functions:
+    <me>
+      3^5 - \left[{3 \choose 1}2^5 - {3 \choose 2}1^5\right] = 150.
+    </me>
+    </p>
+    </solution>
+    </example>
+    <p>
+    You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious. We need to use PIE but with more than 3 sets the formula for PIE is very long. However, we have lucked out. As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded. Similarly, the number of functions which exclude a pair of elements will be the same for every pair. With larger codomains,
+    we will see the same behavior with groups of 3, 4, and more elements excluded. So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are. This works just like it did in for the other types of counting questions in this section, only now the size of the various combinations of sets is a number raised to a power, as opposed to a binomial coefficient or factorial. Here's what happens with <m>4</m> and <m>5</m> elements in the codomain.
+    </p>
+    <example>
+    <statement>
+    <p>
+      <ol>
+      <li>
+      <p>
+      How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c,d\}</m> are surjective?
+      </p>
+      </li>
+      <li>
+      <p>
+      How many functions <m>f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}</m> are surjective?
+      </p>
+      </li>
+      </ol>
+    </p>
+    </statement>
+    <solution>
+    <p>
+      <ol>
+      <li>
+      <p>
+      There are <m>4^5</m> functions all together; we will subtract the functions which are not surjective.  We could exclude any one of the four elements of the codomain, and doing so will leave us with <m>3^5</m> functions for each excluded element.  This counts too many so we subtract the functions which exclude two of the four elements of the codomain, each pair giving <m>2^5</m> functions.  But this excludes too many, so we add back in the functions which exclude three of the four elements of the codomain, each triple giving <m>1^5</m> function.  There are <m>{4 \choose 1}</m> groups of functions excluding a single element, <m>{4 \choose 2}</m> groups of functions excluding a pair of elements, and <m>{4 \choose 3}</m> groups of functions excluding a triple of elements.  This means that the number of functions which are <em>not</em> surjective is:
+      <me>
+        {4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5.
+      </me>
+      We can now say that the number of functions which are surjective is:
+      <me>
+        4^5 - \left[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\right].
+      </me>
+      </p>
+      </li>
+      <li>
+      <p>
+      The number of surjective functions is:
+      <me>
+        5^5 - \left[{5 \choose 1}4^5 - {5 \choose 2}3^5 + {5 \choose 3}2^5 - {5 \choose 4}1^5\right].
+      </me>
+      We took the total number of functions <m>5^5</m> and subtracted all that were not surjective.  There were <m>{5 \choose 1}</m> ways to select a single element from the codomain to exclude from the range, and for each there were <m>4^5</m> functions.  But this double counts, so we use PIE and subtract functions excluding two elements from the range: there are <m>{5 \choose 2}</m> choices for the two elements to exclude, and for each pair, <m>3^5</m> functions.  This takes out too many functions, so we add back in functions which exclude 3 elements from the range: <m>{5 \choose 3}</m> choices for which three to exclude, and then <m>2^5</m> functions for each choice of elements.  Finally we take back out the 1 function which excludes 4 elements for each of the <m>{5 \choose 4}</m> choices of 4 elements.
+      </p>
+
+      <p>
+        If you happen to calculate this number precisely, you will get 120 surjections.  That happens to also be the value of <m>5!</m>.  This might seem like an amazing coincidence until you realize that every surjective function <m>f:X \to Y</m> with <m>\card{X} = \card{Y}</m> finite must necessarily be a bijection.  The number of bijections is always <m>\card{X}!</m> in this case.  What we have here is a <em>combinatorial proof</em> of the following identity:
+        <me>
+          n^n - \left[{n\choose 1}(n-1)^n - {n \choose 2}(n-2)^n + \cdots + {n \choose n-1}1^n \right] = n!.
+        </me>
+      </p>
+      </li>
+      </ol>
+    </p>
+    </solution>
+    </example>
+
+    <p>
+    We have seen that counting surjective functions is another nice example of the advanced use of the Principle of Inclusion/Exclusion. Also, counting injective functions turns out to be equivalent to permutations, and counting all functions has a solution akin to those counting problems where order matters but repeats are allowed (like counting the number of words you can make from a given set of letters).
+    </p>
+
+    <p>
+    These are not just a few more examples of the techniques we have developed in this chapter. Quite the opposite: everything we have learned in this chapter are examples of <em>counting functions</em>!
+    </p>
+    <example>
+    <statement>
+    <p>
+    How many 5-letter words can you make using the eight letters <m>a</m> through <m>h</m>? How many contain no repeated letters?
+    </p>
+    </statement>
+    <solution>
+    <p>
+    By now it should be no surprise that there are <m>8^5</m> words, and <m>P(8,5)</m> words without repeated letters. The new piece here is that we are actually counting functions. For the first problem, we are counting all functions from <m>\{1,2,\ldots, 5\}</m> to <m>\{a,b,\ldots, h\}</m>. The numbers in the domain represent the <em>position</em> of the letter in the word, the codomain represents the letter that could be assigned to that position. If we ask for no repeated letters, we are asking for injective functions.
+    </p>
+
+    <p>
+    If <m>A</m> and <m>B</m> are <em>any</em> sets with <m>|A| = 5</m> and <m>|B| = 8</m>, then the number of functions <m>f: A \to B</m> is <m>8^5</m> and the number of injections is <m>P(8,5)</m>. So if you can represent your counting problem as a function counting problem, most of the work is done.
+    </p>
+    </solution>
+    </example>
+
+    <example>
+    <statement>
+    <p>
+    How many subsets are there of <m>\{1,2,\ldots, 9\}</m>? How many 9-bit strings are there (of any weight)?
+    </p>
+    </statement>
+    <solution>
+    <p>
+    We saw in <xref ref="sec_counting-binom"/> that the answer to both these questions is <m>2^9</m>, as we can say yes or no (or 0 or 1) to each of the 9 elements in the set (positions in the bit-string). But <m>2^9</m> also looks like the answer you get from counting functions. In fact, if you count all functions <m>f: A \to B</m> with <m>|A| = 9</m> and <m>|B| = 2</m>, this is exactly what you get.
+    </p>
+
+    <p>
+    This makes sense! Let <m>A = \{1,2,\ldots, 9\}</m> and <m>B = \{y, n\}</m>. We are assigning each element of the set either a yes or a no. Or in the language of bit-strings, we would take the 9 positions in the bit string as our domain and the set <m>\{0,1\}</m> as the codomain.
+    </p>
+    </solution>
+    </example>
+    <p>
+    So far we have not used a function as a model for binomial coefficients (combinations). Think for a moment about the relationship between combinations and permutations, say specifically <m>{9 \choose 3}</m> and <m>P(9,3)</m>. We <em>do</em> have a function model for <m>P(9,3)</m>. This is the number of <em>injective</em> functions from a set of size 3 (say <m>\{1,2,3\}</m> to a set of size 9 (say <m>\{1,2,\ldots, 9\}</m>) since there are 9 choices for where to send the first element of the domain, then only 8 choices for the second, and 7 choices for the third. For example, the function might look like this:
+    <me>
+      f(1) = 5 \qquad f(2) = 8 \qquad f(3) = 4.
+    </me>
+    </p>
+
+    <p>
+    This is a different function from:
+    <me>
+      f(1) = 4 \qquad f(2) = 5 \qquad f(3) = 8.
+    </me>
+    </p>
+
+    <p>
+    Now <m>P(9,3)</m> counts these as different outcomes correctly, but <m>{9\choose 3}</m> will count these (among others) as just one outcome. In fact, in terms of functions <m>{9 \choose 3}</m> just counts the number of different ranges possible of injective functions. This should not be a surprise since binomial coefficients counts subsets, and the range is a possible subset of the codomain.<fn>A more mathematically sophisticated interpretation of combinations is that we are defining two injective functions to be <em>equivalent</em> if they have the same range, and then counting the number of equivalence classes under this notion of equivalence.</fn>
+    </p>
+
+    <p>
+    While it is possible to interpret combinations as functions, perhaps the better advice is to instead use combinations (or stars and bars) when functions are not quite the right way to interpret the counting question.
+    </p>
+
+
+
+  </subsection>
+
+
+
+<xi:include href="exercises/counting-advPIE.mbx"/>
+
+
+
+</section>

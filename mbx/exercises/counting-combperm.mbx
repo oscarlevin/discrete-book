@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_counting-combperm">
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                A pizza parlor offers 10 toppings.
+              <ol>
+                <li> <p> How many 3-topping pizzas could they put on their menu?  Assume double toppings are not allowed. </p> </li>
+                <li> <p> How many total pizzas are possible, with between zero and ten toppings (but not double toppings) allowed? </p> </li>
+                <li> <p> The pizza parlor will list the 10 toppings in two equal-sized columns on their menu.  How many ways can they arrange the toppings in the left column? </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li><m>{10 \choose 3} = 120</m> pizzas.  We must choose (in no particular order) 3 out of the 10 toppings.</li>
+                  <li><m>2^{10} = 1024</m> pizzas.  Say yes or no to each topping.</li>
+                  <li><m>P(10,5) = 30240</m> ways.  Assign each of the 5 spots in the left column to a unique pizza topping.</li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                A combination lock consists of a dial with 40 numbers on it. To open the lock, you turn the dial to the right until you reach a first number, then to the left until you get to second number, then to the right again to the third number. The numbers must be distinct. How many different combinations are possible?
+              </p>
+            </statement>
+            <solution>
+              <p>
+                Despite its name, we are not looking for a combination here. The order in which the three numbers appears matters. There are <m>P(40,3) = 40\cdot 39 \cdot 38</m> different possibilities for the <q>combination</q>. This is assuming you cannot repeat any of the numbers (if you could, the answer would be <m>40^3</m>).
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                Using the digits 2 through 8, find the number of different 5-digit numbers such that:
+              <ol>
+                <li> <p> Digits can be used more than once. </p> </li>
+                <li> <p> Digits cannot be repeated, but can come in any order. </p> </li>
+                <li> <p> Digits cannot be repeated and must be written in increasing order. </p> </li>
+                <li> <p> Which of the above counting questions is a combination and which is a permutation?  Explain why this makes sense. </p> </li>
+              </ol>
+            </p>
+            </statement>
+          </exercise>
+
+
+          <exercise>
+            <statement>
+              <p>
+                How many triangles are there with vertices from the points shown below? Note, we are not allowing degenerate triangles - ones with all three vertices on the same line, but we do allow non-right triangles. Explain why your answer is correct.
+              </p>
+              <sidebyside width="50%">
+                <image xml:id="triangle-dots">
+                  <latex-image>
+                    \begin{tikzpicture}[scale=0.7]
+          \foreach \i in {0,...,6} {
+            \fill (\i,0) circle (2pt);
+          }
+          \foreach \i in {1,...,4} {
+            \fill (0,\i) circle (2pt);
+          }
+        \end{tikzpicture}
+                  </latex-image>
+                </image>
+              </sidebyside>
+            </statement>
+            <hint>
+                <p>You need exactly two points on either the <m>x</m>- or <m>y</m>-axis, but don't over-count the right triangles.</p>
+            </hint>
+          </exercise>
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                How many quadrilaterals can you draw using the dots below as vertices (corners)?
+              </p>
+
+              <sidebyside width="54%">
+                <image xml:id="quad-counting">
+                  <latex-image>
+                    \begin{tikzpicture}[scale=.9]
+    \foreach \x in {-3,...,3}
+    \foreach \y in {-1,1}
+    \fill (\x,\y) circle (3pt);
+   \end{tikzpicture}
+                  </latex-image>
+                </image>
+              </sidebyside>
+            </statement>
+            <solution>
+              <p>
+                <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals. We must pick two of the seven dots from the top row and two of the seven dots on the bottom row. However, it does not make a difference which of the two (on each row) we pick first because once these four dots are selected, there is exactly one quadrilateral that they determine.
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many of the quadrilaterals possible in the previous problem are:
+              <ol>
+                <li> <p> Squares? </p> </li>
+                <li> <p> Rectangles? </p> </li>
+                <li> <p> Parallelograms? </p> </li>
+                <li> <p> Trapezoids?<fn>Here, as in calculus, a trapezoid is defined as a quadrilateral with <em>at least</em> one pair of parallel sides.  In particular, parallelograms are trapezoids.</fn> </p> </li>
+                <li> <p> Trapezoids that are not parallelograms? </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li> <p> 5 squares. You need to skip exactly one dot on the top and on the bottom to make the side lengths equal.  Once you pick a dot on the top, the other three dots are determined. </p> </li>
+                  <li><m>{7 \choose 2}</m> rectangles.  Once you select the two dots on the top, the bottom two are determined.</li>
+                  <li> <p> This is tricky since you need to worry about running out of space.  One way to count: break into cases by the location of the top left corner.  You get <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91</m> parallelograms. </p> </li>
+                  <li> <p> All of them </p> </li>
+                  <li> <p> <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>. All of them, except the parallelograms.</p> </li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                An <em>anagram</em> of a word is just a rearrangement of its letters. How many different anagrams of <q>uncopyrightable</q> are there? (This happens to be the longest common English word without any repeated letters.)
+              </p>
+            </statement>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many anagrams are there of the word <q>assesses</q> that start with the letter <q>a</q>?
+              </p>
+            </statement>
+            <solution>
+              <p>
+                After the first letter (a), we must rearrange the remaining 7 letters. There are only two letters (s and e), so this is really just a bit-string question (think of s as 1 and e as 0). Thus there <m>{7 \choose 2} = 21</m> anagrams starting with <q>a</q>.
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many anagrams are there of <q>anagram</q>?
+              </p>
+            </statement>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                On a business retreat, your company of 20 businessmen and businesswomen go golfing.
+              <ol>
+                <li> <p> You need to divide up into foursomes (groups of 4 people): a first foursome, a second foursome, and so on.  How many ways can you do this? </p> </li>
+                <li> <p> After all your hard work, you realize that in fact, you want each foursome to include one of the five Board members.  How many ways can you do this? </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li><m>{20 \choose 4}{16 \choose 4}{12 \choose 4}{8 \choose 4}{4 \choose 4}</m> ways. Pick 4 out of 20 people to be in the first foursome, then 4 of the remaining 16 for the second foursome, and so on (use the multiplicative principle to combine).</li>
+                  <li><m>5!{15 \choose 3}{12 \choose 3}{9 \choose 3}{6 \choose 3}{3 \choose 3}</m> ways.  First determine the tee time of the 5 board members, then select 3 of the 15 non board members to golf with the first board member, then 3 of the remaining 12 to golf with the second, and so on.</li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many different seating arrangements are possible for King Arthur and his 9 knights around their round table?
+              </p>
+            </statement>
+            <solution>
+              <p>
+                <m>9!</m> (there are 10 people seated around the table, but it does not matter where King Arthur sits, only who sits to his left, two seats to his left, and so on).
+              </p>
+            </solution>
+          </exercise>
+
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                Consider sets <m>A</m> and <m>B</m> with <m>|A| = 10</m> and <m>|B| = 17</m>.
+              <ol>
+                <li>
+    <p>
+    How many functions <m>f: A \to B</m> are there?
+    </p>
+    </li>
+                <li>
+    <p>
+    How many functions <m>f: A \to B</m> are injective?
+    </p>
+    </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li><m>17^{10}</m> functions.  There are 17 choices for the image of each element in the domain.</li>
+                  <li><m>P(17, 10)</m> injective functions.  There are 17 choices for image of the first element of the domain, then only 16 choices for the second, and so on.</li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                Consider functions <m>f: \{1,2,3,4\} \to \{1,2,3,4,5,6\}</m>.
+              <ol>
+                <li> <p> How many functions are there total? </p> </li>
+                <li> <p> How many functions are injective? </p> </li>
+                <li><p> How many of the injective functions are <em>increasing</em>?  To be increasing means that if <m>a \lt b</m> then <m>f(a) \lt f(b)</m>, or in other words, the outputs get larger as the inputs get larger. </p></li>
+              </ol>
+            </p>
+            </statement>
+          </exercise>
+
+
+          <exercise>
+            <statement>
+              <p>
+                We have seen that the formula for <m>P(n,k)</m> is <m>\dfrac{n!}{(n-k)!}</m>. Your task here is to explain <em>why</em> this is the right formula.
+              <ol>
+                <li>
+                  <p>
+                    Suppose you have 12 chips, each a different color. How many different stacks of 5 chips can you make? Explain your answer and why it is the same as using the formula for <m>P(12,5)</m>.
+
+
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Using the scenario of the 12 chips again, what does <m>12!</m> count? What does <m>7!</m> count? Explain.
+
+
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Explain why it makes sense to divide <m>12!</m> by <m>7!</m> when computing <m>P(12,5)</m> (in terms of the chips).
+
+
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Does your explanation work for numbers other than 12 and 5? Explain the formula <m>P(n,k) = \frac{n!}{(n-k)!}</m> using the variables <m>n</m> and <m>k</m>.
+
+
+                  </p>
+                </li>
+              </ol>
+            </p>
+            </statement>
+          </exercise>
+
+        </exercises>

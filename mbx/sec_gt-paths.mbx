@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_paths">
+<title>Euler Paths and Circuits</title>
+
+
+<introduction>
+<investigation>
+<p>
+An <term>Euler path</term>, in a graph or multigraph, is a walk through the graph which uses every edge exactly once. An <term>Euler circuit</term> is an Euler path which starts and stops at the same vertex. Our goal is to find a quick way to check whether a graph (or multigraph) has an Euler path or circuit.
+
+<ol>
+  <li>
+<p>
+Which of the graphs below have Euler paths? Which have Euler circuits?
+</p>
+<sidebyside widths="18% 18% 36% 22%" margins="auto" valign="bottom">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=0.9]
+    \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+    \draw (-1,2) -- (0,3) \v -- (1,2);
+  \end{tikzpicture}</latex-image>
+  </image>
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=0.9]
+    \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+  \end{tikzpicture}</latex-image>
+  </image>
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=0.9]
+    \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+    \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+  \end{tikzpicture}</latex-image>
+  </image>
+  <image>
+  <latex-image>\begin{tikzpicture}[yscale=.45]
+   \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
+    \draw (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
+    \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+</li>
+
+<li>
+<p>
+List the degrees of each vertex of the graphs above. Is there a connection between degrees and the existence of Euler paths and circuits?
+</p>
+</li>
+<li>
+<p>
+Is it possible for a graph with a degree 1 vertex to have an Euler circuit? If so, draw one. If not, explain why not. What about an Euler path?
+</p>
+</li>
+<li>
+<p>
+What if every vertex of the graph has degree 2. Is there an Euler path? An Euler circuit? Draw some graphs.
+</p>
+</li>
+<li>
+<p>
+Below is <em>part</em> of a graph. Even though you can only see some of the vertices, can you deduce whether the graph will have an Euler path or circuit?
+</p>
+<sidebyside width="54%">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=0.9]
+    \draw (-2,0) \v -- (0,1) \v -- (2,0) \v;
+    \draw (-2,0) -- (-2.5, -.5) (-2,0) -- (-2, -.5) (-2,0) -- (-1.5,-.5);
+    \draw[dashed] (-2.5, -.5) -- (-3, -1) (-2,-.5) -- (-2,-1) (-1.5,-.5) -- (-1,-1);
+      \draw (2,0) -- (2.5, -.5) (2,0) -- (2, -.5) (2,0) -- (1.5,-.5);
+    \draw[dashed] (2.5, -.5) -- (3, -1) (2,-.5) -- (2,-1) (1.5,-.5) -- (1,-1);
+      \draw (0,1) -- (-.25, 0) (0,1) -- (0, 0) (0,1) -- (.25,0);
+    \draw[dashed] (-.25, 0) -- (-.5, -1) (0,0) -- (0,-1) (.25,0) -- (.5,-1);
+   \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+</li>
+</ol>
+</p>
+
+</investigation>
+<p>
+If we start at a vertex and trace along edges to get to other vertices, we create a <em>walk</em> through the graph.  More precisely, a <term>walk</term> in a graph is a sequence of vertices such that every vertex in the sequence is adjacent to the vertices before and after it in the sequence. If the walk travels along every edge exactly once, then the walk is called an <term>Euler path</term> (or <term>Euler walk</term>). If, in addition, the starting and ending vertices are the same (so you trace along every edge exactly once and end up where you started), then the walk is called an <term>Euler circuit</term> (or <term>Euler tour</term>). Of course if a graph is not connected, there is no hope of finding such a path or circuit. For the rest of this section, assume all the graphs discussed are connected.
+</p>
+
+<p>
+The bridges of Königsberg problem is really a question about the existence of Euler paths. There will be a route that crosses every bridge exactly once if and only if the graph below has an Euler path:
+</p>
+
+
+<sidebyside width="22%">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=1, yscale=.5]
+  \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
+  \draw (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
+  \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+
+<p>
+This graph is small enough that we could actually check every possible walk that does not reuse edges, and in doing so convince ourselves that there is no Euler path (let alone an Euler circuit). On small graphs which do have an Euler path, it is usually not difficult to find one. Our goal is to find a quick way to check whether a graph has an Euler path or circuit, even if the graph is quite large.
+</p>
+
+<p>
+One way to guarantee that a graph does <em>not</em> have an Euler circuit is to include a <q>spike,</q> a vertex of degree 1.
+</p>
+<sidebyside width="23%">
+  <image>
+  <latex-image>\begin{tikzpicture}
+    \draw (-1,0) \v -- (0,1) \v -- (1,0) \v -- cycle;
+    \draw (0,1) -- (1,1) \v node[below right]{\(a\)};
+   \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+<p>
+The vertex <m>a</m> has degree 1, and if you try to make an Euler circuit, you see that you will get stuck at the vertex. It is a dead end. That is, unless you start there. But then there is no way to return, so there is no hope of finding an Euler circuit. There is however an Euler path. It starts at the vertex <m>a</m>, then loops around the triangle. You will end at the vertex of degree 3.
+</p>
+
+<p>
+You run into a similar problem whenever you have a vertex of any odd degree. If you start at such a vertex, you will not be able to end there (after traversing every edge exactly once). After using one edge to leave the starting vertex, you will be left with an even number of edges emanating from the vertex. Half of these could be used for returning to the vertex, the other half for leaving. So you return, then leave. Return, then leave. The only way to use up all the edges is to use the last one by leaving the vertex. On the other hand, if you have a vertex with odd degree that you do not start a path at, then you will eventually get stuck at that vertex. The path will use pairs of edges incident to the vertex to arrive and leave again. Eventually all but one of these edges will be used up, leaving only an edge to arrive by, and none to leave again.
+</p>
+
+<p>
+What all this says is that if a graph has an Euler path and two vertices with odd degree, then the Euler path must start at one of the odd degree vertices and end at the other. In such a situation, every other vertex <em>must</em> have an even degree since we need an equal number of edges to get to those vertices as to leave them. How could we have an Euler circuit? The graph could not have any odd degree vertex as an Euler path would have to start there or end there, but not both. Thus for a graph to have an Euler circuit, all vertices must have even degree.
+</p>
+
+<p>
+The converse is also true: if all the vertices of a graph have even degree, then the graph has an Euler circuit, and if there are exactly two vertices with odd degree, the graph has an Euler path. To prove this is a little tricky, but the basic idea is that you will never get stuck because there is an <q>outbound</q> edge for every <q>inbound</q> edge at every vertex. If you try to make an Euler path and miss some edges, you will always be able to <q>splice in</q> a circuit using the edges you previously missed.
+</p>
+<assemblage>
+<title>Euler Paths and Circuits</title>
+
+<p>
+  <ul>
+  <li>
+  <p>
+  A graph has an Euler circuit if and only if the degree of every vertex is even.
+  </p>
+  </li>
+  <li>
+  <p>
+  A graph has an Euler path if and only if there are at most two vertices with odd degree.
+  </p>
+  </li>
+  </ul>
+</p>
+</assemblage>
+<p>
+Since the bridges of Königsberg graph has all four vertices with odd degree, there is no Euler path through the graph.  Thus there is no way for the townspeople to cross every bridge exactly once.
+</p>
+</introduction>
+
+
+<subsection>
+<title>Hamilton Paths</title>
+<p>
+Suppose you wanted to tour Königsberg in such a way where you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path which visits every vertex exactly once. Such a path is called a <term>Hamilton path</term> (or <term>Hamiltonian path</term>)<idx><h>Hamilton path</h></idx>.  We could also consider <term>Hamilton cycles</term>, which are Hamliton paths which start and stop at the same vertex.
+</p>
+
+<example>
+  <statement>
+    <p>
+      Determine whether the graphs below have a Hamilton path.
+    </p>
+
+    <sidebyside widths="20% 20%" margins="auto">
+      <image>
+        <latex-image>
+
+          \begin{tikzpicture}[scale=.5]
+          \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+          \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+          \foreach \x in {18, 90, 162, 234, 306}
+          \draw  (\x:1) \v -- (\x:2) \v;
+          \end{tikzpicture}
+
+        </latex-image>
+      </image>
+      <image>
+        <latex-image>
+
+          \begin{tikzpicture}{scale=.5}
+          \draw  (18:1) -- (90:1) -- (162:1)  -- (234:1) -- (306:1) -- cycle;
+          \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+          \foreach \x in {18, 90, 162, 234, 306}
+          \draw  (\x:1) \v -- (\x:2) \v;
+          \end{tikzpicture}
+
+        </latex-image>
+      </image>
+
+    </sidebyside>
+
+  </statement>
+
+  <solution>
+    <p>
+      The graph on the left has a Hamilton path (many different ones, actually), as shown here:
+    </p>
+
+    <sidebyside width="20%">
+      <image>
+        <latex-image>
+
+          \begin{tikzpicture}[scale=.5]
+          \draw[very thick, -&gt;-] (90:2) -- (90:1) (90:1) -- (234:1) (234:1)  -- (234:2) -- (162:2) -- (162:1) -- (18:1) -- (18:2) -- (306:2) -- (306:1);
+          \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+          \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+          \foreach \x in {18, 90, 162, 234, 306}
+          \draw  (\x:1) \v -- (\x:2) \v;
+          \end{tikzpicture}
+
+        </latex-image>
+      </image>
+    </sidebyside>
+
+  <p>
+    The graph on the right does not have a Hamilton path.  You would need to visit each of the <q>outside</q> vertices, but as soon as you visit one, you get stuck.  Note that this graph does not have an Euler path, although there are graphs with Euler paths but no Hamilton paths.
+  </p>
+
+</solution>
+</example>
+
+
+
+<p>
+It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices, so there are fewer requirements to be met. However, nobody knows whether this is true. There is no known simple test for whether a graph has a Hamilton path. For small graphs this is not a problem, but as the size of the graph grows, it gets harder and harder to check wither there is a Hamilton path. In fact, this is an example of a question which as far as we know is too difficult for computers to solve; it is an example of a problem which is NP-complete<idx><h>NP-complete</h></idx>.
+</p>
+
+</subsection>
+
+<xi:include href="exercises/gt-paths.mbx"/>
+
+</section>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_matchings">
+<title>Matching in Bipartite Graphs</title>
+<investigation>
+<p>
+Given a bipartite graph, a <term>matching</term> is a subset of the edges for which every vertex belongs to exactly one of the edges. Our goal in this activity is to discover some criterion for when a bipartite graph has a matching.
+</p>
+
+<p>
+Does the graph below contain a matching? If so, find one.
+</p>
+<sidebyside width="50%">
+  <image>
+  <latex-image>\begin{tikzpicture}
+  \foreach \x in {0,...,5} {
+   \coordinate (a\x) at (\x,0);
+   \coordinate (b\x) at (\x,2);
+   \draw (a\x) \v (b\x) \v;
+   }
+  \draw (a0) -- (b0) (a0) -- (b1) (a0) -- (b5);
+  \draw (a1) -- (b0) (a1) -- (b3);
+  \draw (a2) -- (b1) (a2) -- (b2) (a2) -- (b3);
+  \draw (a3) -- (b0) (a3) -- (b5);
+  \draw (a4) -- (b2) (a4) -- (b3) (a4) -- (b4) (a4) -- (b5);
+  \draw (a5) -- (b4);
+  \end{tikzpicture}</latex-image>
+  </image>
+</sidebyside>
+
+<p>
+Not all bipartite graphs have matchings. Draw as many fundamentally different examples of bipartite graphs which do NOT have matchings. Your goal is to find all the possible obstructions to a graph having a perfect  matching. Write down the <em>necessary</em> conditions for a graph to have a matching (that is, fill in the blank: If a graph has a matching, then <fillin/>). Then ask yourself whether these conditions are sufficient (is it true that if <fillin/>, then the graph has a matching?).
+</p>
+
+
+</investigation>
+<p>
+We conclude with one more example of a graph theory problem to illustrate the variety and vastness of the subject.
+</p>
+
+<p>
+Suppose you have a bipartite graph <m>G</m>. This will consist of two sets of vertices <m>A</m> and <m>B</m> with some edges connecting some vertices of <m>A</m> to some vertices in <m>B</m> (but of course, no edges between two vertices both in <m>A</m> or both in <m>B</m>). A <term>matching of <m>A</m></term><idx><h>matching</h></idx> is a subset of the edges for which each vertex of <m>A</m> belongs to exactly one edge of the subset, and no vertex in <m>B</m> belongs to more than one edge in the subset. In practice we will assume that <m>|A| = |B|</m> (the two sets have the same number of vertices) so this says that every vertex in the graph belongs to exactly one edge in the matching.<fn>Note: what we are calling a <em>matching</em> is sometimes called a <em>perfect matching</em> or <em>complete matching</em>.  This is because in it interesting to look at non-perfect matchings as well. We will call those <em>partial</em> matchings.</fn>
+</p>
+
+<p>
+Some context might make this easier to understand. Think of the vertices in <m>A</m> as representing students in a class, and the vertices in <m>B</m> as representing presentation topics. We put an edge from a vertex <m>a \in A</m> to a vertex <m>b \in B</m> if student <m>a</m> would like to present on topic <m>b</m>. Of course, some students would want to present on more than one topic, so their vertex would have degree greater than 1. As the teacher, you want to assign each student their own unique topic. Thus you want to find a matching of <m>A</m>: you pick some subset of the edges so that each student gets matched up with exactly one topic, and no topic gets matched to two students.<fn>The standard example for matchings used to be the <em>marriage problem</em> in which <m>A</m> consisted of the men in the town, <m>B</m> the women, and an edge represented a marriage that was agreeable to both parties.  A matching then represented a way for the town elders to marry off everyone in the town, no polygamy allowed.  We have chosen a more progressive context for the sake of political correctness.</fn>
+</p>
+
+<p>
+The question is: when does a bipartite graph contain a matching of <m>A</m>? To begin to answer this question, consider what could prevent the graph from containing a matching. This will not necessarily tell us a condition when the graph <em>does</em> have a matching, but at least it is a start.
+</p>
+
+<p>
+One way <m>G</m> could not have a matching is if there is a vertex in <m>A</m> not adjacent to any vertex in <m>B</m> (so having degree 0). What else? What if two students both like the same one topic, and no others? Then after assigning that one topic to the first student, there is nothing left for the second student to like, so it is very much as if the second student has degree 0. Or what if three students like only two topics between them. Again, after assigning one student a topic, we reduce this down to the previous case of two students liking only one topic. We can continue this way with more and more students.
+<!-- \todo{write exercise asking for a proof by induction for this} -->
+</p>
+
+<p>
+It should be clear at this point that if there is every a group of <m>n</m> students who as a group like <m>n-1</m> or fewer topics, then no matching is possible. This is true for any value of <m>n</m>, and any group of <m>n</m> students.
+</p>
+
+<p>
+To make this more graph-theoretic, say you have a set <m>S \subseteq A</m> of vertices. Define <m>N(S)</m><notation><usage>N(S)</usage><description>the set of neighbors of <m>S</m>.</description></notation> to be the set of all the <term>neighbors</term><idx><h>neighbors</h></idx> of vertices in <m>S</m>. That is, <m>N(S)</m> contains all the vertices (in <m>B</m>) which are adjacent to at least one of the vertices in <m>S</m>. (In the student/topic graph, <m>N(S)</m> is the set of topics liked by the students of <m>S</m>.) Our discussion above can be summarized as follows:
+</p>
+<assemblage>
+<title>Matching Condition</title>
+<p>
+<idx><h>matching condition</h></idx>
+If a bipartite graph <m>G = \{A, B\}</m> has a matching of <m>A</m>, then
+<me>
+  |N(S)| \ge |S|
+</me>
+for all <m>S \subseteq A</m>.
+</p>
+</assemblage>
+<p>
+Is the converse true? Suppose <m>G</m> satisfies the matching condition <m>|N(S)| \ge |S|</m> for all <m>S \subseteq A</m> (every set of vertices has at least as many neighbors than vertices in the set). Does that mean that there is a matching? Surprisingly, yes. The obvious necessary condition is also sufficient.<fn>This happens often in graph theory.  If you can avoid the obvious counterexamples, you often get what you want.</fn> This is a theorem first proved by Philip Hall in 1935.<fn>There is also an infinite version of the theorem which was proved by Marshal Hall, Jr.  The name is a coincidence though as the two Halls are not related.</fn>
+</p>
+
+<theorem>
+<title>Hall's Marriage Theorem</title>
+<statement>
+<p>
+<idx><h>Hall's Marriage Theorem</h></idx>
+Let <m>G</m> be a bipartite graph with sets <m>A</m> and <m>B</m>. Then <m>G</m> has a matching of <m>A</m> if and only if
+<me>
+  |N(S)| \ge |S|
+</me>
+for all <m>S \subseteq A</m>.
+</p>
+</statement>
+</theorem>
+
+<p>
+There are quite a few different proofs of this theorem <ndash/> a quick internet search will get you started.
+</p>
+
+<p>
+In addition to its application to marriage and student presentation topics, matchings have applications all over the place. We conclude with one such example.
+</p>
+<example>
+<statement>
+<p>
+Suppose you deal 52 regular playing cards into 13 piles of 4 cards each. Prove that you can always select one card from each pile to get one of each of the 13 card values Ace, 2, 3, <ellipsis/>, 10, Jack, Queen, and King.
+</p>
+</statement>
+<solution>
+<p>
+Doing this directly would be difficult, but we can use the matching condition to help. Construct a graph <m>G</m> with 13 vertices in the set <m>A</m>, each representing one of the 13 card values, and 13 vertices in the set <m>B</m>, each representing one of the 13 piles. Draw an edge between a vertex <m>a \in A</m> to a vertex <m>b \in B</m> if a card with value <m>a</m> is in the pile <m>b</m>. Notice that we are just looking for a matching of <m>A</m>; each value needs to be found in the piles exactly once.
+</p>
+
+<p>
+We will have a matching if the matching condition holds. Given any set of card values (a set <m>S \subseteq A</m>) we must show that <m>|N(S)| \ge |S|</m>. That is, the number of piles that contain those values is at least the number of different values. But what if it wasn't? Say <m>|S| = k</m>. If <m>|N(S)| \lt  k</m>, then we would have fewer than <m>4k</m> different cards in those piles (since each pile contains 4 cards). But there are <m>4k</m> cards with the <m>k</m> different values, so at least one of these cards must be in another pile, a contradiction. Thus the matching condition holds, so there is a matching, as required.
+</p>
+</solution>
+</example>
+
+
+<xi:include href="exercises/gt-matchings.mbx"/>
+
+</section>
