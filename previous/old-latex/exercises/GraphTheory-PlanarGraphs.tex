@@ -1,0 +1,100 @@
+\begin{questions}
+
+	
+\question Is it possible for a planar graph to have 6 vertices, 10 edges and 5 faces?  Explain.
+
+	\begin{answer}
+		No.  A (connected) planar graph must satisfy Euler's formula: $v - e + f = 2$.  Here $v - e + f = 6 - 10 + 5 = 1$. %Is it possible for a planar graph to have 6 vertices, 10 edges and 5 faces?  Explain.
+	\end{answer}
+	
+	
+
+
+
+\question The graph $G$ has 6 vertices with degrees $2, 2, 3, 4, 4, 5$.  How many edges does $G$ have?  Could $G$ be planar?  If so, how many faces would it have.
+
+	\begin{answer}
+		$G$ has 10 edges.  It could be planar, and then it would have 6 faces. %The graph $G$ has 6 vertices with degrees $2, 2, 3, 4, 4, 5$.  How many edges does $G$ have?  Could $G$ be planar?  If so, how many faces would it have.
+	\end{answer}
+	
+
+
+
+
+\question If a graph has 10 vertices and 10 edges and contains an Euler circuit, must it be planar?  How many faces would it have?
+
+	\begin{answer}
+		Yes.  According to Euler's formula it would have 2 faces.  It does.  The only such graph is $C_{10}$. %If a graph has 10 vertices and 10 edges and contains an Euler circuit, must it be planar?  How many faces would it have?
+	\end{answer}
+
+
+
+\question I'm think of a polyhedron containing 12 faces.  Seven are triangles and four are squares.  The polyhedron has 11 vertices other than those around the mystery face.  How many sides does the last face have?
+
+	\begin{answer}
+	Say the last polyhedron has $n$ edges, and also $n$ vertices.  The total number of edges the polyhedron has then is $(7 \cdot 3 + 4 \cdot 4 + n)/2 = (37 + n)/2$.  In particular, we know the last face must have an odd number of edges.  By Euler's formula, we have $v - (37+n)/2 + 12 = 2$, so $v = (17 + n)/2$.  But we also know that $v = 11 + n$.  Putting these together we get $n = 5$, so the last face is a pentagon.
+	\end{answer}
+	
+
+
+\question Prove Euler's formula using induction on the number of edges in the graph.
+
+	\begin{answer}
+		\begin{proof}
+			Let $P(n)$ be the statement, ``every planar graph containing $n$ edges satisfies $v - n + f = 2$.''  We will show $P(n)$ is true for all $n \ge 0$.  
+			
+			Base case: there is only one graph with zero edges, namely a single isolated vertex.  In this case $v = 1$, $f = 1$ and $e = 0$, so Euler's formula holds.
+			
+			Inductive case:  Suppose $P(k)$ is true for some arbitrary $k \ge 0$.  Now consider an arbitrary graph containing $k+1$ edges (and $v$ vertices and $f$ faces).  No matter what this graph looks like, we can remove a single edge to get a graph with $k$ edges which we can apply the inductive hypothesis to.  There are two possibilities.  First, the edge we remove might be incident to a degree 1 vertex.  In this case, also remove that vertex.  The smaller graph will now satisfy $v-1 - k + f = 2$ by the induction hypothesis (removing the edge and vertex did not reduce the number of faces).  Adding the edge and vertex back gives $v - (k+1) + f = 2$, as required.  The second case is that the edge we remove is incident to vertices of degree greater than one.  In this case, removing the edge will keep the number of vertices the same but reduce the number of faces by one.  So by the inductive hypothesis we will have $v - k + f-1 = 2$.  Adding the edge back will give $v - (k+1) + f = 2$ as needed.
+			
+			Therefore, by the principle of mathematical induction, Euler's formula holds for all planar graphs.
+		\end{proof}
+	\end{answer}
+
+
+
+\question Euler's formula ($v - e + f = 2$) holds for all \emph{connected} planar graphs.  What if a graph is not connected?  Suppose a planar graph has two components.  What is the value of $v - e + f$ now?  What if it has $k$ components?
+
+	\begin{answer}
+		Say the first component has $v_1$ vertices, $e_1$ edges and $f_1$ faces.  The second graph has $v_2$ vertices, $e_2$ edges and $f_2$ faces.  Thinking of each of these separately, we have 
+		\[v_1 - e_1 + f_1 = 2,\]
+		\[v_2 - e_2 + f_2 = 2.\]
+		Adding these two equations gives
+		\[v - e + f = 4\]
+		(since the graph has $v = v_1 + v_2$ vertices, etc).  However, the two components have one common face (the outside of one of them must be contained in one of the faces of the other) so in fact we get
+		\[v - e + f = 3.\]
+		In general, a planar graph with $k$ components will satisfy $v - e + f = 1 + k$.
+	\end{answer}
+
+
+
+
+\question Prove that any planar graph with $v$ vertices and $e$ edges satisfies $e \le 3v - 6$.
+
+	\begin{answer}
+		\begin{proof}
+		We know in any planar graph the number of faces $f$ satisfies $3f \le 2e$ since each face is bounded by at least three edges, but each edge borders two faces.  Combine this with Euler's formula:
+				\[v - e + f = 2\]
+				\[v - e + \frac{2e}{3} \ge 2\]
+				\[3v - e \ge 6\]
+				\[3v - 6 \ge e.\]		
+		\end{proof}
+		
+	\end{answer}
+
+	
+	
+\question Prove that any planar graph must have a vertex of degree 5 or less.
+
+	\begin{answer}
+		\begin{proof}
+		 Suppose this were not the case.  Then there would be a graph with $v$ vertices, each with degree 6 or more.  At a minimum then, there would be $6v/2 = 3v$ edges, so $e \ge 3v$.  By the previous exercise, we also have that $e \le 3v - 6$.  But these two facts are contradictory.
+		 \end{proof}
+	\end{answer}
+
+
+
+
+
+
+\end{questions}

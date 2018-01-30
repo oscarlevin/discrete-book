@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<exercises xml:id="exercises_counting-combperm" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                A pizza parlor offers 10 toppings.
+              <ol>
+                <li> <p> How many 3-topping pizzas could they put on their menu?  Assume double toppings are not allowed. </p> </li>
+                <li> <p> How many total pizzas are possible, with between zero and ten toppings (but not double toppings) allowed? </p> </li>
+                <li> <p> The pizza parlor will list the 10 toppings in two equal-sized columns on their menu.  How many ways can they arrange the toppings in the left column? </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li><m>{10 \choose 3} = 120</m> pizzas.  We must choose (in no particular order) 3 out of the 10 toppings.</li>
+                  <li><m>2^{10} = 1024</m> pizzas.  Say yes or no to each topping.</li>
+                  <li><m>P(10,5) = 30240</m> ways.  Assign each of the 5 spots in the left column to a unique pizza topping.</li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                A combination lock consists of a dial with 40 numbers on it. To open the lock, you turn the dial to the right until you reach a first number, then to the left until you get to second number, then to the right again to the third number. The numbers must be distinct. How many different combinations are possible?
+              </p>
+            </statement>
+            <solution>
+              <p>
+                Despite its name, we are not looking for a combination here. The order in which the three numbers appears matters. There are <m>P(40,3) = 40\cdot 39 \cdot 38</m> different possibilities for the <q>combination</q>. This is assuming you cannot repeat any of the numbers (if you could, the answer would be <m>40^3</m>).
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                Using the digits 2 through 8, find the number of different 5-digit numbers such that:
+              <ol>
+                <li> <p> Digits can be used more than once. </p> </li>
+                <li> <p> Digits cannot be repeated, but can come in any order. </p> </li>
+                <li> <p> Digits cannot be repeated and must be written in increasing order. </p> </li>
+                <li> <p> Which of the above counting questions is a combination and which is a permutation?  Explain why this makes sense. </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <!-- <solution>
+              <ol>
+                <li> <p> This is just the multiplicative principle.  There are 7 digits which we can select for each of the 5 positions, so we have <m>7^5 = 16807</m> such numbers. </p> </li>
+                <li> <p> Now we have 7 choices for the first number, 6 for the second, etc.  So there are <m>7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 = P(7,5) = 2520</m> such numbers. </p> </li>
+                <li> <p> To build such a number we simply must select 5 different digits.  After doing so, there will only be one way to arrange them into a 5-digit number.  Thus there are <m>{7 \choose 5} = 21</m> such numbers. </p> </li>
+                <li> <p> The permutation is in part (b), while the combination is in part (c).  At first this seems backwards, since usually we use combinations for when order does not matter.  Here it looks like in part (c) that order does matter.  The better way to distinguish between combinations and permutations is to ask whether we are counting different arrangements as different outcomes.  In part (c), there is only one arrangement of any set of 5 digits, while in part (b) each set of 5 digits gives <m>5!</m> different outcomes. </p> </li>
+              </ol>
+            </solution> -->
+          </exercise>
+
+
+          <exercise>
+            <statement>
+              <p>
+                How many triangles are there with vertices from the points shown below? Note, we are not allowing degenerate triangles - ones with all three vertices on the same line, but we do allow non-right triangles. Explain why your answer is correct.
+              </p>
+              <figure>
+                <image xml:id="triangle-dots" width="50%">
+                  <latex-image-code>
+                    <![CDATA[\begin{tikzpicture}[scale=0.7]
+          \foreach \i in {0,...,6} {
+            \fill (\i,0) circle (2pt);
+          }
+          \foreach \i in {1,...,4} {
+            \fill (0,\i) circle (2pt);
+          }
+        \end{tikzpicture}]]>
+                  </latex-image-code>
+                </image>
+              </figure>
+            </statement>
+            <hint>
+                You need at exactly two points on either the <m>x</m>- or <m>y</m>-axis, but don't over-count the right triangles.
+            </hint>
+            <!-- <solution>
+              <p>
+                There are 120 triangles. Here are two ways (there are others as well) to get this:
+              </p>
+
+              <ol>
+                <li>
+                  <p>
+                    First count the triangles with the base on the <m>x</m>-axis. There are <m>{7 \choose 2}</m> ways to pick the base. The third vertex of the triangle must be one of the 4 dots on the <m>y</m>-axis (not the origin) so there are a total of <m>{7 \choose 2}4</m> of these triangles. The triangles with base on the <m>y</m> axis can be counted similarly: <m>{5 \choose 2}6</m>. However, we have counted all the right triangles twice - they have a base on the <m>x</m>-axis and also on the <m>y</m>-axis. There are <m>4 \cdot 6</m> right triangles. Thus the total number of triangles is:
+                    <me>
+                      {7 \choose 2}4 + {5 \choose 2}6 - 6\cdot 4 = 120
+                    </me>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    We must select 3 of the 11 dots. This can be done in <m>{11 \choose 3}</m> ways. However, this will also give us degenerate triangles when all three vertices are on the <m>x</m>-axis or on the <m>y</m>-axis. There are <m>{7 \choose 3}</m> ways we could have picked all three vertices on the <m>x</m>-axis. There are <m>{5 \choose 3}</m> ways we could have picked all three vertices on the <m>y</m>-axis. Therefore the total number of triangles is
+                    <me>
+                      {11 \choose 3} - {7 \choose 3} - {5 \choose 3} = 120
+                    </me>
+                  </p>
+                </li>
+              </ol>
+            </solution> -->
+          </exercise>
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                How many quadrilaterals can you draw using the dots below as vertices (corners)?
+              </p>
+
+              <figure>
+                <image xml:id="quad-counting" width="54%">
+                  <latex-image-code>
+                    <![CDATA[\begin{tikzpicture}[scale=.9]
+    \foreach \x in {-3,...,3}
+    \foreach \y in {-1,1}
+    \fill (\x,\y) circle (3pt);
+   \end{tikzpicture}]]>
+                  </latex-image-code>
+                </image>
+              </figure>
+            </statement>
+            <solution>
+              <p>
+                <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals. We must pick two of the seven dots from the top row and two of the seven dots on the bottom row. However, it does not make a difference which of the two (on each row) we pick first because once these four dots are selected, there is exactly one quadrilateral that they determine.
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many of the quadrilaterals possible in the previous problem are:
+              <ol>
+                <li> <p> Squares? </p> </li>
+                <li> <p> Rectangles? </p> </li>
+                <li> <p> Parallelograms? </p> </li>
+                <li> <p> Trapezoids?<fn>Here, as in calculus, a trapezoid is defined as a quadrilateral with <em>at least</em> one pair of parallel sides.  In particular, parallelograms are trapezoids.</fn> </p> </li>
+                <li> <p> Trapezoids that are not parallelograms? </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li> <p> 5 squares. You need to skip exactly one dot on the top and on the bottom to make the side lengths equal.  Once you pick a dot on the top, the other three dots are determined. </p> </li>
+                  <li><m>{7 \choose 2}</m> rectangles.  Once you select the two dots on the top, the bottom two are determined.</li>
+                  <li> <p> This is tricky since you need to worry about running out of space.  One way to count: break into cases by the location of the top left corner.  You get <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91</m> parallelograms. </p> </li>
+                  <li> <p> All of them </p> </li>
+                  <li> <p> <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>. All of them, except the parallelograms.</p> </li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                An <em>anagram</em> of a word is just a rearrangement of its letters. How many different anagrams of <q>uncopyrightable</q> are there? (This happens to be the longest common English word without any repeated letters.)
+              </p>
+            </statement>
+            <!-- <solution>
+              <p>
+                Since there are 15 different letters, we have 15 choices for the first letter, 14 for the next, and so on. Thus there are <m>15!</m> anagrams.
+              </p>
+            </solution> -->
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many anagrams are there of the word <q>assesses</q> that start with the letter <q>a</q>?
+              </p>
+            </statement>
+            <solution>
+              <p>
+                After the first letter (a), we must rearrange the remaining 7 letters. There are only two letters (s and e), so this is really just a bit-string question (think of s as 1 and e as 0). Thus there <m>{7 \choose 2} = 21</m> anagrams starting with <q>a</q>.
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many anagrams are there of <q>anagram</q>?
+              </p>
+            </statement>
+            <!-- <solution>
+              <p>
+                First, decide where to put the <q>a</q>s. There are 7 positions, and we must choose 3 of them to fill with an <q>a</q>. This can be done in <m>{7 \choose 3}</m> ways. The remaining 4 spots all get a different letter, so there are <m>4!</m> ways to finish off the anagram. This gives a total of <m>{7 \choose 3}\cdot 4!</m> anagrams. Strangely enough, this is 840, which is also equal to <m>P(7,4)</m>. To get the answer that way, start by picking one of the 7 <em>positions</em> to be filled by the <q>n</q>, one of the remaining 6 positions to be filled by the <q>g</q>, one of the remaining 5 positions to be filled by the <q>r</q>, one of the remaining 4 positions to be filled by the <q>m</q> and then put <q>a</q>s in the remaining 3 positions.
+              </p>
+            </solution> -->
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                On a business retreat, your company of 20 businessmen and businesswomen go golfing.
+              <ol>
+                <li> <p> You need to divide up into foursomes (groups of 4 people): a first foursome, a second foursome, and so on.  How many ways can you do this? </p> </li>
+                <li> <p> After all your hard work, you realize that in fact, you want each foursome to include one of the five Board members.  How many ways can you do this? </p> </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li><m>{20 \choose 4}{16 \choose 4}{12 \choose 4}{8 \choose 4}{4 \choose 4}</m> ways. Pick 4 out of 20 people to be in the first foursome, then 4 of the remaining 16 for the second foursome, and so on (use the multiplicative principle to combine).</li>
+                  <li><m>5!{15 \choose 3}{12 \choose 3}{9 \choose 3}{6 \choose 3}{3 \choose 3}</m> ways.  First determine the tee time of the 5 board members, then select 3 of the 15 non board members to golf with the first board member, then 3 of the remaining 12 to golf with the second, and so on.</li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+          <exercise>
+            <statement>
+              <p>
+                How many different seating arrangements are possible for King Arthur and his 9 knights around their round table?
+              </p>
+            </statement>
+            <solution>
+              <p>
+                <m>9!</m> (there are 10 people seated around the table, but it does not matter where King Arthur sits, only who sits to his left, two seats to his left, and so on).
+              </p>
+            </solution>
+          </exercise>
+
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                Consider sets <m>A</m> and <m>B</m> with <m>|A| = 10</m> and <m>|B| = 17</m>.
+              <ol>
+                <li>
+    <p>
+    How many functions <m>f: A \to B</m> are there?
+    </p>
+    </li>
+                <li>
+    <p>
+    How many functions <m>f: A \to B</m> are injective?
+    </p>
+    </li>
+              </ol>
+            </p>
+            </statement>
+            <solution>
+              <p>
+                <ol>
+                  <li><m>17^{10}</m> functions.  There are 17 choices for the image of each element in the domain.</li>
+                  <li><m>P(17, 10)</m> injective functions.  There are 17 choices for image of the first element of the domain, then only 16 choices for the second, and so on.</li>
+                </ol>
+              </p>
+            </solution>
+          </exercise>
+
+
+
+          <exercise>
+            <statement>
+              <p>
+                Consider functions <m>f: \{1,2,3,4\} \to \{1,2,3,4,5,6\}</m>.
+              <ol>
+                <li> <p> How many functions are there total? </p> </li>
+                <li> <p> How many functions are injective? </p> </li>
+                <li><p> How many of the injective functions are <em>increasing</em>?  To be increasing means that if <m>a \lt b</m> then <m>f(a) \lt f(b)</m>, or in other words, the outputs get larger as the inputs get larger. </p></li>
+              </ol>
+            </p>
+            </statement>
+
+            <!-- <solution>
+              <ol>
+                <li><p><m>6^4 = 1296</m> functions, since there are six choices of where to send each of the 4 elements of the domain.</p></li>
+                <li><p><m>P(6, 4) = 6 \cdot 5 \cdot 4 \cdot 3 = 360</m> functions, since outputs cannot be repeated.</p></li>
+                <li> <p><m>{6 \choose 4} = 15</m> functions. Since the function must be injective and increasing, we just need to select the four distinct elements of the range from the six elements of the codomain.  Once selected, we must put the smallest as the image of 1, the next smallest as  the image of 2, and so on (doing this does not increase the number of functions, since there is one choice for how this event can occur).  </p> </li>
+              </ol>
+            </solution> -->
+          </exercise>
+
+
+          <exercise>
+            <statement>
+              <p>
+                We have seen that the formula for <m>P(n,k)</m> is <m>\dfrac{n!}{(n-k)!}</m>. Your task here is to explain <em>why</em> this is the right formula.
+              <ol>
+                <li>
+                  <p>
+                    Suppose you have 12 chips, each a different color. How many different stacks of 5 chips can you make? Explain your answer and why it is the same as using the formula for <m>P(12,5)</m>.
+
+                    <!-- <solution>
+                      <p>
+                        There are <m>12\cdot 11\cdot 10\cdot 9\cdot 8 = 95040</m> different stacks of 5 chips. This is because there are 12 choices for which chip goes on bottom, then 11 choices for which comes next, and so on for a total of 5 chips. The formula for <m>P(12,5)</m> is <m>\frac{12!}{7!}</m> - the <m>7!</m> cancels out the part of <m>12!</m> we don't include.
+                      </p>
+                    </solution> -->
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Using the scenario of the 12 chips again, what does <m>12!</m> count? What does <m>7!</m> count? Explain.
+
+                    <!-- <solution>
+                      <p>
+                        <m>12!</m> is the number of different stacks of all 12 chips (12 choices for the bottom chip, 11 for the next, and so on for 12 chips total). <m>7!</m> is the number of 7-chip stacks you can make using just 7 different colored chips (not all 12) because you have 7 choices for the first chip, 6 for the second, and so on.
+                      </p>
+                    </solution> -->
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Explain why it makes sense to divide <m>12!</m> by <m>7!</m> when computing <m>P(12,5)</m> (in terms of the chips).
+
+                    <!-- <solution>
+                      <p>
+                        Say you made all <m>12!</m> stacks of 12 chips. For any particular arrangement of the bottom 5 chips, you will have <m>7!</m> stacks that have that bottom arrangement (one for each arrangement of the remaining 7 chips). But we just want to count the number of 5-chip stacks, so we count all of these as the same outcome (once the top 7 chips are removed, the bottom stacks look identical). Thus we really want to count how many groups there are. All <m>12!</m> stacks are grouped into groups of size <m>7!</m>, so there are <m>12!/7!</m> groups.
+                      </p>
+                    </solution> -->
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Does your explanation work for numbers other than 12 and 5? Explain the formula <m>P(n,k) = \frac{n!}{(n-k)!}</m> using the variables <m>n</m> and <m>k</m>.
+
+                    <!-- <solution>
+                      <p>
+                        <m>P(n,k)</m> counts the number of stacks of size <m>k</m> where the chips come in <m>n</m> different colors (with at most one chip of each color in the stack). You could count this by first forming all stacks of <m>n</m> chips, and there are <m>n!</m> of these. But to get stacks of size <m>k</m>, we don't want the top <m>n-k</m> chips. When we remove <m>n-k</m> chips from the stacks, we sometimes get the same arrangement of the bottom chips. In fact, for each arrangement of the bottom <m>k</m> chips, there are <m>(n-k)!</m> different ways to arrange the top <m>n-k</m> chips, and all of these should count as just 1 outcome. Thus we divide <m>n!</m> by <m>(n-k)!</m> to find the number of <m>k</m>-chip stacks.
+                      </p>
+                    </solution> -->
+                  </p>
+                </li>
+              </ol>
+            </p>
+            </statement>
+          </exercise>
+
+        </exercises>

@@ -1,0 +1,193 @@
+\documentclass[12pt]{article}
+
+\usepackage{discrete}
+
+\def\thetitle{Sequences} % will be put in the center header on the first page only.
+\def\lefthead{Math 228 Notes} % will be put in the left header
+\def\righthead{\thetitle} % will be put in the right header
+
+\begin{document}
+There is a monastery in Hanoi\index{Hanoi}, as the legend goes, with a great hall containing three tall pillars.  Resting on the first pillar are 64 giant disks (or washers), all different sizes, stacked from largest to smallest.  The monks are charged with the following task: they must move the entire stack of disks to the third pillar.  However, due to the size of the disks, the monks cannot move more than one at a time.  Each disk must be placed on one of the pillars before the next disk is moved.  And because the disks are so heavy and fragile, the monks may never place a larger disk on top of a smaller disk. When the monks finally complete their task, the world shall come to an end.  Your task: figure out how long before we need to start worrying about the end of the world.
+
+\begin{activity}
+\begin{questions}
+\question First, let's find the minimum number of moves required for a smaller number of disks.  Collect some data. Make a table.
+  \question Conjecture a formula for the minimum number of moves required to move $n$ disks.  Test your conjecture.  How do you know your formula is correct?
+  \question If the monks were able to move one disk every second without ever stopping, how long before the world ends?
+\end{questions}
+
+\end{activity}
+
+
+This puzzle is called the {\em Tower of Hanoi}\index{Tower of Hanoi}.  You are tasked with finding the minimum number of moves to complete the puzzle.  This certainly sounds like a counting problem.  Perhaps you have an answer?  If not, what else could we try?  The answer depends on the number of disks you need to move.  In fact, we could answer the puzzle first for 1 disk, then 2, then 3 and so on.  If we list out all of the answers for each number of disks, we will get a {\em sequence} of numbers.  The $n$th term in the sequence is the answer to the question, ``what is the smallest number of moves required to complete the Tower of Hanoi puzzle with $n$ disks?''  You might wonder why we would create such a sequence instead of just answering the question.  By looking at how the sequence of numbers grows, we gain insight into the problem.  It is easy to count the number of moves required for a small number of disks.  We can then look for a pattern among the first few terms of the sequence.  Hopefully this will suggest a method for finding the $n$th term of the sequence, which is the answer to our question.  Of course we will also need to verify that our suspected pattern is correct, and that this correct pattern really does give us the $n$th term we think it does, but it is impossible to prove that your formula is correct without having a formula to start with.
+
+Sequences are also interesting mathematical objects to study in their own right. Let's see why.
+
+\section{Basics}\label{sec:seq:basics}
+
+\begin{activity}
+What comes next:
+
+\[1, ~~11, ~~21, ~~1211, ~~111221, ~~312211, ~~\ldots \]
+\end{activity}
+
+A \emph{sequence}\index{sequence} is simply an ordered list of numbers.  For example, here is a sequence: 0, 1, 2, 3, 4, 5, \ldots.  This is different from the set $\N$, because while the sequence is a complete list of every element in the set of natural numbers, in the sequence, we very much care what order the numbers come in.  For this reason, when we use variables to represent terms in a sequence they will look like this:
+\[a_0, a_1, a_2, a_3, \ldots\]
+We might replace the $a$ with another letter, and sometimes we omit $a_0$, starting with $a_1$ instead.  The numbers in the subscripts are called {\em indices} (the plural of {\em index}).  We can think of the terms in the sequence as the outputs of a function with domain $\N$: the $n$th term in the sequence is $f(n) = \gls{an}$.
+%Adopt some sort of sequence notation to use to describe the entire sequence (check with calculus book/analysis book).
+
+\begin{example}
+Can you find the next term in the following sequences?
+\begin{enumerate}
+
+
+\begin{multicols}{2}
+		\item $7,7,7,7,7, \ldots$
+		\item $3, -3, 3, -3, 3, \ldots$
+		\item $1, 5, 2, 10, 3, 15, \ldots$
+		\item $1, 2, 4, 8, 16, 32, \ldots$
+		\item $1, 4, 9, 16, 25, 36, \ldots$
+		\item $1, 2, 3, 5, 8, 13, 21, \ldots$
+		\item $1, 3, 6, 10, 15, 21, \ldots$
+		\item $2, 3, 5, 7, 11, 13, \ldots$
+		\item $3, 2, 1, 0, -1, \ldots$
+		\item $1, 1, 2, 6, \ldots$
+		\end{multicols}
+	\end{enumerate}
+	\begin{solution}
+	 No you cannot.  You might guess that the next terms are:
+	 \begin{enumerate}
+	  \begin{multicols}{4}
+	  \item $7$
+	  \item $-3$
+	  		\item $4$
+		\item 64
+		\item 49
+		\item 34
+		\item 28
+		\item 17
+		\item $-2$
+		\item $24$
+	  \end{multicols}
+
+	 \end{enumerate}
+	 In fact, those are the next terms of the sequences I had in mind when I made up the example, but there is no way to be sure they are correct.
+
+	 That said, we will often do this.  Given the first few terms of a sequence, we can ask what the pattern in the sequence suggests the next terms are.
+	\end{solution}
+
+\end{example}
+
+Given that no number of initial terms in a sequence is enough to say for certain which sequence we are dealing with, we need to find another way to specify a sequence.  We consider two ways to do this.
+
+%use closed notation for sequence?
+\begin{defbox}{Closed formula}
+ A {\em closed formula}\index{closed formula} for a sequence $a_0, a_1, a_2,\ldots$ is a formula for $a_n$ using a fixed finite number of operations on $n$.  This is what you normally think of as a formula in $n$.
+\end{defbox}
+
+\begin{defbox}{Recursive definition}
+ A {\em recursive definition}\index{recursive definition} (sometimes called an {\em inductive definition}) for a sequence $a_0, a_1, a_2, \ldots$ consists of a {\em recurrence relation}\index{recurrence relation}: an equation relating a term of the sequence to previous terms (terms with smaller index) and an {\em initial condition}: a list of a few terms of the sequence (one less than the number of terms in the recurrence relation).
+\end{defbox}
+
+It is easier to understand what is going on here with an example:
+
+\begin{example}
+ Here are a few closed formulas for sequences:
+ \begin{itemize}
+  \item $a_n = n^2$.
+  \item $a_n = \frac{n(n+1)}{2}$.
+  \item $a_n = \frac{\left(\frac{1 + \sqrt 5}{2}\right)^n - \left(\frac{1 + \sqrt 5}{2}\right)^{-n}}{5}$.
+ \end{itemize}
+ Note in each case, if you are given $n$, you can calculate $a_n$ directly. Just plug in $n$.
+
+ Here are a few recursive definitions for sequences:
+ \begin{itemize}
+  \item $a_n = 2a_{n-1}$ with $a_0 = 1$.
+  \item $a_n = 2a_{n-1}$ with $a_0 = 27$.
+  \item $a_n = a_{n-1} + a_{n-2}$ with $a_0 = 0$ and $a_1 = 1$.
+ \end{itemize}
+  In these cases, if you are given $n$, you cannot calculate $a_n$ directly, you first need to find $a_{n-1}$ (or $a_{n-1}$ and $a_{n-2}$). \index{Fibonacci sequence}
+\end{example}
+
+
+\begin{activity}
+You have a large collection of $1\times 1$ squares and $1\times 2$ dominoes.  You want to arrange these to make a $1 \times 15$ strip.  How many ways can you do this?
+\begin{questions}
+  \question Start by collecting data.  How many length $1\times 1$ strips can you make?  How many $1\times 2$ strips?  How many $1\times 3$ strips?  And so on.
+  \question How are the $1\times 3$ and $1 \times 4$ strips related to the $1\times 5$ strips?
+  \question How many $1\times 15$ strips can you make?
+  \question What if I asked you to find the number of $1\times 1000$ strips?  Would the method you used to calculate the number fo  $1 \times 15$ strips be helpful?
+
+\end{questions}
+\end{activity}
+
+
+You might wonder why we would bother with recursive definitions for sequences.  After all, it is harder to find $a_n$ with a recursive definition than with a closed formula.  This is true, but it is also harder to find a closed formula for a sequence than it is to find a recursive definition.  So to find a useful closed formula, we might first find the recursive definition, then use that to find the closed formula.
+
+This is not to say that recursive definitions aren't useful in finding $a_n$.  You can always calculate $a_n$ given a recursive definition, it might just take a while.
+
+\begin{example}
+ Find $a_6$ in the sequence defined by $a_n = 2a_{n-1} - a_{n-2}$ with $a_0 = 3$ and $a_1 = 4$.
+ \begin{solution}
+  We know that $a_6 = 2a_5 - a_4$.  So to find $a_6$ we need to find $a_5$ and $a_4$.  Well \[a_5 = 2a_4 - a_3 \qquad \mbox{and} \qquad a_4 = 2a_3 - a_2,\]
+  so if we can only find $a_3$ and $a_2$ we would be set.  Of course
+  \[a_3 = 2a_2 - a_1 \qquad \mbox{and} \qquad a_2 = 2a_1 - a_0,\]
+  so we only need to find $a_1$ and $a_0$.  But we are given these.  Thus
+  \begin{align*}
+   a_0 & = 3 \\
+   a_1 & = 4 \\
+   a_2 & = 2\cdot 4 - 3 = 5\\
+   a_3 & = 2\cdot 5 - 4 = 6\\
+   a_4 & = 2\cdot 6 - 5 = 7\\
+   a_5 & = 2\cdot 7 - 6 = 8\\
+   a_6 & = 2\cdot 8 - 7 = 9.
+  \end{align*}
+ Note that now we can guess a closed formula for the $n$th term of the sequence: $a_n = n+3$.  To be sure this will always work, we could plug in this formula into the recurrence relation: \[2a_{n-1} - a_{n-2} = 2((n-1) + 3) - ((n-2) + 3) = 2n + 4 - n - 1 = n + 3 = a_n.\]
+ Since $a_0 = 0 + 3 = 3$ and $a_1 = 1+3 = 4$ are the correct initial conditions, we have lucked upon the correct closed formula.
+ \end{solution}
+
+\end{example}
+
+
+Finding closed formulas, or even recursive definitions, for sequences is not trivial. There is no one method for doing this.  Just like in evaluating integrals or solving differential equations, it is useful to have a bag of tricks you can apply, but sometimes there is no easy answer.
+
+One useful method is to relate a given sequence to another sequence for which we already know the closed formula.
+
+\begin{example}
+  Use the formulas $T_n = \frac{n(n+1)}{2}$ and $a_n = 2^n$ to find closed formulas for the following sequences.  Assume the first term is $a_1$ (not $a_0$).  %But maybe change this to $a_0$?
+%  \begin{multicols}{2}
+  \begin{enumerate}
+    \item 2, 4, 7, 11, 16, 22, \ldots
+    \item 2, 3, 5, 9, 17, 33,\ldots
+    \item 2, 6, 12, 20, 30, 42,\ldots
+    \item 6, 10, 15, 21, 28, \ldots
+    \item 1, 3, 7, 15, 31, \ldots
+    \item 3, 6, 12, 24, 48, \ldots
+    \item 6, 10, 18, 34, 66, \ldots
+    \item 15, 33, 57, 87, 123, \ldots
+  \end{enumerate}
+%  \end{multicols}
+
+\begin{solution}
+  Before you say this is impossible, what we are asking for is simply to find a closed formula which agrees with all of the initial terms of the sequences.  Of course there is no way to read into the mind of the person who wrote the numbers down, but we can at least do this.
+
+  Now the first few terms of \gls{Tn}, starting with $T_1$ are $1, 3, 6, 10, 15, 21, \ldots$ (these are the triangular numbers)\index{triangular numbers}.  The first few terms of $a_n$ are $2, 4, 8, 16, \ldots$.  Now let's try to find formulas for the given sequences.
+
+    \begin{enumerate}
+    \item 2, 4, 7, 11, 16, 22, \ldots. Note that if subtract 1 from each term, we get the sequence $T_n$.  So this sequence is $T_n + 1$.  Therefore a closed formula is $\frac{n(n+1)}{2} + 1$.  A quick check of the first few $n$ confirms we have it right.
+    \item 2, 3, 5, 9, 17, 33,\ldots. This sequence is the result of adding 1 to each term in $a_n$.  So we might guess the closed formula $2^n + 1$.  If we try this though, we get the first terms $2^1 + 1 = 3$ and $2^2 + 1 = 5$.  We are off because $a_n$ started with $n = 0$ and now we are starting with $n = 1$.  So we shift: the closed formula is $2^{n-1} + 1$.
+    \item 2, 6, 12, 20, 30, 42,\ldots. Notice that all these terms are even.  What happens if we factor out a 2?  We get $T_n$!  So this sequence has closed formula $n(n+1)$.
+    \item 6, 10, 15, 21, 28, \ldots. These are all triangular numbers.  However, we are starting with 6 as our first term instead of as our third term.  So if we could plug in 3 instead of 1 into the formula for $T_n$, we would be set.  Therefore the closed formula is $\frac{(n+2)(n+3)}{2}$ (where $n+3$ came from $(n+2)+1$)
+    \item 1, 3, 7, 15, 31, \ldots. Try adding one to each term and we get powers of 2.  You might guess this because each term is approximately twice the previous term.  Closed formula: $2^{n} - 1$.
+    \item 3, 6, 12, 24, 48, \ldots. These numbers are all multiples of 3.  Let's try dividing each by 3.  Doing so gives 1, 2, 4, 8, \ldots.  Aha.  We get the closed formula $3\cdot 2^{n-1}$.
+    \item 6, 10, 18, 34, 66, \ldots. To get from one term to the next, we almost double each term.  So maybe we can relate this back to $2^n$. Yes, each term is 2 more than a power of 2.  So we get $2^{n+1} + 2$ (the $n+1$ is because the first term is 2 more than $2^2$, not $2^1$).  Alternatively, we could have related this sequence to the second sequence in this example: starting with 3, 5, 9, 17, \ldots we see that this sequence is twice the terms from that sequence (omitting the 2).  That sequence had closed formula $2^{n-1} + 1$.  To make the 3 first, we would write $2^{n} + 1$.  Our sequence would be twice this, so $2(2^n + 1)$, which is the same as we got before.
+    \item 15, 33, 57, 87, 123, \ldots. Try dividing each term by 3.  That gives the sequence $5, 11, 19, 29, 41,\ldots$.  Now add one: $12, 20, 30, 42, \ldots$, which is sequence 3 in this example, except starting with 6 instead of 2.  So let's start with the formula for sequence 3: $n(n+1)$.  To start with the 6, we shift: $(n+1)(n+2)$.  But this is one too many, so subtract 1: $(n+1)(n+2) - 1$.  That gives us our sequence, but divided by 3.  So we want $3((n+1)(n+2) - 1)$.
+  \end{enumerate}
+\end{solution}
+
+\end{example}
+
+
+
+
+\end{document}

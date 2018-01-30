@@ -1,0 +1,111 @@
+\begin{questions}
+
+
+\question Translate into symbols.  Use $E(x)$ for ``$x$ is even'' and $O(x)$ for ``$x$ is odd.''
+ \begin{parts}
+  \part No number is both even and odd.
+\part One more than any even number is an odd number.
+\part There is prime number that is even.
+\part Between any two numbers there is a third number.
+\part There is no number between a number and one more than that number.
+ \end{parts}
+
+  \begin{answer}
+     \begin{parts}
+	\part $\neg \exists x (E(x) \wedge O(x))$.
+	\part $\forall x (E(x) \imp O(x+1))$.
+	\part $\exists x(P(x) \wedge E(x))$ (where $P(x)$ means ``$x$ is prime'').
+	\part $\forall x \forall y \exists z(x < z < y \vee y < z < x)$.
+	\part $\forall x \neg \exists y (x < y < x+1)$.
+    \end{parts}
+  \end{answer}
+
+  
+ 
+ 
+\question Translate into English:
+\begin{parts}
+ \part $\forall x (E(x) \imp E(x +2))$.
+\part $\forall x \exists y (\sin(x) = y)$.
+\part $\forall y \exists x (\sin(x) = y)$.
+\part $\forall x \forall y (x^3 = y^3 \imp x = y)$.
+\end{parts}
+
+  \begin{answer}
+    \begin{parts}
+	\part Any even number plus 2 is an even number.
+	\part For any $x$ there is a $y$ such that $\sin(x) = y$.  In other words, every number $x$ is in the domain of sine. 
+	\part For every $y$ there is an $x$ such that $\sin(x) = y$.  In other words, every number $y$ is in the range of sine (which is false).
+	\part For any numbers, if the cubes of two numbers are equal, then the numbers are equal.
+      \end{parts}
+  \end{answer}
+
+  
+  
+
+\question Simplify the statements (so negation appears only directly next to predicates).
+\begin{parts}
+  \part $\neg \exists x \forall y (\neg O(x) \vee E(y))$.
+  \part $\neg \forall x \neg \forall y \neg(x < y \wedge \exists z (x < z \vee y < z))$.
+  \part There is a number $n$ for which no other number is either less $n$ than or equal to $n$.
+  \part It is false that for every number $n$ there are two other numbers which $n$ is between.
+\end{parts}
+
+  \begin{answer}
+    \begin{parts}
+	\part $\forall x \exists y (O(x) \wedge \neg E(y))$.
+	\part $\exists x \forall y (x \ge y \vee \forall z (x \ge z \wedge y \ge z))$.
+	\part There is a number $n$ for which every other number is strictly greater than $n$.
+	\part There is a number $n$ which is not between any other two numbers.
+      \end{parts}
+  \end{answer}
+
+
+
+\question Suppose $P(x)$ is some predicate for which the statement $\forall x P(x)$ is true.  Is it also the case that $\exists x P(x)$ is true?  In other words, is the statement $\forall x P(x) \imp \exists x P(x)$ always true?  Is the converse always true?  Explain.
+
+	\begin{answer}
+	  If $P(x)$ is true of every $x$, then in particular it is true of $x = 0$ (or any fixed element of the universe).  So then there is definitely some $x$ (namely 0) for which $P(x)$ holds.  Thus $\forall x P(x) \imp \exists x P(x)$ is always true.
+	  
+	  The converse is not always true though.  Consider the predicate $x = 5$.  So $P(x)$ is true if and only if $x = 5$.  Certainly it is true that $\exists x P(x)$ (since we can take $x = 5$), but false that $\forall x P(x)$.
+	\end{answer}
+
+
+
+\question For each of the statements below, give a universe of discourse for which the statement is true, and a universe for which the statement is false.
+\begin{parts}
+	\part $\forall x \exists y (y^2 = x)$.
+	\part $\forall x \forall y \exists z (x < z < y)$.
+	\part $\exists x \forall y \forall z (y < z \imp y \le x \le z)$  Hint: universes need not be infinite.
+\end{parts}
+
+	\begin{answer}
+		\begin{parts}
+			\part This says that everything has a square root (every element is the square of something).  This is true of the positive real numbers, and also of the complex numbers.  It is false of the natural numbers though, as for $x = 2$ there is no natural number $y$ such that $y^2 = 2$.
+			\part This asserts that between every pair of numbers there is some number strictly between them.  This is true of the rationals (and reals) but false of the integers.  If $x = 1$ and $y = 2$, then there is nothing we can take for $z$.
+			\part Here we are saying that something is between every pair of numbers.  For almost every universe, this is false.  In fact, if the universe contains $\{1,2,3, 4\}$, then no matter what we take $x$ to be, there will be a pair that $x$ is NOT between.  However, the set $\{1,2,3\}$ as our universe makes the statement true.  Let $x = 2$.  Then no matter what $y$ and $z$ we pick, if $y < z$, then 2 is between them.
+		\end{parts}
+	\end{answer}
+	
+	
+	
+	
+	
+\question Can you switch the order of quantifiers?  For example, consider the two statements:
+\[\forall x \exists y P(x,y) \qquad \mathrm{ and } \qquad \exists y \forall x P(x,y).\]
+Depending on what the predicate $P(x,y)$ is, each statement might be true or false.  Give an example of a predicate for which the first statement is true and the second false of the natural numbers.  Can you also give an example of a (different) predicate for which the first statement is false and the second true?  Explain.
+
+	\begin{answer}
+		Let $P(x,y)$ be the predicate $x < y$.  It is true that for all $x$ there is some $y$ greater than it (since there are infinitely many numbers).  However, there is not a natural number $y$ which is greater than every number $x$.
+		
+		We cannot do the reverse of this though.  If there is some $y$ for which every $x$ satisfies $P(x,y)$, then certainly for every $x$ there is some $y$ which satisfies $P(x,y)$.  The first is saying we can find one $y$ that works for every $x$.  The second allows different $y$'s to work for different $x$'s, but there is nothing preventing us from using the same $y$ that work for every $x$.
+	\end{answer}
+
+
+
+
+
+ 
+
+
+\end{questions}

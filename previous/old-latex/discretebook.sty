@@ -1,0 +1,417 @@
+%%%  This is discretebook.sty
+%%%  It is an attempt at designing a package to be used in my discrete course notes.  It will load amsmath, amsthm, etc and all the definitions I like.
+
+\ProvidesPackage{discretebook}
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{bold-extra}
+\usepackage{marvosym} %for stop signs.
+\usepackage{textcomp}
+
+
+
+ 
+
+% % FONT OPTIONS (pick one group to uncomment):
+
+%newpx is my current favorite.  This should work on a TEXLive distribution, but on MiKTeX it initially gave me problems.  Running the update wizard to update MiKTeX then showed ``newpx'' as an available package (only since 8/11/15).  Perhaps just synchronizing in the package manager would do the same thing.  Even then, needed to run initexmf --mkmaps from the command line.
+%You could always uncomment all of these to use the default computer modern font.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext}
+\usepackage[vvarbb,cmintegrals,cmbraces,bigdelims]{newpxmath}
+\usepackage[scr=rsfso]{mathalfa}% \mathscr is fancier than \mathcal
+\linespread{1.04}         % adds more leading (space between lines)
+% quantifiers look strange, so change those back to normal:
+	\DeclareSymbolFont{mysymbols}{OMS}{cmsy}{b}{n} %note we make the figures bold to better match newpx.  Replace the ``b'' with an ``m'' to undo this.
+	%\SetSymbolFont{mysymbols}  {bold}{OMS}{cmsy}{b}{n}
+	%\DeclareSymbolFont{myoperators}   {OT1}{cmr} {m}{n}
+	%\SetSymbolFont{myoperators}{bold}{OT1}{cmr} {bx}{n}
+	\DeclareMathSymbol{\forall}{\mathord}{mysymbols}{"38}
+	\DeclareMathSymbol{\exists}{\mathord}{mysymbols}{"39}
+	%\DeclareMathSymbol{\pm}{\mathbin}{mysymbols}{"06}
+	%\DeclareMathSymbol{+}{\mathbin}{myoperators}{"2B}
+	%\DeclareMathSymbol{-}{\mathbin}{mysymbols}{"00}
+	%\DeclareMathSymbol{=}{\mathrel}{myoperators}{"3D}
+
+
+
+%\usepackage[T1]{fontenc}
+%\usepackage{newtxtext,newtxmath}
+
+
+%\usepackage[bitstream-charter]{mathdesign}
+%\usepackage[T1]{fontenc}
+
+%\usepackage[proportional,space,scaled=1.064]{erewhon}
+%\usepackage[erewhon,vvarbb,bigdelims]{newtxmath}
+%\usepackage[T1]{fontenc}
+%\renewcommand*\oldstylenums[1]{\textosf{#1}}
+
+
+
+
+
+% % % % % % Other packages % % % % % % % %
+
+%\usepackage{comment}
+\usepackage[obeyDraft]{todonotes}
+\usepackage{multicol}
+
+\usepackage{docmute}
+\usepackage{answers}
+\usepackage{pdfpages}
+\usepackage{chessboard}
+
+%\usepackage[titletoc]{appendix}
+%\usepackage{bookmark}
+%\usepackage{titlesec} % to create better chapter header layout
+%\usepackage{booktabs}
+\usepackage{import}
+\usepackage{etoolbox} % to create toggles
+\usepackage{makeidx}
+\usepackage[nomain]{glossaries}
+\usepackage{glossary-mcols}
+%\setglossarystyle{mcolindex}
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations,shadows,fadings}
+
+\usepackage{svg}
+
+\usepackage[framemethod=tikz]{mdframed}
+
+
+\usepackage[colorlinks=true, linkcolor=blue]{hyperref}
+\usepackage[nameinlink]{cleveref}
+
+% % % % % % % % % % % % % %  END OF PACKAGES  % % % % % % % % % % % % % % % % % % %
+
+
+%Number subsections:
+\setsecnumdepth{section} %It might look better to turn this off, but then I should change the headings.
+\settocdepth{subsection}
+
+
+%Margins and such:
+%\setstocksize{11in}{8.5in}
+%\settrimmedsize{11in}{8.5in}{*}
+%\settypeblocksize{8in}{6in}{*}
+%\setbinding{1in}
+\setlrmarginsandblock{1.5in}{1in}{*} %we have 1.5in margins on the ``inside'' of the page, for hole punch or binding, 1 inch on outside.
+\setulmarginsandblock{1in}{1.5in}{*}
+\setheadfoot{.75in}{1in}
+\setheaderspaces{*}{.25in}{*}
+\checkandfixthelayout
+\fixpdflayout
+
+
+
+
+\newtoggle{includeanswers} %this toggle will change the behavior of the question environment depending on whether we want to include answers to the questions or not.  
+\def\withanswers{\toggletrue{includeanswers}} % putting \withanswers will turn on the includeanswers toggle until the end of the next questions environment.
+\def\noanswers{\togglefalse{includeanswers}}
+
+\newtoggle{showsolutions} %for hiding solutions to homework.
+\newcommand{\showsolutions}{\toggletrue{showsolutions}}
+\newcommand{\hidesolutions}{\togglefalse{showsolutions}}
+
+\newtoggle{instructoredition}
+\newcommand{\showinstnotes}{\toggletrue{instructoredition}}
+\newcommand{\hideinstnotes}{\togglefalse{instructoredition}}
+
+\newtoggle{hwsol}
+\newcommand{\starthwsol}{\toggletrue{hwsol}}
+\newcommand{\finishhwsol}{\togglefalse{hwsol}}
+
+%new list environments
+\newcounter{question}
+\newcounter{pcounter}
+\newcounter{spcounter}
+\newenvironment{questions}{%
+	\iftoggle{includeanswers}{\WriteAnsFileStart}{}
+	\begin{list}{\iftoggle{includeanswers}{\hyperlink{ans.\thesection.\Currentlabel.}}{ }{\arabic{question}.~}}{
+	\usecounter{question}\setlength\labelwidth{3em}}
+	}{%
+	\end{list} \iftoggle{includeanswers}{\WriteAnsFileStop}{}
+	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
+	}
+
+%\newenvironment{questions}{%
+%	\iftoggle{includeanswers}{%
+%	\WriteAnsFileStart \begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}}{\arabic{question}.~}{
+%		\usecounter{question}}
+%	}{ %else
+%	\begin{enumerate}
+%	}
+%	}{%end of environment commands:
+%	 \iftoggle{includeanswers}{\end{list}\WriteAnsFileStop}{\end{enumerate}}
+%	\noanswers %turns off includeanswers toggle - it must always be turned on if answers are wanted.
+%	}
+
+\newenvironment{squestions}{\WriteAnsFileStartAlt\begin{list}{\hyperlink{ans.\thesection.\Currentlabel.}{\arabic{question}.~}}{\usecounter{question}}}{\end{list}\WriteAnsFileStop}
+
+
+
+
+
+\newcommand{\question}{%
+	\iftoggle{includeanswers}{%
+		\item\hypertarget{ques.\thesection.\Currentlabel.}{}}{\item}
+	}
+	
+\def\bonusquestion{\question}
+
+\newenvironment{parts}{\begin{list}{(\alph{pcounter})~}{\usecounter{pcounter}}}{\end{list}}
+
+\renewcommand{\part}[1]{\item #1}
+
+\newenvironment{subparts}{\begin{list}{(\alph{spcounter})~}{\usecounter{spcounter}}}{\end{list}}
+
+\newcommand{\subpart}[1]{\item #1}
+
+%\newcounter{answer}
+%\newenvironment{answers}{\begin{list}{\hyperref[ques.\thesection.\Currentlabel.]{\arabic{answer}.~}}{\usecounter{answer}}}{\end{list}}
+
+\newenvironment{ans}[1]{\item[\hyperlink{ques.#1}{#1}]\hypertarget{ans.#1}{}}{}
+
+\newcommand{\ansparams}{{\thesection.\Currentlabel.}}
+
+\def\WriteAnsFileStart{%
+	\Writetofile{\ansfilename}{ %
+		\protect \vskip 2em
+		\protect\subsection*{Solutions for Section \thesection}
+		%\noindent{\textsc{\bfseries Solutions for Section \thesection}}
+		\protect\markright{Solutions for \thesection}
+		%\subsubsection*{Solutions for Section \thesection\markright{Section \thesection ~ Solutions}}
+		
+	%	\protect\heading{}{}{Section \thesection\ Solutions} 
+		\protect\begin{itemize}
+	}
+	\subsection*{Exercises\markright{\thesection ~ Exercises}}\addcontentsline{toc}{subsection}{Exercises}
+	}
+	
+%\def\WriteAnsFileStartAlt{%
+%	\Writetofile{\ansfilename}{\protect\clearpage \protect\noindent{\textbf{Solutions for Chapter \thesection}}
+%%	\protect\heading{}{}{Chapter \thesection\ Solutions} 
+%	\protect\begin{itemize}}
+%	\subsection{Sample Questions\markright{Sample Questions}}\addcontentsline{toc}{subsection}{Sample Questions}
+%	}
+	
+\def\WriteAnsFileStop{%
+	\Writetofile{\ansfilename}{\protect\end{itemize}}
+	}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem{problem}{Problem}
+\newtheorem*{conjecture}{Conjecture}
+%\newtheorem{answer}{Answer}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+%\newtheorem{example}{Example}
+\newtheorem{probfact}{Probability Fact}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+%\newtheorem*{solution}{Solution}
+
+
+
+
+%create a mdframe style for examples:
+\mdfdefinestyle{examplestyle}{%
+	skipabove=2em,
+	skipbelow=1em,
+	leftmargin=1.5ex, %left/right margins for oneside
+	rightmargin=1.5ex,
+	outermargin=1.5ex, %inner/outer margins for twoside
+	innermargin=1.5ex,
+	roundcorner=0pt,
+	topline=false,
+	%bottomline=false,
+	rightline=false,
+    frametitleaboveskip=5pt,
+	frametitlebelowskip=0pt,
+	needspace=3em,
+	frametitle={Example:}
+}
+
+%Create indented ``example'' environment:
+\newmdenv[style=examplestyle]{example}
+
+
+%\newenvironment{example}{\vskip 1em \begin{adjustwidth}{3em}{3em}\textbf{Example}: }{\end{adjustwidth}\vskip 1em}
+
+%Create ``solution'' environment:  This can be used for solutions in examples (which will always be shown) or after homework problems, which will only be shown in the instructor edition. 
+\newenvironment{solution}{%
+	\iftoggle{hwsol}{%
+		\iftoggle{instructoredition}{\color{purple!50!blue} \vskip 1ex \noindent {\itshape\bfseries Solution}:}{\comment}
+	}{%
+		\vskip 1ex \noindent{\itshape\bfseries Solution}:%
+	}
+}{%
+\iftoggle{hwsol}{%
+		\iftoggle{instructoredition}{}{\endcomment}
+	}{}
+}
+
+
+%Create ``defbox'' environment to highlight important definitions
+\newenvironment{defbox}[1]{%
+\mdfsetup{%
+    frametitle={\colorbox{blue!20}{\space#1\space}},
+%	frametitle={\fbox{#1}},
+	frametitlealignment={\hspace*{1ex}},
+    frametitleaboveskip=-1.5ex,
+    frametitlebelowskip=0pt,
+    roundcorner=1pt,
+    leftmargin=3pt,
+    rightmargin=3pt,
+  	backgroundcolor=blue!5,
+  	linecolor=blue!75!black,
+    }
+  \begin{mdframed}%
+  }
+  {\end{mdframed}}
+
+
+%Create ``activity'' environment for in-text worksheet type problems:
+\newenvironment{activity}{%
+\noanswers 
+\mdfsetup{%
+	frametitle={\colorbox{white}{\Large\space\space Investigate! \hspace{4.17in}} },
+	frametitleaboveskip=-1.5ex,
+	frametitlealignment={\hspace*{2pt}},
+	innerbottommargin=2em,
+	innermargin=1ex,
+	outermargin=1ex,
+	leftmargin=1ex,
+	rightmargin=1ex,
+%	topline=false,
+%	bottomline=false,
+	linecolor=green!50!black,
+	linewidth=1pt,
+	skipabove=2em,
+	skipbelow=2em,
+	roundcorner=15pt,
+	needspace=6em,
+	splittopskip=2em,
+}
+\vskip 1em
+\begin{mdframed} 
+}{%
+\end{mdframed}\vspace{-4em} \begin{center}\colorbox{white}{ \space\space\quad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the activity above} \quad {\LARGE\color{red} \Stopsign}\quad\space\space }  \end{center}
+}
+
+
+%\begin{center}\colorbox{white}{ \qquad {\LARGE \color{red} \Stopsign} \quad \textbf{Do not proceed until you have attempted the above} \quad {\LARGE\color{red} \Stopsign}\qquad }  \end{center}
+
+\newcommand{\ex}{\noindent\textbf{Ex: }}
+
+
+\renewcommand{\qedsymbol}{\textsc{qed}}
+
+
+%Fix widows and orphans (single lines at top/bottom of page):
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
+
+
+% % % % % % % % % % My modified page style: % % % % % % % % % % % % % % % % % % % % 
+\copypagestyle{mypagestyle}{ruled}
+\makeevenhead{ruled}{{\footnotesize \textsl{\thepage}}~~ \textsc{\scriptsize \leftmark}}{}{}
+\makeoddhead{ruled}{}{}{\textsc{\scriptsize \rightmark} ~~ {\footnotesize \textsl{\thepage}}}
+\makeevenfoot{ruled}{}{}{}
+\makeoddfoot{ruled}{}{}{}
+
+
+
+
+% % % % % % % % % % My chapter style (based on VZ14: % % % % % % % % % % % % % % % %
+\makeatletter
+\setlength\midchapskip{1pt}
+\makechapterstyle{mychapstyle}{%
+\renewcommand\chapternamenum{}
+	\renewcommand\printchaptername{}
+	\renewcommand\chapnamefont{\Large\scshape}
+	\renewcommand\printchapternum{%
+		\vskip -1.25in
+		\centering\chapnamefont\null\rule[4pt]{2in}{2pt}\quad
+		\@chapapp\space\thechapter\quad\rule[4pt]{2in}{2pt}
+	}
+	\renewcommand\printchapternonum{%
+%		\par\thickhrulefill\par\vskip\midchapskip
+		\vskip -1.25in
+		\hrule\vskip\midchapskip
+	}
+	\renewcommand\chaptitlefont{\Huge\scshape\centering}
+	\renewcommand\afterchapternum{%
+		\par\nobreak\vskip\midchapskip\hrule\vskip\midchapskip
+	}
+	\renewcommand\afterchaptertitle{%
+		\par\vskip\midchapskip\hrule\nobreak\vskip\afterchapskip
+	}
+}
+\makeatother
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+
+% % % % % Styles for section headings: % % % % % % % % % % %
+\setbeforesecskip{-5.5ex plus -1ex minus -.2ex}
+\setaftersecskip{2ex plus .5ex}
+%\newcommand{\ruledsec}[1]{%
+%	\Large\centering\scshape #1 \rule{\textwidth}{1pt}
+%}
+\setsecheadstyle{\Large\bfseries\scshape\centering}
+\setsubsecheadstyle{\large\bfseries\scshape\centering}
+\setsubsubsecheadstyle{\scshape\bfseries\raggedright}
+%to flush left, replace \centering with \raggedright.
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% % % % % Glossaries style for list of symbols % % % % % % % % % % % % % % % 
+\newglossarystyle{myglosses}{%
+    \renewenvironment{theglossary}{%
+      \setlength{\parindent}{0pt}%
+      \setlength{\parskip}{7pt}
+%      \begin{multicols}{2}%
+    }{%
+%      \end{multicols}%
+    }%
+    \renewcommand*{\glossaryheader}{}%
+    \renewcommand*{\glsgroupheading}[1]{}%
+%    \renewcommand*{\glsclearpage}{\columnbreak}%
+     % set how each entry should appear:
+      \renewcommand*{\glossentry}[2]{%
+        \parbox{.15\linewidth}{\glstarget{##1}{\textsc{\glossentryname{##1}}}\hskip \fill}%
+        \hspace{.05\linewidth}%
+        \parbox{.8\linewidth}{\glossentrydesc{##1}, \space ##2 \hskip \fill}\par%
+    }%
+    \renewcommand*{\subglossentry}[3]{%
+        \glossentry{##2}{##3}%
+    }%
+}
+
+
+
+\input{macros-discrete}
+\input{images/USAmap} %for creating maps of the US in tikz.
+
+
+% % Stop sign (taken from marvosym.sty):  This was to still use this symbol when removing the marvosym package due to a conflict with stix font.
+%\newcommand{\mvs}{\fontfamily{mvs}\fontencoding{U}%
+%\fontseries{m}\fontshape{n}\selectfont}
+%\newcommand{\mvchr}[1]{{\mvs\char#1}}
+%\newcommand{\textmvs}[1]{{\mvs #1}}
+%
+%\newcommand\Stopsign{\mvchr{33}}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % %5
+
+\endinput
+
+%%% End of File.
