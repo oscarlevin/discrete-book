@@ -7,11 +7,12 @@ Moving forward, as errors are found, I will record them below.
 
 ## Errors not yet corrected
 
+(updated 2/2/2018)
+Page numbers match print and tablet pdf edition.
+
 ### Major errors
 
-(updated 11/27/2017)
 
-Page numbers match print and tablet pdf edition.
 
 * Example 1.3.5-2 (page 67): the answer is 2162160, not 2192190.
 
@@ -21,6 +22,8 @@ Page numbers match print and tablet pdf edition.
 
 
 ### Minor typos
+
+* Page 50, second sentence of last paragraph in example should read, "For example, *how* many..." instead of "For example, *now* many..."
 
 * Page 200, after the definition of a graph, the example has *five* edges, not four.
 
