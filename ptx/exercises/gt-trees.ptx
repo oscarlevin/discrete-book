@@ -7,7 +7,7 @@
       <p>
         Which of the following graphs are trees?
         <ol>
-          <li><p><m>G = (V, E)</m> with <m>V = \{a, b, c, d, e\}</m> and <m>E = \{\{a, b\}, \{a,e\}, \{b, c\}, \{c,d\}, \{d,e\}, \}</m></p></li>
+          <li><p><m>G = (V, E)</m> with <m>V = \{a, b, c, d, e\}</m> and <m>E = \{\{a, b\}, \{a,e\}, \{b, c\}, \{c,d\}, \{d,e\} \}</m></p></li>
 
           <li><p><m>G = (V, E)</m> with <m>V = \{a, b, c, d, e\}</m> and <m>E = \{\{a, b\}, \{b, c\}, \{c,d\}, \{d,e\}\}</m></p></li>
 
@@ -134,12 +134,146 @@
   <exercise>
     <statement>
       <p>
+        If a graph <m>G</m> with <m>v</m> vertices and <m>e</m> edges is connected and has <m>v \lt e+1</m>, must it contain a cycle?  Prove your answer.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        Yes.  We will prove the contrapositive.  Assume <m>G</m> does not contain a cycle.  Then <m>G</m> is a tree, so would have <m>v = e+1</m>, contrary to stipulation.
+      </p>
+    </solution>
+  </exercise>
+
+  <exercise xml:id="ex-forest">
+    <statement>
+      <p>
+        We define a <term>forest</term> to be a graph with no cycles.
+        <ol>
+          <li>
+            <p>
+              Explain why this is a good name.  That is, explain why a forest is a union of trees.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Suppose <m>F</m> is a forest consisting of <m>m</m> trees and <m>v</m> vertices.  How many edges does <m>F</m> have?  Explain.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Prove that any graph <m>G</m> with <m>v</m> vertices and <m>e</m> edges that satisfies <m>v \lt e+1</m> must contain a cycle (i.e., not be a forest).
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+
+    <solution>
+      <p>
+        <ol>
+          <li>
+            <p>
+              If a forest is connected, then because it has no cycles, it is a tree (and as such a union of trees).  On the other hand, if the forest is not connected, then it is the union of some number of connected components.  Each of these are connected graphs that contain no cycles, so each is a tree.  Thus the forest is a union of trees.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              The total number of edges will be <m>e = v - m</m>.  The reason is that <m>F</m> is the union of trees, each of which consist of some number of vertices and some number of edges.  In fact, each tree in the forest will have one fewer edge than it has vertices.  If we add up all the vertices, we will get <m>v</m>.  If we add up all the edges, we will get <m>v</m> less one edge for each tree, of which there are <m>m</m>.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Suppose that graph <m>G</m> has <m>m</m> connected components.  Assume that <m>G</m> has no cycles.  Then <m>G</m> is a forest.  Thus we have <m>v = e+m</m>, contradicting the assumption that <m>v \lt e+1</m>.  Thus <m>G</m> cannot be a forest.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </solution>
+  </exercise>
+
+
+  <exercise>
+    <statement>
+      <p>
+        Unless it is already a tree, a given graph <m>G</m> will have multiple spanning trees.  How similar or different must these be?
+        <ol>
+          <li>
+            <p>
+              Must all spanning trees of a given graph be isomorphic to each other?  Explain why or give a counterexample.
+            </p>
+          </li>
+          <li>
+            <p>
+              Must all spanning trees of a given graph have the same number of edges?  Explain why or give a counterexample.
+            </p>
+          </li>
+          <li>
+            <p>
+              Must all spanning trees of a graph have the same number of leaves (vertices of degree 1)?  Explain why or give a counterexample.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol>
+          <li>
+            <p>
+              No, although there are graphs for which this is true.  For example, <m>K_4</m> has a spanning tree that is a path (of three edges) and also a spanning tree that is a star (with center vertex of degree 3).
+            </p>
+          </li>
+          <li>
+            <p>
+              Yes.  For a fixed graph, we have a fixed number <m>v</m> of vertices.  Any spanning tree of the graph will also have <m>v</m> vertices, and since it is a tree, must have <m>v-1</m> edges.
+            </p>
+          </li>
+          <li>
+            <p>
+              No, although there are graph for which this is true (note that if all spanning trees are isomorphic, then all spanning trees will have the same number of leaves).  Again, <m>K_4</m> is a counterexample.  One spanning tree is a path, with only two leaves, another spanning tree is a star with 3 leaves.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </solution>
+  </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Find all spanning trees of the graph below.  How many different spanning trees are there?  How many different spanning trees are there <em>up to isomorphism</em> (that is, if you grouped all the spanning trees by which are isomorphic, how many groups would you have)?
+      </p>
+      <sidebyside width="30%">
+        <image>
+          <latex-image>
+            \begin{tikzpicture}
+              \footnotesize{
+              \draw (0,0) -- (-1,.75) \vl{$a$} -- (-1,-.75) \vl{$b$} -- (0,0) \vb{$c$} -- (1,1) \vb{$d$} -- (2,0) \vr{$e$} -- (1,-1) \va{$f$} -- (0,0) -- (2,0);
+              }
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+
+      </sidebyside>
+    </statement>
+
+  </exercise>
+
+
+
+  <exercise>
+    <statement>
+      <p>
         Give an example of a graph that has exactly 7 different spanning trees.  Note, it acceptable for some or all of these spanning trees to be isomorphic.
       </p>
     </statement>
     <solution>
       <p>
-        There are more complicated ways of doing this, but one example is to start with the cycle <m>C_7</m>.  Any edge that you remove will result in a tree (in fact a path), and there are 7 edges to choose from.  Thus there are exactly 7 spanning trees of this graph.
+        There are more complicated ways of doing this, but one example is to start with the cycle <m>C_7</m>.  Any edge that you remove will result in a tree (in fact a path), and there are 7 edges to choose from.  Thus there are exactly 7 spanning trees of this graph (although they are all isomorphic).
       </p>
     </solution>
   </exercise>
@@ -152,11 +286,47 @@
     </statement>
     <solution>
       <p>
-        If a connected graph is not a tree, then it has a cycle.  That cycle must consist of at least three edges.  Removing any one of these three edges cannot disconnect the graph, so we can start to form our spanning tree in at least three ways.  NEED TO SAY MORE: WHY CAN WE ALWAY KEEP THE OTHER TWO EDGES?
+        If a connected graph is not a tree, then it has a cycle.  That cycle must consist of at least three edges, call them <m>e_1</m>, <m>e_2</m>, and <m>e_3</m>.  Removing any one of these three edges cannot disconnect the graph, so we can start to form our spanning tree in at least three ways, and then be sure to include both of the other two edges.  For example, say we start with the graph <m>G</m>.  First, remove <m>e_1</m>, to get a graph <m>G'</m> that is still connected.  Now build a spanning tree that includes <m>e_2</m> and <m>e_3</m> by putting those two edges into the spanning tree first (putting those two edges in cannot create a cycle).  Then keep adding edges until you get a spanning tree.
       </p>
     </solution>
-
   </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Consider edges that must be in every spanning tree of a graph.  Must every graph have such an edge?  Give an example of a graph that has exactly one such edge.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        Note that such an edge, if removed, would disconnect the graph.  A cycle does not have an edge like this.  In fact, we call graphs that have an edge like this <term>1-connected</term>.
+      </p>
+      <p>
+        There are lots of examples of graphs with only one edge like this.  In fact, we could take just a single edge as our graph.  Or something like this:
+      </p>
+      <sidebyside width="30%">
+        <image>
+          <latex-image>
+            \begin{tikzpicture}
+              \draw (-1,0) \v -- (-2,1) \v -- (-2,-1) \v -- (-1,0) -- (1,0) \v -- (2,1) \v -- (2,-1) \v -- (1,0);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+      </sidebyside>
+    </solution>
+  </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Let <m>T</m> be a rooted tree that contains vertices <m>u</m>, <m>v</m>, and <m>w</m> (among possibly others).  Prove that if <m>w</m> is a descendant of both <m>u</m> and <m>v</m>, then <m>u</m> is a descendant of <m>v</m> or <m>v</m> is a descendant of <m>u</m>.
+      </p>
+    </statement>
+    <!-- <solution>
+      NNEDS SOLUTION
+    </solution> -->
+  </exercise>
+
 
 
 </exercises>
