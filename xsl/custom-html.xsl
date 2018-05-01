@@ -81,6 +81,8 @@
 <xsl:param name="html.knowl.table" select="'no'" />
 <xsl:param name="html.knowl.listing" select="'no'" />
 <xsl:param name="html.knowl.sidebyside" select="'no'" />
+<xsl:param name="html.knowl.webwork.inline" select="'no'" />
+<xsl:param name="html.knowl.webwork.sectional" select="'no'" />
 <xsl:param name="html.knowl.exercise.inline" select="'no'" />
 <xsl:param name="html.knowl.exercise.sectional" select="'no'" />
 <!-- html.knowl.example.solution: always "yes", could be implemented -->
