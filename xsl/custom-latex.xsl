@@ -35,13 +35,14 @@
 <!-- Standard fontsizes: 10pt, 11pt, or 12pt       -->
 <!-- extsizes package: 8pt, 9pt, 14pt, 17pt, 20pt  -->
 <!-- memoir class offers more, but maybe other changes? -->
-<xsl:param name="latex.font.size" select="'10pt'" />
+<xsl:param name="latex.font.size" select="'12pt'" />
 <!--  -->
 <!-- Geometry: page shape, margins, etc            -->
 <!-- Pass a string with any of geometry's options  -->
 <!-- Default is empty and thus ineffective         -->
 <!-- Otherwise, happens early in preamble template -->
-<xsl:param name="latex.geometry" select="'papersize={6in,9in}, hmargin={0.85in, 0.5in}, height=7.75in, top=0.75in, twoside, ignoreheadfoot'"/>
+<!-- <xsl:param name="latex.geometry" select="'papersize={6in,9in}, hmargin={0.85in, 0.5in}, height=7.75in, top=0.75in, twoside, ignoreheadfoot'"/> -->
+<xsl:param name="latex.geometry" select="'papersize={7in,10in},  width=5in, inner=.75in, height=8.25in, top=0.75in, twoside, ignoreheadfoot'"/>
 <!--  -->
 <!-- PDF Watermarking                    -->
 <!-- Non-empty string makes it happen    -->
