@@ -1,6 +1,6 @@
 %**************************************%
 %*    Generated from PreTeXt source   *%
-%*    on 2018-05-02T11:45:34-06:00    *%
+%*    on 2018-05-02T16:55:54-06:00    *%
 %*                                    *%
 %*   http://mathbook.pugetsound.edu   *%
 %*                                    *%
@@ -20,10 +20,15 @@
 %% Colored boxes, and much more, though mostly styling
 %% skins library provides "enhanced" skin, employing tikzpicture
 %% boxes may be configured as "breakable" or "unbreakable"
+%% "raster" controls grids of boxes, aka side-by-side
 \usepackage{tcolorbox}
 \tcbuselibrary{skins}
 \tcbuselibrary{breakable}
 \tcbuselibrary{raster}
+%% xparse allows the construction of more robust commands,
+%% this is a necessity for isolating styling and behavior
+%% The tcolorbox library of the same name loads the base library
+\tcbuselibrary{xparse}
 %% Hyperref should be here, but likes to be loaded late
 %%
 %% Inline math delimiters, \(, \), need to be robust
@@ -1574,10 +1579,21 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
 \ifdefined\tikzset
     \tikzset{ampersand replacement = \amp}
 \fi
-%% NB: calc redefines \setlength
-\usepackage{calc}
-%% used repeatedly for vertical dimensions of sidebyside panels
-\newlength{\panelmax}
+%% tcolorbox styles for sidebyside layout
+\tcbset{ sbsstyle/.style={raster equal height=rows,raster force size=false} }
+\tcbset{ sbsheadingstyle/.style={size=minimal,halign=center,fontupper=\bfseries,colback=white} }
+\tcbset{ sbspanelstyle/.style={size=minimal,colback=white} }
+\tcbset{ sbscaptionstyle/.style={size=minimal,halign=center,colback=white} }
+%% Enviroments for side-by-side and components
+%% Necessary to use \NewTColorBox for boxes of the panels
+\NewDocumentEnvironment{sidebyside}{mmmm}
+  {\begin{figure}\begin{tcbraster}
+    [sbsstyle,raster columns=#1,
+    raster left skip=#2\linewidth,raster right skip=#3\linewidth,raster column skip=#4\linewidth]}
+  {\end{tcbraster}\end{figure}}
+\NewTColorBox{sbsheading}{m}{sbsheadingstyle,width=#1\linewidth}
+\NewTColorBox{sbspanel}{mO{top}}{sbspanelstyle,width=#1\linewidth,valign=#2}
+\NewTColorBox{sbscaption}{m}{sbscaptionstyle,width=#1\linewidth}
 %% extpfeil package for certain extensible arrows,
 %% as also provided by MathJax extension of the same name
 %% NB: this package loads mtools, which loads calc, which redefines
@@ -1795,13 +1811,9 @@ The most popular mathematician in the world is throwing a party for all of his f
 At the warm-up event for Oscar's All Star Hot Dog Eating Contest, Al ate one hot dog. Bob then showed him up by eating three hot dogs. Not to be outdone, Carl ate five. This continued with each contestant eating two more hot dogs than the previous contestant. How many hot dogs did Zeno (the 26th and final contestant) eat? How many hot dogs were eaten all together?%
 \item\hypertarget{li-7}{}\hypertarget{p-30}{}%
 After excavating for weeks, you finally arrive at the burial chamber. The room is empty except for two large chests. On each is carved a message (strangely in English):%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.8\linewidth}{!}{{
+\begin{sidebyside}{1}{0.1}{0.1}{0}
+\begin{sbspanel}{0.8}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}
           \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=3cm, minimum width=3.5cm, text width=3.5cm, align=center] (a) { If this chest is empty, then the other chest's message is true.};
           \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=3cm, minimum width=3.5cm, text width=3.5cm, align=center, right=of a] {
@@ -1809,22 +1821,9 @@ After excavating for weeks, you finally arrive at the burial chamber. The room i
               };
       \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.1\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.8\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-31}{}%
 You know exactly one of these messages is true. What should you do?%
@@ -2636,35 +2635,19 @@ Here we are claiming that no element we find will make \(P(n)\) true.  The only 
 \item[10.]\hypertarget{exercise-10}{}\noindent%
 \hypertarget{p-271}{}%
 Suppose \(P(x,y)\) is some binary predicate defined on a very small domain of discourse: just the integers 1, 2, 3, and 4.  For each of the 16 pairs of these numbers, \(P(x,y)\) is either true or false, according to the following table (\(x\) values are rows, \(y\) values are columns).%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAtabular\else\newsavebox{\panelboxAtabular}\fi%
-\savebox{\panelboxAtabular}{%
-\raisebox{\depth}{\parbox{0.5\linewidth}{\centering\begin{tabular}{lllll}
+\begin{sidebyside}{1}{0.25}{0.25}{0}
+\begin{sbspanel}{0.5}
+{\centering%
+\begin{tabular}{lllll}
 \multicolumn{1}{rA}{}&1&2&3&4\tabularnewline\hrulethin
 \multicolumn{1}{rA}{1}&T&F&F&F\tabularnewline[0pt]
 \multicolumn{1}{rA}{2}&F&T&T&F\tabularnewline[0pt]
 \multicolumn{1}{rA}{3}&T&T&T&T\tabularnewline[0pt]
 \multicolumn{1}{rA}{4}&F&F&F&F
 \end{tabular}
-}}}
-\ifdefined\phAtabular\else\newlength{\phAtabular}\fi%
-\setlength{\phAtabular}{\ht\panelboxAtabular+\dp\panelboxAtabular}
-\settototalheight{\phAtabular}{\usebox{\panelboxAtabular}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAtabular}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.25\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.5\linewidth}\usebox{\panelboxAtabular}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+\par}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-272}{}%
 For example, \(P(1,3)\) is false, as indicated by the F in the first row, third column.  Use the table to decide whether the following statements are true or false.%
@@ -3267,56 +3250,30 @@ Let \(A = \{1,2\}\) and \(B = \{3,4,5\}\). Find \(A \times B\) and \(A \times A\
 \subsection[{Venn Diagrams}]{Venn Diagrams}\label{subsection-7}
 \hypertarget{p-444}{}%
 \index{Venn diagram} There is a very nice visual tool we can use to represent operations on sets. A \terminology{Venn diagram} displays sets as intersecting circles. We can shade the region we are talking about when we carry out an operation. We can also represent cardinality of a particular set by putting the number in the corresponding region.%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.34\linewidth}{!}{{
+\begin{sidebyside}{2}{0.08}{0.08}{0.16}
+\begin{sbspanel}{0.34}
+\resizebox{\linewidth}{!}{{
             \begin{tikzpicture}[fill=gray!50,scale=0.85]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\ifdefined\panelboxBimage\else\newsavebox{\panelboxBimage}\fi%
-\begin{lrbox}{\panelboxBimage}
-\resizebox{0.34\linewidth}{!}{{
+}
+\end{sbspanel}
+\begin{sbspanel}{0.34}
+\resizebox{\linewidth}{!}{{
             \begin{tikzpicture}[scale=.60, fill=gray!50]
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phBimage\else\newlength{\phBimage}\fi%
-\setlength{\phBimage}{\ht\panelboxBimage+\dp\panelboxBimage}
-\settototalheight{\phBimage}{\usebox{\panelboxBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0.08\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.08\linewidth}%
-\begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.34\linewidth}\usebox{\panelboxAimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.34\linewidth}\usebox{\panelboxBimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-445}{}%
 Each circle represents a set. The rectangle containing the circles represents the universe. To represent combinations of these sets, we shade the corresponding region. For example, we could draw \(A \cap B\) as:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.34\linewidth}{!}{{
+\begin{sidebyside}{1}{0.33}{0.33}{0}
+\begin{sbspanel}{0.34}
+\resizebox{\linewidth}{!}{{
         \begin{tikzpicture}[fill=gray!50,scale=0.85]
 	\begin{scope}
 	\clip \circleA;
@@ -3325,32 +3282,15 @@ Each circle represents a set. The rectangle containing the circles represents th
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.33\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.34\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-446}{}%
 Here is a representation of \(A \cap \bar B\), or equivalently \(A \setminus B\):%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.34\linewidth}{!}{{
+\begin{sidebyside}{1}{0.33}{0.33}{0}
+\begin{sbspanel}{0.34}
+\resizebox{\linewidth}{!}{{
         \begin{tikzpicture}[fill=gray!50,scale=0.85]
 	\begin{scope}
 	\clip \twosetbox \circleB;
@@ -3359,32 +3299,15 @@ Here is a representation of \(A \cap \bar B\), or equivalently \(A \setminus B\)
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.33\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.34\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-447}{}%
 A more complicated example is \((B \cap C) \cup (C \cap \bar A)\), as seen below.%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.26\linewidth}{!}{{
+\begin{sidebyside}{1}{0.37}{0.37}{0}
+\begin{sbspanel}{0.26}
+\resizebox{\linewidth}{!}{{
         \begin{tikzpicture}[fill=gray!50,scale=0.65]
 	\fill \circleC;
 	\begin{scope}
@@ -3398,22 +3321,9 @@ A more complicated example is \((B \cap C) \cup (C \cap \bar A)\), as seen below
  \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.37\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.26\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-448}{}%
 Notice that the shaded regions above could also be arrived at in another way. We could have started with all of \(C\), then excluded the region where \(C\) and \(A\) overlap outside of \(B\). That region is \((A \cap C) \cap \bar B\). So the above Venn diagram also represents \(C \cap \bar{\left((A\cap C)\cap \bar B\right)}.\) So using just the picture, we have determined that%
@@ -3653,13 +3563,9 @@ Draw a Venn diagram to represent each of the following: \leavevmode%
 \par\smallskip
 \item[8.]\hypertarget{exercise-35}{}\hypertarget{p-532}{}%
 Describe a set in terms of \(A\) and \(B\) (using set notation) which has the following Venn diagram:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.2\linewidth}{!}{{
+\begin{sidebyside}{1}{0.4}{0.4}{0}
+\begin{sbspanel}{0.2}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[fill=gray!50, scale=0.5]
 \scope
 \clip (-2,-2) rectangle (2,2)
@@ -3676,22 +3582,9 @@ Describe a set in terms of \(A\) and \(B\) (using set notation) which has the fo
     (-1.5,-1.5) rectangle (2.5,1.5);
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.4\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.2\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par\smallskip
 \item[9.]\hypertarget{exercise-36}{}\hypertarget{p-533}{}%
 Let \(A = \{a, b, c, d\}\). Find \(\pow(A)\).%
@@ -3741,31 +3634,16 @@ The following are all examples of functions: \leavevmode%
 \(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g(1) = c\), \(g(2) = a\) and \(g(3) = a\). The domain is the set \(\{1,2,3\}\), the codomain is the set \(\{a,b,c\}\) and the range is the set \(\{a,c\}\). Note that \(g(2)\) and \(g(3)\) are the same element of the codomain. This is okay since each element in the domain still has only one output.%
 \item\hypertarget{li-370}{}\hypertarget{p-548}{}%
 \(h:\{1,2,3,4\} \to \N\) defined by the table:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAtabular\else\newsavebox{\panelboxAtabular}\fi%
-\savebox{\panelboxAtabular}{%
-\raisebox{\depth}{\parbox{1\linewidth}{\centering\begin{tabular}{lllll}
+\begin{sidebyside}{1}{0}{0}{0}
+\begin{sbspanel}{1}
+{\centering%
+\begin{tabular}{lllll}
 \multicolumn{1}{cA}{\(x\)}&1&2&3&4\tabularnewline\hrulethin
 \multicolumn{1}{cA}{\(g(x)\)}&3&6&9&12
 \end{tabular}
-}}}
-\ifdefined\phAtabular\else\newlength{\phAtabular}\fi%
-\setlength{\phAtabular}{\ht\panelboxAtabular+\dp\panelboxAtabular}
-\settototalheight{\phAtabular}{\usebox{\panelboxAtabular}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAtabular}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{1\linewidth}\usebox{\panelboxAtabular}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+\par}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-549}{}%
 Here the domain is the finite set \(\{1,2,3,4\}\) and to codomain is the set of natural numbers, \(\N\).  At first you might think this function is the same as \(f\) defined above.  It is absolutely not.  Even though the rule is the same, the domain and codomain are different, so these are two different functions.%
@@ -3795,13 +3673,9 @@ Some calculus textbooks talk about the \emph{Rule of Four}: that every function 
 \par
 \hypertarget{p-555}{}%
 Describing a function graphically usually means drawing the graph of the function: plotting the points on the plain. We can do this, and might get a graph like the following for a function \(f:\{1,2,3\} \to \{1,2,3\}\).%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.3\linewidth}{!}{{
+\begin{sidebyside}{1}{0.35}{0.35}{0}
+\begin{sbspanel}{0.3}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.75]
   \draw[thin, gray!50] (0,0) grid (3.5, 3.5);
   \draw[->, thick] (0,0) -- (0,3.5);
@@ -3809,57 +3683,27 @@ Describing a function graphically usually means drawing the graph of the functio
   \fill (1,2) circle (3pt) (2,1) circle (3pt) (3,3) circle (3pt);
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.35\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.3\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-556}{}%
 It would be absolutely WRONG to connect the dots or try to fit them to some curve. There are only three elements in the domain. A curve would mean that the domain contains an entire interval of real numbers.%
 \par
 \hypertarget{p-557}{}%
 Here is another way to represent that same function:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.17\linewidth}{!}{{
+\begin{sidebyside}{1}{0.415}{0.415}{0}
+\begin{sbspanel}{0.17}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.85]
   \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
   \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
   \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.415\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.17\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-558}{}%
 This shows that the function \(f\) sends 1 to 2, 2 to 1 and 3 to 3: just follow the arrows.%
@@ -3876,31 +3720,16 @@ This describes exactly the same function as above, but we can all agree is a rid
 \par
 \hypertarget{p-561}{}%
 Since we will so often use functions with small domains and codomains, let's adopt some notation to describe them.  All we need is some clear way of denoting the image of each element in the domain. In fact, writing a table of values would work perfectly:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAtabular\else\newsavebox{\panelboxAtabular}\fi%
-\savebox{\panelboxAtabular}{%
-\raisebox{\depth}{\parbox{1\linewidth}{\centering\begin{tabular}{llllll}
+\begin{sidebyside}{1}{0}{0}{0}
+\begin{sbspanel}{1}
+{\centering%
+\begin{tabular}{llllll}
 \multicolumn{1}{cA}{\(x\)}&0&1&2&3&4\tabularnewline\hrulethin
 \multicolumn{1}{cA}{\(f(x)\)}&3&3&2&4&1
 \end{tabular}
-}}}
-\ifdefined\phAtabular\else\newlength{\phAtabular}\fi%
-\setlength{\phAtabular}{\ht\panelboxAtabular+\dp\panelboxAtabular}
-\settototalheight{\phAtabular}{\usebox{\panelboxAtabular}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAtabular}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{1\linewidth}\usebox{\panelboxAtabular}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+\par}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-562}{}%
 We simplify this further by writing this as a matrix with each input directly over its output:%
@@ -3914,13 +3743,9 @@ One advantage of the two-line notation over the arrow diagrams is that it is har
 \begin{example}[]\label{example-18}
 \hypertarget{p-564}{}%
 Which of the following diagrams represent a function? Let \(X = \{1,2,3,4\}\) and \(Y = \{a,b,c,d\}\).%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.25\linewidth}{!}{{
+\begin{sidebyside}{3}{0.0416666666666667}{0.0416666666666667}{0.0833333333333333}
+\begin{sbspanel}{0.25}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
   \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
   \draw[->] (-.5,1) node[above] {2} -- (-1.5,0) node[below] {\(a\)};
@@ -3929,14 +3754,10 @@ Which of the following diagrams represent a function? Let \(X = \{1,2,3,4\}\) an
   \node[above] at (0,1.5) {$f:X \to Y$};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\ifdefined\panelboxBimage\else\newsavebox{\panelboxBimage}\fi%
-\begin{lrbox}{\panelboxBimage}
-\resizebox{0.25\linewidth}{!}{{
+}
+\end{sbspanel}
+\begin{sbspanel}{0.25}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
   \draw[->] (-1.5,1) node[above] {1} -- (1.5,0) node[below] {\(d\)};
   \draw[->] (-.5,1) node[above] {2} -- (-1.6,0) node[below] {\(a\)};
@@ -3946,14 +3767,10 @@ Which of the following diagrams represent a function? Let \(X = \{1,2,3,4\}\) an
   \node[above] at (0,1.5) { $g:X \to Y$};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phBimage\else\newlength{\phBimage}\fi%
-\setlength{\phBimage}{\ht\panelboxBimage+\dp\panelboxBimage}
-\settototalheight{\phBimage}{\usebox{\panelboxBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBimage}}
-\ifdefined\panelboxCimage\else\newsavebox{\panelboxCimage}\fi%
-\begin{lrbox}{\panelboxCimage}
-\resizebox{0.25\linewidth}{!}{{
+}
+\end{sbspanel}
+\begin{sbspanel}{0.25}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
   \draw (-1.5,1) node[above] {1};
   \draw[->] (-.5,1) node[above] {2} (-.6,1) -- (-1.5,0) node[below] {\(a\)};
@@ -3964,24 +3781,9 @@ Which of the following diagrams represent a function? Let \(X = \{1,2,3,4\}\) an
   \node[above] at (0,1.5) {$h:X \to Y$};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phCimage\else\newlength{\phCimage}\fi%
-\setlength{\phCimage}{\ht\panelboxCimage+\dp\panelboxCimage}
-\settototalheight{\phCimage}{\usebox{\panelboxCimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phCimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0.0416666666666667\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.0416666666666667\linewidth}%
-\begin{tabular}{@{}*{3}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.25\linewidth}\usebox{\panelboxAimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.25\linewidth}\usebox{\panelboxBimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.25\linewidth}\usebox{\panelboxCimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par\smallskip%
 \noindent\textbf{Solution.}\hypertarget{solution-40}{}\quad%
 \hypertarget{p-565}{}%
@@ -3993,13 +3795,9 @@ f= \begin{pmatrix} 1 \amp 2 \amp 3 \amp 4 \\ d \amp a \amp c \amp b \end{pmatrix
 \par
 \hypertarget{p-566}{}%
 However, \(h\) is NOT a function. In fact, it fails for two reasons. First, the element 1 from the domain has not been mapped to any element from the codomain. Second, the element 2 from the domain has been mapped to more than one element from the codomain (\(a\) and \(c\)). Note that either one of these problems is enough to make a rule not a function. In general, neither of the following mappings are functions:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.18\linewidth}{!}{{
+\begin{sidebyside}{2}{0.1375}{0.1375}{0.275}
+\begin{sbspanel}{0.18}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
   \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
   \draw[->] (-1, 1) -- (-.5,0);
@@ -4007,14 +3805,10 @@ However, \(h\) is NOT a function. In fact, it fails for two reasons. First, the 
   \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1);
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\ifdefined\panelboxBimage\else\newsavebox{\panelboxBimage}\fi%
-\begin{lrbox}{\panelboxBimage}
-\resizebox{0.27\linewidth}{!}{{
+}
+\end{sbspanel}
+\begin{sbspanel}{0.27}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=0.9]
    \fill (-1, 1.2) circle (.1) (0,1.2) circle (.1) (1, 1.2) circle (.1);
    \draw[->] (-1.1, 1) -- (-1.5, 0);
@@ -4024,23 +3818,9 @@ However, \(h\) is NOT a function. In fact, it fails for two reasons. First, the 
    \draw (-.5, -0.2) circle (.1) (.5, -0.2) circle (.1) (-1.5, -0.2) circle (.1) (1.5, -0.2) circle (.1);
  \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phBimage\else\newlength{\phBimage}\fi%
-\setlength{\phBimage}{\ht\panelboxBimage+\dp\panelboxBimage}
-\settototalheight{\phBimage}{\usebox{\panelboxBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0.1375\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.1375\linewidth}%
-\begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.18\linewidth}\usebox{\panelboxAimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.27\linewidth}\usebox{\panelboxBimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-567}{}%
 It might also be helpful to think about how you would write the two-line notation for \(h\). We would have something like:%
@@ -4051,31 +3831,16 @@ There is nothing under 1 (bad) and we needed to put more than one thing under 2 
 \end{example}
 \hypertarget{p-568}{}%
 We will also be interested in functions with domain \(\N\).  Here two-line notation is no good, but describing the function algebraically is often possible.  Even tables are a little awkward, since they do not describe the function completely.  For example, consider the function \(f:\N \to \N\) given by the table below.%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAtabular\else\newsavebox{\panelboxAtabular}\fi%
-\savebox{\panelboxAtabular}{%
-\raisebox{\depth}{\parbox{1\linewidth}{\centering\begin{tabular}{llllllll}
+\begin{sidebyside}{1}{0}{0}{0}
+\begin{sbspanel}{1}
+{\centering%
+\begin{tabular}{llllllll}
 \multicolumn{1}{cA}{\(x\)}&0&1&2&3&4&5&\(\ldots\)\tabularnewline\hrulethin
 \multicolumn{1}{cA}{\(f(x)\)}&0&1&4&9&16&25&\(\ldots\)
 \end{tabular}
-}}}
-\ifdefined\phAtabular\else\newlength{\phAtabular}\fi%
-\setlength{\phAtabular}{\ht\panelboxAtabular+\dp\panelboxAtabular}
-\settototalheight{\phAtabular}{\usebox{\panelboxAtabular}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAtabular}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{1\linewidth}\usebox{\panelboxAtabular}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+\par}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-569}{}%
 Have I given you enough entries for you to be able to determine \(f(6)\)?  You might guess that \(f(6) = 36\), but there is no way for you to \emph{know} this for sure.  Maybe I am being a jerk and intended \(f(6) = 42\).  In fact, for every natural number \(n\), there is a function that agrees with the table above, but for which \(f(6) = n\).%
@@ -4167,13 +3932,9 @@ In the examples above, you may have noticed that sometimes there are elements of
 \par
 \hypertarget{p-589}{}%
 In pictures:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.3\linewidth}{!}{{
+\begin{sidebyside}{2}{0.1}{0.1}{0.2}
+\begin{sbspanel}{0.3}
+\resizebox{\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-1,0);
@@ -4184,14 +3945,10 @@ In pictures:%
   \node[below] at (0,-.5) {Surjective};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\ifdefined\panelboxBimage\else\newsavebox{\panelboxBimage}\fi%
-\begin{lrbox}{\panelboxBimage}
-\resizebox{0.3\linewidth}{!}{{
+}
+\end{sbspanel}
+\begin{sbspanel}{0.3}
+\resizebox{\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-1.1,0);
@@ -4202,23 +3959,9 @@ In pictures:%
   \node[below] at (0,-.5) {Not surjective};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phBimage\else\newlength{\phBimage}\fi%
-\setlength{\phBimage}{\ht\panelboxBimage+\dp\panelboxBimage}
-\settototalheight{\phBimage}{\usebox{\panelboxBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0.1\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.1\linewidth}%
-\begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.3\linewidth}\usebox{\panelboxAimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.3\linewidth}\usebox{\panelboxBimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \begin{example}[]\label{example-21}
 \hypertarget{p-590}{}%
 Which functions are surjective (i.e., onto)?%
@@ -4230,35 +3973,18 @@ Which functions are surjective (i.e., onto)?%
 \item\hypertarget{li-380}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g = \begin{pmatrix}1 \amp 2 \amp 3 \\ c \amp a \amp a \end{pmatrix}\).%
 \item\hypertarget{li-381}{}\hypertarget{p-592}{}%
 \(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.2\linewidth}{!}{{
+\begin{sidebyside}{1}{0.4}{0.4}{0}
+\begin{sbspanel}{0.2}
+\resizebox{\linewidth}{!}{{
             \begin{tikzpicture}
   \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
   \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
   \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.4\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.2\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \end{enumerate}
 %
 \par\smallskip%
@@ -4277,13 +4003,9 @@ To be a function, a rule cannot assign a single element of the domain to two or 
 \par
 \hypertarget{p-595}{}%
 In pictures:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.4\linewidth}{!}{{
+\begin{sidebyside}{2}{0.05}{0.05}{0.1}
+\begin{sbspanel}{0.4}
+\resizebox{\linewidth}{!}{{
   \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-2,0);
@@ -4294,14 +4016,10 @@ In pictures:%
     \node[below] at (0,-.5) {Injective};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\ifdefined\panelboxBimage\else\newsavebox{\panelboxBimage}\fi%
-\begin{lrbox}{\panelboxBimage}
-\resizebox{0.4\linewidth}{!}{{
+}
+\end{sbspanel}
+\begin{sbspanel}{0.4}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}
   \fill (-1.5, 1.2) circle (.1) (-.5,1.2) circle (.1) (.5, 1.2) circle (.1) (1.5,1.2) circle (.1);
   \draw[->] (-1.5, 1) -- (-2,0);
@@ -4312,23 +4030,9 @@ In pictures:%
     \node[below] at (0,-.5) {Not injective};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phBimage\else\newlength{\phBimage}\fi%
-\setlength{\phBimage}{\ht\panelboxBimage+\dp\panelboxBimage}
-\settototalheight{\phBimage}{\usebox{\panelboxBimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phBimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0.05\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.05\linewidth}%
-\begin{tabular}{@{}*{2}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.4\linewidth}\usebox{\panelboxAimage}\end{minipage}&
-\begin{minipage}[c][\panelmax][t]{0.4\linewidth}\usebox{\panelboxBimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \begin{example}[]\label{example-22}
 \hypertarget{p-596}{}%
 Which functions are injective (i.e., one-to-one)?%
@@ -4340,35 +4044,18 @@ Which functions are injective (i.e., one-to-one)?%
 \item\hypertarget{li-386}{}\(g: \{1,2,3\} \to \{a,b,c\}\) defined by \(g = \begin{pmatrix}1 \amp 2 \amp 3 \\ c \amp a \amp a \end{pmatrix}\).%
 \item\hypertarget{li-387}{}\hypertarget{p-598}{}%
 \(h:\{1,2,3\} \to \{1,2,3\}\) defined as follows:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.2\linewidth}{!}{{
+\begin{sidebyside}{1}{0.4}{0.4}{0}
+\begin{sbspanel}{0.2}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}
   \draw[->] (-1,1) node[above] {1} -- (0,0) node[below] {2};
   \draw[->] (0,1) node[above] {2} -- (-1,0) node[below] {1};
   \draw[->] (1,1) node[above] {3} -- (1,0) node[below] {3};
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.4\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.2\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \end{enumerate}
 %
 \par\smallskip%
@@ -4647,31 +4334,16 @@ Write out all functions \(f: \{1,2\} \to \{a,b,c\}\) (in two-line notation). How
 \par\smallskip
 \item[3.]\hypertarget{exercise-49}{}\hypertarget{p-679}{}%
 Consider the function \(f:\{1,2,3,4,5\} \to \{1,2,3,4\}\) given by the table below:%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAtabular\else\newsavebox{\panelboxAtabular}\fi%
-\savebox{\panelboxAtabular}{%
-\raisebox{\depth}{\parbox{1\linewidth}{\centering\begin{tabular}{llllll}
+\begin{sidebyside}{1}{0}{0}{0}
+\begin{sbspanel}{1}
+{\centering%
+\begin{tabular}{llllll}
 \multicolumn{1}{cA}{\(x\)}&1&2&3&4&5\tabularnewline\hrulethin
 \multicolumn{1}{cA}{\(f(x)\)}&3&2&4&1&2
 \end{tabular}
-}}}
-\ifdefined\phAtabular\else\newlength{\phAtabular}\fi%
-\setlength{\phAtabular}{\ht\panelboxAtabular+\dp\panelboxAtabular}
-\settototalheight{\phAtabular}{\usebox{\panelboxAtabular}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAtabular}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{1\linewidth}\usebox{\panelboxAtabular}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+\par}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-680}{}%
 \leavevmode%
@@ -4687,13 +4359,9 @@ Write the function using two-line notation.%
 \par\smallskip
 \item[4.]\hypertarget{exercise-50}{}\hypertarget{p-688}{}%
 Consider the function \(f:\{1,2,3,4\} \to \{1,2,3,4\}\) given by the graph below.%
-% group protects changes to lengths, releases boxes (?)
-{% begin: group for a single side-by-side
-% set panel max height to practical minimum, created in preamble
-\setlength{\panelmax}{0pt}
-\ifdefined\panelboxAimage\else\newsavebox{\panelboxAimage}\fi%
-\begin{lrbox}{\panelboxAimage}
-\resizebox{0.4\linewidth}{!}{{
+\begin{sidebyside}{1}{0.3}{0.3}{0}
+\begin{sbspanel}{0.4}
+\resizebox{\linewidth}{!}{{
 \begin{tikzpicture}[scale=1]
   \draw[thin, gray!50] (0,0) grid (4.5, 4.5);
   \draw[<->, thick] (0,4.5) node[left] {\(f(x)\)} -- (0,0) -- (4.5,0) node[below right] {\(x\)};
@@ -4702,22 +4370,9 @@ Consider the function \(f:\{1,2,3,4\} \to \{1,2,3,4\}\) given by the graph below
   \fill (1,3) circle (.1) (2,4) circle (.1) (3,1) circle (.1) (4,3) circle (.1);
 \end{tikzpicture}
 }
-}\end{lrbox}
-\ifdefined\phAimage\else\newlength{\phAimage}\fi%
-\setlength{\phAimage}{\ht\panelboxAimage+\dp\panelboxAimage}
-\settototalheight{\phAimage}{\usebox{\panelboxAimage}}
-\setlength{\panelmax}{\maxof{\panelmax}{\phAimage}}
-\leavevmode%
-% begin: side-by-side as tabular
-% \tabcolsep change local to group
-\setlength{\tabcolsep}{0\linewidth}
-% @{} suppress \tabcolsep at extremes, so margins behave as intended
-\par\medskip\noindent
-\hspace*{0.3\linewidth}%
-\begin{tabular}{@{}*{1}{c}@{}}
-\begin{minipage}[c][\panelmax][t]{0.4\linewidth}\usebox{\panelboxAimage}\end{minipage}\end{tabular}\\
-% end: side-by-side as tabular
-}% end: group for a single side-by-side
+}
+\end{sbspanel}
+\end{sidebyside}
 \par
 \hypertarget{p-689}{}%
 \leavevmode%
@@ -4732,142 +4387,224 @@ Write the function using two-line notation.%
 %
 \par\smallskip
 \item[5.]\hypertarget{exercise-51}{}\hypertarget{p-697}{}%
-For each function given below, determine whether or not the function is injective and whether or not the function is surjective. \leavevmode%
+Consider the function \(f:\N \to \N\) given \emph{recursively} by \(f(0) = 1\) and \(f(n+1) = 2\cdot f(n)\).  Find \(f(10)\).%
+\par\smallskip
+\item[6.]\hypertarget{exercise-52}{}\hypertarget{p-699}{}%
+Suppose \(f:\N to \N\) satisfies the recurrence \(f(n+1) = f(n) + 3\).  Note that this is not enough information to define the function, since we don't have an initial condition. For each of the initial conditions below, find the value of \(f(5)\). \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-443}{}\(f:\N \to \N\) given by \(f(n) = n+4\).%
-\item\hypertarget{li-444}{}\(f:\Z \to \Z\) given by \(f(n) = n+4\).%
-\item\hypertarget{li-445}{}\(f:\Z \to \Z\) given by \(f(n) = 5n - 8\).%
-\item\hypertarget{li-446}{}\(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n/2 \amp  \text{ if } n \text{ is even} \\ (n+1)/2 \amp \text{ if } n \text{ is odd} . \end{cases}\)%
+\item\hypertarget{li-443}{}\hypertarget{p-700}{}%
+\(f(0) = 0\).%
+\item\hypertarget{li-444}{}\hypertarget{p-701}{}%
+\(f(0) = 1\).%
+\item\hypertarget{li-445}{}\hypertarget{p-702}{}%
+\(f(0) = 2\).%
+\item\hypertarget{li-446}{}\hypertarget{p-703}{}%
+\(f(0) = 100\).%
 \end{enumerate}
 %
 \par\smallskip
-\item[6.]\hypertarget{exercise-52}{}\hypertarget{p-699}{}%
+\item[7.]\hypertarget{exercise-53}{}\hypertarget{p-709}{}%
+Suppose \(f:\N \to \N\) satisfies the recurrence relation%
+\begin{equation*}
+f(n+1) = \begin{cases} \frac{f(n)}{2} \amp \text{ if } f(n) \text{ is even} \\ 3f(n) + 1 \amp \text{ if } f(n) \text{ is odd}\end{cases}.
+\end{equation*}
+Note that with the initial condition \(f(0) = 1\), the values of the function are: \(f(1) = 4\), \(f(2) = 2\), \(f(3) = 1\), \(f(4) = 4\), and so on, the images cycling through those three numbers.  Thus \(f\) is NOT injective (and also certainly not surjective).  Might it be under other initial conditions?\footnote{It turns out this is a \emph{really} hard question to answer in general.  The \emph{Collatz conjecture} is that no matter what the initial condition is, the function will eventually produce 1 as an output.  This is an open problem in mathematics: nobody knows the answer.\label{fn-3}}%
+\par
+\hypertarget{p-710}{}%
+\leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-451}{}\hypertarget{p-711}{}%
+If \(f\) satisfies the initial condition \(f(0) = 5\), is \(f\) injective?  Explain why or give a specific example of two elements from the domain with the same image.%
+\item\hypertarget{li-452}{}\hypertarget{p-712}{}%
+If \(f\) satisfies the initial condition \(f(0) = 3\), is \(f\) injective?  Explain why or give a specific example of two elements from the domain with the same image.%
+\item\hypertarget{li-453}{}\hypertarget{p-713}{}%
+If \(f\) satisfies the initial condition \(f(0) = 27\), then it turns out that \(f(105) = 10\) and no two numbers less than 105 have the same image.  Could \(f\) be injective?  Explain.%
+\item\hypertarget{li-454}{}\hypertarget{p-714}{}%
+Prove that no matter what initial condition you choose, the function cannot be surjective.%
+\end{enumerate}
+%
+\par\smallskip
+\item[8.]\hypertarget{exercise-54}{}\hypertarget{p-720}{}%
+For each function given below, determine whether or not the function is injective and whether or not the function is surjective. \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-459}{}\(f:\N \to \N\) given by \(f(n) = n+4\).%
+\item\hypertarget{li-460}{}\(f:\Z \to \Z\) given by \(f(n) = n+4\).%
+\item\hypertarget{li-461}{}\(f:\Z \to \Z\) given by \(f(n) = 5n - 8\).%
+\item\hypertarget{li-462}{}\(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n/2 \amp  \text{ if } n \text{ is even} \\ (n+1)/2 \amp \text{ if } n \text{ is odd} . \end{cases}\)%
+\end{enumerate}
+%
+\par\smallskip
+\item[9.]\hypertarget{exercise-55}{}\hypertarget{p-722}{}%
 Let \(A = \{1,2,3,\ldots,10\}\). Consider the function \(f:\pow(A) \to \N\) given by \(f(B) = |B|\). That is, \(f\) takes a subset of \(A\) as an input and outputs the cardinality of that set. \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-451}{}\hypertarget{p-700}{}%
+\item\hypertarget{li-467}{}\hypertarget{p-723}{}%
 Is \(f\) injective? Prove your answer.%
-\item\hypertarget{li-452}{}\hypertarget{p-701}{}%
+\item\hypertarget{li-468}{}\hypertarget{p-724}{}%
 Is \(f\) surjective? Prove your answer.%
-\item\hypertarget{li-453}{}\hypertarget{p-702}{}%
+\item\hypertarget{li-469}{}\hypertarget{p-725}{}%
 Find \(f\inv(1)\).%
-\item\hypertarget{li-454}{}\hypertarget{p-703}{}%
+\item\hypertarget{li-470}{}\hypertarget{p-726}{}%
 Find \(f\inv(0)\).%
-\item\hypertarget{li-455}{}\hypertarget{p-704}{}%
+\item\hypertarget{li-471}{}\hypertarget{p-727}{}%
 Find \(f\inv(12)\).%
 \end{enumerate}
 %
 \par\smallskip
-\item[7.]\hypertarget{exercise-53}{}\hypertarget{p-711}{}%
-Let \(A = \{n \in \N \st 0 \le n \le 999\}\) be the set of all numbers with three or fewer digits. Define the function \(f:A \to \N\) by \(f(abc) = a+b+c\), where \(a\), \(b\), and \(c\) are the digits of the number in \(A\). For example, \(f(253) = 2 + 5 + 3 =  10\). \leavevmode%
+\item[10.]\hypertarget{exercise-56}{}\hypertarget{p-734}{}%
+Let \(X = \{n \in \N \st 0 \le n \le 999\}\) be the set of all numbers with three or fewer digits. Define the function \(f:X \to \N\) by \(f(abc) = a+b+c\), where \(a\), \(b\), and \(c\) are the digits of the number in \(X\) (write numbers less than 100 with leading 0's to make them three digits). For example, \(f(253) = 2 + 5 + 3 =  10\). \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-461}{}\hypertarget{p-712}{}%
+\item\hypertarget{li-477}{}\hypertarget{p-735}{}%
+Let \(A = \{n \in X \st 100 \le x \le 200\}\).  Find \(f(A)\).%
+\item\hypertarget{li-478}{}\hypertarget{p-736}{}%
+Find \(f\inv(\{1,2\})\)%
+\item\hypertarget{li-479}{}\hypertarget{p-737}{}%
 Find \(f\inv(3)\).%
-\item\hypertarget{li-462}{}\hypertarget{p-713}{}%
+\item\hypertarget{li-480}{}\hypertarget{p-738}{}%
 Find \(f\inv(28)\).%
-\item\hypertarget{li-463}{}\hypertarget{p-714}{}%
+\item\hypertarget{li-481}{}\hypertarget{p-739}{}%
 Is \(f\) injective. Explain.%
-\item\hypertarget{li-464}{}\hypertarget{p-715}{}%
+\item\hypertarget{li-482}{}\hypertarget{p-740}{}%
 Is \(f\) surjective. Explain.%
 \end{enumerate}
 %
 \par\smallskip
-\item[8.]\hypertarget{exercise-54}{}\hypertarget{p-719}{}%
-Consider the set \(\Z^2 = \Z \times \Z\), the set of all ordered pairs \((a,b)\) where \(a\) and \(b\) are integers.  Consider a function \(f: \Z^2 \to \N\) given by \(f((a,b)) = |a| + |b|\). \leavevmode%
+\item[11.]\hypertarget{exercise-57}{}\hypertarget{p-746}{}%
+Consider the set \(\N^2 = \N \times \N\), the set of all ordered pairs \((a,b)\) where \(a\) and \(b\) are natural numbers.  Consider a function \(f: \N^2 \to \N\) given by \(f((a,b)) =a+b\). \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-469}{}\hypertarget{p-720}{}%
-Find \(f\inv(2)\).%
-\item\hypertarget{li-470}{}\hypertarget{p-721}{}%
-Give a geometric description of \(f\inv(n)\) for any \(n \ge 1\).%
-\item\hypertarget{li-471}{}\hypertarget{p-722}{}%
-Find a formula for \(|f\inv(n)|\) in terms of \(n\).%
+\item\hypertarget{li-489}{}\hypertarget{p-747}{}%
+Let \(A = \{(a,b) \in \N^2 \st a, b \le 10\}\) Find \(f(A)\).%
+\item\hypertarget{li-490}{}\hypertarget{p-748}{}%
+Find \(f\inv(3)\) and \(f\inv(\{0,1,2,3\})\)%
+\item\hypertarget{li-491}{}\hypertarget{p-749}{}%
+Give geometric descriptions of \(f\inv(n)\) and \(f\inv(\{0, 1, \ldots, n\})\) for any \(n \ge 1\).%
+\item\hypertarget{li-492}{}\hypertarget{p-750}{}%
+Find \(\card{f\inv(8)}\) and \(\card{f\inv(\{0,1, \ldots, 8\})}\)%
 \end{enumerate}
 %
 \par\smallskip
-\item[9.]\hypertarget{exercise-55}{}\hypertarget{p-727}{}%
+\item[12.]\hypertarget{exercise-58}{}\hypertarget{p-756}{}%
 Let \(f:X \to Y\) be some function. Suppose \(3 \in Y\). What can you say about \(f\inv(3)\) if you know, \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-475}{}\hypertarget{p-728}{}%
+\item\hypertarget{li-497}{}\hypertarget{p-757}{}%
 \(f\) is injective? Explain.%
-\item\hypertarget{li-476}{}\hypertarget{p-729}{}%
+\item\hypertarget{li-498}{}\hypertarget{p-758}{}%
 \(f\) is surjective? Explain.%
-\item\hypertarget{li-477}{}\hypertarget{p-730}{}%
+\item\hypertarget{li-499}{}\hypertarget{p-759}{}%
 \(f\) is bijective? Explain.%
 \end{enumerate}
 %
 \par\smallskip
-\item[10.]\hypertarget{exercise-56}{}\hypertarget{p-735}{}%
+\item[13.]\hypertarget{exercise-59}{}\hypertarget{p-764}{}%
 Find a set \(X\) and a function \(f:X \to \N\) so that \(f\inv(0) \cup f\inv(1) = X\).%
 \par\smallskip
-\item[11.]\hypertarget{exercise-57}{}\hypertarget{p-737}{}%
+\item[14.]\hypertarget{exercise-60}{}\hypertarget{p-766}{}%
 What can you deduce about the sets \(X\) and \(Y\) if you know \textellipsis{} \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-481}{}\hypertarget{p-738}{}%
+\item\hypertarget{li-503}{}\hypertarget{p-767}{}%
 there is an injective function \(f:X \to Y\)? Explain.%
-\item\hypertarget{li-482}{}\hypertarget{p-739}{}%
+\item\hypertarget{li-504}{}\hypertarget{p-768}{}%
 there is a surjective function \(f:X \to Y\)? Explain.%
-\item\hypertarget{li-483}{}\hypertarget{p-740}{}%
-there is a bijectitve function \(f:X \to Y\)? Explain.%
+\item\hypertarget{li-505}{}\hypertarget{p-769}{}%
+there is a bijective function \(f:X \to Y\)? Explain.%
 \end{enumerate}
 %
 \par\smallskip
-\item[12.]\hypertarget{exercise-58}{}\hypertarget{p-745}{}%
+\item[15.]\hypertarget{exercise-61}{}\hypertarget{p-774}{}%
 Suppose \(f:X \to Y\) is a function. Which of the following are possible? Explain. \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-487}{}\(f\) is injective but not surjective.%
-\item\hypertarget{li-488}{}\(f\) is surjective but not injective.%
-\item\hypertarget{li-489}{}\(|X| = |Y|\) and \(f\) is injective but not surjective.%
-\item\hypertarget{li-490}{}\(|X| = |Y|\) and \(f\) is surjective but not injective.%
-\item\hypertarget{li-491}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is injective but not surjective.%
-\item\hypertarget{li-492}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is surjective but not injective.%
+\item\hypertarget{li-509}{}\(f\) is injective but not surjective.%
+\item\hypertarget{li-510}{}\(f\) is surjective but not injective.%
+\item\hypertarget{li-511}{}\(|X| = |Y|\) and \(f\) is injective but not surjective.%
+\item\hypertarget{li-512}{}\(|X| = |Y|\) and \(f\) is surjective but not injective.%
+\item\hypertarget{li-513}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is injective but not surjective.%
+\item\hypertarget{li-514}{}\(|X| = |Y|\), \(X\) and \(Y\) are finite, and \(f\) is surjective but not injective.%
 \end{enumerate}
 %
 \par\smallskip
-\item[13.]\hypertarget{exercise-59}{}\hypertarget{p-753}{}%
+\item[16.]\hypertarget{exercise-62}{}\hypertarget{p-782}{}%
 Let \(f:X \to Y\) and \(g:Y \to Z\) be functions.  We can define the \terminology{composition}\index{composition} of \(f\) and \(g\) to be the function \(g\circ f:X \to Z\) for which the image of each \(x \in X\) is \(g(f(x))\).  That is, plug \(x\) into \(f\), then plug the result into \(g\) (just like composition in algebra and calculus).%
 \par
-\hypertarget{p-754}{}%
+\hypertarget{p-783}{}%
 \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-499}{}\hypertarget{p-755}{}%
+\item\hypertarget{li-521}{}\hypertarget{p-784}{}%
 If \(f\) and \(g\) are both injective, must \(g\circ f\) be injective?  Explain.%
-\item\hypertarget{li-500}{}\hypertarget{p-756}{}%
+\item\hypertarget{li-522}{}\hypertarget{p-785}{}%
 If \(f\) and \(g\) are both surjective, must \(g\circ f\) be surjective?  Explain.%
-\item\hypertarget{li-501}{}\hypertarget{p-757}{}%
+\item\hypertarget{li-523}{}\hypertarget{p-786}{}%
 Suppose \(g\circ f\) is injective.  What, if anything, can you say about \(f\) and \(g\)?  Explain.%
-\item\hypertarget{li-502}{}\hypertarget{p-758}{}%
+\item\hypertarget{li-524}{}\hypertarget{p-787}{}%
 Suppose \(g\circ f\) is surjective.  What, if anything, can you say about \(f\) and \(g\)?  Explain.%
 \end{enumerate}
 %
 \par\smallskip
 \par\smallskip%
 \noindent\textbf{Hint.}\hypertarget{hint-4}{}\quad%
-\hypertarget{p-759}{}%
+\hypertarget{p-788}{}%
 Work with some examples.  What if \(f = \twoline{1\amp 2 \amp 3}{a \amp a \amp b}\) and \(g = \twoline{a\amp b \amp c}{5 \amp 6 \amp 7}\)?%
-\item[14.]\hypertarget{exercise-60}{}\hypertarget{p-765}{}%
+\item[17.]\hypertarget{exercise-63}{}\hypertarget{p-794}{}%
 Consider the function \(f:\Z \to \Z\) given by \(f(n) = \begin{cases}n+1 \amp  \text{ if }n\text{ is even} \\ n-3 \amp \text{ if }n\text{ is odd} . \end{cases}\) \leavevmode%
 \begin{enumerate}[label=(\alph*)]
-\item\hypertarget{li-507}{}\hypertarget{p-766}{}%
+\item\hypertarget{li-529}{}\hypertarget{p-795}{}%
 Is \(f\) injective? Prove your answer.%
-\item\hypertarget{li-508}{}\hypertarget{p-767}{}%
+\item\hypertarget{li-530}{}\hypertarget{p-796}{}%
 Is \(f\) surjective? Prove your answer.%
 \end{enumerate}
 %
 \par\smallskip
-\item[15.]\hypertarget{exercise-61}{}\hypertarget{p-773}{}%
+\item[18.]\hypertarget{exercise-64}{}\hypertarget{p-802}{}%
 At the end of the semester a teacher assigns letter grades to each of her students. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?%
 \par\smallskip
-\item[16.]\hypertarget{exercise-62}{}\hypertarget{p-775}{}%
+\item[19.]\hypertarget{exercise-65}{}\hypertarget{p-804}{}%
 In the game of \emph{Hearts}, four players are each dealt 13 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?%
 \par\smallskip
-\item[17.]\hypertarget{exercise-63}{}\hypertarget{p-777}{}%
+\item[20.]\hypertarget{exercise-66}{}\hypertarget{p-806}{}%
 Suppose 7 players are playing 5-card stud. Each player initially receives 5 cards from a deck of 52. Is this a function? If so, what sets make up the domain and codomain, and is the function injective, surjective, bijective, or neither?%
 \par\smallskip
-\item[18.]\hypertarget{exercise-64}{}\hypertarget{p-779}{}%
+\item[21.]\hypertarget{exercise-67}{}\hypertarget{p-808}{}%
 Consider the function \(f:\N \to \N\) that gives the number of handshakes that take place in a room of \(n\) people assuming everyone shakes hands with everyone else.  Give a recursive definition for this function.%
 \par\smallskip
 \par\smallskip%
 \noindent\textbf{Hint.}\hypertarget{hint-5}{}\quad%
-\hypertarget{p-780}{}%
-To finde the recurrence relation, consider how many \emph{new} handshakes occure when person \(n+1\) enters the room.%
+\hypertarget{p-809}{}%
+To find the recurrence relation, consider how many \emph{new} handshakes occur when person \(n+1\) enters the room.%
+\item[22.]\hypertarget{exercise-68}{}\hypertarget{p-812}{}%
+Let \(f:X \to Y\) be a function and \(A \subseteq X\) be a finite subset of the domain.  What can you say about the relationship between \(\card{A}\) and \(\card{f(A)}\)?  Consider both the general case and what happens when you know \(f\) is injective, surjective, or bijective.%
+\par\smallskip
+\item[23.]\hypertarget{exercise-69}{}\hypertarget{p-814}{}%
+Let \(f:X \to Y\) be a function and \(B \subseteq Y\) be a finite subset of the codomain.  What can you say about the relationship between \(\card{B}\) and \(\card{f\inv(B)}\)?  Consider both the general case and what happens when you know \(f\) is injective, surjective, or bijective.%
+\par\smallskip
+\item[24.]\hypertarget{exercise-70}{}\hypertarget{p-817}{}%
+Let \(f:X \to Y\) be a function, \(A \subseteq X\) and \(B \subseteq Y\). \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-533}{}\hypertarget{p-818}{}%
+Is \(f\inv\left(f(A)\right) = A\)?  Always, sometimes, never?  Explain.%
+\item\hypertarget{li-534}{}\hypertarget{p-819}{}%
+Is \(f\left(f\inv(B)\right) = B\)?  Always, sometimes, never?  Explain.%
+\item\hypertarget{li-535}{}\hypertarget{p-820}{}%
+If one or both of the above do not always hold, is there something else you can say?  Will equality always hold for particular types of functions?  Is there some other relationship other than equality that would always hold?  Explore.%
+\end{enumerate}
+%
+\par\smallskip
+\item[25.]\hypertarget{exercise-71}{}\hypertarget{p-825}{}%
+Let \(f:X \to Y\) be a function and \(A, B \subseteq X\) be subsets of the domain. \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-539}{}\hypertarget{p-826}{}%
+Is \(f(A \cup B) = f(A) \cup f(B)\)?  Always, sometimes, or never?  Explain.%
+\item\hypertarget{li-540}{}\hypertarget{p-827}{}%
+Is \(f(A \cap B) = f(A) \cap f(B)\)?  Always, sometimes, or never?  Explain.%
+\end{enumerate}
+%
+\par\smallskip
+\item[26.]\hypertarget{exercise-72}{}\hypertarget{p-831}{}%
+Let \(f:X \to Y\) be a function and \(A, B \subseteq Y\) be subsets of the codomain. \leavevmode%
+\begin{enumerate}[label=(\alph*)]
+\item\hypertarget{li-543}{}\hypertarget{p-832}{}%
+Is \(f\inv(A \cup B) = f\inv(A) \cup f\inv(B)\)?  Always, sometimes, or never?  Explain.%
+\item\hypertarget{li-544}{}\hypertarget{p-833}{}%
+Is \(f\inv(A \cap B) = f\inv(A) \cap f\inv(B)\)?  Always, sometimes, or never?  Explain.%
+\end{enumerate}
+%
+\par\smallskip
 \end{exerciselist}
 \end{document}
