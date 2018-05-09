@@ -101,7 +101,55 @@
 
 
 
+    <exercise>
+      <statement>
+        <p>
+          Write out the first 5 terms (starting with <m>a_0</m> ) of each of the sequences described below.  Then give either a closed formula or a recursive definition for the sequence (whichever is NOT given in the problem).
+          <ol>
+            <li>
+              <p>
+                <m>a_n = \frac{1}{2}(n^2 + n)</m> .
+              </p>
+            </li>
 
+            <li>
+              <p>
+                <m>a_n = 2a_{n-1} - a_{n-2}</m> with <m>a_0 = 0</m> and <m>a_1 = 1</m> .
+              </p>
+            </li>
+
+            <li>
+              <p>
+                <m>a_n = na_{n-1}</m> with <m>a_0 = 1</m> .
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <ol>
+            <li>
+              <p>
+                <m>a_0 = 0</m> , <m>a_1 = 1</m> , <m>a_2 = 3</m> , <m>a_3 = 6</m>  <m>a_4 = 10</m> . The sequence was described by a closed formula.  These are the triangular numbers.  A recursive definition is: <m>a_n = a_{n-1} + n</m> with <m>a_0 = 0</m> .
+              </p>
+            </li>
+
+            <li>
+              <p>
+                This is a recursive definition.  We continue <m>a_2 = 2</m> , <m>a_3 = 3</m> , <m>a_4 = 4</m> , <m>a_5 = 5</m> , and so on.  A closed formula is <m>a_n = n</m> .
+              </p>
+            </li>
+
+            <li>
+              <p>
+                We have <m>a_0 = 1</m> , <m>a_1 = 1</m> , <m>a_2 = 2</m> , <m>a_3 = 6</m> , <m>a_4 = 24</m> , <m>a_5 = 120</m> , and so on.  The closed formula is <m>a_n = n!</m> .
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </exercise>
 
 
 
@@ -226,5 +274,113 @@
         </p>
       </solution> -->
     </exercise>
+
+
+    <exercise>
+      <statement>
+        <p>
+          Consider bit strings with length <m>l</m> and weight <m>k</m> (so strings of <m>l</m> 0's and 1's, including <m>k</m> 1's).  We know how to count the number of these for a fixed <m>l</m> and <m>k</m>.  Now, we will count the number of strings for which the <em>sum</em> of the length and the weight is fixed.  For example, let's count all the bit strings for which <m>l+k = 11</m>.
+          <ol>
+            <li>
+              <p>
+                Find examples of these strings of different lengths.  What is the longest string possible?  What is the shortest?
+              </p>
+            </li>
+
+            <li>
+              <p>
+                How many strings are there of each of these lengths.  Use this to count the total number of strings (with sum 11).
+              </p>
+            </li>
+
+            <li>
+              <p>
+                The other approach: Let <m>n = l+p</m> vary.  How many strings have sum <m>n = 1</m>?  How many have sum <m>n = 2</m>?  And so on.  Find and explain a recurrence relation for the sequence <m>(a_n)</m> which gives the number of strings with sum <m>n</m>.
+              </p>
+            </li>
+
+            <li>
+              <p>
+                Describe what you have found above in terms of Pascal's Triangle.  What pattern have you discovered?
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+      <solution category="instructor">
+        <p>
+          <ol>
+            <li>
+              <p>
+                The longest string is 00000000000.  If we insert a 1, we need to replace two 0's, which shortens the string.  The more 1's, the shorter the string.  We could have 111110, or 101111, or others like this (there will be 6 of them) which are shortest possible.  So all strings range in length between 6 and 11.
+              </p>
+            </li>
+
+            <li>
+              <p>
+                There is 1 string with length 11.  To get a string with length 10, we need one of the 10 spots to be a 1.  Thus there are 10 of these.  To get a string of length 9, we need exactly 2 of the 9 spots to be 1's, so there are <m>{9 \choose 2} = 36</m> such strings.  There will be <m>{8 \choose 3} = 56</m> strings with length 8, another <m>{7 \choose 4} = 35</m> of length 7, and finally <m>{6 \choose 5} = 6</m> of length 6.  All together we have
+                <me>
+                  1 + 10 + 36 + 56 + 35 + 6 = 144 \text{ strings}
+                </me>
+              </p>
+            </li>
+
+            <li>
+              <p>
+                There is 1 string with sum <m>n = 1</m> (just the string 1).  There are two strings with sum <m>n = 2</m> (namely 11, 2).  With sum <m>n = 3</m> we get 3 strings (111, 12, 21), and 5 with sum <m>n = 4</m>.  In fact, we recognize these as the Fibonacci numbers, which satisfy the recurrence <m>f_n = f_{n-1} + f_{n-2}</m> with initial condition here <m>f_1 = 1</m> and <m>f_2 = 2</m>.  The reason this is correct is that to get all the strings with sum <m>n</m>, we can start with a 1 and finish with any string with sum <m>n-1</m>, or start with a 2 and finish with any string with sum <m>n - 2</m>.  If we carry out this recurrence we find <m>f_{11} = 144</m>.
+              </p>
+            </li>
+
+            <li>
+              <p>
+                In this one specific case we have that
+                <me>
+                  {11\choose 0} + {10 \choose 1} + {9 \choose 2} + {8 \choose 3} + {7 \choose 4} + {6 \choose 5} = f_{11}
+                </me>
+                On Pascal's triangle, we recognize that this is the sum of a diagonal line of cells (moving right, then right-up each time).  Indeed, every such sum of diagonals gives a Fibonacci number.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </exercise>
+
+    <exercise>
+      <statement>
+        <p>
+          Bonus:  When bees play chess, they use a hexagonal board like the one shown below.  The queen bee can move one space at a time either directly to the right or angled up-right or down-right (but can never move leftwards).  How many different paths can the queen take from the top left hexagon to the bottom right hexagon?  Explain your answer, and this relates to the previous question.  (As an example, there are three paths to get to the second hexagon on the bottom row.)
+        </p>
+
+          <sidebyside width="70%">
+            <image xml:id="bee-chess">
+              <latex-image>
+                \def\r{1}
+                \newcommand{\hexagon}[3]{
+                  \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+                  \def\y{-\r*#1-sin{30}*\r*#1}
+                  \draw[thick] (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+                  \draw (\x,\y) node{#3};
+                }
+                \begin{tikzpicture}[scale=.75]
+                \hexagon{1}{0}{\tiny start};
+                \hexagon{2}{2}{3}
+                \foreach \i in {1,...,5} {
+                  \foreach \j in {1,2} {
+                    \hexagon{\j}{\i}{};
+                  }
+                }
+                \hexagon{2}{6}{\tiny stop};
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+
+          </sidebyside>
+        </statement>
+        <solution category="instructor">
+          <p>
+            We can code each path through the hive using 0's and 1's as follows:  A 0 corresponds to a move up-right or down-right, a 1 corresponds to a move directly to the right.  Notice that a 1 move can be replaced by two consecutive 0 moves.  This describes a bijection between strings of 0's and 1's with total sum of length and weight equal to 11 and paths through the hive, so there are 144 paths.
+          </p>
+        </solution>
+      </exercise>
 
   </exercises>

@@ -2,6 +2,61 @@
 <exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_seq-induction">
 
 
+  <exercise>
+    <statement>
+      <p>
+        On the way to the market, you exchange your cow for some magic dark chocolate espresso beans.  These beans have the property that every night at midnight, each bean splits into two, effectively doubling your collection.  You decide to take advantage of this and each morning (around 8am) you eat 5 beans.
+        <ol>
+          <li>
+            <p>
+              Explain why it is true that <em>if</em> at noon on day <m>n</m> you have a number of beans ending in a 5, then at noon on day <m>n+1</m> you will still have a number of beans ending in a 5.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Why is the previous fact not enough to conclude that you will always have a number of beans ending in a 5? What additional fact would you need?
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Assuming you have the additional fact in part (b), and have successfully proved the fact in part (a), how do you know that you will always have a number of beans ending in a 5?  Illustrate what is going on by carefully explaining how the two facts above prove that you will have a number of beans ending in a 5 on <em>day 4</em> specifically.  In other words, explain why induction works in this context.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol>
+          <li>
+            <p>
+              If we have a number of beans ending in a 5 and we double it, we will get a number of beans ending in a 0 (since <m>5\cdot 2 = 10</m> ).  Then if we subtract 5, we will once again get a number of beans ending in a 5.  Thus if on any day we have a number ending in a 5, the next day will also have a number ending in a 5.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              If you don't <em>start</em> with a number of beans ending in a 5 (on day 1), the above reasoning is still correct but not helpful.  For example, if you start with a number ending in a 3, the next day you will have a number ending in a 1.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Part (b) is the base case and part (a) is the inductive case.  If on day 1 we have a number ending in a 5 (by part (b)), then on day 2 we will also have a number ending in a 5 (by part (a)).  Then by part (a) again, we will have a number ending in a 5 on day 3.  By part (a) again, this means we will have a number ending in a 5 on day 4
+            </p>
+
+            <p>
+              The proof by induction would say that on <em>every</em> day we will have a number ending in a 5, and this works because we can start with the base case, then use the inductive case over and over until we get up to our desired <m>n</m>.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </solution>
+  </exercise>
+
+
     <exercise>
       <statement>
         <p>
@@ -248,7 +303,6 @@
                   Therefore by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \ge 12</m>.
                 </p>
               </proof>
-
             </solution>
           </exercise>
 
@@ -314,7 +368,41 @@
 
 
 
+    <exercise>
+      <statement>
+        <p>
+          Prove that the sum of the interior angles of a convex <m>n</m>-gon is <m>(n-2)\cdot 180^\circ</m>.  (A convex <m>n</m>-gon is a polygon with <m>n</m> sides for which each interior angle is less than <m>180^\circ</m>.)  Hint: start with <m>(k+1)</m>-gon and divide it up into a <m>k</m>-gon and a triangle.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Every <m>n</m>-gon (for <m>n \ge 4</m> ) can be divided into a triangle and a <m>(n-1)</m>-gon by drawing a line between two vertices one apart.  The sum of the interior angles of the <m>n</m>-gon will then be the sum of the angles in the triangle and the angles in the <m>(n-1)</m>-gon.  This shows how we can go from one case to the next.  Since we are adding a triangle, we are adding <m>180^\circ</m> to the sum, which is what incrementing <m>n</m> in <m>(n-2)\cdot 180^\circ</m> does.
+        </p>
 
+        <proof>
+          <p>
+            Let <m>P(n)</m> be the statement, <q>the sum of the interior angles of a convex <m>n</m>-gon is <m>(n-2)\cdot 180^\circ</m>.</q>  We will prove <m>P(n)</m> is true for all <m>n \ge 3</m>
+          </p>
+
+
+          <p>
+            Base case: When <m>n=3</m>, we have a triangle, and we know the sum of the interior angles of a triangle is <m>180^\circ = (3-2)\cdot 180^\circ</m>.  Thus <m>P(3)</m> is true
+          </p>
+
+            <p>
+              Inductive case: Assume <m>P(k)</m> is true for some arbitrary <m>k \ge 3</m>.  That is, the sum of the angles of any convex <m>k</m>-gon is <m>(k-2)\cdot 180^\circ</m>.  Now consider an arbitrary convex <m>(k+1)</m>-gon.  Draw an edge between two vertices one apart (for example, between the first and third vertices counting clockwise).  Since we have at least 4 vertices, this is a new edge, and divides the <m>k+1</m> -sided polygon into a convex <m>k</m>-gon and a triangle.  The sum of the angles of the <m>(k+1)</m>-gon will be exactly the sum of the angles in the <m>k</m>-gon plus the sum of the angles of the triangle.  But the <m>k</m>-gon has sum of angles <m>(k-2)\cdot 180^\circ</m> (by the inductive hypothesis) and the triangle has sum of angles <m>180^\circ</m>, so together the sum of the interior angles of the <m>(k+1)</m>-gon is
+              <me>
+                (k-2)\cdot 180^\circ + 180^\circ = ((k+1)-2)\cdot 180^\circ
+              </me>
+              Since we can do this for <em>any</em> convex <m>(k+1)</m>-gon, we see that <m>P(k+1)</m> is true
+            </p>
+
+            <p>
+              Therefore, by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n\ge 3</m>.
+            </p>
+          </proof>
+        </solution>
+      </exercise>
 
 
 
@@ -774,5 +862,67 @@
 <!-- The previous problem can be done with simultaneous induction, which could also make a nice problem -->
 
 <!-- Maybe one more double induction problem, without the scafolding? -->
+
+
+<exercise>
+  <statement>
+    <p>
+      Bonus: Given a square, you can cut the square into smaller squares by cutting along lines parallel to the sides of the original square (these lines do not need to travel the entire side length of the original square).  For example, by cutting along the lines below, you will divide a square into 6 smaller squares:
+    </p>
+    <sidebyside width="35%">
+      <image>
+        <latex-image>
+          \begin{tikzpicture}[scale=.75]
+          \draw (0,0) rectangle (3,3) (0,0) rectangle (2,2) (1,2) -- (1,3) (2,2) -- (2,3) (2,2) -- (3,2) (2,1)-- (3,1);
+          \end{tikzpicture}
+        </latex-image>
+      </image>
+    </sidebyside>
+
+    <p>
+      Prove, using strong induction, that it is possible to cut a square into <m>n</m> smaller squares for any <m>n \ge 6</m>.  Hint: you will need three base cases.
+    </p>
+    </statement>
+    <solution>
+      <proof>
+        <p>
+          For each <m>n</m>, let <m>P(n)</m> be the statement <q>You can divide a square into <m>n</m> smaller squares.</q>  We will prove <m>P(n)</m> is true for all <m>n \ge 6</m> using strong induction.
+        </p>
+        <p>
+          First note that you can divide a square into <m>6</m>, <m>7</m>, or <m>8</m> squares as follows:
+        </p>
+        <sidebyside widths="30% 30% 30%">
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=.75]
+              \draw (0,0) rectangle (3,3) (0,0) rectangle (2,2) (1,2) -- (1,3) (2,2) -- (2,3) (2,2) -- (3,2) (2,1)-- (3,1);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=.75]
+              \draw (0,0) rectangle (3,3) (0,1.5) -- (3,1.5) (1.5,0) -- (1.5,3) (0.75,0) -- (0.75, 1.5) (0, 0.75) -- (1.5, 0.75);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=.57]
+              \draw (0,0) rectangle (4,4) (3,0) rectangle (4,1) rectangle (3,2) rectangle (4,3) rectangle (3,4) rectangle (2,3) rectangle (1,4) rectangle (0,3);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+        </sidebyside>
+        <p>
+          Now consider an arbitrary <m>n \lt 8</m> and suppose you can divide a square into <m>k</m> squares, for any <m>6 \le k \lt n</m>.  Then in particular, you can divide a square into <m>n-3</m> squares.  Take any one of the small squares and divide it into 4.  This replaces one of the squares with 4 new ones, increasing the total by 3, giving you <m>n</m> squares.
+        </p>
+        <p>
+          Therefore, by the principle of strong mathematical induction, you can divide a square into <m>n</m> squares for any <m>n \ge 6</m>.
+        </p>
+      </proof>
+    </solution>
+  </exercise>
+
 
   </exercises>
