@@ -1,0 +1,97 @@
+#######################################
+###    Generated from PreTeXt source   
+###    on 2018-05-10T11:08:44-06:00    
+###                                    
+###   http://mathbook.pugetsound.edu   
+###                                    
+#######################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1(Discrete Mathematics)
+## EditionText1()
+## AuthorText1(Oscar Levin)
+## Section1(not reported)
+## Problem1(2.2.4)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context("IntegerFunctions");
+
+####################
+# Body
+####################
+BEGIN_PGML
+How many [`9`]-bit strings (that is, bit strings of length 9) are there which: 
+1.  Start with the sub-string 101? Explain.
+
+    [_____]{64}
+
+
+1.  Have weight 5 (i.e., contain exactly five 1's) and start with the sub-string 101? Explain.
+
+    [_____]{C(6,3)}
+
+
+1.  Either start with [`101`] or end with [`11`] (or both)? Explain.
+
+    [_____]{64 + 128 - 16}
+
+
+1.  Have weight 5 and either start with 101 or end with 11 (or both)? Explain.
+
+    [_____]{51}   
+
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+1.  [`2^6 = 64\text{.}`] You have 2 choices for each of the remaining 6 bits.
+
+
+1.  [`{6 \choose 3} = 20\text{.}`] You need to choose 3 of the remaining 6 bits to be 1's.
+
+
+1.  176. There are 64 strings that start with 101, and another 128 which end with 11 (we choose 1 or 0 for 7 bits, so [`2^7`]). However, we count the strings that start with 101 and end with 11 twice - there are [`16`] such strings ([`2^4`]). So using PIE, we have [`64 + 128 - 16 = 176`]
+
+
+1.  51. There are [`{6 \choose 3} = 20`] strings of weight 5 which start with 101, and another [`{7 \choose 3} = 35`] which end with 11. We have over counted again - there are weight 5 strings which both start with 101 and end with 11, in fact [`{4 \choose 1} = 4`] of them. So all together we have [`20 + 35 - 4 = 51`] strings.   
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();
