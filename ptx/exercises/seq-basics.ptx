@@ -1,102 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_seq_basics">
 
-    <exercise>
-      <statement>
-        <p>
-          Find the closed formula for each of the following sequences by relating them to a well known sequence. Assume the first term given is <m>a_1</m>.
-        </p>
+<!-- Add webwork exercises: -->
+<!-- Find a_5 for some closed formulas and for some recursive formulas -->
+<!-- Say whether a formula is a closed formula or a recurrence relation -->
+<!-- Which recurrence relations agree with the sequence? -->
+<!-- Are there two different sequences that have the same closed formula, recurrence relation, or recursive definition? -->
+<!-- Something about the difference between the value and index -->
 
-        <ol>
-          <li><m>2, 5, 10, 17, 26, \ldots</m></li>
-          <li><m>0, 2, 5, 9, 14, 20, \ldots</m></li>
-          <li><m>8, 12, 17, 23, 30,\ldots</m></li>
-          <li><m>1, 5, 23, 119, 719,\ldots</m></li>
-        </ol>
-      </statement>
-      <solution>
-        <p>
+    <exercise>
+      <webwork>
+        <setup>
+          <pg-code>
+            Context()->variables->are(n => "Real");
+            $ans1 = Formula("n^2 + 1");
+            $ans2 = Formula("(n*(n-1))/2 - 1");
+            $ans3 = Formula("((n+2)*(n+3))/2 + 2");
+            $ans4 = Formula("(n+1)! - 1");
+          </pg-code>
+        </setup>
+        <statement>
+          <p>
+            Find the closed formula for each of the following sequences by relating them to a well known sequence. Assume the first term given is <m>a_1</m>.
+          </p>
+
           <ol>
-            <li><m>a_n = n^2 + 1</m>.</li>
-            <li><m>a_n = \frac{n(n+1)}{2} - 1</m>.</li>
-            <li><m>a_n = \frac{(n+2)(n+3)}{2} + 2</m>.</li>
-            <li><m>a_n = (n+1)! - 1</m> (where <m>n! = 1 \cdot 2 \cdot 3 \cdots n</m>).</li>
+            <li>
+              <p><m>2, 5, 10, 17, 26, \ldots</m></p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans1" width="10"/>
+              </instruction>
+            </li>
+            <li>
+              <p><m>0, 2, 5, 9, 14, 20, \ldots</m></p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans2" width="10"/>
+              </instruction>
+            </li>
+            <li>
+              <p><m>8, 12, 17, 23, 30,\ldots</m></p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans3" width="10"/>
+              </instruction>
+            </li>
+            <li>
+              <p><m>1, 5, 23, 119, 719,\ldots</m></p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans4" width="10"/>
+              </instruction>
+            </li>
           </ol>
-        </p>
-      </solution>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>Note that if we subtract 1 from each term, we get the familiar triangular numbers.  Thus <m>a_n = n^2 + 1</m>.</li>
+              <li>These look like the triangular numbers, only shifted by 1.  We get: <m>a_n = \frac{n(n+1)}{2} - 1</m>.</li>
+              <li>If you subtract 2 from each term, you get triangular numbers, only starting with 6 instead of 1.  So we must shift vertically and horizontally.  <m>a_n = \frac{(n+2)(n+3)}{2} + 2</m>.</li>
+              <li>These seem to grow very quickly.  Further, if we add 1 to each term, we find the factorials, although starting with 2 instead of 1.  This gives, <m>a_n = (n+1)! - 1</m> (where <m>n! = 1 \cdot 2 \cdot 3 \cdots n</m>).</li>
+            </ol>
+          </p>
+        </solution>
+      </webwork>
     </exercise>
 
 
 
     <exercise>
-      <statement>
-        <p>
-          For each sequence given below, find a closed formula for <m>a_n</m>, the <m>n</m>th term of the sequence (assume the first terms are <m>a_0</m>) by relating it to another sequence for which you already know the formula. In each case, briefly say how you got your answers.
+      <webwork>
+        <setup>
+          <pg-code>
+            Context()->variables->are(n => "Real");
+            $ans1 = Formula("2^n + 3");
+            $ans2 = Formula("(n+1)^2 - 1");
+            $ans3 = Formula("(n+2)(n+3)");
+            $ans4 = Formula("(n*(n+1))/2 + n^2");
+          </pg-code>
+        </setup>
+        <statement>
+          <p>
+            For each sequence given below, find a closed formula for <m>a_n</m>, the <m>n</m>th term of the sequence (assume the first terms are <m>a_0</m>) by relating it to another sequence for which you already know the formula. In each case, briefly say how you got your answers.
+
+          <ol>
+            <li>
+              <p>
+                4, 5, 7, 11, 19, 35, <ellipsis/>
+              </p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans1" width="10"/>
+              </instruction>
+            </li>
+            <li>
+              <p>
+                0, 3, 8, 15, 24, 35, <ellipsis/>
+              </p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans2" width="10"/>
+              </instruction>
+            </li>
+            <li>
+              <p>
+                6, 12, 20, 30, 42, <ellipsis/>
+              </p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans3" width="10"/>
+              </instruction>
+            </li>
+            <li>
+              <p>
+                0, 2, 7, 15, 26, 40, 57, <ellipsis/> (Cryptic Hint: these might be called <q>house numbers</q>)
+              </p>
+              <instruction>
+                <m>a_n = </m> <var name="$ans4" width="10"/>
+              </instruction>
+            </li>
+          </ol>
         </p>
-
-        <ol>
-          <li>
-            <p>
-              4, 5, 7, 11, 19, 35, <ellipsis/>
-
-              <!-- <solution>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
                 <p>
-                  If we subtract 3 from each term, we get <m>1, 2, 4, 8, 16, 32, \ldots</m>, which are the powers of 2. So we must shift this sequence up by 3 to get our sequence. Thus
-                  <me>
-                    a_n = 2^n + 3
-                  </me>
-            </p>
-              </solution> -->
-            </p>
-          </li>
-          <li>
-            <p>
-              0, 3, 8, 15, 24, 35, <ellipsis/>
-
-              <!-- <solution>
-                <p>
-                  Add 1 to each term - we get <m>1, 4, 9, 16, 25, 36, \ldots</m>, the square numbers. So maybe our sequence as formula <m>a_n = n^2 - 1</m>. Does this work? <m>a_3 = 8</m>. That is a term of our sequence, but it should be <m>a_2</m>. So we want
-                  <me>
-                    a_n = (n+1)^2 - 1
-                  </me>
-            </p>
-              </solution> -->
-            </p>
-          </li>
-          <li>
-            <p>
-              6, 12, 20, 30, 42, <ellipsis/>
-
-              <!-- <solution>
-                <p>
-                  Each term is even, so let's see what happens when we divide by 2: we get <m>3, 6, 10, 15, 21,\ldots</m>. These are the triangle numbers, but starting at <m>T_2</m>. We know <m>T_n = \frac{n(n+1)}{2}</m>. We want <m>a_0 = 2T_2</m>, <m>a_1 = 2T_3</m>, and so on. In general, <m>a_n = 2T_{n+2}</m>, so
-                  <me>
-                    a_n = (n+2)(n+3)
-                  </me>
+                      If we subtract 3 from each term, we get <m>1, 2, 4, 8, 16, 32, \ldots</m>, which are the powers of 2. So we must shift this sequence up by 3 to get our sequence. Thus
+                      <me>
+                        a_n = 2^n + 3
+                      </me>
                 </p>
+              </li>
+              <li>
+                    <p>
+                      Add 1 to each term - we get <m>1, 4, 9, 16, 25, 36, \ldots</m>, the square numbers. So maybe our sequence as formula <m>a_n = n^2 - 1</m>. Does this work? <m>a_3 = 8</m>. That is a term of our sequence, but it should be <m>a_2</m>. So we want
+                      <me>
+                        a_n = (n+1)^2 - 1
+                      </me>
+                </p>
+              </li>
+              <li>
+                    <p>
+                      Each term is even, so let's see what happens when we divide by 2: we get <m>3, 6, 10, 15, 21,\ldots</m>. These are the triangle numbers, but starting at <m>T_2</m>. We know <m>T_n = \frac{n(n+1)}{2}</m>. We want <m>a_0 = 2T_2</m>, <m>a_1 = 2T_3</m>, and so on. In general, <m>a_n = 2T_{n+2}</m>, so
+                      <me>
+                        a_n = (n+2)(n+3)
+                      </me>
+                    </p>
 
+                    <p>
+                      (This is like a shift by 2 units to the left and a stretch by a factor of 2.)
+                </p>
+              </li>
+              <li>
                 <p>
-                  (This is like a shift by 2 units to the left and a stretch by a factor of 2.)
-            </p>
-              </solution> -->
-            </p>
-          </li>
-          <li>
-            <p>
-              0, 2, 7, 15, 26, 40, 57, <ellipsis/> (Cryptic Hint: these might be called <q>house numbers</q>)
-
-              <!-- <solution>
-                <p>
-                  How far off from triangular number are these? The triangular numbers (starting with <m>T_0</m>) are <m>0, 1, 3, 6, 10, 15, 21, \ldots</m>. The given sequence differs from this by <m>0, 1, 4, 9, 16, 25, 36, \ldots</m> the square numbers! Thus
-                  <me>
-                    a_n = \frac{n(n+1)}{2} + n^2
-                  </me>
-            </p>
-              </solution> -->
-            </p>
-          </li>
-        </ol>
-      </statement>
+                      How far off from triangular number are these? The triangular numbers (starting with <m>T_0</m>) are <m>0, 1, 3, 6, 10, 15, 21, \ldots</m>. The given sequence differs from this by <m>0, 1, 4, 9, 16, 25, 36, \ldots</m> the square numbers! Thus
+                      <me>
+                        a_n = \frac{n(n+1)}{2} + n^2
+                      </me>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+      </webwork>
     </exercise>
 
 

@@ -120,10 +120,10 @@
 <!-- WeBWorK -->
 <!-- There is no default server provided         -->
 <!-- Interactions are with an "anonymous" course -->
-<xsl:param name="webwork.server" select="'https://webwork.pcc.edu'"/>
+<!-- <xsl:param name="webwork.server" select="'https://webwork.pcc.edu'"/>
 <xsl:param name="webwork.course" select="'anonymous'" />
 <xsl:param name="webwork.userID" select="'anonymous'" />
-<xsl:param name="webwork.password" select="'anonymous'" />
+<xsl:param name="webwork.password" select="'anonymous'" /> -->
 
 <!-- Permalinks -->
 <!-- Next to subdivision headings a "paragraph" symbol     -->
