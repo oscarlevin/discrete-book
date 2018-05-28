@@ -35,7 +35,7 @@
 <xsl:param name="exercise.backmatter.answer" select="'yes'" />
 <xsl:param name="exercise.backmatter.solution" select="'yes'" />
 <xsl:param name="webwork.inline.static" select="'no'" />
-<xsl:param name="webwork.divisional.static" select="'no'" />
+<xsl:param name="webwork.divisional.static" select="'yes'" />
 
 
 <!-- Changes to mimic in HTML via CSS/other changes? -->
