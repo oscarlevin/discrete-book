@@ -173,7 +173,7 @@
 <!-- Create a heading for each non-empty collection of solutions -->
 <!-- Format as appropriate LaTeX subdivision for this level      -->
 <!-- But number according to the actual Exercises section        -->
-<xsl:template match="exercises" mode="backmatter">
+<!-- <xsl:template match="exercises" mode="backmatter">
     <xsl:variable name="nonempty" select="(.//hint and $exercise.backmatter.hint='yes') or (.//answer and $exercise.backmatter.answer='yes') or (.//solution and $exercise.backmatter.solution='yes')" />
     <xsl:if test="$nonempty='true'">
         <xsl:text>\</xsl:text>
@@ -185,7 +185,7 @@
         <xsl:text>}&#xa;</xsl:text>
         <xsl:apply-templates select="*" mode="backmatter" />
     </xsl:if>
-</xsl:template>
+</xsl:template> -->
 
 <!-- Create a heading for each non-empty collection of solutions -->
 <!-- Format as appropriate LaTeX subdivision for this level      -->
@@ -214,15 +214,17 @@
 <!-- Set up solution list -->
 <!-- Print exercises with some solution component -->
 <!-- Respect switches about visibility ("knowl" is assumed to be 'no') -->
-<xsl:template match="exercise" mode="backmatter">
-    <xsl:if test="answer or solution"> <!-- revmoed hint, those are not displayed here.  If I move hints to the back, I need to put it back here too -->
+<!-- <xsl:template match="exercise" mode="backmatter">
+    <xsl:if test="answer or solution">  -->
+      <!-- revmoed hint, those are not displayed here.  If I move hints to the back, I need to put it back here too -->
         <!-- Lead with the problem number and some space -->
-        <xsl:text>\noindent\textbf{</xsl:text>
-        <xsl:apply-templates select="." mode="number" /> <!-- changed serial-number to number -->
-        <xsl:text>.} </xsl:text>
-        <xsl:if test="$exercise.backmatter.statement='yes'">
+        <!-- <xsl:text>\noindent\textbf{</xsl:text>
+        <xsl:apply-templates select="." mode="number" />  -->
+        <!-- changed serial-number to number -->
+        <!-- <xsl:text>.} </xsl:text>
+        <xsl:if test="$exercise.backmatter.statement='yes'"> -->
             <!-- TODO: not a "backmatter" template - make one possibly? Or not necessary -->
-            <xsl:apply-templates select="statement" />
+            <!-- <xsl:apply-templates select="statement" />
             <xsl:text>\par\smallskip&#xa;</xsl:text>
         </xsl:if>
         <xsl:if test="hint and $exercise.backmatter.hint='yes'">
@@ -235,7 +237,7 @@
             <xsl:apply-templates select="solution" mode="backmatter" />
         </xsl:if>
     </xsl:if>
-</xsl:template>
+</xsl:template> -->
 
 
 
