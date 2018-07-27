@@ -48,15 +48,15 @@
 <!-- First, an exercise in exercises section.              -->
 <!-- Default is "yes" for every part, so experiment        -->
 <!-- with parameters to make some parts hidden.            -->
-<xsl:param name="exercise.text.statement" select="'yes'" />
-<xsl:param name="exercise.text.hint" select="'no'" />
-<xsl:param name="exercise.text.answer" select="'no'" />
-<xsl:param name="exercise.text.solution" select="'no'" />
-<!-- Second, an exercise in a solutions list in backmatter.-->
-<xsl:param name="exercise.backmatter.statement" select="'no'" />
-<xsl:param name="exercise.backmatter.hint" select="'yes'" />
-<xsl:param name="exercise.backmatter.answer" select="'yes'" />
-<xsl:param name="exercise.backmatter.solution" select="'yes'" />
+<xsl:param name="exercise.inline.hint" select="'yes'" />
+<xsl:param name="exercise.inline.answer" select="'no'" />
+<xsl:param name="exercise.inline.solution" select="'no'" />
+<xsl:param name="exercise.divisional.hint" select="'yes'" />
+<xsl:param name="exercise.divisional.answer" select="'no'" />
+<xsl:param name="exercise.divisional.solution" select="'no'" />
+<xsl:param name="project.hint" select="'yes'" />
+<xsl:param name="project.answer" select="'no'" />
+<xsl:param name="project.solution" select="'no'" />
 <!-- Author tools are for drafts, mostly "todo" items                 -->
 <!-- and "provisional" citations and cross-references                 -->
 <!-- Default is to hide todo's, inline provisionals                   -->

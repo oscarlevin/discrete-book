@@ -25,8 +25,20 @@
 
 
 <!-- Exercises -->
+<xsl:param name="exercise.inline.hint" select="'yes'" />
+<xsl:param name="exercise.inline.answer" select="'yes'" />
+<xsl:param name="exercise.inline.solution" select="'yes'" />
+<xsl:param name="exercise.divisional.hint" select="'yes'" />
+<xsl:param name="exercise.divisional.answer" select="'yes'" />
+<xsl:param name="exercise.divisional.solution" select="'yes'" />
+<xsl:param name="project.hint" select="'yes'" />
+<xsl:param name="project.answer" select="'yes'" />
+<xsl:param name="project.solution" select="'yes'" />
+
+
+
 <!-- HTML: knowlize as available/appropriate -->
-<xsl:param name="exercise.text.statement" select="'yes'" />
+<!-- <xsl:param name="exercise.text.statement" select="'yes'" />
 <xsl:param name="exercise.text.hint" select="'yes'" />
 <xsl:param name="exercise.text.answer" select="'yes'" />
 <xsl:param name="exercise.text.solution" select="'yes'" />
@@ -35,7 +47,7 @@
 <xsl:param name="exercise.backmatter.answer" select="'yes'" />
 <xsl:param name="exercise.backmatter.solution" select="'yes'" />
 <xsl:param name="webwork.inline.static" select="'no'" />
-<xsl:param name="webwork.divisional.static" select="'no'" />
+<xsl:param name="webwork.divisional.static" select="'no'" /> -->
 
 
 <!-- Changes to mimic in HTML via CSS/other changes? -->
