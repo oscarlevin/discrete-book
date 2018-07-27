@@ -35,6 +35,27 @@
 <xsl:param name="project.answer" select="'yes'" />
 <xsl:param name="project.solution" select="'yes'" />
 
+<!-- WeBWorK exercise may be rendered static="yes"    -->
+<!-- TODO: implement middle option static="preview"   -->
+<!-- Or static="no" makes an interactive problem      -->
+<!-- Also in play here are params from -common:       -->
+<!-- exercise.text.statement, exercise.text.hint, exercise.text.solution -->
+<!-- For a divisional exercise, when static="no", that is an intentional -->
+<!-- decision to show the live problem, which means the statement will   -->
+<!-- be shown, regardless of exercise.text.statement. If the problem was -->
+<!-- authored in PTX source, we can respect the values for               -->
+<!-- exercise.text.hint and exercise.text.solution. If the problem       -->
+<!-- source is on the webwork server, then hints and solutions will show -->
+<!-- no matter what.                                                     -->
+<!-- For a divisional exercise, when static="yes", each of the three     -->
+<!-- -common params will be respected. Effectively the content is        -->
+<!-- handled like a non-webwork exercise.                                -->
+<!-- For an inline exercise (webwork or otherwise) statements, hints,    -->
+<!-- and solutions are always shown. The -common params mentioned above  -->
+<!-- do not apply. Whether static is "yes" or "no" doesn't matter.       -->
+<xsl:param name="webwork.inline.static" select="'no'" />
+<xsl:param name="webwork.divisional.static" select="'no'" />
+
 
 
 <!-- HTML: knowlize as available/appropriate -->
