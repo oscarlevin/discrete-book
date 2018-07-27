@@ -240,6 +240,63 @@
 </xsl:template> -->
 
 
+<!-- MINE: Fix for webwork popup formatting: -->
+<!-- answer blank for other kinds of answers                 -->
+<!-- TODO: gradually eliminate "var"'s presence from static  -->
+<!-- coming from a WeBWorK server, similar to how the above  -->
+<!-- replaced var with fillin for quantitative answers.      -->
+<xsl:template match="webwork-reps/static//statement//var[@form]">
+    <xsl:choose>
+        <!-- TODO: make semantic list style in preamble -->
+        <xsl:when test="@form='popup'" >
+            <!-- <xsl:text>\quad(\begin{itemize*}[label=$\square$,leftmargin=3em,itemjoin=\hspace{1em}]&#xa;</xsl:text>
+            <xsl:for-each select="li">
+                <xsl:if test="not(p[.='?']) and not(normalize-space(.)='?')">
+                    <xsl:text>\item{}</xsl:text>
+                    <xsl:apply-templates select='.' />
+                    <xsl:text>&#xa;</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>\end{itemize*})\quad&#xa;</xsl:text> -->
+        </xsl:when>
+        <!-- Radio button alternatives:                                -->
+        <!--     \ocircle (wasysym), \circledcirc (amssymb),           -->
+        <!--     \textopenbullet, \textbigcircle (textcomp)            -->
+        <!-- To adjust in preamble, test on:                           -->
+        <!-- $document-root//webwork-reps/static//var[@form='buttons'] -->
+        <xsl:when test="@form='buttons'" >
+            <xsl:text>\par&#xa;</xsl:text>
+            <xsl:text>\begin{itemize}[label=$\odot$,leftmargin=3em,]&#xa;</xsl:text>
+            <xsl:for-each select="li">
+                <xsl:text>\item{}</xsl:text>
+                <xsl:apply-templates select='.' />
+                <xsl:text>&#xa;</xsl:text>
+            </xsl:for-each>
+            <xsl:text>\end{itemize}&#xa;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@form='checkboxes'" >
+            <xsl:text>\par&#xa;</xsl:text>
+            <xsl:text>\begin{itemize*}[label=$\square$,leftmargin=3em,itemjoin=\hspace{4em plus 1em minus 3em}]&#xa;</xsl:text>
+            <xsl:for-each select="li">
+                <xsl:if test="not(p[.='?']) and not(normalize-space(.)='?')">
+                    <xsl:text>\item{}</xsl:text>
+                    <xsl:apply-templates select='.' />
+                    <xsl:text>&#xa;</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>\end{itemize*}&#xa;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@form='essay'" >
+            <xsl:text>\quad\lbrack Essay Answer\rbrack</xsl:text>
+        </xsl:when>
+    </xsl:choose>
+</xsl:template>
+
+
+
+
+
+
 
 <!-- Set up headers for index -->
 <xsl:template match="index-list">
