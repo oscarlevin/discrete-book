@@ -5,16 +5,21 @@
 
 
       <exercise>
-        <statement>
-          <p>
-            Find <m>3 + 7 + 11+ \cdots + 427</m>.
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <m>\frac{430\cdot 107}{2} = 23005</m>.
-          </p>
-        </solution>
+        <webwork>
+          <statement>
+            <p>
+              Find <m>3 + 7 + 11+ \cdots + 427</m>.
+            </p>
+            <p>
+              <var name="23005" width="5"/>
+            </p>
+          </statement>
+          <solution>
+            <p>
+              <m>\frac{430\cdot 107}{2} = 23005</m>.
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
 
@@ -22,73 +27,116 @@
 
 
       <exercise>
-        <statement>
-          <p>
-            Consider the sequence <m>2, 6, 10, 14, \ldots, 4n + 6</m>.
-          </p>
+        <webwork>
+          <setup>
+            <pg-code>
+              Context()->variables->are(n => "Real");
+              $ans1 = Formula("n+2");
+              $ans2 = Formula("4n+2");
+              $ans3 = Formula("((4n+8)*(n+2))/2");
+            </pg-code>
+          </setup>
+          <statement>
+            <p>
+              Consider the sequence <m>2, 6, 10, 14, \ldots, 4n + 6</m>.
+            </p>
 
-          <p>
-            <ol>
-              <li>
-                <p>
-                  How many terms are there in the sequence?
-                </p>
-              </li>
-              <li>
-                <p>
-                  What is the second-to-last term?
-                </p>
-              </li>
-              <li>
-                <p>
-                  Find the sum of all the terms in the sequence.
-                </p>
-              </li>
-            </ol>
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <ol>
-              <li><m>n+2</m> terms.</li>
-              <li><m>4n+2</m>.</li>
-              <li><m>\frac{(4n+8)(n+2)}{2}</m>.</li>
-            </ol>
-          </p>
-        </solution>
+            <p>
+              <ol>
+                <li>
+                  <p>
+                    How many terms are there in the sequence?
+                  </p>
+                  <p>
+                    <var name="$ans1" width="10"/>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    What is the second-to-last term?
+                  </p>
+                  <p>
+                    <var name="$ans2" width="10"/>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Find the sum of all the terms in the sequence.
+                  </p>
+                  <p>
+                    <var name="$ans3" width="10"/>
+                  </p>
+                </li>
+              </ol>
+            </p>
+          </statement>
+          <solution>
+            <p>
+              <ol>
+                <li><m>n+2</m> terms.</li>
+                <li><m>4n+2</m>.</li>
+                <li><m>\frac{(4n+8)(n+2)}{2}</m>.</li>
+              </ol>
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
 
 
       <exercise>
-        <statement>
-          <p>
-            Consider the sequence given by <m>a_n = 2\cdot 5^{n-1}</m>.
-          </p>
+        <webwork>
+          <setup>
+            <pg-code>
+              Context()->variables->are(n => "Real");
+              $geometric = PopUp(
+                ["?","arithmetic","geometric","neither"],
+                "geometric", # correct answer
+              );
+              $sum = Compute("(2-2*5^25)/(-4)");
+            </pg-code>
+          </setup>
+          <statement>
+            <p>
+              Consider the sequence given by <m>a_n = 2\cdot 5^{n-1}</m>.
+            </p>
 
-          <p>
-            <ol>
-              <li>
-                <p>
-                  Find the first 4 terms of the sequence. What sort of sequence is this?
-                </p>
-              </li>
-              <li>
-                <p>
-                  Find the <em>sum</em> of the first 25 terms. That is, compute <m>\d\sum_{k=1}^{25}a_k</m>.
-                </p>
-              </li>
-            </ol>
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <ol>
-              <li><m>2, 10, 50, 250, \ldots</m> The sequence is geometric.</li>
-              <li><m>\frac{2 - 2\cdot 5^{25}}{-4}</m>.</li>
-            </ol>
-          </p>
-        </solution>
+            <p>
+              <ol>
+                <li>
+                  <p>
+                    Find the first 4 terms of the sequence.
+                  </p>
+                  <instruction>
+                    <m>a_1 = </m> <var name="2" width="3"/>, <m>a_2 = </m> <var name="10" width="3"/>, <m>a_3 = </m> <var name="50" width="3"/>, <m>a_4 = </m> <var name="250" width="3"/> <ellipsis />.
+                  </instruction>
+                  <p>
+                    What sort of sequence is this?
+                  </p>
+                  <p>
+                    <var name="$geometric" form="popup"/>
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Find the <em>sum</em> of the first 25 terms. That is, compute <m>\sum_{k=1}^{25}a_k</m>.
+                  </p>
+                  <p>
+                    <var name="$sum" width="10"/>
+                  </p>
+                </li>
+              </ol>
+            </p>
+          </statement>
+          <solution>
+            <p>
+              <ol>
+                <li><m>2, 10, 50, 250, \ldots</m> The sequence is geometric.</li>
+                <li><m>\frac{2 - 2\cdot 5^{25}}{-4}</m>.</li>
+              </ol>
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
 
@@ -170,19 +218,32 @@
 
 
       <exercise>
-        <statement>
-          <p>
-            Use polynomial fitting to find a closed formula for the sequence <m>(a_n)_{n\ge 1}</m>:
-            <me>4, 11, 20, 31, 44, \ldots.</me>
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <m>a_n = n^2 + 4n - 1</m>.
-          </p>
-        </solution>
+        <webwork>
+          <setup>
+            <pg-code>
+              Context()->variables->are(n => "Real");
+              $ans = Formula("n^2 + 4n - 1");
+            </pg-code>
+          </setup>
+          <statement>
+            <p>
+              Use polynomial fitting to find a closed formula for the sequence <m>(a_n)_{n\ge 1}</m>:
+              <me>4, 11, 20, 31, 44, \ldots.</me>
+            </p>
+            <instruction>
+              <m>a_n = </m> <var name="$ans" width="10"/>
+            </instruction>
+          </statement>
+          <solution>
+            <p>
+              <m>a_n = n^2 + 4n - 1</m>.
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
+
+      <!-- TODO: make multiple choice for webwork -->
       <exercise>
         <statement>
           <p>
@@ -259,16 +320,27 @@
 
 
       <exercise>
-        <statement>
-          <p>
-            The sequence <m>-1, 0, 2, 5, 9, 14\ldots</m> has closed formula <m>a_n = \dfrac{(n+1)(n-2)}{2}</m>. Use this fact to find a closed formula for the sequence <m>4, 10, 18, 28, 40, \ldots</m>.
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <m>b_n = (n+3)n</m>.
-          </p>
-        </solution>
+        <webwork>
+          <setup>
+            <pg-code>
+              Context()->variables->are(n => "Real");
+              $ans = Formula("(n+3)*n");
+            </pg-code>
+          </setup>
+          <statement>
+            <p>
+              The sequence <m>(a_n)_{n \ge 1}</m> starts <m>-1, 0, 2, 5, 9, 14\ldots</m> and has closed formula <m>a_n = \dfrac{(n+1)(n-2)}{2}</m>. Use this fact to find a closed formula for the sequence <m>(b_n)_{n \ge 1}</m> which starts <m>4, 10, 18, 28, 40, \ldots</m>.
+            </p>
+            <instruction>
+              <m>b_n = </m> <var name="$ans" width="10"/>
+            </instruction>
+          </statement>
+          <solution>
+            <p>
+              <m>b_n = (n+3)n</m>.
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
 
@@ -279,71 +351,100 @@
             The in song <em>The Twelve Days of Christmas</em>, my true love gave to me first 1 gift, then 2 gifts and 1 gift, then 3 gifts, 2 gifts and 1 gift, and so on.  How many gifts did my true love give me all together during the twelve days?
           </p>
         </statement>
+        <!-- TODO: needs solution -->
       </exercise>
 
 
 
       <exercise>
-        <statement>
-          <p>
-            Consider the recurrence relation <m>a_n = 3a_{n-1} + 10 a_{n-2}</m> with first two terms <m>a_0 = 1</m> and <m>a_1 = 2</m>.
-          </p>
+        <webwork>
+          <setup>
+            <pg-code>
+              Context()->variables->are(n => "Real");
+              $ans = Formula("3/7 * (-2)^n + 4/7 * 5^n");
+            </pg-code>
+          </setup>
+          <statement>
+            <p>
+              Consider the recurrence relation <m>a_n = 3a_{n-1} + 10 a_{n-2}</m> with first two terms <m>a_0 = 1</m> and <m>a_1 = 2</m>.
+            </p>
 
-          <p>
-            <ol>
-              <li>
-                <p>
-                  Write out the first 5 terms of the sequence defined by this recurrence relation.
-                </p>
-              </li>
-              <li>
-                <p>
-                  Solve the recurrence relation. That is, find a closed formula for <m>a_n</m>.
-                </p>
-              </li>
-            </ol>
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <ol>
-              <li><m>1, 2, 16,68, 364, \ldots</m>.</li>
-              <li><m>a_n = \frac{3}{7}(-2)^n + \frac{4}{7}5^n</m>.</li>
-            </ol>
-          </p>
-        </solution>
+            <p>
+              <ol>
+                <li>
+                  <p>
+                    Write out the first 5 terms of the sequence defined by this recurrence relation.
+                  </p>
+                  <instruction>
+                    <m>a_2 = </m> <var name="16" width="3"/>,  <m>a_3 = </m> <var name="68" width="3"/>,  <m>a_4 = </m> <var name="364" width="3"/>, <ellipsis />
+                  </instruction>
+                </li>
+                <li>
+                  <p>
+                    Solve the recurrence relation. That is, find a closed formula for <m>a_n</m>.
+                  </p>
+                  <instruction>
+                    <m>a_n = </m> <var name="$ans" width="10"/>
+                  </instruction>
+                </li>
+              </ol>
+            </p>
+          </statement>
+          <solution>
+            <p>
+              <ol>
+                <li><m>1, 2, 16, 68, 364, \ldots</m>.</li>
+                <li><m>a_n = \frac{3}{7}(-2)^n + \frac{4}{7}5^n</m>.</li>
+              </ol>
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
 
       <exercise>
-        <statement>
-          <p>
-            Consider the recurrence relation <m>a_n = 2a_{n-1} + 8a_{n-2}</m>, with initial terms <m>a_0 = 1</m> and <m>a_1= 3</m>.
-          </p>
+        <webwork>
+          <setup>
+            <pg-code>
+              Context()->variables->are(n => "Real");
+              $ans = Formula("1/6*(-2)^n + 5/6*4^n");
+            </pg-code>
+          </setup>
+          <statement>
+            <p>
+              Consider the recurrence relation <m>a_n = 2a_{n-1} + 8a_{n-2}</m>, with initial terms <m>a_0 = 1</m> and <m>a_1= 3</m>.
+            </p>
 
-          <p>
-            <ol>
-              <li>
-                <p>
-                  Find the next two terms of the sequence (<m>a_2</m> and <m>a_3</m>).
-                </p>
-              </li>
-              <li>
-                <p>
-                  Solve the recurrence relation. That is, find a closed formula for the <m>n</m>th term of the sequence.
-                </p>
-              </li>
-            </ol>
-          </p>
-        </statement>
-        <solution>
-          <p>
-            <ol>
-              <li><m>a_2 = 14</m>. <m>a_3 = 52</m>.</li>
-              <li><m>a_n = \frac{1}{6}(-2)^n + \frac{5}{6}4^n</m>.</li>
-            </ol>
-          </p>
-        </solution>
+            <p>
+              <ol>
+                <li>
+                  <p>
+                    Find the next two terms of the sequence (<m>a_2</m> and <m>a_3</m>).
+                  </p>
+                  <instruction>
+                    <m>a_2 = </m> <var name="14" width="3"/>, <m>a_3 = </m> <var name="52" width="3"/>
+                  </instruction>
+                </li>
+                <li>
+                  <p>
+                    Solve the recurrence relation. That is, find a closed formula for the <m>n</m>th term of the sequence.
+                  </p>
+                  <instruction>
+                    <m>a_n = </m> <var name="$ans" width="10"/>
+                  </instruction>
+                </li>
+              </ol>
+            </p>
+          </statement>
+          <solution>
+            <p>
+              <ol>
+                <li><m>a_2 = 14</m>. <m>a_3 = 52</m>.</li>
+                <li><m>a_n = \frac{1}{6}(-2)^n + \frac{5}{6}4^n</m>.</li>
+              </ol>
+            </p>
+          </solution>
+        </webwork>
       </exercise>
 
 

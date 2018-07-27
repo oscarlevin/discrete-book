@@ -34,6 +34,8 @@
 <xsl:param name="exercise.backmatter.hint" select="'no'" />
 <xsl:param name="exercise.backmatter.answer" select="'yes'" />
 <xsl:param name="exercise.backmatter.solution" select="'yes'" />
+<xsl:param name="webwork.inline.static" select="'no'" />
+<xsl:param name="webwork.divisional.static" select="'no'" />
 
 
 <!-- Changes to mimic in HTML via CSS/other changes? -->
@@ -120,10 +122,10 @@
 <!-- WeBWorK -->
 <!-- There is no default server provided         -->
 <!-- Interactions are with an "anonymous" course -->
-<xsl:param name="webwork.server" select="'https://webwork.pcc.edu'"/>
+<!-- <xsl:param name="webwork.server" select="'https://webwork.pcc.edu'"/>
 <xsl:param name="webwork.course" select="'anonymous'" />
 <xsl:param name="webwork.userID" select="'anonymous'" />
-<xsl:param name="webwork.password" select="'anonymous'" />
+<xsl:param name="webwork.password" select="'anonymous'" /> -->
 
 <!-- Permalinks -->
 <!-- Next to subdivision headings a "paragraph" symbol     -->
