@@ -17,11 +17,15 @@ Page numbers match print and tablet pdf edition.
 
 -   Exercise 1.6.6: the last binomial coefficient should have a k-2j instead of just k in the bottom.
 
+-   Example 2.2.5 (page 126): As stated, there are n-1 terms.  Thus the formulas should have n-1 instead of n-2.
+
 -   Page 147, last line: the sequence of F's and T's is off near the end.  The correct sequence is F, F, F, F, T, F, F, T, F, T, F, F, T,...
 
 ### Minor typos
 
 -   Page 50, second sentence of last paragraph in example should read, "For example, _how_ many..." instead of "For example, _now_ many..."
+
+-   Example 2.2.6 (page 126): The answer is correct, but there is a typo along the way.  The last line of the page should read "... so the right-hand side becomes _4_+(3n-1)n"
 
 -   Page 200, after the definition of a graph, the example has _five_ edges, not four.
 
