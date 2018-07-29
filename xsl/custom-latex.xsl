@@ -77,7 +77,7 @@
 <!-- Preamble insertions                    -->
 <!-- Insert packages, options into preamble -->
 <!-- early or late                          -->
-<xsl:param name="latex.preamble.early" select="''" />
+<!-- <xsl:param name="latex.preamble.early" select="''" /> -->
 <!-- <xsl:param name="latex.preamble.late" select="''" /> -->
 <!--  -->
 <!-- Console characters allow customization of how    -->
@@ -109,14 +109,14 @@
 
 <!-- Exercises have "solution"s which should be put in the back. -->
 <!-- Not sure what to do for homework solutions -->
-<xsl:param name="exercise.text.statement" select="'yes'" />
+<!-- <xsl:param name="exercise.text.statement" select="'yes'" />
 <xsl:param name="exercise.text.hint" select="'yes'" />
 <xsl:param name="exercise.text.answer" select="'no'" />
 <xsl:param name="exercise.text.solution" select="'no'" />
 <xsl:param name="exercise.backmatter.statement" select="'no'" />
 <xsl:param name="exercise.backmatter.hint" select="'no'" />
 <xsl:param name="exercise.backmatter.answer" select="'yes'" />
-<xsl:param name="exercise.backmatter.solution" select="'yes'" />
+<xsl:param name="exercise.backmatter.solution" select="'yes'" /> -->
 
 
 
@@ -174,7 +174,7 @@
 <!-- Create a heading for each non-empty collection of solutions -->
 <!-- Format as appropriate LaTeX subdivision for this level      -->
 <!-- But number according to the actual Exercises section        -->
-<xsl:template match="exercises" mode="backmatter">
+<!-- <xsl:template match="exercises" mode="backmatter">
     <xsl:variable name="nonempty" select="(.//hint and $exercise.backmatter.hint='yes') or (.//answer and $exercise.backmatter.answer='yes') or (.//solution and $exercise.backmatter.solution='yes')" />
     <xsl:if test="$nonempty='true'">
         <xsl:text>\</xsl:text>
@@ -186,7 +186,7 @@
         <xsl:text>}&#xa;</xsl:text>
         <xsl:apply-templates select="*" mode="backmatter" />
     </xsl:if>
-</xsl:template>
+</xsl:template> -->
 
 <!-- Create a heading for each non-empty collection of solutions -->
 <!-- Format as appropriate LaTeX subdivision for this level      -->
@@ -215,15 +215,17 @@
 <!-- Set up solution list -->
 <!-- Print exercises with some solution component -->
 <!-- Respect switches about visibility ("knowl" is assumed to be 'no') -->
-<xsl:template match="exercise" mode="backmatter">
-    <xsl:if test="answer or solution"> <!-- revmoed hint, those are not displayed here.  If I move hints to the back, I need to put it back here too -->
+<!-- <xsl:template match="exercise" mode="backmatter">
+    <xsl:if test="answer or solution">  -->
+      <!-- revmoed hint, those are not displayed here.  If I move hints to the back, I need to put it back here too -->
         <!-- Lead with the problem number and some space -->
-        <xsl:text>\noindent\textbf{</xsl:text>
-        <xsl:apply-templates select="." mode="number" /> <!-- changed serial-number to number -->
-        <xsl:text>.} </xsl:text>
-        <xsl:if test="$exercise.backmatter.statement='yes'">
+        <!-- <xsl:text>\noindent\textbf{</xsl:text>
+        <xsl:apply-templates select="." mode="number" />  -->
+        <!-- changed serial-number to number -->
+        <!-- <xsl:text>.} </xsl:text>
+        <xsl:if test="$exercise.backmatter.statement='yes'"> -->
             <!-- TODO: not a "backmatter" template - make one possibly? Or not necessary -->
-            <xsl:apply-templates select="statement" />
+            <!-- <xsl:apply-templates select="statement" />
             <xsl:text>\par\smallskip&#xa;</xsl:text>
         </xsl:if>
         <xsl:if test="hint and $exercise.backmatter.hint='yes'">
@@ -236,7 +238,64 @@
             <xsl:apply-templates select="solution" mode="backmatter" />
         </xsl:if>
     </xsl:if>
+</xsl:template> -->
+
+
+<!-- MINE: Fix for webwork popup formatting: -->
+<!-- answer blank for other kinds of answers                 -->
+<!-- TODO: gradually eliminate "var"'s presence from static  -->
+<!-- coming from a WeBWorK server, similar to how the above  -->
+<!-- replaced var with fillin for quantitative answers.      -->
+<xsl:template match="webwork-reps/static//statement//var[@form]">
+    <xsl:choose>
+        <!-- TODO: make semantic list style in preamble -->
+        <xsl:when test="@form='popup'" >
+            <!-- <xsl:text>\quad(\begin{itemize*}[label=$\square$,leftmargin=3em,itemjoin=\hspace{1em}]&#xa;</xsl:text>
+            <xsl:for-each select="li">
+                <xsl:if test="not(p[.='?']) and not(normalize-space(.)='?')">
+                    <xsl:text>\item{}</xsl:text>
+                    <xsl:apply-templates select='.' />
+                    <xsl:text>&#xa;</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>\end{itemize*})\quad&#xa;</xsl:text> -->
+        </xsl:when>
+        <!-- Radio button alternatives:                                -->
+        <!--     \ocircle (wasysym), \circledcirc (amssymb),           -->
+        <!--     \textopenbullet, \textbigcircle (textcomp)            -->
+        <!-- To adjust in preamble, test on:                           -->
+        <!-- $document-root//webwork-reps/static//var[@form='buttons'] -->
+        <xsl:when test="@form='buttons'" >
+            <xsl:text>\par&#xa;</xsl:text>
+            <xsl:text>\begin{itemize}[label=$\odot$,leftmargin=3em,]&#xa;</xsl:text>
+            <xsl:for-each select="li">
+                <xsl:text>\item{}</xsl:text>
+                <xsl:apply-templates select='.' />
+                <xsl:text>&#xa;</xsl:text>
+            </xsl:for-each>
+            <xsl:text>\end{itemize}&#xa;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@form='checkboxes'" >
+            <xsl:text>\par&#xa;</xsl:text>
+            <xsl:text>\begin{itemize*}[label=$\square$,leftmargin=3em,itemjoin=\hspace{4em plus 1em minus 3em}]&#xa;</xsl:text>
+            <xsl:for-each select="li">
+                <xsl:if test="not(p[.='?']) and not(normalize-space(.)='?')">
+                    <xsl:text>\item{}</xsl:text>
+                    <xsl:apply-templates select='.' />
+                    <xsl:text>&#xa;</xsl:text>
+                </xsl:if>
+            </xsl:for-each>
+            <xsl:text>\end{itemize*}&#xa;</xsl:text>
+        </xsl:when>
+        <xsl:when test="@form='essay'" >
+            <xsl:text>\quad\lbrack Essay Answer\rbrack</xsl:text>
+        </xsl:when>
+    </xsl:choose>
 </xsl:template>
+
+
+
+
 
 
 
@@ -340,5 +399,35 @@
 </xsl:template>
 
 
+
+
+<!-- FIX: to allow titlesec and hyperref to play nicely -->
+<!-- Following elements never have their number displayed at birth -->
+<!-- since they are unique either (a) within the document (as part -->
+<!-- of the back matter), or (b) within some division (chapter,    -->
+<!-- section,...).  So we use a *-form and manually create a ToC   -->
+<!-- entry with a "simple" title at the right level.               -->
+<xsl:template match="solutions|references|exercises[count(parent::*/exercises) = 1]" mode="latex-division-heading">
+    <xsl:text>\phantomsection&#xa;</xsl:text>
+    <xsl:text>\</xsl:text>
+    <xsl:apply-templates select="." mode="division-name" />
+    <xsl:text>*</xsl:text>
+    <xsl:text>{</xsl:text>
+    <xsl:apply-templates select="." mode="title-full"/>
+    <xsl:text>}</xsl:text>
+    <xsl:apply-templates select="." mode="label" />
+    <xsl:text>&#xa;</xsl:text>
+    <!-- We add a ToC entry for the starred versions. These may be    -->
+    <!-- generated for divisions that are below the ToC display       -->
+    <!-- level, but they do not render as the ToC level prevails      -->
+    <!-- NB: an optional short title on a starred form caused a LaTeX -->
+    <!-- compilation that rendered poorly, which we never figured     -->
+    <!-- out, so we just avoid that combination (2018-04-12)          -->
+    <xsl:text>\addcontentsline{toc}{</xsl:text>
+    <xsl:apply-templates select="." mode="division-name" />
+    <xsl:text>}{</xsl:text>
+    <xsl:apply-templates select="." mode="title-simple" />
+    <xsl:text>}&#xa;</xsl:text>
+</xsl:template>
 
 </xsl:stylesheet>

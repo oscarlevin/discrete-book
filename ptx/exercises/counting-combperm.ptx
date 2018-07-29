@@ -209,7 +209,7 @@
     <hint>
         <p>You need exactly two points on either the <m>x</m>- or <m>y</m>-axis, but don't over-count the right triangles.</p>
     </hint>
-    <!-- <solution>
+    <solution category="instructor">
       <p>
         There are 120 triangles. Here are two ways (there are others as well) to get this:
       </p>
@@ -232,12 +232,28 @@
           </p>
         </li>
       </ol>
-    </solution> -->
+    </solution>
   </exercise>
 
 
 
   <exercise>
+    <introduction>
+      <p>
+        Suppose you wanted to draw a quadrilateral using the dots below as vertices (corners).  The dots are spaced one unit apart horizontally and two units apart vertically.
+      </p>
+      <sidebyside width="54%">
+        <image xml:id="quad-counting">
+          <latex-image>
+            \begin{tikzpicture}[scale=.9]
+              \foreach \x in {-3,...,3}
+              \foreach \y in {-1,1}
+              \fill (\x,\y) circle (3pt);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+      </sidebyside>
+    </introduction>
     <webwork>
       <!-- Allow C(n,k) and P(n,k): -->
       <pg-macros>
@@ -246,38 +262,75 @@
       <setup>
         <pg-code>
           Context("IntegerFunctions");
-          $ans = Compute("C(7,2)*C(7,2)");
+          $quads = Compute("C(7,2)*C(7,2)");
+          $squares = Compute("5");
+          $rects = Compute("C(7,2)");
+          $parals = Compute("91");
+          $alltraps = $quads;
+          $nonparals = Compute("$quads - $parals");
         </pg-code>
       </setup>
       <statement>
         <p>
-          How many quadrilaterals can you draw using the dots below as vertices (corners)?
+          How many quadrilaterals are possible?
         </p>
-
-        <sidebyside width="54%">
-          <image xml:id="quad-counting">
-            <latex-image>
-              \begin{tikzpicture}[scale=.9]
-                \foreach \x in {-3,...,3}
-                \foreach \y in {-1,1}
-                \fill (\x,\y) circle (3pt);
-              \end{tikzpicture}
-            </latex-image>
-          </image>
-        </sidebyside>
         <p>
-          <var name="$ans" width="10"/>
+          <var name="$quads" width="10"/>
+        </p>
+        <p>
+          How many are squares?
+        </p>
+        <p>
+          <var name="$sqaures" width="10"/>
+        </p>
+        <p>
+          How many are rectangles?
+        </p>
+        <p>
+          <var name="$rects" width="10"/>
+        </p>
+        <p>
+          How many are parallelograms?
+        </p>
+        <p>
+          <var name="$parals" width="10"/>
+        </p>
+        <p>
+          How many are trapezoids?  <fn>Here, as in calculus, a trapezoid is defined as a quadrilateral with <em>at least</em> one pair of parallel sides. In particular, parallelograms are trapezoids.</fn>
+        </p>
+        <p>
+          <var name="$alltraps" width="10"/>
+        </p>
+        <p>
+          How amny are trapezoids that are not parallelograms?
+        </p>
+        <p>
+          <var name="$nonparals" width="10"/>
         </p>
       </statement>
       <solution>
         <p>
           <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals. We must pick two of the seven dots from the top row and two of the seven dots on the bottom row. However, it does not make a difference which of the two (on each row) we pick first because once these four dots are selected, there is exactly one quadrilateral that they determine.
         </p>
+        <p>
+          There are 5 squares. You need to skip exactly one dot on the top and on the bottom to make the side lengths equal. Once you pick a dot on the top, the other three dots are determined.
+        </p>
+        <p>
+        There are <m>{7 \choose 2}</m> rectangles. Once you select the two dots on the top, the bottom two are determined.
+      </p>
+        <p>
+          This is tricky since you need to worry about running out of space. One way to count: break into cases by the location of the top left corner. You get
+          <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91</m>
+          parallelograms.
+        </p>
+        <p>
+          All of the quadralaterals are trapezoids.  To count the non-parallelogram trapezoinds, compute <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>. 
+        </p>
       </solution>
     </webwork>
   </exercise>
 
-  <exercise>
+  <!-- <exercise>
     <statement>
       <p>
         How many of the quadrilaterals possible in the previous problem are:
@@ -340,7 +393,7 @@
           </ol>
         </p>
       </solution>
-  </exercise>
+  </exercise> -->
 
   <exercise>
     <webwork>
@@ -634,6 +687,7 @@
       </statement>
       <solution>
         <p>
+          
           <ol>
             <li>
               <p>

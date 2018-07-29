@@ -48,27 +48,21 @@
 <!-- First, an exercise in exercises section.              -->
 <!-- Default is "yes" for every part, so experiment        -->
 <!-- with parameters to make some parts hidden.            -->
-<xsl:param name="exercise.text.statement" select="'yes'" />
-<xsl:param name="exercise.text.hint" select="'no'" />
-<xsl:param name="exercise.text.answer" select="'no'" />
-<xsl:param name="exercise.text.solution" select="'no'" />
-<!-- Second, an exercise in a solutions list in backmatter.-->
-<xsl:param name="exercise.backmatter.statement" select="'no'" />
-<xsl:param name="exercise.backmatter.hint" select="'yes'" />
-<xsl:param name="exercise.backmatter.answer" select="'yes'" />
-<xsl:param name="exercise.backmatter.solution" select="'yes'" />
+<xsl:param name="exercise.inline.hint" select="'yes'" />
+<xsl:param name="exercise.inline.answer" select="'no'" />
+<xsl:param name="exercise.inline.solution" select="'no'" />
+<xsl:param name="exercise.divisional.hint" select="'yes'" />
+<xsl:param name="exercise.divisional.answer" select="'no'" />
+<xsl:param name="exercise.divisional.solution" select="'no'" />
+<xsl:param name="project.hint" select="'yes'" />
+<xsl:param name="project.answer" select="'no'" />
+<xsl:param name="project.solution" select="'no'" />
 <!-- Author tools are for drafts, mostly "todo" items                 -->
 <!-- and "provisional" citations and cross-references                 -->
 <!-- Default is to hide todo's, inline provisionals                   -->
 <!-- Otherwise ('yes'), todo's in red paragraphs, provisionals in red -->
 <xsl:param name="author-tools" select="'no'" />
-<!-- Cross-references like Section 5.2, Theorem 6.7.89    -->
-<!-- "know" what they point to, so we can get the "name"  -->
-<!-- part automatically (and have it change with editing) -->
-<!-- This switch is global, override with @autoname='no'  -->
-<!-- on an <xref> where it is unjustified or a problem    -->
-<!-- Default is to have this feature off                  -->
-<xsl:param name="autoname" select="'yes'" />
+
 <!-- How many levels to table of contents  -->
 <!-- Not peculiar to HTML or LaTeX or etc. -->
 <!-- Sentinel indicates no choice made     -->
@@ -80,7 +74,7 @@
 <xsl:param name="numbering.theorems.level" select="'2'" />
 <!-- How many levels in numbering of projects, etc     -->
 <!-- PROJECT-LIKE gets independent numbering -->
-<xsl:param name="numbering.projects.level" select="'0'" />
+<xsl:param name="numbering.projects.level" select="'2'" />
 <!-- How many levels in numbering of equations     -->
 <!-- Analagous to numbering theorems, but distinct -->
 <xsl:param name="numbering.equations.level" select="'1'" />
