@@ -399,34 +399,4 @@
 
 
 
-
-<!-- FIX: to allow titlesec and hyperref to play nicely -->
-<!-- Following elements never have their number displayed at birth -->
-<!-- since they are unique either (a) within the document (as part -->
-<!-- of the back matter), or (b) within some division (chapter,    -->
-<!-- section,...).  So we use a *-form and manually create a ToC   -->
-<!-- entry with a "simple" title at the right level.               -->
-<xsl:template match="solutions|references|exercises[count(parent::*/exercises) = 1]" mode="latex-division-heading">
-    <xsl:text>\phantomsection&#xa;</xsl:text>
-    <xsl:text>\</xsl:text>
-    <xsl:apply-templates select="." mode="division-name" />
-    <xsl:text>*</xsl:text>
-    <xsl:text>{</xsl:text>
-    <xsl:apply-templates select="." mode="title-full"/>
-    <xsl:text>}</xsl:text>
-    <xsl:apply-templates select="." mode="label" />
-    <xsl:text>&#xa;</xsl:text>
-    <!-- We add a ToC entry for the starred versions. These may be    -->
-    <!-- generated for divisions that are below the ToC display       -->
-    <!-- level, but they do not render as the ToC level prevails      -->
-    <!-- NB: an optional short title on a starred form caused a LaTeX -->
-    <!-- compilation that rendered poorly, which we never figured     -->
-    <!-- out, so we just avoid that combination (2018-04-12)          -->
-    <xsl:text>\addcontentsline{toc}{</xsl:text>
-    <xsl:apply-templates select="." mode="division-name" />
-    <xsl:text>}{</xsl:text>
-    <xsl:apply-templates select="." mode="title-simple" />
-    <xsl:text>}&#xa;</xsl:text>
-</xsl:template>
-
 </xsl:stylesheet>
