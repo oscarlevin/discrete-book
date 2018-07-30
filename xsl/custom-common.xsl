@@ -104,12 +104,12 @@
 <xsl:param name="webwork.password" select="'anonymous'" />
 
 <!-- Redefine chapter numbering to start at 0 -->
-<xsl:template match="chapter" mode="division-serial-number">
+<!-- <xsl:template match="chapter" mode="division-serial-number"> -->
     <!-- chapters, in parts or not, do not have "references" -->
     <!-- or "exercises" divisions as peers, so we just count -->
     <!-- chapters, varying the subtree considered depending  -->
     <!-- on the style elected for how parts are numbered     -->
-    <xsl:variable name="n">
+    <!-- <xsl:variable name="n">
       <xsl:choose>
         <xsl:when test="($parts = 'absent') or ($parts = 'decorative')">
             <xsl:number from="book" level="any" count="chapter" format="1" />
@@ -120,7 +120,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:number value="$n - 1" format="1" />
-</xsl:template>
+</xsl:template> -->
 
 
 
