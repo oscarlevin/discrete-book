@@ -371,9 +371,14 @@
     <exercise>
       <statement>
         <p>
-          Prove that the sum of the interior angles of a convex <m>n</m>-gon is <m>(n-2)\cdot 180^\circ</m>.  (A convex <m>n</m>-gon is a polygon with <m>n</m> sides for which each interior angle is less than <m>180^\circ</m>.)  Hint: start with <m>(k+1)</m>-gon and divide it up into a <m>k</m>-gon and a triangle.
+          Prove that the sum of the interior angles of a convex <m>n</m>-gon is <m>(n-2)\cdot 180^\circ</m>.  (A convex <m>n</m>-gon is a polygon with <m>n</m> sides for which each interior angle is less than <m>180^\circ</m>.)  
         </p>
       </statement>
+      <hint>
+        <p>
+          Start with <m>(k+1)</m>-gon and divide it up into a <m>k</m>-gon and a triangle.
+        </p>
+      </hint>
       <solution>
         <p>
           Every <m>n</m>-gon (for <m>n \ge 4</m> ) can be divided into a triangle and a <m>(n-1)</m>-gon by drawing a line between two vertices one apart.  The sum of the interior angles of the <m>n</m>-gon will then be the sum of the angles in the triangle and the angles in the <m>(n-1)</m>-gon.  This shows how we can go from one case to the next.  Since we are adding a triangle, we are adding <m>180^\circ</m> to the sum, which is what incrementing <m>n</m> in <m>(n-2)\cdot 180^\circ</m> does.
@@ -492,11 +497,11 @@
           </p>
         </proof>
       </statement>
-      <!-- <solution>
+      <solution>
         <p>
           We once again failed to establish the base case: when <m>n = 0</m>, <m>n^2 + n = 0</m> which is even, not odd.
         </p>
-      </solution> -->
+      </solution>
     </exercise>
 
     <exercise>
@@ -505,15 +510,14 @@
           Now give a valid proof (by induction, even though you might be able to do so without using induction) of the statement, <q>for all <m>n \in \N</m>, the number <m>n^2 + n</m> is even.</q>
         </p>
       </statement>
-      <!-- <solution>
-
+      <solution>
         <proof>
           <p>
             Let <m>P(n)</m> be the statement <q><m>n^2 + n</m> is even.</q> We will prove that <m>P(n)</m> is true for all <m>n \in \N</m>. First the base case: when <m>n = 0</m>, we have <m>n^2 + n = 0</m> which is even, so <m>P(0)</m> is true. Now suppose for induction that <m>P(k)</m> is true, that is, that <m>k^2 + k</m> is even. Now consider the statement <m>P(k+1)</m>. Now <m>(k+1)^2 + (k+1) = k^2 + 2k + 1 + k + 1 = k^2 + k + 2k + 2</m>. By the inductive hypothesis, <m>k^2 + k</m> is even, and of course <m>2k + 2</m> is even. An even plus an even is always even, so therefore <m>(k+1)^2 + (k+1)</m> is even. Therefore by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \in \N</m>.
           </p>
         </proof>
 
-      </solution> -->
+      </solution>
     </exercise>
 
 
@@ -675,13 +679,109 @@
 
 
 
+    <!-- This is a nice problem, to include here, as an example, or save for homework.  It requires some double induction.-->
+
+      <exercise>
+          <idx><h>double induction</h></idx> <idx><h>induction></h><h>double</h></idx>
+        <introduction>
+          <p>
+            Here is an example of a more complicated induction technique called <term>double induction</term>.
+          </p>
+        </introduction>
+        <statement>
+          <p>
+            You will prove that the Fibonacci numbers satisfy the identity <m>F_n^2 + F_{n+1}^2 = F_{2n+1}</m>.
+            One way to do this is to prove the more general identity,
+            <me>
+              F_mF_n + F_{m+1}F_{n+1} = F_{m+n+1}
+            </me>
+            and realize that when <m>m = n</m> we get our desired result.
+          </p>
+
+          <p>
+            Note that we now have two variables, so we want to prove this for all <m>m \ge 0</m> <em>and</em> all <m>n \ge 0</m> at the same time.
+            For each such pair <m>(m,n)</m>, let <m>P(m,n)</m> be the statement <m>F_mF_n + F_{m+1}F_{n+1} = F_{m+n+1}</m>
+          <ol>
+            <li>
+              <p>
+                First fix <m>m = 0</m> and give a proof by mathematical induction that <m>P(0,n)</m> holds for all <m>n \ge 0</m>.  Note this proof will be very easy.
+              </p>
+            </li>
+            <li>
+              <p>
+                Now fix an arbitrary <m>n</m> and give a proof by <em>strong</em> mathematical induction that <m>P(m,n)</m> holds for all <m>m \ge 0</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                You can now conclude that <m>P(m,n)</m> holds for all <m>m,n\ge 0</m>.  Do you believe that?  Explain why this sort of induction is valid.  For example, why do your proofs above guarantee that <m>P(2,3)</m> is true?
+              </p>
+            </li>
+          </ol>
+        </p>
+        </statement>
+
+        <solution category="instructor">
+          <p>
+            <ol>
+              <li>
+                <p>
+                  The base case is when <m>n = 0</m>, so we check <m>P(0,0)</m>. This is just <m>F_0F_0 + F_1F_1 = F_1</m>, which is true since <m>0+1 = 1</m>.
+                </p>
+
+                <p>
+                  For the inductive case, we assume <m>P(0,k)</m> is true and want to show that <m>P(0,k+1)</m> is true.  But <m>P(0,k+1)</m> is the satement <m>F_0F_{k+1} + F_{1}F_{k+2} = F_{k+2}</m>, which we see immediately is true since <m>F_0 = 0</m>.  (We didn't even need the inductive hypothesis here, although other double induction proofs might use it.)
+                </p>
+
+                <p>
+                  Thus we see that <m>P(0,n)</m> is true for all <m>n \ge 0</m>.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Remember that <m>n</m> is fixed.  So our base cases are for <m> m = 0</m> and <m>m = 1</m>.  That is, we need to verify that <m>P(0,n)</m> and <m>P(1,n)</m> are true.  The first is already done above.  The second is also clear: <m>F_1F_n + F_2F_{n+1} = F_n + F_{n+1} = F_{n+2} = F_{1 + n + 1}</m>.
+                </p>
+
+                <p>
+                  Now fix <m>m \gt 1</m> and assume <m>P(k,n)</m> is true for all <m>k \lt m</m>.  That is we know that <m>F_kF_n + F_{k+1}F_{n+1} = F_{k+n+1}</m>.  We must consider <m>F_{m}F_n + F_{m+1}F_{n+1}</m> (and show it equals <m>F_{m+n+1}</m>).  We have,
+
+                  <md>
+                    <mrow>F_{m}F_n + F_{m+1}F_{n+1} \amp = (F_{m-2} + F_{m-1})F_n + (F_{m-1} + F_{m})F_{n+1}</mrow>
+
+                    <mrow> \amp = F_{m-2}F_n + F_{m-1}F_n + F_{m-1}F_{n+1} + F_{m}F_{n+1}</mrow>
+
+                    <mrow> \amp = (F_{m-2}F_n + F_{m-1}F_{n+1}) + (F_{m-1}F_n + F_{m}F_{n+1})</mrow>
+
+                    <mrow> \amp = F_{m-2 + n + 1} + F_{m-1 + n + 1} = F_{m + n + 1}.</mrow>
+                  </md>
+                  The last line is the result of applying the inductive hypothesis twice, once for <m>k = m-2</m> and once of <m>k = m-1</m>.
+                </p>
+
+                <p>
+                  Therefore by the principle of strong mathematical induction, <m>P(m,n)</m> is true for all <m>m \ge 0</m> (and our fixed value of <m>n</m>).
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  This is enough, since we now have a method for getting to <m>P(m,n)</m> for any <m>m,n \ge 0</m>.  For example, we know that <m>P(2,3)</m> is true because we know that <m>P(0,3)</m> is true (from the first part), and then we know we can get up to <m> m = 2</m> by doing induction with <m>n = 3</m> fixed.
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+      </exercise>
+
+
+<!-- The previous problem can be done with simultaneous induction, which could also make a nice problem -->
 
 
 
 <exercise>
   <statement>
     <p>
-      Bonus: Given a square, you can cut the square into smaller squares by cutting along lines parallel to the sides of the original square (these lines do not need to travel the entire side length of the original square).  For example, by cutting along the lines below, you will divide a square into 6 smaller squares:
+      Given a square, you can cut the square into smaller squares by cutting along lines parallel to the sides of the original square (these lines do not need to travel the entire side length of the original square).  For example, by cutting along the lines below, you will divide a square into 6 smaller squares:
     </p>
     <sidebyside width="35%">
       <image>
@@ -697,7 +797,7 @@
       Prove, using strong induction, that it is possible to cut a square into <m>n</m> smaller squares for any <m>n \ge 6</m>.  Hint: you will need three base cases.
     </p>
     </statement>
-    <solution>
+    <solution category="instructor">
       <proof>
         <p>
           For each <m>n</m>, let <m>P(n)</m> be the statement <q>You can divide a square into <m>n</m> smaller squares.</q>  We will prove <m>P(n)</m> is true for all <m>n \ge 6</m> using strong induction.
