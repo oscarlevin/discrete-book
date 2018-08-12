@@ -146,7 +146,7 @@
           </ol>
         </p>
       </statement>
-      <solution category="instructor">
+      <solution>
         <p>
           <ol>
             <li>
@@ -185,6 +185,100 @@
   </exercise>
 
 
+  <exercise>
+    <introduction>
+      <p>
+        Suppose you wanted to draw a quadrilateral using the dots below as vertices (corners).  The dots are spaced one unit apart horizontally and two units apart vertically.
+      </p>
+      <sidebyside width="54%">
+        <image xml:id="quad-counting">
+          <latex-image>
+            \begin{tikzpicture}[scale=.9]
+              \foreach \x in {-3,...,3}
+              \foreach \y in {-1,1}
+              \fill (\x,\y) circle (3pt);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+      </sidebyside>
+    </introduction>
+    <webwork>
+      <!-- Allow C(n,k) and P(n,k): -->
+      <pg-macros>
+          <macro-file>contextIntegerFunctions.pl</macro-file>
+      </pg-macros>
+      <setup>
+        <pg-code>
+          Context("IntegerFunctions");
+          $quads = Compute("C(7,2)*C(7,2)");
+          $squares = Compute("5");
+          $rects = Compute("C(7,2)");
+          $parals = Compute("91");
+          $alltraps = $quads;
+          $nonparals = Compute("$quads - $parals");
+        </pg-code>
+      </setup>
+      <statement>
+        <p>
+          How many quadrilaterals are possible?
+        </p>
+        <p>
+          <var name="$quads" width="10"/>
+        </p>
+        <p>
+          How many are squares?
+        </p>
+        <p>
+          <var name="$sqaures" width="10"/>
+        </p>
+        <p>
+          How many are rectangles?
+        </p>
+        <p>
+          <var name="$rects" width="10"/>
+        </p>
+        <p>
+          How many are parallelograms?
+        </p>
+        <p>
+          <var name="$parals" width="10"/>
+        </p>
+        <p>
+          How many are trapezoids?  <fn>Here, as in calculus, a trapezoid is defined as a quadrilateral with <em>at least</em> one pair of parallel sides. In particular, parallelograms are trapezoids.</fn>
+        </p>
+        <p>
+          <var name="$alltraps" width="10"/>
+        </p>
+        <p>
+          How amny are trapezoids that are not parallelograms?
+        </p>
+        <p>
+          <var name="$nonparals" width="10"/>
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals. We must pick two of the seven dots from the top row and two of the seven dots on the bottom row. However, it does not make a difference which of the two (on each row) we pick first because once these four dots are selected, there is exactly one quadrilateral that they determine.
+        </p>
+        <p>
+          There are 5 squares. You need to skip exactly one dot on the top and on the bottom to make the side lengths equal. Once you pick a dot on the top, the other three dots are determined.
+        </p>
+        <p>
+        There are <m>{7 \choose 2}</m> rectangles. Once you select the two dots on the top, the bottom two are determined.
+      </p>
+        <p>
+          This is tricky since you need to worry about running out of space. One way to count: break into cases by the location of the top left corner. You get
+          <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91</m>
+          parallelograms.
+        </p>
+        <p>
+          All of the quadralaterals are trapezoids.  To count the non-parallelogram trapezoinds, compute <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>. 
+        </p>
+      </solution>
+    </webwork>
+  </exercise>
+
+
 <!-- The following is now also in combinatorial proof exercises -->
   <exercise>
     <statement>
@@ -209,7 +303,7 @@
     <hint>
         <p>You need exactly two points on either the <m>x</m>- or <m>y</m>-axis, but don't over-count the right triangles.</p>
     </hint>
-    <!-- <solution>
+    <solution category="instructor">
       <p>
         There are 120 triangles. Here are two ways (there are others as well) to get this:
       </p>
@@ -232,52 +326,13 @@
           </p>
         </li>
       </ol>
-    </solution> -->
+    </solution>
   </exercise>
 
 
 
-  <exercise>
-    <webwork>
-      <!-- Allow C(n,k) and P(n,k): -->
-      <pg-macros>
-          <macro-file>contextIntegerFunctions.pl</macro-file>
-      </pg-macros>
-      <setup>
-        <pg-code>
-          Context("IntegerFunctions");
-          $ans = Compute("C(7,2)*C(7,2)");
-        </pg-code>
-      </setup>
-      <statement>
-        <p>
-          How many quadrilaterals can you draw using the dots below as vertices (corners)?
-        </p>
 
-        <sidebyside width="54%">
-          <image xml:id="quad-counting">
-            <latex-image>
-              \begin{tikzpicture}[scale=.9]
-                \foreach \x in {-3,...,3}
-                \foreach \y in {-1,1}
-                \fill (\x,\y) circle (3pt);
-              \end{tikzpicture}
-            </latex-image>
-          </image>
-        </sidebyside>
-        <p>
-          <var name="$ans" width="10"/>
-        </p>
-      </statement>
-      <solution>
-        <p>
-          <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals. We must pick two of the seven dots from the top row and two of the seven dots on the bottom row. However, it does not make a difference which of the two (on each row) we pick first because once these four dots are selected, there is exactly one quadrilateral that they determine.
-        </p>
-      </solution>
-    </webwork>
-  </exercise>
-
-  <exercise>
+  <!-- <exercise>
     <statement>
       <p>
         How many of the quadrilaterals possible in the previous problem are:
@@ -340,7 +395,7 @@
           </ol>
         </p>
       </solution>
-  </exercise>
+  </exercise> -->
 
   <exercise>
     <webwork>
@@ -362,7 +417,7 @@
           <var name="$ans" width="5"/>
         </p>
       </statement>
-      <solution category="instructor">
+      <solution>
         <p>
           Since there are 15 different letters, we have 15 choices for the first letter, 14 for the next, and so on. Thus there are <m>15!</m> anagrams.
         </p>
@@ -418,7 +473,7 @@
           <var name="$ans" width="5"/>
         </p>
       </statement>
-      <solution category="instructor">
+      <solution>
         <p>
           First, decide where to put the <q>a</q>s. There are 7 positions, and we must choose 3 of them to fill with an <q>a</q>. This can be done in <m>{7 \choose 3}</m> ways. The remaining 4 spots all get a different letter, so there are <m>4!</m> ways to finish off the anagram. This gives a total of <m>{7 \choose 3}\cdot 4!</m> anagrams. Strangely enough, this is 840, which is also equal to <m>P(7,4)</m>. To get the answer that way, start by picking one of the 7 <em>positions</em> to be filled by the <q>n</q>, one of the remaining 6 positions to be filled by the <q>g</q>, one of the remaining 5 positions to be filled by the <q>r</q>, one of the remaining 4 positions to be filled by the <q>m</q> and then put <q>a</q>s in the remaining 3 positions.
         </p>
@@ -634,6 +689,7 @@
       </statement>
       <solution>
         <p>
+          
           <ol>
             <li>
               <p>
@@ -699,7 +755,7 @@
         </p>
       </statement>
 
-      <solution category="instructor">
+      <solution>
         <p>
           <ol>
             <li><p><m>6^4 = 1296</m> functions, since there are six choices of where to send each of the 4 elements of the domain.</p></li>

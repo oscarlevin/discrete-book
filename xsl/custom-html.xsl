@@ -25,8 +25,41 @@
 
 
 <!-- Exercises -->
+<xsl:param name="exercise.inline.hint" select="'yes'" />
+<xsl:param name="exercise.inline.answer" select="'yes'" />
+<xsl:param name="exercise.inline.solution" select="'yes'" />
+<xsl:param name="exercise.divisional.hint" select="'yes'" />
+<xsl:param name="exercise.divisional.answer" select="'yes'" />
+<xsl:param name="exercise.divisional.solution" select="'yes'" />
+<xsl:param name="project.hint" select="'yes'" />
+<xsl:param name="project.answer" select="'yes'" />
+<xsl:param name="project.solution" select="'yes'" />
+
+<!-- WeBWorK exercise may be rendered static="yes"    -->
+<!-- TODO: implement middle option static="preview"   -->
+<!-- Or static="no" makes an interactive problem      -->
+<!-- Also in play here are params from -common:       -->
+<!-- exercise.text.statement, exercise.text.hint, exercise.text.solution -->
+<!-- For a divisional exercise, when static="no", that is an intentional -->
+<!-- decision to show the live problem, which means the statement will   -->
+<!-- be shown, regardless of exercise.text.statement. If the problem was -->
+<!-- authored in PTX source, we can respect the values for               -->
+<!-- exercise.text.hint and exercise.text.solution. If the problem       -->
+<!-- source is on the webwork server, then hints and solutions will show -->
+<!-- no matter what.                                                     -->
+<!-- For a divisional exercise, when static="yes", each of the three     -->
+<!-- -common params will be respected. Effectively the content is        -->
+<!-- handled like a non-webwork exercise.                                -->
+<!-- For an inline exercise (webwork or otherwise) statements, hints,    -->
+<!-- and solutions are always shown. The -common params mentioned above  -->
+<!-- do not apply. Whether static is "yes" or "no" doesn't matter.       -->
+<xsl:param name="webwork.inline.static" select="'no'" />
+<xsl:param name="webwork.divisional.static" select="'no'" />
+
+
+
 <!-- HTML: knowlize as available/appropriate -->
-<xsl:param name="exercise.text.statement" select="'yes'" />
+<!-- <xsl:param name="exercise.text.statement" select="'yes'" />
 <xsl:param name="exercise.text.hint" select="'yes'" />
 <xsl:param name="exercise.text.answer" select="'yes'" />
 <xsl:param name="exercise.text.solution" select="'yes'" />
@@ -35,7 +68,7 @@
 <xsl:param name="exercise.backmatter.answer" select="'yes'" />
 <xsl:param name="exercise.backmatter.solution" select="'yes'" />
 <xsl:param name="webwork.inline.static" select="'no'" />
-<xsl:param name="webwork.divisional.static" select="'no'" />
+<xsl:param name="webwork.divisional.static" select="'no'" /> -->
 
 
 <!-- Changes to mimic in HTML via CSS/other changes? -->
@@ -82,7 +115,6 @@
 <xsl:param name="html.knowl.figure" select="'no'" />
 <xsl:param name="html.knowl.table" select="'no'" />
 <xsl:param name="html.knowl.listing" select="'no'" />
-<xsl:param name="html.knowl.sidebyside" select="'no'" />
 <xsl:param name="html.knowl.webwork.inline" select="'no'" />
 <xsl:param name="html.knowl.webwork.sectional" select="'no'" />
 <xsl:param name="html.knowl.exercise.inline" select="'no'" />
