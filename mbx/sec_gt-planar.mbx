@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<section xml:id="sec_planar" xmlns:xi="http://www.w3.org/2001/XInclude">
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_planar">
 <title>Planar Graphs</title>
 
 
@@ -25,52 +24,52 @@ Draw, if possible, two different planar graphs with the same number of vertices 
 </investigation>
 
 <p>
-When is it possible to draw a graph so that none of the edges cross? If this <em>is</em> possible, we say the graph is <term>planar</term><index><main>planar</main></index> (since you can draw it on the <em>plane</em>).
+When is it possible to draw a graph so that none of the edges cross? If this <em>is</em> possible, we say the graph is <term>planar</term><idx><h>planar</h></idx> (since you can draw it on the <em>plane</em>).
 </p>
 
 <p>
 Notice that the definition of planar includes the phrase <q>it is possible to.</q> This means that even if a graph does not look like it is planar, it still might be. Perhaps you can redraw it in a way in which no edges cross. For example, this is a planar graph:
 </p>
-<figure>
-  <image width="20%">
-  <latex-image-code><![CDATA[\begin{tikzpicture}[scale=.7, xscale=1.5]
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=.7, xscale=1.5]
    \draw (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (.5, 2) \v -- (1,0) \v -- (-.5,2) (.5,2) -- (-1,0);
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
-</figure>
+</sidebyside>
 <p>
 That is because we can redraw it like this:
 </p>
-<figure>
-  <image width="25%">
-  <latex-image-code><![CDATA[\begin{tikzpicture}[scale=.7, xscale=1.5]
+<sidebyside width="25%">
+  <image>
+  <latex-image>\begin{tikzpicture}[scale=.7, xscale=1.5]
        \draw (-1, 0) \v -- (-.5,2) \v -- (0,0) \v -- (1.5, -1) \v -- (1,0) \v -- (-.5,2) (1.5,-1) -- (-1,0);
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
-</figure>
+</sidebyside>
 <p>
 The graphs are the same, so if one is planar, the other must be too. However, the original drawing of the graph was not a <term>planar representation</term> of the graph.
 </p>
 
 <p>
-When a planar graph is drawn without edges crossing, the edges and vertices of the graph divide the plane into regions. We will call each region a <term>face</term><index><main>faces</main></index>. The graph above has 3 faces (yes, we <b>do</b> include the <q>outside</q> region as a face). The number of faces does not change no matter how you draw the graph (as long as you do so without the edges crossing), so it makes sense to ascribe the number of faces as a property of the planar graph.
+When a planar graph is drawn without edges crossing, the edges and vertices of the graph divide the plane into regions. We will call each region a <term>face</term><idx><h>faces</h></idx>. The graph above has 3 faces (yes, we <em>do</em> include the <q>outside</q> region as a face). The number of faces does not change no matter how you draw the graph (as long as you do so without the edges crossing), so it makes sense to ascribe the number of faces as a property of the planar graph.
 </p>
 
 <p>
-<u>A warning</u>: you can only count faces when the graph is drawn in a planar way. For example, consider these two representations of the same graph:
+WARNING: you can only count faces when the graph is drawn in a planar way. For example, consider these two representations of the same graph:
 </p>
 
 <sidebyside widths="20% 25%" margins="auto" valign="bottom">
   <image>
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+  <latex-image>\begin{tikzpicture}
       \draw (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1) (135:1) -- (315:1);
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
   <image>
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+  <latex-image>\begin{tikzpicture}
       \draw (45:1) \v -- (135:1) \v -- (225:1) \v -- (315:1) \v -- (45:1) -- (225:1);
       \draw (135:1) .. controls (70:2) and (20:2) .. (315:1);
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
 </sidebyside>
 
@@ -84,7 +83,7 @@ There is a connection between the number of vertices (<m>v</m>), the number of e
 <assemblage>
 <title>Euler's Formula for Planar Graphs</title>
 <p>
-<index><main>Euler's formula</main></index>
+<idx><h>Euler's formula</h></idx>
 For any (connected) planar graph with <m>v</m> vertices, <m>e</m> edges and <m>f</m> faces, we have
 <me>
   v-e + f = 2
@@ -94,13 +93,13 @@ For any (connected) planar graph with <m>v</m> vertices, <m>e</m> edges and <m>f
 <p>
 Why is Euler's formula true? One way to convince yourself of its validity is to draw a planar graph step by step. Start with the graph <m>P_2</m>:
 </p>
-<figure>
-  <image width="10%">
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+<sidebyside width="10%">
+  <image>
+  <latex-image>\begin{tikzpicture}
       \draw (-.5,-.5) \v -- (.5,.5)\v;
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
-</figure>
+</sidebyside>
 
 <p>
 Any connected graph (besides just a single isolated vertex) must contain this subgraph. Now build up to your graph by adding edges and vertices. Each step will consist of either adding a new vertex connected by a new edge to part of your graph (so creating a new <q>spike</q>) or by connecting two vertices already in the graph with a new edge (completing a circuit).
@@ -108,16 +107,16 @@ Any connected graph (besides just a single isolated vertex) must contain this su
 
 <sidebyside widths="30% 20%" margins="auto" valign="bottom">
   <image>
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+  <latex-image>\begin{tikzpicture}
       \draw (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
       \draw[dashed] (1,2) -- (2,1) \v;
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
   <image>
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+  <latex-image>\begin{tikzpicture}
       \draw (-1, 0) \v -- (-1,2) \v -- (1,2) \v -- (1,0) \v -- (-1,2);
       \draw[dashed] (1,0) -- (-1,0);
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
 </sidebyside>
 
@@ -163,14 +162,14 @@ What about complete bipartite graphs? How many vertices, edges, and faces (if it
 <p>
 Not all graphs are planar. If there are too many edges and too few vertices, then some of the edges will need to intersect. The first time this happens is in <m>K_5</m>.
 </p>
-<figure>
-  <image width="20%">
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}
       \foreach \x in {0,...,4}
       \draw (\x*72+18:1) \v -- (\x*72+90:1) -- (\x*72-54:1);
-    \end{tikzpicture}]]></latex-image-code>
+    \end{tikzpicture}</latex-image>
   </image>
-</figure>
+</sidebyside>
 <p>
 If you try to redraw this without edges crossing, you quickly get into trouble. There seems to be one edge too many. In fact, we can prove that no matter how you draw it, <m>K_5</m> will always have edges crossing.
 </p>
@@ -208,13 +207,13 @@ If you try to redraw this without edges crossing, you quickly get into trouble. 
 <p>
 The other simplest graph which is not planar is <m>K_{3,3}</m>
 </p>
-<figure>
-  <image width="20%">
-  <latex-image-code><![CDATA[\begin{tikzpicture}[yscale=1.2]
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}[yscale=1.2]
           \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
-        \end{tikzpicture}]]></latex-image-code>
+        \end{tikzpicture}</latex-image>
   </image>
-</figure>
+</sidebyside>
 <p>
 Proving that <m>K_{3,3}</m> is not planar answers the houses and utilities puzzle: it is not possible to connect each of three houses to each of three utilities without the lines crossing.
 </p>
@@ -249,7 +248,7 @@ Note the similarities and differences in these proofs. Both are proofs by contra
 </p>
 
 <p>
-In general, if we let <m>g</m> be the size of the smallest cycle in a graph (<m>g</m> stands for <em>girth</em><index><main>girth</main></index>, which is the technical term for this) then for any planar graph we have <m>gf \le 2e</m>. When this disagrees with Euler's formula, we know for sure that the graph cannot be planar.
+In general, if we let <m>g</m> be the size of the smallest cycle in a graph (<m>g</m> stands for <em>girth</em><idx><h>girth</h></idx>, which is the technical term for this) then for any planar graph we have <m>gf \le 2e</m>. When this disagrees with Euler's formula, we know for sure that the graph cannot be planar.
 </p>
 </subsection>
 
@@ -258,7 +257,7 @@ In general, if we let <m>g</m> be the size of the smallest cycle in a graph (<m>
 <title>Polyhedra</title>
 <investigation>
 <p>
-A cube<index><main>cube</main></index> is an example of a convex polyhedron. It contains 6 identical squares for its faces, 8 vertices, and 12 edges. The cube is a <term>regular polyhedron</term> (also known as a <term>Platonic solid</term><index><main>Platonic solids</main></index>) because each face is an identical regular polygon and each vertex joins an equal number of faces.
+A cube<idx><h>cube</h></idx> is an example of a convex polyhedron. It contains 6 identical squares for its faces, 8 vertices, and 12 edges. The cube is a <term>regular polyhedron</term> (also known as a <term>Platonic solid</term><idx><h>Platonic solids</h></idx>) because each face is an identical regular polygon and each vertex joins an equal number of faces.
 </p>
 
 <p>
@@ -266,21 +265,21 @@ There are exactly four other regular polyhedra: the tetrahedron, octahedron, dod
 </p>
 </investigation>
 <p>
-Another area of mathematics where you might have heard the terms <q>vertex,</q> <q>edge,</q> and <q>face</q> is geometry. A <term>polyhedron</term><index><main>polyhedron</main></index> is a geometric solid made up of flat polygonal faces joined at edges and vertices. We are especially interested in <term>convex</term><index><main>convex</main></index> polyhedra, which means that any line segment connecting two points on the interior of the polyhedron must be entirely contained inside the polyhedron.<fn>An alternative definition for convex is that the internal angle formed by any two faces must be less than <m>180\deg</m>.</fn>
+Another area of mathematics where you might have heard the terms <q>vertex,</q> <q>edge,</q> and <q>face</q> is geometry. A <term>polyhedron</term><idx><h>polyhedron</h></idx> is a geometric solid made up of flat polygonal faces joined at edges and vertices. We are especially interested in <term>convex</term><idx><h>convex</h></idx> polyhedra, which means that any line segment connecting two points on the interior of the polyhedron must be entirely contained inside the polyhedron.<fn>An alternative definition for convex is that the internal angle formed by any two faces must be less than <m>180\deg</m>.</fn>
 </p>
 
 <p>
 Notice that since <m>8 - 12 + 6 = 2</m>, the vertices, edges and faces of a cube satisfy Euler's formula for planar graphs. This is not a coincidence. We can represent a cube as a planar graph by projecting the vertices and edges onto the plane. One such projection looks like this:
 </p>
-<figure>
-  <image width="20%">
-  <latex-image-code><![CDATA[\begin{tikzpicture}
+<sidebyside width="20%">
+  <image>
+  <latex-image>\begin{tikzpicture}
   \foreach \ang in {45, 135, 225, 315} {
   \draw (\ang:.4) \v -- (\ang:1) \v -- (\ang+90:1) (\ang:.4) -- (\ang+90:.4);
   }
-  \end{tikzpicture}]]></latex-image-code>
+  \end{tikzpicture}</latex-image>
   </image>
-</figure>
+</sidebyside>
 <p>
 In fact, <em>every</em> convex polyhedron can be projected onto the plane without edges crossing. Think of placing the polyhedron inside a sphere, with a light at the center of the sphere. The edges and vertices of the polyhedron cast a shadow onto the interior of the sphere. You can then cut a hole in the sphere in the middle of one of the projected faces and <q>stretch</q> the sphere to lay down flat on the plane. The face that was punctured becomes the <q>outside</q> face of the planar graph.
 </p>
@@ -333,7 +332,7 @@ There are exactly five regular polyhedra.
   </p>
 
   <p>
-    We need <m>k</m> and <m>f</m> to both be positive integers. Note that <m>\frac{6f}{4+f}</m> is an increasing function for positive <m>f</m>, and has a horizontal asymptote at 6. Thus the only possible values for <m>k</m> are 3, 4, and 5. Each of these are possible. To get <m>k = 3</m>, we need <m>f = 4</m> (this is the tetrahedron)<index><main>tetrahedron</main></index>. For <m>k = 4</m> we take <m>f = 8</m> (the octahedron)<index><main>octahedron</main></index>. For <m>k = 5</m> take <m>f = 20</m> (the icosahedron)<index><main>icosahedron</main></index>. Thus there are exactly three regular polyhedra with triangles for faces.
+    We need <m>k</m> and <m>f</m> to both be positive integers. Note that <m>\frac{6f}{4+f}</m> is an increasing function for positive <m>f</m>, and has a horizontal asymptote at 6. Thus the only possible values for <m>k</m> are 3, 4, and 5. Each of these are possible. To get <m>k = 3</m>, we need <m>f = 4</m> (this is the tetrahedron)<idx><h>tetrahedron</h></idx>. For <m>k = 4</m> we take <m>f = 8</m> (the octahedron)<idx><h>octahedron</h></idx>. For <m>k = 5</m> take <m>f = 20</m> (the icosahedron)<idx><h>icosahedron</h></idx>. Thus there are exactly three regular polyhedra with triangles for faces.
   </p>
 
   <p>
@@ -366,7 +365,7 @@ There are exactly five regular polyhedra.
   </p>
 
   <p>
-    Now the horizontal asymptote is at <m>\frac{10}{3}</m>. This is less than 4, so we can only hope of making <m>k = 3</m>. We can do so by using 12 pentagons, getting the dodecahedron<index><main>dodecahedron</main></index>. This is the only regular polyhedron with pentagons as faces.
+    Now the horizontal asymptote is at <m>\frac{10}{3}</m>. This is less than 4, so we can only hope of making <m>k = 3</m>. We can do so by using 12 pentagons, getting the dodecahedron<idx><h>dodecahedron</h></idx>. This is the only regular polyhedron with pentagons as faces.
   </p>
 
   <p>
@@ -382,6 +381,6 @@ There are exactly five regular polyhedra.
 </subsection>
 
 
-<xi:include href="exercises/gt-planar.mbx" />
+<xi:include href="exercises/gt-planar.mbx"/>
 
 </section>
