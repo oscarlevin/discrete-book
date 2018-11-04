@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_counting-binom">
+
+  <exercise>
+    <webwork>
+        <statement>
+          <p>
+            Let <m>S = \{1, 2, 3, 4, 5, 6\}</m>
+
+            <ol>
+              <li>
+                <p>
+                  How many subsets are there total?
+                </p>
+
+                <p>
+                  <var name="64" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets have <m>\{2,3,5\}</m> as a subset?
+                </p>
+
+                <p>
+                  <var name="8" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets contain at least one odd number?
+                </p>
+
+                <p>
+                  <var name="56" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets contain exactly one even number?
+                </p>
+
+                <p>
+                  <var name="24" width="5"/>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
+                <m>2^6 = 64</m> subsets.
+                We need to select yes/no for each of the six elements.
+              </li>
+
+              <li>
+                <m>2^3 = 8</m> subsets.
+                We need to select yes/no for each of the remaining three elements.
+              </li>
+
+              <li>
+                <m>2^6 - 2^3 = 56</m> subsets.
+                There are 8 subsets which do not contain any odd numbers
+                (select yes/no for each even number).
+              </li>
+
+              <li>
+                <m>3\cdot 2^3 = 24</m> subsets.
+                First pick the even number.
+                Then say yes or no to each of the odd numbers.
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            Let <m>S = \{1, 2, 3, 4, 5, 6\}</m>
+
+            <ol>
+              <li>
+                <p>
+                  How many subsets are there of cardinality 4?
+                </p>
+                <instruction>
+                  <var name="C(6,4)" width="5"/> (Note: you can enter <q>C(n,k)</q> for <m>\binom{n}{k}</m>.)
+                </instruction>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets of cardinality 4 have <m>\{2,3,5\}</m> as a subset?
+                </p>
+
+                <p>
+                  <var name="C(3,1)" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets of cardinality 4 contain at least one odd number?
+                </p>
+
+                <p>
+                  <var name="C(6,4)" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets of cardinality 4 contain exactly one even number?
+                </p>
+
+                <p>
+                  <var name="C(3,1)" width="5"/>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li><m>{6\choose 4} = 15</m> subsets.</li>
+
+              <li>
+                <m>{3 \choose 1} = 3</m> subsets.
+                We need to select 1 of the 3 remaining elements to be in the subset.
+              </li>
+
+              <li>
+                <m>{6 \choose 4} = 15</m> subsets.
+                All subsets of cardinality 4 must contain at least one odd number.
+              </li>
+
+              <li>
+                <m>{3 \choose 1} = 3</m> subsets.
+                Select 1 of the 3 even numbers.
+                The remaining three odd numbers of <m>S</m> must all be in the set.
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+              $ans1 = Compute(2^9);
+              $ans2 = Compute(C(9,5));
+              $ans1 = Compute(2^4);
+              $ans4 = Compute("C(9,0)+C(9,2)+C(9,4)+C(9,6)+C(9,8)");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            Let <m>A = \{1,2,3,\ldots,9\}</m>.
+
+            <ol>
+              <li>
+                <p>
+                  How many subsets of <m>A</m> are there?
+                  That is, find <m>|\pow(A)|</m>.
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="$ans1" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets of <m>A</m> contain exactly 5 elements?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="$ans2" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets of <m>A</m> contain only even numbers?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="$ans3" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many subsets of <m>A</m> contain an even number of elements?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="$ans4" width="5"/>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
+                <p>
+                  There are <m>512</m> subsets.
+                  This is <m>2^9</m>,
+                  which makes sense because we are deciding yes or no on whether to include each element of <m>A</m> in the subset.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Of the nine elements in <m>A</m>,
+                  we must choose five of them to be in the subset.
+                  So <m>{9 \choose 5} = 126</m>.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  For each of the 9 elements from <m>A</m>,
+                  we must decide yes or no on whether to include them in the subset.
+                  However, for the odd numbers,
+                  we only have one choice: no.
+                  So there are only 4 elements we have two choices for,
+                  so the answer is <m>2^4 = 16</m>. (Note,
+                  if you wish to exclude the empty set - it does not contain odd numbers,
+                  but no evens either - then you could subtract 1).
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Count the number of subsets with each possible even cardinality:
+                  <me>
+                    {9 \choose 0} + {9 \choose 2} + {9\choose 4} + {9 \choose 6} + {9 \choose 8} = 256
+                  </me>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+      <!-- Add exercise investigating while the subsets with even cardinality is the same as all subsets of a one-smaller set -->
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            How many <m>9</m>-bit strings
+            (that is, bit strings of length 9)
+            are there which:
+
+            <ol>
+              <li>
+                <p>
+                  Start with the sub-string 101?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="64" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Have weight 5 (i.e., contain exactly five 1's) and start with the sub-string 101?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="C(6,3)" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Either start with <m>101</m> or end with <m>11</m> (or both)?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="64 + 128 - 16" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Have weight 5 and either start with 101 or end with 11 (or both)?
+                  Explain.
+                </p>
+
+                <p>
+                  <var name="51" width="5"/>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
+                <p>
+                  <m>2^6 = 64</m>.
+                  You have 2 choices for each of the remaining 6 bits.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  <m>{6 \choose 3} = 20</m>.
+                  You need to choose 3 of the remaining 6 bits to be 1's.
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  176.
+                  There are 64 strings that start with 101,
+                  and another 128 which end with 11
+                  (we choose 1 or 0 for 7 bits, so <m>2^7</m>).
+                  However, we count the strings that start with 101 and end with 11 twice - there are <m>16</m> such strings
+                  (<m>2^4</m>).
+                  So using PIE, we have <m>64 + 128 - 16 = 176</m>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  51.
+                  There are <m>{6 \choose 3} = 20</m> strings of weight 5 which start with 101,
+                  and another <m>{7 \choose 3} = 35</m> which end with 11.
+                  We have over counted again - there are weight 5 strings which both start with 101 and end with 11,
+                  in fact <m>{4 \choose 1} = 4</m> of them.
+                  So all together we have <m>20 + 35 - 4 = 51</m> strings.
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            You break your piggy-bank to discover lots of pennies and nickels.
+            You start arranging these in rows of 6 coins.
+
+            <ol>
+              <li>
+                <p>
+                  You find yourself making rows containing an equal number of pennies and nickels.
+                  For fun, you decide to lay out every possible such row.
+                  How many coins will you need?
+                </p>
+
+                <p>
+                  <var name="C(6,3)" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many coins would you need to make all possible rows of 6 coins (not necessarily with equal number of pennies and nickels)?
+                </p>
+
+                <p>
+                  <var name="6*2**6" width="5"/>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
+                <p>
+                  We can think of each row as a 6-bit string of weight 3
+                  (since of the 6 coins, we require 3 to be pennies).
+                  Thus there are <m>{6 \choose 3} = 20</m> rows possible.
+                  Each row requires 6 coins,
+                  so if we want to make all the rows at the same time,
+                  we will need 120 coins (60 of each).
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  Now there are <m>2^6 = 64</m> rows possible,
+                  which is also <m>{6 \choose 0} + {6\choose 1} + {6 \choose 2} + {6 \choose 3} + {6 \choose 4} + {6 \choose 5} + {6 \choose 6}</m>,
+                  if you break them up into rows containing 0, 1, 2, etc. pennies.
+                  Thus we need <m>6 \cdot 64 = 384</m> coins (192 of each).
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+              $ans = Compute("C(10,6) + C(10,7) + C(10,8) + C(10,9) + C(10,10)");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            How many 10-bit strings contain 6 or more 1's?
+          </p>
+
+          <p>
+            <var name="$ans" width="5"/>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <m>{10 \choose 6} + {10\choose 7} + {10\choose 8} + {10 \choose 9} + {10\choose 10} = 386</m> strings.
+            Count the number of strings with each permissible number of 1's separately,
+            then add them up.
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            How many subsets of <m>\{0,1,\ldots, 9\}</m> have cardinality 6 or more?
+          </p>
+
+          <p>
+            <var name="386" width="5"/>
+          </p>
+        </statement>
+        <hint>
+          <p>
+            Break the question into five cases.
+          </p>
+        </hint>
+        <solution>
+          <p>
+            <m>{10 \choose 6} + {10\choose 7} + {10\choose 8} + {10 \choose 9} + {10\choose 10} = 386</m> subsets.
+            This is the same as the previous question,
+            since we can think of each subset as a 10-bit string with a 1 representing that we include that element in the subset.
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+              $ans = Compute("C(15,12)*2^3");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            What is the coefficient of <m>x^{12}</m> in <m>(x+2)^{15}</m>?
+          </p>
+
+          <p>
+            <var name="$ans" width="7"/>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            To get an <m>x^{12}</m>,
+            we must pick 12 of the 15 factors to contribute an <m>x</m>,
+            leaving the other 3 to contribute a 2.
+            There are <m>{15 \choose 12}</m> ways to select these 12 factors.
+            So the term containing an <m>x^{12}</m> will be <m>{15 \choose 12}x^{12}2^{3}</m>.
+            In other words,
+            the coefficient of <m>x^{12}</m> is <m>{15\choose 12}2^3 = 3640</m>.
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+            <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+              $ans = Compute("C(14,9)+C(15,6)*2^9");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            What is the coefficient of <m>x^9</m> in the expansion of <m>(x+1)^{14} + x^3(x+2)^{15}</m>?
+          </p>
+
+          <p>
+            <var name="$ans" width="10"/>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Reason as in the previous question.
+            We get <m>{14\choose 9} + {15 \choose 6}2^9</m>.
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+              $ans1 = Compute("C(14,7)");
+              $ans2 = Compute("C(6,2)*C(8,5)");
+              $ans3 = Compute("C(14,7) - C(6,2)*C(8,5)");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            How many shortest lattice paths start at (3,3) and
+
+            <ol>
+              <li>
+                <p>
+                  end at (10,10)?
+                </p>
+
+                <p>
+                  <var name="$ans1" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  end at (10,10) and pass through (5,7)?
+                </p>
+
+                <p>
+                  <var name="$ans2" width="7"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  end at (10,10) and avoid (5,7)?
+                </p>
+
+                <p>
+                  <var name="$ans3" width="7"/>
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
+                <m>{14 \choose 7} = 3432</m> paths.
+                The paths all have length 14 (7 steps up and 7 steps right),
+                we just select which 7 of those 14 should be up.
+              </li>
+
+              <li>
+                <m>{6 \choose 2}{8\choose 5} = 840</m> paths.
+                First travel to (5,7), and then continue on to (10,10).
+              </li>
+
+              <li>
+                <m>{14 \choose 7} - {6\choose 2}{8 \choose 5}</m> paths.
+                Remove all the paths that you found in part (b).
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Gridtown USA, besides having excellent donut shops,
+        is known for its precisely laid out grid of streets and avenues.
+        Streets run east-west, and avenues north-south,
+        for the entire stretch of the town,
+        never curving and never interrupted by parks or schools or the like.
+      </p>
+
+      <p>
+        Suppose you live on the corner of 3rd and 3rd and work on the corner of 12th and 12th.
+        Thus you must travel 18 blocks to get to work as quickly as possible.
+
+        <ol>
+          <li>
+            <p>
+              How many different routes can you take to work,
+              assuming you want to get there as quickly as possible?
+              Explain.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Now suppose you want to stop and get a donut on the way to work,
+              from your favorite donut shop on the corner of 10th ave and 8th st.
+              How many routes to work,
+              stopping at the donut shop,
+              can you take (again, ensuring the shortest possible route)?
+              Explain.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Disaster Strikes Gridtown:
+              there is a pothole on 4th ave between 5th st and 6th st.
+              How many routes to work can you take avoiding that unsightly
+              (and dangerous)
+              stretch of road?
+              Explain.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              The pothole has been repaired (phew) and a new donut shop has opened on the corner of 4th ave and 5th st.
+              How many routes to work drive by one or the other
+              (or both)
+              donut shops?
+              Hint: the donut shops serve PIE.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol>
+          <li>
+            <p>
+              <m>{18 \choose 9}</m> since you must choose 9 of the 18 blocks to travel east.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              The donut shop is 12 blocks away, 5 one way, 7 the other.
+              So to get from home to the donut shop,
+              there are <m>{12 \choose 7}</m> routes
+              (or equivalently, <m>{12 \choose 5}</m> ).
+              Then from the donut shopd to work,
+              you need to travel 6 more blocks, 2 on way and 4 the other.
+              So there are <m>{6 \choose 2}</m>
+              (or <m>{6 \choose 4}</m> )
+              routes from the donut shop to work.
+            </p>
+
+            <p>
+              For each of the ways to the donut shop,
+              there are so many ways to work,
+              so the multiplicative principle says the total number of ways from home to work via the donut shop is
+              <me>
+                {12 \choose 7}{6 \choose 2}
+              </me>
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Routes to work that hit the pothole:
+              <m>{3 \choose 1}1{14 \choose 8}</m>.
+            </p>
+
+            <p>
+              There for the number of routes to work which {\em avoid} the pothole are
+              <me>
+                {18 \choose 9} - {3 \choose 1}{14 \choose 8}
+              </me>
+            </p>
+          </li>
+
+          <li>
+            <p>
+              The routes to work past the donut shop at (4,5):
+              <m>{3\choose 1}{15 \choose 8}</m>.
+              The routes to work past the donut shop at (10,8):
+              <m>{12 \choose 7}{6 \choose 2}</m>.
+              The routes to work past both:
+              <m>{3\choose 1}{9 \choose 6}{6 \choose 2}</m>.
+              So all together, using PIE:
+              <me>
+                {3\choose 1}{15 \choose 8} + {12 \choose 7}{6 \choose 2} - {3\choose 1}{9 \choose 6}{6 \choose 2}
+              </me>
+            </p>
+          </li>
+        </ol>
+      </p>
+    </solution>
+  </exercise>
+
+  <exercise>
+    <webwork>
+          <!-- Allow C(n,k) and P(n,k): -->
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+
+            <pg-code>
+              Context("IntegerFunctions");
+              $ans1 = Compute("C(11,3)");
+              $ans2 = Compute("C(10,3)");
+              $ans3 = Compute("C(10,2)");
+            </pg-code>
+        </setup>
+        <statement>
+          <p>
+            Suppose you are ordering a large pizza from
+            <em>D.P.<nbsp/>Dough</em>.
+            You want 3 distinct toppings,
+            chosen from their list of 11 vegetarian toppings.
+
+            <ol>
+              <li>
+                <p>
+                  How many choices do you have for your pizza?
+                </p>
+
+                <p>
+                  <var name="$ans1" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many choices do you have for your pizza if you refuse to have pineapple as one of your toppings?
+                </p>
+
+                <p>
+                  <var name="$ans2" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How many choices do you have for your pizza if you <em>insist</em>
+                  on having pineapple as one of your toppings?
+                </p>
+
+                <p>
+                  <var name="$ans3" width="5"/>
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  How do the three questions above relate to each other?
+                  Explain.
+                </p>
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <solution>
+          <p>
+            <ol>
+              <li>
+                <m>{11 \choose 3} = 165</m> choices,
+                since you have to select a 3-element subset of the set of 11 toppings.
+              </li>
+
+              <li>
+                <m>{10 \choose 3} = 120</m> choices,
+                since you must select 3 of the 10 non-pineapple toppings.
+              </li>
+
+              <li>
+                <m>{10 \choose 2} = 45</m> choices,
+                since you must select 2 of the remaining 10 non-pineapple toppings to have in addition to the pineapple.
+              </li>
+
+              <li>
+                <m>165 = 120 + 45</m> choices,
+                which makes sense because every 3-topping pizza either has pineapple or does not have pineapple as a topping.
+              </li>
+            </ol>
+          </p>
+        </solution>
+    </webwork>
+  </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Explain why the coefficient of <m>x^5y^3</m> the same as the coefficient of <m>x^3y^5</m> in the expansion of <m>(x+y)^8</m>?
+      </p>
+    </statement>
+  </exercise>
+
+</exercises>
