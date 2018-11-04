@@ -281,6 +281,54 @@
         <m>F_1 = 1</m> and <m>F_n = F_{n-1} + F_{n-2}</m>).
       </p>
     </statement>
+    <solution category="instructor">
+      <p>
+        This is saying that if we add up the first <m>n</m> Fibonacci numbers,
+        we will get another Fibonacci number (specifically, the <m>(n+2)</m>th one).
+        Induction is a good idea here because it will be easy to just add one more Fibonacci number to the sum we already have.
+        If we already have <m>F_{k+2}</m> and we add <m>F_{k+1}</m> we can use the recurrence relation to simplify this,
+        becoming <m>F_{k+3}</m>.
+      </p>
+
+      <proof>
+        <p>
+          Let <m>P(n)</m> be the statement <m>F_0 + F_1 + F_2 + \cdots + F_n = F_{n+2} - 1</m>.
+          We will prove that <m>P(n)</m> is true for all <m>n \ge 0</m>.
+        </p>
+
+        <p>
+          Base case: <m>P(0)</m> states that <m>F_0 = F_2 - 1</m>,
+          which is true because <m>F_0 = 0</m> and <m>F_2 = 1</m>.
+        </p>
+
+        <p>
+          Inductive case: Assume <m>P(k)</m> is true for an arbitrary fixed <m>k \ge 0</m>.
+          That is,
+          <me>
+            F_0 + F_1 + F_2 + \cdots + F_k = F_{k+2} - 1
+          </me>
+        </p>
+
+        <p>
+          We must prove that <m>P(k+1)</m> is true as well (i.e. that <m>F_0 + F_1 + \cdots +F_{k+1} = F_{k+3} - 1</m>).
+          Start with the left-hand side:
+          <md>
+            <mrow>F_0 + F_1 + F_2 + \cdots + F_k + F_{k+1} \amp = F_{k+2} - 1 + F_{k+1} \amp \mbox{ by the inductive hypothesis}</mrow>
+            <mrow>\amp = F_{k+3} - 1 \amp \mbox{ by the definition of the Fibonacci numbers}</mrow>
+          </md>
+        </p>
+
+        <p>
+          Thus <m>P(k+1)</m> is true.
+        </p>
+
+        <p>
+          Therefore by the principle of mathematical induction,
+          <m>P(n)</m> is true for all <m>n \ge 0</m>.
+        </p>
+      </proof>
+
+    </solution>
   </exercise>
 
   <exercise permid="SzU">
@@ -298,6 +346,35 @@
         and why they together prove that Zombie Cauchy will have more followers on the 4th day.
       </p>
     </statement>
+    <solution category="instructor">
+      <p>
+        The idea here is that because we know Zombie Cauchy starts ahead,
+        and each day increases by the same amount as Zombie Euler,
+        he will always be ahead.
+      </p>
+
+      <p>
+        The base case is that Zombie Cauchy has more followers than Zombie Euler on day 1.
+        We know this is true because it says so in the problem.
+      </p>
+
+      <p>
+        The inductive case is that <em>if</em>
+        Zombie Cauchy has more followers on day <m>k</m>,
+        then he will still have more followers on day <m>k+1</m>.
+        We know this is true because each day,
+        the Zombies receive an equal number of new followers.
+      </p>
+
+      <p>
+        Together, the base case and inductive case show that on the 4th day, Zombie Cauchy will be ahead:
+        he is ahead on day 1, and because on day 1 he is ahead,
+        by the inductive case he will also be ahead on day 2.
+        By the inductive case again,
+        he will be ahead on day 3 since he is ahead on day 2, and since he is ahead on day 3, he will also be ahead on day 4.
+        Of course we could keep doing this up to any day.
+      </p>
+    </solution>
   </exercise>
 
   <exercise permid="yHd">
@@ -309,6 +386,59 @@
         Prove your answer is correct by mathematical induction.
       </p>
     </statement>
+    <solution category="instructor">
+      <p>
+        First note that it is impossible to make 11 points - if only field goals are made,
+        the points must be a multiple of 3, if 1 touchdown is made,
+        the possible point totals are 7, 10, 13,
+        <ellipsis /> and two touchdowns are already too much.
+      </p>
+
+      <p>
+        We will prove that 11 is the largest number of points which cannot be made.
+        In other words,
+        any number of points greater than or equal to 12 can be made.
+      </p>
+
+      <proof>
+        <p>
+          Let <m>P(n)</m> be the statement
+          <q>it is possible to make <m>n</m> points using touchdowns and field goals.</q>
+          We will prove <m>P(n)</m> is true for all <m>n \ge 12</m>.
+        </p>
+
+        <p>
+          First the base case: You can make 12 points with 4 field goals,
+          so <m>P(12)</m> is true.
+        </p>
+
+        <p>
+          Now the inductive case: Assume <m>P(k)</m> is true for some fixed <m>k \ge 12</m>.
+          That is, it is possible to make <m>k</m> points.
+          Since <m>k \ge 12</m>,
+          we must have made the <m>k</m> points using either at least 2 field goals or at least 2 touchdowns, or both
+          (because if we used just one of each we would have only 10 points).
+          Now if the <m>k</m> points were accomplished with 2
+          (or more)
+          field goals, then replace 2 field goals with 1 touchdown.
+          This increases to point total by 1, giving <m>k + 1</m> points.
+          On the other hand,
+          if the <m>k</m> points were accomplished with <m>2</m>
+          (or more)
+          touchdowns, replace 2 touchdowns with 5 field goals,
+          again increasing the point total by 1, giving <m>k+1</m> points.
+          Using one of these two substitutions,
+          we can make <m>k+1</m> points,
+          so <m>P(k+1)</m> is true, establishing the inductive case.
+        </p>
+
+        <p>
+          Therefore by the principle of mathematical induction,
+          <m>P(n)</m> is true for all <m>n \ge 12</m>.
+        </p>
+      </proof>
+
+    </solution>
   </exercise>
 
   <exercise permid="eOm">
@@ -320,6 +450,61 @@
         </me>
       </p>
     </statement>
+    <solution category="instructor">
+      <p>
+        This question is asking us to show that the sum of squares for <m>n</m> numbers can be found using the formula <m>\frac{n(n+1)(2n+1)}{6}</m>.
+        We can definitely see this is true for the first few instances,
+        but we are really taking it on faith that it is true for the first <m>n</m> squares.
+        So, it seems like induction would be a good place to start.
+      </p>
+
+      <proof>
+        <p>
+          First, let <m>P(n)</m> be the statement that is given.
+        </p>
+
+        <p>
+          Base case: We must now show that our base case <m>P(1)</m> is true
+          <me>
+            1^2 = \frac{1(1+1)(2(1)+1)}{6} = \frac{6}{6} =1
+          </me>
+        </p>
+
+        <p>
+          Inductive case: Now,
+          we assume that for some <m>k\leq n</m> that <m>P(k)</m> is true and show that <m>P(k+1)</m> is true.
+          Namely, assume that <m>1^2 +2^2 +3^2+...+k^2 = \frac{k(k+1)(2k+1)}{6}</m> and show that
+          <me>
+            1^2 +2^2 +3^2+...+k^2+{(k+1)}^2 = \frac{(k+1)((k+1)+1)(2(k+1)+1)}{6}
+          </me>
+        </p>
+
+        <p>
+          At this point it is advantageous to start on one side of the equality.
+          So, choosing the left-hand side to start I shall manipulate it so that it looks like the right-hand side.
+          <md>
+            <mrow>1^2 +2^2 +3^2+...+k^2+{(k+1)}^2 =</mrow>
+            <mrow>= \amp \frac{k(k+1)(2k+1)}{6} +(k+1)^2 \mbox{ by our inductive hypothesis}</mrow>
+            <mrow>= \amp \frac{k(k+1)(2k+1)}{6} +\frac{6(k+1)^2}{6}</mrow>
+            <mrow>= \amp \frac{k(k+1)(2k+1)+6(k+1)^2}{6}</mrow>
+            <mrow>= \amp \frac{(k+1)[k(2k+1)+6(k+1)]}{6} \mbox{ factoring out <m>k+1</m> from each term}</mrow>
+            <mrow>= \amp \frac{(k+1)[2k^2+k+6k+6]}{6}</mrow>
+            <mrow>= \amp \frac{(k+1)[2k^2+7k+6]}{6}</mrow>
+            <mrow>= \amp \frac{(k+1)[(2k+3)(k+2)]}{6}</mrow>
+            <mrow>= \amp \frac{(k+1)(2(k+1)+1)((k+1)+1)}{6}</mrow>
+          </md>
+        </p>
+
+        <p>
+          Thus, <m>P(k+1)</m> is true.
+        </p>
+
+        <p>
+          Therefore, by the principle of mathematical induction <m>P(n)</m> is true for all <m>n \geq 1</m>
+        </p>
+      </proof>
+
+    </solution>
   </exercise>
 
   <exercise>
@@ -703,6 +888,39 @@
         of <em>distinct</em> Fibonacci numbers.
       </p>
     </statement>
+    <solution category="instructor">
+
+      <proof>
+        <p>
+          Let <m>P(n)</m> be the statement
+          <q><m>n</m> is either a Fibonacci number or is the sum of distinct Fibonacci numbers.</q>
+          We will prove <m>P(n)</m> is true for all <m>n \ge 0</m>.
+          Note that <m>P(0)</m>, <m>P(1)</m>, <m>P(2)</m>,
+          and <m>P(3)</m> are all true since
+          <m>0, 1, 2, 3</m> are Fibonacci numbers.
+          Suppose that <m>P(k)</m> is true for all <m>k \lt n</m>.
+          Now if <m>n</m> is a Fibonacci number, then <m>P(n)</m> is true.
+          Otherwise, let <m>m</m> be the largest Fibonacci number less than <m>n</m>.
+          Consider the number <m>n - m</m>.
+          This is a number smaller than <m>n</m>, so <m>P(n-m)</m> is true.
+          So wrote <m>n-m</m> either as a single Fibonacci number
+          (if it is one)
+          or as the sum of distinct Fibonacci numbers.
+          Adding the Fibonacci number <m>m</m> will give <m>n</m> as the sum of Fibonacci numbers.
+          All that is left is to explain why this sum does not have any repeats
+          (that the numbers are distinct).
+          We know that there are no repeats in the sum for <m>n-m</m> by the inductive
+          hypothesis.
+          So the only way we might get a repeat is if the sum for <m>n-m</m> contained an <m>m</m>.
+          But there must be a Fibonacci number between <m>m</m> and <m>2m</m>
+          (since <m>m</m> plus the previous Fibonacci number is a Fibonacci number),
+          and we picked <m>m</m> to be the largest Fibonacci number less than <m>n</m>.
+          This would mean that <m>2m > n</m>,
+          so there cannot be two <m>m</m>'s in the sum.
+        </p>
+      </proof>
+
+    </solution>
   </exercise>
 
   <exercise permid="Uph">
@@ -1006,6 +1224,77 @@
         </ol>
       </p>
     </statement>
+    <solution category="instructor">
+      <p>
+        <ol>
+          <li>
+            <p>
+              The base case is when <m>n = 0</m>,
+              so we check <m>P(0,0)</m>.
+              This is just <m>F_0F_0 + F_1F_1 = F_1</m>,
+              which is true since <m>0+1 = 1</m>.
+            </p>
+
+            <p>
+              For the inductive case,
+              we assume <m>P(0,k)</m> is true and want to show that <m>P(0,k+1)</m> is true.
+              But <m>P(0,k+1)</m> is the satement <m>F_0F_{k+1} + F_{1}F_{k+2} = F_{k+2}</m>,
+              which we see immediately is true since <m>F_0 = 0</m>.
+              (We didn't even need the inductive hypothesis here,
+              although other double induction proofs might use it.)
+            </p>
+
+            <p>
+              Thus we see that <m>P(0,n)</m> is true for all <m>n \ge 0</m>.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Remember that <m>n</m> is fixed.
+              So our base cases are for <m> m = 0</m> and <m>m = 1</m>.
+              That is, we need to verify that <m>P(0,n)</m> and <m>P(1,n)</m> are true.
+              The first is already done above.
+              The second is also clear:
+              <m>F_1F_n + F_2F_{n+1} = F_n + F_{n+1} = F_{n+2} = F_{1 + n + 1}</m>.
+            </p>
+
+            <p>
+              Now fix <m>m \gt 1</m> and assume <m>P(k,n)</m> is true for all <m>k \lt m</m>.
+              That is we know that <m>F_kF_n + F_{k+1}F_{n+1} = F_{k+n+1}</m>.
+              We must consider <m>F_{m}F_n + F_{m+1}F_{n+1}</m>
+              (and show it equals <m>F_{m+n+1}</m>).
+              We have,
+              <md>
+                <mrow>F_{m}F_n + F_{m+1}F_{n+1} \amp = (F_{m-2} + F_{m-1})F_n + (F_{m-1} + F_{m})F_{n+1}</mrow>
+                <mrow>\amp = F_{m-2}F_n + F_{m-1}F_n + F_{m-1}F_{n+1} + F_{m}F_{n+1}</mrow>
+                <mrow>\amp = (F_{m-2}F_n + F_{m-1}F_{n+1}) + (F_{m-1}F_n + F_{m}F_{n+1})</mrow>
+                <mrow>\amp = F_{m-2 + n + 1} + F_{m-1 + n + 1} = F_{m + n + 1}</mrow>
+              </md>.
+              The last line is the result of applying the inductive hypothesis twice,
+              once for <m>k = m-2</m> and once of <m>k = m-1</m>.
+            </p>
+
+            <p>
+              Therefore by the principle of strong mathematical induction,
+              <m>P(m,n)</m> is true for all <m>m \ge 0</m>
+              (and our fixed value of <m>n</m>).
+            </p>
+          </li>
+
+          <li>
+            <p>
+              This is enough,
+              since we now have a method for getting to <m>P(m,n)</m> for any <m>m,n \ge 0</m>.
+              For example,
+              we know that <m>P(2,3)</m> is true because we know that <m>P(0,3)</m> is true
+              (from the first part),
+              and then we know we can get up to <m> m = 2</m> by doing induction with <m>n = 3</m> fixed.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </solution>
   </exercise>
 <!-- The previous problem can be done with simultaneous induction, which could also make a nice problem -->
 <!-- Maybe one more double induction problem, without the scafolding? -->
@@ -1038,6 +1327,68 @@
         Hint: you will need three base cases.
       </p>
     </statement>
+    <solution category="instructor">
+
+      <proof>
+        <p>
+          For each <m>n</m>, let <m>P(n)</m> be the statement
+          <q>You can divide a square into <m>n</m> smaller squares.</q>
+          We will prove <m>P(n)</m> is true for all <m>n \ge 6</m> using strong induction.
+        </p>
+
+        <p>
+          First note that you can divide a square into <m>6</m>,
+          <m>7</m>,
+          or <m>8</m> squares as follows:
+        </p>
+
+        <sidebyside widths="30% 30% 30%">
+
+          <image>
+
+            <latex-image>
+              \begin{tikzpicture}[scale=.75]
+              \draw (0,0) rectangle (3,3) (0,0) rectangle (2,2) (1,2) -- (1,3) (2,2) -- (2,3) (2,2) -- (3,2) (2,1)-- (3,1);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+
+          <image>
+
+            <latex-image>
+              \begin{tikzpicture}[scale=.75]
+              \draw (0,0) rectangle (3,3) (0,1.5) -- (3,1.5) (1.5,0) -- (1.5,3) (0.75,0) -- (0.75, 1.5) (0, 0.75) -- (1.5, 0.75);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+
+          <image>
+
+            <latex-image>
+              \begin{tikzpicture}[scale=.57]
+              \draw (0,0) rectangle (4,4) (3,0) rectangle (4,1) rectangle (3,2) rectangle (4,3) rectangle (3,4) rectangle (2,3) rectangle (1,4) rectangle (0,3);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+
+        </sidebyside>
+
+        <p>
+          Now consider an arbitrary <m>n \lt 8</m> and suppose you can divide a square into <m>k</m> squares,
+          for any <m>6 \le k \lt n</m>.
+          Then in particular, you can divide a square into <m>n-3</m> squares.
+          Take any one of the small squares and divide it into 4.
+          This replaces one of the squares with 4 new ones,
+          increasing the total by 3, giving you <m>n</m> squares.
+        </p>
+
+        <p>
+          Therefore, by the principle of strong mathematical induction,
+          you can divide a square into <m>n</m> squares for any <m>n \ge 6</m>.
+        </p>
+      </proof>
+
+    </solution>
   </exercise>
 
 </exercises>
