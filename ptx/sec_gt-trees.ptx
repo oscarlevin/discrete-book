@@ -1,91 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_trees">
-<title>Trees</title>
-
-<introduction>
-  <investigation>
+  <title>Trees</title>
+  <introduction>
+    <investigation>
+      <p>
+        We need an activity about trees.
+        Perhaps an applied type question about finding the smallest connected subgraph that contains all the vertices (i.e. a spanning tree).
+        Then ask what the largest subgraph could be that doesn't contain any cycles.
+      </p>
+    </investigation>
     <p>
-      We need an activity about trees.  Perhaps an applied type question about finding the smallest connected subgraph that contains all the vertices (i.e. a spanning tree).  Then ask what the largest subgraph could be that doesn't contain any cycles.
+      One very useful and common approach to studying graph theory is to restrict your focus to only graphs of a particular kind.
+      For example,
+      you could try to really understand just complete graphs or just bipartite graphs,
+      instead of trying to understand all graphs in general.
+      That is what we are going to do now,
+      looking at <em>trees</em>.
+      Hopefully by the end of this section we will not only have a better understanding of this class of graph,
+      but also understand why it is important enough to warrant its own section.
     </p>
-  </investigation>
 
-  <p>
-  One very useful and common approach to studying graph theory is to restrict your focus to only graphs of a particular kind.  For example, you could try to really understand just complete graphs or just bipartite graphs, instead of trying to understand all graphs in general.  That is what we are going to do now, looking at <em>trees</em>.  Hopefully by the end of this section we will not only have a better understanding of this class of graph, but also understand why it is important enough to warrant its own section.
-  </p>
+    <assemblage>
+      <title>Definition of a Tree</title>
+      <idx><h>tree</h></idx>
 
-  <assemblage>
-    <title>Definition of a Tree</title>
-        <idx><h>tree</h></idx>
+      <p>
+        A <term>tree</term> is a connected graph containing no cycles.<fn>
+        Sometimes this is stated as <q>a tree is an acyclic connected graph;</q> <q>acyclic</q>
+        is just a fancy word for <q>containing no cycles.</q>
+        </fn></p>
+    </assemblage>
+
     <p>
-      A <term>tree</term> is a connected graph containing no cycles.<fn>Sometimes this is stated as <q>a tree is an acyclic connected graph;</q> <q>acyclic</q> is just a fancy word for <q>containing no cycles.</q></fn>
+      Does the definition above agree with your intuition for what graphs we should call trees?
+      Try thinking of examples of trees and make sure they satisfy the definition.
+      One thing to keep in mind is that while the trees we study in graph theory are related to trees you might see in other subjects,
+      the correspondence is not exact.
+      For instance, in anthropology,
+      you might study family trees, like the one below,
     </p>
-  </assemblage>
 
-  <p>
-    Does the definition above agree with your intuition for what graphs we should call trees?  Try thinking of examples of trees and make sure they satisfy the definition.  One thing to keep in mind is that while the trees we study in graph theory are related to trees you might see in other subjects, the correspondence is not exact.  For instance, in anthropology, you might study family trees, like the one below,
-  </p>
+    <sidebyside width="40%">
 
-  <sidebyside width="40%">
-    <image xml:id="family-tree">
+      <image xml:id="family-tree">
+
       <latex-image>
         \begin{tikzpicture}
           %draw family tree!
         \end{tikzpicture}
       </latex-image>
-    </image>
-  </sidebyside>
+      </image>
 
-  <p>
-    So far so good, but while your grandparents are (probably) not blood-relatives in the normal sense, if we go back far enough, it is likely that they did have <em>some</em> common ancestor.  If you trace the tree back from you to that common ancestor, then down through your other grandparent, you would have a cycle, and thus the graph would not be a tree.
-  </p>
+    </sidebyside>
 
-  <p>
-    You might also have seen something called a <em>decision tree</em> before (for example when deciding whether a series converges or diverges).  Sometimes these too contain cycles, as the decision for one node might lead you back to a previous step.
-  </p>
+    <p>
+      So far so good,
+      but while your grandparents are (probably) not blood-relatives in the normal sense,
+      if we go back far enough,
+      it is likely that they did have
+      <em>some</em> common ancestor.
+      If you trace the tree back from you to that common ancestor,
+      then down through your other grandparent,
+      you would have a cycle, and thus the graph would not be a tree.
+    </p>
 
-  <p>
-    Both the examples of trees above also have another feature worth mentioning: there is a clear order to the vertices in the tree.
-    In general, there is no reason for a tree to have this added structure, although we can impose such a structure by considering <term>rooted trees</term>, where we simply designate one vertex as the <em>root</em>.  We will consider such trees in more detail at the end of this section.
-  </p>
+    <p>
+      You might also have seen something called a
+      <em>decision tree</em> before
+      (for example when deciding whether a series converges or diverges).
+      Sometimes these too contain cycles,
+      as the decision for one node might lead you back to a previous step.
+    </p>
 
-</introduction>
+    <p>
+      Both the examples of trees above also have another feature worth mentioning:
+      there is a clear order to the vertices in the tree.
+      In general, there is no reason for a tree to have this added structure,
+      although we can impose such a structure by considering
+      <term>rooted trees</term>,
+      where we simply designate one vertex as the <em>root</em>.
+      We will consider such trees in more detail at the end of this section.
+    </p>
+  </introduction>
 
-<subsection>
-  <title>Properties of Trees</title>
-  <p>
-    We wish to really understand trees.  This means we should discover properties of trees; what makes them special and what is special about them.
-  </p>
+  <subsection>
+    <title>Properties of Trees</title>
+    <p>
+      We wish to really understand trees.
+      This means we should discover properties of trees;
+      what makes them special and what is special about them.
+    </p>
 
-  <p>
-    A tree is an connected graph with no cycles.  Is there anything else we can say?  It would be nice to have other equivalent conditions for a graph to be a tree.  That is, we would like to know whether there are any graph theoretic properties that all trees have, and perhaps even that <em>only</em> trees have.
-  </p>
+    <p>
+      A tree is an connected graph with no cycles.
+      Is there anything else we can say?
+      It would be nice to have other equivalent conditions for a graph to be a tree.
+      That is, we would like to know whether there are any graph theoretic properties that all trees have,
+      and perhaps even that <em>only</em> trees have.
+    </p>
 
-  <p>
-    For example,
-  </p>
-</subsection>
+    <p>
+      For example,
+    </p>
+  </subsection>
 
-
-<subsection>
-  <title>Spanning Trees</title>
-
-
+  <subsection>
+    <title>Spanning Trees</title>
 <!-- Include application to coloring -->
 <!-- Include Prim's algorithm (very roughly) and an example about minimum spanning trees -->
-</subsection>
+  </subsection>
 
+  <subsection>
+    <title>Rooted Trees</title>
+    <p>
+      So far, we have thought of trees only as a particular kind of graph.
+      However, it is often useful to add additional structure to trees to help solve problems.
+      Data is often structured like a tree.
+      This book, for example, has a tree structure:
+      draw a vertex for the book itself.
+      Then draw vertices for each chapter,
+      connected to the book vertex.
+      Under each chapter, draw a vertex for each section,
+      connecting it to the chapter it belongs to.
+      The graph will not have any cycles; it will be a tree.
+      But a tree with clear hierarchy which is not present if we don't identify the book itself as the <q>top</q>.
+    </p>
+  </subsection>
 
-<subsection>
-  <title>Rooted Trees</title>
-
-  <p>
-    So far, we have thought of trees only as a particular kind of graph.  However, it is often useful to add additional structure to trees to help solve problems.  Data is often structured like a tree.  This book, for example, has a tree structure: draw a vertex for the book itself.  Then draw vertices for each chapter, connected to the book vertex.  Under each chapter, draw a vertex for each section, connecting it to the chapter it belongs to.  The graph will not have any cycles; it will be a tree.  But a tree with clear hierarchy which is not present if we don't identify the book itself as the <q>top</q>.
-  </p>
-
-</subsection>
-
-
-
-<xi:include href="exercises/gt-trees.ptx"/>
-
+  <xi:include href="exercises/gt-trees.ptx"/>
 </section>
