@@ -72,19 +72,29 @@ PTXRELAXNG = $(PTX)/schema
 SRC = $(DMOI)/ptx
 XSL = $(DMOI)/xsl
 
+# These are the files to apply templates to
+MAIN = $(SRC)/dmoi.ptx
+MERGED = $(LOCALBUILD)/dmoi-merge.ptx
+
 # These paths are subdirectories of
 # a scratch directory
 HTMLOUT    = $(SCRATCH)/html
 PDFOUT     = $(SCRATCH)/latex
-SMCOUT     = $(SCRATCH)/aata-smc
+SMCOUT     = $(SCRATCH)/dmoi-smc
 DOCTEST    = $(SCRATCH)/doctest
 EPUBOUT    = $(SCRATCH)/epub
 SAGENBOUT  = $(SCRATCH)/sagenb
 JUPYTEROUT = $(SCRATCH)/jupyter
+LOCALBUILD = $(SCRATCH)/localbuild
 
+# Some aspects of producing these examples require a WeBWorK server.
+# Either specify only the protocol and domain (like https://webwork.yourschool.edu)
+# or specify a 5-tuple with quotes exactly as in this example
+# SERVER = "(https://webwork-ptx.aimath.org,courseID,userID,password,course_password)"
+SERVER = https://webwork-ptx.aimath.org
 
-# Following regularly presumes  xml:id="aata" on
-# the <book> element, so xsltproc creates  aata.tex
+# Following regularly presumes  xml:id="dmoi" on
+# the <book> element, so xsltproc creates  dmoi.tex
 
 ###############
 # Preliminaries
@@ -101,10 +111,23 @@ JUPYTEROUT = $(SCRATCH)/jupyter
 diagrams:
 	install -d $(HTMLOUT)/images
 	-rm $(HTMLOUT)/images/*
-	$(MBSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(SRC)/aata.xml
-	$(MBSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(SRC)/aata.xml
-	$(MBSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(SRC)/aata.xml
+	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
+	$(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
+	$(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
 
+# WeBWorK extraction
+#   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
+
+ww-extraction:
+	install -d $(LOCALBUILD)
+	-rm $(LOCALBUILD)/webwork-extraction.xml
+	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
+		
+# 	Then we merge this with the main source 
+
+ww-merge:
+	cd $(SCRATCH); \
+	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(MAIN) > dmoi-merge.ptx
 
 ##########
 # Products
@@ -115,36 +138,37 @@ diagrams:
 #   Move to server: generated *.html and
 #   entire directories - /images and /knowl
 html:
-	install -d $(HTMLOUT) $(MBUSR)
+	install -d $(HTMLOUT)
+	-rm $(HTMLOUT)/*.html
+	-rm $(HTMLOUT)/knowl/*.html
 	cp -a $(SRC)/images $(HTMLOUT)
-	cp $(XSL)/aata-common.xsl $(XSL)/aata-html.xsl $(MBUSR)
 	cd $(HTMLOUT); \
-	xsltproc --xinclude $(MBUSR)/aata-html.xsl $(SRC)/aata.xml
+	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
 
 viewhtml:
-	$(HTMLVIEWER) $(HTMLOUT)/aata.html &
+	$(HTMLVIEWER) $(HTMLOUT)/dmoi.html &
 
-# Full PDF version with Sage
+# Full PDF version
 #   copies in all image files, which is overkill (SVG's)
 #   produces  aata-sage.tex  in scratch directory
 #   which becomes PDF, along with index entries
 #   Includes *all* material, and is fully electronic
 #   This is the DMOI/Sage downloadable Annual Edition
-sage:
-	# delete old  xsltproc  output
-	# dash prevents error if not found
-	-rm $(PDFOUT)/aata.tex
-	install -d $(PDFOUT) $(MBUSR)
-	cp -a $(SRC)/images $(PDFOUT)
-	cp $(XSL)/aata-common.xsl $(XSL)/aata-latex.xsl $(XSL)/aata-sage.xsl $(MBUSR)
-	cd $(PDFOUT); \
-	xsltproc --xinclude $(MBUSR)/aata-sage.xsl $(SRC)/aata.xml; \
-	$(ENGINE) aata.tex; $(ENGINE) aata.tex; \
-	mv aata.pdf aata-sage.pdf
-
-# View PDF from correct directory
-viewsage:
-	$(PDFVIEWER) $(PDFOUT)/aata-sage.pdf &
+# sage:
+# 	# delete old  xsltproc  output
+# 	# dash prevents error if not found
+# 	-rm $(PDFOUT)/aata.tex
+# 	install -d $(PDFOUT) $(MBUSR)
+# 	cp -a $(SRC)/images $(PDFOUT)
+# 	cp $(XSL)/aata-common.xsl $(XSL)/aata-latex.xsl $(XSL)/aata-sage.xsl $(MBUSR)
+# 	cd $(PDFOUT); \
+# 	xsltproc --xinclude $(MBUSR)/aata-sage.xsl $(SRC)/dmoi.ptx; \
+# 	$(ENGINE) aata.tex; $(ENGINE) aata.tex; \
+# 	mv aata.pdf aata-sage.pdf
+# 
+# # View PDF from correct directory
+# viewsage:
+# 	$(PDFVIEWER) $(PDFOUT)/aata-sage.pdf &
 
 # Electronic PDF version
 #   copies in all image files, which is overkill (SVG's)
@@ -154,21 +178,20 @@ viewsage:
 #   No Sage material
 #   This is default downloadable Annual Edition
 #   ie, aata-YYYYMMDD.pdf in repository download section
-electronic:
+tablet:
 	# delete old  xsltproc  output
 	# dash prevents error if not found
-	-rm $(PDFOUT)/aata.tex
-	install -d $(PDFOUT) $(MBUSR)
+	-rm $(PDFOUT)/dmoi.tex
+	install -d $(PDFOUT)
 	cp -a $(SRC)/images $(PDFOUT)
-	cp $(XSL)/aata-common.xsl $(XSL)/aata-latex.xsl $(XSL)/aata-electronic.xsl $(MBUSR)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(MBUSR)/aata-electronic.xsl $(SRC)/aata.xml; \
-	$(ENGINE) aata.tex; $(ENGINE) aata.tex; \
-	mv aata.pdf aata-electronic.pdf
+	xsltproc --xinclude $(XSL)/custom-latex-tablet.xsl $(MERGED); \
+	$(ENGINE) dmoi.tex; $(ENGINE) dmoi.tex; \
+	mv dmoi.pdf dmoi-tablet.pdf
 
 # View PDF from correct directory
-viewelectronic:
-	$(PDFVIEWER) $(PDFOUT)/aata-electronic.pdf &
+viewtablet:
+	$(PDFVIEWER) $(PDFOUT)/dmoi-tablet.pdf &
 
 # Print PDF version
 #   A print version for print-on-demand
@@ -179,18 +202,17 @@ viewelectronic:
 print:
 	# delete old  xsltproc  output
 	# dash prevents error if not found
-	-rm $(PDFOUT)/aata.tex
-	install -d $(PDFOUT) $(MBUSR)
+	-rm $(PDFOUT)/dmoi.tex
+	install -d $(PDFOUT)
 	cp -a $(SRC)/images $(PDFOUT)
-	cp $(XSL)/aata-common.xsl $(XSL)/aata-latex.xsl $(XSL)/aata-print.xsl $(MBUSR)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(MBUSR)/aata-print.xsl $(SRC)/aata.xml; \
-	$(ENGINE) aata.tex; $(ENGINE) aata.tex; \
-	mv aata.pdf aata-print.pdf
+	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED); \
+	$(ENGINE) dmoi.tex; $(ENGINE) dmoi.tex; \
+	mv dmoi.pdf dmoi-print.pdf
 
 # View PDF from correct directory
 viewprint:
-	$(PDFVIEWER) $(PDFOUT)/aata-print.pdf &
+	$(PDFVIEWER) $(PDFOUT)/dmoi-print.pdf &
 
 # Author's Draft
 #   Like electronic PDF version, but for:
@@ -205,7 +227,7 @@ draft:
 	cp $(XSL)/aata-common.xsl $(XSL)/aata-latex.xsl $(XSL)/aata-electronic.xsl $(MBUSR)
 	cd $(PDFOUT); \
 	xsltproc --xinclude --stringparam author-tools 'yes' \
-	--stringparam latex.draft 'yes' $(MBUSR)/aata-electronic.xsl $(SRC)/aata.xml; \
+	--stringparam latex.draft 'yes' $(MBUSR)/aata-electronic.xsl $(SRC)/dmoi.ptx; \
 	$(ENGINE) aata.tex; $(ENGINE) aata.tex; \
 	mv aata.pdf aata-draft.pdf
 
@@ -229,7 +251,7 @@ doctest:
 	-rm $(DOCTEST)/*.py; \
 	install -d $(DOCTEST)
 	cd $(DOCTEST); \
-	xsltproc --xinclude --stringparam chunk.level 2 $(MBXSL)/mathbook-sage-doctest.xsl $(SRC)/aata.xml; \
+	xsltproc --xinclude --stringparam chunk.level 2 $(MBXSL)/mathbook-sage-doctest.xsl $(SRC)/dmoi.ptx; \
 	$(SAGE) -tp 0 .
 
 # SageMathCloud worksheets
@@ -242,7 +264,7 @@ smc:
 	cp -a $(MB)/css/mathbook-content.css $(MB)/css/mathbook-add-on.css $(SMCOUT)
 	cp $(XSL)/aata-common.xsl $(XSL)/aata-smc.xsl $(MBUSR)
 	cd $(SMCOUT); \
-	xsltproc --xinclude $(MBUSR)/aata-smc.xsl $(SRC)/aata.xml
+	xsltproc --xinclude $(MBUSR)/aata-smc.xsl $(SRC)/dmoi.ptx
 	# wrap up into a tarball in SCRATCH
 	# NB: subdir must match with SMCOUT
 	tar -c -z -f $(SCRATCH)/aata-smc.tgz -C $(SCRATCH) aata-smc
@@ -287,7 +309,7 @@ cleansols:
 check:
 	install -d $(SCRATCH)
 	-rm $(SCRATCH)/dtderrors.*
-	-xmllint --xinclude --noout --dtdvalid $(MBDTD)/mathbook.dtd $(SRC)/aata.xml 2> $(SCRATCH)/dtderrors.txt
+	-xmllint --xinclude --noout --dtdvalid $(MBDTD)/mathbook.dtd $(SRC)/dmoi.ptx 2> $(SCRATCH)/dtderrors.txt
 	less $(SCRATCH)/dtderrors.txt
 
 viewcheck:
@@ -305,7 +327,7 @@ jupyter:
 	cp -a $(SRC)/images $(JUPYTEROUT)
 	cp $(XSL)/aata-common.xsl $(XSL)/aata-jupyter.xsl $(MBUSR)
 	cd $(JUPYTEROUT); \
-	xsltproc --xinclude $(MBUSR)/aata-jupyter.xsl $(SRC)/aata.xml
+	xsltproc --xinclude $(MBUSR)/aata-jupyter.xsl $(SRC)/dmoi.ptx
 
 
 # Sage Notebooks
@@ -317,7 +339,7 @@ sagenb:
 	install -d $(HTMLOUT)
 	cp -a $(SRC)/*.xml $(SRC)/images $(SRC)/exercises $(SRC)/sage $(SCRATCH)
 	cp -a $(HTMLOUT)/images $(SCRATCH)
-	$(MBSCRIPT)/mbx -v -c all -f sagenb -o $(SAGENBOUT)/aata.zip $(SCRATCH)/aata.xml
+	$(MBSCRIPT)/mbx -v -c all -f sagenb -o $(SAGENBOUT)/aata.zip $(SCRATCH)/dmoi.ptx
 
 # This makes a zip file of a version for use at AIM Books
 # Clean out directories first by hand
@@ -330,7 +352,7 @@ aimhtml:
 	cp $(XSL)/aata-common.xsl $(XSL)/aata-html.xsl $(MBUSR)
 	sed -i -e 's/002637997310187229905:qj2oy0jlpyu/008832104071767086392:pxbnbrlbfwa/' $(SRC)/bookinfo.xml
 	cd $(HTMLOUT); \
-	xsltproc --xinclude --stringparam html.annotation hypothesis $(MBUSR)/aata-html.xsl $(SRC)/aata.xml
+	xsltproc --xinclude --stringparam html.annotation hypothesis $(MBUSR)/aata-html.xsl $(SRC)/dmoi.ptx
 	sed -i -e 's/008832104071767086392:pxbnbrlbfwa/002637997310187229905:qj2oy0jlpyu/' $(SRC)/bookinfo.xml
 	mv $(SCRATCH)/html $(SCRATCH)/aata-html
 	cd $(SCRATCH); \
@@ -343,7 +365,7 @@ epub:
 	rm -rf $(EPUBOUT)
 	install -d $(EPUBOUT) $(EPUBOUT)/EPUB/css $(EPUBOUT)/EPUB/xhtml
 	cd $(EPUBOUT); \
-	xsltproc --xinclude  $(MBXSL)/mathbook-epub.xsl $(SRC)/aata.xml
+	xsltproc --xinclude  $(MBXSL)/mathbook-epub.xsl $(SRC)/dmoi.ptx
 	rm -rf $(EPUBOUT)/knowl
 	cp ~/mathbook/local/epub-trial/mathbook-content.css $(EPUBOUT)/EPUB/css/
 	cp -a $(SRC)/images $(EPUBOUT)/EPUB/xhtml
