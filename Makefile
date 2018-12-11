@@ -58,6 +58,10 @@
 # project and names of various helper executables
 include Makefile.paths
 
+# This is to ensure that latex is not skipped
+.PHONY: latex
+
+
 # These paths are subdirectories of
 # the Mathbook XML distribution
 # MBUSR is where extension files get copied
@@ -127,7 +131,11 @@ ww-extraction:
 
 ww-merge:
 	cd $(SCRATCH); \
-	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(MAIN) > dmoi-merge.ptx
+	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(MAIN) > $(LOCALBUILD)/dmoi-merge.ptx
+
+ww-all: ww-extraction ww-merge
+
+
 
 ##########
 # Products
@@ -141,9 +149,11 @@ html:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
-	cp -a $(SRC)/images $(HTMLOUT)
+	# cp -a images $(HTMLOUT)
 	cd $(HTMLOUT); \
 	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
+
+html-fresh: ww-fresh html
 
 viewhtml:
 	$(HTMLVIEWER) $(HTMLOUT)/dmoi.html &
@@ -170,6 +180,29 @@ viewhtml:
 # viewsage:
 # 	$(PDFVIEWER) $(PDFOUT)/aata-sage.pdf &
 
+
+# Print PDF version
+#   A print version for print-on-demand
+#   This will be source for the Annual Edition,
+#     as sent to Orthogonal Publishing for modification
+#   Black on white, no live URLs, etc
+#   This is the "printable" downloadable Annual Edition
+latex:
+	-rm $(PDFOUT)/dmoi.tex
+	install -d $(PDFOUT)
+	# cp -a images $(PDFOUT)
+	cd $(PDFOUT); \
+	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
+
+print: latex
+	cd $(PDFOUT); \
+	$(ENGINE) dmoi.tex; $(ENGINE) dmoi.tex; \
+	mv dmoi.pdf dmoi-print.pdf
+
+	# View PDF from correct directory
+viewprint:
+	$(PDFVIEWER) $(PDFOUT)/dmoi-print.pdf &
+	
 # Electronic PDF version
 #   copies in all image files, which is overkill (SVG's)
 #   produces  aata-electronic.tex  in scratch directory
@@ -178,14 +211,15 @@ viewhtml:
 #   No Sage material
 #   This is default downloadable Annual Edition
 #   ie, aata-YYYYMMDD.pdf in repository download section
-tablet:
-	# delete old  xsltproc  output
-	# dash prevents error if not found
+latex-tablet:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
-	cp -a $(SRC)/images $(PDFOUT)
+	# cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
 	xsltproc --xinclude $(XSL)/custom-latex-tablet.xsl $(MERGED); \
+
+tablet: latex-tablet
+	cd $(PDFOUT); \
 	$(ENGINE) dmoi.tex; $(ENGINE) dmoi.tex; \
 	mv dmoi.pdf dmoi-tablet.pdf
 
@@ -193,26 +227,7 @@ tablet:
 viewtablet:
 	$(PDFVIEWER) $(PDFOUT)/dmoi-tablet.pdf &
 
-# Print PDF version
-#   A print version for print-on-demand
-#   This will be source for the Annual Edition,
-#     as sent to Orthogonal Publishing for modification
-#   Black on white, no live URLs, etc
-#   This is the "printable" downloadable Annual Edition
-print:
-	# delete old  xsltproc  output
-	# dash prevents error if not found
-	-rm $(PDFOUT)/dmoi.tex
-	install -d $(PDFOUT)
-	cp -a $(SRC)/images $(PDFOUT)
-	cd $(PDFOUT); \
-	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED); \
-	$(ENGINE) dmoi.tex; $(ENGINE) dmoi.tex; \
-	mv dmoi.pdf dmoi-print.pdf
 
-# View PDF from correct directory
-viewprint:
-	$(PDFVIEWER) $(PDFOUT)/dmoi-print.pdf &
 
 # Author's Draft
 #   Like electronic PDF version, but for:
