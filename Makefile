@@ -133,7 +133,7 @@ ww-merge:
 	cd $(SCRATCH); \
 	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(MAIN) > $(LOCALBUILD)/dmoi-merge.ptx
 
-ww-all: ww-extraction ww-merge
+ww-fresh: ww-extraction ww-merge
 
 
 
@@ -193,6 +193,12 @@ latex:
 	# cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
 	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
+
+latex-fresh: ww-fresh latex
+	
+pdf:
+	cd $(PDFOUT); \
+	$(ENGINE) dmoi.tex;
 
 print: latex
 	cd $(PDFOUT); \
