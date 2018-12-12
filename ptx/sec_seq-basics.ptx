@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <section permid="mrl" xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq_intro">
-  <title>Definitions</title>
-  <introduction permid="Dpw">
-    <investigation permid="jwF">
-    <!-- TODO: Make a better intro problem -->
-      <p permid="ZlV">
-        What comes next:
-        <me permid="Hir">
-          1, ~~11, ~~21, ~~1211, ~~111221, ~~312211, ~~\ldots
-        </me>
+  <title>Describing Sequences</title>
+    <investigation permid="PDO">
+      <p permid="Cyy">
+        You have a large collection of
+        <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
+        You want to arrange these to make a <m>1 \times 15</m> strip.
+        How many ways can you do this?
+
+        <ol permid="YXA">
+          <li permid="IJj">
+            <p permid="ggA">
+              Start by collecting data.
+              How many length <m>1\times 1</m> strips can you make?
+              How many <m>1\times 2</m> strips?
+              How many <m>1\times 3</m> strips?
+              And so on.
+            </p>
+          </li>
+
+          <li permid="oQs">
+            <p permid="MnJ">
+              How are the <m>1\times 3</m> and
+              <m>1 \times 4</m> strips related to the <m>1\times 5</m> strips?
+            </p>
+          </li>
+
+          <li permid="UXB">
+            <p permid="suS">
+              How many <m>1\times 15</m> strips can you make?
+            </p>
+          </li>
+
+          <li permid="BeK">
+            <p permid="YCb">
+              What if I asked you to find the number of <m>1\times 1000</m> strips?
+              Would the method you used to calculate the number fo <m>1 \times 15</m> strips be helpful?
+            </p>
+          </li>
+        </ol>
       </p>
     </investigation>
     <p permid="Fte">
@@ -246,46 +276,7 @@
       </statement>
     </example>
 
-    <investigation permid="PDO">
-      <p permid="Cyy">
-        You have a large collection of
-        <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
-        You want to arrange these to make a <m>1 \times 15</m> strip.
-        How many ways can you do this?
 
-        <ol permid="YXA">
-          <li permid="IJj">
-            <p permid="ggA">
-              Start by collecting data.
-              How many length <m>1\times 1</m> strips can you make?
-              How many <m>1\times 2</m> strips?
-              How many <m>1\times 3</m> strips?
-              And so on.
-            </p>
-          </li>
-
-          <li permid="oQs">
-            <p permid="MnJ">
-              How are the <m>1\times 3</m> and
-              <m>1 \times 4</m> strips related to the <m>1\times 5</m> strips?
-            </p>
-          </li>
-
-          <li permid="UXB">
-            <p permid="suS">
-              How many <m>1\times 15</m> strips can you make?
-            </p>
-          </li>
-
-          <li permid="BeK">
-            <p permid="YCb">
-              What if I asked you to find the number of <m>1\times 1000</m> strips?
-              Would the method you used to calculate the number fo <m>1 \times 15</m> strips be helpful?
-            </p>
-          </li>
-        </ol>
-      </p>
-    </investigation>
     <p permid="iFH">
       You might wonder why we would bother with recursive definitions for sequences.
       After all, it is harder to find <m>a_n</m> with a recursive definition than with a closed formula.
@@ -564,7 +555,107 @@
         </p>
       </solution>
     </example>
-  </introduction>
+
+
+  <paragraphs permid="psV">
+    <title>Partial sums</title>
+    <p>
+      Some sequences naturally arise as the sum of terms of another sequence. 
+    </p>
+    
+    <example xml:id="ex-first-partial-sums">
+      <statement>
+        <p>
+          Sam keeps track of how many push-ups she does each day of her <q>do lots of push-ups challenge.</q>  Let <m>(a_n)_{n \ge 1}</m> be the sequence that describes the number of push-ups done on the <m>n</m>th day of the challenge.  The sequence starts
+          <me>
+            3, 5, 6, 10, 9, 0, 12, \ldots
+          </me>.
+          Describe a sequence <m>(b_n)_{n \ge 1}</m> that describes the total number of push-ups done by Sam after the <m>n</m>th day.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We can find the terms of this sequence easily enough.  <me>
+            3, 8, 14, 24, 33, 33, 45,\ldots
+          </me>
+          Here <m>b_1</m> is just <m>a_1</m>, but then <me>b_2 = 3+5 = a_1 + a_2</me>, <me>b_3 = 3+5+6 = a_1 + a_2 + a_3</me>,
+          and so on.  
+        </p>
+        
+        <p>
+          There are a few ways we might describe <m>b_n</m> in general.  We could do so recursively as,
+          <me>
+            b_n = b_{n-1} + a_n
+          </me>,
+          since the total number of push-ups done after <m>n</m> days will be the number done after <m>n-1</m> days, plus the number done on day <m>n</m>.
+        </p>
+        
+        <p>
+          For something closer to a closed formula, we could write 
+          <me>
+            b_n = a_1 + a_2 + a_3 + \cdots + a_n
+          </me>,
+          or the same thing using <em>summation notation</em>: 
+          <me>
+            b_n = \sum_{i=1}^n a_i
+          </me>.
+          However, note that these are not really closed formulas since even if we had a formula for <m>a_n</m>, we would still have an increasing number of computations to do as <m>n</m> increases.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Given any sequence <m>(a_n)_{n \in \N}</m>, we can always form a new sequence <m>(b_n)_{n in \N}</m> by
+      <me>
+        b_n = a_0 + a_1 + a_2 + \cdots + a_n
+      </me>.
+       Since the terms of <m>(b_n)</m> are the sums of the initial part of the sequence <m>(a_n)</m> ways call <m>(b_n)</m> the <term>sequence of partial sums of <m>(a_n)</m></term>.  Soon we will see that it is sometimes possible to find a closed formula for <m>(b_n)</m> from the closed formula for <m>(a_n)</m>.
+    </p>
+    
+    <p permid="AQp">
+      To simplify writing out these sums,
+      we will often use notation like <m>\d\sum_{k=1}^n a_k</m>.
+      This means add up the <m>a_k</m>'s where <m>k</m> changes from 1 to <m>n</m>.
+          <idx><h>summation notation</h></idx>
+          <idx><h>Sigma notation</h></idx>
+    </p>
+
+    <example permid="SFy">
+      <statement>
+        <p permid="urj">
+          Use <m>\sum</m> notation to rewrite the sums:
+        </p>
+
+        <p permid="ays">
+          <ol permid="aTR">
+            <li permid="wBV"><m>1 + 2 + 3 + 4 + \cdots + 100</m></li>
+
+            <li permid="cJe"><m>1 + 2 + 4 + 8 + \cdots + 2^{50}</m></li>
+
+            <li permid="IQn"><m>6 + 10 + 14 + \cdots + (4n - 2)</m>.</li>
+          </ol>
+        </p>
+      </statement>
+      <solution permid="qcP">
+        <p permid="kXx">
+          <ol cols="3" permid="iyq">
+            <li permid="oXw"><m>\d\sum_{k=1}^{100} k</m></li>
+
+            <li permid="VeF"><m>\d\sum_{k=0}^{50} 2^k</m></li>
+
+            <li permid="BlO"><m>\d\sum_{k=2}^{n} (4k -2)</m></li>
+          </ol>
+        </p>
+      </solution>
+    </example>
+
+    <p permid="gXy">
+      If we want to multiply the <m>a_k</m> instead,
+      we could write <m>\d\prod_{k=1}^n a_k</m>.
+      For example, <m>\d\prod_{k=1}^n k = n!</m>.
+          <idx><h>product notation</h></idx>
+    </p>
+  </paragraphs>
 
   <xi:include href="exercises/seq-basics.ptx"/>
 </section>
