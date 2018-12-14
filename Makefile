@@ -206,8 +206,11 @@ print: latex
 	mv dmoi.pdf dmoi-print.pdf
 
 	# View PDF from correct directory
+viewpdf:
+	$(PDFVIEWER) $(PDFOUT)/dmoi.pdf
+	
 viewprint:
-	$(PDFVIEWER) $(PDFOUT)/dmoi-print.pdf &
+	$(PDFVIEWER) $(PDFOUT)/dmoi-print.pdf
 	
 # Electronic PDF version
 #   copies in all image files, which is overkill (SVG's)
