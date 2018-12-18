@@ -9,18 +9,14 @@
 <!-- See the file COPYING for copying conditions.  -->
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
-<!-- Conveniences for classes of similar elements -->
-<!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
-    %entities;
-]>
+
 
 <!-- DMOI customizations for LaTeX runs -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Assumes current file is in discrete-text/xsl and that the mathbook repository is adjacent -->
-<xsl:import href="../../mathbook/xsl/latex/pretext-latex-dmoi.xsl" />
+<xsl:import href="../../mathbook/xsl/mathbook-latex.xsl" />
 <!-- Assumes next file can be found in discrete-text/xsl -->
 <xsl:import href="custom-common.xsl" />
 
@@ -173,6 +169,78 @@
     <xsl:text>\end{flushright}&#xa;</xsl:text>
 </xsl:template>
 
+
+<!-- Create a heading for each non-empty collection of solutions -->
+<!-- Format as appropriate LaTeX subdivision for this level      -->
+<!-- But number according to the actual Exercises section        -->
+<!-- <xsl:template match="exercises" mode="backmatter">
+    <xsl:variable name="nonempty" select="(.//hint and $exercise.backmatter.hint='yes') or (.//answer and $exercise.backmatter.answer='yes') or (.//solution and $exercise.backmatter.solution='yes')" />
+    <xsl:if test="$nonempty='true'">
+        <xsl:text>\</xsl:text>
+        <xsl:apply-templates select="." mode="division-name" />
+        <xsl:text>*{</xsl:text>
+        <xsl:apply-templates select="." mode="number" />
+        <xsl:text> </xsl:text>
+        <xsl:apply-templates select="." mode="title-full" />
+        <xsl:text>}&#xa;</xsl:text>
+        <xsl:apply-templates select="*" mode="backmatter" />
+    </xsl:if>
+</xsl:template> -->
+
+<!-- Create a heading for each non-empty collection of solutions -->
+<!-- Format as appropriate LaTeX subdivision for this level      -->
+<!-- But number according to the actual Exercises section        -->
+<!-- This needs to be fixed! -->
+<!-- <xsl:template match="exercises" mode="backmatter">
+    <xsl:variable name="nonempty" select="(.//hint and $exercise.backmatter.hint='yes') or (.//answer and $exercise.backmatter.answer='yes') or (.//solution and $exercise.backmatter.solution='yes')" />
+    <xsl:if test="$nonempty='true'">
+        <xsl:text>\</xsl:text>
+        <xsl:apply-templates select="." mode="subdivision-name" />
+        <xsl:text>*{</xsl:text>
+        <xsl:apply-templates select="." mode="number" />
+        <xsl:text> </xsl:text>
+        <xsl:apply-templates select="." mode="title-full" />
+        <xsl:text>}&#xa;</xsl:text>
+        <xsl:text>\markright{Solutions for Section &#xa;</xsl:text>
+        <xsl:apply-templates select="." mode="number" />
+        <xsl:text>}&#xa;</xsl:text>
+        <xsl:apply-templates select="*" mode="backmatter" />
+    </xsl:if>
+</xsl:template> -->
+
+
+
+
+<!-- Set up solution list -->
+<!-- Print exercises with some solution component -->
+<!-- Respect switches about visibility ("knowl" is assumed to be 'no') -->
+<!-- <xsl:template match="exercise" mode="backmatter">
+    <xsl:if test="answer or solution">  -->
+      <!-- revmoed hint, those are not displayed here.  If I move hints to the back, I need to put it back here too -->
+        <!-- Lead with the problem number and some space -->
+        <!-- <xsl:text>\noindent\textbf{</xsl:text>
+        <xsl:apply-templates select="." mode="number" />  -->
+        <!-- changed serial-number to number -->
+        <!-- <xsl:text>.} </xsl:text>
+        <xsl:if test="$exercise.backmatter.statement='yes'"> -->
+            <!-- TODO: not a "backmatter" template - make one possibly? Or not necessary -->
+            <!-- <xsl:apply-templates select="statement" />
+            <xsl:text>\par\smallskip&#xa;</xsl:text>
+        </xsl:if>
+        <xsl:if test="hint and $exercise.backmatter.hint='yes'">
+            <xsl:apply-templates select="hint" mode="backmatter" />
+        </xsl:if>
+        <xsl:if test="answer and $exercise.backmatter.answer='yes'">
+            <xsl:apply-templates select="answer" mode="backmatter" />
+        </xsl:if>
+        <xsl:if test="solution and $exercise.backmatter.solution='yes'">
+            <xsl:apply-templates select="solution" mode="backmatter" />
+        </xsl:if>
+    </xsl:if>
+</xsl:template> -->
+
+
+<!-- MINE: Fix for webwork popup formatting: -->
 <!-- answer blank for other kinds of answers                 -->
 <!-- TODO: gradually eliminate "var"'s presence from static  -->
 <!-- coming from a WeBWorK server, similar to how the above  -->
@@ -227,5 +295,140 @@
 
 
 
+
+
+
+<!-- Set up headers for index -->
+<xsl:template match="index-list">
+    <xsl:text>%&#xa;</xsl:text>
+    <xsl:text>%% The index is here, setup is all in preamble&#xa;</xsl:text>
+    <!-- Not sure why this is needed, but this will get the headings right -->
+    <xsl:text>\markright{Index}&#xa;</xsl:text>
+    <xsl:text>\renewcommand{\leftmark}{Index}&#xa;</xsl:text>
+    <xsl:text>\printindex&#xa;</xsl:text>
+    <xsl:text>%&#xa;</xsl:text>
+</xsl:template>
+
+
+
+
+<!-- Remove leavemode for assemblage -->
+<!-- Lists themselves -->
+<!-- If columns are specified, we        -->
+<!-- wrap in the multicolumn environment -->
+<!-- TODO: fewer \leavevmode might be possible.      -->
+<!-- Test for first node of "p", then test for the   -->
+<!-- "p" being first node of some sectioning element -->
+<xsl:template match="ol">
+    <xsl:choose>
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage or ancestor::investigation)">
+            <xsl:call-template name="leave-vertical-mode" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>%&#xa;</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="@cols">
+        <xsl:text>\begin{multicols}{</xsl:text>
+        <xsl:value-of select="@cols" />
+        <xsl:text>}&#xa;</xsl:text>
+    </xsl:if>
+    <xsl:text>\begin{enumerate}</xsl:text>
+    <!-- override LaTeX defaults as indicated -->
+    <xsl:if test="@label or ancestor::exercises or ancestor::references">
+        <xsl:text>[label=</xsl:text>
+        <xsl:apply-templates select="." mode="latex-list-label" />
+        <xsl:text>]</xsl:text>
+    </xsl:if>
+    <xsl:text>&#xa;</xsl:text>
+     <xsl:apply-templates />
+    <xsl:text>\end{enumerate}&#xa;</xsl:text>
+    <xsl:if test="@cols">
+        <xsl:text>\end{multicols}&#xa;</xsl:text>
+    </xsl:if>
+</xsl:template>
+
+<!-- MBX unordered list scheme is distinct -->
+<!-- from LaTeX's so we write out a label  -->
+<!-- choice for each such list             -->
+<xsl:template match="ul">
+    <xsl:choose>
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage or ancestor::investigation)">
+            <xsl:call-template name="leave-vertical-mode" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>%&#xa;</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="@cols">
+        <xsl:text>\begin{multicols}{</xsl:text>
+        <xsl:value-of select="@cols" />
+        <xsl:text>}&#xa;</xsl:text>
+    </xsl:if>
+    <xsl:text>\begin{itemize}[label=</xsl:text>
+    <xsl:apply-templates select="." mode="latex-list-label" />
+    <xsl:text>]&#xa;</xsl:text>
+    <xsl:apply-templates />
+    <xsl:text>\end{itemize}&#xa;</xsl:text>
+    <xsl:if test="@cols">
+        <xsl:text>\end{multicols}&#xa;</xsl:text>
+    </xsl:if>
+</xsl:template>
+
+<xsl:template match="dl">
+    <xsl:choose>
+        <xsl:when test="not(ancestor::ol or ancestor::ul or ancestor::dl or ancestor::assemblage or ancestor::investigation)">
+            <xsl:call-template name="leave-vertical-mode" />
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:text>%&#xa;</xsl:text>
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:if test="@cols">
+        <xsl:text>\begin{multicols}{</xsl:text>
+        <xsl:value-of select="@cols" />
+        <xsl:text>}&#xa;</xsl:text>
+    </xsl:if>
+    <xsl:text>\begin{description}&#xa;</xsl:text>
+    <xsl:apply-templates />
+    <xsl:text>\end{description}&#xa;</xsl:text>
+    <xsl:if test="@cols">
+        <xsl:text>\end{multicols}&#xa;</xsl:text>
+    </xsl:if>
+</xsl:template>
+
+
+
+
+<!-- Each component has a similar look, so we combine here -->
+<!-- Separators depend on possible trailing items, so no   -->
+<!-- vertical spacing beforehand is present here           -->
+<xsl:template match="hint|answer|solution" mode="solution-heading">
+    <xsl:param name="b-original" select="true()" />
+
+    <xsl:text>\textbf{</xsl:text>
+    <xsl:apply-templates select="." mode="type-name" />
+    <!-- An empty value means element is a singleton -->
+    <!-- else the serial number comes through        -->
+    <xsl:variable name="the-number">
+        <xsl:apply-templates select="." mode="non-singleton-number" />
+    </xsl:variable>
+    <xsl:if test="not($the-number = '')">
+        <xsl:text> </xsl:text>
+        <xsl:apply-templates select="." mode="serial-number" />
+    </xsl:if>
+    <xsl:text>}</xsl:text> <!-- end bold number -->
+    <xsl:if test="title">
+        <xsl:text> (</xsl:text>
+        <xsl:apply-templates select="." mode="title-full" />
+        <xsl:text>)</xsl:text>
+    </xsl:if>
+    <xsl:text>.</xsl:text>
+    <!-- <xsl:if test="$b-original">
+        <xsl:apply-templates select="." mode="label" />
+    </xsl:if> -->
+    <!-- some distance to actual content -->
+    <!-- <xsl:text>~~%&#xa;</xsl:text> -->
+</xsl:template>
 
 </xsl:stylesheet>
