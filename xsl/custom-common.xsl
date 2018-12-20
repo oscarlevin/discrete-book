@@ -39,24 +39,45 @@
 <!-- the *visibility* of these four parts                  -->
 <!--                                                       -->
 <!-- Parameters are:                                       -->
-<!--   'yes' - immediately visible                         -->
-<!--   'knowl' - adjacent, but requires action to reveal   -->
-<!--    NB: HTML - 'knowl' not implemented or recognized   -->
-<!--       'yes' makes knowls for hints, etc *always*      -->
-<!--   'no' - not visible at all                           -->
+<!--   'yes' - visible                                     -->
+<!--   'no' - not visible                                  -->
 <!--                                                       -->
-<!-- First, an exercise in exercises section.              -->
+<!-- Five categories:                                      -->
+<!--   inline (checpoint) exercises                        -->
+<!--   divisional (inside an "exercises" division)         -->
+<!--   worksheet (inside a "worksheet" division)           -->
+<!--   reading (inside a "reading-questions" division)     -->
+<!--   project (on a project-like,                         -->
+<!--   or possibly on a terminal "task" of a project-like) -->
+<!--                                                       -->
 <!-- Default is "yes" for every part, so experiment        -->
 <!-- with parameters to make some parts hidden.            -->
-<xsl:param name="exercise.inline.hint" select="'yes'" />
-<xsl:param name="exercise.inline.answer" select="'no'" />
-<xsl:param name="exercise.inline.solution" select="'no'" />
-<xsl:param name="exercise.divisional.hint" select="'yes'" />
+<!--                                                       -->
+<!-- These are global switches, so only need to be fed     -->
+<!-- into the construction of exercises via the            -->
+<!-- "exercise-components" template.                       -->
+<!-- N.B. "statement" switches are necessary or desirable  -->
+<!-- for alternate collections of solutions (only)         -->
+<xsl:param name="exercise.inline.statement" select="''" />
+<xsl:param name="exercise.inline.hint" select="''" />
+<xsl:param name="exercise.inline.answer" select="''" />
+<xsl:param name="exercise.inline.solution" select="''" />
+<xsl:param name="exercise.divisional.statement" select="''" />
+<xsl:param name="exercise.divisional.hint" select="''" />
 <xsl:param name="exercise.divisional.answer" select="'no'" />
 <xsl:param name="exercise.divisional.solution" select="'no'" />
-<xsl:param name="project.hint" select="'yes'" />
-<xsl:param name="project.answer" select="'no'" />
-<xsl:param name="project.solution" select="'no'" />
+<xsl:param name="exercise.worksheet.statement" select="''" />
+<xsl:param name="exercise.worksheet.hint" select="''" />
+<xsl:param name="exercise.worksheet.answer" select="''" />
+<xsl:param name="exercise.worksheet.solution" select="''" />
+<xsl:param name="exercise.reading.statement" select="''" />
+<xsl:param name="exercise.reading.hint" select="''" />
+<xsl:param name="exercise.reading.answer" select="''" />
+<xsl:param name="exercise.reading.solution" select="''" />
+<xsl:param name="project.statement" select="''" />
+<xsl:param name="project.hint" select="''" />
+<xsl:param name="project.answer" select="''" />
+<xsl:param name="project.solution" select="''" />
 <!-- Author tools are for drafts, mostly "todo" items                 -->
 <!-- and "provisional" citations and cross-references                 -->
 <!-- Default is to hide todo's, inline provisionals                   -->
@@ -84,7 +105,7 @@
 <!-- Last level where subdivision (section) numbering takes place     -->
 <!-- For example, "2" would mean subsections of a book are unnumbered -->
 <!-- N.B.: the levels above cannot be numerically larger              -->
-<xsl:param name="numbering.maximum.level" select="'2'" />
+<xsl:param name="numbering.maximum.level" select="'3'" />
 <!-- Image files, media files and knowls are placed in directories    -->
 <!-- The defaults are relative to wherever principal output goes      -->
 <!-- These can be overridden at the command-line or in customizations -->
@@ -95,21 +116,29 @@
 <xsl:param name="address.html" select="''" />
 <xsl:param name="address.pdf" select="''" />
 
+<!-- To start chapters at 0 (might change later)-->
+<xsl:param name="debug.chapter.start" select="'0'" />
+
+<!-- Forward links to solutions -->
+<!-- very temporary, just for testing -->
+<!-- <xsl:param name="debug.exercises.forward" select="'yes'"/> -->
+
+
 <!-- WeBWorK -->
 <!-- There is no default server provided         -->
 <!-- Interactions are with an "anonymous" course -->
-<xsl:param name="webwork.server" select="'https://webwork-ptx.aimath.org'"/>
+<xsl:param name="webwork.server" select="'https://webwork-dev.aimath.org'"/>
 <xsl:param name="webwork.course" select="'anonymous'" />
 <xsl:param name="webwork.userID" select="'anonymous'" />
 <xsl:param name="webwork.password" select="'anonymous'" />
 
 <!-- Redefine chapter numbering to start at 0 -->
-<xsl:template match="chapter" mode="division-serial-number">
+<!-- <xsl:template match="chapter" mode="division-serial-number"> -->
     <!-- chapters, in parts or not, do not have "references" -->
     <!-- or "exercises" divisions as peers, so we just count -->
     <!-- chapters, varying the subtree considered depending  -->
     <!-- on the style elected for how parts are numbered     -->
-    <xsl:variable name="n">
+    <!-- <xsl:variable name="n">
       <xsl:choose>
         <xsl:when test="($parts = 'absent') or ($parts = 'decorative')">
             <xsl:number from="book" level="any" count="chapter" format="1" />
@@ -120,7 +149,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:number value="$n - 1" format="1" />
-</xsl:template>
+</xsl:template> -->
 
 
 

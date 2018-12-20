@@ -5,9 +5,37 @@
   <introduction>
     <investigation>
       <p>
-        We need an activity about trees.
-        Perhaps an applied type question about finding the smallest connected subgraph that contains all the vertices (i.e. a spanning tree).
-        Then ask what the largest subgraph could be that doesn't contain any cycles.
+        Consider the graph drawn below.
+      </p>
+      
+      <sidebyside width="35%">
+        <image>
+          <latex-image>
+            \begin{tikzpicture}[scale=0.9]
+              \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+              \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+      </sidebyside>
+      <p>
+        <ol>
+          <li>
+            <p>
+              Find a subgraph with the smallest number of edges that is still connected and contains all the vertices.
+            </p>
+          </li>
+          <li>
+            <p>
+              Find a subgraph with the largest number of edges that doesn't contain any cycles.
+            </p>
+          </li>
+          <li>
+            <p>
+              What do you notice about the number of edges in your examples above?  Is this a coincidence?
+            </p>
+          </li>
+        </ol>  
       </p>
     </investigation>
     <p>
@@ -41,13 +69,22 @@
       you might study family trees, like the one below,
     </p>
 
-    <sidebyside width="40%">
+    <sidebyside width="70%">
 
       <image xml:id="family-tree">
 
       <latex-image>
-        \begin{tikzpicture}
-          %draw family tree!
+        \begin{tikzpicture}[level 1/.style={sibling distance=20em},level 2/.style={sibling distance=7em},
+          every node/.style = {shape=rectangle, rounded corners,
+            draw, align=center,
+            top color=white, bottom color=white}]]
+          \node {Me}
+            child { node {Mom} 
+              child { node {\footnotesize Maternal\\Grandma}}
+              child { node {\footnotesize Maternal\\Grandpa}}}
+            child { node {Dad}
+              child { node {\footnotesize Paternal\\Grandma}}
+              child { node {\footnotesize Paternal\\Grandpa} } };
         \end{tikzpicture}
       </latex-image>
       </image>
@@ -56,7 +93,7 @@
 
     <p>
       So far so good,
-      but while your grandparents are (probably) not blood-relatives in the normal sense,
+      but while your grandparents are (probably) not blood-relatives,
       if we go back far enough,
       it is likely that they did have
       <em>some</em> common ancestor.
@@ -80,7 +117,7 @@
       although we can impose such a structure by considering
       <term>rooted trees</term>,
       where we simply designate one vertex as the <em>root</em>.
-      We will consider such trees in more detail at the end of this section.
+      We will consider such trees in more detail later in this section.
     </p>
   </introduction>
 
@@ -105,11 +142,6 @@
     </p>
   </subsection>
 
-  <subsection>
-    <title>Spanning Trees</title>
-<!-- Include application to coloring -->
-<!-- Include Prim's algorithm (very roughly) and an example about minimum spanning trees -->
-  </subsection>
 
   <subsection>
     <title>Rooted Trees</title>
@@ -126,7 +158,144 @@
       The graph will not have any cycles; it will be a tree.
       But a tree with clear hierarchy which is not present if we don't identify the book itself as the <q>top</q>.
     </p>
+    
+    <p>
+      <idx><h>root</h></idx>
+      As soon as one vertex of a tree is designated as the <term>root</term>, then every other vertex on the tree can be characterized by its position relative to the root.  This works because between any two vertices in a tree, there is a unique path.  So from any vertex, we can travel back to the root in exactly one way.  This also allows us to describe how distinct vertices in a rooted tree are related.
+    </p>
+    
+    <p>
+      <idx><h>parent</h></idx>
+      <idx><h>child</h></idx>
+      If two vertices are adjacent, then we say one of them is the <term>parent</term> of the other, which is called the <term>child</term> of the parent.  Of the two, the parent is the vertex that is closer to the root.  Thus the root of a tree is a parent, but is not the child of any vertex (and is unique in this respect: all non-root vertices have <em>exactly one</em> parent).  
+    </p>
+    
+    <p>
+      <idx><h>descendant</h></idx>
+      <idx><h>ancestor</h></idx>
+      Not surprisingly, the child of a child of a vertex is called the <term>grandchild</term> of the vertex (and it is the <term>grandparent</term>).  More in general, we say that a vertex <m>v</m> is a <term>descendent</term> of a vertex <m>u</m> provided <m>u</m> is a vertex on the path from <m>v</m> to the root.  Then we would call <m>u</m> an <term>ancestor</term> of <m>v</m>.
+    </p>
+    
+    <p>
+      <idx><h>sibling</h></idx>
+      For most trees (in fact, all except paths with one end the root), there will be pairs of vertices neither of which is a descendant of the other.  We might call these cousins or siblings.  In fact, vertices <m>u</m> and <m>v</m> are called <term>siblings</term> provided they have the same parent.  Note that siblings are never adjacent (do you see why?).
+    </p>
+    
+    <p>
+      All of this flowery language helps us describe how to <em>navigate</em> through a tree.  Traversing a tree, visiting each vertex in some order, is a key step in many algorithms.  Even if we the tree we are considering is not rooted, we can always form a rooted tree by picking any vertex as the root.  Here is an example.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Explain why every tree is a bipartite graph.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          To show that a graph is bipartite, we must divide the vertices into two sets <m>A</m> and <m>B</m> so that no two vertices in the same set are adjacent.  Here is an algorithm that does just this.
+        </p>
+        
+        <p>
+          Designate any vertex as the root.  Put this vertex in set <m>A</m>.  Now put all of the children of the root in set <m>B</m>.  None of these children are adjacent (they are siblings), so we are good so far.  Now put into <m>A</m> every child of every vertex in <m>B</m> (i.e., every grandchild of the root).  Keep going until all vertices have been assigned one of the sets, alternating between <m>A</m> and <m>B</m> every <q>generation.</q>  That is, a vertex is in set <m>B</m> if and only if it is the child of a vertex in set <m>A</m>.
+        </p>
+      </solution>
+    </example>
+    
+    <p>
+      <idx><h>breadth first search</h></idx>
+      <idx><h>search</h><h>breadth first</h></idx>
+      The key to how we partitioned the tree in the example was to know which vertex to assign to a set next.  We chose to visit all vertices in the same generation before any vertices of the next generation.  This is usually called a <term>breadth first search</term> (we say <q>search</q> because you often traverse a tree looking for vertices with certain properties).  
+    </p>
+    
+    <p>
+      <idx><h>depth first search</h></idx>
+      <idx><h>search</h><h>depth first</h></idx>
+      In contrast, we could also have partitioned the tree in a different order.  Start with the root, put it in <m>A</m>.  Then look for one child of the root to put in <m>B</m>.  Then find a child of that vertex, into <m>A</m>, and then find its child, into <m>B</m>, and so on.  When you get to a vertex with no children, retreat to its parent and see if the parent has any other children.  So we travel as far from the root as fast as possible, then backtrack until we can move forward again.  This is called <term>depth first search</term>.
+    </p>
   </subsection>
 
+  <subsection>
+    <title>Spanning Trees</title>
+    
+    <p>
+      One of the advantages of trees is that they give us a few simple ways to travel through the vertices.  If a connected graph is not a tree, then we can still use these traversal algorithms if we identify a subgraph that <em>is</em> a tree.
+    </p>
+    
+    <p>
+      First we should consider if this even makes sense.  Given any connected graph <m>G</m>, will there always be a subgraph that is a tree?  Well, that is actually too easy: you could just take a single edge of <m>G</m>.  If we want to use this subgraph to tell us how to visit all vertices, then we want our subgraph to include all of the vertices.  We call such a tree a <term>spanning tree</term>.  It turns out that every connected graph has one (and usually many).
+    </p>
+    
+    <assemblage xml:id="assemblage-spanningtree">
+      <title>Spanning tree</title>
+      <p>
+        Given a connected graph <m>G</m>, a <term>spanning tree</term> of <m>G</m> is a subgraph of <m>G</m> which is a tree and includes all the vertices of <m>G</m>. 
+      </p>
+      
+      <p>
+        Every connected graph has a spanning tree.
+      </p>
+    </assemblage>
+    
+    <p>
+      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with the graph connected graph <m>G</m>.  If there is no cycle, then the <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
+    </p>
+    
+    <p>
+      This is by no means the only algorithm for finding a spanning tree.  You could have started with the empty graph and added edges that belong to <m>G</m> as long as adding them would not create a cycle.  You have some choices as to which edges you add first: you could always add an edge adjacent to edges you have already added (after the first one, of course), or add them using some other order.  Which spanning tree you end up with depends on these choices.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Find two different spanning trees of the graph,
+        </p>
+        <sidebyside width="35%">
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+        </sidebyside>
+      </statement>
+      <solution>
+        <p>
+          Here are two spanning trees.  
+        </p>
+        
+        <sidebyside widths="30% 30%">
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v (1,2) \v -- (-1, 2) \v  (-1,0)  (-1,2) -- (0,1) \v;
+                \draw (-1,0) (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+          
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v  (1,0)\v  (1,2) \v (-1, 2) \v  (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v;
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+        </sidebyside>
+      </solution>
+    </example>
+    
+    <p>
+      Although we will not consider this in detail, these algorithms are usually applied to <em>weighted</em> graphs.  Here every edge has some weight or cost assigned to it.  The goal is to find a spanning tree that has the smallest possible combined weight.  Such a tree is called a <term>minimum spanning tree</term>.  Finding the minimum spanning tree uses basically the same algorithms as we described above, but when picking an edge to add, you always pick the smallest (or when removing an edge, you always remove the largest).<fn>If you add the smallest edge adjacent to edges you have already added, you are doing <em>Prim's algorithm</em>.  If you add the smallest edge in the entire graph, you are following <em>Kruskal's algorithm</em>.</fn>
+    </p>
+    
+    
+    
+
+  </subsection>
   <xi:include href="exercises/gt-trees.ptx"/>
 </section>
+
