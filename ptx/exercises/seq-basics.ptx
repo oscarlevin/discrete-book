@@ -496,103 +496,7 @@
       </p>
     </solution>
   </exercise>
-
-  <exercise requires="sec_counting-binom">
-    <statement>
-      <p>
-        Consider bit strings with length <m>l</m> and weight <m>k</m>
-        (so strings of <m>l</m> 0's and 1's, including <m>k</m> 1's).
-        We know how to count the number of these for a fixed <m>l</m> and <m>k</m>.
-        Now, we will count the number of strings for which the <em>sum</em>
-        of the length and the weight is fixed.
-        For example,
-        let's count all the bit strings for which <m>l+k = 11</m>.
-
-        <ol>
-          <li>
-            <p>
-              Find examples of these strings of different lengths.
-              What is the longest string possible?
-              What is the shortest?
-            </p>
-          </li>
-
-          <li>
-            <p>
-              How many strings are there of each of these lengths.
-              Use this to count the total number of strings
-              (with sum 11).
-            </p>
-          </li>
-
-          <li>
-            <p>
-              The other approach: Let <m>n = l+p</m> vary.
-              How many strings have sum <m>n = 1</m>?
-              How many have sum <m>n = 2</m>?
-              And so on.
-              Find and explain a recurrence relation for the sequence <m>(a_n)</m> which gives the number of strings with sum <m>n</m>.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              Describe what you have found above in terms of Pascal's Triangle.
-              What pattern have you discovered?
-            </p>
-          </li>
-        </ol>
-      </p>
-    </statement>
-  </exercise>
-
-  <exercise>
-    <statement>
-      <p>
-        When bees play chess,
-        they use a hexagonal board like the one shown below.
-        The queen bee can move one space at a time either directly to the right or angled up-right or down-right
-        (but can never move leftwards).
-        How many different paths can the queen take from the top left hexagon to the bottom right hexagon?
-        Explain your answer, and this relates to the previous question.
-        (As an example,
-        there are three paths to get to the second hexagon on the bottom row.)
-      </p>
-
-      <sidebyside width="70%">
-
-        <image xml:id="bee-chess">
-
-            <latex-image>
-              \def\r{1}
-              \newcommand{\hexagon}[3]{
-                \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
-                \def\y{-\r*#1-sin{30}*\r*#1}
-                \draw[thick] (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
-                \draw (\x,\y) node{#3};
-              }
-              \begin{tikzpicture}[scale=.75]
-              \hexagon{1}{0}{\tiny start};
-              \hexagon{2}{2}{3}
-              \foreach \i in {1,...,5} {
-                \foreach \j in {1,2} {
-                  \hexagon{\j}{\i}{};
-                }
-              }
-              \hexagon{2}{6}{\tiny stop};
-              \end{tikzpicture}
-            </latex-image>
-        </image>
-
-      </sidebyside>
-    </statement>
-    <hint>
-      <p>
-        Think recursively, like you did in Pascal's triangle.
-      </p>
-    </hint>
-  </exercise>
-
+  
   <exercise permid="izD">
     <statement>
       <p permid="ZIH">
@@ -677,5 +581,156 @@
       </p>
     </solution>
   </exercise>
+  
+  <!-- Inspired by AC -->
+  <exercise>
+    <statement>
+      <p>
+        Suppose you draw <m>n</m> lines in the plane so that every pair of lines cross (no lines are parallel) and no three lines cross at the same point.  This will create some number of regions in the plane, including some unbounded regions.  Call the number of regions <m>R_n</m>.  Find a recursive formula for the number of regions created by <m>n</m> lines, and justify why your recursion is correct.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Try an example: when you draw the 4th line, it will cross three other lines, so will be divided into four segments, two of which are infinite.  Each segment will divide a previous region into two.
+      </p>
+    </hint>
+  </exercise>
+  
+  <!-- From AC -->
+  <exercise>
+    <statement>
+      <p>
+        A <term>ternary</term> string is a sequence of 0's, 1's and 2's.  Just like a bit string, but with three symbols.  
+      </p>
+      
+      <p>
+        Let's call a ternary string <em>good</em> provided it never contains a 2 followed immediately by a 0.  Let <m>G_n</m> be the number of good strings of length <m>n</m>.  For example, <m>G_1 = 3</m>, and <m>G_2 = 8</m> (since of the 9 ternary strings of length 2, only one is not good).
+      </p>
+      
+      <p>
+        Find, with justification, a recursive formula for <m>G_n</m>, and use it to compute <m>G_5</m>.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Consider three cases: the last digit is a 0, a 1, or a 2.  Two of these should be easy to count, but strings ending in 0 cannot be proceeded by a 2, so require a little more work.
+      </p>
+    </hint>
+  </exercise>
+
+  <exercise requires="sec_counting-binom">
+    <statement>
+      <p>
+        Consider bit strings with length <m>l</m> and weight <m>k</m>
+        (so strings of <m>l</m> 0's and 1's, including <m>k</m> 1's).
+        We know how to count the number of these for a fixed <m>l</m> and <m>k</m>.
+        Now, we will count the number of strings for which the <em>sum</em>
+        of the length and the weight is fixed.
+        For example,
+        let's count all the bit strings for which <m>l+k = 11</m>.
+
+        <ol>
+          <li>
+            <p>
+              Find examples of these strings of different lengths.
+              What is the longest string possible?
+              What is the shortest?
+            </p>
+          </li>
+
+          <li>
+            <p>
+              How many strings are there of each of these lengths.
+              Use this to count the total number of strings
+              (with sum 11).
+            </p>
+          </li>
+
+          <li>
+            <p>
+              The other approach: Let <m>n = l+p</m> vary.
+              How many strings have sum <m>n = 1</m>?
+              How many have sum <m>n = 2</m>?
+              And so on.
+              Find and explain a recurrence relation for the sequence <m>(a_n)</m> which gives the number of strings with sum <m>n</m>.
+            </p>
+          </li>
+
+          <li>
+            <p>
+              Describe what you have found above in terms of Pascal's Triangle.
+              What pattern have you discovered?
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+  </exercise>
+
+  
+
+
+  <exercise>
+    <statement>
+      <p>
+        When bees play chess,
+        they use a hexagonal board like the one shown below.
+        The queen bee can move one space at a time either directly to the right or angled up-right or down-right
+        (but can never move leftwards).
+        How many different paths can the queen take from the top left hexagon to the bottom right hexagon?
+        Explain your answer, and this relates to the previous question.
+        (As an example,
+        there are three paths to get to the second hexagon on the bottom row.)
+      </p>
+
+      <sidebyside width="70%">
+
+        <image xml:id="bee-chess">
+
+            <latex-image>
+              \def\r{1}
+              \newcommand{\hexagon}[3]{
+                \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+                \def\y{-\r*#1-sin{30}*\r*#1}
+                \draw[thick] (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+                \draw (\x,\y) node{#3};
+              }
+              \begin{tikzpicture}[scale=.75]
+              \hexagon{1}{0}{\tiny start};
+              \hexagon{2}{2}{3}
+              \foreach \i in {1,...,5} {
+                \foreach \j in {1,2} {
+                  \hexagon{\j}{\i}{};
+                }
+              }
+              \hexagon{2}{6}{\tiny stop};
+              \end{tikzpicture}
+            </latex-image>
+        </image>
+
+      </sidebyside>
+    </statement>
+    <hint>
+      <p>
+        Think recursively, like you did in Pascal's triangle.
+      </p>
+    </hint>
+  </exercise>
+
+
+<!-- From AC: -->
+  <exercise>
+    <statement>
+      <p>
+        Let <m>t_n</m> denote the number of ways to tile a <m>2\times n</m> checkerboard using <m>1\times 2</m> dominoes.  Write out the first few terms of the sequence <m>(t_n)_{n \ge 1}</m> and then give a recursive definition.  Explain why your recursive formula is correct. 
+      </p>
+    </statement>
+    <hint>
+      <p>
+        There is only one way to tile a <m>2 \times 1</m> board, and two ways to tile a <m>2\times 2</m> board (you can orient the dominoes in two ways).  In general, consider the two ways the domino covering the top left corner could be oriented.
+      </p>
+    </hint>
+  </exercise>
+
 
 </exercises>
