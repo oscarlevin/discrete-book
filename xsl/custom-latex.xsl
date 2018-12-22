@@ -469,7 +469,52 @@
 
 <!-- Here is where we remove the solution heading. Note that this only works because I have chosen to put different types of solutions (hints vs solutions) in different solutions envs. -->
 <!-- Each component has a similar look, so we combine here -->
+<!-- Separators depend on possible trailing items, so no   -->
+<!-- vertical spacing beforehand is present here           -->
+<xsl:template match="hint|answer|solution" mode="solution-heading">
+    <xsl:param name="b-original" select="true()" />
+    <xsl:param name="purpose" />
 
+
+    <!-- if original, label in the usual ways  -->
+    <!-- if duplicate, use extraordinary label -->
+    <xsl:choose>
+        <!-- a solution right where the exercise is born -->
+        <xsl:when test="$b-original">
+          <xsl:text>\textbf{</xsl:text>
+          <xsl:apply-templates select="." mode="type-name" />
+          <xsl:text>}</xsl:text> <!-- end bold number -->
+          <xsl:text>.</xsl:text>
+            <xsl:apply-templates select="." mode="label"/>
+        </xsl:when>
+            <!-- Finally, the purpose of $purpose.  We know if this  -->
+            <!-- solution is being displayed in the main matter or   -->
+            <!-- in the back matter, so we can provide the correct   -->
+            <!-- suffix to the label.                                -->
+        <xsl:when test="$purpose = 'mainmatter'">
+            <xsl:text>\hypertarget{</xsl:text>
+            <xsl:apply-templates select="." mode="internal-id-duplicate">
+                <xsl:with-param name="suffix" select="'main'"/>
+            </xsl:apply-templates>
+            <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="$purpose = 'backmatter'">
+            <xsl:text>\hypertarget{</xsl:text>
+            <xsl:apply-templates select="." mode="internal-id-duplicate">
+                <xsl:with-param name="suffix" select="'back'"/>
+            </xsl:apply-templates>
+            <xsl:text>}</xsl:text>
+        </xsl:when>
+        <!-- linking not enabled for PDF solution manual -->
+        <xsl:when test="$purpose = 'solutionmanual'" />
+        <!-- born (original=true), or mainmatter, or backmatter, or solutionmanual -->
+        <xsl:otherwise>
+            <xsl:message>PTX:BUG:     Exercise component mis-labeled</xsl:message>
+        </xsl:otherwise>
+    </xsl:choose>
+    <!-- some distance to actual content -->
+    <xsl:text>~~%&#xa;</xsl:text>
+</xsl:template>
 
 
 
