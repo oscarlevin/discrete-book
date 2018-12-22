@@ -126,6 +126,8 @@ ww-extraction:
 	install -d $(LOCALBUILD)
 	-rm $(LOCALBUILD)/webwork-extraction.xml
 	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
+	sed -i 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
+
 		
 # 	Then we merge this with the main source 
 

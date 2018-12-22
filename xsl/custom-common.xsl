@@ -63,7 +63,7 @@
 <xsl:param name="exercise.inline.answer" select="''" />
 <xsl:param name="exercise.inline.solution" select="''" />
 <xsl:param name="exercise.divisional.statement" select="''" />
-<xsl:param name="exercise.divisional.hint" select="''" />
+<xsl:param name="exercise.divisional.hint" select="'no'" />
 <xsl:param name="exercise.divisional.answer" select="'no'" />
 <xsl:param name="exercise.divisional.solution" select="'no'" />
 <xsl:param name="exercise.worksheet.statement" select="''" />
@@ -178,5 +178,23 @@
     <xsl:number />
 </xsl:template> -->
 
+<!-- Hack (12/21/18): make all exercises unstructured? -->
+<!-- There are two models for most of the divisions (part -->
+<!-- through subsubsection, plus appendix).  One has      -->
+<!-- subdivisions, and possibly multiple "exercises", or  -->
+<!-- other specialized subdivisions.  The other has no    -->
+<!-- subdivisions, and then at most one of each type of   -->
+<!-- specialized subdivision, which inherit numbers from  -->
+<!-- their parent division. This is the test, which is    -->
+<!-- very similar to "is-leaf" above.                     -->
+<!--                                                      -->
+<!-- A "part" must have chapters, so will always return   -->
+<!-- 'true' and for a 'subsubsection' there are no more   -->
+<!-- subdivisions to employ and so will return empty.     -->
+<xsl:template match="book|article|part|chapter|appendix|section|subsection|subsubsection" mode="is-structured-division">
+    <xsl:if test="chapter|section|subsection|subsubsection">
+        <xsl:text></xsl:text> <!-- removed "true", so now this should make all exercises think they are part of unstructured divisions -->
+    </xsl:if>
+  </xsl:template>
 
 </xsl:stylesheet>
