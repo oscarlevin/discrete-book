@@ -5,9 +5,37 @@
   <introduction>
     <investigation>
       <p>
-        We need an activity about trees.
-        Perhaps an applied type question about finding the smallest connected subgraph that contains all the vertices (i.e. a spanning tree).
-        Then ask what the largest subgraph could be that doesn't contain any cycles.
+        Consider the graph drawn below.
+      </p>
+      
+      <sidebyside width="35%">
+        <image>
+          <latex-image>
+            \begin{tikzpicture}[scale=0.9]
+              \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+              \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+      </sidebyside>
+      <p>
+        <ol>
+          <li>
+            <p>
+              Find a subgraph with the smallest number of edges that is still connected and contains all the vertices.
+            </p>
+          </li>
+          <li>
+            <p>
+              Find a subgraph with the largest number of edges that doesn't contain any cycles.
+            </p>
+          </li>
+          <li>
+            <p>
+              What do you notice about the number of edges in your examples above?  Is this a coincidence?
+            </p>
+          </li>
+        </ol>  
       </p>
     </investigation>
     <p>
@@ -24,12 +52,18 @@
     <assemblage>
       <title>Definition of a Tree</title>
       <idx><h>tree</h></idx>
+      <idx><h>forest</h></idx>
 
       <p>
         A <term>tree</term> is a connected graph containing no cycles.<fn>
         Sometimes this is stated as <q>a tree is an acyclic connected graph;</q> <q>acyclic</q>
         is just a fancy word for <q>containing no cycles.</q>
-        </fn></p>
+        </fn>
+      </p>
+      
+      <p>
+        A <term>forest</term> is a graph containing no cycles.   Note that this means that a connected forest is a tree.
+      </p>
     </assemblage>
 
     <p>
@@ -41,13 +75,22 @@
       you might study family trees, like the one below,
     </p>
 
-    <sidebyside width="40%">
+    <sidebyside width="70%">
 
       <image xml:id="family-tree">
 
       <latex-image>
-        \begin{tikzpicture}
-          %draw family tree!
+        \begin{tikzpicture}[level 1/.style={sibling distance=20em},level 2/.style={sibling distance=7em},
+          every node/.style = {shape=rectangle, rounded corners,
+            draw, align=center,
+            top color=white, bottom color=white}]]
+          \node {Me}
+            child { node {Mom} 
+              child { node {\footnotesize Maternal\\Grandma}}
+              child { node {\footnotesize Maternal\\Grandpa}}}
+            child { node {Dad}
+              child { node {\footnotesize Paternal\\Grandma}}
+              child { node {\footnotesize Paternal\\Grandpa} } };
         \end{tikzpicture}
       </latex-image>
       </image>
@@ -56,7 +99,7 @@
 
     <p>
       So far so good,
-      but while your grandparents are (probably) not blood-relatives in the normal sense,
+      but while your grandparents are (probably) not blood-relatives,
       if we go back far enough,
       it is likely that they did have
       <em>some</em> common ancestor.
@@ -80,7 +123,7 @@
       although we can impose such a structure by considering
       <term>rooted trees</term>,
       where we simply designate one vertex as the <em>root</em>.
-      We will consider such trees in more detail at the end of this section.
+      We will consider such trees in more detail later in this section.
     </p>
   </introduction>
 
@@ -101,17 +144,140 @@
     </p>
 
     <p>
-      For example,
+      To get a feel for the sorts of things we can say, we will consider three <em>propositions</em> about trees.  These will also illustrate important proof techniques that apply to graphs in general, and happen to be a little easier for trees.
+    </p>
+    
+    <p>
+      Our first proposition gives an alternate definition for a tree.  That is, it gives necessary and sufficient conditions for a graph to be a tree.
+    </p>
+    
+    <proposition xml:id="prop-unique-paths-trees">
+      <statement>
+        <p>
+          A graph <m>T</m> is a tree if and only if between every pair of distinct vertices of <m>T</m> there is a unique path.
+        </p>
+      </statement>
+      
+      <proof>
+        <p>
+          This is an <q>if and only if</q> statement, so we must prove two implications.  We start by proving that if <m>T</m> is a tree, then between every pair of distinct vertices there is a unique path.
+        </p>
+        
+        <p>
+          Assume <m>T</m> is a tree, and let <m>u</m> and <m>v</m> be distinct vertices (if <m>T</m> only has one vertex, then the conclusion is satisfied automatically).  We must show two things to show that there is a unique path between <m>u</m> and <m>v</m>: that there is a path, and that there is not more than one path.  The first of these is automatic, since <m>T</m> is a tree, it is connected, so there is a path between any pair of vertices.  
+        </p>
+        
+        <p>
+          To show the path is unique, we suppose there are two paths between <m>u</m> and <m>v</m>, and get a contradiction.  The two paths might start out the same, but since they are different, there is some first vertex <m>u'</m> after which the two paths diverge.  However, since the two paths both end and <m>v</m>, there is some first vertex after <m>u'</m> that they have in common, call it <m>v'</m>.  Now consider the two paths from <m>u'</m> to <m>v'</m>.  Taken together, these form a cycle, which contradicts our assumption that <m>T</m> is a tree.
+        </p>
+        
+        <p>
+          Now we consider the converse: if between every pair of distinct vertices of <m>T</m> there is a unique path, then <m>T</m> is a tree.  So assume the hypothesis: between every pair of distinct vertices of <m>T</m> there is a unique path.  To prove that <m>T</m> is a tree, we must show it is connected and contains no cycles.
+        </p>
+        
+        <p>
+          The first half of this is easy: <m>T</m> is connected, because there is a path between every pair of vertices.  To show that <m>T</m> has no cycles, we assume it does, for the sake of contradiction.  Let <m>u</m> and <m>v</m> be two distinct vertices in a cycle of <m>T</m>.  Since we can get from <m>u</m> to <m>v</m> by going clockwise or counterclockwise around the cycle, there are two paths from <m>u</m> and <m>v</m>, contradicting our assumption.
+        </p>
+        
+        <p>
+          We have established both directions so we have completed the proof.
+        </p>
+      </proof>
+    </proposition>
+    
+    <p>
+      Read the proof above very carefully.  Notice that both directions had two parts: the existence of paths, and the uniqueness of paths (which related to the fact there were no cycles).  In this case, these two parts were really separate.  In fact, if we just considered graphs with no cycles (a forest), then we could still do the parts of the proof that explore the uniqueness of paths between vertices, even if there might not <em>exist</em> paths between vertices.
+    </p>
+    
+    <p>
+      This observation allows us to state the following <em>corollary</em>:<fn>A corollary is another sort of provable statement, like a proposition or theorem, but one that follows direction from another already established statement, or its proof.</fn>
+    </p>
+    
+    <corollary xml:id="cor-unique-paths-forests">
+      <statement>
+        <p>
+          A graph <m>F</m> is a forest if and only if between any pair of vertices in <m>F</m> there is at most one path.
+        </p>
+      </statement>
+    </corollary>
+    
+    <p>
+      We do not give a proof of the corollary (it is, after all, supposed to follow directly from the proposition) but for practice, you are asked to give a careful proof in the exercises.  When you do so, try to give a proof using proof by contrapositive instead of proof by contradiction.
+    </p>
+    
+    <p>
+      Our second proposition tells us that all trees have <term>leaves</term>: vertices of degree one.
+    </p>
+    
+    <proposition xml:id="prop-leaves-in-trees">
+      <statement>
+        <p>
+          Any tree with at least two vertices has at least two vertices of degree one.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We give a proof by contradiction.  Let <m>T</m> be a tree with at least two vertices, and suppose, contrary to stipulation, that there are not two vertices of degree one.  
+        </p>
+        
+        <p>
+          Let <m>P</m> be a path in <m>T</m> of longest possible length.  Let <m>u</m> and <m>v</m> be the endpoints of the path.  Since <m>T</m> does not have two vertices of degree one, at least one of these must have degree two or higher.  Say that it is <m>u</m>.  We know that <m>u</m> is adjacent to a vertex in the path <m>P</m>, but now it must also be adjacent to another vertex, call it <m>u'</m>.  
+        </p>
+        
+        <p>
+          Where is <m>u'</m>?  It cannot be a vertex of <m>P</m>, because if it was, there would be two distinct paths from <m>u</m> to <m>u'</m>: the edge between them, and the first part of <m>P</m> (up to <m>u'</m>).  But <m>u'</m> also cannot be outside of <m>P</m>, for if it was, there would be a path from <m>u'</m> to <m>v</m> that was longer than <m>P</m>, which has longest possible length.  
+        </p>
+        
+        <p>
+          This contradiction proves that there must be at least two vertices of degree one.  In fact, we can say a little more: <m>u</m> and <m>v</m> must <em>both</em> have degree one.  
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      The proposition is quite useful when proving statements about trees, because we often prove statements about trees by <em>induction</em>.  To do so, we need to reduce a given tree to a smaller tree (so we can apply the inductive hypothesis).  Getting rid of a vertex of degree one is an obvious choice, and now we know there is always one to get rid of.
+    </p>
+    
+    <p>
+      To illustrate how induction is used on trees, we will consider the relationship between the number of vertices and number of edges in trees.  Is there a tree with exactly 7 vertices and 7 edges?  Try to draw one?  Could a tree with 7 vertices have only 5 edges?  There is a good reason that these seem impossible to draw.
+    </p>
+    
+    <proposition xml:id="prop-tree-edge-vertex">
+      <statement>
+        <p>
+          Let <m>T</m> be a tree with <m>v</m> vertices and <m>e</m> edges.  Then <m>e = v-1</m>. 
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will give a proof by induction on the number of vertices in the tree.  That is, we will prove that every tree with <m>v</m> vertices has exactly <m>v-1</m> edges, and then use induction to show this is true for all <m>v \ge 1</m>.
+        </p>
+        
+        <p>
+          For the base case, consider all trees with <m>v = 1</m> vertices.  There is only one such tree: the graph with a single isolated vertex.  This graph has <m>e = 0</m> edges, so we see that <m>e = v-1</m> as needed.
+        </p>
+        
+        <p>
+          Now for the inductive case, fix <m>k \ge 1</m> and assume that all trees with <m>v=k</m> vertices have exactly <m>e=k-1</m> edges.  Now consider an arbitrary tree <m>T</m> with <m>v = k+1</m> vertices.  By <xref ref="prop-leaves-in-trees"/>, <m>T</m> has a vertex <m>v_0</m> of degree one.  Let <m>T'</m> be the tree resulting from removing <m>v_0</m> from <m>T</m> (together with its incident edge).  Since we removed a leaf, <m>T'</m> is still a tree (the unique paths between pairs of vertices in <m>T'</m> are the same as the unique paths between them in <m>T</m>). 
+        </p>
+        
+        <p>
+          Now <m>T'</m> has <m>k</m> vertices, so by the inductive hypothesis, has <m>k-1</m> edges.  What can we say about <m>T</m>?  Well, it has one more edge than <m>T'</m>, so it has <m>k</m> edges.  But this is exactly what we wanted: <m>v=k+1</m>, <m>e=k</m> so indeed <m>e = v-1</m>.  This completes the inductive case, and the proof.
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      There is a very important feature of this induction proof that is worth noting.  Induction makes sense for proofs about graphs because we can think of graphs as growing into larger graphs.  However, this does NOT work.  It would not be correct to start with a tree with <m>k</m> vertices, and then add a new vertex and edge to get a tree with <m>k+1</m> vertices, and note that the number of edges also grew by one.  Why is this bad?  Because how do you know that <em>every</em> tree with <m>k+1</m> vertices is the result of adding a vertex to your arbitrary starting tree?  You don't!
+    </p>
+    
+    <p>
+      The point is that whenever you give an induction proof that a statement about graphs that holds for all graphs with <m>v</m> vertices, you must start with an arbitrary graph with <m>v+1</m> vertices, then <em>reduce</em> that graph to a graph with <m>v</m> vertices, to which you can apply your inductive hypothesis.
     </p>
   </subsection>
 
-  <subsection>
-    <title>Spanning Trees</title>
-<!-- Include application to coloring -->
-<!-- Include Prim's algorithm (very roughly) and an example about minimum spanning trees -->
-  </subsection>
 
-  <subsection>
+  <subsection xml:id="subsec-rooted-trees">
     <title>Rooted Trees</title>
     <p>
       So far, we have thought of trees only as a particular kind of graph.
@@ -126,8 +292,189 @@
       The graph will not have any cycles; it will be a tree.
       But a tree with clear hierarchy which is not present if we don't identify the book itself as the <q>top</q>.
     </p>
+    
+    <p>
+      <idx><h>root</h></idx>
+      As soon as one vertex of a tree is designated as the <term>root</term>, then every other vertex on the tree can be characterized by its position relative to the root.  This works because between any two vertices in a tree, there is a unique path.  So from any vertex, we can travel back to the root in exactly one way.  This also allows us to describe how distinct vertices in a rooted tree are related.
+    </p>
+    
+    <p>
+      <idx><h>parent</h></idx>
+      <idx><h>child</h></idx>
+      If two vertices are adjacent, then we say one of them is the <term>parent</term> of the other, which is called the <term>child</term> of the parent.  Of the two, the parent is the vertex that is closer to the root.  Thus the root of a tree is a parent, but is not the child of any vertex (and is unique in this respect: all non-root vertices have <em>exactly one</em> parent).  
+    </p>
+    
+    <p>
+      <idx><h>descendant</h></idx>
+      <idx><h>ancestor</h></idx>
+      Not surprisingly, the child of a child of a vertex is called the <term>grandchild</term> of the vertex (and it is the <term>grandparent</term>).  More in general, we say that a vertex <m>v</m> is a <term>descendent</term> of a vertex <m>u</m> provided <m>u</m> is a vertex on the path from <m>v</m> to the root.  Then we would call <m>u</m> an <term>ancestor</term> of <m>v</m>.
+    </p>
+    
+    <p>
+      <idx><h>sibling</h></idx>
+      For most trees (in fact, all except paths with one end the root), there will be pairs of vertices neither of which is a descendant of the other.  We might call these cousins or siblings.  In fact, vertices <m>u</m> and <m>v</m> are called <term>siblings</term> provided they have the same parent.  Note that siblings are never adjacent (do you see why?).
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Consider the tree below.
+        </p>
+        
+        <sidebyside width="40%">
+          <image xml:id="img-labeled-tree">
+            <latex-image>
+              \begin{tikzpicture}
+                {\footnotesize
+                  \coordinate (a) at (0,0);
+                  \coordinate (b) at (1,1);
+                  \coordinate (c) at (1,0);
+                  \coordinate (d) at (1,-1);
+                  \coordinate (e) at (2,0);
+                  \coordinate (f) at (3,1);
+                  \coordinate (g) at (3,-1);
+                  \coordinate (h) at (4,1);
+                  \coordinate (i) at (4,0);
+                  \draw (a) -- (c) -- (e) -- (g) (b) -- (e) (d) -- (e) -- (f) -- (h) (f) -- (i);
+                  \foreach \x in {a,...,i}{
+                  \draw (\x) \vb{$\x$};
+                  }
+                }
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+        </sidebyside>
+        <p>
+          If we designate vertex <m>f</m> as the root, then <m>e</m>, <m>h</m>, and <m>i</m> are the children of <m>f</m>, and are siblings of each other.  Among the other things we cay say are that <m>a</m> is a child of <m>c</m>, and a descendant of <m>f</m>.  The vertex <m>g</m> is a descendant of <m>f</m>, in fact, is a grandchild of <m>f</m>.  Vertices <m>g</m> and <m>d</m> are siblings, since they have the common parent <m>e</m>.
+        </p>
+        
+        <p>
+          Notice how this changes if we pick a different vertex for the root.  If <m>a</m> is the root, then its lone child is <m>c</m>, which also has only one child, namely <m>e</m>.  We would then have <m>f</m> the child of <m>e</m> (instead of the other way around), and <m>f</m> is the descendant of <m>a</m>, instead of the ancestor.  <m>f</m> and <m>g</m> are now siblings.
+        </p>
+      </statement>
+    </example>
+    
+    
+    
+    <p>
+      All of this flowery language helps us describe how to <em>navigate</em> through a tree.  Traversing a tree, visiting each vertex in some order, is a key step in many algorithms.  Even if we the tree we are considering is not rooted, we can always form a rooted tree by picking any vertex as the root.  Here is an example.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Explain why every tree is a bipartite graph.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          To show that a graph is bipartite, we must divide the vertices into two sets <m>A</m> and <m>B</m> so that no two vertices in the same set are adjacent.  Here is an algorithm that does just this.
+        </p>
+        
+        <p>
+          Designate any vertex as the root.  Put this vertex in set <m>A</m>.  Now put all of the children of the root in set <m>B</m>.  None of these children are adjacent (they are siblings), so we are good so far.  Now put into <m>A</m> every child of every vertex in <m>B</m> (i.e., every grandchild of the root).  Keep going until all vertices have been assigned one of the sets, alternating between <m>A</m> and <m>B</m> every <q>generation.</q>  That is, a vertex is in set <m>B</m> if and only if it is the child of a vertex in set <m>A</m>.
+        </p>
+      </solution>
+    </example>
+    
+    <p>
+      <idx><h>breadth first search</h></idx>
+      <idx><h>search</h><h>breadth first</h></idx>
+      The key to how we partitioned the tree in the example was to know which vertex to assign to a set next.  We chose to visit all vertices in the same generation before any vertices of the next generation.  This is usually called a <term>breadth first search</term> (we say <q>search</q> because you often traverse a tree looking for vertices with certain properties).  
+    </p>
+    
+    <p>
+      <idx><h>depth first search</h></idx>
+      <idx><h>search</h><h>depth first</h></idx>
+      In contrast, we could also have partitioned the tree in a different order.  Start with the root, put it in <m>A</m>.  Then look for one child of the root to put in <m>B</m>.  Then find a child of that vertex, into <m>A</m>, and then find its child, into <m>B</m>, and so on.  When you get to a vertex with no children, retreat to its parent and see if the parent has any other children.  So we travel as far from the root as fast as possible, then backtrack until we can move forward again.  This is called <term>depth first search</term>.
+    </p>
+    
+    <p>
+      These algorithmic explanations can serve as a proof that every tree is bipartite, although care needs to be spent to prove that the algorithms are <em>correct</em>.  Another approach to prove that all trees are bipartite, using induction, is requested in the exercises.
+    </p>
   </subsection>
 
+  <subsection>
+    <title>Spanning Trees</title>
+    
+    <p>
+      One of the advantages of trees is that they give us a few simple ways to travel through the vertices.  If a connected graph is not a tree, then we can still use these traversal algorithms if we identify a subgraph that <em>is</em> a tree.
+    </p>
+    
+    <p>
+      First we should consider if this even makes sense.  Given any connected graph <m>G</m>, will there always be a subgraph that is a tree?  Well, that is actually too easy: you could just take a single edge of <m>G</m>.  If we want to use this subgraph to tell us how to visit all vertices, then we want our subgraph to include all of the vertices.  We call such a tree a <term>spanning tree</term>.  It turns out that every connected graph has one (and usually many).
+    </p>
+    
+    <assemblage xml:id="assemblage-spanningtree">
+      <title>Spanning tree</title>
+      <p>
+        Given a connected graph <m>G</m>, a <term>spanning tree</term> of <m>G</m> is a subgraph of <m>G</m> which is a tree and includes all the vertices of <m>G</m>. 
+      </p>
+      
+      <p>
+        Every connected graph has a spanning tree.
+      </p>
+    </assemblage>
+    
+    <p>
+      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with the graph connected graph <m>G</m>.  If there is no cycle, then the <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
+    </p>
+    
+    <p>
+      This is by no means the only algorithm for finding a spanning tree.  You could have started with the empty graph and added edges that belong to <m>G</m> as long as adding them would not create a cycle.  You have some choices as to which edges you add first: you could always add an edge adjacent to edges you have already added (after the first one, of course), or add them using some other order.  Which spanning tree you end up with depends on these choices.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Find two different spanning trees of the graph,
+        </p>
+        <sidebyside width="35%">
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+        </sidebyside>
+      </statement>
+      <solution>
+        <p>
+          Here are two spanning trees.  
+        </p>
+        
+        <sidebyside widths="30% 30%">
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v (1,2) \v -- (-1, 2) \v  (-1,0)  (-1,2) -- (0,1) \v;
+                \draw (-1,0) (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+          
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v  (1,0)\v  (1,2) \v (-1, 2) \v  (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v;
+              \end{tikzpicture}
+            </latex-image>
+          </image>
+        </sidebyside>
+      </solution>
+    </example>
+    
+    <p>
+      Although we will not consider this in detail, these algorithms are usually applied to <em>weighted</em> graphs.  Here every edge has some weight or cost assigned to it.  The goal is to find a spanning tree that has the smallest possible combined weight.  Such a tree is called a <term>minimum spanning tree</term>.  Finding the minimum spanning tree uses basically the same algorithms as we described above, but when picking an edge to add, you always pick the smallest (or when removing an edge, you always remove the largest).<fn>If you add the smallest edge adjacent to edges you have already added, you are doing <em>Prim's algorithm</em>.  If you add the smallest edge in the entire graph, you are following <em>Kruskal's algorithm</em>.</fn>
+    </p>
+    
+    
+    
+
+  </subsection>
   <xi:include href="exercises/gt-trees.ptx"/>
 </section>
 

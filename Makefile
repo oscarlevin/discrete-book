@@ -95,7 +95,7 @@ LOCALBUILD = $(SCRATCH)/localbuild
 # Either specify only the protocol and domain (like https://webwork.yourschool.edu)
 # or specify a 5-tuple with quotes exactly as in this example
 # SERVER = "(https://webwork-ptx.aimath.org,courseID,userID,password,course_password)"
-SERVER = https://webwork-ptx.aimath.org
+SERVER = https://webwork-dev.aimath.org
 
 # Following regularly presumes  xml:id="dmoi" on
 # the <book> element, so xsltproc creates  dmoi.tex
@@ -126,6 +126,8 @@ ww-extraction:
 	install -d $(LOCALBUILD)
 	-rm $(LOCALBUILD)/webwork-extraction.xml
 	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
+	sed -i 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
+
 		
 # 	Then we merge this with the main source 
 
@@ -332,9 +334,16 @@ cleansols:
 #   Automatically invokes the "less" pager, could configure as $(PAGER)
 check:
 	install -d $(SCRATCH)
-	-rm $(SCRATCH)/dtderrors.*
-	-xmllint --xinclude --noout --dtdvalid $(MBDTD)/mathbook.dtd $(SRC)/dmoi.ptx 2> $(SCRATCH)/dtderrors.txt
-	less $(SCRATCH)/dtderrors.txt
+	-rm $(SCRATCH)/jing-errors.txt
+	jing $(PTXRELAXNG)/pretext.rng $(MAIN) > jing-errors.txt
+	
+check-clean:
+	sed -i '/attribute "permid"/d' ./jing-errors.txt
+	# sed -i '/attribute "category"/d' ./jing-errors.txt
+	sed -i '/attribute "oldpermid"/d' ./jing-errors.txt
+	sed -i '/element "instruction"/d' ./jing-errors.txt
+	sed -i '/element "var"/d' ./jing-errors.txt
+	sed -i '/./G' ./jing-errors.txt
 
 viewcheck:
 	less $(SCRATCH)/dtderrors.txt

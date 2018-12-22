@@ -715,7 +715,8 @@
         Consider the graphs:
       </p>
 
-      <sidebyside permid="PYn" widths="18% 18% 18% 18%" margins="auto" valigns="bottom bottom bottom bottom">
+      <sidebyside permid="PYn" widths="18% 18% 18% 18%" margins="auto">
+         <!-- valigns="bottom bottom bottom bottom"> -->
 
         <image permid="pzm">
 
@@ -819,12 +820,6 @@
 
   </sidebyside>
 
-  <p permid="HCQ">
-    Most of the time,
-    it makes sense to treat non-connected graphs as separate graphs
-    (think of the above graph as two squares),
-    so unless otherwise stated, we will assume all our graphs are connected.
-  </p>
 
   <p permid="nJZ">
     Vertices in a graph do not always have edges between them.
@@ -868,6 +863,55 @@
     since each edge adds to the degree of two vertices.
     Notice this means that the sum of the degrees of all vertices in any graph must be even!
   </p>
+  
+  <p>
+    This is our first example of a general result about all graphs.  It seems innocent enough, but we will use it to prove all sorts of other statements.  So let's give it a name and state it formally.
+  </p>
+  
+  <lemma xml:id="lem-handshake">
+    <title>Handshake Lemma</title> 
+    <idx><h>handshake lemma</h></idx>   
+    <idx><h>degree sum formula</h></idx>
+    <statement>
+      <p>
+        In any graph, the sum of the degrees of vertices in the graph is always twice the number of edges.
+      </p>
+    </statement>
+  </lemma>
+  
+  <p>
+    The handshake lemma<fn>A <em>lemma</em> is a mathematical statement that is primarily of importance in that it is used to establish other results.</fn> is sometimes called the <em>degree sum formula</em>, and can be written symbolically as <me>
+      \sum_{v\in V} d(v) = e
+    </me>.
+    Here we are using the notation <m>d(v)</m> for the degree of the vertex <m>v</m>.
+  </p>
+  
+  <p>
+    One use for the lemma is to actually find the number of edges in a graph.  To do this, you must be given the <term>degree sequence</term> for the graph (or be able to find it from other information).  This is a list of every degree of every vertex in the graph, generally written in non-increasing order.
+  </p>
+  
+  <example>
+    <statement>
+      <p>
+        How many vertices and edges must a graph have if its degree sequence is <me>
+          (4, 4, 3, 3, 3, 2, 1)
+        </me>?
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The number of vertices is easy to find: it is the number of degrees in the sequence: 7.  To find the number of edges, we compute the degree sum:
+        <me>
+          4 + 4 + 3 + 3 + 3 + 2 + 1 = 20
+        </me>
+        so the number of edges is half this: 10.
+      </p>
+    </solution>
+  </example>
+
+  <p>
+    The handshake lemma also tells use what is not possible.  
+  </p>
 
   <example permid="GEB">
     <statement>
@@ -893,6 +937,27 @@
       </p>
     </solution>
   </example>
+
+  <p>
+    We can generalize the previous example to get the following proposition.<fn>A <term>proposition</term> is a general statement in mathematics, similar to a theorem, although generally of lesser importance.</fn> 
+  </p>
+  
+  <proposition xml:id="prop-evensum">
+    <statement>
+      <p>
+        In any graph, the number of vertices with odd degree must be even.
+      </p>
+    </statement>
+    <proof>
+      <p>
+        Suppose there were a graph with an odd number of vertices with odd degree.  Then the sum of the degrees in the graph would be odd, which is impossible, by the handshake lemma.
+      </p>
+    </proof>
+  </proposition>
+
+  <p>
+    We will consider further applications of the handshake lemma in the exercises.
+  </p>
 
   <p permid="gfA">
     One final definition: we say a graph is <term>bipartite</term>
