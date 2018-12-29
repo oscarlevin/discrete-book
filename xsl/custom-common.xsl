@@ -95,7 +95,7 @@
 <xsl:param name="numbering.theorems.level" select="'2'" />
 <!-- How many levels in numbering of projects, etc     -->
 <!-- PROJECT-LIKE gets independent numbering -->
-<xsl:param name="numbering.projects.level" select="'2'" />
+<xsl:param name="numbering.projects.level" select="'1'" />
 <!-- How many levels in numbering of equations     -->
 <!-- Analagous to numbering theorems, but distinct -->
 <xsl:param name="numbering.equations.level" select="'1'" />
@@ -105,7 +105,7 @@
 <!-- Last level where subdivision (section) numbering takes place     -->
 <!-- For example, "2" would mean subsections of a book are unnumbered -->
 <!-- N.B.: the levels above cannot be numerically larger              -->
-<xsl:param name="numbering.maximum.level" select="'3'" />
+<xsl:param name="numbering.maximum.level" select="'2'" />
 <!-- Image files, media files and knowls are placed in directories    -->
 <!-- The defaults are relative to wherever principal output goes      -->
 <!-- These can be overridden at the command-line or in customizations -->
