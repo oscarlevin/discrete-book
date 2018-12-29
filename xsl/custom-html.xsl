@@ -241,14 +241,18 @@
 </xsl:template>
 
 <!-- HTML, CSS -->
-<xsl:template match="exercise" mode="environment-element">
+<!-- <xsl:template match="exercise" mode="environment-element">
     <xsl:text>article</xsl:text>
 </xsl:template>
 <xsl:template match="exercise" mode="environment-class">
     <xsl:text>exercise-like</xsl:text>
+</xsl:template> -->
+
+
+<!-- And its CSS class -->
+<xsl:template match="&PROJECT-LIKE;" mode="body-css-class">
+    <xsl:text>example-like</xsl:text>
 </xsl:template>
-
-
 
 <!-- Analytics Footers -->
 
