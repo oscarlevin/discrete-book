@@ -152,7 +152,7 @@ html:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
-	cp -a images $(HTMLOUT)/images
+	cp -a images $(HTMLOUT)
 	cd $(HTMLOUT); \
 	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
 
@@ -193,7 +193,7 @@ viewhtml:
 latex:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
-	cp -a images $(PDFOUT)/images
+	cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
 	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
 
