@@ -116,8 +116,9 @@ diagrams:
 	install -d $(HTMLOUT)/images
 	-rm $(HTMLOUT)/images/*
 	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
-	$(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
-	$(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
+	# $(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
+	# $(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
+	
 
 # WeBWorK extraction
 #   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
@@ -151,7 +152,7 @@ html:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
-	# cp -a images $(HTMLOUT)
+	cp -a images $(HTMLOUT)/images
 	cd $(HTMLOUT); \
 	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
 
@@ -192,7 +193,7 @@ viewhtml:
 latex:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
-	# cp -a images $(PDFOUT)
+	cp -a images $(PDFOUT)/images
 	cd $(PDFOUT); \
 	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
 
