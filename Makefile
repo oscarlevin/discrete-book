@@ -310,8 +310,8 @@ cleansols:
 	# for f in ptx/*.ptx; do \
 	# 	xsltproc -o ptx-clean/$${f##*/} xsl/clean-solutions.xsl $$f; \
 	# done
-	$(foreach var,$(wildcard ptx/*.ptx), \
-		xsltproc -o ptx-clean/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
+	# $(foreach var,$(wildcard ptx/*.ptx), \
+	# 	xsltproc -o ptx-clean/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
 	$(foreach var,$(wildcard ptx/exercises/*.ptx), \
 		xsltproc -o ptx-clean/exercises/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
 	# xsltproc -o $(SCRATCH)/ptx-clean/ xsl/clean-solutions.xsl $(widcard $(DMOI)/ptx/*.ptx)
