@@ -59,7 +59,7 @@
 include Makefile.paths
 
 # This is to ensure that latex is not skipped
-.PHONY: latex, html
+.PHONY: latex html
 
 
 # These paths are subdirectories of
