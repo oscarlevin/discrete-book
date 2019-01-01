@@ -9,7 +9,10 @@
 <!-- See the file COPYING for copying conditions.  -->
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
-
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
+    %entities;
+]>
 
 <!-- DMOI customizations for HTML runs -->
 
@@ -130,11 +133,10 @@
 <!-- We just like #3 as the default                          -->
 <!-- N.B.:  This scheme is transitional and may change             -->
 <!-- N.B.:  without warning and without any deprecation indicators -->
-<xsl:param name="html.js.server"  select="'https://aimath.org'" />
 <xsl:param name="html.css.server" select="'https://aimath.org'" />
-<xsl:param name="html.css.file"   select="'mathbook-4.css'" />
+<xsl:param name="html.css.file"   select="'mathbook-5.css'" />
 <!-- A space-separated list of CSS URLs (points to servers or local files) -->
-<xsl:param name="html.css.extra"  select="'custom-styles.css title-period-fix.css'" />
+<xsl:param name="html.css.extra"  select="'custom-styles.css'" />
 
 <!-- Navigation -->
 <!-- Navigation may follow two different logical models:                     -->
@@ -258,7 +260,7 @@
 
 <!-- Google Analytics                     -->
 <!-- "Classic", not compared to Universal -->
-<xsl:template match="google">
+<!-- <xsl:template match="google">
 <xsl:comment>Start: Google code</xsl:comment>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -271,7 +273,7 @@
 
 </script>
 <xsl:comment>End: Google code</xsl:comment>
-</xsl:template>
+</xsl:template> -->
 
 
 

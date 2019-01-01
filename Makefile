@@ -59,7 +59,7 @@
 include Makefile.paths
 
 # This is to ensure that latex is not skipped
-.PHONY: latex
+.PHONY: latex, html
 
 
 # These paths are subdirectories of
@@ -114,7 +114,7 @@ SERVER = https://webwork-dev.aimath.org
 #   NB: targets below copy versions out of repo and clobber these
 diagrams:
 	install -d $(HTMLOUT)/images
-	-rm $(HTMLOUT)/images/*
+	-rm $(HTMLOUT)/images/*.svg
 	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
 	# $(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
 	# $(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
