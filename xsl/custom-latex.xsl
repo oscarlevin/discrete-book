@@ -569,7 +569,7 @@
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
           <xsl:apply-templates select="." mode="serial-number" />
-          <xsl:text>}&#xa;</xsl:text>
+          <xsl:text>}</xsl:text>
         </xsl:when>
         <xsl:when test="solution">
           <xsl:text>\hyperlink{</xsl:text>
@@ -578,7 +578,7 @@
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
           <xsl:apply-templates select="." mode="serial-number" />
-          <xsl:text>}&#xa;</xsl:text>
+          <xsl:text>}</xsl:text>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates select="." mode="serial-number" />
