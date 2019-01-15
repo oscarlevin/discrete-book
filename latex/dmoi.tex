@@ -1,6 +1,6 @@
 %**************************************%
 %*    Generated from PreTeXt source   *%
-%*    on 2019-01-01T13:08:56-07:00    *%
+%*    on 2019-01-14T22:16:19-07:00    *%
 %*                                    *%
 %*      https://pretextbook.org       *%
 %*                                    *%
@@ -134,6 +134,8 @@ colback=white, colbacktitle=white, coltitle=black, opacityfill=0.0} }
 %% can make this even bigger by overriding with  latex.preamble.late  processing option
 \setcounter{MaxMatrixCols}{30}
 %%
+%% pdfpages package for front and back covers as PDFs
+\usepackage[final]{pdfpages}
 %%
 %% Division Titles, and Page Headers/Footers
 %% titlesec package, loading "titleps" package cooperatively
@@ -2038,6 +2040,11 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
 %% End: Author-provided macros
 \begin{document}
 \frontmatter
+%% Cover image, not numbered
+\setcounter{page}{0}%
+\includepdf[noautoscale=false]{images/front.pdf}%
+%% Blank obverse for 2-sided version
+\thispagestyle{empty}\hbox{}\setcounter{page}{0}\cleardoublepage%
 %% no half-title
 %% No adcard
 %% begin: title page
@@ -8811,7 +8818,7 @@ Here the common difference is \(-7\), since we add \(-7\) to 50 to get 43, and s
 What about sequences like \(2, 6, 18, 54, \ldots\)? This is not arithmetic because the difference between terms is not constant. However, the \emph{ratio} between successive terms is constant. We call such sequences \terminology{geometric}.%
 \par
 \hypertarget{p-2799}{}%
-The recursive definition for the geometric sequence with initial term \(a\) and common ratio \(r\) is \(a_n = a_{n}\cdot r; a_0 = a\). To get the next term we multiply the previous term by \(r\). We can find the closed formula like we did for the arithmetic progression. Write%
+The recursive definition for the geometric sequence with initial term \(a\) and common ratio \(r\) is \(a_n = a_{n-1}\cdot r; a_0 = a\). To get the next term we multiply the previous term by \(r\). We can find the closed formula like we did for the arithmetic progression. Write%
 \begin{align*}
 a_0 \amp = a\\
 a_1 \amp = a_0\cdot r\\
@@ -21418,4 +21425,9 @@ Divide through by 2: \(3x + 5y = 16\). Convert to a congruence, modulo 3: \(5y \
 This book was authored in PreTeXt.%
 \end{backcolophon}%
 \vspace*{\stretch{2}}
+%% Back cover image, not numbered
+\cleardoublepage%
+%% 2-sided, and at end of even page, so add odd page
+\thispagestyle{empty}\hbox{}\newpage%
+\includepdf[noautoscale=false]{images/back.pdf}%
 \end{document}
