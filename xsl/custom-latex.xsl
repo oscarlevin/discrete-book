@@ -77,6 +77,8 @@
 <!-- For a non-electronic copy, inactive links in black   -->
 <!-- Any color options go to black and white, as possible -->
 <xsl:param name="latex.print" select="'no'"/>
+<!-- Sidedness -->
+<xsl:param name="latex.sides" select="'two'"/>
 <!--  -->
 <!-- Preamble insertions                    -->
 <!-- Insert packages, options into preamble -->
@@ -515,6 +517,167 @@
     <!-- some distance to actual content -->
     <xsl:text>~~%&#xa;</xsl:text>
 </xsl:template>
+
+
+
+<!-- HACK 1-1-19: make numbers links to hints or solutions (with hints getting precidence). -->
+<!-- Divisional Exercises (exercises//exercise, worksheet//exercise, etc) -->
+<!-- Divisional exercises are not named when born, by virtue -->
+<!-- of being within an "exercises" division.  We hard-code  -->
+<!-- their numbers to allow for flexibility, and since it is -->
+<!-- too hard (impossible?) to mesh into LaTeX's scheme.  An -->
+<!-- "exercises" may be divided by a future "subexercises"   -->
+<!-- and/or by an "exercisegroup", so we match with "//"     -->
+<xsl:template match="exercises//exercise|worksheet//exercise|reading-questions//exercise">
+    <!-- There are three sets of switches, so we build a single set, -->
+    <!-- depending on what type of division the "exercise" lives in. -->
+    <!-- For each, exactly one "ancestor" is true, and then the      -->
+    <!-- expression will evaluate to the corresponding global switch -->
+    <xsl:variable name="b-has-statement" select="true()"/>
+    <xsl:variable name="b-has-hint"
+        select="(ancestor::exercises and $b-has-divisional-hint) or
+                (ancestor::worksheet and $b-has-worksheet-hint)  or
+                (ancestor::reading-questions and $b-has-reading-hint)"/>
+    <xsl:variable name="b-has-answer"
+        select="(ancestor::exercises and $b-has-divisional-answer) or
+                (ancestor::worksheet and $b-has-worksheet-answer)  or
+                (ancestor::reading-questions and $b-has-reading-answer)"/>
+    <xsl:variable name="b-has-solution"
+        select="(ancestor::exercises and $b-has-divisional-solution) or
+                (ancestor::worksheet and $b-has-worksheet-solution)  or
+                (ancestor::reading-questions and $b-has-reading-solution)"/>
+    <!-- The exact environment depends on the placement of the -->
+    <!-- "exercise" when located in an "exercises" division    -->
+    <xsl:variable name="env-name">
+        <xsl:text>divisionexercise</xsl:text>
+        <xsl:if test="ancestor::exercisegroup">
+            <xsl:text>eg</xsl:text>
+        </xsl:if>
+        <xsl:if test="ancestor::exercisegroup/@cols">
+            <xsl:text>col</xsl:text>
+        </xsl:if>
+    </xsl:variable>
+    <xsl:text>\begin{</xsl:text>
+    <xsl:value-of select="$env-name"/>
+    <xsl:text>}</xsl:text>
+    <xsl:text>{</xsl:text>
+    <xsl:choose>
+        <xsl:when test="hint">
+          <xsl:text>\hyperlink{</xsl:text>
+          <xsl:apply-templates select="hint[1]" mode="internal-id-duplicate">
+              <xsl:with-param name="suffix" select="'back'"/>
+          </xsl:apply-templates>
+          <xsl:text>}{</xsl:text>
+          <xsl:apply-templates select="." mode="serial-number" />
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="solution">
+          <xsl:text>\hyperlink{</xsl:text>
+          <xsl:apply-templates select="solution[1]" mode="internal-id-duplicate">
+              <xsl:with-param name="suffix" select="'back'"/>
+          </xsl:apply-templates>
+          <xsl:text>}{</xsl:text>
+          <xsl:apply-templates select="." mode="serial-number" />
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="." mode="serial-number" />
+        </xsl:otherwise>
+    </xsl:choose>
+    <xsl:text>}</xsl:text>
+    <xsl:text>{</xsl:text>
+    <xsl:apply-templates select="." mode="title-punctuated"/>
+    <xsl:text>}</xsl:text>
+    <!-- workspace fraction, only if given, else blank -->
+    <!-- worksheets only now, eventually exams?        -->
+    <xsl:text>{</xsl:text>
+    <xsl:if test="ancestor::worksheet and @workspace">
+        <xsl:value-of select="substring-before(@workspace,'%') div 100" />
+    </xsl:if>
+    <xsl:text>}</xsl:text>
+    <xsl:text>{</xsl:text>
+    <xsl:apply-templates select="." mode="internal-id"/>
+    <xsl:text>}</xsl:text>
+    <xsl:text>%&#xa;</xsl:text>
+    <!-- Allow a webwork or myopenmath exercise to introduce/connect    -->
+    <!-- a problem (especially from server) to the text in various ways -->
+    <xsl:if test="webwork-reps|myopenmath">
+        <xsl:apply-templates select="introduction"/>
+    </xsl:if>
+    <!-- condition on how statement, hint, answer, solution are presented -->
+    <xsl:choose>
+        <!-- webwork, structured with "stage" matches first -->
+        <!-- Someplace, something like  -->
+        <!-- \par\medskip\noindent% -->
+        <!-- \textbf{Part 2.}\quad  -->
+        <!-- needs to happen for each stage in a solution -->
+        <!-- maybe based on a dry-run -->
+        <xsl:when test="webwork-reps/static/stage">
+            <!-- Needs this fix, but requires more care                                              -->
+            <!-- <xsl:apply-templates select="webwork-reps/static/stage" mode="exercise-components"> -->
+            <xsl:apply-templates select="webwork-reps/static/stage">
+                <xsl:with-param name="b-original" select="true()" />
+                <xsl:with-param name="b-has-statement" select="$b-has-statement" />
+                <xsl:with-param name="b-has-hint"      select="$b-has-hint" />
+                <!-- 2018-09-21: WW answers may become available -->
+                <xsl:with-param name="b-has-answer"    select="$b-has-answer" />
+                <xsl:with-param name="b-has-solution"  select="$b-has-solution" />
+            </xsl:apply-templates>
+        </xsl:when>
+        <!-- webwork exercise, no "stage" -->
+        <xsl:when test="webwork-reps/static">
+            <xsl:apply-templates select="webwork-reps/static" mode="exercise-components">
+                <xsl:with-param name="b-original" select="true()" />
+                <xsl:with-param name="b-has-statement" select="$b-has-statement" />
+                <xsl:with-param name="b-has-hint"      select="$b-has-hint" />
+                <!-- 2018-09-21: WW answers may become available -->
+                <xsl:with-param name="b-has-answer"    select="$b-has-answer" />
+                <xsl:with-param name="b-has-solution"  select="$b-has-solution" />
+            </xsl:apply-templates>
+        </xsl:when>
+        <!-- myopenmath exercise -->
+        <!-- We only try to open an external file when the source  -->
+        <!-- has a MOM problem (with an id number).  The second    -->
+        <!-- argument of the "document()" function is a node and   -->
+        <!-- causes the relative file name to resolve according    -->
+        <!-- to the location of the XML.   Experiments with the    -->
+        <!-- empty node "/.." are interesting.                     -->
+        <!-- https://ajwelch.blogspot.co.za/2008/04/relative-paths-and-document-function.html -->
+        <!-- http://www.dpawson.co.uk/xsl/sect2/N2602.html#d3862e73 (Point 4) -->
+        <xsl:when test="myopenmath">
+            <xsl:variable name="filename" select="concat(concat('problems/mom-', myopenmath/@problem), '.xml')" />
+            <xsl:apply-templates select="document($filename, .)/myopenmath"  mode="exercise-components">
+                <xsl:with-param name="b-original" select="true()" />
+                <xsl:with-param name="b-has-statement" select="$b-has-statement" />
+                <xsl:with-param name="b-has-hint"      select="false()" />
+                <xsl:with-param name="b-has-answer"    select="false()" />
+                <xsl:with-param name="b-has-solution"  select="$b-has-solution" />
+            </xsl:apply-templates>
+        </xsl:when>
+        <!-- "normal" exercise -->
+        <xsl:otherwise>
+            <xsl:apply-templates select="." mode="exercise-components">
+                <xsl:with-param name="b-original" select="true()" />
+                <xsl:with-param name="b-has-statement" select="$b-has-statement" />
+                <xsl:with-param name="b-has-hint"      select="$b-has-hint" />
+                <xsl:with-param name="b-has-answer"    select="$b-has-answer" />
+                <xsl:with-param name="b-has-solution"  select="$b-has-solution" />
+            </xsl:apply-templates>
+        </xsl:otherwise>
+    </xsl:choose>
+    <!-- Allow a webwork or myopenmath exercise to conclude/connect     -->
+    <!-- a problem (especially from server) to the text in various ways -->
+    <xsl:if test="webwork-reps|myopenmath">
+        <xsl:apply-templates select="conclusion"/>
+    </xsl:if>
+    <!-- closing % necessary, as newline between adjacent environments -->
+    <!-- will cause a slight indent on trailing exercise               -->
+    <xsl:text>\end{</xsl:text>
+    <xsl:value-of select="$env-name"/>
+    <xsl:text>}%&#xa;</xsl:text>
+</xsl:template>
+
+
 
 
 

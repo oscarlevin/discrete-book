@@ -59,7 +59,7 @@
 include Makefile.paths
 
 # This is to ensure that latex is not skipped
-.PHONY: latex
+.PHONY: latex html
 
 
 # These paths are subdirectories of
@@ -114,10 +114,11 @@ SERVER = https://webwork-dev.aimath.org
 #   NB: targets below copy versions out of repo and clobber these
 diagrams:
 	install -d $(HTMLOUT)/images
-	-rm $(HTMLOUT)/images/*
+	-rm $(HTMLOUT)/images/*.svg
 	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
-	$(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
-	$(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
+	# $(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
+	# $(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
+	
 
 # WeBWorK extraction
 #   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
@@ -151,7 +152,7 @@ html:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
-	# cp -a images $(HTMLOUT)
+	cp -a images $(HTMLOUT)
 	cd $(HTMLOUT); \
 	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
 
@@ -192,7 +193,7 @@ viewhtml:
 latex:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
-	# cp -a images $(PDFOUT)
+	cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
 	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
 
@@ -310,8 +311,8 @@ cleansols:
 	# for f in ptx/*.ptx; do \
 	# 	xsltproc -o ptx-clean/$${f##*/} xsl/clean-solutions.xsl $$f; \
 	# done
-	$(foreach var,$(wildcard ptx/*.ptx), \
-		xsltproc -o ptx-clean/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
+	# $(foreach var,$(wildcard ptx/*.ptx), \
+	# 	xsltproc -o ptx-clean/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
 	$(foreach var,$(wildcard ptx/exercises/*.ptx), \
 		xsltproc -o ptx-clean/exercises/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
 	# xsltproc -o $(SCRATCH)/ptx-clean/ xsl/clean-solutions.xsl $(widcard $(DMOI)/ptx/*.ptx)
