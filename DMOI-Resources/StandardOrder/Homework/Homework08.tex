@@ -1,0 +1,306 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\bonuspointname{pts}
+\marginbonuspointname{pts}
+\addpoints
+\pagestyle{head}
+%\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 8}{Due: Wednesday, November 1}
+
+
+\begin{document}
+\noindent \textbf{Instructions}: Same rules as usual -- turn in your work on separate sheets of paper.  You must justify all your answers for full credit.  Do not consult the Internet.
+
+\begin{questions}
+  \question[4] Tommy Flanagan was telling you what he ate yesterday afternoon.  He tells you, ``I had either popcorn or raisins.  Also, if I had cucumber sandwiches, then I had soda.  But I didn't drink soda or tea.''  Of course you know that Tommy is the worlds worst liar, and everything he says is false.  What did Tommy eat?
+
+  Justify your answer by writing all Tommy's statements using sentence variables ($P, Q, R, S, T$), taking their negations, and using these to deduce what Tommy actually ate.
+
+  \begin{solution}
+  Let $P$ be the statement, ``I had popcorn,'' $Q$ be the statement, ``I had cucumber sandwiches,'' $R$ be the statement, ``I had raisins,'' $S$ be, ``I had soda,'' and $T$ be, ``I had tea.''  Then the statements made by Tommy are:
+  \[P \vee R \qquad Q \imp S \qquad \neg(S \vee T)\]
+  We need the negation of all of these.  Thus what is true is:
+  \[\neg P \wedge \neg R \qquad Q \wedge \neg S \qquad S \vee T\]
+  From the first two statements we can conclude that Tommy did not eat popcorn, did not eat raisins, did eat cucumber sandwiches and did not drink soda.  From the last statement $S \vee T$ and the fact that we know $\neg S$ we can conclude $T$, so Tommy did drink tea.
+  \end{solution}
+
+
+
+
+
+  \question[8] Use De Morgan's Laws, and any other logical equivalence facts you know to simplify the following statements.  Show all your steps.  Your final statements should have negations only appear directly next to the sentence variables ($P$, $Q$, etc.), and no double negations.  It would be a good idea to use only conjunctions, disjunctions, and negations.
+  \begin{parts}
+    \part $\neg((\neg P \wedge Q) \vee \neg(R \vee \neg Q))$.
+    \begin{solution}
+      $\neg((\neg P \wedge Q) \vee \neg(R \vee \neg Q))$\\
+      $\neg(\neg P \wedge Q) \wedge \neg\neg(R \vee \neg Q)$ by De Morgan's law.\\
+      $\neg(\neg P \wedge Q) \wedge (R \vee \neg Q)$ by double negation.\\
+      $(\neg\neg P \vee \neg Q) \wedge (R \vee \neg Q)$ by De Morgan's law.\\
+      $(P \vee \neg Q) \wedge (R \vee \neg Q)$ by double negation.
+    \end{solution}
+
+    \part $\neg((\neg P \imp \neg Q) \wedge (\neg Q \imp R))$ (careful with the implications).
+    \begin{solution}
+      We will need to convert the implications to disjunctions so we can apply De Morgan's law:
+
+      $\neg((\neg P \imp \neg Q) \wedge (\neg Q \imp R))$\\
+      $\neg((\neg \neg P \vee \neg Q) \wedge (\neg\neg Q \vee R))$ by implication/disjunction equivalence.\\
+      $\neg((P \vee \neg Q) \wedge (Q \vee R))$ by double negation.\\
+      $\neg(P \vee \neg Q) \vee \neg (Q \vee R)$ by De Morgan's law.\\
+      $(\neg P \wedge \neg \neg Q) \vee (\neg Q \wedge \neg R)$ by De Morgan's law.\\
+      $(\neg P \wedge Q) \vee (\neg Q \wedge \neg R)$ by double negation.
+    \end{solution}
+
+    \part For both parts above, verify your answers are correct using truth tables.  That is, use a truth table to check that the given statement and your proposed simplification are actually logically equivalent.
+
+    \begin{solution}
+      For each truth table, the columns for the original statement and the simplified statement must be identical.  They are.  For purposes of checking your work, here are the final columns for the two parts above:
+
+      \begin{tabular}{c|c|c||c|c}
+        $P$ & $Q$ & $R$ & (a) & (b) \\ \hline
+        T   &  T  &  T  &         T         &      F     \\
+        T   &  T  &  F  &         F         &      F     \\
+        T   &  F  &  T  &         T         &      F     \\
+        T   &  F  &  F  &         T         &      T     \\
+        F   &  T  &  T  &         F         &      T     \\
+        F   &  T  &  F  &         F         &      T     \\
+        F   &  F  &  T  &         T         &      F     \\
+        F   &  F  &  F  &         T         &      T     \\
+      \end{tabular}
+    \end{solution}
+
+  %  \part $\neg \forall x \exists y ((E(x) \vee \neg O(y)) \imp \exists z (E(z) \wedge E(y)))$. Here, also put all the quantifiers ``out front.''
+  %  \begin{solution}
+  %  FIX
+  %  \end{solution}
+  \end{parts}
+
+
+\question[8] Determine whether the following are valid deduction rules.  Your answer should involve a truth table as well as an explanation of what your truth table tells you.
+\begin{multicols}{2}
+\begin{parts}
+  \part ~\\ \begin{tabular}{cc}
+  & $P \imp (Q \vee R)$ \\
+  & $\neg (P \imp Q)$ \\ \hline
+  $\therefore$ & $R$
+  \end{tabular}
+  \columnbreak
+  \part ~\\ \begin{tabular}{cc}
+  & $(P \wedge Q) \imp R$ \\
+  & $\neg P \vee \neg Q$ \\ \hline
+  $\therefore$ & $\neg R$
+  \end{tabular}
+\end{parts}
+\end{multicols}
+
+\begin{solution}
+  \begin{parts}
+    \part Here is a truth table that includes all the statements:
+
+        \begin{tabular}{c|c|c||c|c}
+          $P$ & $Q$ & $R$ & $P\imp (Q\vee R)$ & $\neg(P \imp Q)$  \\ \hline
+          T   &  T  &  T  &         T         &      F     \\
+          T   &  T  &  F  &         T         &      F     \\
+          T   &  F  &  T  &         T         &      T     \\
+          T   &  F  &  F  &         F         &      T     \\
+          F   &  T  &  T  &         T         &      F     \\
+          F   &  T  &  F  &         T         &      F     \\
+          F   &  F  &  T  &         T         &      F     \\
+          F   &  F  &  F  &         T         &      F     \\
+        \end{tabular}
+
+        Notice that there is only one row in which both premises are true (row 3).  In this row, $R$ is also true.  So whenever the premises are true, so is the conclusion.  Thus this is a valid deduction rule.
+
+        \part Here is the truth table for this proposed rule:
+
+      \begin{tabular}{c|c|c||c|c|c}
+        $P$ & $Q$ & $R$ & $(P \wedge Q) \imp R$ & $\neg P \vee \neg Q$ & $\neg R$ \\ \hline
+        T   &  T  &  T  &           T            &           F         &   F \\
+        T   &  T  &  F  &           F            &           F         &   T \\
+        T   &  F  &  T  &           T            &           T         &   F \\
+        T   &  F  &  F  &           T            &           T         &   T \\
+        F   &  T  &  T  &           T            &           T         &   F \\
+        F   &  T  &  F  &           T            &           T         &   T \\
+        F   &  F  &  T  &           T            &           T         &   F \\
+        F   &  F  &  F  &           T            &           T         &   T \\
+      \end{tabular}
+
+      Now look at rows 3. 5 and 7.  In each of these (one would be enough) both premises are true.  However, here the conclusion is false.  Thus this is NOT a valid deduction rule.  In fact, we can see exactly where it goes wrong: If $P$ or $Q$ is false and $R$ is true, we get a counterexample, since $Q$ being false makes both premises true no matter what $R$ is.
+  \end{parts}
+\end{solution}
+
+
+  % \question[8] Can you chain implications together?  That is, if $P \imp Q$ and $Q \imp R$, does that means the $P \imp R$?  Can you chain more implications together?  Let's find out:
+  % \begin{parts}
+  %   \part Prove that the following is a valid argument form:
+  %   \begin{tabular}{rc}
+  %     & $P \imp Q$ \\
+  %     & $Q \imp R$ \\ \hline
+  %     $\therefore$ & $P \imp R$
+  %   \end{tabular}
+  %
+  %   \begin{solution}
+  %     Consider the truth table:
+  %
+  %     \begin{tabular}{c|c|c||c|c|c}
+  %       $P$ & $Q$ & $R$ & $P\imp Q$ & $Q \imp R$ & $P \imp R$ \\ \hline
+  %       T   &  T  &  T  &     T     &      T     &      T \\
+  %       T   &  T  &  F  &     T     &      F     &      F \\
+  %       T   &  F  &  T  &     F     &      T     &      T \\
+  %       T   &  F  &  F  &     F     &      T     &      F \\
+  %       F   &  T  &  T  &     T     &      T     &      T \\
+  %       F   &  T  &  F  &     T     &      F     &      T \\
+  %       F   &  F  &  T  &     T     &      T     &      T \\
+  %       F   &  F  &  F  &     T     &      T     &      T \\
+  %     \end{tabular}
+  %     Notice that both $P \imp Q$ and $Q \imp R$ are true in rows 1, 5, 7 and 8.  In each of these rows, $P \imp R$ is also true.  So whenever the premises are true, so in the conclusion.  Thus the argument form is valid.
+  %   \end{solution}
+  %
+  %
+  % \part Prove that the following is a valid argument form for any $n \ge 2$:
+  % \begin{tabular}{rc}
+  %   & $P_1 \imp P_2$\\
+  %   & $P_2 \imp P_3$ \\
+  %   & $\vdots$ \\
+  %   & $P_{n-1} \imp P_n$ \\ \hline
+  %   $\therefore$ & $P_1 \imp P_n$.
+  % \end{tabular}
+  %
+  % I suggest you don't go through the trouble of writing out a $2^n$ row truth table.  Instead, you should use part (a) and mathematical induction.
+  % \begin{solution}
+  % Part (a) is the base case.  Now assume that the deduction rule holds going up to $P_k$.  That is,
+  %
+  % \begin{tabular}{rc}
+  %   & $P_1 \imp P_2$\\
+  %   & $P_2 \imp P_3$ \\
+  %   & $\vdots$ \\
+  %   & $P_{k-1} \imp P_k$ \\ \hline
+  %   $\therefore$ & $P_1 \imp P_k$.
+  % \end{tabular}
+  %
+  % Now suppose we have
+  %
+  % \begin{tabular}{rc}
+  %   & $P_1 \imp P_2$\\
+  %   & $P_2 \imp P_3$ \\
+  %   & $\vdots$ \\
+  %   & $P_{k-1} \imp P_k$ \\
+  %   & $P_k \imp P_{k+1}$
+  % \end{tabular}
+  %
+  % From the first $k-1$ lines, we can conclude $P_1 \imp P_k$.  The combining this with the last line, we can conclude (using part (a) again):
+  %
+  % \begin{tabular}{rc}
+  %   & $P_1 \imp P_k$\\
+  %   & $P_{k} \imp P_{k+1}$ \\ \hline
+  %   $\therefore$ & $P_1 \imp P_{k+1}$.
+  % \end{tabular}
+  %
+  % So
+  %
+  % \begin{tabular}{rc}
+  %   & $P_1 \imp P_2$\\
+  %   & $P_2 \imp P_3$ \\
+  %   & $\vdots$ \\
+  %   & $P_{k-1} \imp P_k$ \\
+  %   & $P_k \imp P_{k+1}$\\ \hline
+  %   $\therefore$ & $P_1 \imp P_{k+1}$.
+  % \end{tabular}
+  % \end{solution}
+  %
+  % \end{parts}
+
+
+
+  \question[4] Your ``friend'' has shown you a ``proof'' he wrote to show that $1 = 3$.  Here is the proof:
+
+  \begin{proof}
+  I claim that $1 = 3$.  Of course we can do anything to one side of an equation as long as we also do it to the other side.  So subtract 2 from both sides.  This gives $-1 = 1$.  Now square both sides, to get $1 = 1$.  And we all agree this is true.
+  \end{proof}
+
+  What is going on here?  Is your friends argument valid?  Is the argument a proof of the claim $1=3$?  Carefully explain using what we know about logic.  Hint: What implication follows from the given proof?
+
+  \begin{solution}
+  In the proof we assume that $1=3$ and conclude that $1=1$.  So we have proved the implication
+  \[1=3 \imp 1=1\]
+  Note that we actually have a valid proof of this, and that the implication is true (for one thing, the ``if'' part is false, so the implication is automatically true).  However, what we really want is to converse of this, that $1=1 \imp 1=3$.  But as we know, the converse is not implied by the original implication (it better not be, otherwise we could conclude that 1 actually was 3).
+
+  Another way to say this: we can never conclude anything about the ``if'' part of an implication, since the ``if'' part can be true or false even if the implication is true.
+  \end{solution}
+
+
+  \question[6] Consider the statement, ``If a number is triangular or square, then it is not prime''
+  \begin{parts}
+    \part Make a truth table for the statement $(T \vee S) \imp \neg P$.
+    \part If you believed the statement was \emph{false}, what properties would a counterexample need to possess?  Explain by referencing your truth table.
+    \part If the statement were true, what could you conclude about the number 5657, which is definitely prime?  Again, explain using the truth table.
+  \end{parts}
+
+\begin{solution}
+  \begin{parts}
+    \part    \begin{tabular}{c|c|c||c}
+            $T$ & $S$ & $P$ & $(T\vee S) \imp \neg P$  \\ \hline
+            T   &  T  &  T  &             F     \\
+            T   &  T  &  F  &             T     \\
+            T   &  F  &  T  &             F     \\
+            T   &  F  &  F  &             T     \\
+            F   &  T  &  T  &             F     \\
+            F   &  T  &  F  &             T     \\
+            F   &  F  &  T  &             T     \\
+            F   &  F  &  F  &             T     \\
+          \end{tabular}
+
+    \part There are three cases in which the statement is false: rows 1, 3 and 5.  So one way to prove this was false would be to find a number that was triangular, square and prime (row 1).  Or you could find a number that was triangular, not square, and prime (row 3) or one that is not triangular, is square and is not prime (row 5).  In fact, since no square number is prime, we would need to do the second one (3 is both triangular and prime, but in fact this is the only one).
+    \part Here we have a prime number, so we need to look at rows in which $P$ is true.  We also need to statement to be true.  There is only one row with both these properties: row 7.  And here we see that $T$ and $S$ are both false.  So we would know that 5657 is neither triangular nor square.
+  \end{parts}
+\end{solution}
+
+
+
+  \bonusquestion[5] \textbf{Bonus:} You come across four trolls playing bridge.  As you know, all trolls belong to one of two clans: knights, who always tell the truth, or knaves, who always lie.  They declare:
+  \begin{itemize}
+  \item[] Troll 1: All trolls here see at least one knave.
+
+  \item[] Troll 2: I see at least one troll that sees only knaves.
+
+  \item[] Troll 3: Some trolls are scared of goats.
+
+  \item[] Troll 4: All trolls are scared of goats.
+  \end{itemize}
+
+  Are there any trolls that are not scared of goats?  Justify your answer.
+
+  \begin{solution}
+  Consider first the statement of Troll 2.  If this were true, then Troll 2 would be a knight.  But the troll he sees that sees only knaves would see him, a knight.  Thus Troll 2 is a knave.  This also means that his statement is false.  In other words, every troll he sees, sees at least one knight.
+
+  Now consider Troll 1's statement.  If this were false, that would mean that there was a troll that saw only knights.  That would have to be Troll 2 (since he is a knave), but Troll 2 sees Troll 1, also a knave.  Thus Troll 1's statement is true, and he is knight.  Also, since his statement is true, everyone sees at least one knave.
+
+  Note that since every troll sees at least one knight (including the knights) and every troll sees at least one knave (including the knaves) there must be exactly two knights and two knaves.
+
+  So among trolls 3 and 4, one is a knight and one is a knave.  The only way this can happen is if Troll 3 is a knight and Troll 4 is a knave (if all trolls are scared of goats, then some are as well).
+
+  In particular, it is false that all trolls are scared of goats, so some strolls are not scared of goats.
+
+
+  \end{solution}
+
+\end{questions}
+\end{document}

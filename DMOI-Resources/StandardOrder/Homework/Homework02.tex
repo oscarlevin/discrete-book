@@ -1,0 +1,119 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+%\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 2}{Due: Wednesday, September 6}
+
+
+\begin{document}
+\noindent \textbf{Instructions}: Complete the homework problems below on {\em separate} sheets of paper (and not all jammed up between the questions).  This is to be turned in and graded, so make sure your work is neat and easy to ready -- there is nothing wrong with using a \underline{separate sheet} of paper for each problem. Your work will be graded on correctness as well as the clarity of your explanations.  You may work with other students in this class on solving the problems, but your write-ups should be completed individually.  You are \textbf{NOT} permitted to search for solutions online or in other textbooks.
+
+\begin{questions}
+
+\question[4] Let $A = \{a,b,c\}$ and $B = \{1,2\}$.
+\begin{parts}
+	\part Write out all functions $f: A \to B$ using two-line notation.  How many different functions are there, and why does this number make sense? (You might want to consider the multiplicative principle here).
+	\begin{solution}
+		There are 8 functions:
+		\begin{equation*}
+		f = \begin{pmatrix} a & b & c \\ 1 & 1& 1 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 2 & 2 & 2 \end{pmatrix}
+		\end{equation*}
+		%
+		\begin{equation*}
+		f = \begin{pmatrix} a & b & c \\ 1 & 1& 2 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 1 & 2 & 1 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 2 & 1& 1 \end{pmatrix}
+		\end{equation*}
+		%
+		\begin{equation*}
+		\quad f = \begin{pmatrix} a & b & c \\ 2 & 2 & 1 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 2 & 1 & 2 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 1 & 2 & 2 \end{pmatrix}
+		\end{equation*}
+		%
+		The 8 makes sense, since for each of the elements of the domain, there are two choices for which element in the codomain they are sent to.  Using the multiplicative principle, this means there are $2 \cdot 2 \cdot 2 = 8$ functions.
+	\end{solution}
+	\part How many of the functions are injective?  How many are surjective?  Identify these (circle/square the functions in your list).
+	\begin{solution}
+		There are 6 surjections (the last 6 above) and no injections (since the size of the domain is larger than the size of the codomain).
+	\end{solution}
+\end{parts}
+
+
+\question[4] Let $A = \{a,b\}$ and $B = \{1,2,3\}$.
+\begin{parts}
+	\part Write out all functions $f: A \to B$ using two-line notation.  How many different functions are there, and why does this number make sense? (You might want to consider the multiplicative principle here).
+	\begin{solution}
+		There will be 9 functions: for each element of the domain, there are three choices for its image.  Using the multiplicative principle we get $3\cdot 3 = 9$ functions.  They are:
+		\begin{equation*}
+		f = \twoline{a & b}{1 & 1} \quad f = \twoline{a & b}{2 & 2} \quad f = \twoline{a & b}{3 & 3}
+		\end{equation*}
+		%
+		\begin{equation*}
+		f = \twoline{a & b}{1 & 2} \quad f = \twoline{a & b}{1 & 3} \quad f = \twoline{a & b}{2 & 3}
+		\end{equation*}
+		%
+		\begin{equation*}
+		f = \twoline{a & b}{2 & 1} \quad f = \twoline{a & b}{3 & 1} \quad f = \twoline{a & b}{3 & 2}
+		\end{equation*}
+	\end{solution}
+	\part How many of the functions are injective?  How many are surjective?  Identify these (circle/square the functions in your list).
+	\begin{solution}
+		There will not be any surjective functions here, since the size of the domain is smaller than the size of the codomain.  There are 6 injections (the bottom two rows again).
+	\end{solution}
+\end{parts}
+
+
+\question[4] Based on your work above, and what you know about the multiplicative principle, how many functions $f: A \to B$ are there if $|A| = 5$ and $|B| = 7$?  How many of those are injective?  How many are surjective?  Explain your answers.
+
+\begin{solution}
+	The total number of functions $f:A \to B$ will be $7^5 = 16807$.  This is because there are 7 choices for the image of the first element of the domain, and for each of these, there are 7 choices for the image of the second element of the domain, and so on.  The multiplicative principle tells us that the number of functions will be $7\cdot 7 \cdot 7 \cdot 7 \cdot 7$.
+
+	For injective functions, once we select the image of the first element from the domain, we now only have 6 choices for where to send the second element of the domain (since we cannot send the first and second elements to the same image).  Then for each of these $7 \cdot 6$ choices of images of the first two elements of the domain, we have 5 choices for the image of the third element of the domain.  And so on.  We see there should be $7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 = 2520$ injective functions.
+
+	Since the size of the comdomain is larger than the size of the domain, there is no way to have every element of the codomain in the range, so no functions are surjective.
+\end{solution}
+
+	\question[8] We usually write numbers in decimal form (or base 10), meaning numbers are composed using 10 different ``digits'' $\{0,1,\ldots, 9\}$.  Sometimes though it is useful to write numbers in {\em hexadecimal} or base 16.  Now there are 16 distinct digits that can be used to form numbers: $\{0, 1, \ldots, 9, \mathrm{A, B, C, D, E, F}\}$.  So for example, a 3 digit hexadecimal number might be 3B8.
+	\begin{parts}
+	\part How many 2-digit hexadecimals are there in which the first digit is E or F?  Explain your answer in terms of the additive principle (using either events or sets).
+		\begin{solution}
+			There are 16 hexadecimals in which the first digit is an E (one for each choice of second digit).  Similarly, there are 16 hexadecimals in which the first digit is an F.  We want the union of these two disjoint sets, so there are $16 + 16 = 32$ two digits hexadecimals in which the first digit is either an E or an F.
+		\end{solution}
+	\part Explain why your answer to the previous part is correct in terms of the multiplicative principle (using either events or sets).  Why do both the additive and multiplicative principles give you the same answer?
+		\begin{solution}
+			We can first select the first digit in 2 ways.  We then select the second digit in 16 ways.  The multiplicative principle says that the number of ways to accomplish both these tasks together is $2 \cdot 16 = 32$.  Of course $2 \cdot 16 = 16 + 16$ so we get the same answer as in part (a).  There we divided the total number of outcomes into two groups of size 16, each group based on the choice we made for the first task (selecting the first digit).
+		\end{solution}
+	\part How many 3-digit hexadecimals start with a letter (A-F) and end with a numeral (0-9)? Explain.
+		\begin{solution}
+			We can select the first digit in 6 ways, the second digit in 16 ways, and the third digit in 10 ways.  Thus there are $6\cdot 16 \cdot 10 = 960$ hexadecimals given these restrictions.
+		\end{solution}
+	\part How many 3-digit hexadecimals start with a letter (A-F) or end with a numeral (0-9) (or both)?  Explain.
+		\begin{solution}
+			The number of 3-digit hexadecimals that start with a letter is $6 \cdot 16 \cdot 16 = 1536$.  The number of 3-hexadecimals that end with a numeral is $16 \cdot 16 \cdot 10 = 2560$.  We want all the elements from both these sets.  However, both sets include those 3-digit hexadecimals which both start with a letter and end with a numeral (found to be 960 in the previous part), so we must subtract these (once).  Thus the number of 3-digit hexadecimals starting with a letter or ending with a numeral is:
+			\[1536 + 2560 - 960 = 3136\]
+		\end{solution}
+	\end{parts}
+
+	
+\end{questions}
+
+
+
+
+\end{document}

@@ -78,7 +78,9 @@ XSL = $(DMOI)/xsl
 
 # These are the files to apply templates to
 MAIN = $(SRC)/dmoi.ptx
+SM = $(SRC)/dmoi-solution-manual.ptx
 MERGED = $(LOCALBUILD)/dmoi-merge.ptx
+MERGEDSM = $(LOCALBUILD)/dmoi-merge-sm.ptx
 
 # These paths are subdirectories of
 # a scratch directory
@@ -239,7 +241,19 @@ tablet: latex-tablet
 viewtablet:
 	$(PDFVIEWER) $(PDFOUT)/dmoi-tablet.pdf &
 
-
+# Solution-Manual
+solution-manual:
+	cd $(SCRATCH); \
+	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(SM) > $(LOCALBUILD)/dmoi-merge-sm.ptx
+	-rm $(PDFOUT)/dmoi-solution-manual.tex
+	install -d $(PDFOUT)
+	cp -a images $(PDFOUT)
+	cd $(PDFOUT); \
+	xsltproc --xinclude $(XSL)/custom-latex-sm.xsl $(MERGEDSM);
+	
+pdf-solution-manual:
+	cd $(PDFOUT); \
+	$(ENGINE) dmoi-solution-manual.tex;
 
 # Author's Draft
 #   Like electronic PDF version, but for:

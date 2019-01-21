@@ -1,0 +1,286 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 3 Solutions}{Due: Wednesday, September 13}
+
+
+\begin{document}
+\noindent \textbf{Instructions}: Same rules as usual.  Turn in solutions on separate pages, and do not consult the internet.
+
+\begin{questions}
+
+
+\question[4] How many positive integers less than 1000 are multiples of 3, 5, or 7?  Explain your answer using the Principle of Inclusion/Exclusion.
+
+\begin{solution}
+	Since $1000/3 = 333.33$, there are 333 multiples of 3 less than 1000.  There are 199 multiples of 5 (strictly) less than 1000.  There are 142 multiples of 7 less than 1000.
+
+	We also need the combinations of these.  To be a multiple of 3 and 5 means you are a multiple of 15, and $1000/15 = 66.67$ so there ar 66 multiples of 3 and 5.  There will be 47 multiples of 3 and 7.  There will be 28 multiples of 5 and 7.  Finally, there will be 9 multiples of all three.
+
+	Using PIE, we get
+	\[333+199 + 142 - 66 - 47 - 28 + 9 = 542\]
+	multiples of 3, 5, or 7 less than 1000.
+\end{solution}
+
+	\question[8] How many $9$-bit strings (that is, bit strings of length 9) are there which:
+	\begin{parts}
+	  \part Start with the sub-string 101? Explain.
+	  \begin{solution}
+	    $2^6 = 64$.  You have 2 choices for each of the remaining 6 bits.
+	  \end{solution}
+
+	  \part Have weight 5 (i.e., contain exactly five 1's) and start with the sub-string 101? Explain.
+	  \begin{solution}
+	    ${6 \choose 3} = 20$.  You need to choose 3 of the remaining 6 bits to be 1's.
+	  \end{solution}
+
+		\part Either start with $101$ or end with $11$ (or both)?  Explain.
+			\begin{solution}
+				176.  There are 64 strings that start with 101, and another 128 which end with 11 (we choose 1 or 0 for 7 bits, so $2^7$).  However, we count the strings that start with 101 and end with 11 twice - there are $16$ such strings ($2^4$).  So using PIE, we have $64 + 128 - 16 = 176$
+			\end{solution}
+
+		\part Have weight 5 and either start with 101 or end with 11 (or both)?  Explain.
+		\begin{solution}
+		 	51. There are ${6 \choose 3} = 20$ strings of weight 5 which start with 101, and another ${7 \choose 3} = 35$ which end with 11.  We have over counted again - there are weight 5 strings which both start with 101 and end with 11, in fact ${4 \choose 1} = 4$ of them.  So all together we have $20 + 35 - 4 = 51$ strings.
+		\end{solution}
+	\end{parts}
+
+
+
+	\question[8] Gridtown USA, besides having excellent donut shops, is known for its precisely laid out grid of streets and avenues.  Streets run east-west, and avenues north-south, for the entire stretch of the town, never curving and never interrupted by parks or schools or the like.
+
+	Suppose you live on the corner of 3rd and 3rd and work on the corner of 12th and 12th.  Thus you must travel 18 blocks to get to work as quickly as possible.
+
+	\begin{parts}
+	\part How many different routes can you take to work, assuming you want to get there as quickly as possible?  Explain.
+	\begin{solution}
+	  ${18 \choose 9}$ since you must choose 9 of the 18 blocks to travel east.
+	\end{solution}
+
+	\part Now suppose you want to stop and get a donut on the way to work, from your favorite donut shop on the corner of 10th ave and 8th st.  How many routes to work, stopping at the donut shop, can you take (again, ensuring the shortest possible route)?  Explain.
+	\begin{solution}
+	  The donut shop is 12 blocks away, 5 one way, 7 the other.  So to get from home to the donut shop, there are ${12 \choose 7}$ routes (or equivalently, ${12 \choose 5}$).  Then from the donut shop to work, you need to travel 6 more blocks, 2 on way and 4 the other.  So there are ${6 \choose 2}$ (or ${6 \choose 4}$) routes from the donut shop to work.
+
+	  For each of the ways to the donut shop, there are so many ways to work, so the multiplicative principle says the total number of ways from home to work via the donut shop is
+	  \[{12 \choose 7}{6 \choose 2}\]
+	\end{solution}
+
+	\part Disaster Strikes Gridtown: there is a pothole on 4th ave between 5th st and 6th st.  How many routes to work can you take avoiding that unsightly (and dangerous) stretch of road? Explain.
+	\begin{solution}
+	  Routes to work that hit the pothole: ${3 \choose 1}1{14 \choose 8}$.
+
+	  There for the number of routes to work which {\em avoid} the pothole are
+	  \[{18 \choose 9} - {3 \choose 1}{14 \choose 8}\]
+	\end{solution}
+
+	\part The pothole has been repaired (phew) and a new donut shop has opened on the corner of 4th ave and 5th st. How many routes to work drive by one or the other (or both) donut shops?  Hint: the donut shops serve PIE.
+	\begin{solution}
+	  The routes to work past the donut shop at (4,5): ${3\choose 1}{15 \choose 8}$.  The routes to work past the donut shop at (10,8): ${12 \choose 7}{6 \choose 2}$.  The routes to work past both: ${3\choose 1}{9 \choose 6}{6 \choose 2}$.  So all together, using PIE:
+		\[{3\choose 1}{15 \choose 8} + {12 \choose 7}{6 \choose 2} - {3\choose 1}{9 \choose 6}{6 \choose 2}\]
+	\end{solution}
+	\end{parts}
+
+
+
+	\question[4] An \emph{anagram} of a word is a rearrangement of its letters (each of the letters must be used exactly once).  We do not need the anagram to form an English word.
+		\begin{parts}
+			\part How many anagrams are there of the word ``magic''?  Explain.
+
+			\begin{solution}
+			There are $120 = 5!$ anagrams.  We can pick any of the 5 distinct letters to put first, then any of the remaining 4, and so on.  We could also have written this $P(5,5)$.
+			\end{solution}
+
+			\part How many anagrams are there of the word ``abracadabra''? Explain.  %Note that you need to figure out how to deal with the repeated letters (starting with the first ``a'' and then the second ``a'' gives the same word as starting with the second ``a'' and then the first ``a''.
+
+			\begin{solution}
+			We need to place 5 a's, 2 b's, 2 r's, and one each of c and d.  So first select 5 of the eleven slots for the a's, which can be done in ${11 \choose 5}$ ways.  Then select 2 of the remaining 6 slots for b's, done in ${6 \choose 2}$ ways.  Next pick 2 of the remaining 4 slots of r's, in ${4 \choose 2}$ ways, and finally pick one of the two available spots for the c leaving the last for the d.  Thus all together the number of anagrams is:
+			\[{11\choose 5}{6 \choose 2}{4 \choose 2}2\cdot 1 = 83160\]
+			(Note, if you pick a different letter to start with, you get a different looking answer, but the final product should be the same.)
+
+			Another approach: Think of all of the letters as different (so there are 5 a's, but maybe written in 5 different fonts, for example.)  In this case, there would be $11!$ anagrams.  Now to correct for the repeated letters, group all the anagrams that just have different arrangements of the a's, b's and r's into groups.  Each group would have $5!\cdot 2! \cdot 2!$ different anagrams (since there are $5!$ ways to arrange the a's, $2!$ ways to arrange the b's and $2!$ ways to arrange the r's).  We just need to count groups, so the total is
+			\[\frac{11!}{5!2! 2!} = 83160\]
+			\end{solution}
+
+			% \part A \emph{sub-anagram} is just like an anagram except now you don't need to use all of the letters (but you could).  So one sub-anagram of ``magic'' is ``mac.''  How many sub-anagrams are there of the word ``magic''?  Explain.  Hint: you might want to break this into cases.
+			%
+			% \begin{solution}
+			% 	We already know there are 120 5-letter sub-anagrams.  To find the 4-letter sub-anagrams, we need to pick one of 5 letters first, then one of remaining, then one of 3 after that and one of the remaining 2.  Thus there are $5\cdot 4 \cdot 3 \cdot 2 = 120$ of these as well (we could think of these as exactly the 120 full anagrams with the last letter missing).  There will be $5 \cdot 4 \cdot 3 = 60$ 3-letter sub-anagrams, $5\cdot 4 = 20$ 2-letter sub-anagrams, and $5$ 1-letter sub-anagrams.  All together, this brings the number of sub-anagrams to
+			% 	\[120 + 120 + 60 + 20 + 5 = 325\]
+			% \end{solution}
+		\end{parts}
+
+
+
+		\question[6] In an attempt to clean up your room, you have purchased a new floating shelf to put some of your 17 books you have stacked in a corner.  These books are all by different authors.  The new book shelf is large enough to hold 10 of the books.  Warning: before answering the next two questions, ask yourself which answer should be larger.
+		\begin{parts}
+			\part How many ways can you select and arrange 10 of the 17 books on the shelf?  Notice that here we will allow the books to end up in any order.  Explain.
+			\begin{solution}
+				We can write the answer as $P(17,10) = 17 \cdot 16 \cdot \cdots \cdot 8$, which is the same as $\frac{17!}{7!}$.  Or, if you think of picking the 10 books and then arranging those 10, you can write this as $\binom{17}{10}\cdot 10!$.  Note, that since any order is acceptable, we are distinguishing between different orders, so a permutation is appropriate here.
+			\end{solution}
+			\part How many ways can you arrange 10 of the 17 books on the shelf if you insist they must be arranged alphabetically by author?  Explain.
+			\begin{solution}
+				Here we just need to select the books, and have no choice as how to arrange them.  So the answer is just $\binom{17}{10}$
+			\end{solution}
+		\end{parts}
+
+
+
+
+	%
+	% \question[6] Consider all the functions $f: \{1,2,3,4\} \to \{1,2, 3, 4, 5, 6\}$.
+	% 	\begin{parts}
+	% 		\part How many functions are there all together?  Explain.
+	% 		\part How many functions are injective? Explain.
+	% 		\part How many of the injective functions are \emph{increasing}?  To be increasing means that if $a< b$ then $f(a) < f(b)$, or in other words, the outputs get larger as the inputs get larger. Explain.
+	% 	\end{parts}
+	% 	Hint: For all of the above, it might help to think about how you would write each function using two-line notation.
+	% 	\begin{solution}
+	% 		\begin{parts}
+	% 			\part $6^4$ functions, since for each of the 4 inputs, we have 6 choices for an output.
+	% 			\part $P(6,4) = 6 \cdot 5 \cdot 4 \cdot 3$ functions.  We have 6 choices for the image of 1, but only 5 choices for the image of 2, since we can't have repeats.  And so on, for 4 inputs.
+	% 			\part ${6 \choose 4}$.  We must select 4 different elements from the codomain to be in the range.  Once we have done this, there is only one way to assign them to inputs, since we need the outputs to be increasing.
+	% 		\end{parts}
+	%
+	% 	\end{solution}
+
+
+
+
+
+ %
+ % \question[6] Suppose you own $x$ fezzes and $y$ bow ties.  Of course, $x$ and $y$ are both greater than 1.
+ % \begin{parts}
+ % 	\part How many combinations of fez and bow tie can you make?  You can wear only one fez and one bow tie at a time.  Explain.
+ % 	\begin{solution}
+ % 		You have $x$ choices for the fez, and for each choice of fez you have $y$ choices for the bow tie.  Thus you have $x \cdot y$ choices for fez and bow tie combination.
+ % 	\end{solution}
+ %
+ % 	\part Explain why the answer is {\em also} ${x+y \choose 2} - {x \choose 2} - {y \choose 2}$.  (If this is what you claimed the answer was in part (a), try it again.)
+ % 	\begin{solution}
+ % 		Line up all $x+y$ quirky clothing items -- the $x$ fezzes and $y$ bow ties.  Now pick 2 of them.  This can be done in ${x+y \choose 2}$ ways.  However, we might have picked 2 fezzes, which is not allowed.  There are ${x \choose 2}$ ways to pick 2 fezzes.  Similarly, the ${x+y \choose 2}$ ways to pick two items includes ${y \choose 2}$ ways to select 2 bow ties, also not allowed.  Thus the total number of ways to pick a fez and a bow ties is
+ % 		\[{x+y \choose 2} - {x \choose 2} - {y \choose 2}\]
+ % 	\end{solution}
+ %
+ % 	\part Use your answers to parts (a) and (b) to give a combinatorial proof of the identity
+ % 	\[{x+y \choose 2} - {x \choose 2} - {y \choose 2} = xy\]
+ % 	Note: you have done almost all of the work for this problem in parts (a) and (b), now you just need to put it together into a proof.
+ % 	\begin{solution}
+ % 		\begin{proof}
+ % 			The question is how many ways can you select one of $x$ fezzes and one of $y$ bow ties.  We answer this question in two ways.  First, the answer could be $a\cdot b$. This is correct as described in part (a) above.  Second, the answer could be ${x+y \choose 2} - {x \choose 2} - {y \choose 2}$.  This is correct as described in part (b) above.  Therefore
+ % 			\[{x+y \choose 2} - {x \choose 2} - {y \choose 2} = xy\]
+ % 		\end{proof}
+ % 	\end{solution}
+ %
+ % \end{parts}
+ %
+ %
+ %
+ %
+ % \question[6] Consider all the triangles you can create using the points shown below as vertices.  Note, we are not allowing degenerate triangles (ones with all three vertices on the same line) but we do allow non-right triangles.
+ %
+ % \begin{center}
+ %   \begin{tikzpicture}[scale=0.5]
+ %     \foreach \i in {0,...,6} {
+ %       \fill (\i,0) circle (2pt);
+ %     }
+ %     \foreach \i in {1,...,4} {
+ %       \fill (0,\i) circle (2pt);
+ %     }
+ %   \end{tikzpicture}
+ % \end{center}
+ %
+ % \begin{parts}
+ % 	\part Find the number of triangles, and explain why your answer is correct.
+ % 	\part Find the number of triangles again, using a different method.  Explain why your new method works.
+ % 	\part State a binomial identity that your two answers above establish (that is, give the binomial identity that your two answers a proof for).  Bonus: generalize this using $m$'s and $n$'s.
+ % \end{parts}
+ %
+ % \begin{solution}
+ %   There are 120 triangles.  Here are a few ways (there are others as well) to get this:
+ %
+ %   \begin{enumerate}
+ %     \item First count the triangles with the base on the $x$-axis.  There are ${7 \choose 2}$ ways to pick the base.  The third vertex of the triangle must be one of the 4 dots on the $y$-axis (not the origin) so there are a total of ${7 \choose 2}4$ of these triangles.  The triangles with base on the $y$ axis can be counted similarly: ${5 \choose 2}6$.  However, we have counted all the right triangles twice - they have a base on the $x$-axis and also on the $y$-axis.  There are $4 \cdot 6$ right triangles.  Thus the total number of triangles is:
+ %     \[{7 \choose 2}4 + {5 \choose 2}6 - 6\cdot 4 = 120\]
+ % 		\item First count all the right triangles: $6 \cdot 4$.  Then count all the non-right triangles with two vertices on the $x$-axis: $4 \cdot {6 \choose 2}$.  Finally, the number of non-right triangles with two vertices on the $y$-axis: $6 \cdot {4 \choose 2}$.  All together then we have ${6 \choose 2}4 + {4 \choose 2}6 + 6 \cdot 4 = 120$.
+ % 		\item Another approach to count the non-right triangles is to first select one of the two sides not parallel to an axis.  This can be done in $6 \cdot 4$ ways.  Then for each of these, select one of the remaining 8 points, which determines the triangle.  However, this double counts the non-right triangles, so we take $\frac{4\cdot 6 \cdot 8}{2}$, and then add on the $6\cdot 4$ right triangles.
+ %     \item We must select 3 of the 11 dots.  This can be done in ${11 \choose 3}$ ways.  However, this will also give us degenerate triangles when all three vertices are on the $x$-axis or on the $y$-axis.  There are ${7 \choose 3}$ ways we could have picked all three vertices on the $x$-axis.  There are ${5 \choose 3}$ ways we could have picked all three vertices on the $y$-axis.  Therefore the total number of triangles is
+ %     \[{11 \choose 3} - {7 \choose 3} - {5 \choose 3} = 120\]
+ %   \end{enumerate}
+ %
+ % 	Picking two of these, we know the expressions must be equal (and not just because they are equal to 120).  So we might write:
+ % 	\[{11 \choose 3} - {7 \choose 3} - {5 \choose 3} = {7 \choose 2}4 + {5 \choose 2}6 - 6\cdot 4\]
+ % 	In general, suppose we have $m$ dots on the $x$-axis (including the origin) and $n$ dots on the $y$-axis (including the origin).  Then counting the number of triangles in two different ways establishes:
+ % 	\[{m+n \choose 3} - {m \choose 3} - {n \choose 3} = {m \choose 2}(n-1) + {n \choose 2}(m-1) - (m-1)(n-1)\]
+ % \end{solution}
+ %
+ %
+ %
+ %
+ %
+ % \question[6] Give a combinatorial proof of the identity:
+ % \[k{n\choose k} = n{n-1 \choose k-1}\]
+ %
+ % Hint: How many ways can you select a team of $k$ people from a group of $n$ people \emph{and} select one of them to be the team captain?
+ %   \begin{solution}
+ %     \begin{proof}
+ %       Question: How many ways can you select a chaired committee of $k$ people from a group of $n$ people?  That is, you need to select $k$ people to be on the committee and one of them needs to be in charge.  How many ways can this happen?
+ %
+ %       Answer 1: First select $k$ of the $n$ people to be on the committee.  This can be done in ${n \choose k}$ ways.  Now select one of those $k$ people to be in charge - this can be done in $k$ ways.  So there are a total of $k {n \choose k}$ ways to select the chaired committee.
+ %
+ %       Answer 2: First select the chair of the committee.  You have $n$ people to choose from, so this can be done in $n$ ways.  Now fill the rest of the committee.  There are $n-1$ people to choose from (you cannot select the person you picked to be the chair) and $k-1$ spots to fill (the chair's spot is already taken).  So this can be done in ${n-1 \choose k-1}$ ways.  Therefore there are $n{n-1 \choose k-1}$ ways to select the chaired committee.
+ %     \end{proof}
+ %
+ %   \end{solution}
+ %
+ %
+ %
+ % 	\question[6] For each of the following questions, first give one example of an outcome (i.e., on of the many things you are counting) and show how that particular outcome can be represented as a ``stars and bars'' diagram.  Then, answer the counting question.
+ % 	\begin{parts}
+ % 		\part When playing Yahtzee, you roll five regular 6-sided dice.  How many different outcomes are possible from a single (five dice) roll?  The order of the dice does not matter.
+ % 		\begin{solution}
+ % 			The outcome of (2, 3, 3, 4, 6) is represented by the diagram $|*|**|*||*$.  Each star represents a particular number that is rolled, so there should be 5 stars (since there are 5 dice).  Each bar switches from one number to the next, so there should be 5 bars.
+ %
+ % 			Since we are counting these diagrams, the total number of outcomes is ${10 \choose 5}$.
+ % 		\end{solution}
+ %
+ %
+ % 		\part Your friend has 7 coins in her pocket (each could be a penny, nickel, dime or quarter).  How many different pocketfuls are possible?
+ % 		\begin{solution}
+ % 			One outcome is (p, p, p, n, d,d,d).  This is represented by $***|*|***|$.  Each star represents a coin.  Where that star is represents what kind of coin it is.  We need 7 stars, and 3 bars (to switch between types of coins).
+ %
+ % 			Thus the total number of pocketfuls is ${10 \choose 7}$.
+ % 		\end{solution}
+ %
+ % 	\end{parts}
+ %
+
+
+
+
+
+\end{questions}
+
+
+
+
+\end{document}

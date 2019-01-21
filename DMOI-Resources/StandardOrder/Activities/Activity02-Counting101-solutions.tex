@@ -1,0 +1,143 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amsmath, amssymb, multicol}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{chessboard}
+
+\def\d{\displaystyle}
+\def\b{\mathbf}
+\def\R{\mathbf{R}}
+\def\Z{\mathbf{Z}}
+\def\st{~:~}
+\def\bar{\overline}
+\def\inv{^{-1}}
+
+%Create ``defbox'' environment to highlight important definitions
+\newenvironment{defbox}[1]{\begin{framed}\noindent{\bf #1\\}}{\end{framed}}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{headandfoot}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Counting 101}{Wednesday, August 30}
+% \firstpagefooter{}{\bf STOP!  Do not turn this page over until instructed to do so.}{}
+\runningfooter{}{}{}
+
+\begin{document}
+
+%space for name
+%\noindent {\large\bf Name:} \underline{\hspace{2.5in}}
+%\vskip 1em
+
+\begin{questions}
+\question A restaurant offers 8 appetizers and 14 entr\'ees.  How many choices do you have if:
+\begin{parts}
+ \part you will eat one dish -- either an appetizers or an entr\'ee?
+ \begin{solution}
+ There are a total of $8+14 = 22$ dishes to choose from.
+ \end{solution}
+ \vfill
+ \part you are extra hungry and want to eat both an appetizer and an entr\'ee?
+ \begin{solution}
+	 There are a total of $8\cdot 14 = 112$ meals to choose from.
+ \end{solution}
+ \vfill
+\end{parts}
+\question Think about the methods you used to solve the counting problems above.  Write down the rules for these methods.
+\begin{solution}
+You might be tempted to say that when you are picking options from one group \emph{or} another group, you add the ways each can happen, but when you are picking from one group \emph{and} another group, you multiply.  You must be careful though, as you see in the next question.
+\end{solution}
+\vfill
+\vfill
+\question Do your rules work?  A standard deck of playing cards has 26 red cards and 12 face cards.
+\begin{parts}
+
+ \part How many ways can you select a card which is either red or a face card?
+ \begin{solution}
+ The answer is not $26+12$.  In fact, there are only 32 cards that are either red or a face card (or both).
+ \end{solution}
+ \vfill
+ \part How many ways can you select a card which is both red and a face card?
+ \begin{solution}
+ The answer is not $26\cdot 12$ (obviously this would be much two big).  There are only 6 cards that have both properties.  The only way to know this is to know something about playing cards.
+ \end{solution}
+ \vfill
+ \part How many ways can you select two cards so that the first one is red and the second one is a face card?
+ \begin{solution}
+ This looks closer to having $26\cdot 12$ as the answer, but this is still not correct.  One way you could come to the correct answer is to see that there are $22 \cdot 12$ ways to pick a red, non-face card first followed by a face card, and then $6 \cdot 11$ ways to pick a red face card followed by another face card.  So all together, the answer is $22\cdot 12 + 6 \cdot 11 = 330$.
+
+ \end{solution}
+ \vfill
+\end{parts}
+
+\newpage
+\begin{defbox}{Additive Principle}
+  The {\em additive principle} states that if event $A$ can occur in $m$ ways, and event $B$ can occur in $n$ {\em disjoint} ways, then the event ``$A$ or $B$'' can occur in $m + n$ ways.
+\end{defbox}
+
+\begin{defbox}{Multiplicative Principle}
+  The {\em multiplicative principle} states that if event $A$ can occur in $m$ ways, and each possibility for $A$ allows for exactly $n$ ways for event $B$, then the event ``$A$ and $B$'' can occur in $m \cdot n$ ways.
+\end{defbox}
+
+\question You have a bunch of chips which come in colors red, blue, green and yellow.
+\begin{parts}
+\part How many different two-chip stacks can you make if the bottom chip must be red or blue?  Explain your answer using both the additive and multiplicative principles.
+\begin{solution}
+There are 4 two chip stacks that have a red bottom chip, and 4 two chip stacks with a blue bottom chip, for a total of 8 stacks.  This uses the additive principle.  Alternatively, we could use the multiplicative principle and say that there are two ways the bottom chip could be selected, and for each there are 4 ways the top chip can be selected, for a total of $2\cdot 4 = 8$ stacks.
+\end{solution}
+\vfill
+\vfill
+\part How many different three-chip stacks can you make if the bottom chip must be red or blue and the top chip must be green or yellow?  How can you use the answer to the previous question to help answer this one?
+\begin{solution}
+From the previous question, we know there are 8 ways to select the bottom two chips.  These 8 ways with a green top, plus these 8 ways with a yellow top give 16 total 3-chip stacks.  Or just using the multiplicative principle, we have $2 \cdot 4 \cdot 2 = 16$ stacks.
+\end{solution}
+\vfill
+\vfill
+\part How many different three-chip stacks are there in which no color is repeated (but otherwise any colors could be on the top or bottom)?
+\begin{solution}
+There are 4 choices for the color on the bottom of the stack.  Once this is picked, there are only 3 choices for the color of the middle chip, and then only 2 choices for the color of the top chip.  So there are $4\cdot 3 \cdot 2 = 24$ choices all together.
+\end{solution}
+\vfill
+\vfill
+\part Suppose you wanted to take three chips of different colors and put them in your pocket.  How many different choices do you have?  How is this problem different from the previous one?
+\begin{solution}
+One way to answer this question is to realize that you will have all but one color chosen.  So there are only 4 choices for the three colors to take.  This is $1/6$ of the answer from the previous question.  This is because for any three chips you take and put in your pocket, there are 6 different ways to arrange them in a stack.
+\end{solution}
+\vfill
+\end{parts}
+
+
+% \newpage
+%
+% \question A recent survey of Village Inn patrons revealed the following pie preferences.  People were asked whether they enjoyed Apple, Blueberry, or Cherry pie.
+%  The following table shows how many people like which kinds of pie, in their various combinations.
+% \begin{center}
+% \begin{tabular}{|l|c|c|c|c|c|c|c|}
+% \hline
+% Pies enjoyed: & A & B & C & AB & AC & BC & ABC\\
+% \hline
+% Number of people: & 20 & 13 & 26 & 9 & 15 & 7 & 5\\
+% \hline
+% \end{tabular}
+% \end{center}
+%
+% How many of those asked enjoy at least one of the kinds of pie?  Hint: The answer is not 95.
+%
+% \begin{solution}
+%   First add up all the people who like each kind of individual pie: $20 + 13 + 26$.  This is more than the number of people we are looking for, since some people said yes to two (or three) types of pie.  In fact, we counted the 9 people who like apple and blueberry in the 20 who liked apple and in the 13 who liked blueberry, and similarly for the other pairs of pie.  So we should subtract off each of these double counted people once.  Our total is now
+%   \[20 + 13 + 26 - 9 - 15 - 7\]
+%   But what about the 5 people who like all three types of pie?  We added them in three times (with the individual pies) and removed them three times (with each pair) so they have not yet been counted.  Thus the total number of people who like pie is:
+%   \[20 + 13 + 26 - 9 - 15 - 7 + 5 = 33\]
+% \end{solution}
+%
+\end{questions}
+
+% Homework: A rook can move only in straight lines (not diagonally).  Fill in each square of the chess board below with the number of different shortest paths the rook in the upper left corner can take to get to the square.  For example, one square is already filled in - there are four paths from the rook to the square: DRRR, RDRR, RRDR and RRRD.
+%
+% \cbDefineNewPiece{white}{x}{$4$}{$4$}
+% \centerline{\chessboard[largeboard, borderwidth=.5px, showmover=false, labelleft=false, labelbottom=false, color=blue, setpieces={ra8, xd7}, blackfieldcolor=gray, setfontcolors]}
+\end{document}

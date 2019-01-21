@@ -1,0 +1,440 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+\usepackage{booktabs}
+
+\input{../macros-discrete}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{ bns pts}
+
+\addpoints
+\pagestyle{headandfoot}
+%\printanswers
+
+\firstpageheader{Math 228}{\bf\large Exam 2}{October 23, 2017}
+\runningfooter{}{\thepage}{}
+\extrafootheight{-.45in}
+
+
+
+\begin{document}
+%space for name
+\noindent {\large\bf Name:} \underline{\hspace{2.5in}}
+\vskip 1em
+
+\noindent{\bf Instructions:} Answer each of the following questions.  Answers without supporting work or explanations will be counted as incorrect.  When asked to explain, justify, or prove your answers, use complete English sentences.
+
+
+\begin{questions}
+\question[24] Consider the sequence $(a_n)_{n \ge 0}$ which begins $3, 8, 13, 18, 23, 28, \ldots $ (note this means $a_0=3$)
+\begin{parts}
+\part Find the recursive and closed formulas for the above sequence.
+\begin{multicols}{2}
+Recursive formula:
+\begin{solution}
+$a_n = a_{n-1} + 5$; $a_0 = 3$
+\end{solution}
+
+\columnbreak
+
+Closed formula:
+\begin{solution}
+$a_n = 3+5n$
+\end{solution}
+
+\end{multicols}
+\vfill
+\part How does the sequence $(b_n)_{n \ge 0}$ which begins $3, 11, 24, 42, 65, 93, \ldots$ relate to the original sequence $(a_n)$?  Explain.
+\begin{solution}
+This sequence $(b_n)$ is the sequence of partial sums of $(a_n)$.  That is
+\[3 = 3\]
+\[11 = 3+8\]
+\[24 = 3 + 8 + 13\]
+and so on.  Alternatively, we can say that $(a_n)$ is the sequence of first differences of $(b_n)$.
+\end{solution}
+\vfill
+\vfill
+\part Find the closed formula for the sequence $(b_n)$ in part (b) (note, $b_0 = 3$).  Show your work.
+\begin{solution}
+Using partial sums, we have
+\[b_n = 3 + 8 + 13 + 18 + \cdots + 3+5n\]
+Reverse and add to get
+\[2b_n = (6+5n) + (6+5n) + (6+5n) + \cdots +(6+5n)\]
+where the right hand side contains $n+1$ terms.  Thus
+\[b_n = \frac{(n+1)(6+5n)}{2}\]
+Alternativelyy, you could use polynomial fitting: we know we are looking for a quadratic because 2nd differences are constant, so $b_n = an^2 + bn + c$.  We can find values for $a$, $b$, and $c$ using the sequence.  We get
+\[b_n = \frac{5}{2}n^2 + \frac{11}{2}n + 3\]
+\end{solution}
+\vfill
+\vfill
+\end{parts}
+
+
+%\question[20]
+%\begin{parts}
+%\part Find recursive and closed formulas for $a_n$, the $n$th term of the sequence
+%$1, 7, 13, 19, 25, 31, 37, \ldots$ (assume $a_1 = 1$)
+%\begin{multicols}{2}
+%Recursive formula:
+%\begin{solution}
+%$a_n = a_{n-1} + 6$; $a_1 = 1$
+%\end{solution}
+%
+%\columnbreak
+%
+%Closed formula:
+%\begin{solution}
+%$a_n = 1 + 6(n-1) = 6n - 5$
+%\end{solution}
+%
+%\end{multicols}
+%\vfill
+%\part Find a formula for the sum of the first $n$ terms of the sequence above.  That is, find
+%$\d\sum_{k=1}^n a_k = 1 + 7 + 13 + \cdots + a_{n}$.
+%
+%\begin{solution}
+%	Reverse and add:
+%	\[\begin{aligned}
+%		S & =  1 + 7 + 13 + \cdots + (6n- 11) + (6n-5) \\
+%		+ ~~~ S & = (6n-5) + (6n-11) + \cdots + 7 + 1 \\
+%		\midrule
+%		2S & =   (6n-4) + (6n-4) + \cdots + (6n-4)
+%	\end{aligned}\]
+%	There are $n$ terms in the sum, so we have
+%	\[2S = n(6n-4)\]
+%	so $S = \frac{n(6n-4)}{2} = n(3n-2) = 3n^2 - 2n$
+%\end{solution}
+%
+%\vfill
+%\part Use your answer to part (b) to find a closed formula for $b_n$, the $n$th term of the sequence
+%$3, 10, 23, 42, 67, 98, 135,\ldots$ (assume $b_1 = 3$).  Explain.
+%
+%\begin{solution}
+%	Rewrite the sequence as follows:
+%	\[2+1,~ 2+1+7,~ 2+1+7+13,~ 2+1+7+13+19,~ 2+1+7+13+19+25,~ \ldots\]
+%	So we add partial sums of $a_n$ to 2 to get $b_n$.  In other words, $b_n = 2 + \sum_{k=1}^{n} a_k$.  Thus:
+%	\[b_n = 2 + 3n^2 - 2n\]
+%	We make sure that we are not off by a shift factor by testing the formula: $b_3 = 2 + 27 - 6 = 23$ which is correct.  Looks good.
+%\end{solution}
+%
+%\vfill
+%\end{parts}
+
+
+
+\newpage
+
+
+
+
+\question[16] Consider the sequence $(a_n)_{n \ge 0}$ which starts $1, 2, 7, 20, 61, 122,\ldots$, defined by the recurrence relation $a_n =2a_{n-1} + 3a_{n-2}$ and initial conditions $a_0 = 1$, $a_1 = 2$.\vskip .1 in
+ Solve the recurrence relation.  That is, find a closed formula for $a_n$. Show your work.
+\begin{solution}
+	The characteristic equation is $x^2 - 2x - 3 = 0$.  This factors as $(x+1)(x-3) = 0$ so the characteristic roots are $x = -1$ and $x = 3$.  Thus
+	\[a_n = a(-1)^n + b3^n\]
+	We have $1 = a+b$ and $2 = -a + 3b$.  Solving for $a$ and $b$ gives $a = \frac{1}{4}$ and $b = \frac{3}{4}$.  Thus
+	\[a_n = \frac{3}{4} 3^n +\frac{1}{4}(-1)^n \]
+\end{solution}
+
+
+\vfill
+
+
+\vfill
+
+
+
+
+
+%\question[12] For the sequence below, what will the closed formula for $a_n$ look like?  All letters other than $n$ are constants (which you do NOT need to find).
+%
+%\begin{oneparchoices}
+%\choice $an^2+bn+c$ \qquad
+%\choice $an^3+bn^2+cn+d$ \qquad
+%\choice $ar^n+b$\qquad
+%\choice $ar_1^n +br_2^n$
+%\end{oneparchoices}
+%
+%\[2, 6, 11, 23, 48, 92, 161, 261, \ldots\] %this sequence should have a third degree polynomial (the third differences are 6)
+%Explain.
+%\begin{solution}
+%The correct answer is B.  This is because the first sequence of differences is $4, 5, 12, 25, 44, 69, 100,\ldots$, the second differences are, $1, 7, 13, 19, 25, 31,\ldots$ making the third differences, $6, 6, 6, 6, 6, \ldots$.  Since the third differences are constant, we know the closed formula for $a_n$ will be a degree 3 polynomial.
+%\end{solution}
+%\vfill
+\newpage
+
+
+\question[16] Consider the sequence given by the recursive definition:
+\[a_n = a_{n-1} + (n^2 + 4n + 3); ~ a_0 = 1\]
+\begin{parts}
+  \part What is the closed formula for $(b_n)$, the sequence of \underline{differences}?  Hint: You do not need to compute anything here, just write it down.
+  \begin{solution}
+    We want to find $b_n = a_n - a_{n-1}$.  But from the recurrence relation, this is jut $b_n = n^2 + 4n + 3$.
+  \end{solution}
+  \vfill
+
+\part Given your answer to part (a), what will the closed formula for the original sequence $a_n$ look like?  All letters other than $n$ are constants (do not find them).
+
+\vskip 1ex
+\begin{oneparchoices}
+\choice $an^2+bn+c$ ~
+\choice $an^3+bn^2+cn+d$ ~
+\choice $an^4+bn^3+cn^2 + dn + e$ ~
+\choice $a4^n +b3^n$
+\end{oneparchoices}
+\vskip 1ex
+
+Explain.
+\begin{solution}
+The recurrence relation tells us that the sequence of first differences (that is, $a_n - a_{n-1}$) will be quadratic.  Thus the second differences will be linear and the third differences will be constant.  Therefore the original sequence will be a cubic (degree 3) polynomial.  We could also see this by writing out the terms of the original sequence: $1, 9, 24, 48, 83, 131,\ldots$, which as first differences $8, 15, 24, 35, 48, \ldots$ and thus second differences $7, 9, 11, 13,\ldots$ so third differences $2, 2, 2, \ldots$.
+\end{solution}
+\vfill
+\vfill
+\part Write down the \underline{system of equations} you would need to solve in order to find the constants in the closed formula for $a_n$.  \underline{Do not find the constants}, just show how you would set it up.
+
+\begin{solution}
+We can right away see that $d = 1$.  Then we will need to solve the following system of 3 equations and 3 unknowns:
+\[9 = a + b + c + 1\]
+\[24 = 8a + 4b + 2c + 1\]
+\[48 = 27a + 9b + 3c + 1\]
+Incidentally, the actual closed formula is $a_n = 1/6 (2n^3+ 15 n^2+31n+6)$ (although you did not need to find this).
+\end{solution}
+
+\vfill
+\vfill
+\vfill
+
+\end{parts}
+
+
+
+\newpage
+
+\question[24] The abandoned field behind your house is home to a large prairie dog colony.  Each week the size of the colony triples.  However, sadly 4 prairie dogs die each week as well (after the tripling occurs).  Consider the sequence $a_0, a_1, a_2,\ldots$, where $a_n$ is the number of prairie dogs in the colony after $n$ weeks.
+%Consider sequences with recurrence relation $a_n = 3a_{n-1} - 2$.
+\begin{parts}
+	\part Write down a recurrence relation to describe $a_n$ and briefly explain.
+	\begin{solution}
+	$a_n = 3a_{n-1} - 4$.  The number of prairie dogs in week $n$ is 3 times the number in week $n-1$ less 4.
+	\end{solution}
+	\vfill
+	\part Explain why {\em if} $a_k$ is even, then $a_{k+1}$ must also be even.
+	\begin{solution}
+		We know that $a_{k+1} = 3a_k - 2$.  If $a_k$ is even, then $3a_k$ is even, and so is $3a_k - 2$.
+	\end{solution}
+
+	\vfill
+	\vfill
+
+	\part Suppose you wanted to prove by mathematical induction that $a_n$ was always even.  What would the base case be and why is it needed?  Your answer should be specific to this context.
+		\begin{solution}
+	 	We know that if any term is even, then every term after that will also be even.  But we don't know if the first term of the sequence is even.  If $a_0 = 3$, then $a_1 = 7$, and so on -- in fact, every term would then be odd.  So we need the base case: $a_0$ is even (you have an even number of prairie dogs at the end of week 0).
+	\end{solution}
+	\vfill
+	\vfill
+	\part Your friend believes what you have written in parts (b) and (c), but still does not see why $a_3$ must be even because he does not understand the logic behind induction.  Explain why induction in this case proves that there will be an even number of prairie dogs in \underline{week 3 specifically}.
+	\begin{solution}
+		Part (b) is the inductive case.  We know that $a_0$ is even, this is the base case.  Since we know $a_0$ is even, the inductive case proves that $a_1$ will be even.  Then the inductive case again proves that $a_2$ is even, and then again, that $a_3$ is even.
+	\end{solution}
+	\vfill
+	\vfill
+	\vfill
+\end{parts}
+
+\newpage
+
+
+
+\question[20] Select \underline{one} of the following three statements and prove it by mathematical induction.  For full credit your proof must be formatted correctly.  Clearly mark which statement you choose to prove.
+\begin{parts}
+  \part $F_0^2 + F_1^2 + F_2^2 + \cdots + F_n^2 = F_nF_{n+1}$ (where $F_n$ is the $n$th Fibonacci number, $F_0 = 0, F_1 = 1$ and $F_n = F_{n-1} + F_{n-2}$).
+	% \part $2 + 4 + 6 + \cdots + 2n = n(n+1)$ for all $n \ge 1$.
+%	\part $1 + 3 + 5 + \cdots + (2n-1) = n^2$ for all $n \ge 1$.
+	\part You can make any amount of postage greater than 7 cents using just 3-cent stamps and 5-cent stamps.
+	\part The sequence $(a_n)_{n \ge 0}$, defined recursively by $a_{n} = a_{n-1} + 3a_{n-2}$ with $a_0 = 2$ and $a_1 = 6$, has the property that every term is even. (Hint: use strong induction).
+\end{parts}
+\begin{solution}
+
+\begin{parts}
+  \part \begin{proof}
+    Let $P(n)$ be the statement $F_0^2 + F_1^2 + \cdots +F_n^2 = F_nF_{n+1}$.  We will show that $P(n)$ is true for all $n \ge 0$.
+
+    Base case: $P(0)$ says $F_0^2 = F_0F_1$ which is true because $F_0^2 = 0$ and $F_0F_1 = 0\cdot 1 = 0$.
+
+    Inductive case: Assume $P(k)$ is true for an arbitrary $k \ge 0$.  Then $F_0^2 + F_1^2 + \cdots + F_k^2 = F_kF_{k+1}$.  Now add $F_{k+1}^2$ to both sides.  This gives
+    \[F_0^2 + F_1^2 + \cdots + F_k^2 + F_{k+1}^2 = F_kF_{k+1} + F_{k+1}^2\]
+    The right hand side can be simplifed to $F_{k+1}(F_k + F_{k+1}) = F_{k+1}F_{k+2}$.  This gives $P(k+1)$ is true.
+
+    Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.
+  \end{proof}
+
+
+
+% 	\part \begin{proof}
+% 		Let $P(n)$ be the statement $2 + 4 + 6 + \cdots + 2n = n(n+1)$.  We will prove $P(n)$ is true for all $n \ge 1$.
+%
+% 		Base case: $P(1)$ is true because $2 = 1(2)$.
+%
+% 		Inductive case: Assume $P(k)$ is true for an arbitrary $k \ge 1$.  That is, $2 + 4 + 6 + \cdots + 2k = k(k+1)$.  Add $2k+2$ to both sides of this equation:
+% 		\[1 + 3 + 5 + \cdots + 2k + 2k+2 = k(k+1) + 2k+2 = (k+1)(k+2)\]
+% 		But that is exactly what $P(k+1)$ states, so $P(k+1)$ is true as well.
+%
+% 		Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+% 	\end{proof}
+
+
+%	\part \begin{proof}
+%		Let $P(n)$ be the statement $1 + 3 + 5 + \cdots + (2n-1) = n^2$.  We will prove $P(n)$ is true for all $n \ge 1$.
+%
+%		Base case: $P(1)$ is true because $1 = 1^2$.
+%
+%		Inductive case: Assume $P(k)$ is true for an arbitrary $k \ge 1$.  That is, $1 + 3 + 5 + \cdots + (2k-1) = k^2$.  Add $2k+1$ to both sides of this equation:
+%		\[1 + 3 + 5 + \cdots + 2k-1 + 2k+1 = k^2 + 2k + 1 = (k+1)^2\]
+%		But that is exactly what $P(k+1)$ states, so $P(k+1)$ is true as well.
+%
+%		Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+%	\end{proof}
+
+
+
+	\part \begin{proof}
+	Let $P(n)$ be the statement, ``You can make $n$ cents of postage using $3$-cent and 5-cent stamps.''  We will prove $P(n)$ is true for all $n \ge 8$.
+
+	Base case: $P(8)$ is true because you can make $8$ cents of postage using one 3-cent stamp and one 5-cent stamp.
+
+	Inductive case: Suppose $P(k)$ is true for some $k \ge 8$.  That is, suppose you can make $k$ cents of postage using 3-cent and 5-cent stamps.  Look at how you made $k$ cents.  If you used at least one 5-cent stamp, replace it with two 3-cent stamps, increasing the total to $k+1$ cents.  If you did not use at least one 5-cent stamp, you must have used at least 3 3-cent stamps (otherwise you would only have 6 cents), so replace 3 3-cent stamps with two 5-cent stamps, increasing the total to $k+1$.  So either way, we now have $k+1$ cents, so $P(k+1)$ is true.
+
+	Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 8$.
+	\end{proof}
+
+	% \part \begin{proof}
+	% 	Let $P(n)$ be the statement $2^n < n!$.  We will prove $P(n)$ for all $n \ge 4$.
+  %
+	% 	Base case: $P(4)$ is the statement $2^4 < 4!$.  Since $2^4 = 16$ while $4! = 24$, we see that $P(4)$ is true.
+  %
+	% 	Inductive case: Assume $P(k)$ is true for some arbitrary $k \ge 4$.  That is, $2^k < k!$.  Now multiply both sides of the inequality by 2:
+	% 	\[2\cdot 2^k < 2\cdot k!\]
+	% 	The left hand side is just $2^{k+1}$.  The right hand side is in fact less than $(k+1)k! = (k+1)!$, since $2 < k+1$.  Thus we have
+	% 	\[2^{k+1} = 2\cdot 2^k < 2\cdot k! < (k+1)k! = (k+1)!\]
+	% 	In other words, $P(k+1)$ is true.
+  %
+	% 	Therefore by the principle of mathematical induction $P(n)$ is true for all $n \ge 4$.
+  %
+	% \end{proof}
+
+  \part \begin{proof}
+    Let $P(n)$ be the statement ``$a_n$ is even.''
+
+    Base cases: Note that $P(0)$ and $P(1)$ are true, since $a_0 = 2$ and $a_1 = 6$.
+
+    Inductive case: Assume $P(0), P(1), \ldots, P(k)$ are true for some $k \ge 1$.  We will now show that $P(k+1)$ is true.  That is, we must check that $a_{k+1}$ is even.  Well $a_{k+1} = a_k + 2a_{k-1}$.  Since $P(k)$ is true, we know that $a_k$ is even.  Since $P(k-1)$ is true (and $k-1 \ge 0$) we have that $a_{k-1}$ is even, and thus so is $3a_{k-1}$.  Since the sum of two even numbers is even, we have that $a_{k+1}$ is even, and thus $P(k+1)$ is true.
+
+    Therefore by the principle of strong mathematical induction, $P(n)$ is true for all $n$.
+  \end{proof}
+\end{parts}
+\end{solution}
+\newpage
+
+\bonusquestion[10] {\bf Bonus}: After winning the lottery, you decide to share your new found wealth.  First, you give half of your winnings to your favorite discrete math teacher.  Then you give a third of what you have left to your second favorite math teacher.  Then a fourth of what you have left after that to your third favorite math teacher, and so on.
+
+What fraction of your original winnings do you have left (have you \underline{not} given away) right after you give money to your $n$th favorite math teacher?  For full credit, you must justify your answer (with a proof by induction, of course).
+
+\begin{solution}
+	Let's call the amount of your winnings $x$.  After giving half to your favorite discrete math teacher, you would have $\frac{x}{2}$ left.  Then you give a third of that away, leaving you with two thirds of what you had, so you have $\frac{x}{2}\frac{2}{3} = \frac{x}{3}$.  You then give away a fourth of that, leaving you with three fourths: $\frac{x}{2}\frac{2}{3}\frac{3}{4} = \frac{x}{4}$.
+
+	Viewed another way, let $a_n$ be the amount of money you have left right after you give money to your $n$th favorite teacher.  We have the recurrence relation $a_n = \frac{n}{n+1}a_{n-1}$.  It appears that a closed formula for this would be $a_n = \frac{x}{n+1}$.  So we claim that after giving money to your $n$th favorite math teacher, you have $\frac{1}{n+1}$ of your original winnings.  Let's prove that by mathematical induction.
+
+	\begin{proof}
+		Let $P(n)$ be the statement, ``after giving money to your $n$th favorite math teacher, you have $\frac{1}{n+1}$ of your original winnings.''
+
+		Base case: $P(1)$ is true because after giving money to your 1st favorite math teacher, you have $\frac{1}{2}$ of your original winnings.
+
+		Inductive case: Assume $P(k)$ is true, for some arbitrary $k \ge 1$.  That is, after giving money to your $k$th favorite math teacher, you have $\frac{1}{k+1}$ of your original winnings.  You then give away $\frac{1}{k+2}$ of that to your $k+1$st favorite math teacher, which leaves you with $\frac{k+1}{k+2}$ of what you had left.  So after giving money away to your $k+1$st favorite math teacher, you have $\frac{1}{k+1}\frac{k+1}{k+2} = \frac{1}{k+2}$ of your original winnings.  In other words, $P(k+1)$ is true.
+
+		Therefore by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+	\end{proof}
+
+\end{solution}
+
+
+%After coming back from Spring Break, you discover your house is infested with 100 cockroaches.  You start to take care of the problem by each day removing half of the cockroaches (rounded  up, so if you had 11 cockroaches, you would remove 6 of them, leaving 5).  However, by the next morning, 10 new cockroaches have moved in.  If you continue this process indefinitely, how many cockroaches will there be after exactly 1 year?  Prove your answer using induction.
+%
+%\begin{solution}
+%Let $a_n$ be the number of cockroaches on the morning of the $n$th day.  So $a_1 = 100$, $a_2 = 60$, $a_3 = 35$, $a_4 = 27$ (since you removed 18 leaving 17 but 10 more moved in), $a_5 = 23$, $a_6 = 21$, $a_7 = 20$.  However, from this point on, $a_n = 20$ for all $n \ge 7$.  We will prove this claim by induction.
+%
+%Let $P(n)$ be the statement, ``on the morning of the $n$th day, there are 20 cockroaches in your house.''
+%
+%The above reasoning proves that on day 7 there are 20 cockroaches in your house.  This is the base case.
+%
+%Inductive case: Assume that $P(k)$ is true.  That is, assume that on the $k$th day, there are 20 cockroaches in your house.  During the day, you remove half of them, bringing the total down to 10.  But then over night 10 new cockroaches move in, bringing the total on the morning of the $k+1$st day to 20 again.  Thus $P(k+1)$ is true.
+%
+%Thus $P(n)$ is true for all $n \ge 7$.  This means that exactly one year from now there will still be 20 cockroaches in your house.  You should probably just move.
+%
+%
+%\end{solution}
+
+
+
+
+
+
+
+
+\end{questions}
+
+
+
+
+\end{document}

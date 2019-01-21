@@ -1,0 +1,91 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amsmath, amssymb, multicol}
+\usepackage{graphicx}
+\usepackage{textcomp}
+
+
+\def\d{\displaystyle}
+\def\b{\mathbf}
+\def\R{\mathbf{R}}
+\def\Z{\mathbf{Z}}
+\def\st{~:~}
+\def\bar{\overline}
+\def\inv{^{-1}}
+\def\pow{\mathcal P}
+
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf The Hockey Stick Theorem (solutions)}{Monday, September 11}
+
+
+\begin{document}
+
+%space for name
+%\noindent {\large\bf Name:} \underline{\hspace{2.5in}}
+%\vskip 1em
+
+\begin{questions}
+%\question Explain why ${n \choose k} = {n \choose n-k}$.  There are at least 3 ways to prove this.
+%\vfill
+%\vfill
+%\question Conjecture a formula for the sum of the $n$th row of Pascal's triangle. How could you prove the formula is correct?
+%\vfill
+%\begin{parts}
+%  \part  How many subsets does a set of cardinality $n$ possess?  That is, if $|A| = n$, what is $|\pow(A)|$?
+%  \vfill
+%  \part Of all the subsets of $A$, how many have cardinality 0?  Cardinality 1?  Cardinality 2?  etc?
+%  \vfill
+%  \part How are parts (a) and (b) related?  What does this have to do with Pascal's triangle?
+%  \vfill
+%\end{parts}
+%
+%\newpage
+
+\question The Stanley Cup is decided in a best of 7 tournament between two teams.  In how many ways can your team win?  Let's answer this question two ways:
+\begin{parts}
+  \part How many of the 7 games does your team need to win?  How many ways can this happen?
+  \begin{solution}
+  $\d{7 \choose 4}$.  You must choose 4 of the 7 games to win (the others you will lose or just not play if they occur after your 4th win).
+  \end{solution}
+  \vfill
+  \part What if the tournament goes all 7 games?  This means you win the 7th game.  How many ways can the first 6 games go down (so to force a game 7)?
+	 \begin{solution}
+		 $\d {6 \choose 3}$.  You win some 3 out of the first 6 games, plus win the 7th game.
+	 \end{solution}
+  \vfill
+  \part What if the tournament goes just 6 games?  How many ways your team win in exactly 6 games?  What about exactly 5 games?  4 games?
+  \begin{solution}
+	  If you win the tournament (win your 4th game) in game 6, then you must have won some 3 of the previous 5 games.  This can happen in ${5 \choose 3}$ ways.  If the tournament only lasted 5 games, you would win that 5th game, plus need to win 3 of the first 4, which can happen in ${4 \choose 3}$ ways.  If the tournament ends in 4 games, you win all 4, which can only happen in 1 way.  But it might be better to write this as ${3 \choose 3}$, to fit the pattern.
+  \end{solution}
+  \vfill
+  \part What are the two different ways to compute the number of ways your team can win?  Write down an equation involving binary coefficients (that is, ${n \choose k}$s).  What pattern in Pascal's triangle is this an example of?
+  \begin{solution}
+	  We have
+	  \[{7 \choose 4} = {6 \choose 3} + {5 \choose 3} + {4 \choose 3} + {3 \choose 3}\]
+	  If you locate those numbers in Pascal's triangle, they form a ``hockey stick'' shape.  The sum of the numbers in the stick equal the blade.  This will work anywhere in the triangle, as long as you start at one of the sides and travel down diagonally.
+  \end{solution}
+  \vfill
+\end{parts}
+\question Generalize.  What if the rules changed and you played a best of $9$ tournament (5 wins required)?  What if you played an $n$ game tournament with $k$ wins required to be named champion?
+\begin{solution}
+For a 9-game tournament, you would arrive at the identity:
+\[{9 \choose 5} = {8 \choose 4} + {7 \choose 4} + {6 \choose 4} + {5 \choose 4} + {4\choose 4}\]
+
+In general, the hockey stick theorem is:
+\[{n \choose k} = {n-1 \choose k-1} + {n-2 \choose k-1} + {n-3 \choose k-1} + \cdots + {n-k-1 \choose k-1}\]
+
+\end{solution}
+\vfill
+
+
+
+\end{questions}
+
+\end{document}
