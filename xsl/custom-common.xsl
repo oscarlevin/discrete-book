@@ -82,7 +82,7 @@
 <!-- and "provisional" citations and cross-references                 -->
 <!-- Default is to hide todo's, inline provisionals                   -->
 <!-- Otherwise ('yes'), todo's in red paragraphs, provisionals in red -->
-<xsl:param name="author-tools" select="'no'" />
+<xsl:param name="author.tools" select="'no'" />
 
 <!-- How many levels to table of contents  -->
 <!-- Not peculiar to HTML or LaTeX or etc. -->

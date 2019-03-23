@@ -76,7 +76,7 @@
 <!-- Print Option                                         -->
 <!-- For a non-electronic copy, inactive links in black   -->
 <!-- Any color options go to black and white, as possible -->
-<xsl:param name="latex.print" select="'yes'"/>
+<xsl:param name="latex.print" select="'no'"/>
 <!-- Sidedness -->
 <xsl:param name="latex.sides" select="'two'"/>
 <!--  -->
@@ -271,7 +271,7 @@
 <!-- "proof" -->
 <!-- Body:  \begin{proof}{title}{label}    -->
 <!-- Title comes with punctuation, always. -->
-<xsl:template match="proof" mode="environment">
+<!-- <xsl:template match="proof" mode="environment">
     <xsl:text>%% proof: title is a replacement&#xa;</xsl:text>
     <xsl:text>\tcbset{ proofstyle/.style={</xsl:text>
     <xsl:apply-templates select="." mode="tcb-style" />
@@ -279,14 +279,14 @@
     <xsl:text>\newtcolorbox{proofptx}[2]{title={\notblank{#1}{#1}{</xsl:text>
     <xsl:apply-templates select="." mode="type-name"/>
     <xsl:text>.}}, phantom={\hypertarget{#2}{}}, breakable, parbox=false, proofstyle }&#xa;</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- Actually, redefine proofs to use the amsthm env for now -->
 <!-- Proofs -->
 <!-- Subsidary to THEOREM-LIKE, or standalone        -->
 <!-- Defaults to "Proof", can be replaced by "title" -->
 <!-- TODO: rename as "proof" once  amsthm  package goes away -->
-<xsl:template match="proof">
+<!-- <xsl:template match="proof">
     <xsl:text>\begin{proof}</xsl:text>
     <xsl:text>{</xsl:text>
     <xsl:if test="title">
@@ -296,6 +296,20 @@
     <xsl:text>&#xa;</xsl:text>
     <xsl:apply-templates select="*" />
     <xsl:text>\end{proof}&#xa;</xsl:text>
+</xsl:template> -->
+
+<!--HACK: 3-23-19 redefine the qed symbol to be qed  -->
+<!-- "proof" -->
+<!-- Title in italics, as in amsthm style.           -->
+<!-- Filled, black square as QED, tombstone, Halmos. -->
+<!-- Pushing the tombstone flush-right is a bit      -->
+<!-- ham-handed, but more elegant TeX-isms           -->
+<!-- (eg \hfill) did not get it done.  We require at -->
+<!-- least two spaces gap to remain on the same      -->
+<!-- line. Presumably the line will stretch when the -->
+<!-- tombstone moves onto its own line.              -->
+<xsl:template match="proof" mode="tcb-style">
+    <xsl:text>bwminimalstyle, fonttitle=\normalfont\itshape, attach title to upper, after title={\space}, after upper={\space\space\hspace*{\stretch{1}}\(\textsc{qed}\)}&#xa;</xsl:text>
 </xsl:template>
 
 
@@ -520,7 +534,7 @@
 
 
 
-<!-- HACK 1-1-19: make numbers links to hints or solutions (with hints getting precidence). -->
+<!-- HACK 3-23-19: make numbers links to hints or solutions (with hints getting precidence). -->
 <!-- Divisional Exercises (exercises//exercise, worksheet//exercise, etc) -->
 <!-- Divisional exercises are not named when born, by virtue -->
 <!-- of being within an "exercises" division.  We hard-code  -->
@@ -561,10 +575,20 @@
     <xsl:value-of select="$env-name"/>
     <xsl:text>}</xsl:text>
     <xsl:text>{</xsl:text>
+    <!--OL: Replace original serial-number with following choose: -->
     <xsl:choose>
         <xsl:when test="hint">
           <xsl:text>\hyperlink{</xsl:text>
           <xsl:apply-templates select="hint[1]" mode="internal-id-duplicate">
+              <xsl:with-param name="suffix" select="'back'"/>
+          </xsl:apply-templates>
+          <xsl:text>}{</xsl:text>
+          <xsl:apply-templates select="." mode="serial-number" />
+          <xsl:text>}</xsl:text>
+        </xsl:when>
+        <xsl:when test="webwork-reps/static/hint">
+          <xsl:text>\hyperlink{</xsl:text>
+          <xsl:apply-templates select="webwork-reps/static/hint[1]" mode="internal-id-duplicate">
               <xsl:with-param name="suffix" select="'back'"/>
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
@@ -580,13 +604,22 @@
           <xsl:apply-templates select="." mode="serial-number" />
           <xsl:text>}</xsl:text>
         </xsl:when>
+        <xsl:when test="webwork-reps/static/solution">
+          <xsl:text>\hyperlink{</xsl:text>
+          <xsl:apply-templates select="webwork-reps/static/solution[1]" mode="internal-id-duplicate">
+              <xsl:with-param name="suffix" select="'back'"/>
+          </xsl:apply-templates>
+          <xsl:text>}{</xsl:text>
+          <xsl:apply-templates select="." mode="serial-number" />
+          <xsl:text>}</xsl:text>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates select="." mode="serial-number" />
         </xsl:otherwise>
     </xsl:choose>
     <xsl:text>}</xsl:text>
     <xsl:text>{</xsl:text>
-    <xsl:apply-templates select="." mode="title-punctuated"/>
+    <xsl:apply-templates select="." mode="title-full"/>
     <xsl:text>}</xsl:text>
     <!-- workspace fraction, only if given, else blank -->
     <!-- worksheets only now, eventually exams?        -->
@@ -607,19 +640,15 @@
     <!-- condition on how statement, hint, answer, solution are presented -->
     <xsl:choose>
         <!-- webwork, structured with "stage" matches first -->
-        <!-- Someplace, something like  -->
-        <!-- \par\medskip\noindent% -->
-        <!-- \textbf{Part 2.}\quad  -->
-        <!-- needs to happen for each stage in a solution -->
-        <!-- maybe based on a dry-run -->
+        <!-- Above provides infrastructure for the exercise, -->
+        <!-- we pass the stage on to a WW-specific template  -->
+        <!-- since each stage may have hints, answers, and   -->
+        <!-- solutions.                                      -->
         <xsl:when test="webwork-reps/static/stage">
-            <!-- Needs this fix, but requires more care                                              -->
-            <!-- <xsl:apply-templates select="webwork-reps/static/stage" mode="exercise-components"> -->
             <xsl:apply-templates select="webwork-reps/static/stage">
                 <xsl:with-param name="b-original" select="true()" />
                 <xsl:with-param name="b-has-statement" select="$b-has-statement" />
                 <xsl:with-param name="b-has-hint"      select="$b-has-hint" />
-                <!-- 2018-09-21: WW answers may become available -->
                 <xsl:with-param name="b-has-answer"    select="$b-has-answer" />
                 <xsl:with-param name="b-has-solution"  select="$b-has-solution" />
             </xsl:apply-templates>
@@ -675,6 +704,7 @@
     <xsl:text>\end{</xsl:text>
     <xsl:value-of select="$env-name"/>
     <xsl:text>}%&#xa;</xsl:text>
+    <xsl:apply-templates select="." mode="pop-footnote-text"/>
 </xsl:template>
 
 
