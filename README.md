@@ -55,12 +55,8 @@ If you look in the makefile, you will see some shortcuts that combine some of th
 
 ## Contributing
 
-Any and all suggestions to improve the text are welcome.  Thanks to those who have already pointed out typos/issues they have found.  If you would like to make a more substantial contribution, please contact me so we can discuss how best to proceed.
+Any and all suggestions to improve the text are welcome.  Thanks to those who have already pointed out typos/issues they have found.  If you would like to make a more substantial contribution, please contact me so we can discuss how best to proceed.  
 
 ## Previous editions
 
 The previous editions have branches, and also tags.  Feel free to switch to those if you want to grab the source for those editions.
-
-## ToDo
-
-Lots of stuff to do before releasing the third edition.  See the issues.
