@@ -1,0 +1,88 @@
+#######################################
+###    Generated from PreTeXt source   
+###    on 2018-05-10T11:08:44-06:00    
+###                                    
+###   http://mathbook.pugetsound.edu   
+###                                    
+#######################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1(Discrete Mathematics)
+## EditionText1()
+## AuthorText1(Oscar Levin)
+## Section1(not reported)
+## Problem1(2.2.10)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context("IntegerFunctions");
+$ans1 = Compute("C(14,7)");
+$ans2 = Compute("C(6,2)*C(8,5)");
+$ans3 = Compute("C(14,7) - C(6,2)*C(8,5)");
+
+####################
+# Body
+####################
+BEGIN_PGML
+How many shortest lattice paths start at (3,3) and 
+1.  end at (10,10)?
+
+    [_____]{$ans1}
+
+
+1.  end at (10,10) and pass through (5,7)?
+
+    [_______]{$ans2}
+
+
+1.  end at (10,10) and avoid (5,7)?
+
+    [_______]{$ans3}   
+
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+1.  [`{14 \choose 7} = 3432`] paths.  The paths all have length 14 (7 steps up and 7 steps right), we just select which 7 of those 14 should be up.
+1.  [`{6 \choose 2}{8\choose 5} = 840`] paths.  First travel to (5,7), and then continue on to (10,10).
+1.  [`{14 \choose 7} - {6\choose 2}{8 \choose 5}`] paths.  Remove all the paths that you found in part (b).   
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();

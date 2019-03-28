@@ -1,0 +1,107 @@
+#######################################
+###    Generated from PreTeXt source   
+###    on 2018-05-10T11:08:44-06:00    
+###                                    
+###   http://mathbook.pugetsound.edu   
+###                                    
+#######################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1(Discrete Mathematics)
+## EditionText1()
+## AuthorText1(Oscar Levin)
+## Section1(not reported)
+## Problem1(2.2.3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context("IntegerFunctions");
+$ans1 = Compute(2^9);
+$ans2 = Compute(C(9,5));
+$ans1 = Compute(2^4);
+$ans4 = Compute("C(9,0)+C(9,2)+C(9,4)+C(9,6)+C(9,8)");
+
+####################
+# Body
+####################
+BEGIN_PGML
+Let [`A = \{1,2,3,\ldots,9\}\text{.}`] 
+1.  How many subsets of [`A`] are there? That is, find [`\newcommand{\pow}{\mathcal P}|\pow(A)|\text{.}`] Explain.
+
+    [_____]{$ans1}
+
+
+1.  How many subsets of [`A`] contain exactly 5 elements? Explain.
+
+    [_____]{$ans2}
+
+
+1.  How many subsets of [`A`] contain only even numbers? Explain.
+
+    [_____]{$ans3}
+
+
+1.  How many subsets of [`A`] contain an even number of elements? Explain.
+
+    [_____]{$ans4}   
+
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+1.  There are [`512`] subsets. This is [`2^9\text{,}`] which makes sense because we are deciding yes or no on whether to include each element of [`A`] in the subset.
+
+
+1.  Of the nine elements in [`A\text{,}`] we must choose five of them to be in the subset. So [`{9 \choose 5} = 126\text{.}`]
+
+
+1.  For each of the 9 elements from [`A\text{,}`] we must decide yes or no on whether to include them in the subset. However, for the odd numbers, we only have one choice: no. So there are only 4 elements we have two choices for, so the answer is [`2^4 = 16\text{.}`] (Note, if you wish to exclude the empty set - it does not contain odd numbers, but no evens either - then you could subtract 1).
+
+
+1.  Count the number of subsets with each possible even cardinality:
+
+    >> [``
+                    {9 \choose 0} + {9 \choose 2} + {9\choose 4} + {9 \choose 6} + {9 \choose 8} = 256
+                    ``] <<
+
+   
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();

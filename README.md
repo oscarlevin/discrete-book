@@ -3,14 +3,20 @@ Discrete Mathematics: an Open Introduction
 
 An open textbook for Discrete Mathematics, as taught at the University of Northern Colorado.  More information about the project is available on [the book's main website](http://discrete.openmathbooks.org).
 
+The `master` branch here now has the source code for the 3rd edition.  Work on the 4th edition is done on the `edition` branch.
+
 
 ## Compilation Instructions
 
-This text is written in [PreTeXt](http://pretextbook.org) (formally called MathBook XML), so the primary source files can be found in the MBX directory.  These can be compiled into html or LaTeX files (as well as some other formats).  If you do not want to bother with this step or just want to grab some LaTeX to use in a worksheet or the like, the generated LaTeX is already provided in the latex folder.
+This text is written in [PreTeXt](http://mathbook.pugetsound.edu) (previously called MathBook XML), so the primary source files can be found in the `ptx` directory.  These can be compiled into html or LaTeX files (as well as some other formats).  If you do not want to bother with this step or just want to grab some LaTeX to use in a worksheet or the like, the generated LaTeX is already provided in the latex folder.
 
-### MBX Compilation
+### Preliminaries
 
-To compile from source, you will need a copy of the mathbook xsl stylesheets, as well as xsltproc installed (should be easy on linux or MacOS, but also possible on Windows---see some [windows installation notes](http://mathbook.pugetsound.edu/doc/author-guide/html/windows-install-notes.html)).
+To compile from source, you will need a copy of the mathbook xsl stylesheets, as well as xsltproc, python, and make installed (should be easy on linux or MacOS, but also possible on Windows---see some [windows installation notes](http://mathbook.pugetsound.edu/doc/author-guide/html/windows-install-notes.html)).  
+
+Earlier editions, that did not include WeBWorK problems were easy enough to compile using commands like `xsltproc --xinclude ../xsl/custom-latex.xsl ../ptx/dmoi.ptx`.  Now though, there are enough intermediate steps that I've written a make file that keeps everything together.  As long as you have all the tools installed, this should make things easy.
+
+You will need to open up `Makefile.paths.original` and follow the directions there (create a copy called `Makefile.paths` and specify paths to various things).  Also note that in order for my custom .xsl files to work, they need to know where the standard pretext xsl stylesheets are.  If you clone mathbook.git and discrete-book.git as shown below, you will be all set, otherwise, you will need to go into the xsl files and change some things at the top.
 
 Open up a terminal and in your preferred directory, clone the mathbook and discrete-book repositories:
 
@@ -18,34 +24,39 @@ Open up a terminal and in your preferred directory, clone the mathbook and discr
 
 `git clone https://github.com/oscarlevin/discrete-book.git`
 
-To generate LaTeX, change to the latex directory of the discrete-book folder:
+Then change to the discrete-book folder:
 
-`cd discrete-book/latex`
+`cd discrete-book`
 
-and run
+### Compiling
 
-`xsltproc --xinclude ../xsl/dmoi-latex.xsl ../mbx/dmoi.mbx`
+If everything has been set up properly above, you can now execute the following commands to build the book.  First, no matter what output format you are looking for, you will need to enter the following.
 
-This will use the custom thin xsl stylesheet I have created with some customizations.  It calls the mathbook-latex.xsl file from mathbook using relative paths, so it is important that you leave the mathbook and discrete-book directories parallel.
+`make ww-extraction`
 
-To generate html, change to the html folder.  We first need to generate the svg images from the mbx code.  This is done using the mbx script from mathbook:
+`make ww-merge`
 
-`../../mathbook/script/mbx -v -c latex-image -f svg -d images ../mbx/dmoi.mbx`
+Then, to create a latex file and pdf, you can enters
 
-You will need to have python and some other tools installed.  See the mathbook documentation.  Then to produce the html, run:
+`make latex`
 
-`xsltproc --xinclude ../xsl/dmoi-html.xsl ../mbx/dmoi.mbx`
+`make pdf`
+
+To make the html verion, you first need to extract images from the source:
+
+`make diagrams`
+
+And then create the html:
+
+`make html`
+
+If you look in the makefile, you will see some shortcuts that combine some of these.  
+
 
 ## Contributing
 
-Any and all suggestions to improve the text are welcome.  Thanks to those who have already pointed out typos/issues they have found.  If you would like to make a more substantial contribution, please contact me so we can discuss how best to proceed.
+Any and all suggestions to improve the text are welcome.  Thanks to those who have already pointed out typos/issues they have found.  If you would like to make a more substantial contribution, please contact me so we can discuss how best to proceed.  
 
-Note that the book is released under the CC-BY-SA license, so if you would like to make your own version, you are completely free to do so (as long as you us a compatible license and acknowledge the original source material as such).  Of course, I would love to hear about how you used the book.
+## Previous editions
 
-## Fall 2015 corrected edition
-
-If you are looking for the previous edition of this text, switch branches to the Fall2015-corrected branch, which contains source files for the corrected version of the Fall 2015 edition.  Use this in case you have that edition or want to continue using that edition.
-
-## Future editions
-
-I am currently working on a 3rd edition, which will include a full instructor version with complete solutions and other resources.  To protect sensitive solutions, development of this edition will take place in a private repository.  If you are interested in contributing to the effort, let me know and I will get you access.
+The previous editions have branches, and also tags.  Feel free to switch to those if you want to grab the source for those editions.
