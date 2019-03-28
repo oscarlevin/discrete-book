@@ -42,7 +42,7 @@ Then, to create a latex file and pdf, you can enters
 
 `make pdf`
 
-To make the html verion, you first need to extract images from the source:
+To make the html version, you first need to extract images from the source:
 
 `make diagrams`
 
