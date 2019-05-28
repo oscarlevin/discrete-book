@@ -15,15 +15,18 @@ Page numbers match print and tablet pdf edition.
 
 * Exercise 1.5.3-c (page 108): The question should be "How many 6-letter words can you make using the 5 vowels *in alphabetical order*"
 
+* Isomorphic Graphs definition (page 236): for $f$ to be a bijection, we need $\{a,b\}$ to be an edge *if and only if* \{f(a), f(b)\}$ is an edge.  
+
 * Lemma 4.1.5 (page 240): The equation following this lemma is incorrect.  It should be $\sum_{v\in V} d(v) = 2e$.
 
 ### Minor typos and clarifications
 
-* Exercise 1.7.2 (page 129): some of these can be made clearer.  For (i), the apples are identical.  For (j), assume each kid is allowed to choose one of the 4 varieties.  For (l) the numbers are distinct.  For (s), the teams are labeled (or have names, say "how many ways are there to add 11 kids to the 5 teams in your quidditch league, so that each team gets at least one of the 11 kids?").  For (t), we are looking for *integer* solutions.
+* Exercise 1.7.2 (page 129): some of these could be made clearer.  For (i), the apples are identical.  For (j), assume each kid is allowed to choose one of the 4 varieties.  For (l) the numbers are distinct.  For (s), the teams are labeled (or have names).  For (t), we are looking for *integer* solutions.
 
-* Exercise 2.1.17-c (page 146): the $p$ should be a $k$ to make this consistent with the statement of the problem.  (Solution manual also needs to be fixed.)
+* Exercise 2.1.17-c (page 146): the $p$ in $n = l+p$ should be a $k$, to make this consistent with the statement of the problem.  (Solution manual also needs to be fixed.)
 
 * Page 238, second paragraph: "subgroup" should be "subgraph".
+
 * Exercise 4.1.11 (page 245): The numbers need to be positive integers here (and really should be larger than 1 to make the binomial coefficients make sense).
 
 * Exercise 4.1.15 (page 246): The graphs must have at least two vertices for this to make sense.
