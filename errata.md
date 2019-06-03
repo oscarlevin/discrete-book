@@ -1,58 +1,49 @@
 
-# Errata for 2nd Edition
+# Errata for 3rd Edition
 
-Many errors were fixed in preparation of the 2nd edition, but thanks in part to the careful reading by students and instructors, more have been revealed.  Over Summer 2017, I corrected many of these errors and released a corrected 2nd edition in time for Fall 2017.  The corrected edition is marked as such on the copyright page and back cover, and is the version that is available in html.
+Many errors were fixed in preparation of the 3rd edition, but thanks in part to the careful reading by students and instructors, more have been revealed.  I'm releasing occasional fixes to the html, pdf and print versions.  These updates should not change the pagination in any major way.
 
-Moving forward, as errors are found, I will record them below.
+If you use the html version, it will only contain errors listed in the first section below (and any undiscovered errors: please email me about them).
+
+If you use a pdf or paperback version, check the copyright page for the printing date, which will tell you how far down this document you need to look for errors.
+
+Page numbers match print and tablet pdf edition.
 
 ## Errors not yet corrected
 
 ### Major errors
 
-(updated 11/27/2017)
+* Exercise 1.5.3-c (page 108): The question should be "How many 6-letter words can you make using the 5 vowels *in alphabetical order*"
 
-Page numbers match print and tablet pdf edition.
+* Isomorphic Graphs definition (page 236): for $f$ to be a bijection, we need $\{a,b\}$ to be an edge *if and only if* \{f(a), f(b)\}$ is an edge.  
 
-* Example 1.3.5-2 (page 67): the answer is 2162160, not 2192190.
+* Lemma 4.1.5 (page 240): The equation following this lemma is incorrect.  It should be $\sum_{v\in V} d(v) = 2e$.
 
-* Exercise 1.5.4-c (page 88): the problem should require x, y, and z all be greater than *or equal* to -3.
+### Minor typos and clarifications
 
-* Page 147, last line: the sequence of F's and T's is off near the end.  The correct sequence is F, F, F, F, T, F, F, T, F, T, F, F, T,...
+* Exercise 1.7.2 (page 129): some of these could be made clearer.  For (i), the apples are identical.  For (j), assume each kid is allowed to choose one of the 4 varieties.  For (l) the numbers are distinct.  For (s), the teams are labeled (or have names).  For (t), we are looking for *integer* solutions.
+
+* Exercise 2.1.17-c (page 146): the $p$ in $n = l+p$ should be a $k$, to make this consistent with the statement of the problem.  (Solution manual also needs to be fixed.)
+
+* Page 238, second paragraph: "subgroup" should be "subgraph".
+
+* Exercise 4.1.11 (page 245): The numbers need to be positive integers here (and really should be larger than 1 to make the binomial coefficients make sense).
+
+* Exercise 4.1.15 (page 246): The graphs must have at least two vertices for this to make sense.
+
+* Page 269, Investigate!: To be a graph, it must be that E conflicts with C, and F conflicts with C and D, in addition to those listed.
+
+## Errors Corrected for 2nd Printing: 3/24/19
+
+In case you have a copy of the book printed prior to 3/24/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+
+* Example 0.4.1-3 (page 39): the table used $g(x)$ instead of $h(x)$.
+
+* Example 1.3.5-2 solution (page 85): The answer is 2162160, but in the explanation, this number was incorrectly written 2192190 in two places.
+
+* Example 2.1.4 solution (page 141): The sequence of triangular numbers was missing 10 between 6 and 15.
+
+* Page 149, second paragraph after Example 2.2.1: The recursive definition for a geometric sequence had a_n on both sides.  It should be $a_n = a_{n-1}\cdot r$
 
 
-### Minor typos
 
-* Page 200, after the definition of a graph, the example has *five* edges, not four.
-
-
-## Errors Corrected Summer 2017
-
-In case you have a copy of the book printed prior to July 2017, you will find the following errors that have since been corrected.  Typos are not included below, unless they might cause confusion.
-
-* Exercise 0.4.5(d) (page 38): the piecewise definition is missing *n* (should read, "if *n* is even/if *n* is odd").
-
-* Exercise 0.4.13 (page 39): the piecewise definition is missing *n*.
-
-* Exercise 1.1.5 solution (page 279): parts (a) and (b) were backwards.
-* Example 1.3.4 (page 66): The codomain should have 8 elements in it.
-
-* Exercise 1.4.6 was missing a part before part (a): the first part should ask for the number of strings starting with 1.  The answers were off, because of this.
-
-* Exercise 2.1.5 (page 119): The recurrence relation should be a_n = 7a_{n-1} - 10a_{n-2}.
-
-* Definition of Subgraphs (page 204): The indices were swapped making the definition of induced subgraph incorrect.  The following example was also reworded to account for the correction.
-
-
-* Exercise 2.2.1(f) solution (page 294): The closed formula is wrong.  it should be 1+(4n+6)n/2.
-
-* Examples 2.2.6 and 2.3.1-1: both of these start with the wrong sequence, which should be 2, 3, 7, 14, 24, 37,..., to match the solution given.
-
-* Exercise 2.3.1(b) solution (page 296): the formula should be a_n = n^2 + n.
-
-* Exercise 2.4.8 (page 146): The second term should be \beta a_{n-2}.
-
-* Exercise 4.1.4 (page 206): In graph 1, the last edge should be {c,d} and not {c,e} (otherwise, the answer in the back is wrong).
-
-* Exercise 4.1.6 solution (page 311): The middle graph was labeled incorrectly.
-
-* Exercise 4.2.3 (page 218) and its solution (page 312): This problem is broken.  As stated, there is no polyhedron that satisfies the statement of the problem.  One way to fix it: assume the polyhedron has 11 vertices including those around the mystery face.
