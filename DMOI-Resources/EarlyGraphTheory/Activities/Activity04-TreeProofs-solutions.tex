@@ -1,0 +1,84 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amsmath, amssymb, amsthm, multicol}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{chessboard}
+
+\def\d{\displaystyle}
+\def\b{\mathbf}
+\def\R{\mathbf{R}}
+\def\Z{\mathbf{Z}}
+\def\st{~:~}
+\def\bar{\overline}
+\def\inv{^{-1}}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\iff{\Leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\land{\wedge}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Trees and Forests\\ Solutions}{Wednesday, September 5}
+% \runningheader{}{\bf For next time:}{}
+
+
+\begin{document}
+
+%space for name
+%\noindent {\large\bf Name:} \underline{\hspace{2.5in}}
+%\vskip 1em
+
+A \emph{tree} is a connected graph which contains no cycles.  A \emph{forest} is a graph which contains no cycles (so each connected component is a tree).  The goal of this activity is to prove some facts about trees and forests.
+
+\begin{questions}
+\question Consider the statement: \textbf{A graph is a forest if and only if there is at most one path between any pair of vertices.}  To prove this statement, you must prove \emph{two} implications.
+
+\begin{parts}
+  \part First, consider the implication: \textbf{If there is at most one path between any pair of vertices, then the graph is a forest.}  Write the first and last line of a proof of this statement provided you were to prove it \emph{directly}, \emph{by contrapositive} or \emph{by contradiction}.
+  \begin{solution}
+    Directly: Assume there is at most one path between any pair of vertices.  \ldots Therefore the graph is a forest.
+    
+    Contrapositive: Assume the graph is not a forest.  \ldots. Therefore there is more than one path between some pair of vertices.
+    
+    Contradiction: Assume there is at most one path between a pair of vertices AND the graph is not a forest.  \ldots.  This is a contradiction.
+  \end{solution}
+  \vfill
+  \part Write the first and last line for each of the proof styles for proving the converse: \textbf{if the graph is a forest, then there is at most one path between any pair of vertices.}
+  \begin{solution}
+    Directly: Assume the graph is a forest.   \ldots. Therefore there is at most one path between any pair of vertices.
+    
+    Contrapositive: Assume there is more than one path between some pair of vertices. \ldots. Therefore the graph is not a forest. 
+    
+    Contradiction: Assume the graph is a forest but there is more than one path between some pair of vertices.  \ldots.  This is a contradiction.
+  \end{solution}
+  \vfill
+  \clearpage
+  \part For both \emph{directions}, complete the proof using an appropriate style.
+  \begin{solution}
+    We will give contrapositive proofs for both directions.
+    \begin{proof}
+      First, suppose the graph is not a forest.  This means there is a cycle.  Let $u$ and $v$ be vertices in that cycle.  Since you can get from $u$ to $v$ by going either clockwise or counterclockwise around the cycle, we see there is more than one path between this pair of vertices.  
+      
+      Conversely, assume there is some pair of vertices $u$ and $v$ for which there is more than one path from $u$ to $v$.  The two paths might start out the same, but since they are different paths, there is some vertex $u'$ after which the two paths diverge (for the first time).  Then, since both the paths eventually end at $v$, there is some first vertex $v'$ at which the two paths intersect again.  But the two paths from $u'$ to $v'$ form a cycle, so we can conclude the graph is not a forest.
+    \end{proof}
+  \end{solution}
+  \vfill
+\end{parts}
+\question Prove that any tree with at least two vertices has at least one leaf (i.e., a degree 1 vertex).  Note this can be phrased as an implication: if $G$ is a tree with at least two vertices, then $G$ has at least one vertex of degree 1.
+\begin{solution}
+ Let $T$ be a tree, and assume, contrary to stipulation, that no vertex has degree one.  Let $P$ be the longest path in $T$.  What can we say about the endpoints of $P$?  Since $T$ has no degree one vertices, there must be edges coming off of the endpoints in $P$.  These edges cannot go to any additional vertices, since $P$ is the longest path in $T$.  But also, these edges cannot go to a vertex already part of $P$, because that would create a cycle.  So we have a contradiction, which shows that $T$ must have a vertex of degree one.
+ 
+ In fact, both endpoints of $P$ must have degree one, so every tree has at least two degree one vertices (if the $T$ has at least two vertices).
+\end{solution}
+\vfill
+
+\end{questions}
+
+\end{document}

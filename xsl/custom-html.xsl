@@ -9,7 +9,10 @@
 <!-- See the file COPYING for copying conditions.  -->
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
-
+<!DOCTYPE xsl:stylesheet [
+    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
+    %entities;
+]>
 
 <!-- DMOI customizations for HTML runs -->
 
@@ -77,6 +80,14 @@
 <!-- LaTeX: Historical Notes -->
 
 
+<!-- ID settings for various services -->
+<!-- These are publisher items that may vary for a fork,     -->
+<!-- and which should not be a concern while editing, and    -->
+<!-- which should not run with source.  Deprecated "docinfo" -->
+<!-- options are respected for now.                          -->
+<xsl:param name="html.google-classic" select="''"/>
+<xsl:param name="html.google-universal" select="'UA-66485406-1'"/>
+<xsl:param name="html.google-search" select="'000445521324161818100:qhc2ahxtur8'"/>
 
 
 <!-- Here are the options, taken from mathbook-html.xsl, changed as needed -->
@@ -122,19 +133,9 @@
 <!-- html.knowl.example.solution: always "yes", could be implemented -->
 
 <!-- CSS and Javascript Servers -->
-<!-- We allow processing paramteers to specify new servers   -->
-<!-- or to specify the particular CSS file, which may have   -->
-<!-- different color schemes.  The defaults should work      -->
-<!-- fine and will not need changes on initial or casual use -->
-<!-- #0 to #5 on mathbook-modern for different color schemes -->
-<!-- We just like #3 as the default                          -->
-<!-- N.B.:  This scheme is transitional and may change             -->
-<!-- N.B.:  without warning and without any deprecation indicators -->
-<xsl:param name="html.js.server"  select="'https://aimath.org'" />
-<xsl:param name="html.css.server" select="'https://aimath.org'" />
-<xsl:param name="html.css.file"   select="'mathbook-4.css'" />
+<xsl:param name="html.css.colorfile" select="''" />
 <!-- A space-separated list of CSS URLs (points to servers or local files) -->
-<xsl:param name="html.css.extra"  select="'custom-styles.css title-period-fix.css'" />
+<xsl:param name="html.css.extra"  select="'custom-styles.css'" />
 
 <!-- Navigation -->
 <!-- Navigation may follow two different logical models:                     -->
@@ -241,20 +242,63 @@
 </xsl:template>
 
 <!-- HTML, CSS -->
-<xsl:template match="exercise" mode="environment-element">
+<!-- <xsl:template match="exercise" mode="environment-element">
     <xsl:text>article</xsl:text>
 </xsl:template>
 <xsl:template match="exercise" mode="environment-class">
     <xsl:text>exercise-like</xsl:text>
+</xsl:template> -->
+
+<!-- HACK 5/29/19: Remove codenumber and period from projects (Investigate!) -->
+<!-- h6, type name, number (if exists), title (if exists) -->
+<!-- REMARK-LIKE, COMPUTATION-LIKE, DEFINITION-LIKE, SOLUTION-LIKE, objectives (xref-content), outcomes (xref-content), EXAMPLE-LIKE, PROJECT-LIKE, exercise (inline), task (xref-content), fn (xref-content), biblio/note (xref-content)-->
+<!-- E.g. Corollary 4.1 (Leibniz, Newton).  The fundamental theorem of calculus. -->
+<xsl:template match="&PROJECT-LIKE;" mode="heading-full">
+    <h6 class="heading">
+        <span class="type">
+            <xsl:apply-templates select="." mode="type-name"/>
+        </span>
+        <!--  -->
+        <xsl:variable name="the-number">
+            <xsl:apply-templates select="." mode="number" />
+        </xsl:variable>
+        <xsl:if test="not($the-number='')">
+            <xsl:text> </xsl:text>
+            <!-- <span class="codenumber">
+                <xsl:value-of select="$the-number"/>
+            </span> REMOVED -->
+        </xsl:if>
+        <!--  -->
+        <xsl:if test="creator and (&THEOREM-FILTER; or &AXIOM-FILTER;)">
+            <xsl:text> </xsl:text>
+            <span class="creator">
+                <xsl:text>(</xsl:text>
+                <xsl:apply-templates select="." mode="creator-full"/>
+                <xsl:text>)</xsl:text>
+            </span>
+        </xsl:if>
+        <!-- A period now, no matter which of 4 combinations we have above-->
+        <!-- <xsl:text>.</xsl:text> REMOVED -->
+        <!-- A title carries its own punctuation -->
+        <xsl:if test="title">
+            <xsl:text> </xsl:text>
+            <span class="title">
+                <xsl:apply-templates select="." mode="title-full"/>
+            </span>
+        </xsl:if>
+    </h6>
 </xsl:template>
 
-
+<!-- And its CSS class -->
+<xsl:template match="&PROJECT-LIKE;" mode="body-css-class">
+    <xsl:text>project-like</xsl:text>
+</xsl:template>
 
 <!-- Analytics Footers -->
 
 <!-- Google Analytics                     -->
 <!-- "Classic", not compared to Universal -->
-<xsl:template match="google">
+<!-- <xsl:template match="google">
 <xsl:comment>Start: Google code</xsl:comment>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -267,7 +311,7 @@
 
 </script>
 <xsl:comment>End: Google code</xsl:comment>
-</xsl:template>
+</xsl:template> -->
 
 
 

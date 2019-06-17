@@ -1,0 +1,497 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{ bns pts}
+
+\addpoints
+\pagestyle{headandfoot}
+%\printanswers
+
+\firstpageheader{Math 228}{\bf\large Exam 1}{September 25, 2017}
+\runningfooter{}{\thepage}{}
+
+\extrafootheight{-.45in}
+
+
+
+\begin{document}
+%space for name
+\noindent {\large\bf Name:} \underline{\hspace{2.5in}}
+\vskip 1em
+
+\noindent{\bf Instructions:} Answer each of the following questions.  Answers without supporting work or explanations will be counted as incorrect.  When asked to explain, justify, or prove your answers, use complete English sentences.
+
+
+
+\begin{questions}
+
+
+
+\question[8] Select the best answer to each counting problem below.
+\begin{parts}
+
+\part Suppose you own 13 distinct bow ties.  You are going on a 5-day trip and need to select a different tie for each day you will be gone (so you will select which tie to wear the first day, which to wear the second, and so on).  How many ways can you do this?
+
+\begin{oneparchoices}
+\choice $13! = 6227020800$
+\choice $P(13, 5)=154440$
+\choice $\d{13 \choose 5}=1287$
+\choice $5! = 120$
+\end{oneparchoices}
+
+\begin{solution}
+$P(13,5) = 13\cdot 12\cdot 11\cdot 10 \cdot 9 = 7920$.  There are 13 choices for which tie to wear on the first day, then 12 choices for which to wear on the second day, and so on.
+\end{solution}
+
+\vskip 1em
+\part You are running late so decide to choose which tie to wear on which day later, and just want to pick 5 ties to toss into your suitcase.  How many ways can you do this?
+
+\begin{oneparchoices}
+  \choice $13! = 6227020800$
+  \choice $P(13, 5)=154440$
+  \choice $\d{13 \choose 5}=1287$
+  \choice $5! = 120$
+\end{oneparchoices}
+
+\begin{solution}
+$\d{13 \choose 5} = \frac{13!}{8!4!} = 1287$.  You simply must choose 5 out of the 13 ties to wear, which can be done in $\d {13\choose 5}$ ways.
+\end{solution}
+\vskip 1em
+\end{parts}
+
+\question[12] Explain the relationship between the two counting problems above both numerically and in terms of bow ties.  Be specific: don't just say which is larger, say how many times larger it is, and why this makes sense.
+
+\begin{solution}
+The answer to the first question will be 120 times larger than the answer to the second question.  This is because for each choice of 5 out of 13 ties, there are 120 different arrangements of those ties (5 choices for which of the 5 go first, 4 choices for which goes second, 3 choices for which goes third, 2 choices for which goes fourth,  leaving 1 choice for which goes fifth).  Notice that in the first question we need to select 5 out of 13 ties {\em and} arrange them, while in the second we only select them.
+
+The other way to see this is to consider all the ways to arrange 5 out of 13 ties, which is $13\cdot 12\cdot 11 \cdot 10 \cdot 9$.  From this to get just the ways to select (but not arrange) the ties, we must divide by 120 because for each selection of 5 ties, we have counted 120 different arrangements of those five ties.  Now though we want to count all 120  of those as a single outcome.
+\end{solution}
+
+\vfill
+
+
+\newpage
+
+\question Consider functions $f: \{1,2,3,4\} \to \{1,2,3,4,5,6\}$.
+\begin{parts}
+  \part[6] Give an example of one such function (use 2-line notation).  Then say how many such functions there are and why your answer makes sense.
+  \begin{solution}
+    One such function is $f = \twoline{1 & 2 & 3 & 4}{3 & 4 & 2 & 3}$.  Each element in the domain has 6 possible images, so there are $6^4$ total functions with this domain and codomain.
+  \end{solution}
+  \vfill
+  \part[8] Give one example of such a function that is injective and one that is not.  Then say how many injective functions there are and why your answer makes sense.
+  \begin{solution}
+    One of the injective functions is $f = \twoline{1 & 2 & 3 & 4}{3 & 1 & 2 & 5}$, while $f = \twoline{1 & 2 & 3 & 4}{2 & 2 & 3 & 3}$ is not, since two elements of the domain go to the same element of the codomain.
+
+    There are $6\cdot 5 \cdot 4 \cdot 3 = \frac{6!}{2!} = P(6,4)$ injective functions.  This is because there are 6 choices for the image of 1, but only 5 choices different than $f(1)$ for the image of 2, and so on.
+  \end{solution}
+  \vfill
+  \part[6] Explain why there are no surjective functions with this domain and codomain.
+  \begin{solution}
+    For function to be surjective, every element of the codomain must be the image of at least one element from the domain.  But there are more elements in the codomain than in the domain, so this is not possible.
+  \end{solution}
+  \vfill
+  \part[8] Your professor claims that you can compute the number of surjective functions as:
+  \[6^4 - \left(\binom{6}{1}5^4 - \binom{6}{2}4^4 + \binom{6}{3}3^4 - \binom{6}{4}2^4 + \binom{6}{5}1^4 \right).\]
+  Explain what each term represents and why they should be combined like this.
+  \begin{solution}
+    This is using the Principle of Inclusion/Exclusion to subtract all the non-surjective functions from the total, $6^4$.  For a function to not be surjective, one or more of the elements in the codomain must be excluded from the range.  First, choose 1 of the 6 elements of the codomain to exclude (in $\binom{6}{1}$ ways) and then count all the functions that exclude this element (there are $5^4$ of them).  But we have counted the functions that exclude two elements too often, so we subtract all the functions where we select 2 of the 6 elements of the codomain and send the elements in the domain to the remaining 4.  Then add back in any function that excludes 3 of the 6 elements of the codomain, sending each element in the domain to one of 3 choices, and so on.
+  \end{solution}
+  \vfill
+  \vfill
+\end{parts}
+
+% \question[9] How many 8-bit strings (bit strings of length 8) are there which:
+%
+%   \begin{parts}
+%     \part Start with 10?  Briefly explain.
+%     \begin{solution}
+%       $2^6$.  For each of the remaining 6 bits, we need to use either a 1 or a 0.
+%     \end{solution}
+%     \vfill
+%     \part Have weight 5?  Briefly explain.
+%     \begin{solution}
+%       ${8 \choose 5}$.  Of the 8 bits, we must choose 5 of them to be 1's.
+%     \end{solution}
+%     \vfill
+%     \part Both start with 10 and have weight 5?  Briefly explain.
+%     \begin{solution}
+%       ${6 \choose 4}$.  After starting with 10, we need to select 6 more bits, of which 4 must be 1's.
+%     \end{solution}
+%     \vfill
+%
+%   \end{parts}
+%  \question[7] How many 8-bit strings start with 10 \emph{or} have weight 5 (or both)?  Explain how to combine your answers from the previous question and why this doesn't over or under count the number of such strings.
+%  \begin{solution}
+%    $2^6 + {8 \choose 5} - {6 \choose 4}$.  We are using PIE: $|A \cup B| = |A| + |B| - |A\cap B|$.  We have definitely counted all the strings here, since we have included all the stings starting with 110 in the $2^6$ and all the strings with weight 5 in the ${8 \choose 5}$.  However, if we stopped there, we would have over counted the strings that are both.  For example, 10111010 both starts with 10 and has weight 5, so we added it to our count twice.  Removing it (along with all ${6 \choose 4}$ such strings) ensures we count it exactly once.
+%  \end{solution}
+% \vfill
+% \vfill
+
+
+% \newpage
+%
+% \question[20] You have a huge box of {\em Greek Alphabits} cereal, containing lots of each of the 24 letters in the Greek alphabet.  For each part below, include the answer and a very brief reason your answer is correct.  (Hint: no two answers on this page will be the same.)
+% \begin{parts}
+%   \part How many words can you make using any 7 distinct letters from the box?
+%   \begin{solution}
+%     $P(24,7) = 24 \cdot 23 \cdot \cdots \cdot 18$. There are 24 choices for the letter you pick first, then 23 choices for the second letter, and so on for a total of 7 letters.
+%   \end{solution}
+%   \vfill
+%   \part How many words can you make using any 7 cereal pieces (possibly repeated letters) from the box?
+%   \begin{solution}
+%     $24^7$.  Now we can repeat letters in our word, so there are 24 letters which can come first, 24 which can come second, and so on for 7 letters.
+%   \end{solution}
+%   \vfill
+% \part You reach into the box and grab a handful of 7 letters.  How many different handfuls are possible?
+% \begin{solution}
+% Use stars and bars: each star represents one of the bits of cereal, each bar separates between the types of letters: ${30 \choose 23}$.
+% \end{solution}
+% \vfill
+% \part How many different handfuls are possible if all the 7 letters must be different?
+% \begin{solution}
+% Now just choose 7 of the 24 letters: ${24 \choose 7}$.
+% \end{solution}
+% \vfill
+%
+% \end{parts}
+
+\newpage
+
+\question[24] Select \underline{one} of the three binomial identities below and give a \underline{combinatorial proof} of that identity.  Circle which identity you choose to prove.
+\begin{parts}
+	\part $\d{n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}$
+	\part $\d{n \choose 0} + {n \choose 1} + {n \choose 2} + \cdots + {n \choose n} = 2^n$
+	\part $\d{n \choose 3}{n-3\choose 2}{n-5 \choose 1} = {n \choose 1}{n-1 \choose 2}{n-3 \choose 3}$
+\end{parts}
+
+ \begin{solution}
+   \begin{proof}
+   \begin{parts}
+   	\part Consider the question, ``how many $n$-bit strings contain $k$ 1's?''  One way to answer this is simply ${n \choose k}$, since we must choose $k$ of the $n$ bits to be 1's.
+
+   	Alternatively, we could break the problem into two cases: count the bit strings which start with 1 and the bit strings which start with 0.  There are ${n-1 \choose k-1}$ bit strings which start with 1, since we need to choose $k-1$ 1's from the remaining $n-1$ bits.  There are ${n-1 \choose k}$ bit strings which start with 0, since we need to choose $k$ 1's from the remaining $n-1$ bits.  Thus the number of $n$-bit strings containing exactly $k$ 1's is also ${n-1 \choose k-1} + {n-1 \choose k}$.
+
+    \part Consider the question, ``how many $n$-bit strings are there?''  One way to answer this is simply $2^n$: we have two choices for each of the $n$ bits.
+
+   	On the other hand, we can break this into cases.  First, how many bit strings have weight 0?  There are ${n \choose 0}$.  How many have weight 1?  ${n \choose 1}$.  And weight 2?  ${n \choose 2}$.  And so on, until we consider all possible weights from 0 to $n$.  This gives the left hand side.
+
+    \part Consider the question, ``if you have $n$ books to give away, how many ways can you give 3 to your best friend, 2 to your second-best fried, and 1 to your roommate?''  One way to answer this is to choose $3$ of the $n$ books to give to your best friend in ${n \choose 3}$ ways, and then of the remaining $n-3$ books, choose $2$ to give to your second-best friend (in ${n-3 \choose 2}$ ways) and then pick 1 of the remaining $n-5$ books to give to your roommate.
+
+   	Alternatively, you could first pick the book to give to your roommate - you have ${n \choose 1}$ choices.  Then pick 2 books to give to your second-best friend from the remaining $n-1$ books in ${n-1 \choose 2}$ ways, and finally pick 3 of the remaining $n-3$ books to give to your best friend.
+   \end{parts}
+
+   \end{proof}
+
+ \end{solution}
+
+
+\newpage
+\question[18] You have 10 identical snails to feed to your 4 starfish (named SF-A, SF-B, SF-C, and SF-D).
+\begin{parts}
+\part One way to distribute the snails is to give 3 snails to SF-A, 2 snails to SF-B, 0 snailes to SF-C, and 5 snails to SF-D.  How would you represent this outcome as a stars-and-bars diagram?
+\begin{solution}
+Each star represents a snail, the spaces between the bars represent the different starfish.
+\[***|**||*****\]
+\end{solution}
+\vfill
+\part How many ways are there to distribute the snails all together?  Briefly explain.
+\begin{solution}
+$\d{13\choose 3}$ -- each way to distribute the snails corresponds to exactly one stars and bars diagram with 10 stars and 3 bars.  We can make such a diagram by choosing which if the 13 symbols are the three bars.
+\end{solution}
+\vfill
+% \part How many ways could you distribute the snails so that each starfish gets at least one snail?  Briefly explain.
+% \begin{solution}
+% First distribute 4 snails (1 to each starfish) -- there is only 1 way to do this.  Then distribute the remaining 6 among the four starfish, which can be done in $\d{9\choose 3}$ ways since there are 6 stars and 3 bars.
+% \end{solution}
+% \vfill
+
+% %Maybe too hard
+\part How many ways could you distribute the snails provided that SF-A or SF-B (or both) get \emph{more} than 2 snails?  Briefly explain.  (Hint: Starfish love snails as much as pie.)
+\begin{solution}
+For SF-A to get more than 2 snails, you could give it 3 and then distribute the remaining 7 to all 4 starfish.  This can happen in ${10 \choose 3}$ ways.  That is also the number of ways you can distribute more than 2 snails to SF-B.  But we can't just add these together, because we have counted the ways to give both SF-A and SF-B too many snails in each group.  So we subtract off ${7\choose 3}$, the ways you could give both SF-A and SF-B 4 or more snails.  Thus
+\[{10\choose 3}+{10\choose 3} - {7 \choose 3}\]
+\end{solution}
+\vfill
+\vfill
+% \part Your professor claims that the number of ways to distribute the snails provided that NO starfish gets more than 2 snails is
+% \[\binom{13}{3} - \left(\binom{4}{1}\binom{10}{3} - \binom{4}{2}\binom{7}{3} + \binom{4}{3}\binom{4}{3}  \right).\]
+% Explain why this is correct (say what each term represents and why they should be combined as they are).
+% \vfill
+% \vfill
+\end{parts}
+
+\question[10] What if the snails in the previous question were NOT identical? How many ways can you distribute the snails to the starfish (giving each starfish all of their snails at the same time, not in any particular order)? Explain your answer and why it makes sense that it is larger than the answer to part (b) above.
+\begin{solution}
+  In the previous question, giving SF-A the first and third snail was the same outcome as giving it the first and second snail (we only cared about how many each SF got).
+
+  The total number of ways to distribute snails to starfish will now be $4^9$, since for each snail, we have 4 choices for which starfish to feed that snail to.
+\end{solution}
+\vfill
+\vfill
+
+
+
+
+\newpage
+
+\bonusquestion[10] BONUS!!! What if it \emph{did} matter in what order you distributed the snails to the starfish?  If you have 4 starfish and 10 snails, each a different flavor, which you will feed to your starfish one at a time (each snail going to one particular starfish), how many ways can you feed your starfish?  Explain your answer.
+
+Hint: This question is a bonus since we have not done anything like this in class.
+
+\begin{solution}
+  Here are two ways to think of the problem:
+
+  First, decide how many snails each starfish will get.  This is the stars-and-bars problem: ${13 \choose 3}$.  But now, any stars and bars diagram has 10 different stars, so these stars can be rearranged in $10!$ different ways (leaving the relative position of the bars alone).  So the answer is
+  \[{13 \choose 3}\cdot 10!\]
+
+  Another approach:  Think of laying out the meals for each starfish in their own row.  The first snail can go in any of 4 rows.  The second snail can go on the right of any row, or just two the left of the first snail, so there are 5 position so put the 2nd snail.  There are 6 positions to put the third snail: to the right on any row, or just to the left of either of the two previously placed snails.  There will be 7 positions for the 4th snail, and so on.  The number of options is therefore
+  \[4 \cdot 5 \cdot 6 \cdot \cdots \cdot 13 = P(13,10)\]
+\end{solution}
+
+% \bonusquestion[10] BONUS!!! A lattice path in three dimensions is a path between two points in 3-dimensional space which moves one unit at a time in either the $x$-, $y$-, or $z$-directions.  (In other words, it is exactly like a regular lattice path, only in 3D.)
+%
+% How many shortest lattice paths are there from $(1,2,2)$ to $(8,6,7)$?  Find the answer in two different ways, explaining why they are both correct, to establish a binomial identity.
+%
+% \begin{solution}
+% 	We must move 7 units in the $x$-direction, 4 units in the $y$-direction, and 5 unites in the $z$-direction.  This is a total of 16 units.  Of those 16 steps, we must choose 7 of them to be in the $x$-direction.  We can do this in ${16 \choose 7}$ ways.  Of the remaining 9 steps, we must choose 4 to be in the $y$-direction: ${9 \choose 4}$.  This leaves 5 steps of the remaining 5 to be in the $z$-direction (which can only be accomplished in one way).  Thus the total number of paths is:
+%
+% 	\[{16 \choose 7}{9 \choose 4}\]
+%
+% 	We could also have picked the $z$-direction steps first and then the $x$-direction.  This would give:
+%
+% 	\[{16 \choose 5}{11 \choose 7}\]
+%
+% 	There are also 4 other forms to the answer.
+% \end{solution}
+
+
+% \bonusquestion[10] BONUS! When bees play chess, they use a hexagonal board like the one shown below.  The queen bee can move one space at a time either directly to the right or angled up-right or down-right (but can never move leftwards).  How many different paths can the queen take from the top left hexagon to the bottom right hexagon?  Explain.  (As an example, there are three paths to get to the second hexagon on the bottom row.)
+%
+% \begin{center}
+% \def\r{1}
+% \newcommand{\hexagon}[3]{
+%   \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+%   \def\y{-\r*#1-sin{30}*\r*#1}
+%   \draw[thick] (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+%   \draw (\x,\y) node{#3};
+% }
+% \begin{tikzpicture}
+% \hexagon{1}{0}{\tiny start};
+% \hexagon{2}{2}{3}
+% \foreach \i in {1,...,5} {
+% 	\foreach \j in {1,2} {
+% 		\hexagon{\j}{\i}{};
+% 	}
+% }
+% \hexagon{2}{6}{\tiny stop};
+% \end{tikzpicture}
+% \end{center}
+
+
+
+%\question[10] The candy store where you work stocks 17 types of candy bars.  You are tasked with creating gift bags containing 9 candy bars each.  How many different gift bags can you make if,
+%\begin{parts}
+%  \part each bag must contain 9 different types of candy bars?  Briefly explain.
+%  \begin{solution}
+%    ${17 \choose 9}$ - you must choose 9 of the 17 candy bars to be in the bag (order does not matter).
+%  \end{solution}
+%
+%  \vfill
+%  \part the bags can contain more than one candy bar of a given type?  Briefly explain.
+%  \begin{solution}
+%    ${25 \choose 16}$ - each bag can be represented by a diagram with 9 stars and 16 bars (each bar switches between candy bar type).
+%  \end{solution}
+%
+%  \vfill
+%\end{parts}
+%\question[10] Later that week, 9 kids come into the store, with a Groupon for 9 candy bars. Again choosing from the 17 types of candy bars, how many ways can the kids select candy bars (one bar per kid) if,
+%\begin{parts}
+%  \part each kid gets a different type of candy bar?  Briefly explain.
+%  \begin{solution}
+%    $P(17, 9) = 17\cdot 16 \cdot 15 \cdot 14 \cdot 13 \cdot 12 \cdot 11 \cdot 10 \cdot 9$.  Select 9 of the 17 candy bars, when order matters.
+%  \end{solution}
+%
+%  \vfill
+%  \part kids are allowed to get the same type of candy bar?  Briefly explain.
+%  \begin{solution}
+%    $17^9$.  Each of the 9 kids can select any of the 17 bars, since repeats are allowed.
+%  \end{solution}
+%
+%  \vfill
+%\end{parts}
+%
+%\newpage
+%\question[20] You want to divide up 33 kids into 3 teams (to play a misguided game of 3-way soccer).  There will be a red team, a blue team, and a green team, each having 11 kids on it.  Additionally, each team will need one of the kids on it to be the team captain.
+%
+%How many different ways are there to do this?  Explain how you got your answer and how you know it is correct.  If you are not confident in your answer, at least explain what is good (or maybe bad) about what you do have.
+%\begin{solution}
+%  $\d{33 \choose 11}{22 \choose 11}{11 \choose 11}11^3$.  First select 11 of the 33 kids to be on the first team, then 11 of the remaining 22 to be on the second team, then 11 of the remaining 11 to be on the third team.  Then for each of the three teams, select one of the 11 kids (11 choices per team).
+%
+%  Alternatively, $\d33 \cdot 32 \cdot 31 {30 \choose 10}{20 \choose 10}{10 \choose 10}$.
+%
+%  Both the above answers assume that the three teams are distinguished (first team, second team, third team).  If that is not the case, you would divide the above answers by 6 - the number of ways to arrange the three teams.
+%\end{solution}
+%
+%\vfill
+%
+%
+%\newpage
+
+% \question Your professor's daughter has a large collection of \emph{counting bears}: small plastic bears which are identical except for their color.  Suppose she wanted to line up 11 bears using exactly 4 red bears, 3 blue bears, 2 green bears and 2 yellow bears.
+% \begin{parts}
+%   \part[10] Explain why the number of ways to do this is
+%   \[{11\choose 4}{7 \choose 3}{4 \choose 2}{2 \choose 2}.\]
+%   That is, say what each binomial coefficient (i.e., ${n \choose k}$) represents and why it is appropriate to multiply them.
+% \begin{solution}
+% Think about breaking the task of creating the line into 4 parts: you must do each part one after the other, which is why you multiply.  The first thing you do is select {\em where} the 4 red bears go.  This can be done in ${11\choose 4}$ ways since you are picking 4 out of the 11 spots to fill with the red bears.
+%
+% Next pick the spots where the 3 blue bears can go: there are 7 spots left and you need to pick three of them.  Thus ${7\choose 3}$.  Next pick the 2 spots from the remaining 6 to place the green bears in ${6 \choose 2}$ ways.  This leaves only two spots for the remaining two bears, so we only have $1 = \{2 \choose 2\}$ way to select that.
+% \end{solution}
+% \vfill
+% \vfill
+% \part[6] Give an alternate correct solution to the counting problem, and explain briefly.  Your alternate solutions should NOT just be rewriting the above solution with factorials.
+% \begin{solution}
+% First pick where the yellow bears go, then where the green bears go, then the red bears then the blue bears:
+% \[{11 \choose 2}{9\choose 2}{7 \choose 4}{3 \choose 3}\]
+% There are other answers as well, depending on the order in which decide to place the colors.
+% \end{solution}
+% \vfill
+% \vfill
+% %This did not go well either.  The question should be more specific.  Perhaps ask what identity you have established and what sort of proof establishes that identity.
+% \part[6] Since both answers are correct, what identity have you established and what sort of proof establishes that identity?  Explain.
+% \begin{solution}
+% We have established a binomial identity using a combinatorial proof:
+% \[{11\choose 4}{7 \choose 3}{4 \choose 2}{2 \choose 2}={11 \choose 2}{9\choose 2}{7 \choose 4}{3 \choose 3}\]
+% Both sides of the equation were correct answers to the same counting question.
+% \end{solution}
+% \vfill
+% \end{parts}
+
+%
+%
+%
+%\newpage
+
+%
+%\vfill
+%
+%\question[6] How many functions $f: \{a,b,c,d,e,f\} \to \{1,2,3,4\}$ are there for which $f(a) < f(b)$ and $f(c) \ne f(d)$?  Briefly justify your answer.
+%
+%\begin{solution}
+%To find $f(a)$ and $f(b)$ we must just select 2 of the 4 elements from the codomain.  This can be done in ${4 \choose 2}$ ways.  Then for $f(c)$ there are 4 choices, but then only 3 choices for $f(d)$.  Finally, there are 4 choices for each of $e$ and $f$.  Thus the total number of functions is:
+%\[{4 \choose 2}4\cdot 3 \cdot 4^2\]
+%\end{solution}
+%
+%\vfill
+%\question[6] How many functions $f: \{a,b,c,d,e,f\} \to \{1,2,3,4\}$ are {\em not} surjective?  Explain each part of your answer.
+%\begin{solution}
+%  \[{4 \choose 1}3^6 - {4 \choose 2}2^6 + {4 \choose 3}1^6\]
+%  Choose 1 of the 4 elements to exclude from the range and count the $3^6$ functions which send the 6 elements of the domain to the 3 remaining possible outputs in the codomain.  This double counts functions, so use PIE.
+%\end{solution}
+%
+%\vfill
+%
+%
+%
+%\newpage
+%
+%
+%
+%
+%
+%
+%\question[18] You have 8 identical starfish, which you must distribute among the 5 shelves of your starfish display case.
+%\begin{parts}
+% \part If you use the ``stars and bars'' method to solve this problem, what do the stars represent, and what do the bars represent?  Give one possible star and bar diagram and say what outcome it corresponds to.
+% \begin{solution}
+% Each star represents a starfish, and each bar is a switch between shelves.  For example,
+%   \[***||****|*|\]
+%   corresponds to the outcome in which the first shelf has 3 starfish, the second shelf is empty, the third shelf has 4 starfish, and the fifth shelf is again empty.
+% \end{solution}
+%
+% \vfill
+% \part How many different outcomes are possible if shelves can be empty?  What if each shelf needs at least one starfish?  Explain your answers.
+% \begin{solution}
+%   With empty selves: ${12 \choose 8}$.  Using a stars and bars diagram, there are 8 stars and 4 bars, giving a total of 12 symbols from which we must choose 8 to be stars.
+%
+%   With no empty selves: ${7 \choose 3}$.  Put one starfish on each shelf.  This leaves 3 stars and 4 bars.
+% \end{solution}
+%
+% \vfill
+%
+% \part How many different outcomes are possible, if no shelf can hold more then 2 starfish?  Explain.
+% \begin{solution}
+%   ${12 \choose 4} - \left[{5 \choose 1}{9 \choose 4} - {5 \choose 2}{6 \choose 4}\right]$.  Subtract those outcomes which put 3 or more star fish on one or more shelves.  Use PIE.
+% \end{solution}
+%
+% \vfill
+%\end{parts}
+%
+%
+%
+%
+%
+%
+
+\end{questions}
+
+
+
+
+\end{document}

@@ -1,0 +1,241 @@
+ \documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18 mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18 mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{ bns pts}
+
+\addpoints
+\pagestyle{headandfoot}
+%\printanswers
+
+\firstpageheader{Math 228}{\bf\large Exam 2 - In Class}{November 9, 2018}
+\runningfooter{}{\thepage}{}
+\extrafootheight{-.45 in}
+
+
+
+\begin{document}
+%space for name
+\noindent {\large\bf Name:} \underline{\hspace{2.5 in}}
+\vskip 1em
+
+\noindent{\bf Instructions:} Answer each of the following questions.  Answers without supporting work or explanations will be counted as incorrect.  When asked to explain, justify, or prove your answers, use complete English sentences.
+
+
+
+\begin{questions}
+
+  \question[4] Select the best answer to each counting problem below.
+  \begin{parts}
+
+  \part Suppose you own 11 distinct bow ties.  You are going on a 4-day trip and need to select a different tie for each day you will be gone (so you will select which tie to wear the first day, which to wear the second, and so on).  How many ways can you do this?
+
+  \begin{oneparchoices}
+  \choice $11! = 39916800$
+  \choice $P(11, 4)=7920$
+  \choice $\d{11 \choose 4}=330$
+  \choice $4! = 24$
+  \end{oneparchoices}
+
+  \begin{solution}
+  $P(11,4) = 11\cdot 10\cdot 9\cdot 8 = 7920$.  There are 11 choices for which tie to wear on the first day, then 1 choices for which to wear on the second day, and so on.
+  \end{solution}
+
+  \vskip 1em
+  \part You are running late so decide to choose which tie to wear on which day later, and just want to pick 4 ties to toss into your suitcase.  How many ways can you do this?
+
+  \begin{oneparchoices}
+  \choice $11! = 39916800$
+  \choice $P(11, 4)=7920$
+  \choice $\d{11 \choose 4}=330$
+  \choice $4! = 24$
+  \end{oneparchoices}
+
+  \begin{solution}
+  $\d{11 \choose 4} = \frac{11!}{7!4!} = 330$.  You simply must choose 4 out of the 11 ties to wear, which can be done in $\d {11\choose 4}$ ways.
+  \end{solution}
+  \vskip 1em
+  \end{parts}
+
+  \question[8] Explain the relationship between the two counting problems above both numerically and in terms of bow ties.  Be specific: don't just say which is larger, say how many times larger it is, and why this makes sense.
+
+
+  \begin{solution}
+  The answer to the first question will be 24 times larger than the answer to the second question.  This is because for each choice of 4 out of 11 ties, there are 24 different arrangements of those ties (4 choices for which of the 4 go first, 3 choices for which goes second, 2 choices for which goes third, leaving 1 choice for which goes fourth).  Notice that in the first question we need to select 4 out of 11 ties {\em and} arrange them, while in the second we only select them.
+
+  The other way to see this is to consider all the ways to arrange 4 out of 11 ties, which is $11\cdot 10\cdot 9 \cdot 8$.  From this to get just the ways to select (but not arrange) the ties, we must divide by 24 because for each selection of 4 ties, we have counted 24 different arrangements of those four ties.  Now though we want to count all 24 of those as a single outcome.
+  \end{solution}
+
+  \vfill
+
+
+  \newpage
+
+  \question[12] You have a huge box of {\em Greek Alphabits} cereal, containing lots of each of the \underline{24 letters} in the Greek alphabet.  For each part below, include the answer and a very brief explanation of why your answer is correct.
+
+  (Hint: no two answers on this page will be the same.)
+  \begin{parts}
+    \part How many words can you make using any 7 \emph{distinct} letters from the box?
+    \begin{solution}
+      $P(24,7) = 24 \cdot 23 \cdot \cdots \cdot 18$. There are 24 choices for the letter you pick first, then 23 choices for the second letter, and so on for a total of 7 letters.  This will be similar to (b), but there are are you allowed repeated letters.
+    \end{solution}
+    \vfill
+    \part How many words can you make using any 7 cereal pieces (possibly repeated letters) from the box?
+    \begin{solution}
+      $24^7$.  Now we can repeat letters in our word, so there are 24 letters which can come first, 24 which can come second, and so on for 7 letters.  So this is just like part (a), but there you are not allowed repeats.
+    \end{solution}
+    \vfill
+  \part You reach into the box and grab a handful of 7 letters.  How many different handfuls are possible?
+  \begin{solution}
+  Use stars and bars: each star represents one of the bits of cereal, each bar separates between the types of letters: ${30 \choose 23}$.  This is different from (a) and (b) because you are not counting different arrangements of letters as different outcomes.
+  \end{solution}
+  \vfill
+  \part How many different handfuls are possible if all the 7 letters must be different?
+  \begin{solution}
+  Now just choose 7 of the 24 letters: ${24 \choose 7}$.  This is similar to part (a), but here you are not counting different arrangements as different outcomes.  It is also similar to (c), but here you are not allowed repeats.
+  \end{solution}
+  \vfill
+
+  \end{parts}
+
+
+  \newpage
+
+  \question The magic candy machine at Trader Joe's spits out 5 candies the first time you insert a coin, then increases the number of candies distributed by 4 for each coin after that (so the 2nd coin results in 9 candies, the 3rd coin results in 13 candies, etc.).
+  \begin{parts}
+    \part[6] Let $(a_n)_{n\ge 1}$ be the sequence where $a_n$ is the number of candies distributed for the $n$th coin.  Give a recursive definition and a closed formula for $a_n$ (clearly mark which is which).
+    \begin{solution}
+      This sequence will be arithmetic.
+
+      Recursive definition: $a_n = a_{n-1} + 4$; $a_1 = 5$.
+
+      Closed formula $a_n = 1+4n$ or $a_n = 5+4(n-1)$.
+    \end{solution}
+    \vfill
+    \part[8] Let $(b_n)_{n \ge 1}$ be the sequence where $b_n$ is the \emph{total} number of candies distributed after the $n$th coin was inserted (this includes all the candies for all previous coins, so the sequence starts $5, 14, 27,44,\ldots$).  Give a recursive definition and a closed formula for $b_n$.  \\
+    Show your work (especially for the closed formula).
+    \begin{solution}
+      The recursive definition will be $b_n = b_{n-1} + (1+4n)$ with $b_1 = 5$.  To find the closed formula, we could use polynomial fitting, but reverse and add is easier.
+
+      \[b_n = 5 + 9 + 13 + \cdots + (1+4n)\]
+
+      \[b_n = (1+4n) + \cdots + 13 + 9 + 5\]
+
+      \[2b_n = n(6+4n) \]
+      So $b_n = \frac{n(6+4n)}{2} = 3n+2n^2$
+    \end{solution}
+    \vfill
+    \vfill
+  \end{parts}
+
+  \newpage
+
+  \question[12]  For each sequence described below, circle the form of the closed formula and briefly explain.  Then write down the system of equations you would need to solve to find the constants $a$, $b$, etc.  (You do not need to find the constants.)
+  \begin{parts}
+    \part The sequence $(a_n)_{n \ge 0}$ with recursive definition $a_n = a_{n-1} + (n^2+3)$; $a_0 = 1$.\\ (The sequence starts $1, 5, 12, 24, 45,\ldots$.)
+    \vskip 1ex
+    \begin{oneparchoices}
+    \choice $an^2+bn+c$ ~
+    \choice $an^3+bn^2+cn+d$ ~
+    \choice $a3^n + b(-1)^n$ ~
+    \choice $a2^n +b3^n$
+    \end{oneparchoices}
+    \vskip 1ex
+    Briefly explain:
+    \begin{solution}
+      The closed formula will be choice B: $an^3 + bn^2 + cn + d$.  This is because the first differences are quadratic, so the original sequence will be cubic.  Alternatively, we will know that the third differences are constant.
+    \end{solution}
+    \vfill
+    System of equations:
+    \begin{solution}
+      First, since $a_0 = 1$, we have $d = 1$  Thus we get 3 equations and 3 unknowns:
+      \[5 = a+b+c + 1\]
+      \[12 = 8a + 4b + 2c + 1\]
+      \[24 = 27a + 9b + 3c + 1\]
+    \end{solution}
+    \vfill
+    \vfill
+    \part The sequence $(b_n)_{n \ge 0}$ with recursive definition $b_n = 5b_{n-1} - 6 b_{n-2}$; $b_0 = 1$, $b_1 = 4$.\\  (The sequence starts $1, 4, 14, 46, 146,\ldots$.)
+    \vskip 1ex
+    \begin{oneparchoices}
+    \choice $an^2+bn+c$ ~
+    \choice $an^3+bn^2+cn+d$ ~
+    \choice $a3^n + b(-1)^n$ ~
+    \choice $a2^n +b3^n$
+    \end{oneparchoices}
+    \vskip 1ex
+    Briefly explain:
+    \begin{solution}
+      The characteristic polynomial will be $x^2 - 5x + 6 = (x-2)(x-3)$.  Thus the answer is D: $b_n = a2^n + b3^n$.
+    \end{solution}
+    \vfill
+    System of equations:
+    \begin{solution}
+      \[1 = a+b\]
+
+      \[4 = 2a + 3b\]
+    \end{solution}
+    \vfill
+    \vfill
+  \end{parts}
+
+\end{questions}
+
+
+
+
+\end{document}

@@ -1,0 +1,1692 @@
+ %% Here is my outline for Math 228, Fall 2017.
+
+\documentclass[12pt]{article}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usetikzlibrary{positioning,matrix,arrows}
+
+\pagestyle{fancy}
+
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem{problem}{Problem}
+\newtheorem{question}{Question}
+\newtheorem{answer}{Answer}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Def}
+\newtheorem*{example}{Ex}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{solution}{Solution}
+
+
+
+%%% macros %%%%%
+\newcommand{\ex}{\noindent{\bf Ex: }}
+
+\def\d{\displaystyle}
+% \def\uplevel#1{\end{itemize}#1\begin{itemize}}
+\def\deg{^\circ}
+\def\st{~:~}
+
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\iff{\Leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\land{\wedge}
+
+
+
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\R{\mathbb R}
+\def\Q{\mathbb Q}
+\def\P{\mathbb P}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\F{\mathbb F}
+\def\pow{\mathcal{P}}
+\def\b{\mathbf}
+\def\st{~|~}
+\def\bar{\overline}
+\def\inv{^{-1}}
+
+
+%headers and footers:
+\lhead{\footnotesize Math 228 Lecture Outline}
+\chead{}
+\rhead{}
+\newcommand{\todayis}[1]{\clearpage{\rhead{\footnotesize #1}}}
+\newcommand{\todayiscont}[1]{ \vspace{3 em}\centerline{\footnotesize Math 228 Lecture Outline \hfill #1} \vspace{-1 em} \noindent\hrulefill }
+
+%opening
+
+\begin{document}
+
+\thispagestyle{empty}
+% \todayis{Monday, August 21}
+
+\begin{center}
+\textbf{\Large Course Outline for Discrete Mathematics (Math 228) Fall 2017}
+\end{center}
+
+Welcome to Discrete Mathematics.  This pdf you are now reading will contain brief lecture outlines describing what we do in class each day.  This is {\bf NOT} a set of course notes -- for those you should download the free ``textbook'' on Canvas or view the online version at \url{http://discrete.openmathbooks.org/dmoi/}.  The notes in this file are provided so that you can remember what we did on a given day, to help synchronize the notes you took in class, or in case you miss a day (gasp!) you can see what you need to catch up on.
+
+Since class was canceled on Monday, you were asked to read over the syllabus carefully and ask questions next time.  You should also work on some introductory problems.  The goal of these problems is to give you an idea of what Discrete Mathematics, and this course, is about.
+
+
+\todayis{Wednesday, August 23}
+\subsection*{Mathematical Statements}
+
+ Start by going over some of the problems from the First Day Problems activity.  Talk about the handshake problem.  Then description the logic puzzle:
+
+ While walking through a fictional forest, you encounter three trolls guarding a bridge.  Each is either a {\em knight}, who always tells the truth, or a {\em knave}, who always lies.  The trolls will not let you pass until you correctly identify each as either a knight or a knave.  Each troll makes a single statement:
+ \begin{itemize}
+  \item[] Troll 1: If I am a knave then there are exactly two knights here.
+  \item[] Troll 2: Troll 1 is lying.
+  \item[] Troll 3: Either we are all knaves or at least one of us is a knight.
+ \end{itemize}
+ Which troll is which?
+
+Our goal today is to agree upon some common language and notation used to describe the language and notation of mathematics.
+
+\begin{itemize}
+  \item A \emph{statement} is a sentence that is either true or false.  ``$n$ is even'' is NOT a statement.
+  \item Simple, irreducible statements are called atomic.  If we combine simpler statements to make one larger statement, the larger statement is called \emph{molecular}.
+  \item How can we combine statements?  Introduce logical connectives: disjunctions, conjunctions, implications (conditionals), biconditionals, negations.
+  \item Consider the ways that we might combine statements about the weather on Friday and my bringing donuts.
+  \item A more mathematical example: connections between a number being odd and being prime.  Note that the number 7 is odd and prime.  The number 2 is odd or prime, as is the number 9.  Can we say something about the relationship between $x$ being odd and greater than 2 and $x$ being prime?
+  \item How about: If a number is prime and greater than 2, then it is odd.  Does it go the other way?  That is, what can we say about the \emph{converse}?
+  \item Talk about the contrapositive as well.  And the negation (the converse is false so its negation is true).
+  \item Stress the importance of implications in mathematics.
+  \item But to be careful, we need to use quantifiers.  For all $x$, if $x$ is prime and greater than 2, then $x$ is prime.
+  \item If time permits, talk about necessary and sufficient language.
+  \item Next time we will apply our mathematical statements to mathematical objects call sets.  Read section 0.3, start practice problems from 0.2.  Homework 1 will be due next Wednesday.
+\end{itemize}
+
+
+
+
+
+\todayis{Friday, August 25}
+\subsubsection*{Statements (cont.)}
+
+\begin{itemize}
+  \item Review implications.  Give a mathematical example.  Ask students to write down the converse, contrapositive, and negation.  Say something about quantifiers.
+\end{itemize}
+
+\subsection*{Sets}
+
+\begin{itemize}
+\item A set is a collection of objects, roughly.  A better definition is that a set is a mathematical object for which other mathematical objects are either elements or are not elements.  (Compare: a statement is a sentence which is true or false.)
+
+\item Much of discrete math is the study of finite sets.  Next week we will start counting things.  This means counting the size of sets.
+
+\item We can combine sets using unions and intersections.  These are sort of like disjunctions and conjunctions.  Also, compliments and set differences.
+
+\item We can also compare two sets.  Two sets might be equal, or one might be a \emph{subset} of another.
+
+\item True or false: $A \cap B \subseteq A \cup B$.  To prove this, we need to think of the implication that this is equivalent to.  For all elements $x$, if $x \in A \cap B$ then $x \in A \cup B$.
+
+\item Note that there is a very important difference between our two sorts of ``in''.
+
+\item Is $4 \in \{1,2,3,4,5\}$?  Yes, one of the elements of the set is the number 4.
+\item Is $4 \subseteq \{1,2,3,4,5\}$?  No, this doesn't even make sense because 4 is not a set, so it cannot be a subset of another set.  However, $\{4\} \subseteq \{1,2,3,4,5\}$ is true, since everything in the first set (namely just 4) is in the second set.
+\item Is $\{4\} \in \{1,2,3,4,5\}$?  No, but this does make sense, it is just false.  The larger set contains 5 elements, each of which is a number.  It could be that the set containing just 4 is an element of a set.  For example, $\{4\} \in \{1,\{2,3\}, \{4\}, \emptyset\}$.
+
+\item Is $\{4\} \subseteq \{1, \{2,3\}, \{4\}, \emptyset\}$?  No.  For this to be true, we would need every element of the set $\{4\}$ to also be an element of the larger set.  But the one element in $\{4\}$, namely the number 4, is not in the larger set (note that 4 is not the same thing as the set containing 4 - one is a number, the other is a set).
+
+\item What about $\emptyset \subseteq \{1,2\}$?  This is true.  In fact, the empty set is a subset of every set, because there is nothing that is in the empty set which is not in the larger set (since there is nothing in the empty set).
+
+\item Discuss this in relation to implications and contrapositives (from last time).
+
+\item So much for practice with notation.  What we are really interested in is how sets could be used in counting.  In other words, we need to be able to find the cardinality of sets.
+
+\item Work on the ``Set Size'' activity.
+\end{itemize}
+
+
+\todayis{Monday, August 28}
+
+\subsection*{Functions}
+%Maybe for next time consider incorporating the Pigeon Hole Principle
+The activity from last time asked for the cardinality of the set of all two element subsets of $\{1, 2,\ldots, 10\}$.  Some of you discovered that there are 45 such subsets, and that this is the same problem as the handshake problem (how many handshakes occur between 10 people if everyone shakes the hand of everyone else?).  To make the claim that these are really the same problem just asked in two different ways, we want to compare them.  To do this, we will need to look at functions, which is the topic for today.
+
+\begin{itemize}
+\item Why do we think that the counting handshakes problem and the counting 2-element subsets problem are the same?  We mean more than just that the answers are the same.  So what?
+
+\item We claim that each handshake someone corresponds exactly with one and only one 2-element subset.  How could we explain this matching?
+
+\item In mathematical terms, we are claiming that there is a function which sends each handshake to a 2-element subset.  How might we describe this function.
+
+\item Let's say that the people at the party are named $A, B, C, \ldots, J$.  The set of handshakes might be represented by $\mathcal{H_s}= \{AB, AC, AD, \ldots, HJ\}$.   We were calling the set of all two elements subsets of $\{1,2,\ldots, 10\}$ the set $\mathcal{B}_2 = \{\{1,2\}, \{1,3\}, \{1,4\}, \ldots\{9,10\}\}$.
+
+\item We have a function $f: \mathcal{H_s} \to \mathcal{B}_2$ defined by $f(AB) = \{1,2\}$, $f(AC) = \{1,3\}$, and so on.  That is, the pair of letters that make up a handshake get sent to the subset that contains the two numbers corresponding to the letters' place in the alphabet.  For example, $EJ$ has the 5th letter $E$ and $10$th letter $J$, so it gets sent to the set $\{5,10\}$.
+
+\item So there is a function with {\em domain} the set of handshakes and {\em codomain} the set of 2-element subsets.  Is this enough to be sure the two sets must have the same size?
+
+\item Consider the function example we ended with last time: let $f:S \to C$ be the function which takes a student and sends him or her to the chair he or she is sitting in.  Is this a function?  Does this function prove that there are an equal number of students and chairs in this room?
+
+\item The problem is the codomain (the set of chairs) is not equal to the range (the set of chairs being sat in, the set of outputs of the function).  In other words, this function is not {\em onto} or {\em surjective} (it is not a {\em surjection}).
+
+\item In order to prove two sets have the same size, we need there to be a {\em surjective} function from one to the other.  Is this enough?
+
+\item Everyone, think of a number between 1 and 5.  Now consider the function $f:S \to \{1,2,3,4,5\}$ which assigns each student here to the number he or she is thinking of.  Is this function surjective?  What would we need to ensure that it is?  Okay, assuming at least one person has thought of each number, does this prove that there are only 5 students here today?
+
+\item No, because more than one student will be thinking of a given number.  In other words, this function is not {\em one-to-one} or {\em injective} (it is not an {\em injection}).
+
+\item Was the function assigning students to chairs an injection?
+
+
+\item Okay, so for a function to accurately compare the sizes of two sets (as equal) the function must be both injective and surjective.  Such functions are called {\em bijective} (they are a {\em bijection}).
+
+\item Notice, $f$ being injective means each element of the codomain is the output for {\em at most} one element of the domain, while $f$ being surjective means each element of the codomain is the output for {\em at least} on element of the domain.  So $f$ being a bijection means each element of the codomain is the output for exactly one element of the domain.
+
+\item Do we need to worry about the other direction?  That is could it be that even though each element of the codomain is the output for exactly one input, that there are somehow more or fewer elements in the domain?  Maybe there are elements of the domain that don't go anywhere?  Or maybe one element of the domain goes to two outputs?  NO! If either of these happened, then $f$ would not even be a function.
+% \item One last note about functions: perhaps before today you thought that a function was some formula, like $f(x) = x^2 + 6$.  This is NOT a function, it is a way to write the rule that defines the function.  Sometimes we will use formulas like this to define functions, other times we might describe the function in words, or use a graph to describe the function, or just say where each element goes.  It is perfectly acceptable to define a function $f:\{1,2,3\} \to \{2, 4, 6\}$ either as $f(x) = 2x$ or as $f(1) = 2$, $f(2) = 4$, and $f(3) = 6$.  And what about the function defined by $f(1) = 4$, $f(2) = 6$, and $f(3) = 2$?  How could you possibly come up with a formula to describe that?  And yet, it is still a perfectly valid function (in fact, a bijection).
+%
+% \item Since we often want to discuss functions with finite domains, we should have some notation to describe these functions, even if no nice formula is present.  We use \emph{two-line} notation by writing a 2 by $n$ matrix (where $n$ is the size of the domain).  Each column to send the top entry to the bottom entry.  For example, the the functions described in the previous bullet could be written $f = \begin{pmatrix}1 & 2 & 3 \\ 2 & 4 & 6\end{pmatrix}$ and $f = \begin{pmatrix}1 & 2 & 3 \\ 4 & 6 & 2\end{pmatrix}$
+\end{itemize}
+
+\todayis{Wednesday, August 30}
+
+\subsubsection*{More functions}
+
+\begin{itemize}
+
+  \item One last note about functions: perhaps before today you thought that a function was some formula, like $f(x) = x^2 + 6$.  This is NOT a function, it is a way to write the rule that defines the function.  Sometimes we will use formulas like this to define functions, other times we might describe the function in words, or use a graph to describe the function, or just say where each element goes.  It is perfectly acceptable to define a function $f:\{1,2,3\} \to \{2, 4, 6\}$ either as $f(x) = 2x$ or as $f(1) = 2$, $f(2) = 4$, and $f(3) = 6$.  And what about the function defined by $f(1) = 4$, $f(2) = 6$, and $f(3) = 2$?  How could you possibly come up with a formula to describe that?  And yet, it is still a perfectly valid function (in fact, a bijection).
+
+  \item Since we often want to discuss functions with finite domains, we should have some notation to describe these functions, even if no nice formula is present.  We use \emph{two-line} notation by writing a 2 by $n$ matrix (where $n$ is the size of the domain).  Each column to send the top entry to the bottom entry.  For example, the the functions described in the previous bullet could be written $f = \begin{pmatrix}1 & 2 & 3 \\ 2 & 4 & 6\end{pmatrix}$ and $f = \begin{pmatrix}1 & 2 & 3 \\ 4 & 6 & 2\end{pmatrix}$
+
+\item We have seen that if $f:A \to B$ is a bijection, then $|A| = |B|$.  What is the contrapositive of this?  If $|A| \ne |B|$, then every function $f:A \to B$ is NOT a bijection.  We can actually be a little more specific here.
+
+\item Suppose $|A| > |B|$.  What can you say about functions $f: A \to B$.  Could they be surjective?  Yes, but not necessarily.  Could they be injective?  Absolutely not!
+
+\item Suppose you have a bunch of white socks and a bunch of black socks.  If you pick three socks at random, must you have two socks of the same color?  Consider the function $f:\{1,2,3\} \to \{W, B\}$ defined by $f(x)$ is the color of the $x$th sock you pick.  Since the domain is larger than the codomain, the function cannot be injective.  This means that there are two elements of the codomain that are assigned to the same element of the domain.  Put another way, $f\inv(W)$ or $f\inv(B)$ has cardinality 2 or greater.
+\end{itemize}
+
+
+ \section*{Introduction to Counting}
+ \begin{itemize}
+ 	\item Introduce counting with a few examples.  Maybe about how many functions there are?
+   \item Let's back up and start at the beginning. Work on the activity Counting 101. Let everyone agree on the additive and multiplicative principles.
+  %  \item Why do they work?  Suppose you have colored chips.  In one pile you have a red, blue and green.  In another pile you have a yellow.  If you want to pick a chip from either the first or second pile, how many choices do you have?  Push the chips together!
+  %  \item Why does the multiplicative principle work?  Distribute the activity and use the chips to actually build all the stacks, at least for the first problem.
+%    \item One way to explain it: multiplication is repeated addition.  For each outcome of the first event, we have $n$ outcomes (one for each outcome of the second event).  Now we have $m$ disjoint sets of $n$ outcomes, so we add them all up.  Adding $n$ to itself $m$ times is the same as $m \cdot n$.
+% \item Can we use the language of set theory to discuss this?
+% \item What does the multiplicative principle say in terms of sets?  We have $|A \times B| = |A|\cdot |B|$.  Why?  Think about arranging all the ordered pairs in columns.
+% \item The additive principle says that we are taking the union of two disjoint sets.  So we are claiming that $|A \cup B| = |A| + |B|$.  Does this always work?
+\end{itemize}
+
+
+
+\todayis{Friday, September 1}
+ \subsection*{Counting with Sets}
+ \begin{itemize}
+ 	\item Recall the additive and multiplicative principles we discussed from the activity last time.
+   \item Why do they work?  Suppose you have colored chips.  In one pile you have a red, blue and green.  In another pile you have a yellow.  If you want to pick a chip from either the first or second pile, how many choices do you have?  Push the chips together!
+   \item Why does the multiplicative principle work?  Distribute the activity and use the chips to actually build all the stacks, at least for the first problem.
+   \item One way to explain it: multiplication is repeated addition.  For each outcome of the first event, we have $n$ outcomes (one for each outcome of the second event).  Now we have $m$ disjoint sets of $n$ outcomes, so we add them all up.  Adding $n$ to itself $m$ times is the same as $m \cdot n$.
+\item Can we use the language of set theory to discuss this?
+\item What does the multiplicative principle say in terms of sets?  We have $|A \times B| = |A|\cdot |B|$.  Why?  Think about arranging all the ordered pairs in columns.
+\item The additive principle says that we are taking the union of two disjoint sets.  So we are claiming that $|A \cup B| = |A| + |B|$.  Does this always work?
+
+	\item What if we have three sets?  Look at the pie example:  You surveyed people at Village Inn and recorded the number of people who like apple, blueberry or cherry pie.  The results are below.  How many people like at least one type of pie?
+	\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+	\hline
+	 Pies enjoyed: & A & B & C & AB & AC & BC & ABC\\
+	\hline
+	Number of people: & 20 & 13 & 26 & 9 & 15 & 7 & 5\\
+	\hline
+	\end{tabular}
+	\end{center}
+	\item We can draw a Venn diagram for this problem.  Go over this quickly.  It would also be nice to have a formula.
+	\item Let's back up and figure out how this would work for just two sets.  Notice the challenge arises because the sets are not disjoint.  So what we are looking for here is some sort of generalized additive principle.
+	\item We get $|A \cup B| = |A| + |B| - |A \cap B|$.
+	\item Use a Venn diagram to establish PIE: \[|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A \cap B \cap C|\]
+	\item We will return to PIE later in our study of counting, and might even use more sets.
+
+  	\item Here is another counting question about sets: If $A = \{1,2,3,4,5\}$, how many subsets does $A$ have?
+
+  	\item Perhaps an easier question: if you write a number in binary, you use only 0's and 1's.  A string of 0's and 1's is called a \emph{bit-string}.  How many bit-strings are there of length 5?
+
+  	\item Why might these two counting questions be the same?  Why are both answers $32$?
+
+  	\item In general, we have $|\pow(A)| = 2^{|A|}$.
+\end{itemize}
+
+
+
+
+
+
+
+ \todayis{Wednesday, September 6}
+ \subsection*{Bit Strings and Subsets}
+
+
+ \begin{itemize}
+
+	\item Last time we answer this counting question about sets: If $A = \{1,2,3,4,5\}$, how many subsets does $A$ have?
+
+	\item Perhaps an easier question: if you write a number in binary, you use only 0's and 1's.  A string of 0's and 1's is called a \emph{bit-string}.  How many bit-strings are there of length 5?
+
+	\item Why might these two counting questions be the same?  Why are both answers $32$?
+
+	\item In general, we have $|\pow(A)| = 2^{|A|}$.
+
+	\item Okay, here is a slightly harder question.  How many subsets of $A$ have exactly three elements?
+
+	\item We can answer this question by deciding how many 5-bit strings have \emph{weight} 3.  Perhaps one approach: how many do NOT have weight 3?  How many have weight 0?  1?  And why will this help us find the ones that have weight 4 and 5?
+
+	\item In fact, we know that there will be an equal number of strings with weight 2 and 3.  Why is this?  So then what will those numbers be?
+
+	\item This worked okay for the 5-bit strings, but what about longer ones?  Could we ask how many 6-bit strings have weight 3?  Or 7-bit strings have weight 4?
+
+   \item Notation: $\b B^n$ is the set of $n$-bit strings.  $\b B^n_k$ is the number of $n$-bit strings with {\em weight} $k$ (they contain $k$ 1's).
+
+   \item Here is a ``completely different'' counting question: how many lattice paths are there from $(0,0)$ to $(3,2)$?
+
+   \item On the one hand we are creating a sequence of 5 symbols, R's and U's, and 3 of them are R's.  So the answer should be the same as $|\b B^5_3|$.
+
+   \item On the other hand, we can find this number recursively: to get to the end of our path, there are two points we can go through.  Use the additive principle.
+
+
+   \item Back to bit strings: How many bit-strings are in $\b B^5_3$?  Can we get this from know the cardinality of smaller $\b B^n_k$'s?  Find a recurrence relation -- a formula for $\b B^n_k$ in terms of smaller $\b B^n_k$'s.
+
+	\item What do you get if you expand $(x+1)^3$?  What about $(x+1)^4$?
+
+	\item Some more notation: $|B^n_k| = {n \choose k}$, and we say this as ``$n$ choose $k$.''  This is a good name because we are asking how many ways can we choose $k$ spots (to put 1's into) out of $n$ spots.
+
+  \item Pass out Pascal's Triangle.  Next time, we will see if we can discover an closed formula for $\binom{n}{k}$.  Then we will start to develop properties of binomial coefficients.  For this, try to identify patterns in Pascal's triangle.
+
+ \end{itemize}
+
+
+ \todayis{Friday, September 8}
+
+
+\subsection*{Binomial Coefficients, Combinations, and Permutations}
+\begin{itemize}
+
+\item We can generate any binomial coefficient in Pascal's Triangle.  But it would be really nice to have a closed formula for ${n \choose k}$ so we can compute it directly.
+
+\item Toward this goal, consider a new counting question:
+
+	\item Suppose you have 10 skittles, all different colors.  How many ways are there to make a row of 4 of these?  The answer is $10\cdot 9 \cdot 8 \cdot 7$, using the multiplicative principle.
+	\item We will abbreviate this number as $P(10,4)$, a \emph{$4$-permutation} of 10 objects.  In general, $P(n,k)$ is called a \emph{$k$-permutation} of $n$ elements, and is the number of ways to \emph{arrange} $k$ out of $n$ objects.
+  \item Now consider a different procedure to get to the same outcomes.  Instead of selecting one skittle to go on the left, then one to go next, and so on, first select which skittles will go in the row.  Then after that, line them up.
+  \item Choosing 4 out of 10 skittles: ${10 \choose 4}$ (we are just picking a 4-element subset).  Then to arrange them, we have 4 choices for the left-most skittle, 3 for the next, then 2, then 1.
+  \item So another way to get $P(10,4)$ is ${10 \choose 4}\cdot 4!$.
+  \item Aha! So ${10 \choose 4} = \frac{10\cdot 9 \cdot 8 \cdot 7}{4!}$.
+
+
+  \item Notice we have two closely related but different counting questions: How many rows of skittles can you make ($P(10,4)$) and how many \emph{handfuls} of skittles can you make, ${10 \choose 4}$.  In this context, we call the binomial coefficient a \emph{combination}
+
+
+
+   \ex You want to select 5 people to be on a basketball team.  There are 12 players available.  How many ways can you do this?
+
+
+   \item We have a formula for $P(n,k)$.  It is $n(n-1)(n-2)\cdots(n-k+1)$.  A nicer way to write this is $\frac{n!}{(n-k)!}$.   Why?
+
+
+
+ \item Using the connection between combinations and permutations, we find a formula for ${n \choose k}$:
+ \[{n\choose k} = \frac{n!}{k!(n-k)!}\]
+
+
+\item Another way to look at it: A combination is the result of forming the permutation and then grouping the outcomes into same-sized groups.  The combination counts how many groups we have.
+
+% \item We can also use combinations and permutations as building blocks in more complicated problems.  For example, how many anagrams of ``anagram'' are there?
+%
+% \item Do this same thing for anagrams of 0001111.  In other words, how many 7-bit strings are there of weight 4.
+
+ \end{itemize}
+
+
+\todayis{Monday, September 11}
+
+\subsubsection*{More Combinations and Permutations}
+
+\begin{itemize}
+
+  \item Warm up: You deal 5 cards from a deck of 52.  How many ways can this transpire?  Compare: how many 5 card hands are there?  How are these numbers related?
+
+  \item We can also use combinations and permutations as building blocks in more complicated problems.  How many anagrams of ``anagram'' are there?
+
+  \item Do this same thing for anagrams of 0001111.  In other words, how many 7-bit strings are there of weight 4.
+
+  \item Illustrate with cards: how many ways can you arrange 3 hearts, 2 spades and 2 diamonds.  You do not care about the values of the cards, just the suits.
+
+  \item Notice, you can solve this counting question in a few different ways.  Since we are answering the same question, we really have a combinatorial proof of an identity.
+\end{itemize}
+
+\subsection*{Patterns in Pascal's Triangle}
+
+\begin{itemize}
+  \item Let's look a little closer at Pascal's Triangle.  What are some patterns that you notice?
+  \item What is the sum of any row?  Why does this make sense?
+  \item We can answer this question by answering another (counting) question.  In two ways.  This is called a \emph{combinatorial proof}.
+\end{itemize}
+
+
+
+
+\todayis{Wednesday, September 13}
+
+
+ \subsubsection*{Combinatorial Proofs}
+ \begin{itemize}
+   \item Do the hockey stick activity.
+
+	 \item This is a {\em combinatorial proof} -- we show the two sides of the equation are equal by finding a counting problem they are both the answer to.  Here are some examples:
+
+ \ex Prove the identity $1\cdot 8 + 2 \cdot 7 + 3 \cdot 6 + \cdots + 8 \cdot 1 = {10 \choose 3}$.  Answer the question, ``how many 3-element subsets of $A = \{1,2,\ldots, 10\}$ are there?'' in two ways -- once the easy way (for the right hand side) and the hard way, by cases based on which the middle element of the subset is.
+
+
+
+\ex Prove $\d {11 \choose 5}{6 \choose 2}{4 \choose 2}{2\choose 1}{1\choose 1} = \frac{11!}{5!2!2!}$.
+
+\ex Prove $\d {n \choose k}{n-k \choose r} = {n \choose r}{n-r \choose k}$.
+
+\item There will be a quiz on Friday (on combinations and permutations).
+ \end{itemize}
+
+
+%
+% \todayis{Friday, September 16}
+%
+% \subsubsection*{Wrap up combinatorial proofs}
+%
+%  \ex Prove the identity $\d{n \choose 0}^2 + {n \choose 1}^2 + \cdots + {n \choose n}^2 = {2n \choose n}$ by counting lattice paths from $(0,0)$ to $(n,n)$ in two ways: directly or via one of the points $n$ blocks away from $(0,0)$.
+%
+%
+\todayis{Friday, September 15}
+\subsection*{Stars and Bars}
+\begin{itemize}
+
+	\item Suppose there are 4 types of jelly beans.  You will put 2 in your mouth to enjoy.  How many choices do you have (doubles are okay).  Try writing out the set of outcomes.
+	\item What if you wanted to try 3 at a time?  4 at a time?  More?
+	\item Try some of these.  Notice we do get numbers in Pascal's triangle, but not necessarily ones we would expect.
+	\item How should we write our outcomes in a systematic way? Let's say we want to count the number of ways to enjoy 7 jelly beans at once chosen from the 4.  How might you list the outcomes?
+	\item We could say how many of each type we want.  Or we could make a list of 7 symbols, each representing one of the 4 types of beans.  What would each of these look like?
+	\item Go with the second option, listing the symbols in alphabetical order.
+	\item All we really need to do is say when to switch to the next flavor of bean.  So we can actually represent each bean with the same symbol, but separate flavors with some divider.  Like this:
+	\[**|**||***\]
+	\item These ``stars and bars'' charts give us a way of listing every possible outcome.  How many are there?  Well there are 10 symbols (7 beans and 3 dividers), and we need to choose 3 of them to be bars (or 7 to be stars).
+	\item Other questions: What if we want at least one of each bean?
+	\item How many ways are there to distribute 10 ice-cream cones to your 3 kids?  Again, we can insist that each kid gets at least one, or have no such rule.  What are the stars and what are the bars?
+	\item A related question: How many solutions are there to the equation $x_1 + x_2 + x_3 + x_4 = 7$ where each variable must be a non-negative integer?
+% %% % TEACHING NOTES: This year I changed the activity to be about cutting up Toblerone bars.  It worked a little better, although we did not really have enough time for students to dig in to the problems.  It would probably be a good idea to make this the investigate problem though.
+% %
+% %
+% %
+\item How many 5 letter words can you make using the first 6 letters of the alphabet?  How many of those have the letters occur in alphabetical order?
+
+\item What if you wanted to give 10 cookies to 5 kids?  What are the stars and what are the bars?
+
+\item A variation: what if you insisted that every kid got at least one cookie?  Well, give each kid their cookie, and then start the problem over (only with 5 cookies left).
+
+\item We could also insist that each kid gets at least two cookies (maybe we start with more than 10).  The other direction is harder: what if no kid is allowed to have more than 3 cookies?  To do this, we need PIE.  For Monday, read section 1.6.
+
+\end{itemize}
+
+
+
+\todayis{Monday, September 18}
+\subsection*{PIE Revisited}
+Last time we reviewed the {\em stars and bars} counting technique.  This is useful if you want to count how many ways there are to distribute some number of identical objects to some number of distinguished people.  We even saw that we could answer the counting problem where every person got at least one (or two) of the objects (by giving everyone these first, then using stars and bars on the remaining objects).
+
+Today we will start by considering the opposite restriction: what if no person can have more than some number of objects?  We will see that we must use PIE here again.  Then we will consider other counting problems that use this advanced PIE.
+
+\begin{itemize}
+
+\item Suppose you want to give 10 cookies to 5 kids.  What if you insisted that no kid got more than 3 cookies (and zero cookies for a kid is acceptable)?  This is harder.  Let's subtract all the ways that one or more kid gets more than 3 cookies.
+
+\item Start by giving one kid 4 cookies.  Then distribute the remaining 6 to all 5 kids with no restrictions.  Of course there are 5 choices for which kid gets too many cookies.  Thus there are $5\cdot{10 \choose 4}$ ways to do this.  But careful, we have counted the outcomes where two kids get at least 4 cookies multiple times.  So use PIE.  There are ${4\choose 2}$ ways to select which two kids will get spoiled.  Then there are 2 cookies left to distribute to 5 kids, which can happen in ${6 \choose 4}$ ways.  Do we need to add any outcomes back in?  Those would be the outcomes in which 3 kids get too many cookies.  But this cannot happen.
+
+\item Try another one like this.
+
+\item This advanced use of PIE is also helpful in counting other things.  For example, derangements.   How many derangements are there of 5 objects?  A derangement is a permutation in which no element is put in its starting spot.  For example, $21453$ is one, because every number moved.  To count this, start with all permutations, take away the bad ones using PIE.
+
+\item Another way to view this problem is this: how many bijective functions from $\{1,2,3,4,5\}$ to $\{1,2,3,4,5\}$ have the property that $f(x) \ne x$?  Of course a bijection from a set to itself is really a permutation.  The added requirement that $f(x) \ne x$ says that the permutation must be a derangement.
+
+\item Thinking of counting problems as functions can be very useful in classifying them.
+
+\item Stars and Bars was useful when distributing identical things to distinguishable things.  What if the things we distribute are not identical?  For example, 10 friends want to go to a drive-in movie.  They have 5 cars, each a different color.  How many ways could they do this?
+
+\item This is much more like a function, so we are counting how many functions there are where the domain contains 10 elements and the codomain contains 5.  Note that if we want to make sure all 5 cars get used, we are asking for {\em surjective} functions.  Let's count how many functions there are total, then get rid of those that are not surjective.
+
+
+\end{itemize}
+
+\todayis{Wednesday, September 20}
+\section*{Summary of Counting}
+
+\begin{itemize}
+  \item Start by counting derangments.  Or another stars and bars PIE example.
+
+	\item Over the last few weeks we have learned a variety of counting methods.  Let's take stock.
+
+	\item Work on the ``Animal Parades for Kids'' activity.  Notice the subtle differences between these counting problems.
+
+	\item When do we use binomial coefficients?  When we select a subset.  The order that we select the elements in doesn't matter (i.e., doesn't lead to additional outcomes).  Note that if we can select an item more than once we use stars and bars, and this is also a binomial coefficient.
+
+	\item If we do distinguish outcomes by the order the elements are chosen, then we can just use the multiplicative principle: we either get $P(n,k)$ if we cannot have repeats, or $n^k$ if repeats are allowed.
+
+	\item Another model we can use to consider these counting problems is counting functions.  To determine a function, you must say which element of the codomain is paired with each element of the domain.  In this sense order matters, so we either get $P(n,k)$ or $n^k$.  The latter counts all functions (since you can repeat outputs), the former just injective functions.
+
+	\item What if we want to count surjective functions?  This is harder and requires PIE to subtract the non-surjective functions.  Do this.
+
+	\item There are other examples of more complex counting questions we should be aware of as well.
+
+	\item How many ways can you give 6 giraffes and 5 lions to  10 kids?  What if no kid can have more than one of each type?  What if you insist that each kid gets at least one cracker (this might be really hard).
+
+	\ex 12 golfers hit the links.  How many ways can they be grouped into 3 foursomes?  To solve this, think about breaking the problem up into parts (what do you need to do first, then second, then third?).
+
+	% \ex How many anagrams are there of ``anagram''?
+
+	% \ex How many 5 letter words can you make from the first 8 letters of the alphabet?  How many do not contain the subword ``bad''?  How many do not contain repeated letters?  How many do not contain more than 2 of any single letter?  How many have the letters in alphabetical order?  With or without repeats?
+
+\end{itemize}
+
+
+\todayis{Wednesday, September 27}
+\section*{Sequences}
+\subsection*{Introduction}
+
+\begin{itemize}
+	\item Start off right away with the ``Towers and Tiles'' worksheet.
+	\item Both of these problems look like counting problems: you are asked to find how many\ldots.
+	\item However, this time let us find the solution by considering smaller cases and generalizing.
+	\item For the Towers of Hanoi, look at how many moves are required for 1 disk, then 2 disks, then 3, and so on.
+	\item For the tile paths, look at how many length 1, then length 2, then length 3, etc. paths there are.
+	\item In each case, we get a sequence of numbers.  If we can find a formula for the $n$th term of these sequences, then we will have our general answer to the counting problem (how many moves are required to move $n$ disks, or how many length $n$ paths are there).
+	\item Perhaps we have a guess for a closed formula for the Towers of Hanoi.  How do we know this is right?
+	\item The tiles problem: you might recognize the numbers, but do you have a closed formula?
+	\item In both cases, it is easy to find a {\em recursive} formula -- say what this means.
+	\item Contrast closed vs recursive formulas.
+	\item Some examples: include the triangular numbers.  Throw up some sequences on the board.  If time, include arithmetic and geometric sequences (and define these).
+\end{itemize}
+
+
+ \todayis{Friday, September 29}
+
+ \subsection*{Arithmetic and Geometric sequences, and their sums}
+
+
+
+ \begin{itemize}
+\item Work on the ``From Dots to Sequences'' activities.
+   \item Next, look at some specific types of sequences.  For example, 2, 5, 8, 11, \ldots.  Give recursive and closed formulas.
+   \item Such sequences are called {\em arithmetic}
+   \item Find the general recursive and closed formulas for arithmetic sequences.
+   \item Consider now 2, 6, 18, 54,\ldots.  This is not arithmetic.
+   \item Instead, this is an example of a geometric sequence.
+   \item Find the recursive definition and closed formulas for geometric sequences.
+ \end{itemize}
+
+
+
+\todayis{Monday, October 3}
+
+\subsection*{Sums of Arithmetic (and other) Sequences; Polynomial Fitting}
+
+Today we continue our investigation of sequences.  Last time we saw briefly noted that some sequences that are NOT the arithmetic might be the sum of terms that are arithmetic.  Today we generalize this to find the sum of any arithmetic sequence.  Then we consider what happens when we take the sum of other sequences.
+
+\begin{itemize}
+  \item Consider the sequence: 1, 3, 7, 13, 21, 31, \ldots.  Is this arithmetic or geometric?  No.
+
+  \item But notice that the sequences of differences is an arithmetic sequence.  So we can think of this sequence as a sequence of partial sums or an arithmetic sequence.
+
+  \item How do we sum an arithmetic sequence: Reverse and Add.  Do a couple examples.  In particular, use this for the triangular numbers.
+
+  \item Can we do a similar thing for geometric sequences?
+  Yes, but now the technique is different: Multiply, Shift and Subtract.  Do some examples.
+
+  \item Introduce summation notation.
+% \item Start with the {\em Candy Sequences} activity.
+% \item Problem 1 is just an arithmetic sequence.
+% \item For 2, we need to take the sum of an arithmetic sequence.
+% \item We add $7+10+13 + \cdots + 64 = 710$ (using reverse and add).
+% \item For problem 3, we need to take the sum of $n^2 +3$, since that gives the number of Skittles given out at the $n$th quarter.  However, here we cannot use the reverse and add trick, since differences are not constant.
+
+ \item We know how to find the sum of a constant sequence (i.e., the closed formula for a sequence whose differences are constant) -- this is just arithmetic.
+
+ \item We know how to find the sum of an arithmetic sequence (i.e., the closed formula for a sequence whose differences are an arithmetic sequence) -- use ``reverse and add.''
+
+ \item What if we want to form a sequence which is the sum of the terms of the sequence which is the sum of an arithmetic sequence, for example.
+
+ \ex How many squares (of all sizes) are there in a $8\times 8$ chessboard?  Start small.  Can we find a formula for the number of squares in an $n\times n$ board?
+
+
+
+ \end{itemize}
+
+ \todayis{Wednesday, October 5}
+
+ \subsection*{Polynomial Fitting}
+ \ex How many squares (of all sizes) are there in a $8\times 8$ chessboard?  Start small.  Can we find a formula for the number of squares in an $n\times n$ board?
+ \begin{itemize}
+   \item The example above is the sum of squares.  Squares are themselves sums of odd numbers (an arithmetic sequence).
+
+   \item What if we look at the differences between terms.  The differences are squares.  What about the differences between the differences.  They are always odd.  And the differences between those -- constant.
+
+
+
+   \ex Find a closed formula for the sequence $3, 7, 14, 24,\ldots$ in three ways.
+
+   \item What about the sequence $6, 10, 16, 26, 42, \ldots$ (from the homework)?  How many differences do we need to take to get a constant?
+
+   \item Since the sequence of differences is never constant, this sequence cannot be ``fit'' to a polynomial.  In some sense it is growing too fast.  In fact, the rate at which it is growing is itself.  What does this remind you of?
+
+   \item Sequences like this will need to be fit to an exponential function.  How can we do this?
+
+   \item Let's figure out how to give a closed formula for a sequence whose differences, or second differences, etc, are eventually constant.
+
+   \item If the ``first'' differences are constant, we have an arithmetic sequence: $a + d(n-1)$.  This is linear.  If the second differences are constant, then we get something like $n(n+1)/2$ - it has an $n^2$ term.
+
+   \item Call $\Delta$ the first difference, $\Delta^2$ the second, etc.  If $\Delta^k$ is constant, we will need a degree $k$ polynomial.  Compare $k$th difference being constant with $k$th derivative being constant.
+
+   \item If the $k$th difference is constant, then the closed formula with have the form $a_k n^k + a_{k-1} n^{k-1} +\cdots + a_2 n^2 + a_1 n + a_0$.
+
+   \ex Find a formula for the sequence $3, 7, 14, 24,\ldots$. Assume $a_1 = 3$.  It is easier to include the term $a_0$.  In this case, $a_0 = 2$ (why?).  Now we can check that this sequence has constant second difference.  So the formula will look like $a_n = a n^2 + b n + c$.  What are $a, b, c$?  Plug some values of $n$ in. $a_0 = 2 = a\cdot 0^2 + b \cdot 0 + c$.  Then $a_1 = 3 = a + b + c$ and $a_2 = 7 = a2^2 + b 2 + c$.  We have three equations and three unknowns, so we can solve.  We get $a_n = \frac{3}{2} n^2 - \frac{1}{2}n + 2$.
+
+
+   \item Now return to the question about counting squares on a chessboard.  It has constant third differences.  What is the formula? $a_n = \frac{1}{3}n^3 + \frac{1}{2}n^2 + \frac{1}{6}n = \frac{n(n+1)(2n+1)}{6}$
+
+ \end{itemize}
+
+ \todayis{Friday, October 6}
+
+ \subsection*{Characteristic Root Technique}
+ \begin{itemize}
+   \item What about the sequence $1, 3, 5, 11, 21, 43, 85, \ldots$?  There do not appear to be any finite differences.
+
+   \item Instead, try to write the recursive definition.  We might get $a_n = a_{n-1} + 2 a_{n-2}$.  It would be nice to be able to use this to find the closed formula.
+
+   \item We might guess the closed formula is exponential.  In this case, we could plug something in.  Does $2^n$ work?  Yes, but this doesn't match the initial conditions.
+
+
+	\item Suppose we wanted to find a closed formula for the sequence with recursive definition $a_n = a_{n-1} + 6a_{n-2}$.
+
+  \item The idea is, we want to find a function which satisfies $a_n - a_{n-1} - 6a_{n-2} = 0$.  It is reasonable to guess the solution will be geometric - that is, $r^n$'s.
+
+  \item What happens if we plug in $r^n$ into the recursion?   $r^n - r^{n-1} - 6r^{n-2} = 0$.  Solve for $r$: $r^{n-2}(r^2 - r - 6) = 0$.  So by factoring, $r = -2$ or $r = 3$.  Which one is it?
+
+  \item That depends on the initial conditions.  Notice we could also have $a_n = (-2)^n + 3^n$.  Or $a_n = 7(-2)^n + 4\cdot 3^n$.  In fact, for any $a$ and $b$, $a_n = a(-2)^n + b 3^n$ is a solution.  To find the values of $a$ and $b$, use the initial conditions.
+
+  \ex Solve the recursion $a_n = 7a_{n-1} - 10 a_{n-2}$ with $a_0 = 2$ and $a_1 = 3$.  First find the characteristic equation: $x^2 - 7x + 10 = 0$.  The roots: $x = 2$ and $x = 5$ (these are the characteristic roots).  So $a_n = a 2^n + b 5^n$.  Plug in $n = 0$ and $n = 1$ to find $a$ and $b$.
+
+
+  \item How many 1 by $n$ paths can you design out of 1 by 1 tiles which come in two colors, and 1 by 2 tiles which come in 3 colors?
+
+  \item Guessing a closed formula for this problem looks hard.  However, we can quite easily build a recurrence relation: each path 1 by $n$ path can be constructed either by adding one of two 1 by 1 tiles to a path of length $n-1$ or by adding one of three 1 by 2 tiles to a path of length 1 by $n-2$.  If we already know how many paths there are of shorter length, we can find the paths of length $n$.
+
+  \item Thus the recurrence relation is $a_n = 2a_{n-1} + 3a_{n-2}$.  Initial conditions?  Well there are no paths of length 0, so we can make a path of length 0 in only one way.  So $a_0 = 1$ and only two paths of length 1, so $a_1 = 2$.  Check that this works to generate the correct next two terms of the sequence.
+
+  \item Can we find a closed formula?  You betcha.  Use the characteristic root technique.
+
+  \item Other things can happen.  What if we factor the characteristic equation and have a repeated root?
+
+  \ex  Solve the recurrence relation $a_n = 6a_{n-1} - 9a_{n-2}$ with initial conditions $a_0 = 1$ and $a_1 = 4$.
+
+  \item In cases such as these, we must slightly modify our general solution: $a_n = ar^n + bnr^n$.  Now we should be able to solve for $a$ and $b$.
+ \end{itemize}
+
+
+%
+%
+%
+% \subsection*{Summary of Sequences}
+% Warm Up: How many $1\times n$ strips can you design using squares that come in two colors and dominoes that come in three colors?
+%
+% \vskip 1 ex
+% Today we will summarize the big ideas we have uncovered about sequences.
+%
+% \begin{itemize}
+% \item We have two ways to represent a sequence with a formula: a recursive definition or a closed formula.  Recursive definitions are often easier to find (given a real world context), but closed formulas are more useful for computing terms of the sequence.
+% \item Our main goal is often to find the closed formula, and we have a variety of methods to accomplish this.
+% \item We might recognize the sequence as a modification of a well known sequence.
+% \item We might recognize the sequence as arithmetic or geometric.
+% \item We might recognize that the sequence is the sum of an arithmetic sequence and so reverse and add (like we did for the triangular numbers)
+% \item We might recognize that if we take enough differences, we get a sequence of $n$th differences that is constant.  Then the sequence can be fit to a degree $n$ polynomial.
+% \item If the sequence grows exponentially, we might be able to use the characteristic root technique, especially if we can write a recurrence relation which expresses $a_n$ in terms of $a_{n-1}$ and $a_{n-2}$.
+%
+% \item Of course all of this assumes we understand what the sequence really is doing from its first few terms.  What we are really interested in is understanding how sequences help us solve counting problems.  Consider a modification of our $1\times n$ strip problem:
+%
+%   \item How many 1 by $n$ paths can you design out of 1 by 1 tiles which come in two colors, and 1 by 2 tiles which come in 3 colors?
+%
+%   \item Guessing a closed formula for this problem looks hard.  However, we can quite easily build a recurrence relation: each path 1 by $n$ path can be constructed either by adding one of two 1 by 1 tiles to a path of length $n-1$ or by adding one of three 1 by 2 tiles to a path of length 1 by $n-2$.  If we already know how many paths there are of shorter length, we can find the paths of length $n$.
+%
+%   \item Thus the recurrence relation is $a_n = 2a_{n-1} + 3a_{n-2}$.  Initial conditions?  Well there are no paths of length 0, so we can make a path of length 0 in only one way.  So $a_0 = 1$ and only two paths of length 1, so $a_1 = 2$.  Check that this works to generate the correct next two terms of the sequence.
+%
+%   \item Can we find a closed formula?  You betcha.  Use the characteristic root technique.
+%
+%   \item We can also use this to find a closed formula for the Fibonacci numbers.  Do this.
+%
+%   \item Here are a few other examples to illustrate what we know so far.
+%
+% \ex Find a closed formula for the sequence $3, 6, 11, 18, 27, 38,\ldots$ assuming $a_0 = 3$.  We can use polynomial fitting to find $a_n = n^2 + 2n + 3$ or we can write this as a sequence of partial sums of an arithmetic sequence.  Or compare the sequence to the perfect squares.
+%
+% \ex The sequence $2, 5, 11, 23, 47, 95,\ldots$ has recursive definition $a_n = 3a_{n-1} - 2a_{n-2}$ with initial conditions $a_0 = 2$ and $a_1 = 5$.  To find the closed formula, use the characteristic root technique: $x^2 - 3x + 2 = 0$ so $x = 2$ and $x = 1$.  Thus the closed formula has the form $a_n = a2^n + b1^n$.  We can solve for $a$ and $b$ to find $a_n = 3\cdot 2^n - 1$.
+% \end{itemize}
+%
+%
+%
+%
+%
+\todayis{Monday, October 9}
+\section*{Mathematical Induction}
+
+
+What amounts of postage can you make using just 5-cent and 8-cent stamps?  Work on this in groups.  What if I asked you: can you make 123 cents?  Suppose you knew it was possible to make 122 cents -- what would you do?
+
+Another example: Prove that the last digit of $6^n$ is a 6 for all positive integers $n$.
+
+Work on these in groups and then discuss ideas for proving them.  Notice the recursive nature of the reasoning we are using.
+
+\subsection*{Introduction to Induction}
+
+Induction is a proof technique; a style of argument.  Today we will see some examples of how to use induction to prove mathematical statements.
+
+\begin{itemize}
+\item Consider question about the last digit of $6^n$.   We don't really want to find $6^8$ right?  But we don't need to.  All we need is the last digit.  What if we knew the last digit of $6^7$ was a 6.  We could then multiply this by $6$ and just look for the last digit.
+\item Is this convincing though?  Sure, we know that the last digit of $6^n$ is a 6, {\em provided we already know} that the last digit of $6^{n-1}$ is a 6.  How do we know that?
+\item Well if we know that $6^{n-2}$ ends in a 6, then we would know that $6^{n-1}$ does as well.  And we can continue working our way all the way down.  Of course $6^1$ ends in a 6.
+\item This is mathematical induction.  We have some place to start, and we know we can always go one more, so we can get everywhere.
+\item Formally: let $P(n)$ be the statement, ``the last digit of $6^n$ is a 6.''  We know that $P(1)$ is true, because $6^1 = 6$.  Now suppose we know that $P(k)$ is true.  That is, we know that $6^k$ ends in a 6.  Well multiply $6^k$ by 6 to get $6^{k+1}$, which by the algorithm for multiplying has last digit 6 still.  Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+
+
+
+
+
+
+
+
+\end{itemize}
+
+
+
+\todayis{Wednesday, October 12}
+
+\subsection*{Formalizing proofs}
+
+Last time we saw how to solve problems using ``inductive'' reasoning.  The idea: to explain why something is true for all $n$, you can show it is true for a small value of $n$, and also show that \emph{if} it is true for $n$ then it is also true for $n+1$.  Today we will see how to write down nicely formatted proofs using this idea.
+
+\begin{itemize}
+
+  \item Let's apply this same sort of reasoning to the stamp problem.  We want to show that you can get any amount of postage greater than $27$ cents using just 5-cent and 8-cent stamps.  Well, we can get $28$ cents using 4 5-cent stamps and 1 8-cent stamp.  This is the {\em base case}.
+
+  \item Now assume for induction that it is possible to make $k$ cents, for $k \ge 28$.  Note that this means we must either have more than 2 5-cent stamps or more than 2 8-cent stamps.  Suppose we have (at least) 3 5-cent stamps.  Replace these with 2 8-cent stamps, making 1 more cent of postage ($k+1$ cents).  On the other hand, if we have 3 8-cent stamps, replace them with 5 5-cent stamps to make 1 more cent of postage.  So no matter what, we can make $k+1$ cents of postage.
+
+  \item Formalize this proof (write ``Let $P(n)$ be the statement\ldots'').
+
+
+\item Consider another example.
+
+\ex Prove $n^2 < 2^n$ for all $n \ge 5$.  Think about this: what does increasing $n$ by 1 do to each side.  The right side doubles.  How does $n^2$ relate to $(n+1)^2$?  Note that $(n+1)^2 = n^2 + 2n + 1$ but that $2n + 1$ is much less than $n^2$ (so we are not even doubling $n^2$).
+
+\item Thinking about this informally, we can see why the inequality always holds.  But it would be nice to write down a formal proof of this fact, using a format that is easy to read and check.
+
+\item Although in practice, mathematicians are a little less formal that we are going to be, using our format will help us make sure we are not missing anything.
+
+\item Proofs by induction have the following form.  If you want to prove a statement $P(n)$ is true for all $n \ge 1$, you first show that $P(1)$ is true (this is the base case).  Then you show that for all $k \ge 1$, if $P(k)$ is true then $P(k+1)$ is true.  This proves that $P(n)$ is true for all $n \ge 1$, by the principle of mathematical induction.
+
+\item Notice what sort of thing $P(n)$ is.  It is a \emph{sentence} that has the variable $n$ in it.  If you replace $n$ with different values, the statement will either be true or false, depending on what $n$ is.
+
+\item Give some examples and non-examples of $P(n)$.  One example: ``$n$ is divisible by $3$.''  This is true for some $n$ and false for others.  A non-example: ``$4n$ is even for all $n \ge 1$''.  What goes wrong here?
+
+\item If we want to prove the statement comparing $n^2$ and $2^n$, what should $P(n)$ be?  We could just say, $P(n)$ is the statement $n^2 < 2^n$.  Notice equations and inequalities are statements (they have a verb).
+
+\item Now give a formal proof.
+
+\end{itemize}
+
+
+
+\todayis{Friday, October 14}
+
+\subsubsection*{Induction Practice}
+\ex Prove $1+2+3+\cdot+n = \frac{n(n+1)}{2}$ for all $n \ge 1$.
+
+Do the group induction quiz.
+
+\ex What is the sum of the first $n$ odd-indexed Fibonacci numbers?  That is, what is $F_1 + F_3 + F_5 + \cdots + F_{2n+1}$ equal to?  It looks like it should be $F_{2n+2}$. Prove this by induction for all $n \ge 0$.
+
+% \ex For next time: how many time do you have to break a $n$-square chocolate bar to reduce it to $n$ squares?
+
+
+
+\todayis{Monday, October 16}
+
+
+
+\subsection*{Strong induction}
+
+In induction, you prove that $P(k+1)$ holds assuming that $P(k)$ holds.  But presumably you also know that $P(j)$ holds for all $j \le k$.  If you assume this, you get to use a little more information when proving $P(k+1)$.  This extra strength is what makes ``strong'' induction so strong.
+
+
+\begin{itemize}
+	\item How many times do you need to break a chocolate bar with $n$ squares to get $n$ individual squares?
+
+	\item Try some examples.  To break down a $1\times 3$ bar, you need 2 breaks.  To break down a $2\times 3$ bar, you could break the bar into two $1\times 3$ bars, each of which take 2 breaks, for a total of 4, plus the initial break.  So five breaks.
+
+  \item The conjecture: it takes $n-1$ breaks to break down a $n$-square bar.
+
+  \item To prove this, we use \emph{strong} induction.  Let $P(n)$ be the statement in question.  Do the base case.  Now do the inductive case.
+
+  \item With normal induction, we would assume that $P(k)$ is true, and prove $P(k+1)$ is true.  But this is not entirely helpful.  I don't know that I can break of just one piece, to reduce the $(k+1)$-square bar to a $k$-square bar.
+
+  \item However, if we assume that $P(j)$ is true for all $j \le k$, then we are in business.  No matter how you break apart the $k+1$ squares, you are left with two bars, both with $k$ or fewer squares.  Say $j_1$ and $j_2$ resp (so $j_1 + j_2 = k+1$).  Then $P(j_1)$ is true, as is $P(j_2)$.  So these take $j_1 - 1$ and $j_2 - 1$ breaks.  That's a total of $k-1$ breaks, but we also did that first break, for a total of $k$ breaks, as needed.
+
+  \item Remember the stamp problem?  There we needed to replace three 5-cent stamps or three 8-cent stamps to increase the total by 1.  But instead, we could point out that it is possible to make 28, 29, 30, 31, and 32 cents.  Now add 5 to each.  This is a proof by strong induction!
+
+  \ex Prove that every integers $n \ge 2$ is either prime or the product of (some number of) primes.
+
+
+
+
+\end{itemize}
+
+
+\todayis{Wednesday, October 18}
+
+
+\subsection*{Summary of Induction and Sequences}
+
+First, finish up the proof of the chocolate squares problem.
+
+Here are some more examples of problems you can solve using induction.
+
+\ex Every integer $n \ge 2$ is either prime or can be written as the product of primes.
+
+
+
+% \ex Prove that if the closed formula for the $n$th term of the sequence $\{a_n\}$ is a polynomial of degree $k$, then the $k$th sequence of differences will be constant.
+
+\vfill
+
+	\ex Back to the Towers of Hanoi: give an inductive proof that the smallest number of moves required to transport a stack of $n$ disks is $2^n - 1$.  Note the parallel between induction and recursive definitions.
+
+	\vfill
+
+	\ex Play the game: race to 100.  Two players alternate adding to a running total -- each can add any number between 1 and 10 to the total.  The winner is the first player to get to 100.  To make this more like induction, suppose you instead race backward to 0.  Pick a number to start with and each player can subtract between 1 and 10 from the total, first to 0 wins.  Which numbers should you NOT start with?
+
+	\vfill
+
+	\ex What is the $n$th derivative of $f(x) = xe^x$?  Prove your answer by induction.
+
+	\vfill
+
+	\ex Prove $5^{2n} - 1$ is a multiple of 24.
+	\vfill
+	\ex Prove that every natural number can be written as the sum of distinct Fibonacci numbers.  Go through this proof carefully, noting the use of strong induction.
+
+
+
+
+% 		\vfill
+%
+	\todayis{Wednesday, October 26}
+	\section*{Logic}
+\subsection*{Propositional logic: deduction and equivalence}
+
+\begin{itemize}
+  \item Start by working in groups on this puzzle:
+  \vskip 1 ex
+Holmes owns two suits: one black and one tweed. He always wears either a tweed suit or sandals. Whenever he wears his tweed suit and a purple shirt, he chooses to not wear a tie. He never wears the tweed suit unless he is also wearing either a purple shirt or sandals. Whenever he wears sandals, he also wears a purple shirt. Yesterday, Holmes wore a bow tie. What else did he wear?
+
+
+  \item Deduce the answer on the board using connectives and propositional variables.
+
+\item Instead of just using plain old reasoning, we could create a truth table to make sure our conclusions are sound. Let's consider some truth tables from the Holmes problem. Start with $P\vee S$ (disjunction), $P\wedge Q$ (conjunction), and $S\imp Q$ (implication or conditional)
+\vskip 1 ex
+\begin{tabular}{c|c||c}
+ $P$ & $Q$ & $P\wedge Q$ \\ \hline
+ T & T & T\\
+ T & F & F\\
+ F & T & F\\
+ F & F & F
+\end{tabular}\hfill
+\begin{tabular}{c|c||c}
+ $P$ & $S$ & $P\vee S$ \\ \hline
+ T & T & T\\
+ T & F & T\\
+ F & T & T\\
+ F & F & F
+\end{tabular}\hfill
+\begin{tabular}{c|c||c}
+ $S$ & $Q$ & $S\imp Q$ \\ \hline
+ T & T & T\\
+ T & F & F\\
+ F & T & T\\
+ F & F & T
+\end{tabular}\hfill
+
+
+  % %HOMEWORK:
+%  \item If time permits, give them Tommy's Snack puzzle:
+%
+%  \vskip 1ex
+%  Tommy Flanagan was telling you what he ate yesterday afternoon.  He tells you, ``I had either popcorn or raisins.  Also, if I had cucumber sandwiches, then I had soda.  But I didn't drink soda or tea.  Yeah, that's the ticket.''  Of course you know that Tommy is the worlds worst liar, and everything he says is false.  What did Tommy eat?
+
+% \item Is the following statement true: If you get more doubles than any other player then you will lose, or if you lose then you must have bought the most properties.
+
+  \item End by giving the four proofs and ask them to figure out which ones are valid arguments.
+
+\end{itemize}
+
+
+
+\todayis{Friday, October 28}
+
+\subsubsection*{Deduction rules and Logical Equivalence}
+
+\begin{itemize}
+\item Last time we saw how to use truth tables to decide whether two statements were logically equivalent.
+
+\item Do an example of a \emph{deduction rule}:
+\begin{example}
+  Show that
+  \begin{center}
+    \begin{tabular}{rc}
+      & $P \imp Q$\\
+      & $\neg P \imp Q$ \\ \hline
+      $\therefore$ & $Q$
+    \end{tabular}
+  \end{center}
+  is a valid deduction rule.
+
+  \begin{solution}
+    We make a truth table which contains all the lines of the argument form:
+    \begin{center}
+      \begin{tabular}{c|c||c|c|c}
+        $P$ & $Q$ & $P\imp Q$ & $\neg P$ & $\neg P \imp Q$ \\ \hline
+        T & T & T & F & T \\
+        T & F & F & F & T \\
+        F & T & T & T & T \\
+        F & F & T & T & F
+      \end{tabular}
+    \end{center}
+    (we include a column for $\neg P$ just as a step to help getting the column for $\neg P \imp Q$).
+  \end{solution}
+\end{example}
+
+\item Give them the example:
+\begin{example}
+  Decide whether
+  \begin{center}
+    \begin{tabular}{rc}
+      &  $(P \imp R) \vee (Q \imp R)$ \\ \hline
+      $\therefore$  & $(P \vee Q) \imp R$
+    \end{tabular}
+  \end{center}
+  is a valid deduction rule.
+  \begin{solution}
+    Let's make a truth table containing both statements.
+
+    \begin{center}
+      \begin{tabular}{c|c|c||c|c|c|c|c}
+        $P$ & $Q$ & $R$ & $P\vee Q$ & $P \imp R$ & $Q \imp R$ & $(P\vee Q) \imp R$ 	& $(P\imp R) \vee (Q \imp R)$ \\ \hline
+        T   & T   & T   & T         & T          & T  	 & T 			& T \\
+        T   & T   & F   & T         & F          & F 	 & F			& F \\
+        T   & F   & T   & T         & T 	    & T 	 	& T			& T \\
+        T   & F   & F   & T		& F 	    & T 	 	& F			& T \\
+        F   & T   & T   & T 		& T 	    & T          & T			& T \\
+        F   & T   & F   & T 		& T 	    & F          & F			& T \\
+        F   & F   & T   & F 		& T 	    & T          & T			& T \\
+        F   & F   & F   & F 		& T 	    & T          & T			& T \\
+
+      \end{tabular}
+    \end{center}
+  \end{solution}
+\end{example}
+
+\item Start by having groups discuss the validity of the proofs that they took home, focusing on the first two to begin. Ask them to justify to each other which one's are valid and which ones are not. Take a poll
+\item Next, ask the class to consider the statement they are trying to prove: ``If $ab$ is even, then $a$ or $b$ must be even''. Assign letters to the hypothesis and the conclusion.
+
+\item What are the assumptions and conclusions for the first 2 proofs? How do we know that these are the same (or different) arguments than the original statement?
+\item Draw a truth table for just 1 and 2. Remind students about the terms contrapositive and converse.
+ \begin{center}
+  \begin{tabular}{c|c|c|c||c|c|c|c|c}
+   $P$ & $Q$ & $\neg P$ & $\neg Q$ & $P\imp Q$ & $\neg Q \imp \neg P$ & $Q \imp P$ & $P \imp \neg Q$ & $\neg P \imp \neg Q$\\ \hline
+   T & T & F & F & T & T & T & F & T\\
+   T & F & F & T & F & F & T & T & T\\
+   F & T & T & F & T & T & F & T & F\\
+   F & F & T & T & T & T & T & T & T
+  \end{tabular}
+ \end{center}
+ \item Now let's consider the third proof (proof by contradiction). Can we extrapolate an if then statement from the argument?
+ \item What about the fourth proof? What does this one have to do with $P$ and $Q$? Need to break $Q$ up into $S: a$ is even and $R: b$ is even. Then the original statement is $P \imp (S \vee R)$ and we want to know whether this is equivalent to $P \wedge \neg S \imp R$. We know how to show whether this is true. We can make a truth table (like we did last class) to see if it is a valid deduction rule.
+ \begin{center}
+  \begin{tabular}{rc}
+   &  $(P \wedge \neg S) \imp R$ \\ \hline
+ $\therefore$  & $P \imp (S \vee R)$
+  \end{tabular}
+  \end{center}
+  Make a truth table
+   \begin{center}
+  \begin{tabular}{c|c|c|c|c|c||c|c}
+   $P$ & $R$ & $S$ & $\neg S$ & $S\vee R$ & $P\wedge \neg S$ & $P\imp (S\vee R)$ & $(P\wedge \neg S)\imp R$\\ \hline
+   T & T & T & F & T & F & T & T \\
+   T & T & F & T & T & T & T & T \\
+   T & F & T & F & T & F & T & T \\
+   T & F & F & T & F & T & F & F \\
+   F & T & T & F & T & F & T & T \\
+   F & T & F & T & T & F & T & T \\
+   F & F & T & F & T & F & T & T \\
+   F & F & F & T & F & F & T & T
+  \end{tabular}
+ \end{center}
+ Thus these are logically equivalent statements.
+ \item Mention usefulness of these types of proof approaches.
+\end{itemize}
+
+
+
+\todayis{Monday, October 30}
+
+\subsection*{Proofs}
+\begin{itemize}
+% \item Warm-up: When can you exactly cover an $n \times n$ chessboard with dominoes?
+% \begin{itemize}
+% \item Can you exactly cover a $2\times 2$?
+% \item What about a $3\times 3$?
+% \item Can you create an implication?
+% \end{itemize}
+% \item You can cover an $n\times n$ chess board with dominoes if and only if $n$ is even.
+% \item Point out that we need to do two different implications (one of them is direct and the other is a contrapositive)
+
+\item Review the styles of proof we had from the activity on Friday.
+
+\item Then have them do the worksheet:
+\ex Suppose you have a collection of 5-cent stamps and 8-cent stamps.  We saw earlier that it is possible to make any amount of postage greater than 27 cents using these.  But we can ask other questions about this situation as well:
+\begin{enumerate}
+\item What amounts of postage can you make if you only used an even number of both types of stamps?  (directly show that the total postage is even)
+\item Suppose you made $72$ cents of postage.  Prove that you needed an even number of at least one of the types of stamps. (show this by contrapositive)
+\item Suppose you made 72 cents of postage.  Prove that you must have used at least 6 of one type of stamp. (contradiction)
+\end{enumerate}
+\end{itemize}
+
+
+\todayis{Wednesday, November 1}
+Begin by going over the stamp proofs from last time:
+\begin{enumerate}
+\item What amounts of postage can you make if you only used an even number of both types of stamps?  (directly show that the total postage is even)
+\item Suppose you made $72$ cents of postage.  Prove that you needed an even number of at least one of the types of stamps. (show this by contrapositive)
+\item Suppose you made 72 cents of postage.  Prove that you must have used at least 6 of one type of stamp. (contradiction)
+\end{enumerate}
+
+\subsection*{Pigeon Hole Principle}
+\begin{itemize}
+\item Warm-up: Suppose you only have black and white socks in your sock drawer. How many socks do you need to pull out in order to get a same-colored pair?
+\item Discuss problem 3 from the worksheet: If you have made $72$ cents of postage, then you must have had at least 6 of at least one type of stamp. Have students present their proof to each other
+\item Proof by contradiction vs contrapositive
+\item Toward graph theory: Suppose we live in a world where everyone that anyone meets is either a friend or an enemy.  Assume also that all friendships are reciprocated.
+
+\item How many people would you need to meet to guarantee you have encountered either 3 enemies or 3 friends?
+\item Just because you are friends with two people does not mean that they are friends with each other (similarly for enemies).  How many people do you need to have in a room to guarantee there will be at least 3 people who are mutually friends or mutually enemies?
+\item If time permits: suppose there are 11 people at a party. Can everyone shake hands with an odd number of people?
+\end{itemize}
+
+
+
+\todayis{Friday, November 3}
+\section*{Graph Theory}
+
+\subsection*{Introduction to Graphs}
+
+\begin{itemize}
+\item Last time we asked: what is the fewest number of people you need in a room to guarantee there will be three people who are all friends with each other or three people who are all not friends with each other.  We can give an argument that this will always happen if you have 6 people in a room.
+\item It is useful to draw the friendship graph -- we represent each person as a dot (vertex) and friendship as an edge connecting vertices.
+  \item Formally introduce graphs and definitions of: vertices, edges, degree, connected.
+  \item Our mathematical definition of a graph is a set of vertices and a set of edges, where the set of edges is a set of 2-element subsets of the vertices.
+
+  \item Named graphs: $K_n$, $K_{m,n}$ (bipartite graphs), $C_n$, $P_n$.
+  \item Trees, leaves and forests.
+  \item Work on page 1 of the activity ``Graph Sameness.''
+  \item What does it mean for two graphs to be ``the same''?
+  \item What are some things that must be the same for two different representations of a graph?  What are some things that can be different?  What are some things that can be the same in two graphs that are not the same?
+
+  \item We can start to ask for some basic properties of graphs.
+
+  \item What is the relationship between number of vertices and number of edges?  None.  But, what if we know the degrees of the vertices?
+  \item How many edges are in $K_n$?  How many are in $K_{m,n}$?
+  \item Can 9 people shake hands with 7 of the group?
+  \item What can we say about the sum of the degrees of the vertices?
+
+
+  \item Is it okay to draw a graph with edges crossing?  Yes.  Can we always draw it without edges crossing?  No.  If we can, the graph is said to be {\em planar}.
+  \item  Note when a graph is planar, and drawn in a planar way, we get a new quantity -- faces.  Does this change if we draw the graph in a different planar way?
+
+
+\end{itemize}
+
+
+\todayis{Monday, November 6}
+\subsection*{Planar Graphs and Polyhedrons}
+
+\begin{itemize}
+  \item Review graph theory concepts covered so far. In particular, define what it means for two graphs to be \emph{isomorphic}.
+  \item Do problem 3 from the activity last time.
+  \item Introduce (recall) what it means for a graph to be planar.
+  \item Important: you cannot just look at a graph to see if it is not planar; maybe you could redraw it without edges crossing.
+  \item Notice that when you draw a graph without edges crossing, it creates regions in the plane separated by edges.  We want to count the number of these.
+  \item These regions are called {\em faces}. As in the faces of a cube. This is not a coincidence.  We can take an convex polyhedron and project it down into the plane to get a planar graph.  One of the faces of the polyhedron will be the ``outside'' face of the graph.
+  \item Come together to decide that $v - e + f = 2$ for any planar graph.  How do we know this will always work?
+  \item Show that you can build a graph edge by edge, and $v - e + f$ is always the same.  This suggests a proof by induction.  Do at least one of those (induct on either edges, vertices or faces).
+
+\end{itemize}
+
+
+
+\todayis{Wednesday, November 9}
+\subsection*{Planar Graphs; $K_5$ and $K_{3,3}$}
+\begin{itemize}
+
+\item Recall that last time we counted the number of faces when a graph was drawn without edges crossing.  Do this again.  Point out that in all these situations we have $v - e + f = 2$.
+
+\item Why is this?  Well consider what happens when you add edges to a graph?  This says there is an inductive proof we could give for Euler's formula.
+
+\begin{example}
+  Is there a convex polyhedron consisting of three triangles and six pentagons?  What about three triangles, six pentagons and five heptagons (7-sided polygons)?
+
+  \begin{solution}
+  How many edges would such polyhedra have?  For the first proposed polyhedron, the triangles would contribute a total of 9 edges, and the pentagons would contribute 30.  However, this counts each edge twice (as each edge borders exactly two faces), giving 39/2 edges, an impossibility.  There is no such polyhedron.
+
+  The second polyhedron does not have this obstacle. The extra 35 edges contributed by the heptagons give a total of 74/2 = 37 edges.  So far so good.  Now how many vertices does this supposed polyhedron have?  We can use Euler's formula.  There are 14 faces, so we have $v - 37 + 14 = 2$ or equivalently $v = 25$.  But now use the vertices to count the edges again.  Each vertex must have degree \emph{at least} three (that is, each vertex joins at least three faces), so the sum of the degrees is at least 75.  Since the sum of the degrees must be exactly twice the number of edges, this says that there are strictly more than 37 edges.  Again, there is no such polyhedron.
+  \end{solution}
+   \end{example}
+
+\item Prove that $K_5$ is not planar\\
+Assume for a contradiction that $K_5$ is in fact planar. Then it would satisfy Euler's formula, and we would get:
+\[v=5, e=10, f=7\]
+Now, each face is bounded by at least 3 edges because if it wasn't then we wouldn't have a connected graph - think about how you would get back to the original vertex it would take at least two more moves after you left. So, there are at least $3\times f$ edges around the faces, but since each edge separates $2$ faces $3f\leq 2e$. Plugging in the values we get that $21\leq 20$ which is a contradiction.
+\item What about $K_{m,n}$?
+\item Prove that $K_{3,3}$ is not planar.
+Assume for a contradiction that $K_{3,3}$ is planar. Then it would satisfy Euler's formula,
+\[v=6, e=9, f=5\]
+Now, each face is bounded by at least 4 edges because in order to bound a face the path has to go across and back and across and back. So, there are at least $4\times f$ edges, but since each edge separates 2 faces we would divide by 2. So, $4\times f \leq 2\times e= 20\leq 18$ which is a contradiction. Thus $K_{3,3}$ is not planar.
+
+\end{itemize}
+
+
+
+
+\todayis{Friday, November 10}
+
+\subsection*{Coloring Graphs}
+
+\begin{itemize}
+
+
+\item Let's look at another application of graphs.  Suppose the math department plans to offer 10 classes next semester.  Some classes cannot run at the same time (perhaps they are taught by the same professor, or are required for seniors).
+
+\begin{center}
+\begin{tabular}{cl}
+\textbf{Class:} & \textbf{Conflicts with:} \\ \hline
+A & D I \\
+B & D I J \\
+C & E F I \\
+D & A B F \\
+E & H I\\
+F & I\\
+G & J \\
+H & E I J\\
+I & A B C E F H \\
+J & B G H
+\end{tabular}
+\end{center}
+
+\item How many different time slots are needed to teach these classes (and which should be taught at the same time)?
+
+\item Strategy: draw a graph with the classes for vertices and edges where there is a conflict.  Then partition the vertices into time slots.
+
+\item Or more fun, color the vertices so that adjacent vertices must be colored differently.  Each color represents a time slot.
+
+\item Such a coloring is called a {\em proper vertex coloring}.  The smallest number of colors you need for a proper vertex coloring is called the {\em chromatic number} of the graph, written $\chi(G)$.
+
+\item It would be nice to be able to look at a graph and quickly determine its chromatic number.  Or at least bounds on the chromatic number (for example, that graph over there, its chromatic number must be at least 3 because \ldots).
+
+\item We will investigate that problem on Monday.
+
+\item Introduce the \emph{chromatic index}: the smallest number of colors required to color \emph{edges} so that no two adjacent edges are colored identically.  This can be used for other applications.
+\end{itemize}
+
+
+
+\todayis{Monday, November 13}
+
+First, any questions on homework?
+
+\subsection*{Bounds on Chromatic Number}
+
+Start with a picture of a graph on the board and ask for its chromatic number.
+
+\begin{itemize}
+  \item Recall what the chromatic number of a graph is.  This is the \emph{smallest} number of colors which allow for a proper vertex coloring in that number of colors.
+
+  \item Given a graph, how can you find the chromatic number?  You could try to give a coloring (and it is easy to check whether your coloring is ``proper''), but how do you know that the chromatic number isn't smaller?
+
+  \item Maybe it isn't possible to always know for sure what the chromatic number of a graph is.  Perhaps we can give \emph{bounds} on this though.
+
+  \item Here are some obvious bounds: The chromatic number is never more than the number of vertices in the graph.  The chromatic number is always more than 2 (if the graph has at least one edge).  Can we do better?
+
+  \item Let's explore.  Try coloring the graphs in the activity.  Pay special attention to whether there is some feature of the graph that tells you the chromatic number must be at least \ldots or at most \ldots.
+
+  \item Some observations.  If the graph has a $n$-clique (that is, a copy of $K_n$) then the chromatic number must be at least $n$.  So the clique number of a graph is a lower bound for the chromatic number.
+
+  \item However, this is not enough.  Look at graph 7.  The chromatic number is 4, but there is no $4$-clique.
+
+  \item For an upper bound, this is less obvious.  It turns out that Brooks' Theorem tells us that the chromatic number is no more than 1 larger than the maximum degree in the graph, and this is only for graphs which are complete or are an odd cycle (otherwise the chromatic number is never more than the maximum degree in the graph).  This is hard to prove.
+
+  \item Some special graphs are easier to bound the chromatic number for.  Bipartite graphs have chromatic number 2 always.  What about planar graphs?
+
+  \item The 4-color theorem says that every planar graph has chromatic number at most 4.  This is really really really hard to prove.
+\end{itemize}
+
+
+
+\todayis{Wednesday, November 15}
+
+
+
+
+\subsection*{Euler Paths and Circuits}
+\begin{itemize}
+\item Warm up: Ask them to investigate the Bridges of Konigsberg -- can you find a ``tour'' of these bridges that crosses each bridge only once?
+\item Summarize graph coloring from the activity started Wednesday.
+% \item Consider the partial map of the United States -- relate this map to a dual planar graph.
+% \item The last graphs we talked about are all planar. Is it possible to have a planar graph with more than 4 colors? hmm...
+% \item Introduce the 4 color theorem:
+% \begin{center} If $G$ is a planar graph, then the chromatic number of $G$ is less than or equal to 4.  Thus any map can be colored with 4 or fewer colors.
+% \end{center}
+% \item  April Fools Four Colors
+\item Bridges of Koenigsberg -- did anyone find a tour that crosses each bridge only once?
+\item Worksheet on Euler Paths and Circuits.
+
+\item Let's summarize. If we found an Euler circuit, then we couldn't have a vertex of odd degree and if we found an Euler path, then there were two (and only two) vertices of odd degree. Consider a vertex of odd degree. What would happen if we started there? What would happen if we didn't start there?
+\item Is the above a necessary or sufficient condition for an Euler circuit/path?  It is in fact a necessary condition: if every vertex has an even degree then we have an Euler Circuit and if we have an Euler Circuit then ever vertex has an even degree. This is an if and only if statement. (similarly for Euler Paths).
+\item We already talked through if we had an Euler Circuit then ever vertex has an even degree. So let's try the other way. We are going to prove this by induction on the number of edges.
+\item Let $P(n)$ be the statement: ``If a connected graph, $G$, has $n$ vertices all of which have an even degree then $G$ has an Euler Circuit.''
+\item Base case: Consider $P(3)$ well this is true.
+\item Inductive case: Assume that $P(k)$ is true for all $k<n$ (notice I am using strong induction here) and now we need to show that $P(n)$ is true. So, let's start at some vertex of $G$ and let's just walk along with the goal of finding an Euler Circuit. Well, if we do then we are done, however, what happens if we took a wrong turn but still ended up at the original vertex we left from (which is an Euler Circuit of less than $n$ vertices). Let's consider this example. If we take the red path outlined here we are going to get back to the first vertex but we will have missed some edges and possibly vertices! Is this a problem? Well, let's consider take out the path that we took. Notice that what we are left with is a collection of connected graphs all of which have vertices of even degree (and they have less than $n$ vertices, so by the inductive hypothesis they are Euler Circuits!) Now, notice in our example here that we can start the circuit of each of these subgraphs at a point that touches our previous walk. Therefore, if we walk on our original path and pause to consider the other subgraph circuits we will get an Euler Circuit.
+
+\end{itemize}
+
+
+
+\todayis{Friday, November 17}
+
+\subsection*{Review for Exam 3}
+
+We went over some of the sample questions from the study guide.
+
+\todayis{Monday, November 27}
+
+\subsection*{Semester Review week}
+
+Today we worked on the ``Game of Counting'' activity.
+
+\todayiscont{Wednesday, November 29}
+
+Today we did select review problems from Activity 14: Review.
+
+\todayiscont{Friday, December 1}
+
+It's Math Jeoporday day.  Solutions can be found on Canvas.
+
+%
+% % \item A farmer owns a wolf, a goat, and a cabbage, and he wishes to transport them to the other side of a river. Unfortunately, the only available boat is large enough to hold only the farmer and one of his possessions at one time. (It is a giant cabbage!) The farmer cannot afford to leave the wolf and the goat together unchaperoned, for the former would eat the latter. Similarly, the goat and cabbage may also not be left together unattended. How can the farmer safely transport all three of his possessions across the river?
+% %
+% % \item Draw a state diagram/transition graph and find a safe path (not an Euler path).
+% %
+% % %\begin{center}
+% % %\begin{tikzpicture}[yscale=3]
+% % %\draw (0,0) -- (-3, 1) -- (-3,2) (0,0) -- (0,1) -- (0,2) (0,0) -- (3,1) -- (3,2);
+% % %\draw (-3,2) -- (0, 3) -- (3,2) -- (-3,3) -- (0,2) -- (3,3) -- (-3,2);
+% % %\draw (-3,3) -- (-3, 4) -- (0,5) -- (3,4) -- (3,3) (0,3) -- (0,4) -- (0,5);
+% % %\draw (0,0) -- (6, 1) (6,4) -- (0,5);
+% % %\node[fill=white] (0,0) {(-,FWGC)};
+% % %\node[fill=white] {(FW, GC)} (-3, 1) ;
+% % %\node[fill=white] (0,1) {(FG, WC)};
+% % %\node[fill=white] (3,1) {(FC,WG)};
+% % %\node[fill=white]  (-3, 2) {(W, FGC)};
+% % %\node[fill=white] (0,2) {(G, FWC)};
+% % %\node[fill=white] (3,1) {(C,FWG)};
+% % %%\node[fill=white]  (-3, 1) {(FW, GC)};
+% % %%\node[fill=white] (0,1) {(FG, WC)};
+% % %%\node[fill=white] (0,0) {(-,FWGC)};
+% % %%\node[fill=white]  (-3, 1) {(FW, GC)};
+% % %%\node[fill=white] (0,1) {(FG, WC)};
+% % %%\node[fill=white] (0,0) {(-,FWGC)};
+% % %%\node[fill=white]  (-3, 1) {(FW, GC)};
+% % %%\node[fill=white] (0,1) {(FG, WC)};
+% % %%\draw (0,0) node{(-,FWGC)} -- (-1,1) node{(FW, GC)} (0,0) -- (0,1) node{(FG, WC)} (0,0) -- (1,1) node{(FC, WG)};
+% % %
+% % %\end{tikzpicture}
+% % %\end{center}
+% % \end{itemize}
+% % %
+% % %
+% % %
+% % %%
+% % %%\todayis{Friday, February 1}
+% % %%
+% % %%\section*{Graph Theory}
+% % %%\subsection*{Euler paths and circuits}
+% % %%\begin{itemize}
+% % %%  \item Start with the Bridges of K\"onigsberg problem.
+% % %%  \item Relate this to a question about graphs.
+% % %%  \item Work in groups on the Euler Paths worksheet.
+% % %%  \item Conclude that an graph has an Euler circuit if and only if the degree of every vertex is even.  A graph has an Euler path if and only if no more than two vertices have odd degree.
+% % %%  \item What if a graph only has one vertex with odd degree?  Challenge (for 100 bonus points): draw such a graph.
+% % %%\end{itemize}
+% % %%
+% % %%\todayiscont{Monday, February 4}
+% % %%
+% % %
+% % %%
+% % %
+% % %%
+% % %%\todayiscont{Friday, February 8}
+% % %%
+% % %%\begin{itemize}
+% % %%  \item Is $K_{3,3}$ planar?  This is the famous houses and utilities problem.  Is $K_5$ planar?
+% % %%  \item Recall Euler's formula for planar graphs.
+% % %%  \item Prove that $K_5$ is planar - if it were, there would be 7 faces.  But because it is simple, each face is bounded by at least 3 edges, each of which is used to bound exactly 2 faces, so $F \le 2E/3$.  This is a contradiction.
+% % %%  \item Work in groups to prove that $K_{3,3}$ is not planar - same idea, only this time every face is bounded by at least 4 edges (since $K_{3,3}$ contains no triangles).
+% % %%\end{itemize}
+% % %%
+% % %%
+% % %%\todayis{Monday, February 11}
+% % %%
+% % %%\subsection*{Coloring Graphs}
+% % %%\begin{itemize}
+% % %%  \item Start by drawing a map on the board - how many colors do you need to shade the map?
+% % %%  \item After the quiz, show how this can become a graph theory question - what do the vertices and edges of the graph represent?
+% % %%  \item We want no two countries which are adjacent to be shaded with the same color - so we need to color the {\em vertices} such that no adjacent vertices are colored the same.
+% % %%  \item We call the smallest number of colors which work for a given graph the {\em chromatic number} of the graph.
+% % %%  \item Draw some examples - what is the chromatic number?
+% % %%  \item Can anyone think of a graph with chromatic number 5? 7? 42?
+% % %%  \item Graph coloring can be useful - consider traffic lights at intersections, radio stations, etc.
+% % %%  \item Back to the map coloring problem.  There is a famous theorem in mathematics called the ``four color theorem'' which states that any map can be properly colored with four or fewer colors.
+% % %%  \item What???  We had a graph which had chromatic number 42!  What gives?
+% % %%  \item The point: when you build a graph from a map, the graph will necessarily be planar.
+% % %%  \item Another way to state the four color theorem is this: the chromatic number of any planar graph is no more than 4.
+% % %%  \item The proof is hard: no ``human'' proof is known, only computer assisted proofs.
+% % %%  \subsubsection*{Edge coloring}
+% % %%  \item We can also think about coloring edges.  Again, we could require that no two edges sharing a common vertex had the same color.  Or we could ask other questions:
+% % %%  \item What if you colored every edge of a graph with one of two colors.  Must there be a monochromatic triangle (a triangle in which all three edges were colored the same)?
+% % %%  \item For small graphs, the answer is clearly no.  But if you have a really big graph, then surely there must be one.  What is the smallest graph that forces a monochromatic triangle?
+% % %%  \item Try it if there is time.  Note that we can generalize the question.  What is the smallest graph, which when the edges are 2-colored, forces a monochromatic $K_5$?  Nobody knows (the answer is between 43 and 49)
+% % %%\end{itemize}
+% % %
+% % %
+% % %
+% % %%
+% % %%\todayis{Monday, April 15}
+% % %%
+% % %%\subsection*{More Induction}
+% % %%
+% % %%\begin{itemize}
+% % %%	\item It is high time we practice some ``traditional'' induction proofs.  Start with everyone writing a proof of the following example on their own:
+% % %%
+% % %%	\ex Prove that $3^n$ is odd for every $n \ge 1$.
+% % %%
+% % %%	\ex Prove $n^2 < 2^n$ for all $n \ge 5$.
+% % %%
+% % %%	\ex Prove $5^{2n} - 1$ is a multiple of 24.
+% % %%
+% % %%	\ex What is $F_1 + F_3 + F_5 + \cdots + F_{2n+1}$ equal to?  Prove the answer by induction for all $n \ge 0$.
+% % %%
+% % %%	\ex What is the $n$th derivative of $f(x) = xe^x$?  Prove your answer by induction.
+% % %%
+% % %%	\vskip 2ex
+% % %%	If there is time:
+% % %%
+% % %%	\item Bean game: this game is played by 2 players.  The game starts with 21 beans in a heap.  Each player, on his or her turn, must take 1, 2, or 3 beans from the heap.  Play alternates until all the beans are gone; the last player to make a legal move wins.  Do you want to go first or second?
+% % %%	\item Analyze the problem using winning positions and losing positions.  (A losing position is one which, if it is your turn, no matter what you do, your opponent will win if she plays optimally.)
+% % %%	\item Prove that $L = \{4n \st n \in \N\}$ using induction.
+% % %%
+% % %%
+% % %%
+% % %%
+% % %%\end{itemize}
+% % %%
+% % %%
+% % %
+% % %
+% % %
+% % %
+% % %
+% % %%\section*{Logic}
+% % %%\subsection*{Intro, truth tables}
+% % %%\begin{itemize}
+% % %%  \item Write an analyze the proof for, ``given integers $a$ and $b$, if the product $ab$ is even, then $a$ or $b$ is even.''
+% % %%  \item Wait for someone to suggest a proof of the converse.  Write it down.  Is this correct?
+% % %%  \item While the reasoning in the converse proof is correct, it does not prove the original implication.  How can we know this?
+% % %%  \item Logic is the study of consequence - what follows from what?
+% % %%  \item Introduce statements - give examples and non-examples.
+% % %%  \item Introduce the connectives.  Statements are made up by connecting smaller statements.
+% % %%  \item A method for finding the truth value of a complicated statement: truth tables.
+% % %%  \item Is the monopoly statement true: ``if you get the most doubles then you will win, or if you win, you owned all the railroads''?  Make a truth table.
+% % %%  \item The monopoly statement is a {\em tautology}.  Always true, but not interesting.
+% % %%  \item When we try to prove something in math, it will almost never be a tautology - we will use logic to help guide our proof, and the proof will have to be logically valid, but we will also need to incorporate the meaning of the mathematical terms, for example.
+% % %%\end{itemize}
+% % %%
+% % %%\todayis{Wednesday, January 23}
+% % %%\subsection*{Propositional logic: deduction and equivalence}
+% % %%
+% % %%\begin{itemize}
+% % %%  \item Start by working in groups on this puzzle:
+% % %%  \vskip 1ex
+% % %%  Holmes owns two suits: one blue and one brown.  Whenever he wears his blue suit and a blue shirt, he also wears a blue tie.  He always wears either a blue suit or white socks.  He never wears the blue suit unless he is also wearing either a blue shirt or white socks.  Whenever he wears white socks, he also wears a blue shirt.  Today, Holmes is wearing a gold tie.  What else is he wearing?
+% % %%  \vskip 1ex
+% % %%
+% % %%  \item Deduce the answer on the board.  Notice that while we could have made a giant truth table, that is too much work.  Instead, we used some common rules of inference.
+% % %%
+% % %%  \item If this was a course entirely about logic, we would spend time developing a formal system of rules (like an algebra for statements) which would allow us to deduce any logical consequence from any statement.  However, time is short!
+% % %%
+% % %%  \item Highlight some of the rules we used in our deduction - are you confident these are correct?  Truth tables!
+% % %%
+% % %%  \item Do an example to establish a valid argument form.  Ask for one from the class.  For example, maybe $P \imp Q$ and $\neg P \imp Q$, therefore $Q$.
+% % %%
+% % %%
+% % %%
+% % %%  \item End with the Tommy's Snack puzzle:
+% % %%
+% % %%  \vskip 1ex
+% % %%  Tommy Flanagan was telling you what he ate yesterday afternoon.  He tells you, ``I had either popcorn or raisins.  Also, if I had cucumber sandwiches, then I had soda.  But I didn't drink soda or tea.  Yeah, that's the ticket.''  Of course you know that Tommy is the worlds worst liar, and everything he says is false.  What did Tommy eat?
+% % %%\end{itemize}
+% % %%
+% % %%\todayis{Friday, January 25}
+% % %%
+% % %%\begin{itemize}
+% % %%\item One useful technique when making deductions is to rewrite a statement in an equivalent way.  Compare $P \imp Q$ to $\neg P \vee Q$.
+% % %%  \item You could also view these as argument forms - from one you can deduce the other.  Statements are equivalent if the deduction can go both ways.
+% % %%
+% % %%  \item Introduce De Morgan's Laws.  Also double negation rule.
+% % %%
+% % %%  \item Simplify: $\neg((P \imp \neg Q)\vee \neg(R \wedge \neg Q))$.  Notice that we first need to convert the $\imp$ into a $\vee$ to use De Morgan's Laws.
+% % %%
+% % %%  \item Being able to state the negation of a statement is very helpful (proof by contradiction).  In particular, what is the only way for an implication to be false?  Or a disjunction? Recall the Tommy's Snack problem from last time.
+% % %%\end{itemize}
+% % %%
+% % %%\subsubsection*{Implications - Converse and Contrapositive}
+% % %%
+% % %%\begin{itemize}
+% % %% \item Recall that the converse of the implication $P \imp Q$ is $Q \imp P$.  The contrapositive of $P \imp Q$ is $\neg Q \imp \neg P$.
+% % %% \item We also sometimes want to consider $\neg P \imp \neg Q$.  This is called the inverse of $P \imp Q$ - it is the converse of the contrapositive (or the contrapositive of the converse).
+% % %%
+% % %% \item As we have said, an implication is logically equivalent to its contrapositive, but not to the converse (or inverse for that matter).
+% % %%
+% % %% \item If $P \imp Q$ and its converse $Q \imp P$ happen to hold, then we have $P \iff Q$.
+% % %%
+% % %% \item If this was all there was to it, we would be fine.  The trouble begins when the English gets style.  The following are all implications - rephrase them in a ``standard'' way:
+% % %% \begin{itemize}
+% % %%  \item You can have a cookie only if you finish your homework.
+% % %%  \item You can have a cookie if you finish your homework.
+% % %%  \item Unless you finish your homework, you cannot have a cookie.
+% % %%  \item To have a cookie, it is necessary that you finish your homework.
+% % %%  \item Finishing your homework is sufficient to get a cookie.
+% % %%  \item Either you finish your homework or you don't have a cookie.
+% % %% \end{itemize}
+% % %% \item Notice especially the ``necessary and sufficient'' language.  This is actually pretty common in mathematics - we might talk about necessary or sufficient conditions for something to happen.  You might say, for example, that being continuous is necessary, but not sufficient, for being differentiable.
+% % %% \item Saying one things is necessary and sufficient for another things is the same as saying one thing is true if and only if the other thing.
+% % %% \item I do NOT suggest you try to memorize these - instead, you should always think about the {\em meaning} of the statements carefully.
+% % %%\end{itemize}
+% % %%
+% % %% \todayis{Monday, January 28}
+% % %%\subsection*{Quantifiers and Predicate Logic}
+% % %%\begin{itemize}
+% % %%  \item How do you translate, ``all squares are rectangles'' into symbols?
+% % %%  \item Another example: for all integers $a$ and $b$, if $ab$ is even then $a$ or $b$ is even.  How would you write this in symbols.
+% % %%  \item What are predicates?  Give some examples.
+% % %%  \item Introduce $\exists x$ and $\forall x$ notation.
+% % %%  \item How do you read: $\exists x \forall y (x < y)$.  Is it true?  Domain of discourse.
+% % %%  \item Translate to symbols: For all numbers $x$ and $y$, if $x \ne y$ then there is a number between $x$ and $y$.  Is this true?
+% % %%  \item How do you say the above is false?
+% % %%  \item Simplify $\neg \exists x P(x)$.  Simplify $\neg \forall x P(x)$.  Why are these like De Morgan's Laws?
+% % %%  \item Big simplification example.
+% % %%  \item If there is time: when can you factor out quantifiers?  You need different variables, and be careful with implications.
+% % %%  \item Another approach: to translate, ``all multiples of 4 are even'' or ``some multiples of 3 are even,'' we could use quantifiers and predicates, or we could use set theory.  For next time, read the course notes on set theory.  We will go over them fairly quickly next time (I suspect much will be review).
+% % %%\end{itemize}
+% % %%
+% % %%\todayiscont{Wednesday, January 30}
+% % %%
+% % %%
+% % %%\section*{Set Theory}
+% % %%\subsection*{Introduction to notation}
+% % %%\begin{itemize}
+% % %%  \item Do quick example to find unions and intersections of sets, decide whether a set is a subset of another, find cardinalities
+% % %%  \item Do set theory worksheet in groups.
+% % %%  \item Discuss worksheet, pointing out the difference between $\in$ and $\subseteq$.
+% % %%  \item Note that $\emptyset \subseteq A$ for all sets $A$.  This means $\emptyset \in \pow(A)$.
+% % %%  \item Sets can contain other sets, but not automatically.  For example, $4 \in \{2,3,4\}$ but $\{4\} \notin \{2,3,4\}$.  We do have $\{4\} \subseteq \{2,3,4\}$.  To get $\{4\} \in A$, the set $A$ would have to look something like $\{2,3,4, \{4\}\}$.
+% % %%\end{itemize}
+% % %
+% % %%
+% % %
+% % %%
+% % %%\todayis{Monday, March 25}
+% % %%
+% % %
+% % %%
+% % %% \todayis{Friday, April 5}
+% % %%
+% % %% \subsection*{Generating Functions}
+% % %%
+% % %% \begin{itemize}
+% % %% 	\item Describe the goal of generating functions.  Talk about power series a bit.
+% % %%
+% % %%  \item The generating function for $1,1,1,1,1, \ldots$ is $\frac{1}{1-x}$ because $\frac{1}{1-x} = 1 + x + x^2 + x^3 + \cdots$
+% % %%
+% % %%  \item We can use this to find other generating functions.  Do so for:
+% % %%  \begin{itemize}
+% % %%    \item $1,-1,1,-1,1,-1, \ldots$
+% % %%    \item $1,3,9,27,81,\ldots$
+% % %%    \item $2, 2, 10, 26, 82, \ldots$
+% % %%    \item $0, 2, 2, 2, 2, 2, \ldots$
+% % %%    \item $1, 0, 1, 0, 1, 0, \ldots$
+% % %%    \item $1,2,3,4,5,\ldots$
+% % %%  \end{itemize}
+% % %%
+% % %%  \item By the way, what happens if you add $1, 0, 1, 0, 1, 0, \ldots$ to $0, 1, 0, 1, 0, 1, \ldots$?  Compare the generating functions.
+% % %%
+% % %%
+% % %%
+% % %%    \subsubsection*{Multiplication - partial sums}
+% % %%
+% % %%  \item What happens to the sequences when you multiply two generating functions?  Let's see: $A = a_0 + a_1x + a_2x^2 + \cdots$ and $B = b_0 + b_1x + b_2x^2 + \cdots$.  To multiply $A$ and $B$, we need to do a lot of distributing (infinite FOIL?) but keep in mind we will regroup and only need to write down the first few terms to see the pattern.  What is the constant term?  $a_0b_0$.  What is the coefficient of $x$?  $a_0b_1 + a_1b_0$.  And so on.  We get:
+% % %%     \[AB = a_0b_0 + (a_0b_1 + a_1b_0)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2 + (a_0b_3 + a_1b_2 + a_2b_1 + a_3b_0)x^3 + \cdots\]
+% % %%
+% % %%     \ex ``Multiply'' the sequence $1, 2, 3, 4 \ldots$ and $2, 4, 8, 16, \ldots$.  What new sequence do you get?
+% % %%
+% % %%     \item What happens when you multiply a sequence by $1, 1, 1, \ldots$?  Try it with $1, 2, 3, 4, 5\ldots$?  Now multiply it again!  Is this a surprise?  What would differencing give you?
+% % %%
+% % %%     \item The point is, if you need to find a generating function for the sum of the first $n$ terms of a particular sequence, and you know the generating function for {\em that} sequence, you can multiply it by $\frac{1}{1-x}$.
+% % %%
+% % %%
+% % %%   \end{itemize}
+% % %%
+% % %%   \todayis{Monday, April 8}
+% % %%
+% % %%    \subsubsection*{Differencing}
+% % %%   \begin{itemize}
+% % %%
+% % %%
+% % %%      \item Find the generating function for $1, 3, 6, 10, 15, \ldots$ by getting the differences.
+% % %%
+% % %%      \item Use differencing to find the generating function for the Fibonacci numbers.
+% % %%
+% % %%      \item Differencing can also be used to find the generating function for a sequence given by a recurrence relation.  Try $a_n = 4a_{n-1} + 5a_{n-2}$ with $a_0 = 1$ and $a_1 = 4$.
+% % %%
+% % %%   \subsubsection*{Finding closed formulas via Generating Functions}
+% % %%
+% % %%   \item Think back to the number of paths problem earlier (colored tiles).  The sequence was $1, 2, 7, 20, 61, \ldots$ (we had the recurrence relation $a_n = 2a_{n-1} + 3a_{n-2}$).  Let's find a generating function for this sequence.  The recurrence relation will help.
+% % %%
+% % %%   \item Call the generating function $A$.  Now find $A - 2xA - 3x^2A$.  Every thing should cancel out (because of the recurrence relation) except for 1.  So the generating function is just
+% % %%   \[\frac{1}{1-2x -3x^2} = \frac{1}{(1+x)(1-3x)} = \frac{a}{1+x} + \frac{b}{1-3x}\]
+% % %%   The last step by partial fraction decomposition.
+% % %%
+% % %%   \item We can now solve for $a$ and $b$ (it works out that $a = 1/4$ and $b = 3/4$).  But why is this helpful?
+% % %%
+% % %%   \item What is generated by $\frac{3/4}{1-3x} = 3/4(1 + 3x + 9x^2 + 27x^3+ \cdots)$?  The $n$th term of the sequence is $(3/4)3^n$.  Similarly, the $n$th term of the sequence generated by $\frac{1/4}{1+x}$ is $(1/4)(-1)^n$.  So the $n$th term of our original sequence is $(3/4)3^n + (1/4)(-1)^n$.
+% % %%
+% % %%   \item Thus we can add generating functions to our list of methods for solving recurrence relations - although you do need to know how to do partial fraction decomposition.
+% % %% \end{itemize}
+% % %%
+% % %%
+% % %
+% % %%\todayis{Monday, April 22}
+% % %%
+% % %%\section*{Introduction to Number Theory}
+% % %%
+% % %%\subsubsection*{Divisibility}
+% % %%
+% % %%\begin{itemize}
+% % %%	\item Recall one of the questions from day 1: is it possible to measure $4$ gallons using two (unmarked) jugs each holding either 3 or 5 gallons?
+% % %%	\item What if we change the number in this problem?  Which triples $(a,b,c)$ have the property that $a$- and $b$-gallon jugs can be used to measure $c$ gallons?
+% % %%	\item Work in groups for 10 minutes on this, form a conjecture.  How can we represent this process mathematically?
+% % %%	\item One way to solve the original problem is to fill up the 3-gallon jug, move the water to to 5 gallon jug, and repeat.  When the 5 gallon jug is full, we empty it.
+% % %%	\item So think about filling the 3-gallon jug $x$ times, and emptying the 5-gallon jug $y$ times. Or rather empty it $-y$ times, which means filling it $y$ times.
+% % %%	\item What we want then is to solve the equation $3x + 5y = 4$.  We want $x$ to be positive, and $y$ to be negative, but both have to be integers (whole numbers).
+% % %%	\item This sort of equation looks familiar: For the stamp problem, we wanted to know whether $5x + 8y = 61$, for example.  In that case, $x$ and $y$ both had to be positive.
+% % %%	\item Equations such as these are called {\em Diophantine equations}, because the solutions we are looking for must be integers.  These are called {\em linear Diophantine equations} because the variables are all degree 1.
+% % %%	\item Incidentally, are there any solutions to $x^2 + y^2 = z^2$ (with no variable 0)?  This is also a Diophantine equation.  What about $x^3 + y^3 = z^3$?  (Fermat's last theorem: 1637-1995).
+% % %%	\item Now, is there a solution to $6x + 8y = 7$?  What about $6x + 9y = 7$?
+% % %%
+% % %%	\item This brings us to the idea of divisibility.
+% % %%
+% % %%	\item We say $a$ {\em divides} $b$ (in symbols: $a \mid b$) if $b$ is divisible by $a$, or if $b$ is a multiple of $a$ or if $a$ is a factor (or divisor) of $b$.  In other words, $b = ma$ for some integer $m$.
+% % %%
+% % %%	\ex True or false: $3 \mid 12$, $9 \mid 12$, $0 \mid 13$, $13 \mid 0$, $10 \mid 5$, $5 \mid -10$, etc.
+% % %%
+% % %%	\item When $a \nmid b$, then if we did divide $b$ by $a$, there would be something left over.  Some remainder (also called a {\em residue}).  In fact we can \underline{always} write $b = qa + r$ where $0 \le r < |a|$.
+% % %%
+% % %%
+% % %%\end{itemize}
+% % %%
+% % %%\todayis{Wednesday, April 24}
+% % %%
+% % %%
+% % %%
+% % %%\subsection*{Modular Arithmetic}
+% % %%Problem of the day: What is the largest collection of numbers you can find such that no pair of numbers in the collection are a multiple of 7 distance apart?
+% % %%\begin{itemize}
+% % %%	\item Recall from last time, given two numbers $a$ and $b$, even if $b \nmid a$, we can still divide $a$ by $b$ {\em with remainder}.  We can write $a = qb + r$ where $0 \le r < |b|$.
+% % %%
+% % %%	\item The big idea: we can group numbers together by their remainder which divided by a particular number.  For example, we can compare all numbers with respect to division by 3.  Every number would have remainder 0, 1, or 2.
+% % %%
+% % %%	\item If two numbers $a$ and $b$ have the same remainder when divided by $n$, we say $a$ and $b$ are {\em congruent modulo $n$}, and write $a \equiv b \pmod{n}$.
+% % %%
+% % %%	\item How does congruence modulo $n$ relate to divisibility by $n$?  If $a \equiv b \pmod{n}$, this means that $a = q_1n + r$ and $b = q_2n + r$, but the $r$'s are the same!  So $a-b = q_2 n + r - (q_1n + r) = (q_2 - q_1) n$.  In other words, $n \mid a-b$.
+% % %%
+% % %%	\item This solves the problem of the day: suppose we had 8 numbers in the collection.  What could they be congruent to modulo 7?  There must be two that are congruent!  But then 7 must divide their difference, or in other words, their difference is a multiple of 7.
+% % %%
+% % %%	\item How does congruence relate to equality?  Using the previous observation, we know that if $a \equiv b \pmod{n}$, then $a-b = kn$ for some integer $k$.  So $a = b + kn$.  Does this make sense?
+% % %%
+% % %%	\item Suppose we wanted to solve a congruence like $3x + 5 \equiv 10 \pmod{7}$.  Can we subtract 5 from both sides?
+% % %%
+% % %%	\item Well, we actually have $3x + 5 = 10 + 7k$.  This is an equation, so yes we can.  We get $3x = 5 + 7k$, which is the same as $3x \equiv 5 \pmod{7}$.
+% % %%
+% % %%	\item Now can we divide both sides by $3$?  Well, what is $5/3$???  It's 4 of course.  What???
+% % %%
+% % %%	\item Notice that if $3x \equiv 5 \pmod{7}$, then $3x \equiv 12 \pmod{7}$.  Then assuming we can do the division, we would get $x \equiv 4 \pmod{7}$.  Is this right?
+% % %%
+% % %%	\item We could check: $3\cdot 4 + 5 = 17$, which has remainder $3$ when divided by 7.  So does $10$.  So yes, this is an acceptable solution for $x$.  What other solutions are there?
+% % %%
+% % %%
+% % %%\end{itemize}
+% % %%
+% % %%
+% % %%
+% % %%\todayis{Friday, April 26}
+% % %%
+% % %%Problem of the day: What is the last digit of $3^{888}$?
+% % %%
+% % %%\begin{itemize}
+% % %%	\item Suppose $a \equiv b \pmod{n}$ and $c \equiv d \pmod{n}$.  Then:
+% % %%	\[a+c \equiv  b+d \pmod{n} \qquad a-c \equiv b-d \pmod{n} \qquad ac \equiv bd \pmod{n}\]
+% % %%
+% % %% 	\item Check the addition version.  Use both divisibility and equations.
+% % %%
+% % %%	\item Why do we care?  One special case is when $c = d$.  Then we are adding, subtracting, or multiplying both sides by the same thing.  Another special case, when $c = n$: we can add or subtract any number of $n$'s from one side or the other, since $n \equiv 0 \pmod{n}$  Similarly, we multiply by $n+1$ on just one side, as this is just multiplying by 1.
+% % %%
+% % %%	\item Big question: what about division?  Last time we saw that sometimes division works.  But always?  Try to simplify $18 \equiv 42 \pmod{8}$ (which is true).
+% % %%
+% % %%	\item The rule: $ax \equiv ay \pmod{n}$ can be simplified to $x \equiv y \pmod{\frac{n}{\gcd(a,n)}}$ where $\gcd(a,n)$ is the greatest common divisor of $a$ and $n$.
+% % %%
+% % %%
+% % %%
+% % %%
+% % %%\end{itemize}
+% % %%
+% % %%\todayis{Monday, April 29}
+% % %%
+% % %%\subsubsection{More number theory}
+% % %%
+% % %%\begin{itemize}
+% % %%	\item Let's solve some congruences:
+% % %%
+% % %%	\ex Solve for $x$: $3x \equiv 15 \pmod{20}$ and $8x \equiv 12 \pmod{20}$.  Also, try $2x \equiv 5 \pmod 6$ (no solutions - why?).  More:  Solve $7x \equiv 6 \pmod{37}$.  ($154/7 = 22$).  Also solve: $18 x \equiv 42 \pmod{40}$.
+% % %%
+% % %%	\item This is fun and all, but remember, our real goal is to solve linear Diophantine equations.  We already noticed that if the equation $ax + by = c$ is going to have solutions, then anything dividing $a$ and $b$ must also divide $c$.  In other words, both sides of the equation must be divisible by the same numbers.
+% % %%
+% % %%	\item The new insight here: both sides must also have the same remainder when divided by any number.  In other words, if $ax + by = c$, then $ax + by \equiv c \pmod n$.  This works for every $n$.  In particular, we can choose $n$ to be $a$ or $b$!
+% % %%
+% % %%	\ex Solve $56 x + 20 y = 32$.  (First, check that there are even any solutions: does $\gcd(56, 20)|32$?  Yes.  So why don't we divide both sides by that.) We get $14 x + 5 y = 8$.  Now we convert to a congruence modulo $a$ or $b$.  Usually, pick the smaller one.  so we get: $14 x + 5 y \equiv 8 \pmod 5$.  Then: $14 x \equiv 8 \pmod 5$ $\longrightarrow$ $4x \equiv 3 \pmod 5$ $\longrightarrow$ $4x \equiv 8 \pmod 5$ $\longrightarrow$ $x \equiv 2 \pmod 5$.  Now back to an equation.  $x = 2 + 5k$ for all integers $k$.  What is $y$?  Solve $14(2 + 5k) + 5y = 8$ $\longrightarrow$ $y = 4 + 14 k$.
+% % %%
+% % %%	 \ex Solve $17 x - 19 y = 1$.  Find all solutions with $50 \le x \le 100$.
+% % %%
+% % %%	 \ex Solve $171 x + 47 y = 54$.  First get $5x \equiv 9 \pmod{47}$.  Rewrite this as $5x + 47k = 9$.  Now solve {\em this} Diophantine equation.  Then plug back in to find $x$, and then back into the original to find $y$.
+% % %%
+% % %%	 \ex How can you make \$6.30 using only dimes and quarters?  What if you have at least 20 dimes and at least 15 quarters.
+% % %%
+% % %%
+% % %%	\item We know that sometimes there are no solutions, for divisibility reasons.
+% % %%	\item Specifically, if $\gcd(a,b) \nmid c$, then $ax + by = c$ has no solutions.  Is the converse true?
+% % %%	\item It sure looks like it.  How can we be sure?
+% % %%	\item To solve $ax \equiv b \pmod{n}$, we need to look at the multiples of $a$.  Are we sure that as we cycle through the multiples of $a$ that there will be such a multiple with remainder $b$ when we divide by $n$?
+% % %%	\item Another approach: switch back and forth between Diophantine equations and congruences.
+% % %%	\item Other fun number theory: which numbers are the difference of squares?  Which are differences of squares in only one way?  Which even numbers are the sum of two primes?
+% % %%\end{itemize}
+% % %%
+% % %%
+% % %%%Magic trick: Write down any multi-digit number.  Scramble the digits to create a second number.  Subtract the smaller of these from the larger.  Now add up the digits of the result, and then add up the digits of that, and so on, until you have a single  digit left.  It is a 9.
+% % %%
+% % %%
+%
+\end{document}
+
+
+% After excavating for weeks, you finally arrive at the burial chamber. The room is empty except for two large chests. On each is carved a message (strangely in English):
+% %
+% \leavevmode%
+%
+% \centering{
+% \begin{tikzpicture}
+%     \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=3cm, minimum width=3.5cm, text width=3.5cm, align=center] (a) { If this chest is empty, then the other chest's message is true.};
+%     \node[shape=rectangle, draw=brown, thick, fill=brown!20!white, inner sep=5mm, minimum height=3cm, minimum width=3.5cm, text width=3.5cm, align=center, right=of a] {
+%          This chest is filled with treasure or the other chest contains deadly scorpions.
+%         };
+% \end{tikzpicture}
+% }
+%
+%
+% You know exactly one of these messages is true. What should you do?

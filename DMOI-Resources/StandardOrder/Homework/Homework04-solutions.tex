@@ -1,0 +1,160 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 4 Solutions}{Due: Wednesday, September 20}
+
+
+\begin{document}
+% \noindent \textbf{Instructions}: Same rules as usual.  Turn in solutions on separate pages, and do not consult the internet.
+%
+\begin{questions}
+
+
+
+ \question[6] Suppose you own $x$ fezzes and $y$ bow ties.  Of course, $x$ and $y$ are both greater than 1.
+ \begin{parts}
+ 	\part How many combinations of fez and bow tie can you make?  You can wear only one fez and one bow tie at a time.  Explain.
+ 	\begin{solution}
+ 		You have $x$ choices for the fez, and for each choice of fez you have $y$ choices for the bow tie.  Thus you have $x \cdot y$ choices for fez and bow tie combination.
+ 	\end{solution}
+
+ 	\part Explain why the answer is {\em also} ${x+y \choose 2} - {x \choose 2} - {y \choose 2}$.  (If this is what you claimed the answer was in part (a), try it again.)
+ 	\begin{solution}
+ 		Line up all $x+y$ quirky clothing items -- the $x$ fezzes and $y$ bow ties.  Now pick 2 of them.  This can be done in ${x+y \choose 2}$ ways.  However, we might have picked 2 fezzes, which is not allowed.  There are ${x \choose 2}$ ways to pick 2 fezzes.  Similarly, the ${x+y \choose 2}$ ways to pick two items includes ${y \choose 2}$ ways to select 2 bow ties, also not allowed.  Thus the total number of ways to pick a fez and a bow ties is
+ 		\[{x+y \choose 2} - {x \choose 2} - {y \choose 2}\]
+ 	\end{solution}
+
+ 	\part Use your answers to parts (a) and (b) to give a combinatorial proof of the identity
+ 	\[{x+y \choose 2} - {x \choose 2} - {y \choose 2} = xy\]
+ 	Note: you have done almost all of the work for this problem in parts (a) and (b), now you just need to put it together into a proof.
+ 	\begin{solution}
+ 		\begin{proof}
+ 			The question is how many ways can you select one of $x$ fezzes and one of $y$ bow ties.  We answer this question in two ways.  First, the answer could be $a\cdot b$. This is correct as described in part (a) above.  Second, the answer could be ${x+y \choose 2} - {x \choose 2} - {y \choose 2}$.  This is correct as described in part (b) above.  Therefore
+ 			\[{x+y \choose 2} - {x \choose 2} - {y \choose 2} = xy\]
+ 		\end{proof}
+ 	\end{solution}
+
+ \end{parts}
+
+
+
+
+ \question[6] Consider all the triangles you can create using the points shown below as vertices.  Note, we are not allowing degenerate triangles (ones with all three vertices on the same line) but we do allow non-right triangles.
+
+ \begin{center}
+   \begin{tikzpicture}[scale=0.5]
+     \foreach \i in {0,...,6} {
+       \fill (\i,0) circle (2pt);
+     }
+     \foreach \i in {1,...,4} {
+       \fill (0,\i) circle (2pt);
+     }
+   \end{tikzpicture}
+ \end{center}
+
+ \begin{parts}
+ 	\part Find the number of triangles, and explain why your answer is correct.
+ 	\part Find the number of triangles again, using a different method.  Explain why your new method works.
+ 	\part State a binomial identity that your two answers above establish (that is, give the binomial identity that your two answers a proof for).  Bonus: generalize this using $m$'s and $n$'s.
+ \end{parts}
+
+ \begin{solution}
+   There are 120 triangles.  Here are a few ways (there are others as well) to get this:
+
+   \begin{enumerate}
+     \item First count the triangles with the base on the $x$-axis.  There are ${7 \choose 2}$ ways to pick the base.  The third vertex of the triangle must be one of the 4 dots on the $y$-axis (not the origin) so there are a total of ${7 \choose 2}4$ of these triangles.  The triangles with base on the $y$ axis can be counted similarly: ${5 \choose 2}6$.  However, we have counted all the right triangles twice - they have a base on the $x$-axis and also on the $y$-axis.  There are $4 \cdot 6$ right triangles.  Thus the total number of triangles is:
+     \[{7 \choose 2}4 + {5 \choose 2}6 - 6\cdot 4 = 120\]
+ 		\item First count all the right triangles: $6 \cdot 4$.  Then count all the non-right triangles with two vertices on the $x$-axis: $4 \cdot {6 \choose 2}$.  Finally, the number of non-right triangles with two vertices on the $y$-axis: $6 \cdot {4 \choose 2}$.  All together then we have ${6 \choose 2}4 + {4 \choose 2}6 + 6 \cdot 4 = 120$.
+ 		\item Another approach to count the non-right triangles is to first select one of the two sides not parallel to an axis.  This can be done in $6 \cdot 4$ ways.  Then for each of these, select one of the remaining 8 points, which determines the triangle.  However, this double counts the non-right triangles, so we take $\frac{4\cdot 6 \cdot 8}{2}$, and then add on the $6\cdot 4$ right triangles.
+     \item We must select 3 of the 11 dots.  This can be done in ${11 \choose 3}$ ways.  However, this will also give us degenerate triangles when all three vertices are on the $x$-axis or on the $y$-axis.  There are ${7 \choose 3}$ ways we could have picked all three vertices on the $x$-axis.  There are ${5 \choose 3}$ ways we could have picked all three vertices on the $y$-axis.  Therefore the total number of triangles is
+     \[{11 \choose 3} - {7 \choose 3} - {5 \choose 3} = 120\]
+   \end{enumerate}
+
+ 	Picking two of these, we know the expressions must be equal (and not just because they are equal to 120).  So we might write:
+ 	\[{11 \choose 3} - {7 \choose 3} - {5 \choose 3} = {7 \choose 2}4 + {5 \choose 2}6 - 6\cdot 4\]
+ 	In general, suppose we have $m$ dots on the $x$-axis (including the origin) and $n$ dots on the $y$-axis (including the origin).  Then counting the number of triangles in two different ways establishes:
+ 	\[{m+n-1 \choose 3} - {m \choose 3} - {n \choose 3} = {m \choose 2}(n-1) + {n \choose 2}(m-1) - (m-1)(n-1)\]
+ \end{solution}
+
+
+
+
+
+ \question[6] Give a combinatorial proof of the identity:
+ \[k{n\choose k} = n{n-1 \choose k-1}\]
+
+ Hint: How many ways can you select a team of $k$ people from a group of $n$ people \emph{and} select one of them to be the team captain?  Also note: $k = \binom{k}{1}$ and $n = \binom{n}{1}$, if that helps.
+   \begin{solution}
+     \begin{proof}
+       Question: How many ways can you select a chaired committee of $k$ people from a group of $n$ people?  That is, you need to select $k$ people to be on the committee and one of them needs to be in charge.  How many ways can this happen?
+
+       Answer 1: First select $k$ of the $n$ people to be on the committee.  This can be done in ${n \choose k}$ ways.  Now select one of those $k$ people to be in charge - this can be done in $k$ ways.  So there are a total of $k {n \choose k}$ ways to select the chaired committee.
+
+       Answer 2: First select the chair of the committee.  You have $n$ people to choose from, so this can be done in $n$ ways.  Now fill the rest of the committee.  There are $n-1$ people to choose from (you cannot select the person you picked to be the chair) and $k-1$ spots to fill (the chair's spot is already taken).  So this can be done in ${n-1 \choose k-1}$ ways.  Therefore there are $n{n-1 \choose k-1}$ ways to select the chaired committee.
+     \end{proof}
+
+   \end{solution}
+
+
+
+ 	\question[6] For each of the following questions, first give one example of an outcome (i.e., one of the many things you are counting) and show how that particular outcome can be represented as a ``stars and bars'' diagram.  Then, answer the counting question.
+ 	\begin{parts}
+ 		\part When playing Yahtzee, you roll five regular 6-sided dice.  How many different outcomes are possible from a single (five dice) roll?  The order of the dice does not matter.
+ 		\begin{solution}
+ 			The outcome of (2, 3, 3, 4, 6) is represented by the diagram $|*|**|*||*$.  Each star represents a particular number that is rolled, so there should be 5 stars (since there are 5 dice).  Each bar switches from one number to the next, so there should be 5 bars.
+
+ 			Since we are counting these diagrams, the total number of outcomes is ${10 \choose 5}$.
+ 		\end{solution}
+
+
+ 		\part Your friend has 7 coins in her pocket (each could be a penny, nickel, dime or quarter).  How many different pocketfuls are possible?
+ 		\begin{solution}
+ 			One outcome is (p, p, p, n, d,d,d).  This is represented by $***|*|***|$.  Each star represents a coin.  Where that star is represents what kind of coin it is.  We need 7 stars, and 3 bars (to switch between types of coins).
+
+ 			Thus the total number of pocketfuls is ${10 \choose 7}$.
+ 		\end{solution}
+
+ 	\end{parts}
+
+
+  \question[6] Consider the counting question: how many ways can you give $k$ kids $n$ identical pieces of candy, so that each kid gets at least one piece of candy?  (You might want to try some specific examples of $n$ and $k$ first, but your final answers should be done in the general case).
+  \begin{parts}
+    \part One way to answer this: give each kid a piece of candy first, then distribute the remaining candy without any restrictions.  How many ways can this be done?  Give your answer and describe the stars-and-bars diagrams you are counting.
+    \begin{solution}
+      If you give away $k$ candies, then you will have $n-k$ left, so we can use $n-k$ stars and $k-1$ bars.  The number of such diagrams is is $\binom{n-k+k-1}{k-1} = \binom{n-1}{k-1}$.
+    \end{solution}
+    \part Another approach: You have $n$ stars, but now can only put one bar between any two stars (and none on the ends).  How many ways can this be done?  Explain why your answer makes sense.
+    \begin{solution}
+      Now we have $n-1$ spots (between the stars).  Some of these get one of the $k-1$ bars, some do not.  We simply must choose which spots to put bars in.  This can be done in $\binom{n-1}{k-1}$ ways.
+    \end{solution}
+  \end{parts}
+
+
+
+
+\end{questions}
+
+
+
+
+\end{document}

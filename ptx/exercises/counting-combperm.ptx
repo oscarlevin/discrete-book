@@ -127,7 +127,6 @@
             $ans1 = Compute("7^5");
             $ans2 = Compute("P(7,5)");
             $ans3 = Compute("C(7,5)");
-            $ans4 = Compute("5!");
           </pg-code>
         </setup>
         <statement>
@@ -169,10 +168,6 @@
                 <p permid="fnP">
                   Which of the above counting questions is a combination and which is a permutation?
                   Explain why this makes sense.
-                </p>
-
-                <p permid="LuY">
-                  <var name="$ans4" width="5"/>
                 </p>
               </li>
             </ol>
@@ -233,6 +228,57 @@
     </webwork>
   </exercise>
 
+  <exercise>
+    <!-- <webwork>
+        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
+        <setup>
+          <pg-code>
+            Context("IntegerFunctions");
+            $ans1 = Compute("P(17,10)");
+            $ans2 = Compute("C(17,10)");
+          </pg-code>
+        </setup> -->
+        <statement>
+          <p>
+            In an attempt to clean up your room,
+            you have purchased a new floating shelf to put some of your 17 books you have stacked in a corner.
+            These books are all by different authors.
+            The new book shelf is large enough to hold 10 of the books.
+            <ol>
+              <li>
+                <p>
+                  How many ways can you select and arrange 10 of the 17 books on the shelf?
+                  Notice that here we will allow the books to end up in any order.
+                  Explain.
+                </p>
+<!-- 
+                <p>
+                  <var name="$ans1" width="5"/>
+                </p> -->
+              </li>
+
+              <li>
+                <p>
+                  How many ways can you arrange 10 of the 17 books on the shelf if you insist they must be arranged alphabetically by author?
+                  Explain.
+                </p>
+<!-- 
+                <p>
+                  <var name="$ans2" width="5"/>
+                </p> -->
+              </li>
+            </ol>
+          </p>
+        </statement>
+        <hint>
+          <p>
+          Which question should have the larger answer?  One of these is a combination, the other is a permutation.  
+          </p>
+        </hint>
+    <!-- </webwork> -->
+  </exercise>
+
+
   <exercise permid="SLc">
 
     <introduction oldpermid="uis">
@@ -286,7 +332,7 @@
           </p>
 
           <p permid="gHD">
-            <var name="$sqaures" width="10"/>
+            <var name="$squares" width="10"/>
           </p>
 
           <p permid="MOM">
@@ -306,19 +352,19 @@
           </p>
 
           <p permid="lrw">
-            How many are trapezoids?<fn>
-            Here, as in calculus,
+            How many are trapezoids? 
+            (Here, as in calculus,
             a trapezoid is defined as a quadrilateral with <em>at least</em>
             one pair of parallel sides.
-            In particular, parallelograms are trapezoids.
-            </fn></p>
+            In particular, parallelograms are trapezoids.)
+          </p>
 
           <p permid="RyF">
             <var name="$alltraps" width="10"/>
           </p>
 
           <p permid="xFO">
-            How amny are trapezoids that are not parallelograms?
+            How many are trapezoids that are not parallelograms?
           </p>
 
           <p permid="dMX">
@@ -326,6 +372,31 @@
           </p>
         </statement>
         <solution permid="gOH">
+          <p permid="BFN">
+            You can make <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals.
+          </p>
+
+          <p permid="hMW">
+            There are 5 squares.
+          </p>
+
+          <p permid="NUf">
+            There are <m>{7 \choose 2}</m> rectangles.
+          </p>
+
+          <p permid="ubo">
+            There are
+            <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91</m>
+            parallelograms.
+          </p>
+
+          <p permid="aix">
+            All of the quadrilaterals are trapezoids.
+            To count the non-parallelogram trapezoids,
+            compute <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>.
+          </p>
+        </solution>
+        <solution permid="gOH" category="instructor">
           <p permid="BFN">
             <m>{7\choose 2}{7\choose 2} = 441</m> quadrilaterals.
             We must pick two of the seven dots from the top row and two of the seven dots on the bottom row.
@@ -395,8 +466,7 @@
     </statement>
     <hint permid="MVQ">
       <p permid="Dva">
-        You need exactly two points on either the <m>x</m>- or <m>y</m>-axis,
-        but don't over-count the right triangles.
+        If you pick any three points, you can get a triangle, unless those three points are all on the <m>x</m>-axis or on the <m>y</m>-axis.  There are other ways to start this as well, and any correct method should give the same answer.
       </p>
     </hint>
     <solution category="instructor">
@@ -405,8 +475,6 @@
         Here are two ways
         (there are others as well)
         to get this:
-      </p>
-
       <ol>
         <li>
           <p>
@@ -440,72 +508,11 @@
           </p>
         </li>
       </ol>
+    </p>
     </solution>
   </exercise>
-  <!-- <exercise>
-    <statement>
-      <p>
-        How many of the quadrilaterals possible in the previous problem are:
-      <ol>
-        <li>
-          <p>
-            Squares?
-          </p>
-        </li>
-        <li>
-          <p>
-            Rectangles?
-          </p>
-        </li>
-        <li>
-          <p>
-            Parallelograms?
-          </p>
-        </li>
-        <li>
-          <p>
-            Trapezoids?<fn>Here, as in calculus, a trapezoid is defined as a quadrilateral with <em>at least</em> one pair of parallel sides. In particular, parallelograms are trapezoids.</fn>
-          </p>
-        </li>
-        <li>
-          <p>
-            Trapezoids that are not parallelograms?
-          </p>
-        </li>
-      </ol>
-    </p>
-    </statement>
-      <solution>
-        <p>
-          <ol>
-            <li>
-              <p>
-                5 squares. You need to skip exactly one dot on the top and on the bottom to make the side lengths equal. Once you pick a dot on the top, the other three dots are determined.
-              </p>
-            </li>
-            <li>
-              <m>{7 \choose 2}</m> rectangles. Once you select the two dots on the top, the bottom two are determined.</li>
-            <li>
-              <p>
-                This is tricky since you need to worry about running out of space. One way to count: break into cases by the location of the top left corner. You get
-                <m>{7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) = 91</m>
-                parallelograms.
-              </p>
-            </li>
-            <li>
-              <p>
-                All of them
-              </p>
-            </li>
-            <li>
-              <p>
-                <m>{7\choose 2}{7\choose 2} - \left[ {7 \choose 2} + ({7 \choose 2}-1) + ({7 \choose 2} - 3) + ({7 \choose 2} - 6) + ({7 \choose 2} - 10) + ({7 \choose 2} - 15) \right]</m>. All of them, except the parallelograms.
-              </p>
-            </li>
-          </ol>
-        </p>
-      </solution>
-  </exercise> -->
+
+
   <exercise permid="eZu">
     <webwork>
       <!-- Allow C(n,k) and P(n,k): -->
@@ -558,7 +565,17 @@
             <var name="$ans" width="5"/>
           </p>
         </statement>
+        <hint>
+          <p>
+            We just need a string of 7 letters: 4 of one type, 3 of the other.
+          </p>
+        </hint>
         <solution permid="Zki">
+          <p permid="mwP">
+            There are <m>{7 \choose 2} = 21</m> anagrams starting with <q>a</q>.
+          </p>
+        </solution>
+        <solution permid="Zki" category="instructor">
           <p permid="mwP">
             After the first letter (a), we must rearrange the remaining 7 letters.
             There are only two letters (s and e),
@@ -612,9 +629,8 @@
     </webwork>
   </exercise>
 
-  <exercise>
+  <!-- <exercise>
     <webwork>
-      <!-- Allow C(n,k) and P(n,k): -->
         <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
         <setup>
           <pg-code>
@@ -696,7 +712,7 @@
                   Thus all together the number of anagrams is:
                   <me>
                     {11\choose 5}{6 \choose 2}{4 \choose 2}2\cdot 1 = 83160
-                  </me>
+                  </me>.
                   (Note, if you pick a different letter to start with,
                   you get a different looking answer,
                   but the final product should be the same.)
@@ -714,7 +730,7 @@
                   We just need to count groups, so the total is
                   <me>
                     \frac{11!}{5!2! 2!} = 83160
-                  </me>
+                  </me>.
                 </p>
               </li>
 
@@ -732,14 +748,14 @@
                   All together, this brings the number of sub-anagrams to
                   <me>
                     120 + 120 + 60 + 20 + 5 = 325
-                  </me>
+                  </me>.
                 </p>
               </li>
             </ol>
           </p>
         </solution>
     </webwork>
-  </exercise>
+  </exercise> -->
 
   <exercise permid="DCe">
     <webwork>
@@ -755,7 +771,7 @@
         <statement>
           <p permid="GZA">
             On a business retreat,
-            your company of 20 businessmen and businesswomen go golfing.
+            your company of 20 executives go golfing.
 
             <ol permid="TuW">
               <li permid="qSn">
@@ -785,6 +801,21 @@
           </p>
         </statement>
         <solution permid="RFJ">
+          <p permid="eSq">
+            <ol permid="iDU">
+              <li permid="DgF">
+                <m>{20 \choose 4}{16 \choose 4}{12 \choose 4}{8 \choose 4}{4 \choose 4}</m>
+                ways.
+              </li>
+
+              <li permid="jnO">
+                <m>5!{15 \choose 3}{12 \choose 3}{9 \choose 3}{6 \choose 3}{3 \choose 3}</m>
+                ways.
+              </li>
+            </ol>
+          </p>
+        </solution>
+        <solution permid="RFJ" category="instructor">
           <p permid="eSq">
             <ol permid="iDU">
               <li permid="DgF">
@@ -827,12 +858,16 @@
             <var name="$ans" width="5"/>
           </p>
         </statement>
+        <hint>
+          <p>
+            There are 10 people seated around the table,
+            but it does not matter where King Arthur sits,
+            only who sits to his left, two seats to his left, and so on.  So the answer is not <m>10!</m>.
+          </p>
+        </hint>
         <solution permid="xMS">
           <p permid="KZz">
             <m>9!</m>.
-            There are 10 people seated around the table,
-            but it does not matter where King Arthur sits,
-            only who sits to his left, two seats to his left, and so on.
           </p>
         </solution>
     </webwork>
@@ -955,6 +990,29 @@
             <ol permid="uSm">
               <li permid="gti">
                 <p permid="TJr">
+                  <m>6^4 = 1296</m> functions.
+                </p>
+              </li>
+
+              <li permid="MAr">
+                <p permid="zQA">
+                  <m>P(6, 4) = 6 \cdot 5 \cdot 4 \cdot 3 = 360</m> functions.
+                </p>
+              </li>
+
+              <li permid="sHA">
+                <p permid="fXJ">
+                  <m>{6 \choose 4} = 15</m> functions.
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+        <solution permid="Kbk" category="instructor">
+          <p permid="XnR">
+            <ol permid="uSm">
+              <li permid="gti">
+                <p permid="TJr">
                   <m>6^4 = 1296</m> functions,
                   since there are six choices of where to send each of the 4 elements of the domain.
                 </p>
@@ -1019,21 +1077,10 @@
             </p>
           </li>
 
-<<<<<<< HEAD
           <li permid="ldb">
             <p permid="Ytk">
               Explain why it makes sense to divide <m>12!</m> by <m>7!</m> when computing <m>P(12,5)</m>
               (in terms of the chips).
-=======
-          <li>
-            <p>
-              Explain why it makes sense to divide <m>12!</m> by <m>7!</m> when computing <m>P(12,5)</m> (in terms of the chips).
-            <!-- <solution>
-              <p>
-                Say you made all <m>12!</m> stacks of 12 chips. For any particular arrangement of the bottom 5 chips, you will have <m>7!</m> stacks that have that bottom arrangement (one for each arrangement of the remaining 7 chips). But we just want to count the number of 5-chip stacks, so we count all of these as the same outcome (once the top 7 chips are removed, the bottom stacks look identical). Thus we really want to count how many groups there are. All <m>12!</m> stacks are grouped into groups of size <m>7!</m>, so there are <m>12!/7!</m> groups.
-          </p>
-            </solution> -->
->>>>>>> Add missing solutions
             </p>
           </li>
 
@@ -1053,77 +1100,5 @@
     </statement>
   </exercise>
 
-  <exercise>
-    <webwork>
-        <pg-macros><macro-file>contextIntegerFunctions.pl</macro-file></pg-macros>
-        <setup>
-          <pg-code>
-            Context("IntegerFunctions");
-            $ans1 = Compute("P(17,10)");
-            $ans2 = Compute("C(17,10)");
-          </pg-code>
-        </setup>
-        <statement>
-          <p>
-            In an attempt to clean up your room,
-            you have purchased a new floating shelf to put some of your 17 books you have stacked in a corner.
-            These books are all by different authors.
-            The new book shelf is large enough to hold 10 of the books.
-            Warning: before answering the next two questions,
-            ask yourself which answer should be larger.
-
-            <ol>
-              <li>
-                <p>
-                  How many ways can you select and arrange 10 of the 17 books on the shelf?
-                  Notice that here we will allow the books to end up in any order.
-                  Explain.
-                </p>
-
-                <p>
-                  <var name="$ans1" width="5"/>
-                </p>
-              </li>
-
-              <li>
-                <p>
-                  How many ways can you arrange 10 of the 17 books on the shelf if you insist they must be arranged alphabetically by author?
-                  Explain.
-                </p>
-
-                <p>
-                  <var name="$ans2" width="5"/>
-                </p>
-              </li>
-            </ol>
-          </p>
-        </statement>
-        <solution category="instructor">
-          <p>
-            <ol>
-              <li>
-                <p>
-                  We can write the answer as <m>P(17,10) = 17 \cdot 16 \cdot \cdots \cdot 8</m>,
-                  which is the same as <m>\frac{17!}{7!}</m>.
-                  Or, if you think of picking the 10 books and then arranging those 10,
-                  you can write this as <m>\binom{17}{10}\cdot 10!</m>.
-                  Note, that since any order is acceptable,
-                  we are distinguishing between different orders,
-                  so a permutation is appropriate here.
-                </p>
-              </li>
-
-              <li>
-                <p>
-                  Here we just need to select the books,
-                  and have no choice as how to arrange them.
-                  So the answer is just <m>\binom{17}{10}</m>
-                </p>
-              </li>
-            </ol>
-          </p>
-        </solution>
-    </webwork>
-  </exercise>
 
 </exercises>

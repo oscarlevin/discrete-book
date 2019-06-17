@@ -1,0 +1,210 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 2 Solutions}{Due: Wednesday, September 6}
+
+
+\begin{document}
+% \noindent \textbf{Instructions}: Complete the homework problems below on {\em separate} sheets of paper (and not all jammed up between the questions).  This is to be turned in and graded, so make sure your work is neat and easy to ready -- there is nothing wrong with using a \underline{separate sheet} of paper for each problem. Your work will be graded on correctness as well as the clarity of your explanations.  You may work with other students in this class on solving the problems, but your write-ups should be completed individually.  You are \textbf{NOT} permitted to search for solutions online or in other textbooks.
+
+\begin{questions}
+
+\question[4] Let $A = \{a,b,c\}$ and $B = \{1,2\}$.
+\begin{parts}
+	\part Write out all functions $f: A \to B$ using two-line notation.  How many different functions are there, and why does this number make sense? (You might want to consider the multiplicative principle here).
+	\begin{solution}
+		There are 8 functions:
+		\begin{equation*}
+		f = \begin{pmatrix} a & b & c \\ 1 & 1& 1 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 2 & 2 & 2 \end{pmatrix}
+		\end{equation*}
+		%
+		\begin{equation*}
+		f = \begin{pmatrix} a & b & c \\ 1 & 1& 2 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 1 & 2 & 1 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 2 & 1& 1 \end{pmatrix}
+		\end{equation*}
+		%
+		\begin{equation*}
+		\quad f = \begin{pmatrix} a & b & c \\ 2 & 2 & 1 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 2 & 1 & 2 \end{pmatrix} \quad f = \begin{pmatrix} a & b & c \\ 1 & 2 & 2 \end{pmatrix}
+		\end{equation*}
+		%
+		The 8 makes sense, since for each of the elements of the domain, there are two choices for which element in the codomain they are sent to.  Using the multiplicative principle, this means there are $2 \cdot 2 \cdot 2 = 8$ functions.
+	\end{solution}
+	\part How many of the functions are injective?  How many are surjective?  Identify these (circle/square the functions in your list).
+	\begin{solution}
+		There are 6 surjections (the last 6 above) and no injections (since the size of the domain is larger than the size of the codomain).
+	\end{solution}
+\end{parts}
+
+
+\question[4] Let $A = \{a,b\}$ and $B = \{1,2,3\}$.
+\begin{parts}
+	\part Write out all functions $f: A \to B$ using two-line notation.  How many different functions are there, and why does this number make sense? (You might want to consider the multiplicative principle here).
+	\begin{solution}
+		There will be 9 functions: for each element of the domain, there are three choices for its image.  Using the multiplicative principle we get $3\cdot 3 = 9$ functions.  They are:
+		\begin{equation*}
+		f = \twoline{a & b}{1 & 1} \quad f = \twoline{a & b}{2 & 2} \quad f = \twoline{a & b}{3 & 3}
+		\end{equation*}
+		%
+		\begin{equation*}
+		f = \twoline{a & b}{1 & 2} \quad f = \twoline{a & b}{1 & 3} \quad f = \twoline{a & b}{2 & 3}
+		\end{equation*}
+		%
+		\begin{equation*}
+		f = \twoline{a & b}{2 & 1} \quad f = \twoline{a & b}{3 & 1} \quad f = \twoline{a & b}{3 & 2}
+		\end{equation*}
+	\end{solution}
+	\part How many of the functions are injective?  How many are surjective?  Identify these (circle/square the functions in your list).
+	\begin{solution}
+		There will not be any surjective functions here, since the size of the domain is smaller than the size of the codomain.  There are 6 injections (the bottom two rows again).
+	\end{solution}
+\end{parts}
+
+
+\question[4] Based on your work above, and what you know about the multiplicative principle, how many functions $f: A \to B$ are there if $|A| = 5$ and $|B| = 7$?  How many of those are injective?  How many are surjective?  Explain your answers.
+
+\begin{solution}
+	The total number of functions $f:A \to B$ will be $7^5 = 16807$.  This is because there are 7 choices for the image of the first element of the domain, and for each of these, there are 7 choices for the image of the second element of the domain, and so on.  The multiplicative principle tells us that the number of functions will be $7\cdot 7 \cdot 7 \cdot 7 \cdot 7$.
+
+	For injective functions, once we select the image of the first element from the domain, we now only have 6 choices for where to send the second element of the domain (since we cannot send the first and second elements to the same image).  Then for each of these $7 \cdot 6$ choices of images of the first two elements of the domain, we have 5 choices for the image of the third element of the domain.  And so on.  We see there should be $7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 = 2520$ injective functions.
+
+	Since the size of the comdomain is larger than the size of the domain, there is no way to have every element of the codomain in the range, so no functions are surjective.
+\end{solution}
+
+	\question[8] We usually write numbers in decimal form (or base 10), meaning numbers are composed using 10 different ``digits'' $\{0,1,\ldots, 9\}$.  Sometimes though it is useful to write numbers in {\em hexadecimal} or base 16.  Now there are 16 distinct digits that can be used to form numbers: $\{0, 1, \ldots, 9, \mathrm{A, B, C, D, E, F}\}$.  So for example, a 3 digit hexadecimal number might be 3B8.
+	\begin{parts}
+	\part How many 2-digit hexadecimals are there in which the first digit is E or F?  Explain your answer in terms of the additive principle (using either events or sets).
+		\begin{solution}
+			There are 16 hexadecimals in which the first digit is an E (one for each choice of second digit).  Similarly, there are 16 hexadecimals in which the first digit is an F.  We want the union of these two disjoint sets, so there are $16 + 16 = 32$ two digits hexadecimals in which the first digit is either an E or an F.
+		\end{solution}
+	\part Explain why your answer to the previous part is correct in terms of the multiplicative principle (using either events or sets).  Why do both the additive and multiplicative principles give you the same answer?
+		\begin{solution}
+			We can first select the first digit in 2 ways.  We then select the second digit in 16 ways.  The multiplicative principle says that the number of ways to accomplish both these tasks together is $2 \cdot 16 = 32$.  Of course $2 \cdot 16 = 16 + 16$ so we get the same answer as in part (a).  There we divided the total number of outcomes into two groups of size 16, each group based on the choice we made for the first task (selecting the first digit).
+		\end{solution}
+	\part How many 3-digit hexadecimals start with a letter (A-F) and end with a numeral (0-9)? Explain.
+		\begin{solution}
+			We can select the first digit in 6 ways, the second digit in 16 ways, and the third digit in 10 ways.  Thus there are $6\cdot 16 \cdot 10 = 960$ hexadecimals given these restrictions.
+		\end{solution}
+	\part How many 3-digit hexadecimals start with a letter (A-F) or end with a numeral (0-9) (or both)?  Explain.
+		\begin{solution}
+			The number of 3-digit hexadecimals that start with a letter is $6 \cdot 16 \cdot 16 = 1536$.  The number of 3-hexadecimals that end with a numeral is $16 \cdot 16 \cdot 10 = 2560$.  We want all the elements from both these sets.  However, both sets include those 3-digit hexadecimals which both start with a letter and end with a numeral (found to be 960 in the previous part), so we must subtract these (once).  Thus the number of 3-digit hexadecimals starting with a letter or ending with a numeral is:
+			\[1536 + 2560 - 960 = 3136\]
+		\end{solution}
+	\end{parts}
+
+	%
+	% \question[8] How many $9$-bit strings (that is, bit strings of length 9) are there which:
+	% \begin{parts}
+	%   \part Start with the sub-string 101? Explain.
+	%   \begin{solution}
+	%     $2^6 = 64$.  You have 2 choices for each of the remaining 6 bits.
+	%   \end{solution}
+	%
+	%   \part Have weight 5 (i.e., contain exactly five 1's) and start with the sub-string 101? Explain.
+	%   \begin{solution}
+	%     ${6 \choose 3} = 20$.  You need to choose 3 of the remaining 6 bits to be 1's.
+	%   \end{solution}
+	%
+	% 	\part Either start with $101$ or end with $11$ (or both)?  Explain.
+	% 		\begin{solution}
+	% 			176.  There are 64 strings that start with 101, and another 128 which end with 11 (we choose 1 or 0 for 7 bits, so $2^7$).  However, we count the strings that start with 101 and end with 11 twice - there are $16$ such strings ($2^4$).  So using PIE, we have $64 + 128 - 16 = 176$
+	% 		\end{solution}
+	%
+	% 	\part Have weight 5 and either start with 101 or end with 11 (or both)?  Explain.
+	% 	\begin{solution}
+	% 	 	51. There are ${6 \choose 3} = 20$ strings of weight 5 which start with 101, and another ${7 \choose 3} = 35$ which end with 11.  We have over counted again - there are weight 5 strings which both start with 101 and end with 11, in fact ${4 \choose 1} = 4$ of them.  So all together we have $20 + 35 - 4 = 51$ strings.
+	% 	\end{solution}
+	% \end{parts}
+	%
+	%
+	%
+	% \question[8] Gridtown USA, besides having excellent donut shops, is known for its precisely laid out grid of streets and avenues.  Streets run east-west, and avenues north-south, for the entire stretch of the town, never curving and never interrupted by parks or schools or the like.
+	%
+	% Suppose you live on the corner of 3rd and 3rd and work on the corner of 12th and 12th.  Thus you must travel 18 blocks to get to work as quickly as possible.
+	%
+	% \begin{parts}
+	% \part How many different routes can you take to work, assuming you want to get there as quickly as possible?  Explain.
+	% \begin{solution}
+	%   ${18 \choose 9}$ since you must choose 9 of the 18 blocks to travel east.
+	% \end{solution}
+	%
+	% \part Now suppose you want to stop and get a donut on the way to work, from your favorite donut shop on the corner of 10th ave and 8th st.  How many routes to work, stopping at the donut shop, can you take (again, ensuring the shortest possible route)?  Explain.
+	% \begin{solution}
+	%   The donut shop is 12 blocks away, 5 one way, 7 the other.  So to get from home to the donut shop, there are ${12 \choose 7}$ routes (or equivalently, ${12 \choose 5}$).  Then from the donut shopd to work, you need to travel 6 more blocks, 2 on way and 4 the other.  So there are ${6 \choose 2}$ (or ${6 \choose 4}$) routes from the donut shop to work.
+	%
+	%   For each of the ways to the donut shop, there are so many ways to work, so the multiplicative principle says the total number of ways from home to work via the donut shop is
+	%   \[{12 \choose 7}{6 \choose 2}\]
+	% \end{solution}
+	%
+	% \part Disaster Strikes Gridtown: there is a pothole on 4th ave between 5th st and 6th st.  How many routes to work can you take avoiding that unsightly (and dangerous) stretch of road? Explain.
+	% \begin{solution}
+	%   Routes to work that hit the pothole: ${3 \choose 1}1{14 \choose 8}$.
+	%
+	%   There for the number of routes to work which {\em avoid} the pothole are
+	%   \[{18 \choose 9} - {3 \choose 1}{14 \choose 8}\]
+	% \end{solution}
+	%
+	% \part The pothole has been repaired (phew) and a new donut shop has opened on the corner of 4th ave and 5th st. How many routes to work drive by one or the other (or both) donut shops?  Hint: the donut shops serve PIE.
+	% \begin{solution}
+	%   The routes to work past the donut shop at (4,5): ${3\choose 1}{15 \choose 8}$.  The routes to work past the donut shop at (10,8): ${12 \choose 7}{6 \choose 2}$.  The routes to work past both: ${3\choose 1}{9 \choose 6}{6 \choose 2}$.  So all together, using PIE:
+	% 	\[{3\choose 1}{15 \choose 8} + {12 \choose 7}{6 \choose 2} - {3\choose 1}{9 \choose 6}{6 \choose 2}\]
+	% \end{solution}
+	%
+	% \end{parts}
+	%
+	%
+	%
+	% \question[6] An \emph{anagram} of a word is a rearrangement of its letters (each of the letters must be used exactly once).  We do not need the anagram to form an English word.
+	% 	\begin{parts}
+	% 		\part How many anagrams are there of the word ``magic''?  Explain.
+	%
+	% 		\begin{solution}
+	% 		There are $120 = 5!$ anagrams.  We can pick any of the 5 distinct letters to put first, then any of the remaining 4, and so on.  We could also have written this $P(5,5)$.
+	% 		\end{solution}
+	%
+	% 		\part How many anagrams are there of the word ``abracadabra''? Explain.  %Note that you need to figure out how to deal with the repeated letters (starting with the first ``a'' and then the second ``a'' gives the same word as starting with the second ``a'' and then the first ``a''.
+	%
+	% 		\begin{solution}
+	% 		We need to place 5 a's, 2 b's, 2 r's, and one each of c and d.  So first select 5 of the eleven slots for the a's, which can be done in ${11 \choose 5}$ ways.  Then select 2 of the remaining 6 slots for b's, done in ${6 \choose 2}$ ways.  Next pick 2 of the remaining 4 slots of r's, in ${4 \choose 2}$ ways, and finally pick one of the two available spots for the c leaving the last for the d.  Thus all together the number of anagrams is:
+	% 		\[{11\choose 5}{6 \choose 2}{4 \choose 2}2\cdot 1 = 83160\]
+	% 		(Note, if you pick a different letter to start with, you get a different looking answer, but the final product should be the same.)
+	%
+	% 		Another approach: Think of all of the letters as different (so there are 5 a's, but maybe written in 5 different fonts, for example.)  In this case, there would be $11!$ anagrams.  Now to correct for the repeated letters, group all the anagrams that just have different arrangments of the a's, b's and r's into groups.  Each group would have $5!\cdot 2! \cdot 2!$ different anagrams (since there are $5!$ ways to arrange the a's, $2!$ ways to arrange the b's and $2!$ ways to arrange the r's).  We just need to count groups, so the total is
+	% 		\[\frac{11!}{5!2! 2!} = 83160\]
+	% 		\end{solution}
+	%
+	% 		\part A \emph{sub-anagram} is just like an anagram except now you don't need to use all of the letters (but you could).  So one sub-anagram of ``magic'' is ``mac.''  How many sub-anagrams are there of the word ``magic''?  Explain.
+	%
+	% 		\begin{solution}
+	% 			We already know there are 120 5-letter sub-anagrams.  To find the 4-letter sub-anagrams, we need to pick one of 5 letters first, then one of remaining, then one of 3 after that and one of the remaining 2.  Thus there are $5\cdot 4 \cdot 3 \cdot 2 = 120$ of these as well (we could think of these as exactly the 120 full anagrams with the last letter missing).  There will be $5 \cdot 4 \cdot 3 = 60$ 3-letter sub-anagrams, $5\cdot 4 = 20$ 2-letter sub-anagrams, and $5$ 1-letter sub-anagrams.  All together, this brings the number of sub-anagrams to
+	% 			\[120 + 120 + 60 + 20 + 5 = 325\]
+	% 		\end{solution}
+	% 	\end{parts}
+	%
+
+
+
+\end{questions}
+
+
+
+
+\end{document}

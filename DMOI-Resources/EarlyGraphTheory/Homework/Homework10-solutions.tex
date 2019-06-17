@@ -1,0 +1,163 @@
+ \documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+\usepackage{array}
+
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{bn-pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 10 Solutions}{Due: Wednesday, November 7}
+
+
+\begin{document}
+\noindent \textbf{Instructions}: Same rules as usual.  Turn in solutions on separate pages, and do not consult the internet.
+
+\begin{questions}
+
+
+	\question[6] In their down time, ghost pirates enjoy stacking cannonballs in triangular based pyramids (aka, tetrahedrons), like those pictured here:
+
+	\centerline{
+	\begin{tikzpicture}
+	\draw (0,0) circle (10pt);
+	\draw[very thin, color=brown!15] (0,0) circle (10pt);
+	\shade[shading=axis,bottom color=black!70!brown, top color=black!15, shading angle=-40] (0,0) circle (10pt);
+	\end{tikzpicture}\qquad
+	\begin{tikzpicture}
+	\foreach \pos in {(-.32, .2), (.32,.2), (0,.55), (0,0)}{
+	\draw[very thin, color=brown!15] \pos circle (10pt);
+	\shade[shading=axis,bottom color=black!70!brown, top color=black!15, shading angle=-40] \pos circle (10pt);
+	}
+	\end{tikzpicture}
+	\qquad
+	\begin{tikzpicture}
+	\foreach \pos in {(-.64, .4), (.64,.4), (-.37, .75), (.37,.75), (0, 1.2), (-.32, .2), (.32,.2), (0,.6), (0,0)}{
+	\draw[very thin, color=brown!15] \pos circle (10pt);
+	\shade[shading=axis,bottom color=black!70!brown, top color=black!15, shading angle=-40] \pos circle (10pt);
+	}
+	\end{tikzpicture}
+	}
+
+	Note, these are solid tetrahedrons, so there will be some cannonballs obscured from view (the picture on the right has one cannonball in the back not shown in the picture, for example).
+
+
+	The pirates wonder how many cannonballs would be required to build a pyramid 15 layers high (thus breaking the world cannonball stacking record).  Can you help?
+
+	Find a closed formula for the number of cannonballs in the $n$th pyramid and use this to find the number of cannonballs in the 15th pyramid.
+
+	\begin{solution}
+	  To get the next larger pyramid, we add a triangle of cannonballs to the previous pyramid.  Thus to get $P_n$, we add $P_{n-1}$ to the $n$th triangular number:
+	  $P_3 = 4 + 6 = 10$, $P_4 = 10 + 10 = 20$, $P_5 = 20 + 15 = 35$.
+
+	  	To find the closed formula, look at the sequences of differences.  The first differences are $3, 6, 10, 15, \ldots$.  The second differences are $3, 4, 5, 6, \ldots$.  The third differences are $1,1,1,\ldots$.  Since third differences are constant, we know the closed formula for $P_n$ will be a degree 3 polynomial.  So $P_n = an^3 + b n^2 + cn + d$.  Note that $P_0 = 0$, so $d = 0$.  To solve for $a$, $b$, and $c$, we solve the system of equations:
+	  \begin{align*}
+	    1 & = a + b + c \\
+	    4 & = 8a+ 4b + 2c \\
+	    10 & = 27a + 9b + 3c
+	  \end{align*}
+	  Doing so gives $a = \frac{1}{6}$, $b = \frac{1}{2}$ and $c = \frac{1}{3}$ so
+	  \[P_n = \frac{1}{6}n^3 + \frac{1}{2} n^2 + \frac{1}{3} n\]
+
+	Finally:
+	  \[P_{15} = \frac{1}{6}15^3 + \frac{1}{2} 15^2 + \frac{1}{3} 15 = 680\]
+	\end{solution}
+
+
+	\question[4] Write down the sequence of cannonballs from the previous question.  Where (in a particular triangle) have you seen these numbers before?  Write the number of cannonballs needed for a tetrahedron $n$ layers high as a binomial coefficient.  Does the formula you found above match this?  Use the factorial formula for $\binom{n}{k}$ to compare.  Bonus: Explain why it makes sense from a counting perspective that the answer should be a binomial coefficient.
+
+  \begin{solution}
+    The number of cannonballs in an $n$ layer pyramid is $\binom{n+2}{3}$.  You can see this using the hockey-stick theorem, since the pyramids are sums of the triangular numbers.  Using the factorial formula, you do indeed get the same thing, realizing that the numerator should be $(n+2)(n+1)n$ (the rest of the factorial cancels).
+  \end{solution}
+
+
+  \question Let $a_n$ be the number of  $1 \times n$ tile designs can you make using $1 \times 1$ squares available in 3 colors and $1 \times 2$ dominoes available in 4 colors.
+  \begin{parts}
+    \part[3] First, find a recurrence relation to describe the problem.  Explain why the recurrence relation is correct (your explanation should reference tile designs of squares and dominoes).
+    \begin{solution}
+      $a_n = 3a_{n-1} + 4a_{n-2}$.  Each path of length $n$ must either start with one of the 3 $1\times 1$ tiles, in each case there are then $a_{n-1}$ ways to finish the path, or start with one of the 4 $1\times 2$ tiles, in each case there are then $a_{n-2}$ ways to finish the path.
+    \end{solution}
+
+    \part[2] Write out the first 5 terms of the sequence $a_1, a_2, \ldots$.  Hint: since you have a recurrence relation, the only difficult part will be finding the first two terms, which are simple counting questions.
+    \begin{solution}
+      3, 13, 51, 205, 819, \ldots
+    \end{solution}
+
+    \part[3] Solve the recurrence relation.  That is, find a closed formula for $a_n$.
+    \begin{solution}
+      The characteristic equation is $x^2 - 3x - 4 = 0$ so the characteristic roots are $x = 4$ and $x = -1$.  Therefore the general solution is
+      \[a_n = a 4^n + b (-1)^n\]
+      We solve for $a$ and $b$ using the fact that $a_1 = 3$ and $a_2 = 13$ (or you could work backwards to find $a_0 = 1$).   We get $a = \frac{4}{5}$ and $b = \frac{1}{5}$.  Therefore the solution is
+      \[a_n = \frac{4}{5} 4^n + \frac{1}{5}(-1)^n\]
+    \end{solution}
+
+  \end{parts}
+
+	\question[8] Consider the sequences $2, 5, 12, 29, 70, 169, 408,\ldots$ (with $a_0 = 2$).
+	\begin{parts}
+	\part Describe the rate of growth of this sequence.
+	\begin{solution}
+	It does not seem to help to look at the difference between terms - in fact, the differences seem to be growing in the same manner as the original sequence.  However, looking at the ratio between terms gives us almost a common ratio of 2.  In other words, it appears that the sequence is growing exponentially.
+	\end{solution}
+
+
+	\part Find a recursive definition for the sequence.
+	\begin{solution}
+	We see that $5$ is a little more than twice the previous term, and 12 is a little more than twice 5.  In fact, it is exactly 2 more, which is the first term.  So perhaps $a_n = 2a_{n-1} + a_{n-2}$, and this seems to work moving forward.
+	\end{solution}
+
+	\part Find a closed formula for the sequence.  Don't be afraid to use the quadratic formula.
+
+	\begin{solution}
+	Use the characteristic root technique.  The characteristic equation is $x^2 - 2x - 1 = 0$.  Solving this (using the quadratic formula) gives $x = 1\pm\sqrt{2}$.  So we know that the closed formula for $a_n = a(1+\sqrt{2})^n + b(1-\sqrt{2})^n$.  Now let's find $a$ and $b$.  We have
+
+	\[2 = a + b\]
+	\[5 = a(1+\sqrt{2}) + b(1-\sqrt{2})\]
+	Use substitution: $a = 2-b$ so $5 = (2-b)(1+\sqrt 2) + b(1-\sqrt{2})$ which simplifies to $b = 1-\frac{3}{2 \sqrt{2}}$.  This gives $a = 1+\frac{3}{2\sqrt 2}$.  Therefore
+	\[a_n = (1+\frac{3}{2\sqrt 2})(1+\sqrt{2})^n + (1-\frac{3}{2 \sqrt{2}})(1-\sqrt{2})^n\]
+	\end{solution}
+
+	\part If you look at the sequence of differences between terms, and then the sequence of second differences, the sequence of third differences, and so on, will you ever get a constant sequence?  Explain how you know.
+	\begin{solution}
+	You will never get a constant sequence of differences.  If you did, this would mean that the original sequence would be some polynomial.  But we have an exponential closed formula, so no polynomial will fit.
+	\end{solution}
+	\end{parts}
+
+
+	\question[4] The characteristic root technique can handle situations where the characteristic root is repeated (so you do not have two distinct roots).  Now the general solution to a recurrence relation will be $a_n = ar^n + bnr^n$ where $r$ is the single repeated root of the characteristic polynomial.  See the last topic in section 2.4.
+
+	\begin{parts}
+		\part Use the characteristic root technique to solve the recurrence relation $a_n = 4a_{n-1} - 4a_{n-2}$ with initial conditions $a_0 = 1$ and $a_1 = 2$.
+		\begin{solution}
+			The characteristic polynomial is $x^2 - 4x + 4$ which factors as $(x - 2)^2$.  Thus the general solution to the recurrence relation is $a_n = a2^n + bn2^n$.  We can find $a = 1$ and $b = 0$ using the initial conditions, so $a_n = 2^n$.  This makes sense when you write out the first few terms.
+		\end{solution}
+		\part Solve the recurrence relation $a_n = 2a_{n-1} - a_{n-2}$ with initial conditions $a_0 = 1$ and $a_1 = 3$.
+		\begin{solution}
+			Now the characteristic polynomial is $x^2 - 2x + 1 = (x-1)^n$ so the closed formula will have the form $a_n = a+bn$.  Initial conditions show that $a = 1$ and $b = 3$, so we get the closed formula is $a_n = 1+2n$.
+		\end{solution}
+	\end{parts}
+
+
+\end{questions}
+
+
+
+
+\end{document}

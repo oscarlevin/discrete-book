@@ -1,0 +1,688 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amsmath, amssymb, amsthm, mathrsfs, multicol, wasysym}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage{answers}
+
+\renewcommand{\labelitemi}{\Large\Square}
+\renewcommand{\labelitemii}{\Large\Circle}
+
+\input{../macros-discrete}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+
+\def\filename{Exam2Guide}
+\def\doctitle{Exam 2 Study Guide}
+\def\docdate{Fall 2018}
+
+\def\ansfilename{\filename-solutions}
+
+
+
+\Opensolutionfile{\ansfilename}
+\Newassociation{answer}{Ans}{\ansfilename}
+\Writetofile{\ansfilename}{\protect\documentclass[10pt]{exam} }
+\Writetofile{\ansfilename}{\protect\usepackage{answers, amsthm, amsmath, amssymb, mathrsfs}
+  \protect\pagestyle{head}
+  \protect\firstpageheader{Math 228}{\bf \doctitle \\ Hints and Answers}{\docdate}
+  \protect\Newassociation{answer}{Ans}{\ansfilename}
+  }
+
+\begin{Filesave}{\ansfilename}
+\input{../macros-discrete}
+\usepackage{tikz, multicol}
+\renewenvironment{Ans}[1]{\setcounter{question}{#1}\addtocounter{question}{-1}\question }{}
+\begin{document}
+ \begin{questions}
+\end{Filesave}
+
+
+\firstpageheader{Math 228}{\bf \doctitle}{\docdate}
+
+
+\begin{document}
+Exam 2 will be Friday, November 9, and will cover everything we have discussed since Exam 1.  That primarily means counting and sequences, but you should also be able to prove things, including using a proof by induction and a combinatorial proof.  Here is a more detailed list of topics:
+
+\begin{itemize}
+  \item Additive and Multiplicative Principles
+  \item Principle of Inclusion/Exclusion
+  \item Binomial coefficients: ${n \choose k}$
+  \item Combinations and Permutations
+  \item Stars and Bars
+  \item Things to count:
+  \begin{itemize}
+    \item Bit strings
+    \item Subsets
+    \item Lattice Paths
+    \item Stacks vs Handfuls of chips
+    \item Ways to distribute items
+    \item Functions
+  \end{itemize}
+  \item Closed vs. recursive formulas
+  \item Relationship between sequences, relationships between their formulas.
+  \item Arithmetic and geometric sequences
+  \item Sums of arithmetic sequences (reverse and add)
+  \item Relationship between sequences, differences, and partial sums.
+  \item Sums of geometric sequences (multiply by $r$, shift and subtract)
+  \item Polynomial fitting (finite differences)
+  \item The characteristic root technique
+  \item Combinatorial Proofs
+  \item Induction Proofs
+\end{itemize}
+
+
+The quizzes, activities, practice problems, and collected homework should give you a good idea of the types of questions to expect.
+
+Additionally, the questions below would all make fine exam questions.\footnote{Disclaimer: Questions on the actual exam may be easier or harder than those given here.  There might be types of questions on this study guide not covered on the exam and questions on the exam not covered in this study guide.  Questions on the exam might be asked in a different way than here.  If solving a question lasts longer than four hours, contact your professor immediately.}
+
+
+\section*{Sample Questions}
+
+
+\begin{questions}
+
+  \question Give a counting question where the answer is $8\cdot 3 \cdot 3 \cdot 5$.  Give another question where the answer is $8 + 3 + 3 + 5$.
+
+  	\begin{answer}
+  		You own 8 purple bow ties, 3 red bow ties, 3 blue bow ties and 5 green bow ties.  How many ways can you select one of each color bow tie to take with you on a trip?  $8 \cdot 3 \cdot 3 \cdot 5$.  How many choices do you have for a single bow tie to wear tomorrow?  $8 + 3 + 3 + 5$.
+  	\end{answer}
+
+
+
+  \question Suppose you own 7 bow ties and 2 fezzes.  Let $A$ be the \emph{set} of all outfits you can make (using 1 bow tie and 1 fez).
+  \begin{parts}
+    \part Write down the set $A$ by listing all its elements (you might want to use $b_1, b_2,\ldots$ for bow ties and $f_1, f_2$ for fezzes).
+    \part Find two disjoint sets $B$ and $C$ such that $A = B \cup C$. Explain how this illustrates the additive principle.
+    \part Find two sets $D$ and $E$ such that $A = D \times E$ (when written correctly).  Explain how this illustrates the multiplicative principle.
+  \end{parts}
+
+  \begin{answer}
+    \begin{parts}
+      \part $A = \{(b_1,f_1), (b_2,f_1),(b_3,f_1),(b_4,f_1),(b_5,f_1),(b_6,f_1),(b_7,f_1),\\ (b_1,f_2),(b_2,f_2),(b_3,f_2),(b_4,f_2),(b_5,f_2),(b_6,f_2),(b_7,f_2)\}$
+      \part Let $B = \{(b_1,f_1), (b_2,f_1),(b_3,f_1),(b_4,f_1),(b_5,f_1),(b_6,f_1),(b_7,f_1)\}$ and \\ $C = \{(b_1,f_2),(b_2,f_2),(b_3,f_2),(b_4,f_2),(b_5,f_2),(b_6,f_2),(b_7,f_2)\}$ (so $B$ contains all the outfits with the first fez and $C$ all the outfits with the second fez).  We have $A = B \cup C$, and since $B$ and $C$
+      are disjoint, we see that $|A| = |B \cup C|$.
+      \part Let $D = \{b_1, b_2, b_3, b_4, b_5, b_6, b_7\}$ and $E = \{f_1, f_2\}$.  Forming all ordered pairs gives us $A$ (we need to think of $A$ as containing ordered pairs, otherwise all we get is a bijection between $A$ and $D \times E$).  Then we have that $|A| = 7 \cdot 2 = |D| \cdot |E|$.
+    \end{parts}
+  \end{answer}
+
+
+
+  \question Consider five digit numbers $\alpha = a_1a_2a_3a_4a_5$, with each digit from the set $\{1,2,3,4\}$.
+  \begin{parts}
+  \part How many such numbers are there?
+  \part How many such numbers are there for which the {\em sum} of the digits is even?
+  \part How many such numbers contain more even digits than odd digits?
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		\part $4^5$. %How many such numbers are there?
+  		\part $4^4\cdot 2$ (choose any digits for the first four digits - then pick either an even or an odd last digit to make the sum even). %How many such numbers are there for which the {\em sum} of the digits is even?
+  		\part We need 3 or more even digits.  3 even digits: ${5 \choose 3}2^3 2^2$.  4 even digits: ${5 \choose 4}2^4 2$.  5 even digits: ${5 \choose 5}2^5$.  So all together: ${5 \choose 3}2^3 2^2 + {5 \choose 4}2^4 2 + {5 \choose 5}2^5$.  %  How many such numbers contain more even digits than odd digits?
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+  \question For how many $n \in \{1,2, \ldots, 500\}$ is $n$ a multiple of one or more of 5, 6, or 7?  Hint: to find the number of $n$ that are a multiple of, say $35$, you can take $500$, divide by 35, and round down.
+
+  	\begin{answer}
+  		215.  Use PIE: $100 + 83 + 71 - 16 - 14 -11 + 2 = 215$ or a Venn diagram.  To find out how many numbers are divisible by 6 and 7, for example, take $500/42$ and round down.
+  	\end{answer}
+
+
+
+
+  % \question In a recent small survey of airline passengers, 25 said they had flown American in the last year, 30 had flown Jet Blue, and 20 had flown Continental.  Of those, 10 reported they had flown on American and Jet Blue, 12 had flown on Jet Blue and Continental, and 7 had flown on American and Continental.  5 passengers had flown on all three airlines.
+  %
+  % How many passengers were surveyed?  (Assume the results above make up the entire survey.)
+  %
+  % 	\begin{answer}
+  % 		51.
+  % 	\end{answer}
+
+
+
+
+
+
+  \question Recall, by $8$-bit strings, we mean strings of binary digits, of length 8.
+  \begin{parts}
+    \part How many $8$-bit strings are there total?
+    \part How many $8$-bit strings have weight 5?
+    \part How many subsets of the set $\{a,b,c,d,e,f,g,h\}$ contain exactly 5 elements?
+    \part Explain why your answers to parts (b) and (c) are the same.  Why are these questions equivalent?
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		  \part $2^8$. %How many $8$-bit strings are there total?
+  		  \part ${8 \choose 5}$  %How many $8$-bit strings have weight 5?
+  		  \part ${8 \choose 5}$ %How many subsets of the set $\{a,b,c,d,e,f,g,h\}$ contain exactly 5 elements?
+  		  \part There is a bijection between subsets and bit strings: a 1 means that element in is the subset, a 0 means that element is not in the subset.  To get a subset of an 8 element set we have a 8-bit string.  To make sure the subset contains exactly 5 elements, there must be 5 1's, so the weight must be 5. %Explain why your answers to parts (b) and (c) are the same.  Why are these questions equivalent?
+  		\end{parts}
+  	\end{answer}
+
+
+
+  % \question What is the coefficient of $x^{10}$ in the expansion of $(x+1)^{13} + x^2(x+1)^{17}$?
+  %
+  % 	\begin{answer}
+  % 		${13 \choose 10} + {17 \choose 8}$
+  % 	\end{answer}
+
+
+
+
+  \question How many 8-letter words contain exactly 5 vowels (a,e,i,o,u)?  What if repeated letters were not allowed?
+
+  	\begin{answer}
+  		 With repeated letters allowed: ${8 \choose 5}5^5 21^3$.  Without repeats: ${8 \choose 5}5! P(21, 3)$.
+  	\end{answer}
+
+
+
+
+  \question For each of the following, find the number of shortest lattice paths from $(0,0)$ to $(8,8)$ which:
+  \begin{parts}
+    \part pass through the point $(2,3)$.
+    \part avoid (do not pass through) the point $(7,5)$.
+    \part either pass through $(2,3)$ or $(5,7)$ (or both).
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		  \part ${5 \choose 2}{11 \choose 6}$ %pass through the point $(2,3)$.
+  		  \part ${16 \choose 8} - {12 \choose 7}{4 \choose 1}$   %avoid (do not pass through) the point $(7,5)$.
+  		  \part ${5 \choose 2}{11 \choose 6} + {12 \choose 5}{4 \choose 3} - {5 \choose 2}{7 \choose 3}{4 \choose 3}$ %either pass through $(2,3)$ or $(5,7)$ (or both).
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+  \question You live in Grid-Town on the corner of 2nd and 3rd, and work in a building on the corner of 10th and 13th.  How many routes are there which take you from home to work and then back home, but by a different route?
+
+  	\begin{answer}
+  		 ${18 \choose 8}\left({18 \choose 8} - 1\right)$
+  	\end{answer}
+
+
+
+
+  \question Suppose an exam has 10 questions on it, and you must answer 6 of them.  In how many different ways could you complete the exam?  There are actually two reasonable answers to this question.  Give both of them and explain what the difference is and how they are related.  Your explanation should include a justification for why the larger answer is larger and by how much.
+
+  	\begin{answer}
+  		 One answer is ${10 \choose 6}$, the other is $P(10, 6)$.  These are different, in fact, $P(10,6)$ is $6!$ times larger than ${10 \choose 6}$.  This is because ${10 \choose 6}$ is the number of ways to select which 6 of the 10 questions you will answer, but then assumes you will answer them in the usual order.  Once you have selected the 6 questions, you could answer them (possibly) out of order in 6! different ways, and that is what $P(10,6)$ counts: There are 10 choices for which question to answer first, 9 for which to answer second, and so on until you have answered 6 questions.
+  	\end{answer}
+
+
+
+  \question Your favorite BBQ restaurant offers a pick-3 menu, in which you can choose 3 menu items from a larger list.  You have narrowed you choices down to 4 that sound good.  How many ways can you select 3 of these 4?
+    \begin{parts}
+      \part If you assume order matters, how many ways can you make your selection?  Write down the set of all of these.
+      \part If you assume order doesn't matter, how many ways can you make your selection?  Again, write down the set of all of these.
+      \part Show how the two sets of outcomes you gave in the parts above are related to each other.  Use this to explain what we mean when we say ``order matters'' in counting problems.
+    \end{parts}
+
+
+  \begin{answer}
+    \begin{parts}
+      \part Call the items B, C, P, and R.  There are 24 outcomes:
+
+      \begin{tabular}{cccccc}
+        BCP & BPC & CBP & CPB & PBC & PCB \\
+        BCR & BRC & CBR & CRB & RBC & RCB \\
+        BPR & BRP & PBR & PRB & RBP & RPB \\
+        CPR & CRP & PCR & PRC & RCP & RPC
+      \end{tabular}
+
+      We know this is all of them because there are 4 choices for which item we choose first, then 3 choices for the second item, and 2 choices for the 3rd.  Order matters in the sense that different arrangements count as different outcomes.
+
+      \part Now the set of outcomes is $\{ BCP, BCR, BPR, CPR\}$.  We just need to choose 1 item not to order.  Or equivalently, ${4 \choose 3} = 4$.  Notice that we are giving these in alphabetical order, but that is because we are NOT including the (repeat) outcomes when the same three items are listed in different orders.
+
+      \part The 24 outcomes for part (a) are arranged in a table so that each row corresponds to a set of three items, and the columns in that row are the 6 different ways to permute those three items.  This illustrates that ${4 \choose 3} = P(4,3)/3!$
+    \end{parts}
+  \end{answer}
+
+
+  % \question How many 10-bit strings contain 6 or more 1's?
+  %
+  % 	\begin{answer}
+  % 		${10 \choose 6} + {10 \choose 7} + {10 \choose 8} + {10 \choose 9} + {10 \choose 10}$
+  % 	\end{answer}
+
+
+
+
+  \question How many 10-bit strings start with $111$ or end with $101$ or both?
+
+  	\begin{answer}
+  		 $2^7 + 2^7 - 2^4$.
+  	\end{answer}
+
+
+
+
+  \question How many 10-bit strings of weight 6 start with $111$ or end with $101$ or both?
+
+  	\begin{answer}
+  		${7 \choose 3} + {7 \choose 4} - {4 \choose 1}$.
+  	\end{answer}
+
+
+
+
+
+
+  \question How many lattice paths traveling only up and right, start at the origin and end on the line $x + y = 5$?  Answer this question in two ways.  What pattern in Pascal's triangle is this an example of?
+
+  	\begin{answer}
+  		Each step in our path adds 1 to either $x$ or $y$.  So to end at a point on $x+y = 5$, we must make $5$ steps, each being in the $x$ or $y$ direction.  Thus all together there are $2^5$ such paths.
+
+      Answering this another way, notice that these paths end at $(0,5)$,  $(1,4)$, $(2, 3)$, $(3,2)$, $(4,1)$, or $(5,0)$.  Counting the paths to each of these points separately, we get ${5 \choose 0}$, ${5 \choose 1}$, ${5 \choose 2}$, \ldots, ${5 \choose 5}$ (each time choosing which of the $n$ steps are in the $x$ direction).  All together then we get
+      \[{5 \choose 0} + {5 \choose 1} + {5\choose 2} + {5 \choose 3} + {5 \choose 4} + {5 \choose 5}\]
+
+      These two answers are the same.  This is an example of the fact that the sum of the $n$th row in Pascal's triangle is $2^n$.
+  	\end{answer}
+
+
+  %New question:
+  \question Give a combinatorial proof for the identity
+  \[{n \choose k}{n-k \choose j} = {n \choose j}{n-j \choose k}.\]
+
+  	\begin{answer}
+  		This might remind you a little about the anagrams questions, so you could use as a question: how many $n$-letter words can you make using $k$ a's, $j$ b's and the rest of the letters c's?  One answer is to pick $k$ of the $n$ spots to fill with a's (in ${n \choose k}$ ways), then chose $j$ of the remaining $n-k$ spots to fill with b's, and fill the remaining spots with c's.  Answer 2 is to first pick the spots where the b's go: pick $j$ of the $n$ spots to fill with b's, then pick $k$ of the remaining $n-j$ spots to fill with a's, and fill the remaining spots with c's.
+
+  		Another question you could ask: how many ways are there to select a $k$-person team and a $j$-person team from a group of $n$ people.  The two answers depend on which team you pick first.
+  	\end{answer}
+
+
+
+  % \question Explain the relationship between $\d{n\choose k}$ and $P(n,k)$.  Be sure to say both how the formulas for each are related, and why that relationship makes sense.
+  %
+  % 	\begin{answer}
+  % 		Hint: give a combinatorial proof for the identity $P(n,k) = {n \choose k} k!$.
+  % 	\end{answer}
+
+
+
+
+  % \question Give your favorite argument for why Pascal's Triangle is symmetric.  That is, explain why \({n \choose k} = {n \choose n-k}\).
+  %
+  % 	\begin{answer}
+  % 		Of your $n$ bow ties, you decide to give $k$ away to charity.  How many ways can you do this?  On one hand, you can choose $k$ of the $n$ bow ties to give away in ${n \choose k}$ ways.  Alternatively, you can choose which bow ties to keep.  You must keep $n -k$ of them if you will give $k$ away, so you can choose the bow ties to keep in ${n \choose n-k}$ ways.  This gives a combinatorial proof for the identity.
+  % 	\end{answer}
+
+
+
+
+
+  \question Suppose you have 20 one-dollar bills to give out as prizes to your top 5 discrete math students.  How many ways can you do this if:
+  \begin{parts}
+    \part each of the 5 students gets at least 1 dollar?
+    \part some students might get nothing?
+    \part each student gets at least 1 dollar but no more than 7 dollars?
+  \end{parts}
+
+  	\begin{answer}
+  		Hint: stars and bars%Suppose you have 20 one-dollar bills to give out as prizes to your top 5 discrete math students.  How many ways can you do this if:
+  		\begin{parts}
+  		  \part ${19 \choose 4}$ %each of the 5 students gets at least 1 dollar?
+  		  \part ${24 \choose 4}$ %some students might get nothing?
+  		  \part ${19 \choose 4} - \left[{5 \choose 1}{12 \choose 4} - {5 \choose 2}{5 \choose 4}  \right]$ %each student gets at least 1 dollar but no more than 7 dollars?
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+
+
+  \question How many functions $f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}$ are there for which
+  \begin{parts}
+    \part $f(1) = a$ or $f(2) = b$ (or both)?
+    \part $f(1) \ne a$ or $f(2) \ne b$ (or both)?
+    \part $f(1) \ne a$ {\em and} $f(2) \ne b$, and are also injective?
+    \part Are injective and have at least one of $f(1) = a$, $f(2) = b$, or $f(3) = c$.
+    % \part are surjective but have $f(1) \ne a$, $f(2) \ne b$, $f(3) \ne c$, $f(4) \ne d$ and $f(5) \ne e$?
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		  \part $5^4 + 5^4 - 5^3$ %$f(1) = a$ or $f(2) = b$ (or both)?
+  		  \part $4\cdot 5^4 + 5 \cdot 4 \cdot 5^3 - 4 \cdot 4 \cdot 5^3$ %$f(1) \ne a$ or $f(2) \ne b$ (or both)?
+  		  \part $5! - \left[ 4! + 4! - 3! \right]$ %$f(1) \ne a$ {\em and} $f(2) \ne b$, and are also one-to-one?
+        \part Use PIE: $4! + 4! + 4! - 3! - 3! - 3! + 2!$
+  		  % \part $5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5} 0!\right]$ %are onto but have $f(1) \ne a$, $f(2) \ne b$, $f(3) \ne c$, $f(4) \ne d$ and $f(5) \ne e$?
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+
+
+  \question How many permutations of $\{1,2,3,4,5\}$ leave exactly 1 element fixed?
+
+  	\begin{answer}
+  		 ${5 \choose 1}\left( 4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4} 0!\right] \right)$
+  	\end{answer}
+
+
+
+
+  \question You return to your favorite tax-free fast food Mexican restaurant, {\em Burrito Chime}.  You decide to order off of the dollar menu, which now only has 5 items.  Your group has \$12 to spend (and will spend all of it).
+  \begin{parts}
+    \part How many different orders are possible?  Explain. (The {\em order} in which the order is placed does not matter -- just which and how many of each item that is ordered.)
+
+    \part How many different orders are possible if you want to get at least one of each item? Explain.
+
+    \part How many different orders are possible if you don't get more than 3 of any one item?  Explain. Hint: get rid of the bad orders using PIE.
+
+    \part When you get back to your apartment, you give 3 items to your roommate (in a single bag).  How many different collections of items could he receive provided he does not get more than one of any item?  Explain.
+
+  \end{parts}
+
+  \begin{answer}
+  \begin{parts}
+  \part $\d{16 \choose 4}$ -- there are 12 stars and 4 bars.
+  \part $\d{11 \choose 4}$ -- buy one of each item, using \$5.  This leaves you \$7 to distribute to the 5 items, so 7 stars and 4 bars.
+  \part \[{16 \choose 4} - \left[{5 \choose 1}{12 \choose 4} - {5 \choose 2}{8 \choose 4} + {5 \choose 3}{4 \choose 4} \right]\]
+  \part $\d{5 \choose 3}$.  This is just a combination: choose 3 of the 5 items.
+
+  \end{parts}
+  \end{answer}
+
+
+
+  \question While enjoying your ``food,'' a commercial for \emph{Burrito Chime} comes on TV advertising a special ``Buy 5 for \$4'' deal.  The ad claims that this means that for \$4, you can choose from 2520 different meals.  One of your friends says that this is too small (that it should be 16807), while another friend says the true number should be only 21.  Who is right?
+
+  \begin{answer}
+    Everyone is right, under different interpretations.  The 2520 number is correct if you assume that customers will pick 5 different items, but care about what order they eat them in (so eating a taco and then a burrito would be a different meal than eating a burrito then a taco).  Then the answer would be $P(7,5) = 7\cdot 6 \cdot 5 \cdot 4$.  If we care about the order we eat the items in but allow repeated items, we get $7^5 = 16807$.  If we just want to count the number of 5-item meals, with 5 distinct items, we get ${7 \choose 5} = 21$.  Another reasonable answer would be to count the number of 5-item meals, not distinguishing between different orders of consumption, but allowing for repeated items.  This would be a stars-and-bars problem, giving ${11 \choose 5}$ meals.
+  \end{answer}
+
+
+
+
+  % \question The Grinch sneaks into a room with 6 Christmas presents to 6 different people.  He proceeds to switch the name-labels on the presents.  How many ways could he do this if:
+  % \begin{parts}
+  %   \part No present is allowed to end up with its original label?  Explain what each term in your answer represents.
+  %
+  %   \part Exactly 2 presents keep their original labels? Explain.
+  %
+  %   \part Exactly 5 presents keep their original labels? Explain.
+  % \end{parts}
+  %
+  % 	\begin{answer}
+  % 	\begin{parts}
+  % 	  \part
+  % 	    \[6! - \left[{6 \choose 1}5! - {6 \choose 2}4! + {6 \choose 3}3! - {6 \choose 4}2! + {6 \choose 5}1! - {6 \choose 6}0!\right]\]
+  % 	  \part
+  % 	    \[{6 \choose 2}\left(4! - \left[{4\choose 1}3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)\]
+  % 	  \part 0.  Once 5 presents have their original label, there is only one present left and only one label left, so the 6th present must get its own label.
+  % 	\end{parts}
+  % 	\end{answer}
+
+
+
+
+  \question To thank your math professor for doing such an amazing job all semester, you decide to bake him (or her) cookies.  You know how to make 10 different types of cookies.
+  \begin{parts}
+   \part If you want to give your professor 4 different types of cookies, how many different combinations of cookie type can you select?  Explain your answer.
+   \part To keep things interesting, you decide to make a different number of each type of cookie.  If again you want to select 4 cookie types, how many ways can you select the cookie types and decide for which there will be the most, second most, etc.  Explain your answer.
+   \part You change your mind again.  This time you decide you will make a total of 12 cookies.  Each cookie could be any one of the 10 types of cookies you know how to bake (and it's okay if you leave some types out).  How many choices do you have?  Explain.
+   \part You realize that the previous plan did not account for presentation.  This time, you once again want to make 12 cookies, each one could be any one of the 10 types of cookies.  However, now you plan to shape the cookies into the numerals 1, 2, \ldots, 12 (and probably arrange them to make a giant clock - but you haven't decided on that yet).  How many choices do you have for which types of cookies to bake into which numerals?  Explain.
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		 \part ${10 \choose 4}$.  You need to choose 4 of the 10 cookie types.  Order doesn't matter. %If you want to give your professor 4 different types of cookies, how many different combinations of cookie type can you select?  Explain your answer.
+  		 \part $P(10, 4) = 10 \cdot 9 \cdot 8 \cdot 7$.  You are choosing and arranging 4 out of 10 cookies.  Order matters now.  %To keep things interesting, you decide to make a different number of each type of cookie.  If again you want to select 4 cookie types, how many ways can you select the cookie types and decide for which there will be the most, second most, etc.  Explain your answer.
+  		 \part ${21 \choose 9}$.  You must switch between cookie type 9 times as you make your 12 cookies.  The cookies are the stars, the switches between cookie types are the bars. %You change your mind again.  This time you decide you will make a total of 12 cookies.  Each cookie could be any one of the 10 types of cookies you know how to bake (and it's okay if you leave some types out).  How many choices do you have?  Explain.
+  		 \part $10^{12}$.  You have 10 choices for the ``1'' cookie, 10 choices for the ``2'' cookie, and so on. %You realize that the previous plan did not account for presentation.  This time, you once again want to make 12 cookies, each one could be any one of the 10 types of cookies.  However, now you plan to shape the cookies into the numerals 1, 2, \ldots, 12 (and probably arrange them to make a giant clock - but you haven't decided on that yet).  How many choices do you have for which types of cookies to bake into which numerals?  Explain.
+  		\end{parts}
+  	\end{answer}
+
+
+  % \question For which of the parts above does it make sense to interpret the counting question as counting some number of functions?  Say what the domain and codomain should be, and whether you are counting all functions, injections, surjections, or something else.
+  %
+  % 	\begin{answer}
+  % 		\begin{parts}
+  % 			\part You are giving your professor 4 types of cookies coming from 10 different types of cookies.  This does not lend itself well to a function interpretation.  We {\em could} say that the domain contains the 4 types you will give your professor and the codomain contains the 10 you can choose from, but then counting injections would be too much (it doesn't matter if you pick type 3 first and type 2 second, or the other way around, just that you pick those two types).
+  % 			\part We want to consider injective functions from the set $\{\mbox{most, second most, second least, least}\}$ to the set of 10 cookie types.  We want injections because we cannot pick the same type of cookie to give most and least of (for example).
+  % 			\part This is not a good problem to interpret as a function.  The problem is that the domain would have to be the 12 cookies you bake, but these elements are indistinguishable (there is not a first cookie, second cookie, etc.).
+  % 			\part The domain should be the 12 shapes, the codomain the 10 types of cookies.  Since we can use the same type for different shapes, we are interested in counting all functions here.  Note that if we insisted that each type of cookie be given at least once, this would be asking for the number of surjections, which would require using PIE.
+  % 		\end{parts}
+  % 	\end{answer}
+
+  \question Consider the sum $4 + 11 + 18 + 25 + \cdots + 249$.
+  \begin{parts}
+  \part How many terms (summands) are in the sum?
+  \part Compute the sum.  Remember to show all your work.
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		\part 36.  %How many terms (summands) are in the sum?
+  		\part $\frac{253 \cdot 36}{2} = 4554$.  %Compute the sum.  Remember to show all your work.
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+  \question Consider the sequence $5, 9, 13, 17, 21, \ldots$ with $a_1 = 5$
+  \begin{parts}
+    \part Give a recursive definition for the sequence.
+    \part Give a closed formula for the $n$th term of the sequence.
+    \part Is $2013$ a term in the sequence?  Explain.
+    \part How many terms does the sequence $5, 9, 13, 17, 21, \ldots, 533$ have?
+    \part Find the sum: $5 + 9 + 13 + 17 + 21 + \cdots + 533$.  Show your work.
+    \part Use what you found above to find $b_n$, the $n^{th}$ term of the sequence $1, 6, 15, 28, 45, \ldots$ where $b_0 = 1$
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		  \part $a_n = a_{n-1} + 4$ with $a_1 = 5$.  %Give a recursive definition for the sequence.
+  		  \part $a_n = 5 + 4(n-1)$  %Give a closed formula for the $n$th term of the sequence.
+  		  \part Yes, since $2013 = 5 + 4(503-1)$ (so $a_{503} = 2013$).
+  		  \part 133 %How many terms does the sequence $5, 9, 13, 17, 21, \ldots, 533$ have?
+  		  \part $\frac{538\cdot 133}{2} = 35777$  %Find the sum: $5 + 9 + 13 + 17 + 21 + \cdots + 533$.  Show your work.
+  		  \part $b_n = 1 + \frac{(4n+6)n}{2}$.
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+
+  %%Sum of geometric sequence
+  \question Consider the sequence given by $a_n = 2\cdot 5^{n-1}$.
+  \begin{parts}
+  \part Find the first 4 terms of the sequence.  What sort of sequence is this?
+  \part Find the {\em sum} of the first 25 terms.  That is, compute $\d\sum_{k=1}^{25}a_k$.
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		\part $2, 10, 50, 250, \ldots$  The sequence is geometric. %Find the first 4 terms of the sequence.  What sort of sequence is this?
+  		\part $\frac{2 - 2\cdot 5^{25}}{-4}$.  %Find the {\em sum} of the first 25 terms.  That is, compute $\d\sum_{k=1}^{25}a_k$.
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+
+  %Polynomial fitting
+  \question Use polynomial fitting to find a closed formula for the sequence:
+  $4, 11, 20, 31, 44, \ldots $
+  (assume $a_1 = 4$).
+
+  	\begin{answer}
+  		$a_n = n^2 + 4n - 1$
+  	\end{answer}
+
+
+
+
+
+
+  %Recursive definition:
+  \question Consider the sequence given recursively by $a_1 = 4$, $a_2 = 6$ and $a_n = a_{n-1} + a_{n-2}$.
+  \begin{parts}
+  \part Write out the first 6 terms of the sequence.
+  \part Could the closed formula for $a_n$ be a polynomial?  Explain.
+  \end{parts}
+
+  	\begin{answer}
+  	 	\begin{parts}
+  	 	\part $4, 6, 10, 16, 26, 42, \ldots$  %Write out the first 6 terms of the sequence.
+  	 	\part No, taking differences gives the original sequence back, so the differences will never be constant.  %Could the closed formula for $a_n$ be a polynomial?  Explain.
+  	 	\end{parts}
+  	\end{answer}
+
+
+
+
+
+  %new sequences from old:
+  \question The sequence $-1, 0, 2, 5, 9, 14\ldots$ has closed formula $a_n = \dfrac{(n+1)(n-2)}{2}$.  Use this fact to find a closed formula for the sequence $4, 10, 18, 28, 40, \ldots$
+
+  	\begin{answer}
+  		 $b_n = (n+3)n$
+  	\end{answer}
+
+
+
+
+
+  \question Consider the recurrence relation $a_n = 3a_{n-1} + 10 a_{n-2}$ with first two terms $a_0 = 1$ and $a_1 = 2$.
+  \begin{parts}
+   \part Write out the first 5 terms of the sequence defined by this recurrence relation.
+   \part Solve the recurrence relation. That is, find a closed formula for $a_n$.
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		 \part $1, 2, 16,68, 364, \ldots$  %Write out the first 5 terms of the sequence defined by this recurrence relation.
+  		 \part $a_n = \frac{3}{7}(-2)^n + \frac{4}{7}5^n$  %Solve the recurrence relation.
+  		\end{parts}
+  	\end{answer}
+
+
+
+
+
+  \question Consider the recurrence relation $a_n = 2a_{n-1} + 8a_{n-2}$, with initial terms $a_0 = 1$ and $a_1= 3$.
+  \begin{parts}
+    \part Find the next two terms of the sequence ($a_2$ and $a_3$).
+    \part Solve the recurrence relation.   That is, find a closed formula for the $n$th term of the sequence.
+  %  \part Find the generating function for the sequence.  Hint: use the recurrence relation.
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+  		  \part $a_2 = 14$.  $a_3 = 52$  %Find the next two terms of the sequence ($a_2$ and $a_3$).
+  		  \part $a_n = \frac{1}{6}(-2)^n + \frac{5}{6}4^n$  %Solve the recurrence relation.   That is, find a closed formula for the $n$th term of the sequence.
+  %		  \part $\frac{1+x}{1-2x-8x^2}$  %Find the generating function for the sequence.  Hint: use the recurrence relation.
+  		\end{parts}
+  	\end{answer}
+
+
+
+  \question You have a supply of magic chocolate covered espresso beans.  Each day at noon, your supply triples (each one splits in three), but then at 1pm, you eat 6 beans.  You record the number of beans you have at the end of each day.  You have 5 beans on day 0.
+
+  \begin{parts}
+  	\part Write out the first few terms of the sequence of number of beans you have on day $n$.
+  	\part Give a recursive definition of the sequence and explain why it is correct.
+  	\part Prove, using induction, that you will always end the day with an odd number of beans.
+  	\part Explain why it is important to prove the base case in an inductive proof, using this problem as an example.
+  \end{parts}
+
+  	\begin{answer}
+  		\begin{parts}
+    			\part $5, 9, 21, 57, 165, 489, \ldots$.
+  			\part By the end of day $n$, you will have three the number of beans you had the previous day, less 6.  Thus $a_n = 3a_{n-1} - 6$ with $a_0 = 5$.
+  			\part Let $P(n)$ be the statement, ``at the end of day $n$, you have an odd number of beans.''  For the base case, not that on day 0, you have 5 beans, which is odd.  Now assume that $P(k)$ is true.  That is, at the end of the $k$th day, you have an odd number of beans.  What happens on the next day?  We triple the number of beans, and subtract 6.  If you triple an odd number, you will get an odd number.  Then subtracting 6 (an even number) will still give you an odd number.  Thus the number of beans at the end of day $k+1$ will be odd.  This concludes the inductive case.  Therefore, by the principle of mathematical induction, $P(n)$ is true of all $n \ge 0$.
+  			\part The inductive case works independent of the base case.  We can prove the IF you have an odd number of beans on day $k$, THEN you have an odd number of beans on day $k+1$.  But to go from this to the conclusion that you will always have an odd number of beans requires a starting spot.  In fact, if you started with 4 beans, then the next day you would have 6 beans, and then 12, and so on.  All these numbers would be even!
+  		\end{parts}
+  	\end{answer}
+
+
+  \question Your magic chocolate bunnies reproduce like rabbits: every large bunny produces 2 new mini bunnies each day, and each day every mini bunny born the previous day grows into a large bunny.  Assume you start with 2 mini bunnies and no bunny ever dies (or gets eaten).
+
+  \begin{parts}
+  	\part Write out the first few terms of the sequence.
+  	\part Give a recursive definition of the sequence and explain why it is correct.
+  	\part Find a closed formula for the $n$th term of the sequence.
+  \end{parts}
+
+  	\begin{answer}
+  	 \begin{parts}
+  	 	\part On the first day, your 2 mini bunnies become 2 large bunnies.  On day 2, your two large bunnies produce 4 mini bunnies.  On day 3, you have 4 mini bunnies (produced by your 2 large bunnies) plus 6 large bunnies (your original 2 plus the 4 newly matured bunnies).  On day 4, you will have $12$ mini bunnies (2 for each of the 6 large bunnies) plus 10 large bunnies (your previous 6 plus the 4 newly matured).  The sequence of total bunnies is $2, 2, 6, 10, 22, 42\ldots$ starting with $a_0 = 2$ and $a_1 = 2$.
+  	 	\part $a_n = a_{n-1} + 2a_{n-2}$.  This is because the number of bunnies is equal to the number of bunnies you had the previous day (both mini and large) plus 2 times the number you had the day before that (since all bunnies you had 2 days ago are now large and producing 2 new bunnies each).
+  	 	\part Using the characteristic root technique, we find $a_n = a2^n + b(-1)^n$, and we can find $a$ and $b$ to give $a_n = \frac{4}{3}2^n + \frac{2}{3}(-1)^n$.
+  	 \end{parts}
+  	\end{answer}
+
+
+
+
+
+
+  \question Prove the following statement by mathematical induction:
+
+$F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n + 1} - 1$ for all $n = 0,1,2,\ldots$.  ($F_n$ is the $n$th Fibonacci numbers.)
+
+
+  	\begin{answer}
+      Hint: Use the fact $F_{2n} + F_{2n+1} = F_{2n+2}$
+  	\end{answer}
+
+
+  \question Prove using induction that every set containing $n$ elements has $2^n$ different subsets for any $n \ge 1$.
+
+  	\begin{answer}
+  		Let $P(n)$ be the statement, ``every set containing $n$ elements has $2^n$ different subsets.''  We will show $P(n)$ is true for all $n \ge 1$.
+
+  		\underline{Base case}: Any set with 1 element $\{a\}$ has exactly 2 subsets: the empty set and the set itself.  Thus the number of subsets is $2= 2^1$.  Thus $P(1)$ is true.
+
+  		\underline{Inductive case}: Suppose $P(k)$ is true for some arbitrary $k \ge 1$.  Thus every set containing exactly $k$ elements has $2^k$ different subsets.  Now consider a set containing $k+1$ elements: $A = \{a_1, a_2, \ldots, a_k, a_{k+1}\}$.  Any subset of $A$ must either contain $a_{k+1}$ or not.  In other words, a subset of $A$ is just a subset of $\{a_1, a_2,\ldots, a_k\}$ with or without $a_{k+1}$.  Thus there are $2^k$ subsets of $A$ which contain $a_{k+1}$ and another $2^{k+1}$ subsets of $A$ which do not contain $a^{k+1}$.  This gives a total of $2^k + 2^k = 2\cdot 2^k = 2^{k+1}$ subsets of $A$.  But our choice of $A$ was arbitrary, so this works for any subset containing $k+1$ elements, so $P(k+1)$ is true.
+
+  		Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 1$.
+  	\end{answer}
+
+    \question Prove that $a_n = 3^n + 2$ is a solution to the recurrence relation $a_n = 3a_{n-1} - 4$ subject to the initial condition $a_0 = 3$.
+    \begin{answer}
+      Let $P(n)$ be the statement $a_n = 3^n + 2$.
+
+      \underline{Base Case}: $a_0 = 3^0 + 2 = 3$, which agrees with the initial condition.
+
+      \underline{Inductive Case}:  Assume $P(k)$ is true.  That is, $a_k = 3^k + 2$.  Consider $a_{k+1}$.  By the recurrence relation, we have $a_{k+1} = 3a_k - 4$.  But by the inductive hypothesis, this is just $3(3^k+2) - 4$.  We can simplify this further:
+      \[ a_{k+1} = 3(3^k+2) - 4 = 3^{k+2} + 6 - 4 = 3^{k+1} +2\]
+      which is what $P(k+1)$ claims.  Thus $P(k+1)$ is true.
+
+      Therefore, by the principle of mathematical induction, $P(n)$ is true for all $n \ge 0$.
+    \end{answer}
+
+\end{questions}
+
+
+\Writetofile{\ansfilename}{
+\protect\end{questions}
+
+\protect\end{document}}
+\Closesolutionfile{\ansfilename}
+
+\end{document}

@@ -1,0 +1,225 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\bonuspointname{pts}
+\marginbonuspointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 5 \\ Solutions}{Due: Wednesday, October 4}
+
+
+\begin{document}
+% \noindent \textbf{Instructions}: Same rules as usual -- turn in your work on separate sheets of paper.  You must justify all your answers for full credit.  Do not consult the internet.
+
+\begin{questions}
+\question[6] Write out the first 5 terms (starting with $a_0$) of each of the sequences described below.  Then give either a closed formula or a recursive definition for the sequence (whichever is NOT given in the problem).
+\begin{parts}
+\part $a_n = \frac{1}{2}(n^2 + n)$.
+\begin{solution}
+$a_0 = 0$, $a_1 = 1$, $a_2 = 3$, $a_3 = 6$ $a_4 = 10$. The sequence was described by a closed formula.  These are the triangular numbers.  A recursive definition is: $a_n = a_{n-1} + n$ with $a_0 = 0$.
+\end{solution}
+
+\part $a_n = 2a_{n-1} - a_{n-2}$ with $a_0 = 0$ and $a_1 = 1$.
+\begin{solution}
+This is a recursive definition.  We continue $a_2 = 2$, $a_3 = 3$, $a_4 = 4$, $a_5 = 5$, and so on.  A closed formula is $a_n = n$.
+\end{solution}
+
+\part $a_n = na_{n-1}$ with $a_0 = 1$.
+\begin{solution}
+We have $a_0 = 1$, $a_1 = 1$, $a_2 = 2$, $a_3 = 6$, $a_4 = 24$, $a_5 = 120$, and so on.  The closed formula is $a_n = n!$.
+\end{solution}
+\end{parts}
+
+\question[8] For each sequence given below, find a closed formula for $a_n$, the $n$th term of the sequence (assume the first terms are $a_0$) by relating it to another sequence for which you already know the formula.  In each case, briefly say how you got your answers.
+\begin{parts}
+	\part 4, 5, 7, 11, 19, 35, \ldots
+	\begin{solution}
+		If we subtract 3 from each term, we get $1, 2, 4, 8, 16, 32, \ldots$, which are the powers of 2.  So we must shift this sequence up by 3 to get our sequence.  Thus
+		\[a_n = 2^n + 3\]
+	\end{solution}
+
+	\part 0, 3, 8, 15, 24, 35, \ldots
+	\begin{solution}
+		Add 1 to each term - we get $1, 4, 9, 16, 25, 36, \ldots$, the square numbers.  So maybe our sequence as formula $a_n = n^2 - 1$.  Does this work?  $a_3 = 8$.  That is a term of our sequence, but it should be $a_2$.  So we want
+		\[a_n = (n+1)^2 - 1\]
+	\end{solution}
+
+	\part 6, 12, 20, 30, 42, \ldots
+	\begin{solution}
+		Each term is even, so let's see what happens when we divide by 2: we get $3, 6, 10, 15, 21,\ldots$.  These are the triangle numbers, but starting at $T_2$.  We know $T_n = \frac{n(n+1)}{2}$. We want $a_0 = 2T_2$, $a_1 = 2T_3$, and so on.  In general, $a_n = 2T_{n+2}$, so
+		\[a_n = (n+2)(n+3)\]
+		(This is like a shift by 2 units to the left and a stretch by a factor of 2.)
+	\end{solution}
+
+	\part 0, 2, 7, 15, 26, 40, 57, \ldots (Hint: this is the \emph{sum} of two well known sequences.)
+	\begin{solution}
+		How far off from triangular number are these?  The triangular numbers (starting with $T_0$) are $0, 1, 3, 6, 10, 15, 21, \ldots$.  The given sequence differs from this by $0, 1, 4, 9, 16, 25, 36, \ldots$ the square numbers!  Thus
+		\[a_n = \frac{n(n+1)}{2} + n^2\]
+	\end{solution}
+\end{parts}
+
+
+
+% This continues to confuse students.  To fix, give the third rectangle in the sequence, or at least describe it in words.  The problem is that students want to keep attaching a square on to the same side (keep adding a 5x5 square to the 5 side in the example).
+\question[8] Starting with any rectangle, we can create a new, larger rectangle by attaching a square to the longer side.  For example, if we start with a $2\times 5$ rectangle, we would glue on a $5\times 5 $ square, forming a $5 \times 7$ rectangle:
+
+\begin{center}
+	\begin{tikzpicture}[scale=.4]
+		\draw[thick] (0,0) rectangle (2,5);
+		\draw[thick] (2.2,0) rectangle (7.2,5);
+		\draw (0,2.5) node[left]{\tiny 5} (1,0) node[above]{\tiny 2} (4.5,0) node[above]{\tiny 5};
+		\draw (9,2.5) node{\Large $\rightsquigarrow$};
+		\draw[thick] (11,0) rectangle (18,5);
+		\draw[dotted] (13,0) -- (13,5);
+		\draw (11,2.5) node[left]{\tiny 5}  (14.5,0) node[above]{\tiny 7};
+	\end{tikzpicture}
+\end{center}
+
+\begin{parts}
+	\part Create a sequence of rectangles using this rule starting with a $1\times 2$ rectangle.  Then write out the sequence of \emph{perimeters} for the rectangles (the first term of the sequence would be 6, since the perimeter of a $1\times 2$ rectangle is 6, the next term would be 10).
+	\begin{solution}
+		The rectangles are $1 \times 2$, $2 \times 3$, $3 \times 5$, $5 \times 8$, $8 \times 13$, and so on.  The sequence of perimeters is \[6, 10, 16, 26, 42, \ldots\]
+	\end{solution}
+
+	\part Repeat the above part this time starting with a $1 \times 3$ rectangle.
+	\begin{solution}
+		The sequence of rectangles have dimensions $1\times 3$, $3 \times 4$, $4 \times 7$, $7 \times 11$, $11\times 18$, and so on.  The sequence of perimeters is \[8, 14, 22, 36, 58, \ldots\]
+	\end{solution}
+
+	\part Find recursive definitions for each of the sequences of perimeters you found in parts (a) and (b).  Don't forget to give the initial conditions as well.
+	\begin{solution}
+		For the sequence from (a), the recursive formula is $a_1 = 6$, $a_2 = 10$, and $a_n = a_{n-1} + a_{n-2}$.
+
+		For the sequence from (b), the recursive formula is $a_1 = 8$, $a_2 = 14$, and $a_n = a_{n-1} + a_{n-2}$.
+
+		Notice that both sequence have the same rule for getting terms from the previous ones, it is just the initial conditions that are different.
+	\end{solution}
+
+	\part Are the sequences arithmetic?  Geometric?  If not, are they {\em close} to being either of these (i.e., are the differences or ratios {\em almost} constant)?  Write down the sequences of differences and sequences of ratios and explain anything interesting you find.
+	\begin{solution}
+		The sequences are not arithmetic because the differences between terms is not constant.  Similarly the ratio between terms is not constant, so the sequences are not geometric either.
+
+		However, look at the ratio between terms: $10/6 \approx 1.66$, $16/10 = 1.6$, $26/16 \approx 1.625$, $42/26 \approx 1.61$, \ldots.  In fact, the ratio between terms of the second sequence also floats around this same number.
+
+		That number (and in fact, the limit of the ratios of either sequence as the terms increase) is $\frac{1 + \sqrt{5}}{2} \approx 1.618$, also known as the golden ratio.
+		\end{solution}
+\end{parts}
+
+
+\question[8] Consider bit strings with lenght $l$ and weight $k$ (so strings of $l$ 0's and 1's, including $k$ 1's).  We know how to count the number of these for a fixed $l$ and $k$.  Now, we will count the number of strings for which the \emph{sum} of the length and the weight is fixed.  For example, let's count all the bit strings for which $l+k = 11$.
+
+\begin{parts}
+	\part Find examples of these strings of different lengths.  What is the longest string possible?  What is the shortest?
+	\begin{solution}
+		The longest string is 00000000000.  If we insert a 1, we need to replace two 0's, which shortens the string.  The more 1's, the shorter the string.  We could have 111110, or 101111, or others like this (there will be 6 of them) which are shortest possible.  So all strings range in length between 6 and 11.
+	\end{solution}
+
+	\part How many strings are there of each of these lengths.  Use this to count the total number of strings (with sum 11).
+	\begin{solution}
+		There is 1 string with length 11.  To get a string with length 10, we need one of the 10 spots to be a 1.  Thus there are 10 of these.  To get a string of length 9, we need exactly 2 of the 9 spots to be 1's, so there are ${9 \choose 2} = 36$ such strings.  There will be ${8 \choose 3} = 56$ strings with length 8, another ${7 \choose 4} = 35$ of length 7, and finally ${6 \choose 5} = 6$ of length 6.  All together we have
+		\[1 + 10 + 36 + 56 + 35 + 6 = 144 \text{ strings}\]
+	\end{solution}
+
+	\part The other approach: Let $n = l+p$ vary.  How many strings have sum $n = 1$?  How many have sum $n = 2$?  And so on.  Find and explain a recurrence relation for the sequence $(a_n)$ which gives the number of strings with sum $n$.
+	\begin{solution}
+		there is 1 string with sum $n = 1$ (just the string 1).  There are two strings with sum $n = 2$ (namely 11, 2).  With sum $n = 3$ we get 3 strings (111, 12, 21), and 5 with sum $n = 4$.  In fact, we recognize these as the Fibonacci numbers, which satisfy the recurrence $f_n = f_{n-1} + f_{n-2}$ with initial condition here $f_1 = 1$ and $f_2 = 2$.  The reason this is correct is that to get all the strings with sum $n$, we can start with a 1 and finish with any string with sum $n-1$, or start with a 2 and finish with any string with sum $n - 2$.  If we carry out this recurrence we find $f_{11} = 144$.
+	\end{solution}
+
+
+	\part Describe what you have found above in terms of Pascal's Triangle.  What patter have you discovered?
+	\begin{solution}
+		In this one specific case we have that \[{11\choose 0} + {10 \choose 1} + {9 \choose 2} + {8 \choose 3} + {7 \choose 4} + {6 \choose 5} = f_{11}\]
+		On Pascal's triangle, we recognize that this is the sum of a diagonal line of cells (moving right, then right-up each time).  Indeed, every such sum of diagonals gives a Fibonacci number.
+	\end{solution}
+
+
+\end{parts}
+
+\bonusquestion[4] Bonus:  When bees play chess, they use a hexagonal board like the one shown below.  The queen bee can move one space at a time either directly to the right or angled up-right or down-right (but can never move leftwards).  How many different paths can the queen take from the top left hexagon to the bottom right hexagon?  Explain your answer, and this relates to the previous question.  (As an example, there are three paths to get to the second hexagon on the bottom row.)
+
+	\begin{center}
+	\def\r{1}
+	\newcommand{\hexagon}[3]{
+	  \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+	  \def\y{-\r*#1-sin{30}*\r*#1}
+	  \draw[thick] (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+	  \draw (\x,\y) node{#3};
+	}
+	\begin{tikzpicture}[scale=.75]
+	\hexagon{1}{0}{\tiny start};
+	\hexagon{2}{2}{3}
+	\foreach \i in {1,...,5} {
+		\foreach \j in {1,2} {
+			\hexagon{\j}{\i}{};
+		}
+	}
+	\hexagon{2}{6}{\tiny stop};
+	\end{tikzpicture}
+	\end{center}
+
+
+	\begin{solution}
+		We can code each path through the hive using 0's and 1's as follows:  A 0 corresponds to a move up-right or down-right, a 1 corresponds to a move directly to the right.  Notice that a 1 move can be replaced by two consecutive 0 moves.  This describes a bijection between strings of 0's and 1's with total sum of length and weight equal to 11 and paths through the hive, so there are 144 paths.
+	\end{solution}
+
+% \question[8] If you have enough toothpicks, you can make a large triangular grid.  Below, are the triangular grids of size 1 and of size 2.  The size 1 grid requires 3 toothpicks, the size 2 grid requires 9 toothpicks.
+%
+% \centerline{\includegraphics[height=1in]{images/triangles.png}}
+%
+% \begin{parts}
+%   \part Let $t_n$ be the number of toothpicks required to make a size $n$ triangular grid.  Write out the first 5 terms of the sequence $t_1, t_2, \ldots$.
+%   \begin{solution}
+%     $ 3, 9, 18, 30, 45, \ldots$
+%   \end{solution}
+%
+%   \part Find a recursive definition for the sequence.  Explain why you are correct.
+%   \begin{solution}
+%     $t_n = t_{n-1} + 3n$ with $t_1 = 3$.  This works because to get the next larger triangular grid, we must add a row of $n$ triangles, each requiring 3 toothpicks.
+%   \end{solution}
+%
+%   \part Is the sequence arithmetic or geometric?  If not, is it the sequence of partial sums of an arithmetic or geometric sequence?  Explain why your answer is correct.
+%
+%   \begin{solution}
+% 	  The sequence is not arithmetic (since $9-3 = 6$ but $18-9 = 9$).  It is also not geometric (since $9/3 = 3$ but $18/9 = 2$).  To decide whether the sequence is a sequence of partial sums, we look at the differences.  The sequence of differences is $6, 9, 12, 15, \ldots$.  This {\em is} an arithmetic sequence.  So we see that
+% 	  \[t_1 = 3\]
+% 	  \[t_2 = 3+6\]
+% 	  \[t_3 = 3+6+9\]
+% 	  \[t_4 = 3+6+9+12\]
+% 	  \[t_n = \sum_{k = 1}^n 3k\]
+%   \end{solution}
+%
+%   \part Use your results from part (c) to find a closed formula for the sequence.  Show your work.
+%   \begin{solution}
+%     We have $t_n = 3 + 6 + 9 + \cdots + 3n$.  If we reverse these and add corresponding terms we get
+%     \[2t_n = (3n+3) + (3n+3) + (3n+3) + \cdots + (3n+3)\]
+%     On the right hand side of the equation we have the sum of $n$ copies of $(3n+3)$ so we get
+%     \[2t_n = n(3n+3)\]
+%     or \[t_n = \frac{n(3n+3)}{2}\]
+%
+%     This is not a huge surprise.  Notice that each term in the sequence is a multiple of 3.  Dividing each term by 3 gives the sequence $1,3, 6, 10, 15,\ldots$ - the triangular numbers. This makes sense because we are forming triangles out of 3-toothpick collections.   So a closed formula is therefore
+%     $t_n = 3\frac{n(n+1)}{2}$
+%   \end{solution}
+%
+% \end{parts}
+
+
+\end{questions}
+\end{document}

@@ -52,7 +52,12 @@
         Draw two such graphs or explain why not.
       </p>
     </statement>
-    <solution permid="nvR">
+    <hint>
+      <p>
+        Both situations are possible.  Go find some examples. 
+      </p>
+    </hint>
+    <solution permid="nvR" category="instructor">
       <p permid="xzx">
         Yes.
         For example, both graphs below contain 6 vertices, 7 edges,
@@ -283,6 +288,20 @@
     </statement>
   </exercise>
 
+  <exercise>
+    <statement>
+      <p>
+        What is the largest number of edges possible in a graph with 10 vertices?  What is the largest number of edges possible in a <em>bipartite</em> graph with 10 vertices?  What is the largest number of edges possible in a <em>tree</em> with 10 vertices?
+      </p>
+    </statement>
+    <hint>
+      <p>
+        The bipartite graph is a little tricky.  You will definitely want a complete bipartite graph, but it could be <m>K_{5,5}</m> or maybe <m>K_{1,9}</m>, or <ellipsis />
+      </p>
+    </hint>
+  </exercise>
+
+
   <exercise permid="CEP">
     <statement>
       <p permid="LDc">
@@ -332,7 +351,24 @@
 
       </sidebyside>
     </statement>
-    <solution permid="zKj">
+    <hint>
+      <p>
+        The first graph is bipartite, which can be seen by labeling it as follows.
+      </p>
+      <sidebyside width="20%">
+        <image xml:id="img-bipartitelabel">
+          <latex-image>
+            \begin{tikzpicture}
+    \draw (-1,1) \vb{\footnotesize $A$} -- (0,2) \vb{\footnotesize $B$} -- (1,1) \vb{\footnotesize $A$} -- (0,0) \vb{\footnotesize $B$} -- (-1,1) -- (0,1) \vb{\footnotesize $B$} -- (1,1);
+  \end{tikzpicture}
+          </latex-image>
+        </image>
+      </sidebyside>
+      <p>
+        Two of the remaining three are also bipartite.
+      </p>
+    </hint>
+    <solution permid="zKj" category="instructor">
       <p permid="JNP">
         Three of the graphs are bipartite.
         The one which is not is <m>C_7</m>
@@ -393,7 +429,12 @@
         For which <m>n \ge 3</m> is the graph <m>C_n</m> bipartite?
       </p>
     </statement>
-    <solution permid="fRs">
+    <hint>
+      <p>
+        <m>C_4</m> is bipartite; <m>C_5</m> is not.  What about all the other values of <m>n</m>?
+      </p>
+    </hint>
+    <solution permid="fRs" category="instructor">
       <p permid="Wch">
         <m>C_n</m> is bipartite if and only if <m>n</m> or is even.
         Put every other vertex into the first part,
@@ -497,11 +538,68 @@
     </solution>
   </exercise>
 
+  <exercise>
+    <statement>
+      <p>
+        Decide whether the statements below about subgraphs are true or false.  For those that are true, briefly explain why (1 or 2 sentences).  For any that are false, give a counterexample.
+        <ol>
+          <li>
+            <p>
+              Any subgraph of a complete graph is also complete.
+            </p>
+          </li>
+          <li>
+            <p>
+              Any <em>induced</em> subgraph of a complete graph is also complete.
+            </p>
+          </li>
+          <li>
+            <p>
+              Any subgraph of a bipartite graph is bipartite.
+            </p>
+          </li>
+          <li>
+            <p>
+              Any subgraph of a tree is a tree.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <solution>
+      <p>
+        <ol cols="4">
+          <li>
+            <p>
+              False.
+            </p>
+          </li>
+          <li>
+            <p>
+              True.
+            </p>
+          </li>
+          <li>
+            <p>
+              True.
+            </p>
+          </li>
+          <li>
+            <p>
+              False.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </solution>
+  </exercise>
+
+
   <exercise permid="vaq">
     <statement>
       <p permid="DYD">
         Let <m>k_1, k_2, \ldots,
-        k_j</m> be a list of numbers that sum to <m>n</m> (i.e, <m>\sum_{i=1}^j k_i = n</m>).
+        k_j</m> be a list of positive integers that sum to <m>n</m> (i.e, <m>\sum_{i=1}^j k_i = n</m>).
         Use two graphs containing <m>n</m> vertices to explain why
         <me permid="kfM">
           \sum_{i = 1}^j \binom{k_i}{2} \le \binom{n}{2}
@@ -510,10 +608,10 @@
     </statement>
     <hint permid="YmT">
       <p permid="OxI">
-        One of the graphs will not be connected, unless <m>j=1</m>.
+        How many edges does <m>K_n</m> have?  One of the two graphs will not be connected (unless <m>j=1</m>).
       </p>
     </hint>
-    <solution permid="sfK">
+    <solution permid="sfK" category="instructor">
       <p permid="iqz">
         First consider the graph <m>K_n</m>,
         which has <m>\binom{n}{2}</m> vertices.
@@ -528,4 +626,128 @@
     </solution>
   </exercise>
 
+
+  <exercise>
+    <statement>
+      <p>
+        We often define graph theory concepts using set theory.  For example, given a graph <m>G = (V, E)</m> and a vertex <m>v \in V</m>, we define
+        <me>N(v) = \{u \in V \st \{v,u\} \in E\}</me>.
+        We define <m>N[v] = N(v) \cup \{v\}</m>.  The goal of this problem is to figure out what all this means.
+        <ol>
+          <li>
+            <p>
+              Let <m>G</m> be the graph with <m>V = \{a,b,c,d,e,f\}</m> and <m>E = \{\{a,b\}, \{a,e\},\{b, c\}, \{b,e\}, \{c,d\}, \{c, f\}, \{d, f\}, \{e,f\}\}</m>.  Find <m>N(a)</m>, <m>N[a]</m>, <m>N(c)</m>, and <m>N[c]</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              What is the largest and smallest possible values for <m>|N(v)|</m> and <m>|N[v]|</m> for the graph in part (a)?  Explain.
+            </p>
+          </li>
+          <li>
+            <p>
+              Give an example of a graph <m>G = (V, E)</m> (probably different than the one above) for which <m>N[v] = V</m> for some vertex <m>v \in V</m>.  Is there a graph for which <m>N[v] = V</m> for <em>all</em> <m>v \in V</m>?  Explain.
+            </p>
+          </li>
+          <li>
+            <p>
+              Give an example of a graph <m>G = (V,E)</m> for which <m>N(v) = \emptyset</m> for some <m>v \in V</m>.  Is there an example of such a graph for which <m>N[u] = V</m> for some other <m>u \in V</m> as well?  Explain.
+            </p>
+          </li>
+          <li>
+            <p>
+              Describe in words what <m>N(v)</m> and <m>N[v]</m> mean in general.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <hint>
+      <p>
+        You should be able to deduce everything directly from the definition.  However, perhaps it would be helpful to know that the <m>N</m> stands for <em>neighborhood</em>.
+      </p>
+    </hint>
+  </exercise>
+
+
+  <exercise>
+    <statement>
+      <p>
+        A graph is a way of representing the relationships between elements in a set: an edge between the vertices <m>x</m> and <m>y</m> tells us that <m>x</m> is related to <m>y</m> (which we can write as <m>x \sim y</m>).  Not all sorts of relationships can be represented by a graph though.  For each relationship described below, either draw the graph or explain why the relationship cannot be represented by a graph.  
+        <ol>
+          <li>
+            <p>
+              The set <m>V = \{1,2, \ldots, 9\}</m> and the relationship <m>x \sim y</m> when <m>x-y</m> is a non-zero multiple of 3.
+            </p>
+          </li>
+          <li>
+            <p>
+              The set <m>V = \{1,2, \ldots, 9\}</m> and the relationship <m>x \sim y</m> when <m>y</m> is a multiple of <m>x</m>.  
+            </p>
+          </li>
+          <li>
+            <p>
+              The set <m>V = \{1,2,\ldots, 9\}</m> and the relationship <m>x \sim y</m> when <m>0 \lt |x-y| \lt 3</m>.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Be careful to make sure the edges are not <q>directed.</q>  In a graph, if <m>a</m> is adjacent to <m>b</m>, then <m>b</m> is adjacent to <m>a</m>.  In the language of relations, we say that the edge relation is <term>symmetric</term>.
+      </p>
+    </hint>
+  </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Consider graphs with <m>n</m> vertices.  Remember, graphs do not need to be <em>connected</em>.  
+        <ol>
+          <li>
+            <p>
+              How many edges must the graph have to guarantee at least one vertex has degree two or more?  Prove your answer.
+            </p>
+          </li>
+          <li>
+            <p>
+              How many edges must the graph have to guarantee all vertices have degree two or more?  Prove your answer.
+            </p>
+          </li>
+        </ol>
+      </p>
+    </statement>
+    <hint>
+      <p>
+        You might want to answer the questions for some specific values of <m>n</m> to get a feel for them, but your final answers should be in terms of <m>n</m>.
+      </p>
+    </hint>
+  </exercise>
+
+  <exercise>
+    <statement>
+      <p>
+        Prove that any graph with at least two vertices must have two vertices of the same degree.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Try a small example first: any graph with 8 vertices must have two vertices of the same degree.  If not, what would the degree sequence be?
+      </p>
+    </hint>
+  </exercise>
+
+  <exercise xml:id="exr-degree1handshake">
+    <statement>
+      <p>
+        Suppose <m>G</m> is a connected graph with <m>n > 1</m> vertices and <m>n-1</m> edges.  Prove that <m>G</m> has a vertex of degree 1.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Use the <xref ref="lem-handshake">handshake lemma</xref>.  What would happen if all the vertices had degree 2?
+      </p>
+    </hint>
+  </exercise>
 </exercises>

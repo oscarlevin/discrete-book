@@ -1,0 +1,238 @@
+\documentclass[11pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+\input{../macros-discrete}
+
+\def\d{\displaystyle}
+\def\?{\reflectbox{?}}
+\def\inv{^{-1}}
+\def\b#1{\mathbf{#1}}
+\def\f#1{\mathfrak #1}
+\def\c#1{\mathcal #1}
+\def\s#1{\mathscr #1}
+\def\r#1{\mathrm{#1}}
+\def\N{\mathbb N}
+\def\Z{\mathbb Z}
+\def\Q{\mathbb Q}
+\def\R{\mathbb R}
+\def\C{\mathbb C}
+\def\F{\mathbb F}
+\def\A{\mathbb A}
+\def\X{\mathbb X}
+\def\E{\mathbb E}
+\def\O{\mathbb O}
+\def\FR{\mathscr{F(\R)}}
+\def\pow{\mathscr P}
+\def\inv{^{-1}}
+\def\nrml{\triangleleft}
+\def\st{:}
+\def\~{\widetilde}
+\def\rem{\mathcal R}
+\def\iff{\leftrightarrow}
+\def\Iff{\Leftrightarrow}
+\def\and{\wedge}
+\def\And{\bigwedge}
+\def\AAnd{\d\bigwedge\mkern-18mu\bigwedge}
+\def\Vee{\bigvee}
+\def\VVee{\d\Vee\mkern-18mu\Vee}
+\def\imp{\rightarrow}
+\def\Imp{\Rightarrow}
+\def\Fi{\Leftarrow}
+
+
+\def\dom{\mbox{dom}}
+\def\rng{\mbox{range}}
+
+
+
+\def\bar{\overline}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\marginbonuspointname{bn-pts}
+
+\addpoints
+\pagestyle{headandfoot}
+\printanswers
+
+\firstpageheader{Math 228}{\bf\large Exam 2 -- Take Home\\Solutions}{Fall 2018}
+\runningfooter{}{\thepage}{}
+\extrafootheight{-.45in}
+
+
+
+\begin{document}
+% %space for name
+% \noindent {\large\bf Name:} \underline{\hspace{2.5in}}
+% \vskip 1em
+%
+% \noindent{\bf Instructions:} This is the take-home portion of the second exam.  Here are my expectations:
+%
+% \begin{itemize}
+% \item WORK ALONE!  You may \underline{not} collaborate or discuss problems with other students, either in or outside of this class.  Also do not discuss with tutors, significant others, parents, kids, etc.  Cats and dogs are okay, but only if they have not taken discrete math class. If you need clarification on a problem, ask me.
+%
+% \item You may use your notes and the textbook, but only notes you have taken in this class and only the assigned textbook from this class.  This is intended only for you to refresh your memory if you forget a definition, not for you to copy proofs (or even the style of proof) from your notes.  Alternatively, if you do not remember a definition, send me an email.
+%
+% \item Other than your notes and textbook, do not use any outside sources. In particular, absolutely NO INTERNET.
+%
+% \item This is not a timed exam, and you may take as much time on it as you like.  However, I do not intend for you to spend more than 2 hours total working on the exam.
+%
+% \item You should write up all solutions neatly on your own paper and staple this sheet to your solutions, and sign below.  Clearly number each problem.  Preferably, use one sheet of paper per problem, and leave lots of room around your work.
+%
+% \item As always, you must show all your work to receive credit, and explanations and proofs should be written out in complete English sentences.  A page of just equations and calculations will probably receive no credit.
+%
+% \item \textbf{Due Monday, November 12}
+% \end{itemize}
+%
+% \centerline{Have Fun!}
+%
+%
+% \vfill
+%
+% \begin{center}
+% 	\emph{By signing below, I certify that the work on this take-home exam is solely my own, that I did not receive assistance from anyone other than my instructor, and did not use resources other than my own notes and the course textbook.}
+%
+% \end{center}
+% \vskip 1em
+% \noindent {\large Signature:} \underline{\hspace{3in}} \hspace{2em} {\large Date:} \underline{\hspace{1.5in}}
+%
+%
+%
+% \vskip 1em
+%
+% % \hrulefill
+% % \vskip 2em
+% \clearpage
+
+\begin{questions}
+\question[16] There was an old lady (who lived in a shoe) who wanted to give her 7 kids some mincemeat pies.  She had 20 (identical) pies to give, but didn't know what to do.
+\begin{parts}
+	\part Describe one way she could give out all the pies to her kids and show how you can represent this outcome using a string of two types of symbols.  Then find the total number of ways she can distribute the pies to her kids.
+	\begin{solution}
+		One distribution would be to give 10 pies to her oldest kid, no pies to her second oldest, and 2 pies to each of the 5 youngest kids.  This outcome would be represented by
+		\[**********||**|**|**|**|**\]
+		Every distribution can be represented by exactly one ``stars and bars'' diagram with 20 stars and 6 bars.  Thus there are $\binom{26}{6}$ ways to distribute the pies.
+	\end{solution}
+	\part How many ways can she distribute all 20 pies to her 7 kids so that each kid gets at least one pie?  Briefly explain your answer.
+	\begin{solution}
+		First give each kid one pie, leaving 13 to distribute.  These 13 can be distributed in $\binom{19}{6}$ ways.
+	\end{solution}
+	\part Three kids, Al, Bob, and Cam, have been naughty and as such the old lady has decided that none of them may have more than 3 pies.  Complete the chart below listing the number of ways to distribute all the pies so that the listed kids \emph{do} get more than 3 pies.
+	\begin{center}
+			\begin{tabular}{p{3.5cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1.2cm}|p{1cm}}
+				Kids getting more than 3 pies & Al & Bob & Cam & Al \& Bob & Al \& Cam & Bob \& Cam & All three \\ \hline
+				Number of ways to distribute all pies & & & & & & &
+			\end{tabular}
+	\end{center}
+	Then use the chart and the Principle of Inclusion Exclusion to find the number of ways to distribute all the pies so that none of Al, Bob, or Cam get more than three pies.
+	\begin{solution}
+		Give 4 pies to the specified kid(s) and then distribute the rest amoung all 7 kids.
+
+		\begin{center}
+				\begin{tabular}{p{3.5cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1.2cm}|p{1cm}}
+					Kids getting more than 3 pies & Al & Bob & Cam & Al \& Bob & Al \& Cam & Bob \& Cam & All three \\ \hline
+					Number of ways to distribute all pies & $\binom{22}{6}$ & $\binom{22}{6}$ & $\binom{22}{6}$ & $\binom{18}{6}$ & $\binom{18}{6}$ & $\binom{18}{6}$ & $\binom{14}{6}$
+				\end{tabular}
+		\end{center}
+
+		Using PIE: the number of ways that Al, Bob, \emph{or} Cam \emph{do} get more than 3 pies is
+		\[\binom{22}{6} + \binom{22}{6} + \binom{22}{6} - \binom{18}{6} - \binom{18}{6} - \binom{18}{6} + \binom{14}{6}\]
+		Thus the number of ways that none of them get too many pies is
+		\[\binom{26}{6} - \left[\binom{22}{6} + \binom{22}{6} + \binom{22}{6} - \binom{18}{6} - \binom{18}{6} - \binom{18}{6} + \binom{14}{6}\right]\]
+	\end{solution}
+	\part How many ways can you distribute the 20 pies to the 7 kids so that NO kid gets more than 3 pies?  Briefly explain.
+	\begin{solution}
+		Again we use PIE.  But now with 7 sets, so we are lucky that every intersection of a fixed number of sets will have the same cardinality.  We get
+		\[\binom{26}{6} - \left[ \binom{7}{1}\binom{22}{6} - \binom{7}{2}\binom{18}{6} + \binom{7}{3}\binom{14}{6} - \binom{7}{4}\binom{10}{6} + \binom{7}{5}\binom{6}{6}\right].\]
+		The $\binom{7}{k}$ terms count the number of ways to select the $k$ kids from the 7 to give too many pies to.
+	\end{solution}
+\end{parts}
+
+
+\question[20] The abandoned field behind your house is home to a large prairie dog colony.  Each week the size of the colony triples, before 4 prairie dogs sadly die.  Let $(a_n)_{n\ge 1}$ be the sequence giving the number of prairie dogs in the colony after the $n$th week (after the tripling followed by the death of 4). After the first week, there are 5 prairie dogs (so $a_1 = 5$).
+\begin{parts}
+	\part Write down a recurrence relation to describe $a_n$ and briefly explain.
+	\begin{solution}
+		We will have $a_n = 3a_{n-1} - 4$.  This comes directly from the description: to get the number of dogs this week ($a_n$), you triple the previous week's amount ($a_{n-1}$) and then subtract 4.
+	\end{solution}
+	\part Prove that there will always be an odd number of prairie dogs (at the end of each week).
+	\begin{solution}
+		The idea here is that 3 times an odd number is odd, and an odd number minus 4 is still odd.  Really we should do this by induction.
+		\begin{proof}
+			Let $P(n)$ be the statement that $a_n$ is odd.  We know that $P(1)$ is true because we are given that $a_1 = 5$, an odd number.  Now assume that $P(k)$ is true.  That is, assume $a_k$ is odd.  What about $a_{k+1}$?  Well, $a_{k+1} = 3a_k - 4$ and $a_k$ is odd, so $3a_{k}$ is odd, so $3a_k - 4$ is odd.  Therefore $P(k+1)$ is true.
+
+			Therefore, by the principle of mathematical induction, $a_n$ is odd for all $n \ge 1$.
+		\end{proof}
+	\end{solution}
+	\part Give a careful proof by mathematical induction that $a_n = 3^{n} + 2$.
+	\begin{solution}
+		\begin{proof}
+			Let $P(n)$ be the statement $a_n = 3^n + 2$.  The base case, that $a_1 = 3^1 + 2 = 5$ is true.  For the inductive case, assume $P(k)$ is true.  That is, assume $a_k = 3^k + 2$.  Now consider $a_{k+1} = 3a_k - 4$.  But this is \[a_{k+1} = 3(3^k + 2) - 4 = 3^{k+1} +6 - 4 = 3^{k+1} + 2\]
+			so $P(k+1)$ is true.
+
+			Therefore, by the principle of mathematical induction, $a_n = 3^n+2$ for all $n \ge 1$.
+		\end{proof}
+	\end{solution}
+	\part Show how you could use a sequence of partial sums to derive the closed formula for $a_n$.
+	\begin{solution}
+		The sequence we get is $5, 11, 29, 83, \ldots$.  The sequence of differences is $6, 18, 54,\ldots$ which looks like it has a closed formula $d_n = 2\cdot 3^{n-1}$ (it looks geometric).  We can find the partial sums of this sequence:
+		\[S = 6 + 18 + 54 + \cdots + 2\cdot 3^{n-1}\]
+
+		\[3S = ~~~ 6 + 18 + 54 + \cdots + 2\cdot 3^n\]
+
+		\[ -2S = 6 - 2\cdot 3^n\]
+
+		\[S = 3^n - 3\]
+		But we must add 5 (the initial term in $a_n$) and we do indeed get $a_n = 3^n + 2$.
+	\end{solution}
+\end{parts}
+
+\question
+\begin{parts}
+	\part[4] How many lattice paths from $(0,0)$ to $(6,6)$ pass through the point $(3,3)$?  Briefly explain your answer.
+	\begin{solution}
+		There will be $\binom{6}{3}$ lattice paths from $(0,0)$ to $(3,3)$ and another $\binom{6}{3}$ paths from $(3,3)$ to $(6,6)$.  Thus there are $\binom{6}{3}\binom{6}{3}$ lattice paths from $(0,0)$ to $(6,6)$ that pass through $(3,3)$.
+	\end{solution}
+	\part[2] How many 12-bit strings of weight $6$ have an equal number of 1's and 0's exactly half way through?  That is, how many of the strings have exactly 3 of their first 6 bits a 1?  Briefly explain your answer.
+	\begin{solution}
+		First pick a 6-bit string of weight 3 for the first half, then another 6-bit string of weight 3 for the second half.  This give $\binom{6}{3}\binom{6}{3}$ strings.
+	\end{solution}
+	\part[2] Explain why it makes sense that the answers to the previous two counting questions are the same.
+	\begin{solution}
+		Each lattice path can be represented by a bit string (1's are ups and 0's are rights).
+	\end{solution}
+	\part[6] Use either (a) or (b) above to explain why $\binom{4n}{2n} > \binom{2n}{n}\binom{2n}{n}$  for any $n\ge 1$.
+	\begin{solution}
+		Note that if $n = 3$, the right hand side is the answer to the questions above.  The left hand side is the total number of 12-bit strings of weight 6 (or lattice paths from $(0,0)$ to $(6,6)$), which is clearly more.
+
+		\begin{proof}
+			Consider the question: how many $4n$-bit strings of weight $2n$ have exactly $n$ 1's in the first $2n$ bits.  The answer is $\binom{2n}{n}^2$, as described above.  But the answer is also smaller than the total number of $4n$-bit strings of weight $2n$, of which there are $\binom{4n}{2n}$, which includes all of the desired bit strings plus more besides.
+		\end{proof}
+	\end{solution}
+\end{parts}
+
+
+
+\bonusquestion[10] Bonus: Let $d_n$ denote the number of \emph{derangements} of $n$ numbers.  For example, $d_3 = 2$ because the only derangements of $\{1,2,3\}$ are $231$ and $312$ (a \emph{derangement} is a permutation in which no element stays in its original place).  For convenience, we set $d_0 = 1$ and $d_1 = 0$
+
+Give a combinatorial proof of the identity
+\[\binom{n}{0} d_0 + \binom{n}{1}d_1 + \binom{n}{2}d_2 + \cdots + \binom{n}{n}d_n = n!\]
+
+\begin{solution}
+	Consider the question: how many ways can you arrange the numbers in $\{1,2,3,\ldots, n\}$?
+
+	Answer 1: $n!$, since there are $n$ choices for which number is in position 1, $n-1$ choices for which number is in position 2, and so on.
+
+	Answer 2: We consider cases for how many of the numbers are NOT in their ``natural'' position.  If 0 numbers are in their natural position, we must choose 0 numbers to derange, and then derange them in $d_0$ ways.  That give $\binom{n}{0}d_0$.  If 1 number is not in its natural position, then we choose that one number in $\binom{n}{1}$ ways and derange it in $d_1 = 0$ ways.  If two numbers are not in their natural position, then you can pick which two in $\binom{n}{2}$ ways and derange those two elements in $d_2$ ways.  And so on: the number of permutations of $\{1,2,3,\ldots, n\}$ with exactly $k$ elements not in their natural position is $\binom{n}{k}d_k$, and we sum over all values of $k$.  Thus we see that the left-hand side of the identity is also an answer to the question.
+
+	Since answer 1 and answer 2 are both answers to the same question, their expressions must be equal.
+\end{solution}
+
+\end{questions}
+
+
+
+
+\end{document}

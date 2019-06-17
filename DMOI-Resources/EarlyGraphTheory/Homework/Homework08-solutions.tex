@@ -1,0 +1,146 @@
+\documentclass[10pt]{exam}
+
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, multicol, graphicx}
+\usepackage{tikz}
+
+\input{../macros-discrete}
+
+\def\circleA{(-.5,0) circle (1)}
+\def\circleAlabel{(-1.5,.6) node[above]{$A$}}
+\def\circleB{(.5,0) circle (1)}
+\def\circleBlabel{(1.5,.6) node[above]{$B$}}
+\def\circleC{(0,-1) circle (1)}
+\def\circleClabel{(.5,-2) node[right]{$C$}}
+\def\twosetbox{(-2,-1.5) rectangle (2,1.5)}
+\def\threesetbox{(-2,-2.5) rectangle (2,1.5)}
+
+%\pointname{pts}
+\pointsinmargin
+\marginpointname{pts}
+\addpoints
+\pagestyle{head}
+\printanswers
+
+\firstpageheader{Math 228}{\bf Homework 8\\Solutions}{Due: Wednesday, October 24}
+
+
+\begin{document}
+% \noindent \textbf{Instructions}: Same rules as usual.  Turn in solutions on separate pages, and do not consult the internet.
+
+\begin{questions}
+	\question[6] For each of the following questions, first give one example of an outcome (i.e., one of the many things you are counting) and show how that particular outcome can be represented as a ``stars and bars'' diagram.  Then, answer the counting question.
+	\begin{parts}
+		\part When playing Yahtzee, you roll five regular 6-sided dice.  How many different outcomes are possible from a single (five dice) roll?  The order of the dice does not matter.
+		\begin{solution}
+			The outcome of (2, 3, 3, 4, 6) is represented by the diagram $|*|**|*||*$.  Each star represents a particular number that is rolled, so there should be 5 stars (since there are 5 dice).  Each bar switches from one number to the next, so there should be 5 bars.
+
+			Since we are counting these diagrams, the total number of outcomes is ${10 \choose 5}$.
+		\end{solution}
+
+
+		\part Your friend has 7 coins in her pocket (each could be a penny, nickel, dime or quarter).  How many different pocketfuls are possible?
+		\begin{solution}
+			One outcome is (p, p, p, n, d,d,d).  This is represented by $***|*|***|$.  Each star represents a coin.  Where that star is represents what kind of coin it is.  We need 7 stars, and 3 bars (to switch between types of coins).
+
+			Thus the total number of pocketfuls is ${10 \choose 7}$.
+		\end{solution}
+
+	\end{parts}
+
+
+
+	\question[6] After a late night of math studying, you and your friends decide to go to your favorite tax-free fast food Mexican restaurant, {\em Burrito Chime}.  You decide to order off of the dollar menu, which has 7 items.  Your group has \$16 to spend (and will spend all of it).
+	\begin{parts}
+	  \part How many different orders are possible?  Explain. (The {\em order} in which the order is placed does not matter - just which and how many of each item that is ordered.)
+	  \begin{solution}
+	    $\d{22 \choose 6}$ - there are 16 stars and 6 bars.
+	  \end{solution}
+
+	  \part How many different orders are possible if you want to get at least one of each item? Explain.
+	  \begin{solution}
+	    $\d{15 \choose 6}$ - buy one of each item, using \$7.  This leaves you \$11 to distribute to the 7 items, so 11 stars and 6 bars.
+	  \end{solution}
+
+	  \part How many different orders are possible if you don't get more than 4 of any one item?  Explain. Hint: get rid of the bad orders using PIE.
+	  \begin{solution}
+	    \[{22 \choose 6} - \left[{7 \choose 1}{17 \choose 6} - {7 \choose 2}{12 \choose 6} + {7 \choose 3}{7 \choose 6} \right]\]
+	  \end{solution}
+	\end{parts}
+
+
+
+	\question[6] The Grinch sneaks into a room with 6 Christmas presents to 6 different people.  He proceeds to switch the name-labels on the presents.  How many ways could he do this if:
+	\begin{parts}
+		\part No present is allowed to end up with its original label?  Explain what each term in your answer represents.
+		\begin{solution}
+			\[6! - \left[{6 \choose 1}5! - {6 \choose 2}4! + {6 \choose 3}3! - {6 \choose 4}2! + {6 \choose 5}1! - {6 \choose 6}0!\right]\]
+		\end{solution}
+
+		\part Exactly 2 presents keep their original labels? Explain.
+		\begin{solution}
+			\[{6 \choose 2}\left(4! - \left[{4\choose 1}3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)\]
+		\end{solution}
+
+		\part Exactly 5 presents keep their original labels? Explain.
+		\begin{solution}
+			0.  Once 5 presents have their original label, there is only one present left and only one label left, so the 6th present must get its own label.
+		\end{solution}
+	\end{parts}
+
+
+	\question[8] Consider functions $f:\{1,2,3,4,5\} \to \{0,1,2,\ldots,9\}$.  Note that in order to specify a function, you must simply say what the outputs are for each input.
+	\begin{parts}
+		\part How many of these functions are there all together? Explain.
+		\begin{solution}
+			There will be $10^5$ functions.  For each input, we must pick one of the 10 possible outputs.
+		\end{solution}
+		\part How many of these functions are one-to-one (or \emph{injective}, meaning no two inputs are sent to the same output)? Explain.
+		\begin{solution}
+			There will be $P(10,5) = 10!/5!$ functions.  There are 10 choices for the image of 1, then only 9 choices for the image of 2, and so on.
+		\end{solution}
+		\part How many of these functions are strictly increasing?  Explain.  (A function is strictly increasing provided if $a < b$, then $f(a) < f(b)$.)
+		\begin{solution}
+			${10 \choose 5}$.  Note that a strictly increasing function is automatically injective.  So the five outputs must all be different.  So let's first pick which five outputs we will use: there are ${10 \choose 5}$ ways to do this.  Now how many ways are there to assign those outputs to the inputs $1$ through 5?  Only one way, since there is only one way to arrange numbers in increasing order.
+		\end{solution}
+		\part How many of the functions are non-decreasing?  Explain.  (A function is non-decreasing provided if $a < b$, then $f(a) \le f(b)$.)
+		\begin{solution}
+			${14 \choose 5}$.  This is in fact a stars and bars problem.  The stars are the 5 inputs and the bars are the 9 spots between the 10 possible outputs.  Think of it this way - we will specify $f(1)$, then $f(2)$, then $f(3)$, and so on in that order.  Start with the possible output 0.  We can use it as the output of $f(1)$, or we can switch to 1 as a potential output.  Say we put $f(1) = 1$.  Now we are at 1 (can't go back to 0).  Should $f(2) = 1$?  If yes, then we are putting down another star.  If no, put down a bar and switch to 2.  Maybe you switch to 3, then assign $f(2) = 3$ and $f(3) = 3$ (two more stars) before switching to 4 as a possible output.  And so on.
+		\end{solution}
+	\end{parts}
+
+
+	\question[4] Suppose you planned on giving 7 gold stars to some of the 13 star students in your class.  Each student can receive at most one star.  How many ways can you do this?
+	\begin{parts}
+		\part Answer this question using Stars, Bars, and the Principle of Inclusion Exclusion.
+		\begin{solution}
+			There will be 7 stars and 12 bars.  So without the restriction of no kid getting more than one star, there would be $\binom{19}{12}$ ways to distribute the stars.  Then get rid of the bad ones using PIE:
+			\[\binom{19}{12} - \left[\binom{13}{1}\binom{17}{12} - \binom{13}{2}\binom{15}{12} + \binom{13}{3}\binom{14}{12} - \binom{13}{4}\binom{12}{12}\right]\]
+			Each term represents the ways in which one (or two, or three) students get two or more stars (giving two to them first, then distributing the rest).
+		\end{solution}
+		\part Answer this question using a much easier method (a single binomial coefficient).  Briefly explain how you have to think differently about the problem to find this answer.
+		\begin{solution}
+			The answer is just $\binom{13}{7}$.  This is because we must simply select which of the 13 students get stars.  The key here is that instead of thinking about where each star goes, we are thinking about whether a student gets a star or not.
+		\end{solution}
+
+	\end{parts}
+
+\bonusquestion[3] BONUS: Generalize the previous question to state and prove a binomial identity.
+\begin{solution}
+	Consider the question: How many ways can you pass out $k$ identical gold stars to $n$ star students so that each student gets at most one star?  One answer to this is just $\binom{n}{k}$, since you must choose $k$ of the $n$ students to receive their star (notice that this is only non-zero if $k \le n$).
+
+	On the other hand, we can use ``stars and bars''.  The ways to distribute the stars to the students with no restrictions is $\binom{k+n-1}{n-1}$.  Then we can remove the distributions in which one or more student gets two or more stars.  All together we get
+	{\footnotesize
+	\[\binom{k+n-1}{n-1} - \left[\binom{n}{1}\binom{k-2+n-1}{n-1} - \binom{n}{2}\binom{k-4+n-1}{n-1} + \binom{n}{3}\binom{k-6+n-1}{n-1} - \cdots \pm \binom{n}{n}\binom{k-2n + n -1}{n-1}  \right]. \]
+	}
+	Note that many of the terms in the square brackets above will be zero, after $k/2$ terms.
+
+	Therefore, we have proved the following identity:
+{\footnotesize		\[\binom{k+n-1}{n-1} - \left[\binom{n}{1}\binom{k-2+n-1}{n-1} - \binom{n}{2}\binom{k-4+n-1}{n-1} + \binom{n}{3}\binom{k-6+n-1}{n-1} - \cdots \pm \binom{n}{n}\binom{k-2n + n -1}{n-1}  \right] = \binom{n}{k}. \]
+}
+\end{solution}
+\end{questions}
+
+
+
+
+\end{document}
