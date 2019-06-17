@@ -39,14 +39,14 @@
       </p>
     </investigation>
     <p>
-      One very useful and common approach to studying graph theory is to restrict your focus to only graphs of a particular kind.
+      One very useful and common approach to studying graph theory is to restrict your focus to graphs of a particular kind.
       For example,
       you could try to really understand just complete graphs or just bipartite graphs,
       instead of trying to understand all graphs in general.
       That is what we are going to do now,
       looking at <em>trees</em>.
-      Hopefully by the end of this section we will not only have a better understanding of this class of graph,
-      but also understand why it is important enough to warrant its own section.
+      Hopefully by the end of this section we will have a better understanding of this class of graph,
+      and also understand why it is important enough to warrant its own section.
     </p>
 
     <assemblage>
@@ -110,8 +110,8 @@
 
     <p>
       You might also have seen something called a
-      <em>decision tree</em> before
-      (for example when deciding whether a series converges or diverges).
+      <em>decision tree</em>
+      (such as the algorithm for deciding whether a series converges or diverges).
       Sometimes these too contain cycles,
       as the decision for one node might lead you back to a previous step.
     </p>
@@ -136,7 +136,7 @@
     </p>
 
     <p>
-      A tree is an connected graph with no cycles.
+      A tree is a connected graph with no cycles.
       Is there anything else we can say?
       It would be nice to have other equivalent conditions for a graph to be a tree.
       That is, we would like to know whether there are any graph theoretic properties that all trees have,
@@ -186,7 +186,7 @@
     </proposition>
     
     <p>
-      Read the proof above very carefully.  Notice that both directions had two parts: the existence of paths, and the uniqueness of paths (which related to the fact there were no cycles).  In this case, these two parts were really separate.  In fact, if we just considered graphs with no cycles (a forest), then we could still do the parts of the proof that explore the uniqueness of paths between vertices, even if there might not <em>exist</em> paths between vertices.
+      Read the proof above very carefully.  Notice that both directions had two parts: the existence of paths, and the uniqueness of paths (which related to the fact that there were no cycles).  In this case, these two parts were really separate.  In fact, if we just considered graphs with no cycles (a forest), then we could still do the parts of the proof that explore the uniqueness of paths between vertices, even if there might not <em>exist</em> paths between vertices.
     </p>
     
     <p>
@@ -202,7 +202,7 @@
     </corollary>
     
     <p>
-      We do not give a proof of the corollary (it is, after all, supposed to follow directly from the proposition) but for practice, you are asked to give a careful proof in the exercises.  When you do so, try to give a proof using proof by contrapositive instead of proof by contradiction.
+      We do not give a proof of the corollary (it is, after all, supposed to follow directly from the proposition) but for practice, you are asked to give a careful proof in the exercises.  When you do so, try to use proof by contrapositive instead of proof by contradiction.
     </p>
     
     <p>
@@ -239,7 +239,7 @@
     </p>
     
     <p>
-      To illustrate how induction is used on trees, we will consider the relationship between the number of vertices and number of edges in trees.  Is there a tree with exactly 7 vertices and 7 edges?  Try to draw one?  Could a tree with 7 vertices have only 5 edges?  There is a good reason that these seem impossible to draw.
+      To illustrate how induction is used on trees, we will consider the relationship between the number of vertices and number of edges in trees.  Is there a tree with exactly 7 vertices and 7 edges?  Try to draw one.  Could a tree with 7 vertices have only 5 edges?  There is a good reason that these seem impossible to draw.
     </p>
     
     <proposition xml:id="prop-tree-edge-vertex">
@@ -290,12 +290,12 @@
       Under each chapter, draw a vertex for each section,
       connecting it to the chapter it belongs to.
       The graph will not have any cycles; it will be a tree.
-      But a tree with clear hierarchy which is not present if we don't identify the book itself as the <q>top</q>.
+      But a tree with clear hierarchy which is not present if we don't identify the book vertex as the <q>top</q>.
     </p>
     
     <p>
       <idx><h>root</h></idx>
-      As soon as one vertex of a tree is designated as the <term>root</term>, then every other vertex on the tree can be characterized by its position relative to the root.  This works because between any two vertices in a tree, there is a unique path.  So from any vertex, we can travel back to the root in exactly one way.  This also allows us to describe how distinct vertices in a rooted tree are related.
+      As soon as one vertex of a tree is designated as the <term>root</term>, then every other vertex on the tree can be characterized by its position relative to the root.  This works because there is a unique path between any two vertices in a tree.  So from any vertex, we can travel back to the root in exactly one way.  This also allows us to describe how distinct vertices in a rooted tree are related.
     </p>
     
     <p>
@@ -357,7 +357,7 @@
     
     
     <p>
-      All of this flowery language helps us describe how to <em>navigate</em> through a tree.  Traversing a tree, visiting each vertex in some order, is a key step in many algorithms.  Even if we the tree we are considering is not rooted, we can always form a rooted tree by picking any vertex as the root.  Here is an example.
+      All of this flowery language helps us describe how to <em>navigate</em> through a tree.  Traversing a tree, visiting each vertex in some order, is a key step in many algorithms.  Even if the tree is not rooted, we can always form a rooted tree by picking any vertex as the root.  Here is an example of why doing so can be helpful.
     </p>
     
     <example>
@@ -417,7 +417,7 @@
     </assemblage>
     
     <p>
-      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with the graph connected graph <m>G</m>.  If there is no cycle, then the <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
+      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with a connected graph <m>G</m>.  If there is no cycle, then <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
     </p>
     
     <p>

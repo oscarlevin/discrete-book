@@ -52,8 +52,8 @@
 <!-- Non-empty string makes it happen    -->
 <!-- Scale works well for "CONFIDENTIAL" -->
 <!-- or  for "DRAFT YYYY/MM/DD"          -->
-<xsl:param name="latex.watermark" select="''"/>
-<xsl:param name="latex.watermark.scale" select="2.0"/>
+<xsl:param name="watermark.text" select="''"/>
+<xsl:param name="watermark.scale" select="2.0"/>
 <!--  -->
 <!-- Author's Tools                                            -->
 <!-- Set the author-tools parameter to 'yes'                   -->
@@ -260,7 +260,7 @@
     <xsl:apply-templates select="." mode="title-full" />
     <xsl:text>}</xsl:text>
     <xsl:text>{</xsl:text>
-    <xsl:apply-templates select="." mode="internal-id" />
+    <xsl:apply-templates select="." mode="latex-id" />
     <xsl:text>}</xsl:text>
     <xsl:text>%&#xa;</xsl:text>
     <xsl:apply-templates/>
@@ -401,7 +401,7 @@
         <xsl:text>}</xsl:text>
         <!-- label of the exercise, to link back to it -->
         <xsl:text>{</xsl:text>
-        <xsl:apply-templates select="." mode="internal-id"/>
+        <xsl:apply-templates select="." mode="latex-id"/>
         <xsl:text>}</xsl:text>
         <!-- no workspace fraction in a solution -->
         <xsl:text>%&#xa;</xsl:text>
@@ -509,14 +509,14 @@
             <!-- suffix to the label.                                -->
         <xsl:when test="$purpose = 'mainmatter'">
             <xsl:text>\hypertarget{</xsl:text>
-            <xsl:apply-templates select="." mode="internal-id-duplicate">
+            <xsl:apply-templates select="." mode="latex-id-duplicate">
                 <xsl:with-param name="suffix" select="'main'"/>
             </xsl:apply-templates>
             <xsl:text>}</xsl:text>
         </xsl:when>
         <xsl:when test="$purpose = 'backmatter'">
             <xsl:text>\hypertarget{</xsl:text>
-            <xsl:apply-templates select="." mode="internal-id-duplicate">
+            <xsl:apply-templates select="." mode="latex-id-duplicate">
                 <xsl:with-param name="suffix" select="'back'"/>
             </xsl:apply-templates>
             <xsl:text>}</xsl:text>
@@ -579,7 +579,7 @@
     <xsl:choose>
         <xsl:when test="hint">
           <xsl:text>\hyperlink{</xsl:text>
-          <xsl:apply-templates select="hint[1]" mode="internal-id-duplicate">
+          <xsl:apply-templates select="hint[1]" mode="latex-id-duplicate">
               <xsl:with-param name="suffix" select="'back'"/>
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
@@ -588,7 +588,7 @@
         </xsl:when>
         <xsl:when test="webwork-reps/static/hint">
           <xsl:text>\hyperlink{</xsl:text>
-          <xsl:apply-templates select="webwork-reps/static/hint[1]" mode="internal-id-duplicate">
+          <xsl:apply-templates select="webwork-reps/static/hint[1]" mode="latex-id-duplicate">
               <xsl:with-param name="suffix" select="'back'"/>
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
@@ -597,7 +597,7 @@
         </xsl:when>
         <xsl:when test="solution">
           <xsl:text>\hyperlink{</xsl:text>
-          <xsl:apply-templates select="solution[1]" mode="internal-id-duplicate">
+          <xsl:apply-templates select="solution[1]" mode="latex-id-duplicate">
               <xsl:with-param name="suffix" select="'back'"/>
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
@@ -606,7 +606,7 @@
         </xsl:when>
         <xsl:when test="webwork-reps/static/solution">
           <xsl:text>\hyperlink{</xsl:text>
-          <xsl:apply-templates select="webwork-reps/static/solution[1]" mode="internal-id-duplicate">
+          <xsl:apply-templates select="webwork-reps/static/solution[1]" mode="latex-id-duplicate">
               <xsl:with-param name="suffix" select="'back'"/>
           </xsl:apply-templates>
           <xsl:text>}{</xsl:text>
@@ -629,7 +629,7 @@
     </xsl:if>
     <xsl:text>}</xsl:text>
     <xsl:text>{</xsl:text>
-    <xsl:apply-templates select="." mode="internal-id"/>
+    <xsl:apply-templates select="." mode="latex-id"/>
     <xsl:text>}</xsl:text>
     <xsl:text>%&#xa;</xsl:text>
     <!-- Allow a webwork or myopenmath exercise to introduce/connect    -->
@@ -735,7 +735,7 @@
                             <xsl:when test="count(.|$solutions-mainmatter) = count($solutions-mainmatter)">
                                 <xsl:text>\hfill{\tiny</xsl:text>
                                 <xsl:text>\hyperlink{</xsl:text>
-                                <xsl:apply-templates select="." mode="internal-id-duplicate">
+                                <xsl:apply-templates select="." mode="latex-id-duplicate">
                                     <xsl:with-param name="suffix" select="'main'"/>
                                 </xsl:apply-templates>
                                 <xsl:text>}{[</xsl:text>
@@ -745,7 +745,7 @@
                             <xsl:when test="count(.|$solutions-backmatter) = count($solutions-backmatter)">
                                 <xsl:text>\hfill{\tiny</xsl:text>
                                 <xsl:text>\hyperlink{</xsl:text>
-                                <xsl:apply-templates select="." mode="internal-id-duplicate">
+                                <xsl:apply-templates select="." mode="latex-id-duplicate">
                                     <xsl:with-param name="suffix" select="'back'"/>
                                 </xsl:apply-templates>
                                 <xsl:text>}{[</xsl:text>

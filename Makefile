@@ -197,7 +197,7 @@ latex:
 	install -d $(PDFOUT)
 	cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
+	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED) > dmoi.tex;
 
 latex-fresh: ww-fresh latex
 	
