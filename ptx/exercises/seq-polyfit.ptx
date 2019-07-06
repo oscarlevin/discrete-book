@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<exercises permid="Trf" xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_seq-polyfit">
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" permid="Trf" xml:id="exercises_seq-polyfit">
 <!-- Other exercises ideas: -->
 <!-- Find the a_0 term given a_1 and knowledge about the degree of the polynomial -->
 <!-- Find the next term assuming the pattern holds -->
@@ -7,7 +7,7 @@
     <webwork>
         <setup>
           <pg-code>
-            Context()->variables->are(n => "Real");
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans = Formula("n^2 + n");
           </pg-code>
         </setup>
@@ -42,7 +42,7 @@
     <webwork>
         <setup>
           <pg-code>
-            Context()->variables->are(n => "Real");
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans = Formula("(1/6)*(n^3 + 5n + 6)");
           </pg-code>
         </setup>
@@ -59,10 +59,7 @@
         </statement>
         <solution permid="KsS">
           <p permid="yOu">
-            Notice that the third differences are constant,
-            so <m>a_n = an^3 + bn^2 + cn + d</m>.
-            Use the terms of the sequence to solve for <m>a, b, c</m>,
-            and <m>d</m> to get <m>a_n = \frac{1}{6} (n^3 + 5n + 6)</m>.
+            <m>a_n = \frac{1}{6} (n^3 + 5n + 6)</m>.
           </p>
         </solution>
     </webwork>
@@ -72,7 +69,7 @@
     <webwork>
         <setup>
           <pg-code>
-            Context()->variables->are(n => "Real");
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans = Formula("(1/6)*(12+11*n+6*n^2+n^3)");
           </pg-code>
         </setup>
@@ -89,10 +86,7 @@
         </statement>
         <solution permid="qAb">
           <p permid="eVD">
-            Notice that the third differences are constant,
-            so <m>a_n = an^3 + bn^2 + cn + d</m>.
-            Use the terms of the sequence to solve for <m>a, b, c</m>,
-            and <m>d</m> to get <m>a_n = \frac{1}{6} (n^3 + 6n^2 + 11n + 12)</m>.
+            <m>a_n = \frac{1}{6} (n^3 + 6n^2 + 11n + 12)</m>.
           </p>
         </solution>
     </webwork>
@@ -102,7 +96,7 @@
     <webwork>
         <setup>
           <pg-code>
-            Context()->variables->are(n => "Real");
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans = Formula("(1/6)*(n^3 + 6n^2 + 11n + 18)");
           </pg-code>
         </setup>
@@ -119,11 +113,7 @@
         </statement>
         <solution permid="WHk">
           <p permid="LcM">
-            Notice that the third differences are constant,
-            so <m>a_n = an^3 + bn^2 + cn + d</m>.
-            Use the terms of the sequence to solve for <m>a, b, c</m>,
-            and <m>d</m> to get <m>a_n = \frac{1}{6} (n^3 + 6n^2 + 11n + 18)</m>.
-            Compare this to what you got on <xref ref="ex-cubic-seq"/>
+            <m>a_n = \frac{1}{6} (n^3 + 6n^2 + 11n + 18)</m>.
           </p>
         </solution>
     </webwork>
@@ -132,7 +122,7 @@
   <exercise permid="AZg">
     <statement>
       <p permid="gKQ">
-        Make up a sequences that have
+        Make up sequences that have
 
         <ol permid="nFv">
           <li permid="gaW">3, 3, 3, 3, <ellipsis/> as its second differences.</li>
@@ -159,23 +149,12 @@
         (do not use polynomial fitting).
       </p>
     </statement>
-    <solution permid="COt">
-      <p permid="rjV">
-        The first differences are <m>2, 4, 6, 8, \ldots</m>,
-        and the second differences are <m>2, 2, 2, \ldots</m>.
-        Thus the original sequence is <m>\Delta^2</m>-constant,
-        so can be fit to a quadratic.
-      </p>
-
-      <p permid="Xre">
-        Call the original sequence <m>a_n</m>.
-        Consider <m>a_n - n^2</m>.
-        This gives <m>0, -1, -2, -3, \ldots</m>. <em>That</em>
-        sequence has closed formula <m>1-n</m>
-        (starting at <m>n = 1</m>)
-        so we have <m>a_n - n^2 = 1-n</m> or equivalently <m>a_n = n^2 - n + 1</m>.
+    <solution>
+      <p>
+        <m>a_n = n^2 - n + 1</m>.
       </p>
     </solution>
+    
   </exercise>
 
   <exercise permid="Nny">
@@ -184,15 +163,12 @@
         Use a similar technique as in the previous exercise to find a closed formula for the sequence <m>2, 11, 34, 77, 146, 247,\ldots</m>.
       </p>
     </statement>
-    <solution permid="iVC">
-      <p permid="Dyn">
-        This is a <m>\Delta^3</m>-constant sequence.
-        If we subtract off <m>n^3</m>,
-        we are left with <m>1, 3, 7, 13, 21, \ldots</m>,
-        the sequence from the previous question.
-        Thus here the closed formula is <m>n^3 + n^2 - n + 1</m>.
+    <solution>
+      <p>
+        <m>a_n = n^3 + n^2 - n + 1</m>
       </p>
     </solution>
+    
   </exercise>
 
   <exercise permid="tuH" xml:id="ex-quad-diff">
@@ -201,8 +177,8 @@
         <setup>
           <pg-code>
             Context("LimitedPolynomial");
-            Context()->flags->set(singlePowers=>1);
-            Context()->variables->are(n => "Real");
+            Context()-&gt;flags-&gt;set(singlePowers=&gt;1);
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans = Formula("2n+2");
           </pg-code>
         </setup>
@@ -291,7 +267,7 @@
         tetrahedrons), like those pictured here:
       </p>
 
-      <sidebyside permid="wpn" widths="8% 18% 26%" valign="bottom" margins="auto">
+      <sidebyside permid="wpn" widths="8% 18% 26%" valigns="bottom bottom bottom" margins="auto">
 
         <image permid="aVE">
 
@@ -375,43 +351,6 @@
     </statement>
   </exercise>
 
-  <exercise permid="yeA">
-    <statement>
-      <p permid="qeC">
-        Consider the sequences <m>2, 5, 12, 29, 70, 169, 408,\ldots</m>
-        (with <m>a_0 = 2</m>).
 
-        <ol permid="zTN">
-          <li permid="wZh">
-            <p permid="ueB">
-              Describe the rate of growth of this sequence.
-            </p>
-          </li>
-
-          <li permid="dgq">
-            <p permid="alK">
-              Find a recursive definition for the sequence.
-            </p>
-          </li>
-
-          <li permid="Jnz">
-            <p permid="GsT">
-              Find a closed formula for the sequence.
-            </p>
-          </li>
-
-          <li permid="puI">
-            <p permid="mAc">
-              If you look at the sequence of differences between terms,
-              and then the sequence of second differences,
-              the sequence of third differences, and so on,
-              will you ever get a constant sequence?
-              Explain how you know.
-            </p>
-          </li>
-        </ol>
-      </p>
-    </statement>
-  </exercise>
 
 </exercises>

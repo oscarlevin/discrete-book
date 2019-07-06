@@ -59,7 +59,7 @@
 include Makefile.paths
 
 # This is to ensure that latex is not skipped
-.PHONY: latex
+.PHONY: latex html
 
 
 # These paths are subdirectories of
@@ -95,7 +95,7 @@ LOCALBUILD = $(SCRATCH)/localbuild
 # Either specify only the protocol and domain (like https://webwork.yourschool.edu)
 # or specify a 5-tuple with quotes exactly as in this example
 # SERVER = "(https://webwork-ptx.aimath.org,courseID,userID,password,course_password)"
-SERVER = https://webwork-ptx.aimath.org
+SERVER = https://webwork-dev.aimath.org
 
 # Following regularly presumes  xml:id="dmoi" on
 # the <book> element, so xsltproc creates  dmoi.tex
@@ -114,10 +114,11 @@ SERVER = https://webwork-ptx.aimath.org
 #   NB: targets below copy versions out of repo and clobber these
 diagrams:
 	install -d $(HTMLOUT)/images
-	-rm $(HTMLOUT)/images/*
+	-rm $(HTMLOUT)/images/*.svg
 	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
-	$(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
-	$(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
+	# $(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
+	# $(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
+	
 
 # WeBWorK extraction
 #   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
@@ -126,6 +127,8 @@ ww-extraction:
 	install -d $(LOCALBUILD)
 	-rm $(LOCALBUILD)/webwork-extraction.xml
 	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
+	sed -i 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
+
 		
 # 	Then we merge this with the main source 
 
@@ -149,7 +152,7 @@ html:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
-	# cp -a images $(HTMLOUT)
+	cp -a images $(HTMLOUT)
 	cd $(HTMLOUT); \
 	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
 
@@ -190,9 +193,9 @@ viewhtml:
 latex:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
-	# cp -a images $(PDFOUT)
+	cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED);
+	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED) > dmoi.tex;
 
 latex-fresh: ww-fresh latex
 	
@@ -308,8 +311,8 @@ cleansols:
 	# for f in ptx/*.ptx; do \
 	# 	xsltproc -o ptx-clean/$${f##*/} xsl/clean-solutions.xsl $$f; \
 	# done
-	$(foreach var,$(wildcard ptx/*.ptx), \
-		xsltproc -o ptx-clean/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
+	# $(foreach var,$(wildcard ptx/*.ptx), \
+	# 	xsltproc -o ptx-clean/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
 	$(foreach var,$(wildcard ptx/exercises/*.ptx), \
 		xsltproc -o ptx-clean/exercises/$(notdir $(var)) xsl/clean-solutions.xsl $(var);)
 	# xsltproc -o $(SCRATCH)/ptx-clean/ xsl/clean-solutions.xsl $(widcard $(DMOI)/ptx/*.ptx)
@@ -332,9 +335,16 @@ cleansols:
 #   Automatically invokes the "less" pager, could configure as $(PAGER)
 check:
 	install -d $(SCRATCH)
-	-rm $(SCRATCH)/dtderrors.*
-	-xmllint --xinclude --noout --dtdvalid $(MBDTD)/mathbook.dtd $(SRC)/dmoi.ptx 2> $(SCRATCH)/dtderrors.txt
-	less $(SCRATCH)/dtderrors.txt
+	-rm $(SCRATCH)/jing-errors.txt
+	jing $(PTXRELAXNG)/pretext.rng $(MAIN) > jing-errors.txt
+	
+check-clean:
+	sed -i '/attribute "permid"/d' ./jing-errors.txt
+	# sed -i '/attribute "category"/d' ./jing-errors.txt
+	sed -i '/attribute "oldpermid"/d' ./jing-errors.txt
+	sed -i '/element "instruction"/d' ./jing-errors.txt
+	sed -i '/element "var"/d' ./jing-errors.txt
+	sed -i '/./G' ./jing-errors.txt
 
 viewcheck:
 	less $(SCRATCH)/dtderrors.txt

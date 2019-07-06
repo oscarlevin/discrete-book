@@ -23,6 +23,6 @@
 </xsl:template>
 
 <!-- override copy of solutions with category instructor -->
-<xsl:template match="solution[@category='instructor']"/>
+<xsl:template match="solution[@c='i']"/>
 
 </xsl:stylesheet>

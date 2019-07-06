@@ -1,0 +1,104 @@
+\documentclass[10pt]{article}
+
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{mdframed}
+\usepackage[papersize={6in,9in}, hmargin={.75in, .75in}, top=.25in]{geometry}
+
+\definecolor{bg}{HTML}{265773}
+\pagecolor{bg}
+
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext}
+\usepackage[vvarbb,cmintegrals,cmbraces,bigdelims]{newpxmath}
+\usepackage[scr=rsfso]{mathalfa}% \mathscr is fancier than \mathcal
+\linespread{1.04}         % adds more leading (space between lines)
+% quantifiers look strange, so change those back to normal:
+	\DeclareSymbolFont{mysymbols}{OMS}{cmsy}{b}{n} %note we make the figures bold to better match newpx.  Replace the ``b'' with an ``m'' to undo this.
+	%\SetSymbolFont{mysymbols}  {bold}{OMS}{cmsy}{b}{n}
+	%\DeclareSymbolFont{myoperators}   {OT1}{cmr} {m}{n}
+	%\SetSymbolFont{myoperators}{bold}{OT1}{cmr} {bx}{n}
+	\DeclareMathSymbol{\forall}{\mathord}{mysymbols}{"38}
+	\DeclareMathSymbol{\exists}{\mathord}{mysymbols}{"39}
+	%\DeclareMathSymbol{\pm}{\mathbin}{mysymbols}{"06}
+	%\DeclareMathSymbol{+}{\mathbin}{myoperators}{"2B}
+	%\DeclareMathSymbol{-}{\mathbin}{mysymbols}{"00}
+	%\DeclareMathSymbol{=}{\mathrel}{myoperators}{"3D}
+
+
+\begin{document}
+
+\pagestyle{empty}
+~
+\begin{center}
+\begin{tikzpicture}[yshift=-.75in, scale=.9, remember picture, overlay, color=bg!90]
+\def\r{.55}
+\newcommand{\hexbox}[3]{
+  \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+  \def\y{-\r*#1-sin{30}*\r*#1}
+  \draw (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+  \draw (\x,\y) node{#3};
+}
+
+
+% Pascal's triangle
+%put row of 1's down left side:
+  \foreach \row in {0,...,16} {
+    \hexbox{\row}{0}{\large 1}
+  }
+%fill in the rest of the triangle:
+  \foreach \row in {1,...,16} {
+    \pgfmathsetmacro{\entry}{1};
+    \foreach \col in {1,...,\row} {
+      % iterative formula : val = precval * (row-col+1)/col
+      % (+ 0.5 to bypass rounding errors)
+      \pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
+      \global\let\entry=\entry
+      \ifnum \entry<100
+	\hexbox{\row}{\col}{\large \entry}
+      \else \ifnum \entry<1000
+	\hexbox{\row}{\col}{\entry}
+      \else \ifnum \entry<10000
+	\hexbox{\row}{\col}{\footnotesize \entry}
+	\else
+	\hexbox{\row}{\col}{\scriptsize \entry}
+	\fi
+      \fi
+      \fi
+    }
+  }
+  % \foreach \row in{17,...,20} {
+  % \foreach \col in {1,...,\row} {
+  % \hexbox{\row}{\col}{}
+  % }
+  % }
+\end{tikzpicture}
+\end{center}
+\hspace{-3em}{\color{bg!65} Mathematics}
+
+
+\vskip 1.5in
+\noindent This gentle introduction to discrete mathematics is written for first and second year math majors, especially those who intend to teach.  The text began as a set of lecture notes for the discrete mathematics course at the University of Northern Colorado.  This course serves both as an introduction to topics in discrete math and as the ``introduction to proof'' course for math majors.  The course is usually taught with a large amount of student inquiry, and this text is written to help facilitate this.
+
+\vskip 2em
+
+\noindent Four main topics are covered: counting, sequences, logic, and graph theory.  Along the way proofs are introduced, including proofs by contradiction, proofs by induction, and combinatorial proofs.
+
+\vskip 2em
+
+\noindent While there are many fine discrete math textbooks available, this text has the following advantages:
+\begin{itemize}
+\item[--] It is written to be used in an inquiry rich course.
+\item[--] It is written to be used in a course for future math teachers.
+\item[--] It is open source, with low cost print editions and free electronic editions.
+\end{itemize}
+
+\vskip 5em
+\begin{center}To download the current version, or for information on obtaining the MathBook XML source, visit: \\\url{http://discretetext.oscarlevin.com/}.
+\end{center}
+
+
+\clearpage
+
+\end{document}

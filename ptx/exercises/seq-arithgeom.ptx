@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<exercises permid="QYP" xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_seq-arithgeom">
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" permid="QYP" xml:id="exercises_seq-arithgeom">
 <!-- Some more problem ideas: -->
 <!-- Classify each of the following as arithmetic, geometric, or neither -->
 <!-- Find the closed formulas for arithmetic/geometric sequences -->
@@ -84,7 +84,7 @@
     <webwork>
         <setup>
           <pg-code>
-            Context()->variables->are(n => "Real");
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans1 = 32;
             $ans2 = Formula("8+6n");
             $ans3 = 30500;
@@ -202,7 +202,7 @@
     <webwork>
         <setup>
           <pg-code>
-            Context()->variables->are(n => "Real");
+            Context()-&gt;variables-&gt;are(n =&gt; "Real");
             $ans1 = Formula("n+2");
             $ans2 = Formula("6n+1");
             $ans3 = Formula("((6*n+8)*(n+2))/2");
@@ -276,23 +276,19 @@
     <webwork>
         <statement>
           <p permid="rMl">
-            Find <m>5 + 7 + 9 + 11+ \cdots + 521</m> using a technique from this section.
+            Find <m>5 + 7 + 9 + 11+ \cdots + 521</m> using a technique from this section. 
           </p>
 
           <p permid="XTu">
             <var name="68117" width="10"/>
           </p>
         </statement>
-        <solution permid="LMg">
-          <p permid="pWY">
+        <solution>
+          <p>
             <m>68117</m>.
-            If we take <m>a_0 = 5</m>,
-            the terms of the sum are an arithmetic sequence with closed formula <m>a_n = 5+2n</m>.
-            Then <m>521 = a_{258}</m>, for a total of 259 terms in the sum.
-            Reverse and add to get 259 identical 526 terms,
-            which is twice the total we seek. <m>526\cdot 259 = 68117</m>
           </p>
         </solution>
+        
     </webwork>
   </exercise>
 
@@ -309,7 +305,7 @@
         </statement>
         <solution permid="rTp">
           <p permid="Weh">
-            <m>\frac{5-5\cdot 3^{21}}{-2}</m>.
+            <m>\frac{5\cdot 3^{21}-5}{2}</m>.
             Let the sum be <m>S</m>, and compute <m>S - 3S = -2S</m>,
             which causes terms except <m>5</m> and <m>-5\cdot 3^{21}</m> to cancel.
             Then solve for <m>S</m>.
@@ -359,17 +355,13 @@
             (Warning: <m>x</m> and <m>y</m> might not be integers.)
           </p>
         </statement>
-        <solution permid="EhH">
-          <p permid="isz">
+        <solution>
+          <p>
             For arithmetic: <m>x = 55/3</m>, <m>y = 29/3</m>.
             For geometric: <m>x = 9</m> and <m>y = 3</m>.
-            For the arithmetic sequence,
-            we know <m>27 + d = x</m>,
-            <m>x + d = y</m>, and <m>y + d = 1</m>.
-            In other words, <m>27 + 3d = 1</m> so <m>d = -26/3</m>.
-            Similarly we can find the common ratio for the geometric sequence by solving <m>27\cdot r^3 = 1</m> for <m>r</m>.
           </p>
         </solution>
+        
     </webwork>
   </exercise>
 
@@ -397,8 +389,7 @@
         <solution>
           <p>
             For arithmetic: <m>x = 14</m>, <m>y = 23</m>.
-            For geometric: <m>x = 9</m> and <m>y = 3</m>.
-            Similarly we can find the common ratio for the geometric sequence by solving <m>27\cdot r^3 = 1</m> for <m>r</m>.
+            For geometric: <m>x = 5*(32/5)^(1/3)</m> and <m>y = 5*(32/5)^(2/3)</m>.
           </p>
         </solution>
     </webwork>
@@ -524,7 +515,7 @@
         the size 2 grid requires 9 toothpicks.
       </p>
 
-      <sidebyside permid="gKq" widths="16% 28%" valign="bottom" margins="auto">
+      <sidebyside permid="gKq" widths="10% 20%" valign="bottom" margins="20% 10% 40%">
 
         <image permid="ghN">
 
@@ -673,95 +664,27 @@
         </ol>
       </p>
     </statement>
-    <solution category="instructor">
+    
+  </exercise>
+  
+  <exercise>
+    <statement>
       <p>
+        Here is a surprising use of sequences to answer a counting question:  How many license plates consist of 6 symbols, using only the three numerals 1, 2, and 3 and the four letters a, b, c, and d, so that no numeral appears after any letter?  For example, <q>31ddac</q> and <q>12321</q> are acceptable license plates, but <q>13ba2c</q> is not.
         <ol>
           <li>
             <p>
-              The sequence is <m>1, 5, 13, 25, 41, 61, \ldots</m>.
-              This is not arithmetic
-              (since <m>5-1 = 4</m> but <m>13-5 = 8</m> ).
-              It is also not geometric
-              (since <m>5/1 = 5</m> but <m>13/5 = 2.6</m> ).
-              To recognize whether the sequence is a sequence of partial sums,
-              we look at the differences.
-              The sequence of differences is <m>4, 8, 12, 16, 20, \ldots</m>.
-              This {\em is} an arithmetic sequence.
-              So we see that
-              <me>
-                a_1 = 1
-              </me>
-              <me>
-                a_2 = 1+4
-              </me>
-              <me>
-                a_3 = 1+4+8
-              </me>
-              <me>
-                a_4 = 1+4+8+12
-              </me>
-              <me>
-                a_n = 1 + \sum_{k = 1}^n 4(k-1)
-              </me>
+              First answer this question by considering different cases: how many of the license plates contain no numerals?  How many contain one numeral, etc.
             </p>
           </li>
-
           <li>
             <p>
-              We have <m>a_n = 1 + 4 + 8 + \cdots + 4(n-1)</m>.
-              If we reverse these and add corresponding terms
-              (not including the 1)
-              we get
-              <me>
-                2a_n = 2 + (4n) + (4n) + (4n) + \cdots + (4n)
-              </me>
-              On the right hand side of the equation we have the sum of <m>n-1</m> copies of <m>(4n)</m> so we get
-              <me>
-                2a_n = 2 + (n-1)(4n)
-              </me>
-              or
-              <me>
-                a_n = 2n^2 - 2n + 1
-              </me>
-            </p>
-          </li>
-
-          <li>
-            <p>
-              Look along the diagonals.
-              The <m>n</m> th figure will have <m>n</m> diagonals of <m>n</m> squares,
-              and <m>n-1</m> diagonals of <m>n-1</m> squares.
-              Thus all together, the number of squares is <m>n^2 + (n-1)^2</m>.
-            </p>
-
-            <p>
-              Alternatively,
-              if you count the number of squares in each row starting at the top,
-              you will have <m>1, 3, 5, \ldots, 2n-3, 2n-1, 2n-3, \ldots, 3, 1</m>.
-              So we can think of the total number of squares as being the sum of the first <m>n</m> odd numbers
-              (counting up)
-              plus the sum of the first <m>n-1</m> odd numbers
-              (counting down).
-              But the sum of the first <m>n</m> odd numbers is <m>n^2</m>,
-              so again we find the total number of squares to be <m>n^2 + (n-1)^2</m>.
-            </p>
-
-            <p>
-              Another: Enclose the figure in a larger square with dimensions <m>2n-1 \times 2n-1</m>.
-              Then look at what part of that square you don't want.
-              You have 4 triangles you must remove.
-              The <m>n</m> th figure requires removing a triangle with base <m>n-1</m> on each corner,
-              so we must remove <m>4T_{n-1}</m>,
-              where <m>T_n = \frac{n(n+1)}{2}</m> is the <m>n</m> th triangular number.
-              Thus the total number of squares in the figure is
-              <me>
-                (2n-1)^2 - 4\frac{(n-1)n}{2}
-              </me>.
+              Now use the techniques of this section to show why the answer is <m>4^7 - 3^7</m>.
             </p>
           </li>
         </ol>
       </p>
-    </solution>
+    </statement>
   </exercise>
 
 </exercises>
