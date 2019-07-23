@@ -12,30 +12,42 @@ Page numbers match print and tablet pdf edition.
 ## Errors not yet corrected
 
 ### Major errors
-
 * Exercise 1.5.3-c (page 108): The question should be "How many 6-letter words can you make using the 5 vowels *in alphabetical order*"
 
-* Isomorphic Graphs definition (page 236): for $f$ to be a bijection, we need $\{a,b\}$ to be an edge *if and only if* \{f(a), f(b)\}$ is an edge.  
+Exercise 2.1.1-a solution (page 357): subtracting 1 gives the familiar *square* numbers.
 
-* Lemma 4.1.5 (page 240): The equation following this lemma is incorrect.  It should be $\sum_{v\in V} d(v) = 2e$.
+Example 2.4.6 (page 173): The final answer should have $5^n$, not $3^n$ in the formula (which makes it consistent with what is said above).
 
 ### Minor typos and clarifications
 
+
+
+## Errors Corrected for 3rd Printing: 6/15/19
+
+In case you have a copy of the book printed prior to 6/15/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+
+
+
 * Exercise 1.7.2 (page 129): some of these could be made clearer.  For (i), the apples are identical.  For (j), assume each kid is allowed to choose one of the 4 varieties.  For (l) the numbers are distinct.  For (s), the teams are labeled (or have names).  For (t), we are looking for *integer* solutions.
 
-* Exercise 2.1.17-c (page 146): the $p$ in $n = l+p$ should be a $k$, to make this consistent with the statement of the problem.  (Solution manual also needs to be fixed.)
+* Exercise 2.1.17-c (page 146): the $p$ in $n = l+p$ should be a $k$, to make this consistent with the statement of the problem.  
+
+* Isomorphic Graphs definition (page 236): for $f$ to be a bijection, we need $\{a,b\}$ to be an edge *if and only if* \{f(a), f(b)\}$ is an edge.  
 
 * Page 238, second paragraph: "subgroup" should be "subgraph".
 
-* Exercise 4.1.11 (page 245): The numbers need to be positive integers here (and really should be larger than 1 to make the binomial coefficients make sense).
+* Lemma 4.1.5 (page 240): The equation following this lemma is incorrect.  It should be $\sum_{v\in V} d(v) = 2e$.
 
 * Exercise 4.1.15 (page 246): The graphs must have at least two vertices for this to make sense.
 
 * Page 269, Investigate!: To be a graph, it must be that E conflicts with C, and F conflicts with C and D, in addition to those listed.
 
+
+
+
 ## Errors Corrected for 2nd Printing: 3/24/19
 
-In case you have a copy of the book printed prior to 3/24/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+Books printed prior to 3/24/19 (check copyright page) contain the following errors that have since been corrected. 
 
 * Example 0.4.1-3 (page 39): the table used $g(x)$ instead of $h(x)$.
 
