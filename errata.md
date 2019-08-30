@@ -12,14 +12,19 @@ Page numbers match print and tablet pdf edition.
 ## Errors not yet corrected
 
 ### Major errors
+* Exercise 0.3.1's solution (page 338) is wrong (although the WeBWorK problem works correctly).  The solutions are $\{1,3,4,6,9,10\}$, $\{1\}$, $\{4,9\}$, and $\{3,6,10\}$.
+
+* Exercise 0.3.2b is wrong.  The set should be $\{n \in \mathbb N : n^2 - 5 \in \mathbb N\}$.  As stated currently, the smallest element in the set is $\sqrt{5}$.
+
 * Exercise 1.5.3-c (page 108): The question should be "How many 6-letter words can you make using the 5 vowels *in alphabetical order*"
 
-Exercise 2.1.1-a solution (page 357): subtracting 1 gives the familiar *square* numbers.
+* Exercise 2.1.1-a solution (page 357): subtracting 1 gives the familiar *square* numbers.
 
-Example 2.4.6 (page 173): The final answer should have $5^n$, not $3^n$ in the formula (which makes it consistent with what is said above).
+* Example 2.4.6 (page 173): The final answer should have $5^n$, not $3^n$ in the formula (which makes it consistent with what is said above).
 
 ### Minor typos and clarifications
 
+* Exercises 0.4.14a.  The set should be $A = \{n \in X : 113 \le n \le 122\}$, and not mention the variable $x$.
 
 
 ## Errors Corrected for 3rd Printing: 6/15/19
