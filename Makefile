@@ -148,7 +148,7 @@ ww-fresh: ww-extraction ww-merge
 #   Copies in image files from source directory
 #   Move to server: generated *.html and
 #   entire directories - /images and /knowl
-html:
+html: ww-merge
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
@@ -156,7 +156,7 @@ html:
 	cd $(HTMLOUT); \
 	xsltproc --xinclude $(XSL)/custom-html.xsl $(MERGED);
 
-html-fresh: ww-fresh html
+html-fresh: diagrams ww-extraction html
 
 viewhtml:
 	$(HTMLVIEWER) $(HTMLOUT)/dmoi.html &
@@ -190,14 +190,14 @@ viewhtml:
 #     as sent to Orthogonal Publishing for modification
 #   Black on white, no live URLs, etc
 #   This is the "printable" downloadable Annual Edition
-latex:
+latex: ww-merge
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
 	cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
 	xsltproc --xinclude $(XSL)/custom-latex.xsl $(MERGED) > dmoi.tex;
 
-latex-fresh: ww-fresh latex
+latex-fresh: ww-extraction latex
 	
 pdf:
 	cd $(PDFOUT); \
