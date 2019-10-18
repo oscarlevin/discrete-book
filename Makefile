@@ -118,7 +118,6 @@ diagrams:
 	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
 	# $(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
 	# $(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
-	
 
 # WeBWorK extraction
 #   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
@@ -127,9 +126,9 @@ ww-extraction:
 	install -d $(LOCALBUILD)
 	-rm $(LOCALBUILD)/webwork-extraction.xml
 	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
-	sed -i 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
+	sed -i.bak 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
+	rm $(LOCALBUILD)/webwork-extraction.xml.bak
 
-		
 # 	Then we merge this with the main source 
 
 ww-merge:
