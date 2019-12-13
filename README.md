@@ -12,7 +12,7 @@ This text is written in [PreTeXt](http://mathbook.pugetsound.edu) (previously ca
 
 ### Preliminaries
 
-To compile from source, you will need a copy of the mathbook xsl stylesheets, as well as xsltproc, python, and make installed (should be easy on linux or MacOS, but also possible on Windows---see some [windows installation notes](http://mathbook.pugetsound.edu/doc/author-guide/html/windows-install-notes.html)).  
+To compile from source, you will need a copy of the mathbook xsl stylesheets, as well as xsltproc, python, LaTeX, and pdf2svg and make installed (should be easy on linux or MacOS, but also possible on Windows---see some [windows installation notes](http://mathbook.pugetsound.edu/doc/author-guide/html/windows-install-notes.html)).
 
 Earlier editions, that did not include WeBWorK problems were easy enough to compile using commands like `xsltproc --xinclude ../xsl/custom-latex.xsl ../ptx/dmoi.ptx`.  Now though, there are enough intermediate steps that I've written a make file that keeps everything together.  As long as you have all the tools installed, this should make things easy.
 
@@ -50,12 +50,12 @@ And then create the html:
 
 `make html`
 
-If you look in the makefile, you will see some shortcuts that combine some of these.  
+If you look in the makefile, you will see some shortcuts that combine some of these.
 
 
 ## Contributing
 
-Any and all suggestions to improve the text are welcome.  Thanks to those who have already pointed out typos/issues they have found.  If you would like to make a more substantial contribution, please contact me so we can discuss how best to proceed.  
+Any and all suggestions to improve the text are welcome.  Thanks to those who have already pointed out typos/issues they have found.  If you would like to make a more substantial contribution, please contact me so we can discuss how best to proceed.
 
 ## Previous editions
 
