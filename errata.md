@@ -12,6 +12,14 @@ Page numbers match print and tablet pdf edition.
 ## Errors not yet corrected
 
 ### Major errors
+
+### Minor typos and clarifications
+
+
+## Errors corrected for 4th printing: 12/20/19
+
+In case you have a copy of the book printed prior to 12/20/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+
 * Exercise 0.3.1's solution (page 338) is wrong (although the WeBWorK problem works correctly).  The solutions are $\{1,3,4,6,9,10\}$, $\{1\}$, $\{4,9\}$, and $\{3,6,10\}$.
 
 * Exercise 0.3.2b is wrong.  The set should be $\{n \in \mathbb N : n^2 - 5 \in \mathbb N\}$.  As stated currently, the smallest element in the set is $\sqrt{5}$.
@@ -22,15 +30,9 @@ Page numbers match print and tablet pdf edition.
 
 * Example 2.4.6 (page 173): The final answer should have $5^n$, not $3^n$ in the formula (which makes it consistent with what is said above).
 
-### Minor typos and clarifications
+## Errors corrected for 3rd printing: 6/15/19
 
-* Exercises 0.4.14a.  The set should be $A = \{n \in X : 113 \le n \le 122\}$, and not mention the variable $x$.
-
-
-## Errors Corrected for 3rd Printing: 6/15/19
-
-In case you have a copy of the book printed prior to 6/15/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
-
+Books printed prior to 6/15/19 (check copyright page) contain the following errors that have since been corrected.
 
 
 * Exercise 1.7.2 (page 129): some of these could be made clearer.  For (i), the apples are identical.  For (j), assume each kid is allowed to choose one of the 4 varieties.  For (l) the numbers are distinct.  For (s), the teams are labeled (or have names).  For (t), we are looking for *integer* solutions.
@@ -50,7 +52,7 @@ In case you have a copy of the book printed prior to 6/15/19 (check copyright pa
 
 
 
-## Errors Corrected for 2nd Printing: 3/24/19
+## Errors corrected for 2nd printing: 3/24/19
 
 Books printed prior to 3/24/19 (check copyright page) contain the following errors that have since been corrected. 
 
@@ -60,7 +62,4 @@ Books printed prior to 3/24/19 (check copyright page) contain the following erro
 
 * Example 2.1.4 solution (page 141): The sequence of triangular numbers was missing 10 between 6 and 15.
 
-* Page 149, second paragraph after Example 2.2.1: The recursive definition for a geometric sequence had a_n on both sides.  It should be $a_n = a_{n-1}\cdot r$
-
-
-
+* Page 149, second paragraph after Example 2.2.1: The recursive definition for a geometric sequence had a_n on both sides.  It should be $a_n = a_{n-1}\cdot r$.
