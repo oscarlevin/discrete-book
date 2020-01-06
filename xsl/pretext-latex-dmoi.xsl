@@ -21,7 +21,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- Conveniences for classes of similar elements -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
+    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
     %entities;
 ]>
 

@@ -10,7 +10,7 @@
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
+    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
     %entities;
 ]>
 
@@ -18,10 +18,10 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<!-- Assumes current file is in discrete-text/xsl and that the mathbook repository is adjacent -->
-<xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
-<!-- Assumes next file can be found in discrete-text/xsl -->
-<xsl:import href="custom-common.xsl" />
+<!-- Assumes current file is in mathbook/user -->
+<xsl:import href="../xsl/mathbook-html.xsl" />
+<!-- Assumes next file can be found in mathbook/user-->
+<xsl:import href="dmoi-common.xsl" />
 
 <!-- List Chapters and Sections in sidebar Table of Contents -->
 <xsl:param name="toc.level" select="''" />
