@@ -21,7 +21,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- Conveniences for classes of similar elements -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../entities.ent">
+    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
     %entities;
 ]>
 
@@ -31,7 +31,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 >
 
 <!-- Override specific tenplates of the standard conversion -->
-<xsl:import href="../mathbook-latex.xsl" />
+<!-- <xsl:import href="../mathbook-latex.xsl" /> -->
 
 <!-- Intend output for rendering by pdflatex -->
 <xsl:output method="text" />

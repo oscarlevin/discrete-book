@@ -9,16 +9,16 @@ If you use a pdf or paperback version, check the copyright page for the printing
 
 Page numbers match print and tablet pdf edition.
 
-## Errors not yet corrected
+<!-- ## Errors not yet corrected
 
 ### Major errors
 
-### Minor typos and clarifications
+### Minor typos and clarifications -->
 
 
-## Errors corrected for 4th printing: 12/20/19
+## Errors corrected for 4th printing: 12/29/19
 
-In case you have a copy of the book printed prior to 12/20/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+In case you have a copy of the book printed prior to 12/29/19 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
 
 * Exercise 0.3.1's solution (page 338) is wrong (although the WeBWorK problem works correctly).  The solutions are $\{1,3,4,6,9,10\}$, $\{1\}$, $\{4,9\}$, and $\{3,6,10\}$.
 
@@ -29,7 +29,7 @@ In case you have a copy of the book printed prior to 12/20/19 (check copyright p
 * Exercise 2.1.1-a solution (page 357): subtracting 1 gives the familiar *square* numbers.
 
 * Example 2.4.6 (page 173): The final answer should have $5^n$, not $3^n$ in the formula (which makes it consistent with what is said above).
-
+ 
 ## Errors corrected for 3rd printing: 6/15/19
 
 Books printed prior to 6/15/19 (check copyright page) contain the following errors that have since been corrected.
