@@ -9,9 +9,13 @@ If you use a pdf or paperback version, check the copyright page for the printing
 
 Page numbers match print and tablet pdf edition.
 
-<!-- ## Errors not yet corrected
+## Errors not yet corrected
 
-### Major errors
+The following errors have not yet been corrected in the print/pdf versions (but are likely fixed online).
+
+* Example 0.4.5: In the statement of part 3, and the solutions to parts 2 and 3, the functions are incorrectly called \(f\) instead of \(g\) or \(h\) to match the the statement.  Every function in part 2 should be \(g\) and every function in part 3 should be \(h\).
+
+<!-- ### Major errors
 
 ### Minor typos and clarifications -->
 
