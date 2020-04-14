@@ -127,7 +127,7 @@ diagrams:
 ww-extraction:
 	install -d $(LOCALBUILD)
 	-rm $(LOCALBUILD)/webwork-extraction.xml
-	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
+	python3 $(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
 	sed -i.bak 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
 	rm $(LOCALBUILD)/webwork-extraction.xml.bak
 
@@ -248,7 +248,7 @@ solution-manual:
 	install -d $(PDFOUT)
 	cp -a images $(PDFOUT)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(XSL)/custom-latex-sm.xsl $(MERGEDSM);
+	xsltproc --xinclude $(XSL)/custom-latex-sm.xsl $(MERGEDSM) > dmoi-solution-manual.tex;
 	
 pdf-solution-manual:
 	cd $(PDFOUT); \
