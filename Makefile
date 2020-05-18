@@ -158,12 +158,24 @@ html: ww-merge
 	install -b $(XSL)/dmoi-html.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(HTMLOUT); \
-	xsltproc -xinclude $(PTXUSR)/dmoi-html.xsl $(MERGED);
+	xsltproc -xinclude -stringparam publisher ../ptx/pub-standard.xml $(PTXUSR)/dmoi-html.xsl $(MERGED);
 
 html-fresh: diagrams ww-extraction html
 
 viewhtml:
 	$(HTMLVIEWER) $(HTMLOUT)/dmoi.html &
+
+#Runestone target - just like html but with runestone host set through pubfile
+runestone: ww-merge
+	install -d $(HTMLOUT)
+	-rm $(HTMLOUT)/*.html
+	-rm $(HTMLOUT)/knowl/*.html
+	cp -a images $(HTMLOUT)
+	install -d $(PTXUSR)
+	install -b $(XSL)/dmoi-html.xsl $(PTXUSR)
+	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
+	cd $(HTMLOUT); \
+	xsltproc -xinclude -stringparam publisher ../ptx/pub-runestone.xml $(PTXUSR)/dmoi-html.xsl $(MERGED);
 
 # Full PDF version
 #   copies in all image files, which is overkill (SVG's)
