@@ -96,6 +96,7 @@ LOCALBUILD = $(SCRATCH)/localbuild
 # or specify a 5-tuple with quotes exactly as in this example
 # SERVER = "(https://webwork-ptx.aimath.org,courseID,userID,password,course_password)"
 SERVER = https://webwork-dev.aimath.org
+RSSERVER = http://webwork.runestone.academy
 
 # Following regularly presumes  xml:id="dmoi" on
 # the <book> element, so xsltproc creates  dmoi.tex
@@ -125,7 +126,7 @@ diagrams:
 #   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
 
 ww-extraction:
-	$(PTXSCRIPT)/pretext -c -vv webwork -s $(SERVER) -d $(SRC) $(MAIN)
+	$(PTXSCRIPT)/pretext -vv -c webwork -s $(SERVER) -d $(SRC) $(MAIN)
 	sed -i.bak 's/label="a."/label="(a)"/g' $(SRC)/webwork-representations.ptx
 	rm $(SRC)/webwork-representations.ptx.bak
 	# install -d $(LOCALBUILD)
@@ -133,6 +134,11 @@ ww-extraction:
 	# $(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
 	# sed -i.bak 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
 	# rm $(LOCALBUILD)/webwork-extraction.xml.bak
+
+ww-extraction-rs:
+	$(PTXSCRIPT)/pretext -vv -c webwork -s $(RSSERVER) -d $(SRC) $(MAIN)
+	sed -i.bak 's/label="a."/label="(a)"/g' $(SRC)/webwork-representations.ptx
+	rm $(SRC)/webwork-representations.ptx.bak
 
 # 	Then we merge this with the main source 
 
