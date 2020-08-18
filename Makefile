@@ -67,7 +67,7 @@ include Makefile.paths
 # MBUSR is where extension files get copied
 # so relative paths work properly
 PTXXSL = $(PTX)/xsl
-PTXSCRIPT = $(PTX)/script
+PTXSCRIPT = $(PTX)/pretext
 PTXUSR = $(PTX)/user
 PTXRELAXNG = $(PTX)/schema
 
@@ -117,7 +117,7 @@ SERVER = https://webwork-dev.aimath.org
 diagrams:
 	install -d $(HTMLOUT)/images
 	-rm $(HTMLOUT)/images/*.svg
-	$(PTXSCRIPT)/mbx -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
+	$(PTXSCRIPT)/pretext -v -c latex-image -f svg -d $(HTMLOUT)/images $(MAIN)
 	# $(PTXSCRIPT)/mbx -v -c sageplot    -f pdf -d $(HTMLOUT)/images $(MAIN)
 	# $(PTXSCRIPT)/mbx -v -c sageplot    -f svg -d $(HTMLOUT)/images $(MAIN)
 
@@ -125,19 +125,22 @@ diagrams:
 #   This happens in two steps (for now), first extract WW problems into a single xml file called webwork-extraction.xml in localbuild, which holds multiple versions of each problem.
 
 ww-extraction:
-	install -d $(LOCALBUILD)
-	-rm $(LOCALBUILD)/webwork-extraction.xml
-	$(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
-	sed -i.bak 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
-	rm $(LOCALBUILD)/webwork-extraction.xml.bak
+	$(PTXSCRIPT)/pretext -c -vv webwork -s $(SERVER) -d $(SRC) $(MAIN)
+	sed -i.bak 's/label="a."/label="(a)"/g' $(SRC)/webwork-representations.ptx
+	rm $(SRC)/webwork-representations.ptx.bak
+	# install -d $(LOCALBUILD)
+	# -rm $(LOCALBUILD)/webwork-extraction.xml
+	# $(PTXSCRIPT)/mbx -v -c webwork -d $(LOCALBUILD) -s $(SERVER) $(MAIN)
+	# sed -i.bak 's/label="a."/label="(a)"/g' $(LOCALBUILD)/webwork-extraction.xml
+	# rm $(LOCALBUILD)/webwork-extraction.xml.bak
 
 # 	Then we merge this with the main source 
 
-ww-merge:
-	cd $(SCRATCH); \
-	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(MAIN) > $(LOCALBUILD)/dmoi-merge.ptx
+# ww-merge:
+# 	cd $(SCRATCH); \
+# 	xsltproc --xinclude --stringparam webwork.extraction $(LOCALBUILD)/webwork-extraction.xml $(PTXXSL)/pretext-merge.xsl $(MAIN) > $(LOCALBUILD)/dmoi-merge.ptx
 
-ww-fresh: ww-extraction ww-merge
+# ww-fresh: ww-extraction ww-merge
 
 
 
@@ -149,7 +152,7 @@ ww-fresh: ww-extraction ww-merge
 #   Copies in image files from source directory
 #   Move to server: generated *.html and
 #   entire directories - /images and /knowl
-html: ww-merge
+html:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
@@ -158,7 +161,8 @@ html: ww-merge
 	install -b $(XSL)/dmoi-html.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(HTMLOUT); \
-	xsltproc -xinclude -stringparam publisher ../ptx/pub-standard.xml $(PTXUSR)/dmoi-html.xsl $(MERGED);
+  xsltproc -xinclude -stringparam publisher "$(SRC)/pub-standard.xml" $(PTXUSR)/dmoi-html.xsl $(MAIN);
+
 
 html-fresh: diagrams ww-extraction html
 
@@ -166,7 +170,7 @@ viewhtml:
 	$(HTMLVIEWER) $(HTMLOUT)/dmoi.html &
 
 #Runestone target - just like html but with runestone host set through pubfile
-runestone: ww-merge
+runestone:
 	install -d $(HTMLOUT)
 	-rm $(HTMLOUT)/*.html
 	-rm $(HTMLOUT)/knowl/*.html
@@ -175,7 +179,7 @@ runestone: ww-merge
 	install -b $(XSL)/dmoi-html.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(HTMLOUT); \
-	xsltproc -xinclude -stringparam publisher ../ptx/pub-runestone.xml $(PTXUSR)/dmoi-html.xsl $(MERGED);
+	xsltproc -xinclude -stringparam publisher ../ptx/pub-runestone.xml $(PTXUSR)/dmoi-html.xsl $(MAIN);
 
 # Full PDF version
 #   copies in all image files, which is overkill (SVG's)
