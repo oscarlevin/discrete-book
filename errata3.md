@@ -9,9 +9,16 @@ If you use a pdf or paperback version, check the copyright page for the printing
 
 Page numbers match print and tablet pdf edition.
 
-<!-- ## Errors not yet corrected
+## Errors not yet corrected
 
-### Major errors
+* Example 0.4.5: In the statement of part 3, and the solutions to parts 2 and 3, the functions are incorrectly called \(f\) instead of \(g\) or \(h\) to match the statement.  Every function in part 2 should be \(g\) and every function in part 3 should be \(h\).
+
+* Exercise 2.2.10: The first sequence should have $y_1$, not $y_2$ in it.  So it should read "...such that $a, x_1, y_1, b$ is part of an arithmetic sequence...".
+
+* Exercise 2.2.15: The second example of an acceptable license plate should be 123321 (or some other 6-digit plate with only numerals, instead of the 5 digits that are currently there).
+The following errors have not yet been corrected in the print/pdf versions (but are likely fixed online).
+
+<!-- ### Major errors
 
 ### Minor typos and clarifications -->
 

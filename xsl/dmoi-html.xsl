@@ -10,7 +10,7 @@
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../../mathbook/xsl/entities.ent">
+    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
     %entities;
 ]>
 
@@ -18,10 +18,10 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-<!-- Assumes current file is in discrete-text/xsl and that the mathbook repository is adjacent -->
-<xsl:import href="../../mathbook/xsl/mathbook-html.xsl" />
-<!-- Assumes next file can be found in discrete-text/xsl -->
-<xsl:import href="custom-common.xsl" />
+<!-- Assumes current file is in mathbook/user -->
+<xsl:import href="../xsl/mathbook-html.xsl" />
+<!-- Assumes next file can be found in mathbook/user-->
+<xsl:import href="dmoi-common.xsl" />
 
 <!-- List Chapters and Sections in sidebar Table of Contents -->
 <xsl:param name="toc.level" select="''" />
@@ -85,9 +85,10 @@
 <!-- and which should not be a concern while editing, and    -->
 <!-- which should not run with source.  Deprecated "docinfo" -->
 <!-- options are respected for now.                          -->
-<xsl:param name="html.google-classic" select="''"/>
+<!-- Removed to publisher file 5/18/2020 -->
+<!-- <xsl:param name="html.google-classic" select="''"/>
 <xsl:param name="html.google-universal" select="'UA-66485406-1'"/>
-<xsl:param name="html.google-search" select="'000445521324161818100:qhc2ahxtur8'"/>
+<xsl:param name="html.google-search" select="'000445521324161818100:qhc2ahxtur8'"/> -->
 
 
 <!-- Here are the options, taken from mathbook-html.xsl, changed as needed -->
@@ -160,28 +161,6 @@
 <xsl:param name="webwork.course" select="'anonymous'" />
 <xsl:param name="webwork.userID" select="'anonymous'" />
 <xsl:param name="webwork.password" select="'anonymous'" /> -->
-
-<!-- Permalinks -->
-<!-- Next to subdivision headings a "paragraph" symbol     -->
-<!-- (a pilcrow) along with internationalized text         -->
-<!-- ("permalink") indicates a link to that section.       -->
-<!-- It is useful if you want to right-click on it to      -->
-<!-- capture a link for use somewhere else.  (Similar      -->
-<!-- behavior for theorems, examples, etc is planned.)     -->
-<!--                                                       -->
-<!-- "Permalink" is a bit of an exaggeration.  Site        -->
-<!-- domain name is relative to wherever content is        -->
-<!-- hosted.  We say a link is "stable" if there is        -->
-<!-- an  xml:id  on the enclosing page AND an  xml:id      -->
-<!-- on the subdivision (which could be the same).         -->
-<!-- If you change the chunking level, then the enclosing  -->
-<!-- page could change and these links will be affected.   -->
-<!--                                                       -->
-<!-- 'none' - no permalinks anywhere                       -->
-<!-- 'stable' - only stable links (see paragraph above)    -->
-<!-- 'all' - every section heading, even if links are poor -->
-<xsl:param name="html.permalink"  select="'all'" />
-
 
 
 
