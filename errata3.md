@@ -9,9 +9,24 @@ If you use a pdf or paperback version, check the copyright page for the printing
 
 Page numbers match print and tablet pdf edition.
 
-<!-- ## Errors not yet corrected
+## Errors not yet corrected
 
-### Major errors
+* Example 0.4.5: In the statement of part 3, and the solutions to parts 2 and 3, the functions are incorrectly called \(f\) instead of \(g\) or \(h\) to match the statement.  Every function in part 2 should be \(g\) and every function in part 3 should be \(h\).
+
+* Exercise 2.2.10: The first sequence should have $y_1$, not $y_2$ in it.  So it should read "...such that $a, x_1, y_1, b$ is part of an arithmetic sequence...".
+
+* Exercise 2.2.15: The second example of an acceptable license plate should be 123321 (or some other 6-digit plate with only numerals, instead of the 5 digits that are currently there).
+The following errors have not yet been corrected in the print/pdf versions (but are likely fixed online).
+
+* Proof of Theorem 4.3.4: In Case 1, the function is bounded above by a horizontal asymptote at *k* = 6, not f=6.
+
+* Example 5.1.1: The sequence as displayed is missing a 0 between the 1 and the 1/7.
+
+* Example 5.1.5: The solution includes the number 28, but it should be 26 (in three places).
+
+* Example 5.2.7: In solving the congruence, the first line should be $8y \equiv 637 \pmod{5}$.
+
+<!-- ### Major errors
 
 ### Minor typos and clarifications -->
 
