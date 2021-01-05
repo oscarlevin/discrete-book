@@ -216,7 +216,7 @@ runestone:
 #     as sent to Orthogonal Publishing for modification
 #   Black on white, no live URLs, etc
 #   This is the "printable" downloadable Annual Edition
-latex: ww-merge
+latex:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
 	cp -a images $(PDFOUT)
@@ -225,7 +225,7 @@ latex: ww-merge
 	install -b $(XSL)/pretext-latex-dmoi.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(PTXUSR)/dmoi-latex.xsl $(MERGED) > dmoi.tex;
+  xsltproc -xinclude -stringparam publisher "$(SRC)/pub-standard.xml" $(PTXUSR)/dmoi-latex.xsl $(MAIN) > dmoi.tex;
 
 latex-fresh: ww-extraction latex
 	

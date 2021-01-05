@@ -137,7 +137,7 @@
 <xsl:param name="html.css.colorfile" select="''" />
 <xsl:param name="debug.colorgs" select="'blue_grey'" />
 <!-- A space-separated list of CSS URLs (points to servers or local files) -->
-<xsl:param name="html.css.extra"  select="'custom-styles.css'" />
+<xsl:param name="html.css.extra"  select="'custom-styles.css style_oscarlevin.css'" />
 
 <!-- Navigation -->
 <!-- Navigation may follow two different logical models:                     -->
