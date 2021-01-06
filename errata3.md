@@ -13,9 +13,9 @@ Page numbers match print and tablet pdf edition.
 
 None so far.
 
-## Errors corrected for 5th printing: 1/6/21
+## Errors corrected for 5th printing: 1/7/21
 
-In case you have a copy of the book printed prior to 1/6/21 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+In case you have a copy of the book printed prior to 1/7/21 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
 
 * Example 0.4.5: In the statement of part 3, and the solutions to parts 2 and 3, the functions are incorrectly called \(f\) instead of \(g\) or \(h\) to match the statement.  Every function in part 2 should be \(g\) and every function in part 3 should be \(h\).
 
