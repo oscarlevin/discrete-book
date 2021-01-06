@@ -11,6 +11,12 @@ Page numbers match print and tablet pdf edition.
 
 ## Errors not yet corrected
 
+None so far.
+
+## Errors corrected for 5th printing: 1/6/21
+
+In case you have a copy of the book printed prior to 1/6/21 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+
 * Example 0.4.5: In the statement of part 3, and the solutions to parts 2 and 3, the functions are incorrectly called \(f\) instead of \(g\) or \(h\) to match the statement.  Every function in part 2 should be \(g\) and every function in part 3 should be \(h\).
 
 * Exercise 2.2.10: The first sequence should have $y_1$, not $y_2$ in it.  So it should read "...such that $a, x_1, y_1, b$ is part of an arithmetic sequence...".
@@ -25,11 +31,6 @@ The following errors have not yet been corrected in the print/pdf versions (but 
 * Example 5.1.5: The solution includes the number 28, but it should be 26 (in three places).
 
 * Example 5.2.7: In solving the congruence, the first line should be $8y \equiv 637 \pmod{5}$.
-
-<!-- ### Major errors
-
-### Minor typos and clarifications -->
-
 
 ## Errors corrected for 4th printing: 12/29/19
 
