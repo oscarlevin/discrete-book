@@ -11,7 +11,7 @@ Page numbers match print and tablet pdf edition.
 
 ## Errors not yet corrected
 
-None so far.
+* Example 0.4.8 solution: The answer is correct but the explanation should say that \(a\) and \(b\) are the elements in the codomain to which \(f\) sends 1, 2, _and 3_.
 
 ## Errors corrected for 5th printing: 1/7/21
 
