@@ -11,11 +11,11 @@ This text is written in [PreTeXt](https://pretextbook.org) (previously called Ma
 
 ### Preliminaries
 
-To compile from source, you will need a copy of the MathBook XSL stylesheets, as well as `xsltproc`, Python, LaTeX, and `pdf2svg` and `make` installed (should be simple on Linux or macOS, but also possible on Windows---see some [PreTeXt for Novices Using Windows](https://pretextbook.org/doc/pnw/html/novices.html)).
+To compile from source, you will need a copy of the PreTeXt XSL stylesheets, as well as `xsltproc`, Python, LaTeX, and `pdf2svg` and `make` installed (should be simple on Linux or macOS, but also possible on Windows---see some [PreTeXt for Novices Using Windows](https://pretextbook.org/doc/pnw/html/novices.html)).
 
 Earlier editions, that did not include WeBWorK problems were easy enough to compile using commands like `xsltproc --xinclude ../xsl/custom-latex.xsl ../ptx/dmoi.ptx`.  Now though, there are enough intermediate steps that I've written a `Makefile` that keeps everything together.  As long as you have all the tools installed, this should make things easy.
 
-You will need to open up `Makefile.paths.original` and follow the directions there (create a copy called `Makefile.paths` and specify paths to various things).  Also note that in order for my custom `.xsl` files to work, they need to know where the standard PreTeXt XSL stylesheets are.  If you clone `mathbook.git` and `discrete-book.git` as shown below, you will be all set, otherwise, you will need to go into the XSL files and change some things at the top.
+You will need to open up `Makefile.paths.original` and follow the directions there (create a copy called `Makefile.paths` and specify paths to various things).  
 
 Open up a terminal and in your preferred directory, clone the `mathbook` and `discrete-book` repositories:
 
@@ -23,17 +23,17 @@ Open up a terminal and in your preferred directory, clone the `mathbook` and `di
 
 `git clone https://github.com/oscarlevin/discrete-book.git`
 
+If you had previously done either of the steps above, you will likely want to get the most recent versions of these repositories.  (From their directories, type `git pull`.)
+
 Then change to the `discrete-book` folder:
 
 `cd discrete-book`
 
 ### Compiling
 
-If everything has been set up properly above, you can now execute the following commands to build the book.  First, no matter what output format you are looking for, you will need to enter the following.
+If everything has been set up properly above, you can now execute the following commands to build the book.  First, no matter what output format you are looking for, you will need to enter the following to extract the WeBWorK problems and create a `webwork-representations.ptx` file:
 
 `make ww-extraction`
-
-`make ww-merge`
 
 Then, to create a LaTeX file and PDF, you can enter:
 
