@@ -167,7 +167,7 @@ html:
 	install -b $(XSL)/dmoi-html.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(HTMLOUT); \
-  xsltproc -xinclude -stringparam publisher "$(SRC)/pub-standard.xml" $(PTXUSR)/dmoi-html.xsl $(MAIN);
+  xsltproc -xinclude -stringparam publisher "pub-standard.xml" $(PTXUSR)/dmoi-html.xsl $(MAIN);
 
 
 html-fresh: diagrams ww-extraction html
@@ -225,7 +225,7 @@ latex:
 	install -b $(XSL)/pretext-latex-dmoi.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(PDFOUT); \
-  xsltproc -xinclude -stringparam publisher "$(SRC)/pub-standard.xml" $(PTXUSR)/dmoi-latex.xsl $(MAIN) > dmoi.tex;
+  xsltproc -xinclude -stringparam publisher "pub-standard.xml" $(PTXUSR)/dmoi-latex.xsl $(MAIN) > dmoi.tex;
 
 latex-fresh: ww-extraction latex
 	
