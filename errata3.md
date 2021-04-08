@@ -13,6 +13,8 @@ Page numbers match print and tablet pdf edition.
 
 * Example 0.4.8 solution: The answer is correct but the explanation should say that \(a\) and \(b\) are the elements in the codomain to which \(f\) sends 1, 2, _and 3_.
 
+* Discussion after Example 1.4.5: In the binomial theorem expansion, the penultimate term should have \(y^{n-1}\) not \(y^n\) (and similarly for the next displayed equation where we have substituted 1 for \(x\) and \(y\)).
+
 ## Errors corrected for 5th printing: 1/7/21
 
 In case you have a copy of the book printed prior to 1/7/21 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
