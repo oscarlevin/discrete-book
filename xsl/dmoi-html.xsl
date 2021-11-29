@@ -10,7 +10,7 @@
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
+    <!ENTITY % entities SYSTEM "entities.ent">
     %entities;
 ]>
 
@@ -19,7 +19,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Assumes current file is in mathbook/user -->
-<xsl:import href="../xsl/pretext-html.xsl" />
+<xsl:import pretext-href="pretext-html.xsl" />
 <!-- Assumes next file can be found in mathbook/user-->
 <xsl:import href="dmoi-common.xsl" />
 
