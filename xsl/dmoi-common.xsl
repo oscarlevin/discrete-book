@@ -58,7 +58,7 @@
 <!-- "exercise-components" template.                       -->
 <!-- N.B. "statement" switches are necessary or desirable  -->
 <!-- for alternate collections of solutions (only)         -->
-<xsl:param name="exercise.inline.statement" select="''" />
+<!-- <xsl:param name="exercise.inline.statement" select="''" />
 <xsl:param name="exercise.inline.hint" select="''" />
 <xsl:param name="exercise.inline.answer" select="''" />
 <xsl:param name="exercise.inline.solution" select="''" />
@@ -77,7 +77,7 @@
 <xsl:param name="project.statement" select="''" />
 <xsl:param name="project.hint" select="''" />
 <xsl:param name="project.answer" select="''" />
-<xsl:param name="project.solution" select="''" />
+<xsl:param name="project.solution" select="''" /> -->
 <!-- Author tools are for drafts, mostly "todo" items                 -->
 <!-- and "provisional" citations and cross-references                 -->
 <!-- Default is to hide todo's, inline provisionals                   -->
@@ -92,20 +92,20 @@
 <!-- Followed by a sequential number across that level -->
 <!-- For example "2" implies Theorem 5.3.12 is         -->
 <!-- 12-th theorem, lemma, etc in 5.2                  -->
-<xsl:param name="numbering.theorems.level" select="'2'" />
+<!-- <xsl:param name="numbering.theorems.level" select="'2'" /> -->
 <!-- How many levels in numbering of projects, etc     -->
 <!-- PROJECT-LIKE gets independent numbering -->
-<xsl:param name="numbering.projects.level" select="'1'" />
+<!-- <xsl:param name="numbering.projects.level" select="'1'" /> -->
 <!-- How many levels in numbering of equations     -->
 <!-- Analagous to numbering theorems, but distinct -->
-<xsl:param name="numbering.equations.level" select="'1'" />
+<!-- <xsl:param name="numbering.equations.level" select="'1'" /> -->
 <!-- Level where footnote numbering resets                                -->
 <!-- For example, "2" would be sections in books, subsections in articles -->
-<xsl:param name="numbering.footnotes.level" select="'1'" />
+<!-- <xsl:param name="numbering.footnotes.level" select="'1'" /> -->
 <!-- Last level where subdivision (section) numbering takes place     -->
 <!-- For example, "2" would mean subsections of a book are unnumbered -->
 <!-- N.B.: the levels above cannot be numerically larger              -->
-<xsl:param name="numbering.maximum.level" select="'2'" />
+<!-- <xsl:param name="numbering.maximum.level" select="'2'" /> -->
 <!-- Image files, media files and knowls are placed in directories    -->
 <!-- The defaults are relative to wherever principal output goes      -->
 <!-- These can be overridden at the command-line or in customizations -->
@@ -117,7 +117,7 @@
 <xsl:param name="address.pdf" select="''" />
 
 <!-- To start chapters at 0 (might change later)-->
-<xsl:param name="debug.chapter.start" select="'0'" />
+<!-- <xsl:param name="debug.chapter.start" select="'0'" /> -->
 
 <!-- Forward links to solutions -->
 <!-- very temporary, just for testing -->
