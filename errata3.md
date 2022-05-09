@@ -11,6 +11,14 @@ Page numbers match print and tablet pdf edition.
 
 ## Errors not yet corrected
 
+* Example 0.4.8 solution: The answer is correct but the explanation should say that \(a\) and \(b\) are the elements in the codomain to which \(f\) sends 1, 2, _and 3_.
+
+* Discussion after Example 1.4.5: In the binomial theorem expansion, the penultimate term should have \(y^{n-1}\) not \(y^n\) (and similarly for the next displayed equation where we have substituted 1 for \(x\) and \(y\)).
+
+## Errors corrected for 5th printing: 1/7/21
+
+In case you have a copy of the book printed prior to 1/7/21 (check copyright page), you will find the following errors that have since been corrected.  Minor typos are not included below, unless they might cause confusion.
+
 * Example 0.4.5: In the statement of part 3, and the solutions to parts 2 and 3, the functions are incorrectly called \(f\) instead of \(g\) or \(h\) to match the statement.  Every function in part 2 should be \(g\) and every function in part 3 should be \(h\).
 
 * Exercise 2.2.10: The first sequence should have $y_1$, not $y_2$ in it.  So it should read "...such that $a, x_1, y_1, b$ is part of an arithmetic sequence...".
@@ -18,10 +26,13 @@ Page numbers match print and tablet pdf edition.
 * Exercise 2.2.15: The second example of an acceptable license plate should be 123321 (or some other 6-digit plate with only numerals, instead of the 5 digits that are currently there).
 The following errors have not yet been corrected in the print/pdf versions (but are likely fixed online).
 
-<!-- ### Major errors
+* Proof of Theorem 4.3.4: In Case 1, the function is bounded above by a horizontal asymptote at *k* = 6, not f=6.
 
-### Minor typos and clarifications -->
+* Example 5.1.1: The sequence as displayed is missing a 0 between the 1 and the 1/7.
 
+* Example 5.1.5: The solution includes the number 28, but it should be 26 (in three places).
+
+* Example 5.2.7: In solving the congruence, the first line should be $8y \equiv 637 \pmod{5}$.
 
 ## Errors corrected for 4th printing: 12/29/19
 

@@ -11,7 +11,7 @@
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
 <!-- Conveniences for classes of similar elements -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
+    <!ENTITY % entities SYSTEM "entities.ent">
     %entities;
 ]>
 
@@ -20,7 +20,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- assumes this has been copied to mathbook/user -->
-<xsl:import href="../xsl/mathbook-latex.xsl" />
+<xsl:import pretext-href="pretext-latex.xsl" />
 
 <xsl:import href="pretext-latex-dmoi.xsl" />
 <!-- Assumes next file can be found in mathbook/user -->

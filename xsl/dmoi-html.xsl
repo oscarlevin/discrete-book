@@ -10,7 +10,7 @@
 
 <!-- Parts of this file were adapted from the author guide at https://github.com/rbeezer/mathbook and the analagous file at https://github.com/twjudson/aata -->
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY % entities SYSTEM "../xsl/entities.ent">
+    <!ENTITY % entities SYSTEM "entities.ent">
     %entities;
 ]>
 
@@ -19,7 +19,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Assumes current file is in mathbook/user -->
-<xsl:import href="../xsl/mathbook-html.xsl" />
+<xsl:import pretext-href="pretext-html.xsl" />
 <!-- Assumes next file can be found in mathbook/user-->
 <xsl:import href="dmoi-common.xsl" />
 
@@ -28,7 +28,7 @@
 
 
 <!-- Exercises -->
-<xsl:param name="exercise.inline.hint" select="'yes'" />
+<!-- <xsl:param name="exercise.inline.hint" select="'yes'" />
 <xsl:param name="exercise.inline.answer" select="'yes'" />
 <xsl:param name="exercise.inline.solution" select="'yes'" />
 <xsl:param name="exercise.divisional.hint" select="'yes'" />
@@ -36,7 +36,7 @@
 <xsl:param name="exercise.divisional.solution" select="'yes'" />
 <xsl:param name="project.hint" select="'yes'" />
 <xsl:param name="project.answer" select="'yes'" />
-<xsl:param name="project.solution" select="'yes'" />
+<xsl:param name="project.solution" select="'yes'" /> -->
 
 <!-- WeBWorK exercise may be rendered static="yes"    -->
 <!-- TODO: implement middle option static="preview"   -->
@@ -117,27 +117,12 @@
 <!-- panels born as knowls, using the switch.    -->
 <!-- PROJECT-LIKE gets own switch here           -->
 
-<xsl:param name="html.knowl.theorem" select="'no'" />
-<xsl:param name="html.knowl.proof" select="'no'" />
-<xsl:param name="html.knowl.definition" select="'no'" />
-<xsl:param name="html.knowl.example" select="'no'" />
-<xsl:param name="html.knowl.project" select="'no'" />
-<xsl:param name="html.knowl.list" select="'no'" />
-<xsl:param name="html.knowl.remark" select="'no'" />
-<xsl:param name="html.knowl.figure" select="'no'" />
-<xsl:param name="html.knowl.table" select="'no'" />
-<xsl:param name="html.knowl.listing" select="'no'" />
-<xsl:param name="html.knowl.webwork.inline" select="'no'" />
-<xsl:param name="html.knowl.webwork.sectional" select="'no'" />
-<xsl:param name="html.knowl.exercise.inline" select="'no'" />
-<xsl:param name="html.knowl.exercise.sectional" select="'no'" />
-<!-- html.knowl.example.solution: always "yes", could be implemented -->
 
 <!-- CSS and Javascript Servers -->
-<xsl:param name="html.css.colorfile" select="''" />
-<xsl:param name="debug.colorgs" select="'blue_grey'" />
+<!-- <xsl:param name="html.css.colorfile" select="''" /> -->
+<!-- <xsl:param name="debug.colorgs" select="'blue_grey'" /> -->
 <!-- A space-separated list of CSS URLs (points to servers or local files) -->
-<xsl:param name="html.css.extra"  select="'custom-styles.css'" />
+<!-- <xsl:param name="html.css.extra"  select="'custom-styles.css style_oscarlevin.css'" /> -->
 
 <!-- Navigation -->
 <!-- Navigation may follow two different logical models:                     -->

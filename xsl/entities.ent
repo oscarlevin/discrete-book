@@ -1,0 +1,119 @@
+<!-- ********************************************************************* -->
+<!-- Copyright 2016                                                        -->
+<!-- Robert A. Beezer                                                      -->
+<!--                                                                       -->
+<!-- This file is part of MathBook XML.                                    -->
+<!--                                                                       -->
+<!-- MathBook XML is free software: you can redistribute it and/or modify  -->
+<!-- it under the terms of the GNU General Public License as published by  -->
+<!-- the Free Software Foundation, either version 2 or version 3 of the    -->
+<!-- License (at your option).                                             -->
+<!--                                                                       -->
+<!-- MathBook XML is distributed in the hope that it will be useful,       -->
+<!-- but WITHOUT ANY WARRANTY; without even the implied warranty of        -->
+<!-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         -->
+<!-- GNU General Public License for more details.                          -->
+<!--                                                                       -->
+<!-- You should have received a copy of the GNU General Public License     -->
+<!-- along with MathBook XML.  If not, see <http://www.gnu.org/licenses/>. -->
+<!-- ********************************************************************* -->
+
+<!-- XSLT Cookbook, 2nd Edition                                     -->
+<!-- Copyright 2006, O'Reilly Media, Inc.                           -->
+<!-- Declaration and entity definition format from Recipe 2.8       -->
+<!-- Unicode strings from http://stackoverflow.com/questions/586231 -->
+<!ENTITY UPPERCASE "'ABCDEFGHIJKLMNOPQRSTUVWXYZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞŸŽŠŒ'">
+<!ENTITY LOWERCASE "'abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿžšœ'">
+
+<!-- Some more of our own design -->
+<!ENTITY DIGIT "'0123456789'">
+<!ENTITY ALPHABET "'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'">
+<!ENTITY SIMPLECHAR "concat(&DIGIT;,&ALPHABET;)">
+
+<!-- for match/select -->
+<!ENTITY STRUCTURAL "book|article|slideshow|letter|memo|frontmatter|part|chapter|appendix|index[index-list]|index-part|preface|acknowledgement|biography|foreword|dedication|colophon|section|subsection|subsubsection|slide|exercises|worksheet|reading-questions|solutions|references|glossary|backmatter">
+
+<!-- for filtering nodes, eg *[&STRUCTURAL-FILTER;], *[not(&STRUCTURAL-FILTER;)] -->
+<!ENTITY STRUCTURAL-FILTER "self::book or self::article or self::slideshow or self::letter or self::memo or self::frontmatter or self::part or self::chapter or self::appendix or self::index[index-list] or self::index-part or self::preface or self::acknowledgement or self::biography or self::foreword or self::dedication or self::colophon or self::section or self::subsection or self::subsubsection or self::slide or self::exercises or self::worksheet or self::reading-questions or self::solutions or self::references or self::glossary or self::backmatter">
+
+<!-- NB: (2019-06-12)  Only the two metadata "filters" seem to          -->
+<!-- be in use, so only those are being maintained.  grep'ing on        -->
+<!-- METADATA v. METADATA-FILTER, and applying "wc" makes this evident. -->
+<!-- (Include this comment in count!)                                   -->
+
+<!-- typical items in blocks that get special treatment -->
+<!ENTITY METADATA "title|subtitle|caption|index">
+<!ENTITY METADATA-FILTER "self::title or self::subtitle or self::caption or self::idx or self::index[not(index-list)]">
+
+<!-- Subdivisions and runs of paragraphs (like in a proof)  -->
+<!-- contain "invisible" items that get killed  and then    -->
+<!-- used/accessed other ways.  To see if something  is     -->
+<!--first, last, preceded, or followed by other significant -->
+<!-- items requires filtering out these items in forming a  -->
+<!-- node-set (so as to not be confused by their presence)  -->
+<!-- A super-lightweight "article" might have "frontmatter" -->
+<!-- and "backmatter" as peers of content elements, and in  -->
+<!-- other cases it should not be a problem                 -->
+<!-- Typical use:  *[not(&SUBDIVISION-METADATA-FILTER;)]    -->
+<!ENTITY SUBDIVISION-METADATA "title|subtitle|index|notation|todo|frontmatter|backmatter">
+<!ENTITY SUBDIVISION-METADATA-FILTER "self::title or self::subtitle or self::idx or self::index[not(index-list)] or self::notation or self::todo or self::frontmatter or self::backmatter">
+
+<!-- To implement a new category of blocks, search on    -->
+<!-- "PROJECT-" (case-sensitive) since we will mark      -->
+<!-- non-obvious locations with the string PROJECT-LIKE  -->
+<!-- as we immplement this on 2016-07-17, other entities -->
+<!-- below will also match this short form               -->
+
+<!-- definition, just a plain statement, but logically distinct -->
+<!ENTITY DEFINITION-LIKE "definition">
+<!ENTITY DEFINITION-FILTER "self::definition">
+
+<!-- statement + proof -->
+<!ENTITY THEOREM-LIKE "theorem|corollary|lemma|algorithm|proposition|claim|fact|identity">
+<!ENTITY THEOREM-FILTER "self::theorem or self::corollary or self::lemma or self::algorithm or self::proposition or self::claim or self::fact or self::identity">
+
+<!-- a mathematical statement, but never with a proof -->
+<!ENTITY AXIOM-LIKE "axiom|conjecture|principle|heuristic|hypothesis|assumption">
+<!ENTITY AXIOM-FILTER "self::axiom or self::conjecture or self::principle or self::heuristic or self::hypothesis or self::assumption">
+
+<!-- narrative, set off for structure, reference -->
+<!ENTITY REMARK-LIKE "remark|convention|note|observation|warning|insight">
+<!ENTITY REMARK-FILTER "self::remark or self::convention or self::note or self::observation or self::warning or self::insight">
+
+<!-- about computations or technology -->
+<!ENTITY COMPUTATION-LIKE "computation|technology">
+<!ENTITY COMPUTATION-FILTER "self::computation or self::technology">
+
+<!-- incidental, skippable, lightweight -->
+<!ENTITY ASIDE-LIKE "aside|biographical|historical">
+<!ENTITY ASIDE-FILTER "self::aside or self::biographical or self::historical">
+
+<!-- blocks, or statement + solution -->
+<!ENTITY EXAMPLE-LIKE "example|question|problem">
+<!ENTITY EXAMPLE-FILTER "self::example or self::question or self::problem">
+
+<!-- blocks, or statement + solution -->
+<!-- save off lab, laboratory, experiment for science -->
+<!-- NB: update comprehensive list in the Guide with any additions -->
+<!ENTITY PROJECT-LIKE "project|activity|exploration|investigation">
+<!ENTITY PROJECT-FILTER "self::project or self::activity or self::exploration or self::investigation">
+
+<!-- blocks with meta-information in lists -->
+<!-- TODO: add in "standards", "goals"     -->
+<!-- NB: update comprehensive list in the Guide with any additions -->
+<!ENTITY GOAL-LIKE "objectives|outcomes">
+<!ENTITY GOAL-FILTER "self::objectives or self::outcomes">
+
+<!-- displays with captions -->
+<!ENTITY FIGURE-LIKE "figure|table|listing|list">
+<!ENTITY FIGURE-FILTER "self::figure or self::table or self::listing or self::list">
+
+<!-- appendages of examples, exercises, tasks -->
+<!ENTITY SOLUTION-LIKE "hint|answer|solution">
+<!ENTITY SOLUTION-FILTER "self::hint or self::answer or self::solution">
+
+<!-- When context is an inline "exercise", then this condition is      -->
+<!-- true. We are positive, so as new locations of "exercise"          -->
+<!-- are added, then this need not change                              -->
+<!-- Typical use: self::exercise and boolean(&INLINE-EXERCISE-FILTER;) -->
+<!ENTITY INLINE-EXERCISE-FILTER "parent::article|parent::paragraphs|parent::chapter|parent::section|parent::subsection|parent::subsubsection">

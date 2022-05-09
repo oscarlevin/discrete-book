@@ -95,7 +95,7 @@ LOCALBUILD = $(SCRATCH)/localbuild
 # Either specify only the protocol and domain (like https://webwork.yourschool.edu)
 # or specify a 5-tuple with quotes exactly as in this example
 # SERVER = "(https://webwork-ptx.aimath.org,courseID,userID,password,course_password)"
-SERVER = https://webwork-dev.aimath.org
+SERVER = https://webwork-ptx.aimath.org
 RSSERVER = http://webwork.runestone.academy/
 
 # Following regularly presumes  xml:id="dmoi" on
@@ -167,7 +167,7 @@ html:
 	install -b $(XSL)/dmoi-html.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(HTMLOUT); \
-  xsltproc -xinclude -stringparam publisher "$(SRC)/pub-standard.xml" $(PTXUSR)/dmoi-html.xsl $(MAIN);
+  xsltproc -xinclude -stringparam publisher "pub-standard.xml" $(PTXUSR)/dmoi-html.xsl $(MAIN);
 
 
 html-fresh: diagrams ww-extraction html
@@ -216,7 +216,7 @@ runestone:
 #     as sent to Orthogonal Publishing for modification
 #   Black on white, no live URLs, etc
 #   This is the "printable" downloadable Annual Edition
-latex: ww-merge
+latex:
 	-rm $(PDFOUT)/dmoi.tex
 	install -d $(PDFOUT)
 	cp -a images $(PDFOUT)
@@ -225,7 +225,7 @@ latex: ww-merge
 	install -b $(XSL)/pretext-latex-dmoi.xsl $(PTXUSR)
 	install -b $(XSL)/dmoi-common.xsl $(PTXUSR)
 	cd $(PDFOUT); \
-	xsltproc --xinclude $(PTXUSR)/dmoi-latex.xsl $(MERGED) > dmoi.tex;
+  xsltproc -xinclude -stringparam publisher "pub-standard.xml" $(PTXUSR)/dmoi-latex.xsl $(MAIN) > dmoi.tex;
 
 latex-fresh: ww-extraction latex
 	
