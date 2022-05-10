@@ -2,28 +2,22 @@
 
 An open textbook for Discrete Mathematics, as taught at the University of Northern Colorado.  More information about the project is available on [the book's main website](http://discrete.openmathbooks.org).
 
-The `master` branch here now has the source code for the 3rd edition.  Work on the 4th edition is done on the `edition` branch.
+The `main` branch now has the source code for the 3rd edition.  Work on the 4th edition is done on the `edition` branch.
 
 
 ## Compilation instructions
 
-This text is written in [PreTeXt](https://pretextbook.org) (previously called MathBook XML), so the primary source files can be found in the `ptx` directory.  These can be compiled into HTML or LaTeX files (as well as some other formats).  If you do not want to bother with this step or just want to grab some LaTeX to use in a worksheet or the like, the generated LaTeX is already provided in the `latex` folder.
+This text is written in [PreTeXt](https://pretextbook.org), so the primary source files can be found in the `source` directory.  These can be compiled into HTML or PDF files (as well as some other formats) using the following directions.
 
 ### Preliminaries
 
-To compile from source, you will need a copy of the PreTeXt XSL stylesheets, as well as `xsltproc`, Python, LaTeX, and `pdf2svg` and `make` installed (should be simple on Linux or macOS, but also possible on Windows---see some [PreTeXt for Novices Using Windows](https://pretextbook.org/doc/pnw/html/novices.html)).
+The easiest way to build output formats from the source is to use the PreTeXt-CLI.  To get this set up, follow the instructions in the [PreTeXt guide](https://pretextbook.org/doc/guide/html/quickstart-getting-pretext.html).  You will need Python, LaTeX, and `pdf2svg` (if you wish to compile the html version; this requires an [extra step](https://pretextbook.org/doc/guide/html/section-installing-pdf2svg.html) on Windows).
 
-Earlier editions, that did not include WeBWorK problems were easy enough to compile using commands like `xsltproc --xinclude ../xsl/custom-latex.xsl ../ptx/dmoi.ptx`.  Now though, there are enough intermediate steps that I've written a `Makefile` that keeps everything together.  As long as you have all the tools installed, this should make things easy.
-
-You will need to open up `Makefile.paths.original` and follow the directions there (create a copy called `Makefile.paths` and specify paths to various things).  
-
-Open up a terminal and in your preferred directory, clone the `mathbook` and `discrete-book` repositories:
-
-`git clone https://github.com/rbeezer/mathbook.git`
+Open up a terminal and in your preferred directory, clone `discrete-book` repositories:
 
 `git clone https://github.com/oscarlevin/discrete-book.git`
 
-If you had previously done either of the steps above, you will likely want to get the most recent versions of these repositories.  (From their directories, type `git pull`.)
+(If you had previously done this, you will likely want to get the most recent versions of the repository by entering `git pull` from the discrete-book folder.)
 
 Then change to the `discrete-book` folder:
 
@@ -31,25 +25,15 @@ Then change to the `discrete-book` folder:
 
 ### Compiling
 
-If everything has been set up properly above, you can now execute the following commands to build the book.  First, no matter what output format you are looking for, you will need to enter the following to extract the WeBWorK problems and create a `webwork-representations.ptx` file:
+If everything has been set up properly above, you can now execute the following commands to build the book.  To create a PDF, you can enter:
 
-`make ww-extraction`
+`pretext build pdf -w`
 
-Then, to create a LaTeX file and PDF, you can enter:
+To make the HTML version:
 
-`make latex`
+`pretext build html -w -d`
 
-`make pdf`
-
-To make the HTML version, you first need to extract images from the source:
-
-`make diagrams`
-
-And then create the HTML files:
-
-`make html`
-
-If you look in the `Makefile`, you will see some shortcuts that combine some of these.
+The `-w` and `-d` flags are only needed the first time you compile, to extract the WeBWorK exercises and create SVGs for the images.  Use the flags again only if you edit these elements in the source. 
 
 
 ## Contributing
