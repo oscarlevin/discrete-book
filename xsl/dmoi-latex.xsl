@@ -20,7 +20,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- assumes this has been copied to mathbook/user -->
-<xsl:import pretext-href="pretext-latex.xsl" />
+<xsl:import href="./core/pretext-latex.xsl" />
 
 <xsl:import href="pretext-latex-dmoi.xsl" />
 <!-- Assumes next file can be found in mathbook/user -->
