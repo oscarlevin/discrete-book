@@ -19,7 +19,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
 <!-- Assumes current file is in mathbook/user -->
-<xsl:import pretext-href="pretext-html.xsl" />
+<xsl:import href="./core/pretext-html.xsl" />
 <!-- Assumes next file can be found in mathbook/user-->
 <xsl:import href="dmoi-common.xsl" />
 
