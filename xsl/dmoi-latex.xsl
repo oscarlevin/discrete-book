@@ -36,7 +36,7 @@
 <!-- LaTeX executable, "engine"                       -->
 <!-- pdflatex is default, xelatex or lualatex for Unicode support -->
 <!-- N.B. This has no effect, and may never.  xelatex and lualatex support is automatic -->
-<xsl:param name="latex.engine" select="'pdflatex'" />
+<xsl:param name="latex.engine" select="'xelatex'" />
 <!--  -->
 <!-- Standard fontsizes: 10pt, 11pt, or 12pt       -->
 <!-- extsizes package: 8pt, 9pt, 14pt, 17pt, 20pt  -->
@@ -104,7 +104,7 @@
 <!-- is needed a fatal message will warn if it is not set.    -->
 <!-- Path ends with a slash, anticipating appended filename   -->
 <!-- This could be overridden in a compatibility layer        -->
-<xsl:param name="webwork.server.latex" select="''" />
+<!-- <xsl:param name="webwork.server.latex" select="''" /> -->
 
 
 
@@ -132,7 +132,7 @@
 
 <xsl:param name="latex.preamble.late">
   <xsl:text>%This should load all the style information that ptx does not.&#xa;</xsl:text>
-    <xsl:text>\input{latex-preamble-styles}&#xa;</xsl:text>
+    <xsl:text>\input{external/latex-preamble-styles}&#xa;</xsl:text>
 </xsl:param>
 
 
@@ -161,14 +161,14 @@
 <xsl:template match="book" mode="title-page">
     <xsl:text>%% begin: title page&#xa;</xsl:text>
     <xsl:text>%% my custom page.&#xa;</xsl:text>
-    <xsl:text>\input{frontmatter/title-page}&#xa;</xsl:text>
+    <xsl:text>\input{external/frontmatter/title-page}&#xa;</xsl:text>
     <xsl:text>%% end: title page&#xa;</xsl:text>
 </xsl:template>
 
 <!-- Import custom copyright page -->
 <xsl:template match="book" mode="copyright-page" >
     <xsl:text>%% begin: copyright-page&#xa;</xsl:text>
-    <xsl:text>\input{frontmatter/copyright-page}&#xa;</xsl:text>
+    <xsl:text>\input{external/frontmatter/copyright-page}&#xa;</xsl:text>
     <xsl:text>%% end:   copyright-page&#xa;</xsl:text>
 </xsl:template>
 

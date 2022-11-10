@@ -1,0 +1,122 @@
+%%%  This is a set of styles to include in the preamble of the generated latex code for the book Discrete Mathematics: an Open Introduction.
+
+
+\usepackage{bold-extra}
+\usepackage{marvosym} %for stop signs.
+\usepackage{textcomp}
+\usepackage{multicol}
+
+
+% % FONT OPTIONS (pick one group to uncomment):
+
+%newpx is my current favorite.  This should work on a TEXLive distribution, but on MiKTeX it initially gave me problems.  Running the update wizard to update MiKTeX then showed ``newpx'' as an available package (only since 8/11/15).  Perhaps just synchronizing in the package manager would do the same thing.  Even then, needed to run initexmf --mkmaps from the command line.
+%You could always uncomment all of these to use the default computer modern font.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newpxtext}
+\usepackage[vvarbb,cmintegrals,cmbraces,bigdelims]{newpxmath}
+\usepackage[scr=rsfso]{mathalfa}% \mathscr is fancier than \mathcal
+\linespread{1.04}         % adds more leading (space between lines)
+% quantifiers look strange, so change those back to normal:
+	\DeclareSymbolFont{mysymbols}{OMS}{cmsy}{b}{n} %note we make the figures bold to better match newpx.  Replace the ``b'' with an ``m'' to undo this.
+	%\SetSymbolFont{mysymbols}  {bold}{OMS}{cmsy}{b}{n}
+	%\DeclareSymbolFont{myoperators}   {OT1}{cmr} {m}{n}
+	%\SetSymbolFont{myoperators}{bold}{OT1}{cmr} {bx}{n}
+	\DeclareMathSymbol{\forall}{\mathord}{mysymbols}{"38}
+	\DeclareMathSymbol{\exists}{\mathord}{mysymbols}{"39}
+	%\DeclareMathSymbol{\pm}{\mathbin}{mysymbols}{"06}
+	%\DeclareMathSymbol{+}{\mathbin}{myoperators}{"2B}
+	%\DeclareMathSymbol{-}{\mathbin}{mysymbols}{"00}
+	%\DeclareMathSymbol{=}{\mathrel}{myoperators}{"3D}
+
+
+
+%\usepackage[T1]{fontenc}
+%\usepackage{newtxtext,newtxmath}
+
+
+%\usepackage[bitstream-charter]{mathdesign}
+%\usepackage[T1]{fontenc}
+
+%\usepackage[proportional,space,scaled=1.064]{erewhon}
+%\usepackage[erewhon,vvarbb,bigdelims]{newtxmath}
+%\usepackage[T1]{fontenc}
+%\renewcommand*\oldstylenums[1]{\textosf{#1}}
+
+
+% % % % % % Other packages % % % % % % % %
+
+\usepackage{docmute}
+\usepackage{pdfpages}
+
+\usepackage{svg}
+
+% % % % % % % % % % % % % %  END OF PACKAGES  % % % % % % % % % % % % % % % % % % %
+
+
+
+\renewcommand{\qedsymbol}{\textsc{qed}}
+
+
+%%%%%%%% Set description spacing the way I want %%%%%%%%%%%%%%%
+\setlist[description]{style=nextline, leftmargin=3em}
+
+
+
+%%%%%%% Set chapters to start at 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{chapter}{-1}
+
+
+%Fix widows and orphans (single lines at top/bottom of page):
+\clubpenalty=10000
+\widowpenalty=10000
+\raggedbottom
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%  Headers and footers %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} %Removes word "chapter" from the \leftmark.
+
+\fancyhead{} % clear header fields
+\fancyhead[ro,le]{\textsc{\scriptsize \nouppercase{\rightmark}}  }
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%    Chapter headings  %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[bf,sc,medium,outermarks,explicit]{titlesec}
+
+
+%%%%% FIX FOR BUG IN TITLESEC %%%%%%%%%%%
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}
+\makeatother
+%%%%% END FIX %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\titlespacing*{\chapter}{0pt}{-2em}{2em}
+
+%Don't display subtitles
+\titleformat{\subsection}[display]
+	{}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{-2em}{-2em}
+
+\titleformat{\paragraph}[block]
+  {\normalfont\bfseries\filcenter}
+  {\theparagraph}
+  {}
+  {\textsc}
+
+%%% End of File.

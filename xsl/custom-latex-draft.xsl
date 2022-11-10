@@ -95,7 +95,7 @@
 <!-- is needed a fatal message will warn if it is not set.    -->
 <!-- Path ends with a slash, anticipating appended filename   -->
 <!-- This could be overridden in a compatibility layer        -->
-<xsl:param name="webwork.server.latex" select="''" />
+<!-- <xsl:param name="webwork.server.latex" select="''" /> -->
 
 
 
