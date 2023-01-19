@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Additive and Multiplicative Principles</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Discrete Mathematics">
+<meta property="book:author" content="Oscar Levin">
+<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    tags: "none",
+    tagSide: "right",
+    tagIndent: ".8em",
+    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  },
+  options: {
+    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
+    processHtmlClass: "process-math",
+    renderActions: {
+        findScript: [10, function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        }, '']
+    },
+  },
+  chtml: {
+    scale: 0.98,
+    mtextInheritFont: true
+  },
+  loader: {
+    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
+    paths: {pretext: "https://pretextbook.org/js/lib"},
+  },
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  },
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link href="https://webwork.runestone.academy/webwork2_files/js/apps/MathView/mathview.css" rel="stylesheet">
+<script src="https://pretextbook.org/js/0.2/pretext-webwork/2.16/pretext-webwork.js"></script><script src="https://webwork.runestone.academy/webwork2_files/node_modules/iframe-resizer/js/iframeResizer.min.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/style_oscarlevin.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="external/custom-styles.css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '5.0.1';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runtime.a26418f1c7af0a01.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/637.d54be67956c5c660.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runestone.38c38879674c28b2.bundle.js"></script><link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/637.0fa6cababf056764.css">
+<link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/runestone.93e720e6c6581fb5.css">
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</head>
+<body id="dmoi-4" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" href="http://discrete.openmathbooks.org/dmoi3.html" target="_blank"><img src="external/images/cover.png" alt="Logo image"></a><div class="title-container">
+<h1 class="heading"><a href="dmoi4.html"><span class="title">Discrete Mathematics:</span> <span class="subtitle">An Open Introduction, 4th edition (preview)</span></a></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+<div id="searchresultsplaceholder" style="display: none">
+<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
+</h2>
+<div id="searchempty"><span>No results.</span></div>
+<ol id="searchresults"></ol>
+</div>
+</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><a class="index-button button" href="index-1.html" title="Index"><span class="name">Index</span></a><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
+<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden avatar">
+<li data-val="You!" tabindex="-1">
+<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
+<li data-val="😺" tabindex="-1">
+<span id="the😺" class="avatarcheck"></span>😺</li>
+<li data-val="👤" tabindex="-1">
+<span id="the👤" class="avatarcheck"></span>👤</li>
+<li data-val="👽" tabindex="-1">
+<span id="the👽" class="avatarcheck"></span>👽</li>
+<li data-val="🐶" tabindex="-1">
+<span id="the🐶" class="avatarcheck"></span>🐶</li>
+<li data-val="🐼" tabindex="-1">
+<span id="the🐼" class="avatarcheck"></span>🐼</li>
+<li data-val="🌈" tabindex="-1">
+<span id="the🌈" class="avatarcheck"></span>🌈</li>
+</ol>
+</li>
+<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fontfamily">
+<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
+<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
+<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+</ol>
+</li>
+<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fonts">
+<li>Size</li>
+<li><span id="thesize">12</span></li>
+<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
+<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
+<li>Width</li>
+<li><span id="thewdth">100</span></li>
+<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
+<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
+<li>Weight</li>
+<li><span id="thewght">400</span></li>
+<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
+<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
+<li>Letter spacing</li>
+<li>
+<span id="thelspace">0</span><span class="byunits">/200</span>
+</li>
+<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
+<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
+<li>Word spacing</li>
+<li>
+<span id="thewspace">0</span><span class="byunits">/50</span>
+</li>
+<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
+<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
+<li>Line Spacing</li>
+<li>
+<span id="theheight">135</span><span class="byunits">/100</span>
+</li>
+<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
+<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
+</ol>
+</li>
+<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden atmosphere">
+<li data-val="default" tabindex="-1">
+<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
+<li data-val="pastel" tabindex="-1">
+<span id="thepastel" class="atmospherecheck"></span>pastel</li>
+<li data-val="darktwilight" tabindex="-1">
+<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
+<li data-val="dark" tabindex="-1">
+<span id="thedark" class="atmospherecheck"></span>dark</li>
+<li data-val="darkmidnight" tabindex="-1">
+<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
+</ol>
+</li>
+<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden ruler">
+<li data-val="none" tabindex="-1">
+<span id="thenone" class="rulercheck">✔️</span>none</li>
+<li data-val="underline" tabindex="-1">
+<span id="theunderline" class="rulercheck"></span>underline</li>
+<li data-val="lunderline" tabindex="-1">
+<span id="thelunderline" class="rulercheck"></span>L-underline</li>
+<li data-val="greybar" tabindex="-1">
+<span id="thegreybar" class="rulercheck"></span>grey bar</li>
+<li data-val="lightbox" tabindex="-1">
+<span id="thelightbox" class="rulercheck"></span>light box</li>
+<li data-val="sunrise" tabindex="-1">
+<span id="thesunrise" class="rulercheck"></span>sunrise</li>
+<li data-val="sunriseunderline" tabindex="-1">
+<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
+<li class="moveQ">Motion by:</li>
+<li data-val="mouse" tabindex="-1">
+<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
+<li data-val="arrow" tabindex="-1">
+<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
+<li data-val="eye" tabindex="-1">
+<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
+</ol>
+</li>
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="ch_counting.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="ch_counting.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="sec_counting-binom.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
+</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\renewcommand{\d}{\displaystyle}
+\newcommand{\N}{\mathbb N}
+\newcommand{\B}{\mathbf B}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\U}{\mathcal U}
+\newcommand{\pow}{\mathcal P}
+\newcommand{\inv}{^{-1}}
+\newcommand{\st}{:}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\Imp}{\Rightarrow}
+\newcommand{\isom}{\cong}
+
+\renewcommand{\bar}{\overline}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar"><nav id="ptx-toc" class="depth3"><ul class="structural">
+<li>
+<div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="colophon-1.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li><div class="toc-item"><a href="dedication-1.html" class="internal"><span class="title">Dedication</span></a></div></li>
+<li><div class="toc-item"><a href="acknowledgement-1.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+<li><div class="toc-item"><a href="preface.html" class="internal"><span class="title">Preface</span></a></div></li>
+<li><div class="toc-item"><a href="preface-2.html" class="internal"><span class="title">How to use this book</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_intro.html" class="internal"><span class="codenumber">0</span> <span class="title">Introduction and Preliminaries</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_intro-intro.html" class="internal"><span class="codenumber">0.1</span> <span class="title">What is Discrete Mathematics?</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_intro-intro.html#rqs-intro-intro" class="internal"><span class="codenumber">0.1</span> <span class="title">Reading Questions</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-structures.html" class="internal"><span class="codenumber">0.2</span> <span class="title">Discrete Structures</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sets" class="internal"><span class="title">Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-functions" class="internal"><span class="title">Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sequences" class="internal"><span class="title">Sequences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec-relations" class="internal"><span class="title">Relations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-graphs" class="internal"><span class="title">Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsubsec_structures-statements" class="internal"><span class="title">Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-even-more" class="internal"><span class="title">Even More Structures</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#rqs-intro-structures" class="internal"><span class="codenumber">0.2</span> <span class="title">Reading Questions</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-sets.html" class="internal"><span class="codenumber">0.3</span> <span class="title">Sets</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-sets.html#RBf" class="internal"><span class="title">Notation</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#xIo" class="internal"><span class="title">Relationships Between Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#dPx" class="internal"><span class="title">Operations On Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#JWG" class="internal"><span class="title">Venn Diagrams</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#ww_intro-sets" class="internal"><span class="codenumber">0.3</span> <span class="title">Interactive Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-functions.html" class="internal"><span class="codenumber">0.4</span> <span class="title">Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-functions.html#irZ" class="internal"><span class="title">Describing Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#Ozi" class="internal"><span class="title">Surjections, Injections, and Bijections</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#uGr" class="internal"><span class="title">Image and Inverse Image</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#XHz" class="internal"><span class="codenumber">0.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_logic.html" class="internal"><span class="codenumber">1</span> <span class="title">Symbolic Logic and Proofs</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_logic-statements.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Mathematical Statements</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-statements.html#wKm" class="internal"><span class="title">Atomic and Molecular Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#cRv" class="internal"><span class="title">Implications</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#IYE" class="internal"><span class="title">Predicates and Quantifiers</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#rqs-logic-statements" class="internal"><span class="codenumber">1.1</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#iCD" class="internal"><span class="codenumber">1.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_propositional.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Propositional Logic</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_propositional.html#DTz" class="internal"><span class="title">Truth Tables</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#kaI" class="internal"><span class="title">Logical Equivalence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#QhR" class="internal"><span class="title">Deductions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#wpa" class="internal"><span class="title">Beyond Propositions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#rqs-logic-prop" class="internal"><span class="codenumber">1.2</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#Shv" class="internal"><span class="codenumber">1.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-proofs.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Ruo" class="internal"><span class="title">Direct Proof</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#xBx" class="internal"><span class="title">Proof by Contrapositive</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#dIG" class="internal"><span class="title">Proof by Contradiction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#JPP" class="internal"><span class="title">Proof by (counter) Example</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#pWY" class="internal"><span class="title">Proof by Cases</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#rqs-logic-proof" class="internal"><span class="codenumber">1.3</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Fqn" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-conc.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_logic-conc.html#MrW" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_counting.html" class="internal"><span class="codenumber">2</span> <span class="title">Counting</span></a></div>
+<ul class="structural">
+<li class="active">
+<div class="toc-item"><a href="sec_counting-addmult.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-addmult.html#YQj" class="internal"><span class="title">Counting With Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#EXs" class="internal"><span class="title">Principle of Inclusion/Exclusion</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#WHK" class="internal"><span class="codenumber">2.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-binom.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Binomial Coefficients</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-binom.html#cgB" class="internal"><span class="title">Subsets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#InK" class="internal"><span class="title">Bit Strings</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#ouT" class="internal"><span class="title">Lattice Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#UCc" class="internal"><span class="title">Binomial Coefficients</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#AJl" class="internal"><span class="title">Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#uWm" class="internal"><span class="codenumber">2.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-combperm.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Combinations and Permutations</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_counting-combperm.html#jkK" class="internal"><span class="codenumber">2.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_comb-proofs.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Combinatorial Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_comb-proofs.html#zbp" class="internal"><span class="title">Patterns in Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#fiy" class="internal"><span class="title">More Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#lYz" class="internal"><span class="codenumber">2.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_stars-and-bars.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Stars and Bars</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_stars-and-bars.html#zVa" class="internal"><span class="codenumber">2.5</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_advPIE.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_advPIE.html#nSd" class="internal"><span class="title">Counting Derangements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#TZm" class="internal"><span class="title">Counting Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#nUq" class="internal"><span class="codenumber">2.6</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_count-conc.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_count-conc.html#Ejh" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_sequences.html" class="internal"><span class="codenumber">3</span> <span class="title">Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq_intro.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Describing Sequences</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_seq_intro.html#vPK" class="internal"><span class="codenumber">3.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html#RQa" class="internal"><span class="title">Sums of Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#xXj" class="internal"><span class="title">Summing Arithmetic Sequences: Reverse and Add</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#ees" class="internal"><span class="title">Summing Geometric Sequences: Multiply, Shift and Subtract</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#EGG" class="internal"><span class="codenumber">3.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_polyfit.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Polynomial Fitting</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_polyfit.html#FTD" class="internal"><span class="codenumber">3.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_recurrence.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Solving Recurrence Relations</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_recurrence.html#Hke" class="internal"><span class="title">The Characteristic Root Technique</span></a></div></li>
+<li><div class="toc-item"><a href="sec_recurrence.html#bQc" class="internal"><span class="codenumber">3.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-induction.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Induction</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-induction.html#vyp" class="internal"><span class="title">Stamps</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#bFy" class="internal"><span class="title">Formalizing Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#HMH" class="internal"><span class="title">Examples</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#nTQ" class="internal"><span class="title">Strong Induction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#YsG" class="internal"><span class="codenumber">3.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_sequences-conc.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_sequences-conc.html#XPQ" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_graphtheory.html" class="internal"><span class="codenumber">4</span> <span class="title">Graph Theory</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_gt-intro.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Definitions</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-intro.html#QMu" class="internal"><span class="codenumber">4.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_trees.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Trees</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_trees.html#MvA" class="internal"><span class="title">Properties of Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#sCJ" class="internal"><span class="title">Rooted Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#YJS" class="internal"><span class="title">Spanning Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#iQl" class="internal"><span class="codenumber">4.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_planar.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Planar Graphs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_planar.html#ZAQ" class="internal"><span class="title">Non-planar Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#FHZ" class="internal"><span class="title">Polyhedra</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#Pey" class="internal"><span class="codenumber">4.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_coloring.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Coloring</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_coloring.html#WFX" class="internal"><span class="title">Coloring in General</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#CNg" class="internal"><span class="title">Coloring Edges</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#MxN" class="internal"><span class="codenumber">4.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_paths.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Euler Paths and Circuits</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_paths.html#ZWp" class="internal"><span class="title">Hamilton Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_paths.html#wMz" class="internal"><span class="codenumber">4.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_matchings.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Matching in Bipartite Graphs</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_matchings.html#wye" class="internal"><span class="codenumber">4.6</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_gt-conc.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-conc.html#WIK" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_additionalTopics.html" class="internal"><span class="codenumber">5</span> <span class="title">Additional Topics</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_addtops-genfun.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Generating Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#DhS" class="internal"><span class="title">Building Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#jpb" class="internal"><span class="title">Differencing</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#Pwk" class="internal"><span class="title">Multiplication and Partial Sums</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#vDt" class="internal"><span class="title">Solving Recurrence Relations with Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#iOL" class="internal"><span class="codenumber">5.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_addtops-numbth.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#CqU" class="internal"><span class="title">Divisibility</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#iyd" class="internal"><span class="title">Remainder Classes</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#OFm" class="internal"><span class="title">Properties of Congruence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#uMv" class="internal"><span class="title">Solving Congruences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#aTE" class="internal"><span class="title">Solving Linear Diophantine Equations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#TUi" class="internal"><span class="codenumber">5.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="solutions-1.html" class="internal"><span class="codenumber">A</span> <span class="title">Selected Hints</span></a></div></li>
+<li><div class="toc-item"><a href="solutions-2.html" class="internal"><span class="codenumber">B</span> <span class="title">Selected Solutions</span></a></div></li>
+<li><div class="toc-item"><a href="appendix-1.html" class="internal"><span class="codenumber">C</span> <span class="title">List of Symbols</span></a></div></li>
+<li><div class="toc-item"><a href="index-1.html" class="internal"><span class="title">Index</span></a></div></li>
+<li><div class="toc-item"><a href="colophon-2.html" class="internal"><span class="title">Colophon</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="section" id="sJa"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span>
+</h2>
+<section class="introduction" id="Qgr"><article class="project-like" id="wnA"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para logical" id="DwA"><ol class="decimal">
+<li id="RVE"><div class="para logical" id="Ppt">
+<div class="para">A restaurant offers 8 appetizers and 14 entrées. How many choices do you have if:</div>
+<ol class="lower-alpha">
+<li id="vwC"><div class="para" id="p-derived-vwC">you will eat one dish, either an appetizer or an entrée?</div></li>
+<li id="ycN"><div class="para" id="p-derived-ycN">you are extra hungry and want to eat both an appetizer and an entrée?</div></li>
+</ol>
+</div></li>
+<li id="iTP"><div class="para" id="vih">Think about the methods you used to solve question 1. Write down the rules for these methods.</div></li>
+<li id="PaY"><div class="para logical" id="jDJ">
+<div class="para">Do your rules work? A standard deck of playing cards has 26 red cards and 12 face cards.</div>
+<ol class="lower-alpha">
+<li id="ejW"><div class="para" id="p-derived-ejW">How many ways can you select a card which is either red or a face card?</div></li>
+<li id="Krf"><div class="para" id="p-derived-Krf">How many ways can you select a card which is both red and a face card?</div></li>
+<li id="qyo"><div class="para" id="p-derived-qyo">How many ways can you select two cards so that the first one is red and the second one is a face card?</div></li>
+</ol>
+</div></li>
+</ol></div></article> <div class="para" id="PKS">Consider this rather simple counting problem: at Red Dogs and Donuts, there are 14 varieties of donuts, and 16 types of hot dogs. If you want either a donut or a dog, how many options do you have? This isn't too hard, just add 14 and 16. Will that always work? What is important here?</div> <article class="assemblage assemblage-like" id="pOu"><h3 class="heading"><span class="title">Additive Principle.</span></h3>
+<div class="para" id="vSb">The <dfn class="terminology">additive principle</dfn> states that if event <span class="process-math">\(A\)</span> can occur in <span class="process-math">\(m\)</span> ways, and event <span class="process-math">\(B\)</span> can occur in <span class="process-math">\(n\)</span> <em class="emphasis">disjoint</em> ways, then the event “<span class="process-math">\(A\)</span> or <span class="process-math">\(B\)</span>” can occur in <span class="process-math">\(m + n\)</span> ways.</div></article> <div class="para" id="bZk"> It is important that the events be <dfn class="terminology">disjoint</dfn>: i.e., that there is no way for <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> to both happen at the same time. For example, a standard deck of 52 cards contains <span class="process-math">\(26\)</span> red cards and <span class="process-math">\(12\)</span> face cards. However, the number of ways to select a card which is either red or a face card is not <span class="process-math">\(26 + 12 = 38\text{.}\)</span> This is because there are 6 cards which are both red and face cards.</div> <article class="example example-like" id="Lwy"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="ajX"> How many two letter “words” start with either A or B? (A <dfn class="terminology">word</dfn> is just a string of letters; it doesn't have to be English, or even pronounceable.)</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-cuJ" id="cuJ"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-cuJ"><div class="solution solution-like"><div class="para" id="nDI">First, how many two letter words start with A? We just need to select the second letter, which can be accomplished in 26 ways. So there are 26 words starting with A. There are also 26 words that start with B. To select a word which starts with either A or B, we can pick the word from the first 26 or the second 26, for a total of 52 words.</div></div></div>
+</div></article> <div class="para" id="Igt">The additive principle also works with more than two events. Say, in addition to your 14 choices for donuts and 16 for dogs, you would also consider eating one of 15 waffles? How many choices do you have now? You would have <span class="process-math">\(14 + 16 + 15 = 45\)</span> options.</div> <article class="example example-like" id="rDH"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.2</span><span class="period">.</span>
+</h3>
+<div class="para" id="Grg">How many two letter words start with one of the 5 vowels?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-IBS" id="IBS"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-IBS"><div class="solution solution-like"><div class="para" id="TKR">There are 26 two letter words starting with A, another 26 starting with E, and so on. We will have 5 groups of 26. So we add 26 to itself 5 times. Of course it would be easier to just multiply <span class="process-math">\(5\cdot 26\text{.}\)</span> We are really using the additive principle again, just using multiplication as a shortcut.</div></div></div>
+</div></article> <article class="example example-like" id="XKQ"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.3</span><span class="period">.</span>
+</h3>
+<div class="para" id="myp">Suppose you are going for some fro-yo. You can pick one of 6 yogurt choices, and one of 4 toppings. How many choices do you have?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-oJb" id="oJb"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-oJb"><div class="solution solution-like"><div class="para" id="zSa">Break your choices up into disjoint events: <span class="process-math">\(A\)</span> are the choices with the first topping, <span class="process-math">\(B\)</span> the choices featuring the second topping, and so on. There are four events; each can occur in 6 ways (one for each yogurt flavor). The events are disjoint, so the total number of choices is <span class="process-math">\(6 + 6 + 6 + 6 = 24\text{.}\)</span>
+</div></div></div>
+</div></article> <div class="para" id="onC">Note that in both of the previous examples, when using the additive principle on a bunch of events all the same size, it is quicker to multiply. This really is the same, and not just because <span class="process-math">\(6 + 6 + 6 + 6 = 4\cdot 6\text{.}\)</span> We can first select the topping in 4 ways (that is, we first select which of the disjoint events we will take). For each of those first 4 choices, we now have 6 choices of yogurt. We have:</div> <article class="assemblage assemblage-like" id="VVD"><h3 class="heading"><span class="title">Multiplicative Principle.</span></h3>
+<div class="para" id="UuL">The <dfn class="terminology">multiplicative principle</dfn> states that if event <span class="process-math">\(A\)</span> can occur in <span class="process-math">\(m\)</span> ways, and each possibility for <span class="process-math">\(A\)</span> allows for exactly <span class="process-math">\(n\)</span> ways for event <span class="process-math">\(B\text{,}\)</span> then the event “<span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span>” can occur in <span class="process-math">\(m \cdot n\)</span> ways.</div></article> <div class="para" id="ABU">The multiplicative principle generalizes to more than two events as well.</div> <article class="example example-like" id="DRZ"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.4</span><span class="period">.</span>
+</h3>
+<div class="para" id="SFy">How many license plates can you make out of three letters followed by three numerical digits?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-UQk" id="UQk"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-UQk"><div class="solution solution-like">
+<div class="para" id="fZj">Here we have six events: the first letter, the second letter, the third letter, the first digit, the second digit, and the third digit. The first three events can each happen in 26 ways; the last three can each happen in 10 ways. So the total number of license plates will be <span class="process-math">\(26\cdot 26\cdot 26 \cdot 10 \cdot 10 \cdot 10\text{,}\)</span> using the multiplicative principle.</div> <div class="para" id="Mgs">Does this make sense? Think about how we would pick a license plate. How many choices we would have? First, we need to pick the first letter. There are 26 choices. Now for each of those, there are 26 choices for the second letter: 26 second letters with first letter A, 26 second letters with first letter B, and so on. We add 26 to itself 26 times. Or quicker: there are <span class="process-math">\(26 \cdot 26\)</span> choices for the first two letters.</div> <div class="para" id="snB">Now for each choice of the first two letters, we have 26 choices for the third letter. That is, 26 third letters for the first two letters AA, 26 choices for the third letter after starting AB, and so on. There are <span class="process-math">\(26 \cdot 26\)</span> of these <span class="process-math">\(26\)</span> third letter choices, for a total of <span class="process-math">\((26\cdot26)\cdot 26\)</span> choices for the first three letters. And for each of these <span class="process-math">\(26\cdot26\cdot26\)</span> choices of letters, we have a bunch of choices for the remaining digits.</div> <div class="para" id="YuK">In fact, there are going to be exactly 1000 choices for the numbers. We can see this because there are 1000 three-digit numbers (000 through 999). This is 10 choices for the first digit, 10 for the second, and 10 for the third. The multiplicative principle says we multiply: <span class="process-math">\(10\cdot 10 \cdot 10 = 1000\text{.}\)</span>
+</div> <div class="para" id="EBT">All together, there were <span class="process-math">\(26^3\)</span> choices for the three letters, and <span class="process-math">\(10^3\)</span> choices for the numbers, so we have a total of <span class="process-math">\(26^3 \cdot 10^3\)</span> choices of license plates.</div>
+</div></div>
+</div></article> <div class="para" id="gJd">Careful: “and” doesn't mean “times.” For example, how many playing cards are both red and a face card? Not <span class="process-math">\(26 \cdot 12\text{.}\)</span> The answer is 6, and we needed to know something about cards to answer that question.</div> <div class="para" id="MQm">Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the multiplicative principle (you are counting two separate events) but the answer is not <span class="process-math">\(26 \cdot 12\)</span> here either. The problem is that while there are 26 ways for the first card to be selected, it is not the case that <em class="emphasis">for each</em> of those there are 12 ways to select the second card. If the first card was both red and a face card, then there would be only 11 choices for the second card.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-6" id="fn-6"><sup> 1 </sup></a>
+</div> <article class="example example-like" id="jZi"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.5</span><span class="period">.</span><span class="space"> </span><span class="title">Counting functions.</span>
+</h3>
+<div class="para" id="yMH">How many functions <span class="process-math">\(f:\{1,2,3,4,5\} \to \{a,b,c,d\}\)</span> are there?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-AXt" id="AXt"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-AXt"><div class="solution solution-like">
+<div class="para" id="kJc">Remember that a function sends each element of the domain to exactly one element of the codomain. To determine a function, we just need to specify the image of each element in the domain. Where can we send 1? There are 4 choices. Where can we send 2? Again, 4 choices. What we have here is 5 “events” (picking the image of an element in the domain) each of which can happen in 4 ways (the choices for that image). Thus there are <span class="process-math">\(4 \cdot 4 \cdot 4 \cdot 4 \cdot 4 = 4^5\)</span> functions.</div> <div class="para" id="QQl">This is more than just an example of how we can use the multiplicative principle in a particular counting question. What we have here is a general interpretation of certain applications of the multiplicative principle using rigorously defined mathematical objects: functions. Whenever we have a counting question that asks for the number of outcomes of a repeated event, we can interpret that as asking for the number of functions from <span class="process-math">\(\{1,2,\ldots, n\}\)</span> (where <span class="process-math">\(n\)</span> is the number of times the event is repeated) to <span class="process-math">\(\{1,2,\ldots,k\}\)</span> (where <span class="process-math">\(k\)</span> is the number of ways that event can occur).</div>
+</div></div>
+</div></article></section><section class="subsection" id="YQj"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Counting With Sets</span>
+</h3>
+<div class="para" id="JVG">Do you believe the additive and multiplicative principles? How would you convince someone they are correct? This is surprisingly difficult. They seem so simple, so obvious. But why do they work?</div>
+<div class="para" id="qcP">To make things clearer, and more mathematically rigorous, we will use sets. Do not skip this section! It might seem like we are just trying to give a proof of these principles, but we are doing a lot more. If we understand the additive and multiplicative principles rigorously, we will be better at applying them, and knowing when and when not to apply them at all.</div>
+<div class="para" id="WjY">We will look at the additive and multiplicative principles in a slightly different way. Instead of thinking about event <span class="process-math">\(A\)</span> and event <span class="process-math">\(B\text{,}\)</span> we want to think of a set <span class="process-math">\(A\)</span> and a set <span class="process-math">\(B\text{.}\)</span> The sets will contain all the different ways the event can happen. (It will be helpful to be able to switch back and forth between these two models when checking that we have counted correctly.) Here's what we mean:</div>
+<article class="example example-like" id="CcM"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.6</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="eTQ">
+<div class="para">Suppose you own 9 shirts and 5 pairs of pants.</div>
+<ol class="decimal">
+<li id="WFx"><div class="para" id="bpq">How many outfits can you make?</div></li>
+<li id="CMG"><div class="para" id="Hwz">If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-heC" id="heC"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-heC"><div class="solution solution-like">
+<div class="para" id="wXu">By now you should agree that the answer to the first question is <span class="process-math">\(9 \cdot 5 = 45\)</span> and the answer to the second question is <span class="process-math">\(9 + 5 = 14\text{.}\)</span> These are the multiplicative and additive principles. There are two events: picking a shirt and picking a pair of pants. The first event can happen in 9 ways and the second event can happen in 5 ways. To get both a shirt and a pair of pants, you multiply. To get just one article of clothing, you add.</div> <div class="para" id="deD">Now look at this using sets. There are two sets, call them <span class="process-math">\(S\)</span> and <span class="process-math">\(P\text{.}\)</span> The set <span class="process-math">\(S\)</span> contains all 9 shirts so <span class="process-math">\(|S| = 9\)</span> while <span class="process-math">\(|P| = 5\text{,}\)</span> since there are 5 elements in the set <span class="process-math">\(P\)</span> (namely your 5 pairs of pants). What are we asking in terms of these sets? Well in question 2, we really want <span class="process-math">\(|S \cup P|\text{,}\)</span> the number of elements in the union of shirts and pants. This is just <span class="process-math">\(|S| + |P|\)</span> (since there is no overlap; <span class="process-math">\(|S \cap P| = 0\)</span>). Question 1 is slightly more complicated. Your first guess might be to find <span class="process-math">\(|S \cap P|\text{,}\)</span> but this is not right (there is nothing in the intersection). We are not asking for how many clothing items are both a shirt and a pair of pants. Instead, we want one of each. We could think of this as asking how many pairs <span class="process-math">\((x,y)\)</span> there are, where <span class="process-math">\(x\)</span> is a shirt and <span class="process-math">\(y\)</span> is a pair of pants. As we will soon verify, this number is <span class="process-math">\(|S| \cdot |P|\text{.}\)</span>
+</div>
+</div></div>
+</div></article><div class="para" id="Crh">From this example we can see right away how to rephrase our additive principle in terms of sets:</div>
+<article class="assemblage assemblage-like" id="leB"><h4 class="heading"><span class="title">Additive Principle (with sets).</span></h4>
+<div class="para logical" id="FlN">
+<div class="para">Given two sets <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{,}\)</span> if <span class="process-math">\(A \cap B = \emptyset\)</span> (that is, if there is no element in common to both <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span>), then</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\card{A \cup B} = \card{A} + \card{B}\text{.}
+\end{equation*}
+</div>
+</div></article><div class="para" id="iyq">This hardly needs a proof. To find <span class="process-math">\(A \cup B\text{,}\)</span> you take everything in <span class="process-math">\(A\)</span> and throw in everything in <span class="process-math">\(B\text{.}\)</span> Since there is no element in both sets already, you will have <span class="process-math">\(\card{A}\)</span> things and add <span class="process-math">\(\card{B}\)</span> new things to it. This is what adding does! Of course, we can easily extend this to any number of disjoint sets.</div>
+<div class="para" id="OFz">From the example above, we see that in order to investigate the multiplicative principle carefully, we need to consider ordered pairs. We should define this carefully:</div>
+<article class="assemblage assemblage-like" id="RlK"><h4 class="heading"><span class="title">Cartesian Product.</span></h4>
+<div class="para logical" id="lsW">
+<div class="para">Given sets <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{,}\)</span> we can form the <em class="emphasis">set</em>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A \times B = \{(x,y) \st x \in A \wedge y \in B\}
+\end{equation*}
+</div>
+<div class="para">to be the set of all ordered pairs <span class="process-math">\((x,y)\)</span> where <span class="process-math">\(x\)</span> is an element of <span class="process-math">\(A\)</span> and <span class="process-math">\(y\)</span> is an element of <span class="process-math">\(B\text{.}\)</span> We call <span class="process-math">\(A \times B\)</span> the <dfn class="terminology">Cartesian product</dfn> of <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{.}\)</span>
+</div>
+</div></article><article class="example example-like" id="ijV"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.7</span><span class="period">.</span>
+</h4>
+<div class="para" id="LaZ">Let <span class="process-math">\(A = \{1,2\}\)</span> and <span class="process-math">\(B=\{3,4,5\}\text{.}\)</span> Find <span class="process-math">\(A \times B\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-NlL" id="NlL"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-NlL"><div class="solution solution-like"><div class="para logical" id="JlM">
+<div class="para">We want to find ordered pairs <span class="process-math">\((a,b)\)</span> where <span class="process-math">\(a\)</span> can be either <span class="process-math">\(1\)</span> or <span class="process-math">\(2\)</span> and <span class="process-math">\(b\)</span> can be either 3, 4, or 5. <span class="process-math">\(A \times B\)</span> is the set of all of these pairs:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A \times B = \{(1,3), (1,4), (1,5), (2,3), (2,4), (2,5)\}\text{.}
+\end{equation*}
+</div>
+</div></div></div>
+</div></article><div class="para logical" id="uMI">
+<div class="para">The question is, what is <span class="process-math">\(\card{A \times B}\text{?}\)</span> To figure this out, write out <span class="process-math">\(A \times B\text{.}\)</span> Let <span class="process-math">\(A = \{a_1,a_2, a_3, \ldots,
+a_m\}\)</span> and <span class="process-math">\(B = \{b_1,b_2, b_3, \ldots, b_n\}\)</span> (so <span class="process-math">\(\card{A} = m\)</span> and <span class="process-math">\(\card{B} = n\)</span>). The set <span class="process-math">\(A \times B\)</span> contains all pairs with the first half of the pair being some <span class="process-math">\(a_i \in A\)</span> and the second being one of the <span class="process-math">\(b_j \in B\text{.}\)</span> In other words:</div>
+<div class="displaymath process-math" id="yri">
+\begin{align*}
+A \times B = \{ \amp (a_1, b_1), (a_1, b_2), (a_1, b_3), \ldots (a_1, b_n),\\
+\amp (a_2, b_1), (a_2, b_2), (a_2, b_3), \ldots, (a_2, b_n),\\
+\amp (a_3, b_1), (a_3, b_2), (a_3, b_3), \ldots, (a_3, b_n),\\
+\amp \vdots\\
+\amp (a_m, b_1), (a_m, b_2), (a_m, b_3), \ldots, (a_m, b_n)\}\text{.}
+\end{align*}
+</div>
+</div>
+<div class="para" id="aTR">Notice what we have done here: we made <span class="process-math">\(m\)</span> rows of <span class="process-math">\(n\)</span> pairs, for a total of <span class="process-math">\(m \cdot n\)</span> pairs.</div>
+<div class="para logical" id="Hba">
+<div class="para">Each row above is really <span class="process-math">\(\{a_i\} \times B\)</span> for some <span class="process-math">\(a_i \in A\text{.}\)</span> That is, we fixed the <span class="process-math">\(A\)</span>-element. Broken up this way, we have</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A \times B = (\{a_1\} \times B) \cup (\{a_2\} \times B) \cup (\{a_3\}\times B) \cup \cdots \cup (\{a_m\} \times B)\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="nij">So <span class="process-math">\(A \times B\)</span> is really the union of <span class="process-math">\(m\)</span> disjoint sets. Each of those sets has <span class="process-math">\(n\)</span> elements in them. The total (using the additive principle) is <span class="process-math">\(n + n + n + \cdots + n = m \cdot n\text{.}\)</span>
+</div>
+<div class="para" id="Tps">To summarize:</div>
+<article class="assemblage assemblage-like" id="xsT"><h4 class="heading"><span class="title">Multiplicative Principle (with sets).</span></h4>
+<div class="para" id="RAf">Given two sets <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{,}\)</span> we have <span class="process-math">\(\card{A \times B} = \card{A} \cdot \card{B}\text{.}\)</span>
+</div></article><div class="para" id="zwB">Again, we can easily extend this to any number of sets.</div></section><section class="subsection" id="EXs"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Principle of Inclusion/Exclusion</span>
+</h3>
+<article class="project-like" id="fpp"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para" id="sXv">A recent buzz marketing campaign for <em class="emphasis">Village Inn</em> surveyed patrons on their pie preferences. People were asked whether they enjoyed (A) Apple, (B) Blueberry or (C) Cherry pie (respondents answered yes or no to each type of pie, and could say yes to more than one type). The following table shows the results of the survey.</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;"><div class="sbspanel fixed-width top" style="width:100%;"><table class="tabular" id="Dbb">
+<tr>
+<td class="r m b1 r1 l0 t0 lines">Pies enjoyed:</td>
+<td class="c m b1 r0 l0 t0 lines">A</td>
+<td class="c m b1 r0 l0 t0 lines">B</td>
+<td class="c m b1 r0 l0 t0 lines">C</td>
+<td class="c m b1 r0 l0 t0 lines">AB</td>
+<td class="c m b1 r0 l0 t0 lines">AC</td>
+<td class="c m b1 r0 l0 t0 lines">BC</td>
+<td class="c m b1 r0 l0 t0 lines">ABC</td>
+</tr>
+<tr>
+<td class="r m b0 r1 l0 t0 lines">Number of people:</td>
+<td class="c m b0 r0 l0 t0 lines">20</td>
+<td class="c m b0 r0 l0 t0 lines">13</td>
+<td class="c m b0 r0 l0 t0 lines">26</td>
+<td class="c m b0 r0 l0 t0 lines">9</td>
+<td class="c m b0 r0 l0 t0 lines">15</td>
+<td class="c m b0 r0 l0 t0 lines">7</td>
+<td class="c m b0 r0 l0 t0 lines">5</td>
+</tr>
+</table></div></div></div> <div class="para" id="ZeE">How many of those asked enjoy at least one of the kinds of pie? Also, explain why the answer is not 95.</div></article><div class="para" id="fDK"> While we are thinking about sets, consider what happens to the additive principle when the sets are NOT disjoint. Suppose we want to find <span class="process-math">\(\card{A \cup B}\)</span> and know that <span class="process-math">\(\card{A} = 10\)</span> and <span class="process-math">\(\card{B} = 8\text{.}\)</span> This is not enough information though. We do not know how many of the 8 elements in <span class="process-math">\(B\)</span> are also elements of <span class="process-math">\(A\text{.}\)</span> However, if we also know that <span class="process-math">\(\card{A \cap B} = 6\text{,}\)</span> then we can say exactly how many elements are in <span class="process-math">\(A\text{,}\)</span> and, of those, how many are in <span class="process-math">\(B\)</span> and how many are not (6 of the 10 elements are in <span class="process-math">\(B\text{,}\)</span> so 4 are in <span class="process-math">\(A\)</span> but not in <span class="process-math">\(B\)</span>). We could fill in a Venn diagram as follows:</div>
+<div class="sidebyside"><div class="sbsrow" style="margin-left:30%;margin-right:30%;"><div class="sbspanel top" style="width:100%;"><img src="generated/latex-image/image-25.svg" role="img" class="contained" alt="Intersecting circles labeled A and B.  Inside the region enclosed by both circles is the number 6.  The number 4 is in the region inside A but outside B.  The number 2 is in the region inside B but outside A."></div></div></div>
+<div class="para" id="LKT">This says there are 6 elements in <span class="process-math">\(A \cap B\text{,}\)</span> 4 elements in <span class="process-math">\(A \setminus B\)</span> and 2 elements in <span class="process-math">\(B \setminus A\text{.}\)</span> Now <em class="emphasis">these</em> three sets <em class="emphasis">are</em> disjoint, so we can use the additive principle to find the number of elements in <span class="process-math">\(A \cup B\text{.}\)</span> It is <span class="process-math">\(6 + 4 + 2 = 12\text{.}\)</span>
+</div>
+<div class="para" id="rSc">This will always work, but drawing a Venn diagram is more than we need to do. In fact, it would be nice to relate this problem to the case where <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> are disjoint. Is there one rule we can make that works in either case?</div>
+<div class="para logical" id="XZl">
+<div class="para">Here is another way to get the answer to the problem above. Start by just adding <span class="process-math">\(\card{A} + \card{B}\text{.}\)</span> This is <span class="process-math">\(10 + 8 = 18\text{,}\)</span> which would be the answer if <span class="process-math">\(\card{A \cap B} = 0\text{.}\)</span> We see that we are off by exactly 6, which just so happens to be <span class="process-math">\(\card{A \cap B}\text{.}\)</span> So perhaps we guess,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\card{A \cup B} = \card{A} + \card{B} - \card{A \cap B}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="Egu">This works for this one example. Will it always work? Think about what we are doing here. We want to know how many things are either in <span class="process-math">\(A\)</span> or <span class="process-math">\(B\)</span> (or both). We can throw in everything in <span class="process-math">\(A\text{,}\)</span> and everything in <span class="process-math">\(B\text{.}\)</span> This would give <span class="process-math">\(\card{A} + \card{B}\)</span> many elements. But of course when you actually take the union, you do not repeat elements that are in both. So far we have counted every element in <span class="process-math">\(A \cap B\)</span> exactly twice: once when we put in the elements from <span class="process-math">\(A\)</span> and once when we included the elements from <span class="process-math">\(B\text{.}\)</span> We correct by subtracting out the number of elements we have counted twice. So we added them in twice, subtracted once, leaving them counted only one time.</div>
+<div class="para" id="knD">In other words, we have:</div>
+<article class="assemblage assemblage-like" id="dAc"><h4 class="heading"><span class="title">Cardinality of a union (2 sets).</span></h4>
+<div class="para logical" id="xHo">
+<div class="para">For any finite sets <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\card{A \cup B} = \card{A} + \card{B} - \card{A \cap B}\text{.}
+\end{equation*}
+</div>
+</div></article><div class="para" id="QuM">We can do something similar with three sets.</div>
+<article class="example example-like" id="Ore"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.1.8</span><span class="period">.</span>
+</h4>
+<div class="para" id="rii">An examination in three subjects, Algebra, Biology, and Chemistry, was taken by 41 students. The following table shows how many students failed in each single subject and in their various combinations:</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;"><div class="sbspanel fixed-width top" style="width:100%;"><table class="tabular" id="jik">
+<tr>
+<td class="r m b1 r1 l0 t0 lines">Subject:</td>
+<td class="c m b1 r0 l0 t0 lines">A</td>
+<td class="c m b1 r0 l0 t0 lines">B</td>
+<td class="c m b1 r0 l0 t0 lines">C</td>
+<td class="c m b1 r0 l0 t0 lines">AB</td>
+<td class="c m b1 r0 l0 t0 lines">AC</td>
+<td class="c m b1 r0 l0 t0 lines">BC</td>
+<td class="c m b1 r0 l0 t0 lines">ABC</td>
+</tr>
+<tr>
+<td class="r m b0 r1 l0 t0 lines">Failed:</td>
+<td class="c m b0 r0 l0 t0 lines">12</td>
+<td class="c m b0 r0 l0 t0 lines">5</td>
+<td class="c m b0 r0 l0 t0 lines">8</td>
+<td class="c m b0 r0 l0 t0 lines">2</td>
+<td class="c m b0 r0 l0 t0 lines">6</td>
+<td class="c m b0 r0 l0 t0 lines">3</td>
+<td class="c m b0 r0 l0 t0 lines">1</td>
+</tr>
+</table></div></div></div> <div class="para" id="Xpr">How many students failed at least one subject?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original has-image" data-refid="hk-tsU" id="tsU"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-tsU"><div class="solution solution-like">
+<div class="para" id="psV">The answer is not 37, even though the sum of the numbers above is 37. For example, while 12 students failed Algebra, 2 of those students also failed Biology, 6 also failed Chemistry, and 1 of those failed all three subjects. In fact, that 1 student who failed all three subjects is counted a total of 7 times in the total 37. To clarify things, let us think of the students who failed Algebra as the elements of the set <span class="process-math">\(A\text{,}\)</span> and similarly for sets <span class="process-math">\(B\)</span> and <span class="process-math">\(C\text{.}\)</span> The one student who failed all three subjects is the lone element of the set <span class="process-math">\(A \cap B \cap C\text{.}\)</span> Thus, in Venn diagrams:</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:32%;margin-right:32%;"><div class="sbspanel top" style="width:100%;"><img src="generated/latex-image/image-26.svg" role="img" class="contained" alt="Three intersecting circles labeled A, B, and C.  The center region inside all three circles contains the number 1."></div></div></div> <div class="para" id="VAe">Now let's fill in the other intersections. We know <span class="process-math">\(A\cap B\)</span> contains 2 elements, but 1 element has already been counted. So we should put a 1 in the region where <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> intersect (but <span class="process-math">\(C\)</span> does not). Similarly, we calculate the cardinality of <span class="process-math">\((A\cap C) \setminus B\text{,}\)</span> and <span class="process-math">\((B \cap C) \setminus A\text{:}\)</span>
+</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:32%;margin-right:32%;"><div class="sbspanel top" style="width:100%;"><img src="generated/latex-image/image-27.svg" role="img" class="contained" alt="Three intersecting circles labeled A, B, and C.  The center region inside all three circles contains the number 1.  The region above this, inside both A and B but outside C, contains the number 1.  The region inside both A and C but outside B contains the number 5.  The region inside B and C but outside A contains the number 2."></div></div></div> <div class="para" id="BHn">Next, we determine the numbers which should go in the remaining regions, including outside of all three circles. This last number is the number of students who did not fail any subject:</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:32%;margin-right:32%;"><div class="sbspanel top" style="width:100%;"><img src="generated/latex-image/image-28.svg" role="img" class="contained" alt="Three intersecting circles labeled A, B, and C.  The center region inside all three circles contains the number 1.  The region above this, inside both A and B but outside C, contains the number 1.  The region inside both A and C but outside B contains the number 5.  The region inside B and C but outside A contains the number 2.  The region just inside A contains the number 5; the region just inside B contains the number 1; the region just inside C contains the number 0.  The number 26 is outside all three circles."></div></div></div> <div class="para" id="hOw">We found 5 goes in the “<span class="process-math">\(A\)</span> only” region because the entire circle for <span class="process-math">\(A\)</span> needed to have a total of 12, and 7 were already accounted for. Similarly, we calculate the “<span class="process-math">\(B\)</span> only” region to contain only 1 student and the “<span class="process-math">\(C\)</span> only” region to contain no students.</div> <div class="para" id="NVF">Thus the number of students who failed at least one class is 15 (the sum of the numbers in each of the eight disjoint regions). The number of students who passed all three classes is 26: the total number of students, 41, less the 15 who failed at least one class.</div> <div class="para" id="ucO">Note that we can also answer other questions. For example, how many students failed just Chemistry? None. How many passed Algebra but failed both Biology and Chemistry? This corresponds to the region inside both <span class="process-math">\(B\)</span> and <span class="process-math">\(C\)</span> but outside of <span class="process-math">\(A\text{,}\)</span> containing 2 students.</div>
+</div></div>
+</div></article><div class="para" id="wBV">Could we have solved the problem above in an algebraic way? While the additive principle generalizes to any number of sets, when we add a third set here, we must be careful. With two sets, we needed to know the cardinalities of <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\(B\text{,}\)</span> and <span class="process-math">\(A \cap B\)</span> in order to find the cardinality of <span class="process-math">\(A \cup B\text{.}\)</span> With three sets we need more information. There are more ways the sets can combine. Not surprisingly then, the formula for cardinality of the union of three non-disjoint sets is more complicated:</div>
+<article class="assemblage assemblage-like" id="JHl"><h4 class="heading"><span class="title">Cardinality of a union (3 sets).</span></h4>
+<div class="para logical" id="dOx">
+<div class="para">For any finite sets <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\(B\text{,}\)</span> and <span class="process-math">\(C\text{,}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\card{A \cup B \cup C} = \card{A} + \card{B} + \card{C} - \card{A \cap B} - \card{A \cap C} - \card{B \cap C} + \card{A \cap B \cap C}\text{.}
+\end{equation*}
+</div>
+</div></article><div class="para" id="cJe">To determine how many elements are in at least one of <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\(B\text{,}\)</span> or <span class="process-math">\(C\)</span> we add up all the elements in each of those sets. However, when we do that, any element in both <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> is counted twice. Also, each element in both <span class="process-math">\(A\)</span> and <span class="process-math">\(C\)</span> is counted twice, as are elements in <span class="process-math">\(B\)</span> and <span class="process-math">\(C\text{,}\)</span> so we take each of those out of our sum once. But now what about the elements which are in <span class="process-math">\(A \cap B \cap C\)</span> (in all three sets)? We added them in three times, but also removed them three times. They have not yet been counted. Thus we add those elements back in at the end.</div>
+<div class="para logical" id="IQn">
+<div class="para">Returning to our example above, we have <span class="process-math">\(\card{A} = 12\text{,}\)</span> <span class="process-math">\(\card{B} = 5\text{,}\)</span> <span class="process-math">\(\card{C} = 8\text{.}\)</span> We also have <span class="process-math">\(\card{A \cap B} = 2\text{,}\)</span> <span class="process-math">\(\card{A \cap C} = 6\text{,}\)</span> <span class="process-math">\(\card{B \cap C} = 3\text{,}\)</span> and <span class="process-math">\(\card{A \cap B \cap C} = 1\text{.}\)</span> Therefore:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\card{A \cup B \cup C} = 12 + 5 + 8 - 2 - 6 - 3 + 1 = 15\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="oXw">This is what we got when we solved the problem using Venn diagrams.</div>
+<div class="para" id="VeF">This process of adding in, then taking out, then adding back in, and so on is called the <em class="emphasis">Principle of Inclusion/Exclusion</em>, or simply PIE. We will return to this counting technique later to solve for more complicated problems (involving more than 3 sets).</div></section><section class="exercises" id="WHK"><h3 class="heading hide-type">
+<span class="type">Exercises</span> <span class="codenumber"></span> <span class="title">Exercises</span>
+</h3>
+<article class="exercise exercise-like" id="giA"><h4 class="heading"><span class="codenumber">1<span class="period">.</span></span></h4>
+<div id="webwork-32" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="32" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApGb3IgeW91ciBjb2xsZWdlIGludGVydmlldywgeW91IG11c3Qgd2VhciBhIHRpZS4gWW91IG93biAzIHJlZ3VsYXIgKGJvcmluZykgdGllcyBhbmQgNSAoY29vbCkgYm93IHRpZXMuCmEuICBIb3cgbWFueSBjaG9pY2VzIGRvIHlvdSBoYXZlIGZvciB5b3VyIG5lY2std2Vhcj8KCiAgICBbX117OH17NX0KCgphLiAgWW91IHJlYWxpemUgdGhhdCB0aGUgaW50ZXJ2aWV3IGlzIGZvciBjbG93biBjb2xsZWdlLCBzbyB5b3Ugc2hvdWxkIHByb2JhYmx5IHdlYXIgYm90aCBhIHJlZ3VsYXIgdGllIGFuZCBhIGJvdyB0aWUuIEhvdyBtYW55IGNob2ljZXMgZG8geW91IGhhdmUgbm93PwoKICAgIFtfXXsxNX17NX0KCgphLiAgRm9yIHRoZSByZXN0IG9mIHlvdXIgb3V0Zml0LCB5b3UgaGF2ZSA1IHNoaXJ0cywgNCBza2lydHMsIDMgcGFudHMsIGFuZCA3IGRyZXNzZXMuIFlvdSB3YW50IHRvIHNlbGVjdCBlaXRoZXIgYSBzaGlydCB0byB3ZWFyIHdpdGggYSBza2lydCBvciBwYW50cywgb3IganVzdCBhIGRyZXNzLiBIb3cgbWFueSBvdXRmaXRzIGRvIHlvdSBoYXZlIHRvIGNob29zZSBmcm9tPwoKICAgIFtfXXs0Mn17NX0KCgoKRU5EX1BHTUwKCkJFR0lOX1BHTUxfU09MVVRJT04KYS4gIDggdGllcy4gVXNlIHRoZSBhZGRpdGl2ZSBwcmluY2lwbGUuCgoKYS4gIDE1IHRpZXMuIFVzZSB0aGUgbXVsdGlwbGljYXRpdmUgcHJpbmNpcGxlCmEuICBbYDVcY2RvdCAoNCszKSArIDcgPSA0MmBdIG91dGZpdHMuICAgCgoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para logical" id="p-1572">
+<div class="para">For your college interview, you must wear a tie. You own 3 regular (boring) ties and 5 (cool) bow ties.</div>
+<ol class="lower-alpha">
+<li id="li-673"><div class="para" id="p-1573">How many choices do you have for your neck-wear?</div></li>
+<li id="li-674"><div class="para" id="p-1574">You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?</div></li>
+<li id="li-675"><div class="para" id="p-1575">For the rest of your outfit, you have 5 shirts, 4 skirts, 3 pants, and 7 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from?</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-101" id="solution-101"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-101"><div class="solution solution-like"><div class="para logical" id="p-1579"><ol class="lower-alpha">
+<li id="li-676"><div class="para" id="p-1580">8 ties. Use the additive principle.</div></li>
+<li id="li-677"><div class="para" id="p-1581">15 ties. Use the multiplicative principle</div></li>
+<li id="li-678"><div class="para" id="p-1582">
+<span class="process-math">\(5\cdot (4+3) + 7 = 42\)</span> outfits.</div></li>
+</ol></div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-32')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="MpJ"><h4 class="heading"><span class="codenumber">2<span class="period">.</span></span></h4>
+<div class="para logical" id="wpN">
+<div class="para">Your Blu-ray collection consists of 9 comedies and 7 horror movies. Give an example of a question for which the answer is:</div>
+<ol class="lower-alpha">
+<li id="dXO"><div class="para" id="yAz">16.</div></li>
+<li id="KeX"><div class="para" id="eHI">63.</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-umf" id="umf"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-umf"><div class="solution solution-like"><div class="para logical" id="uAA"><ol class="lower-alpha">
+<li id="qmg"><div class="para" id="KOR">For example, 16 is the number of choices you have if you want to watch one movie, either a comedy or horror flick.</div></li>
+<li id="Wtp"><div class="para" id="qWa">For example, 63 is the number of choices you have if you will watch two movies, first a comedy and then a horror.</div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="swS"><h4 class="heading"><span class="codenumber">3<span class="period">.</span></span></h4>
+<div id="webwork-33" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="33" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApoZXhhZGVjaW1hbCBXZSB1c3VhbGx5IHdyaXRlIG51bWJlcnMgaW4gZGVjaW1hbCBmb3JtIChvciBiYXNlIDEwKSwgbWVhbmluZyBudW1iZXJzIGFyZSBjb21wb3NlZCB1c2luZyAxMCBkaWZmZXJlbnQgImRpZ2l0cyIgW2BcezAsMSxcbGRvdHMsIDlcfVx0ZXh0ey59YF0gU29tZXRpbWVzIHRob3VnaCBpdCBpcyB1c2VmdWwgdG8gd3JpdGUgbnVtYmVycyBoZXhhZGVjaW1hbCBvciBiYXNlIDE2LiBOb3cgdGhlcmUgYXJlIDE2IGRpc3RpbmN0IGRpZ2l0cyB0aGF0IGNhbiBiZSB1c2VkIHRvIGZvcm0gbnVtYmVyczogW2BcezAsIDEsIFxsZG90cywgOSwgXG1hdGhybXtBLCBCLCBDLCBELCBFLCBGfVx9XHRleHR7Ln1gXSBTbyBmb3IgZXhhbXBsZSwgYSAzIGRpZ2l0IGhleGFkZWNpbWFsIG51bWJlciBtaWdodCBiZSAyQjguCmEuICBIb3cgbWFueSAyLWRpZ2l0IGhleGFkZWNpbWFscyBhcmUgdGhlcmUgaW4gd2hpY2ggdGhlIGZpcnN0IGRpZ2l0IGlzIEUgb3IgRj8gRXhwbGFpbiB5b3VyIGFuc3dlciBpbiB0ZXJtcyBvZiB0aGUgYWRkaXRpdmUgcHJpbmNpcGxlICh1c2luZyBlaXRoZXIgZXZlbnRzIG9yIHNldHMpLgoKICAgIFtfXXszMn17NX0KCgphLiAgRXhwbGFpbiB3aHkgeW91ciBhbnN3ZXIgdG8gdGhlIHByZXZpb3VzIHBhcnQgaXMgY29ycmVjdCBpbiB0ZXJtcyBvZiB0aGUgbXVsdGlwbGljYXRpdmUgcHJpbmNpcGxlICh1c2luZyBlaXRoZXIgZXZlbnRzIG9yIHNldHMpLiBXaHkgZG8gYm90aCB0aGUgYWRkaXRpdmUgYW5kIG11bHRpcGxpY2F0aXZlIHByaW5jaXBsZXMgZ2l2ZSB5b3UgdGhlIHNhbWUgYW5zd2VyPwoKCmEuICBIb3cgbWFueSAzLWRpZ2l0IGhleGFkZWNpbWFscyBzdGFydCB3aXRoIGEgbGV0dGVyIChBLUYpIGFuZCBlbmQgd2l0aCBhIG51bWVyYWwgKDAtOSk/IEV4cGxhaW4uCgogICAgW19dezk2MH17NX0KCgphLiAgSG93IG1hbnkgMy1kaWdpdCBoZXhhZGVjaW1hbHMgc3RhcnQgd2l0aCBhIGxldHRlciAoQS1GKSBvciBlbmQgd2l0aCBhIG51bWVyYWwgKDAtOSkgKG9yIGJvdGgpPyBFeHBsYWluLgoKICAgIFtfXXszMTM2fXs1fQoKCgpFTkRfUEdNTAoKRU5ERE9DVU1FTlQoKTs=" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents"><div class="para logical" id="p-1589">
+<div class="para">hexadecimal We usually write numbers in decimal form (or base 10), meaning numbers are composed using 10 different “digits” <span class="process-math">\(\{0,1,\ldots, 9\}\text{.}\)</span> Sometimes though it is useful to write numbers hexadecimal or base 16. Now there are 16 distinct digits that can be used to form numbers: <span class="process-math">\(\{0, 1, \ldots, 9, \mathrm{A, B, C, D, E, F}\}\text{.}\)</span> So for example, a 3 digit hexadecimal number might be 2B8.</div>
+<ol class="lower-alpha">
+<li id="li-683"><div class="para" id="p-1590">How many 2-digit hexadecimals are there in which the first digit is E or F? Explain your answer in terms of the additive principle (using either events or sets).</div></li>
+<li id="li-684"><div class="para" id="p-1591">Explain why your answer to the previous part is correct in terms of the multiplicative principle (using either events or sets). Why do both the additive and multiplicative principles give you the same answer?</div></li>
+<li id="li-685"><div class="para" id="p-1592">How many 3-digit hexadecimals start with a letter (A-F) and end with a numeral (0-9)? Explain.</div></li>
+<li id="li-686"><div class="para" id="p-1593">How many 3-digit hexadecimals start with a letter (A-F) or end with a numeral (0-9) (or both)? Explain.</div></li>
+</ol>
+</div></div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-33')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="YEb"><h4 class="heading"><span class="codenumber">4<span class="period">.</span></span></h4>
+<div id="webwork-34" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="34" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQQ0NtYWNyb3MucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKVEVYVChNT0RFUyhQVFg9PicnLEhUTUw9Pic8ZGl2IHN0eWxlPSJkaXNwbGF5Om5vbmU7Ij5cKFxyZW5ld2NvbW1hbmR7XGJhcn17XG92ZXJsaW5lfVxuZXdjb21tYW5ke1xjYXJkfVsxXXtcbGVmdHwgIzEgXHJpZ2h0fH1cKTwvZGl2PicpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApTdXBwb3NlIHlvdSBoYXZlIHNldHMgW2BBYF0gYW5kIFtgQmBdIHdpdGggW2BcY2FyZHtBfSA9IDEwYF0gYW5kIFtgXGNhcmR7Qn0gPSAxNVx0ZXh0ey59YF0KYS4gIFdoYXQgaXMgdGhlIGxhcmdlc3QgcG9zc2libGUgdmFsdWUgZm9yIFtgXGNhcmR7QSBcY2FwIEJ9XHRleHR7P31gXQoKICAgIFtfXXsxMH17NX0KCgphLiAgV2hhdCBpcyB0aGUgc21hbGxlc3QgcG9zc2libGUgdmFsdWUgZm9yIFtgXGNhcmR7QSBcY2FwIEJ9XHRleHR7P31gXQoKICAgIFtfXXswfXs1fQoKCmEuICBXaGF0IGFyZSB0aGUgcG9zc2libGUgdmFsdWVzIGZvciBbYFxjYXJke0EgXGN1cCBCfVx0ZXh0ez99YF0KCiAgICBbQEtleWJvYXJkSW5zdHJ1Y3Rpb25zKCdbX117MTV9ezV9W2BcbGUgXGNhcmR7QSBcY3VwIEJ9IFxsZWBdIFtfXXsyNX17NX0nKUBdKioKCgoKCgpFTkRfUEdNTAoKQkVHSU5fUEdNTF9TT0xVVElPTgphLiAgVG8gbWF4aW1pemUgdGhlIG51bWJlciBvZiBlbGVtZW50cyBpbiBjb21tb24gYmV0d2VlbiBbYEFgXSBhbmQgW2BCXHRleHR7LH1gXSBtYWtlIFtgQSBcc3Vic2V0IEJcdGV4dHsufWBdIFRoaXMgd291bGQgZ2l2ZSBbYFxjYXJke0EgXGNhcCBCfSA9IDEwXHRleHR7Ln1gXQphLiAgW2BBYF0gYW5kIFtgQmBdIG1pZ2h0IGhhdmUgbm8gZWxlbWVudHMgaW4gY29tbW9uLCBnaXZpbmcgW2BcY2FyZHtBXGNhcCBCfSA9IDBcdGV4dHsufWBdCmEuICBbYDE1IFxsZSBcY2FyZHtBIFxjdXAgQn0gXGxlIDI1XHRleHR7Ln1gXSBJbiBmYWN0LCB3aGVuIFtgXGNhcmR7QSBcY2FwIEJ9ID0gMGBdIHRoZW4gW2BcY2FyZHtBIFxjdXAgQn0gPSAyNWBdIGFuZCB3aGVuIFtgXGNhcmR7QSBcY2FwIEJ9ID0gMTBgXSB0aGVuIFtgXGNhcmR7QSBcY3VwIEJ9ID0gMTVcdGV4dHsufWBdICAgCgoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para logical" id="p-1597">
+<div class="para">Suppose you have sets <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> with <span class="process-math">\(\card{A} = 10\)</span> and <span class="process-math">\(\card{B} = 15\text{.}\)</span>
+</div>
+<ol class="lower-alpha">
+<li id="li-687"><div class="para" id="p-1598">What is the largest possible value for <span class="process-math">\(\card{A \cap B}\text{?}\)</span>
+</div></li>
+<li id="li-688"><div class="para" id="p-1599">What is the smallest possible value for <span class="process-math">\(\card{A \cap B}\text{?}\)</span>
+</div></li>
+<li id="li-689"><div class="para" id="p-1600">What are the possible values for <span class="process-math">\(\card{A \cup B}\text{?}\)</span>
+</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-103" id="solution-103"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-103"><div class="solution solution-like"><div class="para logical" id="p-1603"><ol class="lower-alpha">
+<li id="li-690"><div class="para" id="p-1604">To maximize the number of elements in common between <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{,}\)</span> make <span class="process-math">\(A \subset B\text{.}\)</span> This would give <span class="process-math">\(\card{A \cap B} = 10\text{.}\)</span>
+</div></li>
+<li id="li-691"><div class="para" id="p-1605">
+<span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> might have no elements in common, giving <span class="process-math">\(\card{A\cap B} = 0\text{.}\)</span>
+</div></li>
+<li id="li-692"><div class="para" id="p-1606">
+<span class="process-math">\(15 \le \card{A \cup B} \le 25\text{.}\)</span> In fact, when <span class="process-math">\(\card{A \cap B} = 0\)</span> then <span class="process-math">\(\card{A \cup B} = 25\)</span> and when <span class="process-math">\(\card{A \cap B} = 10\)</span> then <span class="process-math">\(\card{A \cup B} = 15\text{.}\)</span>
+</div></li>
+</ol></div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-34')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="ELk"><h4 class="heading"><span class="codenumber">5<span class="period">.</span></span></h4>
+<div id="webwork-35" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="35" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKVEVYVChNT0RFUyhQVFg9PicnLEhUTUw9Pic8ZGl2IHN0eWxlPSJkaXNwbGF5Om5vbmU7Ij5cKFxyZW5ld2NvbW1hbmR7XGJhcn17XG92ZXJsaW5lfVxuZXdjb21tYW5ke1xjYXJkfVsxXXtcbGVmdHwgIzEgXHJpZ2h0fH1cKTwvZGl2PicpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApJZiBbYFxjYXJke0F9ID0gOGBdIGFuZCBbYFxjYXJke0J9ID0gNVx0ZXh0eyx9YF0gd2hhdCBpcyBbYFxjYXJke0EgXGN1cCBCfSArIFxjYXJke0EgXGNhcCBCfVx0ZXh0ez99YF0KCltfXXsxM317NX0KCgpFTkRfUEdNTAoKQkVHSU5fUEdNTF9TT0xVVElPTgpbYFxjYXJke0EgXGN1cCBCfSArIFxjYXJke0EgXGNhcCBCfSA9IDEzXHRleHR7Ln1gXSBVc2UgUElFOiB3ZSBrbm93IFtgXGNhcmR7QSBcY3VwIEJ9ID0gOCArIDUgLSBcY2FyZHtBIFxjYXAgQn1cdGV4dHsufWBdCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-1607">If <span class="process-math">\(\card{A} = 8\)</span> and <span class="process-math">\(\card{B} = 5\text{,}\)</span> what is <span class="process-math">\(\card{A \cup B} + \card{A \cap B}\text{?}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-104" id="solution-104"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-104"><div class="solution solution-like"><div class="para" id="p-1609">
+<span class="process-math">\(\card{A \cup B} + \card{A \cap B} = 13\text{.}\)</span> Use PIE: we know <span class="process-math">\(\card{A \cup B} = 8 + 5 - \card{A \cap B}\text{.}\)</span>
+</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-35')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="kSt"><h4 class="heading"><span class="codenumber">6<span class="period">.</span></span></h4>
+<div id="webwork-36" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="36" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApBIGdyb3VwIG9mIGNvbGxlZ2Ugc3R1ZGVudHMgd2VyZSBhc2tlZCBhYm91dCB0aGVpciBUViB3YXRjaGluZyBoYWJpdHMuIE9mIHRob3NlIHN1cnZleWVkLCAyOCBzdHVkZW50cyB3YXRjaCBfVGhlIFdhbGtpbmcgRGVhZF8sIDE5IHdhdGNoIF9UaGUgQmxhY2tsaXN0XywgYW5kIDI0IHdhdGNoIF9HYW1lIG9mIFRocm9uZXNfLiBBZGRpdGlvbmFsbHksIDE2IHdhdGNoIF9UaGUgV2Fsa2luZyBEZWFkXyBhbmQgX1RoZSBCbGFja2xpc3RfLCAxNCB3YXRjaCBfVGhlIFdhbGtpbmcgRGVhZF8gYW5kIF9HYW1lIG9mIFRocm9uZXNfLCBhbmQgMTAgd2F0Y2ggX1RoZSBCbGFja2xpc3RfIGFuZCBfR2FtZSBvZiBUaHJvbmVzXy4gVGhlcmUgYXJlIDggc3R1ZGVudHMgd2hvIHdhdGNoIGFsbCB0aHJlZSBzaG93cy4gSG93IG1hbnkgc3R1ZGVudHMgc3VydmV5ZWQgd2F0Y2hlZCBhdCBsZWFzdCBvbmUgb2YgdGhlIHNob3dzPwoKW19dezM5fXs1fQoKCkVORF9QR01MCgpCRUdJTl9QR01MX1NPTFVUSU9OCjM5IHN0dWRlbnRzLiBVc2UgVmVubiBkaWFncmFtIG9yIFBJRTogW2AyOCArIDE5ICsgMjQgLSAxNiAtIDE0IC0gMTAgKyA4ID0gMzlcdGV4dHsufWBdCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-1610">A group of college students were asked about their TV watching habits. Of those surveyed, 28 students watch <em class="emphasis">The Walking Dead</em>, 19 watch <em class="emphasis">The Blacklist</em>, and 24 watch <em class="emphasis">Game of Thrones</em>. Additionally, 16 watch <em class="emphasis">The Walking Dead</em> and <em class="emphasis">The Blacklist</em>, 14 watch <em class="emphasis">The Walking Dead</em> and <em class="emphasis">Game of Thrones</em>, and 10 watch <em class="emphasis">The Blacklist</em> and <em class="emphasis">Game of Thrones</em>. There are 8 students who watch all three shows. How many students surveyed watched at least one of the shows?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-105" id="solution-105"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-105"><div class="solution solution-like"><div class="para" id="p-1612">39 students. Use Venn diagram or PIE: <span class="process-math">\(28 + 19 + 24 - 16 - 14 - 10 + 8 = 39\text{.}\)</span>
+</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-36')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="QZC"><h4 class="heading"><span class="codenumber">7<span class="period">.</span></span></h4>
+<div id="webwork-37" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="37" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApJbiBhIHJlY2VudCBzdXJ2ZXksIDMwIHN0dWRlbnRzIHJlcG9ydGVkIHdoZXRoZXIgdGhleSBsaWtlZCB0aGVpciBwb3RhdG9lcyBNYXNoZWQsIEZyZW5jaC1mcmllZCwgb3IgVHdpY2UtYmFrZWQuIDE1IGxpa2VkIHRoZW0gbWFzaGVkLCAyMCBsaWtlZCBGcmVuY2ggZnJpZXMsIGFuZCA5IGxpa2VkIHR3aWNlIGJha2VkIHBvdGF0b2VzLiBBZGRpdGlvbmFsbHksIDEyIHN0dWRlbnRzIGxpa2VkIGJvdGggbWFzaGVkIGFuZCBmcmllZCBwb3RhdG9lcywgNSBsaWtlZCBGcmVuY2ggZnJpZXMgYW5kIHR3aWNlIGJha2VkIHBvdGF0b2VzLCA2IGxpa2VkIG1hc2hlZCBhbmQgYmFrZWQsIGFuZCAzIGxpa2VkIGFsbCB0aHJlZSBzdHlsZXMuIEhvdyBtYW55IHN0dWRlbnRzIF9oYXRlXyBwb3RhdG9lcz8gRXhwbGFpbiB3aHkgeW91ciBhbnN3ZXIgaXMgY29ycmVjdC4KCltfXXs2fXs1fQoKCkVORF9QR01MCgpCRUdJTl9QR01MX1NPTFVUSU9OCjYgc3R1ZGVudHMgX2Rvbid0XyBsaWtlIHBvdGF0b2VzLgoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-1613">In a recent survey, 30 students reported whether they liked their potatoes Mashed, French-fried, or Twice-baked. 15 liked them mashed, 20 liked French fries, and 9 liked twice baked potatoes. Additionally, 12 students liked both mashed and fried potatoes, 5 liked French fries and twice baked potatoes, 6 liked mashed and baked, and 3 liked all three styles. How many students <em class="emphasis">hate</em> potatoes? Explain why your answer is correct.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-106" id="solution-106"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-106"><div class="solution solution-like"><div class="para" id="p-1615">6 students <em class="emphasis">don’t</em> like potatoes.</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-37')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="xgL"><h4 class="heading"><span class="codenumber">8<span class="period">.</span></span></h4>
+<div id="webwork-38" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="38" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApGb3IgaG93IG1hbnkgW2BuIFxpbiBcezEsMiwgXGxkb3RzLCA1MDBcfWBdIGlzIFtgbmBdIGEgbXVsdGlwbGUgb2Ygb25lIG9yIG1vcmUgb2YgNSwgNiwgb3IgNz8KCltfXXsyMTV9ezV9CgoKRU5EX1BHTUwKCkJFR0lOX1BHTUxfSElOVApUbyBmaW5kIG91dCBob3cgbWFueSBudW1iZXJzIGFyZSBkaXZpc2libGUgYnkgNiBhbmQgNywgZm9yIGV4YW1wbGUsIHRha2UgW2A1MDAvNDJgXSBhbmQgcm91bmQgZG93bi4KCgpFTkRfUEdNTF9ISU5UCgpCRUdJTl9QR01MX1NPTFVUSU9OCjIxNSB2YWx1ZXMgb2YgW2BuXHRleHR7Ln1gXQoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-1616">For how many <span class="process-math">\(n \in \{1,2, \ldots, 500\}\)</span> is <span class="process-math">\(n\)</span> a multiple of one or more of 5, 6, or 7?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-hint-23" id="hint-23"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-hint-23"><div class="hint solution-like"><div class="para" id="p-1617">To find out how many numbers are divisible by 6 and 7, for example, take <span class="process-math">\(500/42\)</span> and round down.</div></div></div>
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-107" id="solution-107"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-107"><div class="solution solution-like"><div class="para" id="p-1619">215 values of <span class="process-math">\(n\text{.}\)</span>
+</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-38')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="dnU"><h4 class="heading"><span class="codenumber">9<span class="period">.</span></span></h4>
+<div id="webwork-39" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="39" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApIb3cgbWFueSBwb3NpdGl2ZSBpbnRlZ2VycyBsZXNzIHRoYW4gMTAwMCBhcmUgbXVsdGlwbGVzIG9mIDMsIDUsIG9yIDc/IEV4cGxhaW4geW91ciBhbnN3ZXIgdXNpbmcgdGhlIFByaW5jaXBsZSBvZiBJbmNsdXNpb24vRXhjbHVzaW9uLgoKW19dezU0Mn17NX0KCgpFTkRfUEdNTAoKRU5ERE9DVU1FTlQoKTs=" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents"><div class="para" id="p-1620">How many positive integers less than 1000 are multiples of 3, 5, or 7? Explain your answer using the Principle of Inclusion/Exclusion.</div></div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-39')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="Jvd"><h4 class="heading"><span class="codenumber">10<span class="period">.</span></span></h4>
+<div class="para logical" id="yfa">
+<div class="para">Let <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\(B\text{,}\)</span> and <span class="process-math">\(C\)</span> be sets.</div>
+<ol class="lower-alpha">
+<li id="LUk"><div class="para" id="p-derived-LUk">Find <span class="process-math">\(\card{(A \cup C)\setminus B}\)</span> provided <span class="process-math">\(\card{A} = 50\text{,}\)</span> <span class="process-math">\(\card{B} = 45\text{,}\)</span> <span class="process-math">\(\card{C} = 40\text{,}\)</span> <span class="process-math">\(\card{A\cap B} = 20\text{,}\)</span> <span class="process-math">\(\card{A \cap C} = 15\text{,}\)</span> <span class="process-math">\(\card{B \cap C} = 23\text{,}\)</span> and <span class="process-math">\(\card{A \cap B \cap C} = 12\text{.}\)</span>
+</div></li>
+<li id="sbt"><div class="para" id="p-derived-sbt">Describe a set in terms of <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\(B\text{,}\)</span> and <span class="process-math">\(C\)</span> with cardinality 26.</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-Lkq" id="Lkq"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Lkq"><div class="hint solution-like"><div class="para" id="rFU">For part (a) you could use the formula for PIE, but for part (b) you might be better off drawing a Venn diagram.</div></div></div>
+</div></article><article class="exercise exercise-like" id="pCm"><h4 class="heading"><span class="codenumber">11<span class="period">.</span></span></h4>
+<div id="webwork-40" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="40" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgnTnVtZXJpYycpOwoKQkVHSU5fUEdNTApDb25zaWRlciBhbGwgNSBsZXR0ZXIgIndvcmRzIiBtYWRlIGZyb20gdGhlIGxldHRlcnMgW2BhYF0gdGhyb3VnaCBbYGhcdGV4dHsufWBdIChSZWNhbGwsIHdvcmRzIGFyZSBqdXN0IHN0cmluZ3Mgb2YgbGV0dGVycywgbm90IG5lY2Vzc2FyaWx5IGFjdHVhbCBFbmdsaXNoIHdvcmRzLikKYS4gIEhvdyBtYW55IG9mIHRoZXNlIHdvcmRzIGFyZSB0aGVyZSB0b3RhbD8KCiAgICBbX117MzI3Njh9ezd9CgoKYS4gIEhvdyBtYW55IG9mIHRoZXNlIHdvcmRzIGNvbnRhaW4gbm8gcmVwZWF0ZWQgbGV0dGVycz8KCiAgICBbX117NjcyMH17N30KCgphLiAgSG93IG1hbnkgb2YgdGhlc2Ugd29yZHMgc3RhcnQgd2l0aCB0aGUgc3ViLXdvcmQgImFoYSI/CgogICAgW19dezY0fXs3fQoKCmEuICBIb3cgbWFueSBvZiB0aGVzZSB3b3JkcyBlaXRoZXIgc3RhcnQgd2l0aCAiYWhhIiBvciBlbmQgd2l0aCAiYmFoIiBvciBib3RoPwoKICAgIFtfXXsxMjh9ezd9CgoKYS4gIEhvdyBtYW55IG9mIHRoZSB3b3JkcyBjb250YWluaW5nIG5vIHJlcGVhdHMgYWxzbyBkbyBub3QgY29udGFpbiB0aGUgc3ViLXdvcmQgImJhZCI/CgogICAgW19dezY2NjB9ezd9CgoKCkVORF9QR01MCgpCRUdJTl9QR01MX1NPTFVUSU9OCmEuICBbYDheNSA9IDMyNzY4YF0gd29yZHMuCmEuICBbYDhcY2RvdCA3XGNkb3QgNlxjZG90IDVcY2RvdCA0ID0gNjcyMGBdIHdvcmRzLgphLiAgW2A4IFxjZG90IDggPTY0YF0gd29yZHMuCgoKYS4gIFtgNjQgKyA2NCAtIDAgPSAxMjhgXSB3b3Jkcy4KYS4gIFtgKDhcY2RvdCA3XGNkb3QgNlxjZG90IDVcY2RvdCA0KSAtIDNcY2RvdCAoNVxjZG90IDQpID0gNjY2MGBdIHdvcmRzLiAgIAoKCgpFTkRfUEdNTF9TT0xVVElPTgoKRU5ERE9DVU1FTlQoKTs=" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para logical" id="p-1624">
+<div class="para">Consider all 5 letter “words” made from the letters <span class="process-math">\(a\)</span> through <span class="process-math">\(h\text{.}\)</span> (Recall, words are just strings of letters, not necessarily actual English words.)</div>
+<ol class="lower-alpha">
+<li id="li-695"><div class="para" id="p-1625">How many of these words are there total?</div></li>
+<li id="li-696"><div class="para" id="p-1626">How many of these words contain no repeated letters?</div></li>
+<li id="li-697"><div class="para" id="p-1627">How many of these words start with the sub-word “aha”?</div></li>
+<li id="li-698"><div class="para" id="p-1628">How many of these words either start with “aha” or end with “bah” or both?</div></li>
+<li id="li-699"><div class="para" id="p-1629">How many of the words containing no repeats also do not contain the sub-word “bad”?</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-108" id="solution-108"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-108"><div class="solution solution-like"><div class="para logical" id="p-1635"><ol class="lower-alpha">
+<li id="li-700"><div class="para" id="p-1636">
+<span class="process-math">\(8^5 = 32768\)</span> words.</div></li>
+<li id="li-701"><div class="para" id="p-1637">
+<span class="process-math">\(8\cdot 7\cdot 6\cdot 5\cdot 4 = 6720\)</span> words.</div></li>
+<li id="li-702"><div class="para" id="p-1638">
+<span class="process-math">\(8 \cdot 8 =64\)</span> words.</div></li>
+<li id="li-703"><div class="para" id="p-1639">
+<span class="process-math">\(64 + 64 - 0 = 128\)</span> words.</div></li>
+<li id="li-704"><div class="para" id="p-1640">
+<span class="process-math">\((8\cdot 7\cdot 6\cdot 5\cdot 4) - 3\cdot (5\cdot 4) = 6660\)</span> words.</div></li>
+</ol></div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-40')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="VJv"><h4 class="heading"><span class="codenumber">12<span class="period">.</span></span></h4>
+<div class="para" id="Kts">For how many three digit numbers (100 to 999) is the <em class="emphasis">sum of the digits</em> even? (For example, <span class="process-math">\(343\)</span> has an even sum of digits: <span class="process-math">\(3+4+3 = 10\)</span> which is even.) Find the answer and explain why it is correct in at least two <em class="emphasis">different</em> ways.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-XyI" id="XyI"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-XyI"><div class="hint solution-like"><div class="para" id="XNd">You could consider cases.  For example, any number of the form ODD-ODD-EVEN will have an even sum.  Alternatively, how many three digit numbers have the sum of their digits even if the first two digits are 54?  What if the first two digits are 19?</div></div></div>
+</div></article><article class="exercise exercise-like" id="BQE"><h4 class="heading"><span class="codenumber">13<span class="period">.</span></span></h4>
+<div class="para" id="qAB">The number 735000 factors as <span class="process-math">\(2^3 \cdot 3 \cdot 5^4 \cdot 7^2\text{.}\)</span> How many divisors does it have? Explain your answer using the multiplicative principle.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-DFR" id="DFR"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-DFR"><div class="hint solution-like"><div class="para" id="DUm">For a simpler example, there are 4 divisors of <span class="process-math">\(6 = 2\cdot 3\text{.}\)</span>  They are <span class="process-math">\(1 = 2^0\cdot 3^0\text{,}\)</span> <span class="process-math">\(2 = 2^1\cdot 3^0\text{,}\)</span> <span class="process-math">\(3 = 2^0\cdot 3^1\)</span> and <span class="process-math">\(6 = 2^1\cdot 3^1\text{.}\)</span>
+</div></div></div>
+</div></article></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-6"><div class="fn">To solve this problem, you could break it into two cases. First, count how many ways there are to select the two cards when the first card is a red non-face card. Second, count how many ways when the first card is a red face card. Doing so makes the events in each separate case independent, so the multiplicative principle can be applied.</div></div>
+</div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="ch_counting.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="sec_counting-binom.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+</div></main>
+</div>
+<div class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
+<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
+<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+</div>
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</body>
+</html>

@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Induction</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Discrete Mathematics">
+<meta property="book:author" content="Oscar Levin">
+<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    tags: "none",
+    tagSide: "right",
+    tagIndent: ".8em",
+    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  },
+  options: {
+    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
+    processHtmlClass: "process-math",
+    renderActions: {
+        findScript: [10, function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        }, '']
+    },
+  },
+  chtml: {
+    scale: 0.98,
+    mtextInheritFont: true
+  },
+  loader: {
+    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
+    paths: {pretext: "https://pretextbook.org/js/lib"},
+  },
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  },
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link href="https://webwork.runestone.academy/webwork2_files/js/apps/MathView/mathview.css" rel="stylesheet">
+<script src="https://pretextbook.org/js/0.2/pretext-webwork/2.16/pretext-webwork.js"></script><script src="https://webwork.runestone.academy/webwork2_files/node_modules/iframe-resizer/js/iframeResizer.min.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/style_oscarlevin.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="external/custom-styles.css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '5.0.1';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runtime.a26418f1c7af0a01.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/637.d54be67956c5c660.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runestone.38c38879674c28b2.bundle.js"></script><link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/637.0fa6cababf056764.css">
+<link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/runestone.93e720e6c6581fb5.css">
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</head>
+<body id="dmoi-4" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" href="http://discrete.openmathbooks.org/dmoi3.html" target="_blank"><img src="external/images/cover.png" alt="Logo image"></a><div class="title-container">
+<h1 class="heading"><a href="dmoi4.html"><span class="title">Discrete Mathematics:</span> <span class="subtitle">An Open Introduction, 4th edition (preview)</span></a></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+<div id="searchresultsplaceholder" style="display: none">
+<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
+</h2>
+<div id="searchempty"><span>No results.</span></div>
+<ol id="searchresults"></ol>
+</div>
+</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><a class="index-button button" href="index-1.html" title="Index"><span class="name">Index</span></a><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
+<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden avatar">
+<li data-val="You!" tabindex="-1">
+<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
+<li data-val="😺" tabindex="-1">
+<span id="the😺" class="avatarcheck"></span>😺</li>
+<li data-val="👤" tabindex="-1">
+<span id="the👤" class="avatarcheck"></span>👤</li>
+<li data-val="👽" tabindex="-1">
+<span id="the👽" class="avatarcheck"></span>👽</li>
+<li data-val="🐶" tabindex="-1">
+<span id="the🐶" class="avatarcheck"></span>🐶</li>
+<li data-val="🐼" tabindex="-1">
+<span id="the🐼" class="avatarcheck"></span>🐼</li>
+<li data-val="🌈" tabindex="-1">
+<span id="the🌈" class="avatarcheck"></span>🌈</li>
+</ol>
+</li>
+<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fontfamily">
+<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
+<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
+<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+</ol>
+</li>
+<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fonts">
+<li>Size</li>
+<li><span id="thesize">12</span></li>
+<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
+<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
+<li>Width</li>
+<li><span id="thewdth">100</span></li>
+<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
+<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
+<li>Weight</li>
+<li><span id="thewght">400</span></li>
+<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
+<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
+<li>Letter spacing</li>
+<li>
+<span id="thelspace">0</span><span class="byunits">/200</span>
+</li>
+<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
+<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
+<li>Word spacing</li>
+<li>
+<span id="thewspace">0</span><span class="byunits">/50</span>
+</li>
+<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
+<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
+<li>Line Spacing</li>
+<li>
+<span id="theheight">135</span><span class="byunits">/100</span>
+</li>
+<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
+<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
+</ol>
+</li>
+<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden atmosphere">
+<li data-val="default" tabindex="-1">
+<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
+<li data-val="pastel" tabindex="-1">
+<span id="thepastel" class="atmospherecheck"></span>pastel</li>
+<li data-val="darktwilight" tabindex="-1">
+<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
+<li data-val="dark" tabindex="-1">
+<span id="thedark" class="atmospherecheck"></span>dark</li>
+<li data-val="darkmidnight" tabindex="-1">
+<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
+</ol>
+</li>
+<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden ruler">
+<li data-val="none" tabindex="-1">
+<span id="thenone" class="rulercheck">✔️</span>none</li>
+<li data-val="underline" tabindex="-1">
+<span id="theunderline" class="rulercheck"></span>underline</li>
+<li data-val="lunderline" tabindex="-1">
+<span id="thelunderline" class="rulercheck"></span>L-underline</li>
+<li data-val="greybar" tabindex="-1">
+<span id="thegreybar" class="rulercheck"></span>grey bar</li>
+<li data-val="lightbox" tabindex="-1">
+<span id="thelightbox" class="rulercheck"></span>light box</li>
+<li data-val="sunrise" tabindex="-1">
+<span id="thesunrise" class="rulercheck"></span>sunrise</li>
+<li data-val="sunriseunderline" tabindex="-1">
+<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
+<li class="moveQ">Motion by:</li>
+<li data-val="mouse" tabindex="-1">
+<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
+<li data-val="arrow" tabindex="-1">
+<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
+<li data-val="eye" tabindex="-1">
+<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
+</ol>
+</li>
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="sec_recurrence.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="ch_sequences.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="sec_sequences-conc.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
+</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\renewcommand{\d}{\displaystyle}
+\newcommand{\N}{\mathbb N}
+\newcommand{\B}{\mathbf B}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\U}{\mathcal U}
+\newcommand{\pow}{\mathcal P}
+\newcommand{\inv}{^{-1}}
+\newcommand{\st}{:}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\Imp}{\Rightarrow}
+\newcommand{\isom}{\cong}
+
+\renewcommand{\bar}{\overline}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar"><nav id="ptx-toc" class="depth3"><ul class="structural">
+<li>
+<div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="colophon-1.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li><div class="toc-item"><a href="dedication-1.html" class="internal"><span class="title">Dedication</span></a></div></li>
+<li><div class="toc-item"><a href="acknowledgement-1.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+<li><div class="toc-item"><a href="preface.html" class="internal"><span class="title">Preface</span></a></div></li>
+<li><div class="toc-item"><a href="preface-2.html" class="internal"><span class="title">How to use this book</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_intro.html" class="internal"><span class="codenumber">0</span> <span class="title">Introduction and Preliminaries</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_intro-intro.html" class="internal"><span class="codenumber">0.1</span> <span class="title">What is Discrete Mathematics?</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_intro-intro.html#rqs-intro-intro" class="internal"><span class="codenumber">0.1</span> <span class="title">Reading Questions</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-structures.html" class="internal"><span class="codenumber">0.2</span> <span class="title">Discrete Structures</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sets" class="internal"><span class="title">Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-functions" class="internal"><span class="title">Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sequences" class="internal"><span class="title">Sequences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec-relations" class="internal"><span class="title">Relations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-graphs" class="internal"><span class="title">Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsubsec_structures-statements" class="internal"><span class="title">Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-even-more" class="internal"><span class="title">Even More Structures</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#rqs-intro-structures" class="internal"><span class="codenumber">0.2</span> <span class="title">Reading Questions</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-sets.html" class="internal"><span class="codenumber">0.3</span> <span class="title">Sets</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-sets.html#RBf" class="internal"><span class="title">Notation</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#xIo" class="internal"><span class="title">Relationships Between Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#dPx" class="internal"><span class="title">Operations On Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#JWG" class="internal"><span class="title">Venn Diagrams</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#ww_intro-sets" class="internal"><span class="codenumber">0.3</span> <span class="title">Interactive Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-functions.html" class="internal"><span class="codenumber">0.4</span> <span class="title">Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-functions.html#irZ" class="internal"><span class="title">Describing Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#Ozi" class="internal"><span class="title">Surjections, Injections, and Bijections</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#uGr" class="internal"><span class="title">Image and Inverse Image</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#XHz" class="internal"><span class="codenumber">0.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_logic.html" class="internal"><span class="codenumber">1</span> <span class="title">Symbolic Logic and Proofs</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_logic-statements.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Mathematical Statements</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-statements.html#wKm" class="internal"><span class="title">Atomic and Molecular Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#cRv" class="internal"><span class="title">Implications</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#IYE" class="internal"><span class="title">Predicates and Quantifiers</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#rqs-logic-statements" class="internal"><span class="codenumber">1.1</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#iCD" class="internal"><span class="codenumber">1.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_propositional.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Propositional Logic</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_propositional.html#DTz" class="internal"><span class="title">Truth Tables</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#kaI" class="internal"><span class="title">Logical Equivalence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#QhR" class="internal"><span class="title">Deductions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#wpa" class="internal"><span class="title">Beyond Propositions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#rqs-logic-prop" class="internal"><span class="codenumber">1.2</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#Shv" class="internal"><span class="codenumber">1.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-proofs.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Ruo" class="internal"><span class="title">Direct Proof</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#xBx" class="internal"><span class="title">Proof by Contrapositive</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#dIG" class="internal"><span class="title">Proof by Contradiction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#JPP" class="internal"><span class="title">Proof by (counter) Example</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#pWY" class="internal"><span class="title">Proof by Cases</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#rqs-logic-proof" class="internal"><span class="codenumber">1.3</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Fqn" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-conc.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_logic-conc.html#MrW" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_counting.html" class="internal"><span class="codenumber">2</span> <span class="title">Counting</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_counting-addmult.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-addmult.html#YQj" class="internal"><span class="title">Counting With Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#EXs" class="internal"><span class="title">Principle of Inclusion/Exclusion</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#WHK" class="internal"><span class="codenumber">2.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-binom.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Binomial Coefficients</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-binom.html#cgB" class="internal"><span class="title">Subsets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#InK" class="internal"><span class="title">Bit Strings</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#ouT" class="internal"><span class="title">Lattice Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#UCc" class="internal"><span class="title">Binomial Coefficients</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#AJl" class="internal"><span class="title">Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#uWm" class="internal"><span class="codenumber">2.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-combperm.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Combinations and Permutations</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_counting-combperm.html#jkK" class="internal"><span class="codenumber">2.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_comb-proofs.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Combinatorial Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_comb-proofs.html#zbp" class="internal"><span class="title">Patterns in Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#fiy" class="internal"><span class="title">More Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#lYz" class="internal"><span class="codenumber">2.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_stars-and-bars.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Stars and Bars</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_stars-and-bars.html#zVa" class="internal"><span class="codenumber">2.5</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_advPIE.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_advPIE.html#nSd" class="internal"><span class="title">Counting Derangements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#TZm" class="internal"><span class="title">Counting Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#nUq" class="internal"><span class="codenumber">2.6</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_count-conc.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_count-conc.html#Ejh" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_sequences.html" class="internal"><span class="codenumber">3</span> <span class="title">Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq_intro.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Describing Sequences</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_seq_intro.html#vPK" class="internal"><span class="codenumber">3.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html#RQa" class="internal"><span class="title">Sums of Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#xXj" class="internal"><span class="title">Summing Arithmetic Sequences: Reverse and Add</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#ees" class="internal"><span class="title">Summing Geometric Sequences: Multiply, Shift and Subtract</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#EGG" class="internal"><span class="codenumber">3.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_polyfit.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Polynomial Fitting</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_polyfit.html#FTD" class="internal"><span class="codenumber">3.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_recurrence.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Solving Recurrence Relations</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_recurrence.html#Hke" class="internal"><span class="title">The Characteristic Root Technique</span></a></div></li>
+<li><div class="toc-item"><a href="sec_recurrence.html#bQc" class="internal"><span class="codenumber">3.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li class="active">
+<div class="toc-item"><a href="sec_seq-induction.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Induction</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-induction.html#vyp" class="internal"><span class="title">Stamps</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#bFy" class="internal"><span class="title">Formalizing Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#HMH" class="internal"><span class="title">Examples</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#nTQ" class="internal"><span class="title">Strong Induction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#YsG" class="internal"><span class="codenumber">3.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_sequences-conc.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_sequences-conc.html#XPQ" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_graphtheory.html" class="internal"><span class="codenumber">4</span> <span class="title">Graph Theory</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_gt-intro.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Definitions</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-intro.html#QMu" class="internal"><span class="codenumber">4.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_trees.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Trees</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_trees.html#MvA" class="internal"><span class="title">Properties of Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#sCJ" class="internal"><span class="title">Rooted Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#YJS" class="internal"><span class="title">Spanning Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#iQl" class="internal"><span class="codenumber">4.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_planar.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Planar Graphs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_planar.html#ZAQ" class="internal"><span class="title">Non-planar Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#FHZ" class="internal"><span class="title">Polyhedra</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#Pey" class="internal"><span class="codenumber">4.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_coloring.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Coloring</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_coloring.html#WFX" class="internal"><span class="title">Coloring in General</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#CNg" class="internal"><span class="title">Coloring Edges</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#MxN" class="internal"><span class="codenumber">4.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_paths.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Euler Paths and Circuits</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_paths.html#ZWp" class="internal"><span class="title">Hamilton Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_paths.html#wMz" class="internal"><span class="codenumber">4.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_matchings.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Matching in Bipartite Graphs</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_matchings.html#wye" class="internal"><span class="codenumber">4.6</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_gt-conc.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-conc.html#WIK" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_additionalTopics.html" class="internal"><span class="codenumber">5</span> <span class="title">Additional Topics</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_addtops-genfun.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Generating Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#DhS" class="internal"><span class="title">Building Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#jpb" class="internal"><span class="title">Differencing</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#Pwk" class="internal"><span class="title">Multiplication and Partial Sums</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#vDt" class="internal"><span class="title">Solving Recurrence Relations with Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#iOL" class="internal"><span class="codenumber">5.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_addtops-numbth.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#CqU" class="internal"><span class="title">Divisibility</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#iyd" class="internal"><span class="title">Remainder Classes</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#OFm" class="internal"><span class="title">Properties of Congruence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#uMv" class="internal"><span class="title">Solving Congruences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#aTE" class="internal"><span class="title">Solving Linear Diophantine Equations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#TUi" class="internal"><span class="codenumber">5.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="solutions-1.html" class="internal"><span class="codenumber">A</span> <span class="title">Selected Hints</span></a></div></li>
+<li><div class="toc-item"><a href="solutions-2.html" class="internal"><span class="codenumber">B</span> <span class="title">Selected Solutions</span></a></div></li>
+<li><div class="toc-item"><a href="appendix-1.html" class="internal"><span class="codenumber">C</span> <span class="title">List of Symbols</span></a></div></li>
+<li><div class="toc-item"><a href="index-1.html" class="internal"><span class="title">Index</span></a></div></li>
+<li><div class="toc-item"><a href="colophon-2.html" class="internal"><span class="title">Colophon</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="section" id="Prg"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">3.5</span> <span class="title">Induction</span>
+</h2>
+<section class="introduction" id="duL"><div class="para" id="rcR"> Mathematical induction is a proof technique, not unlike direct proof or proof by contradiction or combinatorial proof.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-11" id="fn-11"><sup> 3 </sup></a> In other words, induction is a style of argument we use to convince ourselves and others that a mathematical statement is always true. Many mathematical statements can be proved by simply explaining what they mean. Others are very difficult to prove—in fact, there are relatively simple mathematical statements which nobody yet knows how to prove. To facilitate the discovery of proofs, it is important to be familiar with some standard styles of arguments. Induction is one such style. Let's start with an example:</div></section><section class="subsection" id="vyp"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Stamps</span>
+</h3>
+<article class="project-like" id="MwA"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para" id="Xka">You need to mail a package, but don't yet know how much postage you will need. You have a large supply of 8-cent stamps and 5-cent stamps. Which amounts of postage can you make exactly using these stamps? Which amounts are impossible to make?</div></article><div class="para" id="Upu">Perhaps in investigating the problem above you picked some amounts of postage, and then figured out whether you could make that amount using just 8-cent and 5-cent stamps. Perhaps you did this in order: can you make 1 cent of postage? Can you make 2 cents? 3 cents? And so on. If this is what you did, you were actually answering a <em class="emphasis">sequence</em> of questions. We have methods for dealing with sequences. Let's see if that helps.</div>
+<div class="para logical" id="AwD">
+<div class="para">Actually, we will not make a sequence of questions, but rather a sequence of statements. Let <span class="process-math">\(P(n)\)</span>  be the statement “you can make <span class="process-math">\(n\)</span> cents of postage using just 8-cent and 5-cent stamps.” Since for each value of <span class="process-math">\(n\text{,}\)</span> <span class="process-math">\(P(n)\)</span> is a statement, it is either true or false. So if we form the sequence of statements</div>
+<div class="displaymath process-math">
+\begin{equation*}
+P(1), P(2), P(3), P(4), \ldots\text{,}
+\end{equation*}
+</div>
+<div class="para">the sequence will consist of <span class="process-math">\(T\)</span>'s (for true) and <span class="process-math">\(F\)</span>'s (for false). In our particular case the sequence starts</div>
+<div class="displaymath process-math">
+\begin{equation*}
+F,F,F,F,T,F,F,T,F,T,F,F,T,\ldots
+\end{equation*}
+</div>
+<div class="para">because <span class="process-math">\(P(1), P(2), P(3), P(4)\)</span> are all false (you cannot make 1, 2, 3, or 4 cents of postage) but <span class="process-math">\(P(5)\)</span> is true (use one 5-cent stamp), and so on.</div>
+</div>
+<div class="para" id="gDM">Let's think a bit about how we could find the value of <span class="process-math">\(P(n)\)</span> for some specific <span class="process-math">\(n\)</span> (the “value” will be either <span class="process-math">\(T\)</span> or <span class="process-math">\(F\)</span>). How did we find the value of the <span class="process-math">\(n\)</span>th term of a sequence of numbers? How did we find <span class="process-math">\(a_n\text{?}\)</span> There were two ways we could do this: either there was a closed formula for <span class="process-math">\(a_n\text{,}\)</span> so we could plug in <span class="process-math">\(n\)</span> into the formula and get our output value, or we had a recursive definition for the sequence, so we could use the previous terms of the sequence to compute the <span class="process-math">\(n\)</span>th term. When dealing with sequences of statements, we could use either of these techniques as well. Maybe there is a way to use <span class="process-math">\(n\)</span> itself to determine whether we can make <span class="process-math">\(n\)</span> cents of postage. That would be something like a closed formula. Or instead we could use the previous terms in the sequence (of statements) to determine whether we can make <span class="process-math">\(n\)</span> cents of postage. That is, if we know the value of <span class="process-math">\(P(n-1)\text{,}\)</span> can we get from that to the value of <span class="process-math">\(P(n)\text{?}\)</span> That would be something like a recursive definition for the sequence. Remember, finding recursive definitions for sequences was often easier than finding closed formulas. The same is true here.</div>
+<div class="para" id="MKV">Suppose I told you that <span class="process-math">\(P(43)\)</span> was true (it is). Can you determine from this fact the value of <span class="process-math">\(P(44)\)</span> (whether it true or false)? Yes you can. Even if we don't know how exactly we made 43 cents out of the 5-cent and 8-cent stamps, we do know that there was some way to do it. What if that way used at least three 5-cent stamps (making 15 cents)? We could replace those three 5-cent stamps with two 8-cent stamps (making 16 cents). The total postage has gone up by 1, so we have a way to make 44 cents, so <span class="process-math">\(P(44)\)</span> is true. Of course, we assumed that we had at least three 5-cent stamps. What if we didn't? Then we must have at least three 8-cent stamps (making 24 cents). If we replace those three 8-cent stamps with five 5-cent stamps (making 25 cents) then again we have bumped up our total by 1 cent so we can make 44 cents, so <span class="process-math">\(P(44)\)</span> is true.</div>
+<div class="para" id="sSe">Notice that we have not said how to make 44 cents, just that we can, on the basis that we can make 43 cents. How do we know we can make 43 cents? Perhaps because we know we can make <span class="process-math">\(42\)</span>  cents, which we know we can do because we know we can make 41 cents, and so on. It's a recursion! As with a recursive definition of a numerical sequence, we must specify our initial value. In this case, the initial value is “<span class="process-math">\(P(1)\)</span> is false.” That's not good, since our recurrence relation just says that <span class="process-math">\(P(k+1)\)</span> is true <em class="emphasis">if</em> <span class="process-math">\(P(k)\)</span> is also true. We need to start the process with a true <span class="process-math">\(P(k)\text{.}\)</span> So instead, we might want to use “<span class="process-math">\(P(28)\)</span> is true” as the initial condition.</div>
+<div class="para logical" id="YZn">
+<div class="para">Putting this all together we arrive at the following fact: it is possible to (exactly) make any amount of postage greater than 27 cents using just 5-cent and 8-cent stamps.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-12" id="fn-12"><sup> 4 </sup></a> In other words, <span class="process-math">\(P(k)\)</span> is true for any <span class="process-math">\(k \ge 28\text{.}\)</span> To prove this, we could do the following:</div>
+<ol class="decimal">
+<li id="ryq"><div class="para" id="cps">Demonstrate that <span class="process-math">\(P(28)\)</span> is true.</div></li>
+<li id="XFz"><div class="para" id="IwB">Prove that if <span class="process-math">\(P(k)\)</span> is true, then <span class="process-math">\(P(k+1)\)</span> is true (for any <span class="process-math">\(k \ge 28\)</span>).</div></li>
+</ol>
+</div>
+<div class="para" id="Fgw">Suppose we have done this. Then we know that the 28th term of the sequence above is a <span class="process-math">\(T\)</span> (using step 1, the initial condition or <dfn class="terminology">base case</dfn>),  and that every term after the 28th is <span class="process-math">\(T\)</span> also (using step 2, the recursive part or <dfn class="terminology">inductive case</dfn>).  Here is what the proof would actually look like.</div>
+<article class="proof" id="GHo"><h4 class="heading"><span class="type">Proof<span class="period">.</span></span></h4>
+<div class="para" id="cZm">Let <span class="process-math">\(P(n)\)</span> be the statement “it is possible to make exactly <span class="process-math">\(n\)</span> cents of postage using 5-cent and 8-cent stamps.” We will show <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 28\text{.}\)</span>
+</div> <div class="para" id="Jgv">First, we show that <span class="process-math">\(P(28)\)</span> is true: <span class="process-math">\(28 = 4 \cdot 5+ 1\cdot 8\text{,}\)</span> so we can make <span class="process-math">\(28\)</span> cents using four 5-cent stamps and one 8-cent stamp.</div> <div class="para" id="pnE">Now suppose <span class="process-math">\(P(k)\)</span> is true for some arbitrary <span class="process-math">\(k \ge 28\text{.}\)</span> Then it is possible to make <span class="process-math">\(k\)</span> cents using 5-cent and 8-cent stamps. Note that since <span class="process-math">\(k \ge 28\text{,}\)</span> it cannot be that we use fewer than three 5-cent stamps <em class="emphasis">and</em> fewer than three 8-cent stamps: using two of each would give only 26 cents. Now if we have made <span class="process-math">\(k\)</span> cents using at least three 5-cent stamps, replace three 5-cent stamps by two 8-cent stamps. This replaces 15 cents of postage with 16 cents, moving from a total of <span class="process-math">\(k\)</span> cents to <span class="process-math">\(k+1\)</span> cents. Thus <span class="process-math">\(P(k+1)\)</span> is true. On the other hand, if we have made <span class="process-math">\(k\)</span> cents using at least three 8-cent stamps, then we can replace three 8-cent stamps with five 5-cent stamps, moving from 24 cents to 25 cents, giving a total of <span class="process-math">\(k+1\)</span> cents of postage. So in this case as well <span class="process-math">\(P(k+1)\)</span> is true.</div> <div class="para" id="VuN">Therefore, by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 28\text{.}\)</span>
+</div></article></section><section class="subsection" id="bFy"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Formalizing Proofs</span>
+</h3>
+<div class="para" id="lnF">What we did in the stamp example above works for many types of problems. Proof by induction is useful when trying to prove statements about all natural numbers, or all natural numbers greater than some fixed first case (like 28 in the example above), and in some other situations too. In particular, induction should be used when there is some way to go from one case to the next – when you can see how to always “do one more.”</div>
+<div class="para" id="RuO">This is a big idea. Thinking about a problem <em class="emphasis">inductively</em> can give new insight into the problem. For example, to really understand the stamp problem, you should think about how any amount of postage (greater than 28 cents) can be made (this is non-inductive reasoning) and also how the ways in which postage can be made <em class="emphasis">changes</em> as the amount increases (inductive reasoning). When you are asked to provide a proof by induction, you are being asked to think about the problem <em class="emphasis">dynamically</em>; how does increasing <span class="process-math">\(n\)</span> change the problem?</div>
+<div class="para" id="xBX">But there is another side to proofs by induction as well. In mathematics, it is not enough to understand a problem, you must also be able to communicate the problem to others. Like any discipline, mathematics has standard language and style, allowing mathematicians to share their ideas efficiently. Proofs by induction have a certain formal style, and being able to write in this style is important. It allows us to keep our ideas organized and might even help us with formulating a proof.</div>
+<div class="para" id="dJg">Here is the general structure of a proof by mathematical induction:</div>
+<article class="assemblage assemblage-like" id="UaZ"><h4 class="heading"><span class="title">Induction Proof Structure.</span></h4>
+<div class="para logical" id="bTT">
+<div class="para"> Start by saying what the statement is that you want to prove: “Let <span class="process-math">\(P(n)\)</span> be the statement…” To prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 0\text{,}\)</span> you must prove two facts:</div>
+<ol class="decimal">
+<li id="DMI"><div class="para" id="oDK"> Base case: Prove that <span class="process-math">\(P(0)\)</span> is true. You do this directly. This is often easy.</div></li>
+<li id="jTR"><div class="para" id="UKT"> Inductive case: Prove that <span class="process-math">\(P(k) \imp P(k+1)\)</span> for all <span class="process-math">\(k \ge 0\text{.}\)</span> That is, prove that for any <span class="process-math">\(k \ge 0\)</span> if <span class="process-math">\(P(k)\)</span> is true, then <span class="process-math">\(P(k+1)\)</span> is true as well. This is the proof of an if … then … statement, so you can assume <span class="process-math">\(P(k)\)</span> is true (<span class="process-math">\(P(k)\)</span> is called the <em class="emphasis">inductive hypothesis</em>).  You must then explain why <span class="process-math">\(P(k+1)\)</span> is also true, given that assumption.</div></li>
+</ol>
+</div>
+<div class="para" id="Ibc">Assuming you are successful on both parts above, you can conclude, “Therefore by the principle of mathematical induction, the statement <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 0\text{.}\)</span>”</div></article><div class="para" id="JQp">Sometimes the statement <span class="process-math">\(P(n)\)</span> will only be true for values of <span class="process-math">\(n \ge 4\text{,}\)</span> for example, or some other value. In such cases, replace all the 0's above with 4's (or the other value).</div>
+<div class="para" id="pXy">The other advantage of formalizing inductive proofs is it allows us to verify that the logic behind this style of argument is valid. Why does induction work? Think of a row of dominoes set up standing on their edges. We want to argue that in a minute, all the dominoes will have fallen down. For this to happen, you will need to push the first domino. That is the base case. It will also have to be that the dominoes are close enough together that when any particular domino falls, it will cause the next domino to fall. That is the inductive case. If both of these conditions are met, you push the first domino over and each domino will cause the next to fall, then all the dominoes will fall.</div>
+<div class="para" id="WeH">Induction is powerful! Think how much easier it is to knock over dominoes when you don't have to push over each domino yourself. You just start the chain reaction, and the rely on the relative nearness of the dominoes to take care of the rest.</div>
+<div class="para" id="ClQ">Think about our study of sequences. It is easier to find recursive definitions for sequences than closed formulas. Going from one case to the next is easier than going directly to a particular case. That is what is so great about induction. Instead of going directly to the (arbitrary) case for <span class="process-math">\(n\text{,}\)</span> we just need to say how to get from one case to the next.</div>
+<div class="para" id="isZ">When you are asked to prove a statement by mathematical induction, you should first think about <em class="emphasis">why</em> the statement is true, using inductive reasoning. Explain why induction is the right thing to do, and roughly why the inductive case will work. Then, sit down and write out a careful, formal proof using the structure above.</div></section><section class="subsection" id="HMH"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Examples</span>
+</h3>
+<div class="para" id="OAi">Here are some examples of proof by mathematical induction.</div>
+<article class="example example-like" id="sDJ"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.5.1</span><span class="period">.</span>
+</h4>
+<div class="para" id="SAh">Prove for each natural number <span class="process-math">\(n \ge 1\)</span> that <span class="process-math">\(1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-JBU" id="JBU"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-JBU"><div class="solution solution-like">
+<div class="para" id="Ngu">First, let's think inductively about this equation. In fact, we know this is true for other reasons (reverse and add comes to mind). But why might induction be applicable? The left-hand side adds up the numbers from 1 to <span class="process-math">\(n\text{.}\)</span> If we know how to do that, adding just one more term (<span class="process-math">\(n+1\)</span>) would not be that hard. For example, if <span class="process-math">\(n = 100\text{,}\)</span> suppose we know that the sum of the first 100 numbers is <span class="process-math">\(5050\)</span> (so <span class="process-math">\(1 + 2 + 3 + \cdots + 100 = 5050\text{,}\)</span> which is true). Now to find the sum of the first 101 numbers, it makes more sense to just add 101 to 5050, instead of computing the entire sum again. We would have <span class="process-math">\(1 + 2 + 3 + \cdots + 100 + 101 = 5050 + 101 = 5151\text{.}\)</span> In fact, it would always be easy to add just one more term. This is why we should use induction.</div> <div class="para" id="tnD">Now the formal proof:</div> <article class="proof" id="pJd"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="ZuM">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}\text{.}\)</span> We will show that <span class="process-math">\(P(n)\)</span> is true for all natural numbers <span class="process-math">\(n \ge 1\text{.}\)</span>
+</div> <div class="para" id="FBV">Base case: <span class="process-math">\(P(1)\)</span> is the statement <span class="process-math">\(1 = \frac{1(1+1)}{2}\)</span> which is clearly true.</div> <div class="para logical" id="lJe">
+<div class="para">Inductive case: Let <span class="process-math">\(k \ge 1\)</span> be a natural number. Assume (for induction) that <span class="process-math">\(P(k)\)</span> is true. That means <span class="process-math">\(1 + 2 + 3 + \cdots + k = \frac{k(k+1)}{2}\text{.}\)</span> We will prove that <span class="process-math">\(P(k+1)\)</span> is true as well. That is, we must prove that <span class="process-math">\(1 + 2 + 3 + \cdots + k + (k+1) = \frac{(k+1)(k+2)}{2}\text{.}\)</span> To prove this equation, start by adding <span class="process-math">\(k+1\)</span> to both sides of the inductive hypothesis:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1 + 2 + 3 + \cdots + k + (k+1) = \frac{k(k+1)}{2} + (k+1)\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="RQn">
+<div class="para">Now, simplifying the right side we get:</div>
+<div class="displaymath process-math" id="lXz">
+\begin{align*}
+\frac{k(k+1)}{2} + k+1 \amp = \frac{k(k+1)}{2} + \frac{2(k+1)}{2}\\
+\amp = \frac{k(k+1) + 2(k+1)}{2}\\
+\amp = \frac{(k+2)(k+1)}{2}\text{.}
+\end{align*}
+</div>
+</div> <div class="para" id="xXw">Thus <span class="process-math">\(P(k+1)\)</span> is true, so by the principle of mathematical induction <span class="process-math">\(P(n)\)</span> is true for all natural numbers <span class="process-math">\(n \ge 1\text{.}\)</span>
+</div></article>
+</div></div>
+</div></article><div class="para" id="uHr">Note that in the part of the proof in which we proved <span class="process-math">\(P(k+1)\)</span> from <span class="process-math">\(P(k)\text{,}\)</span> we used the equation <span class="process-math">\(P(k)\text{.}\)</span> This was the inductive hypothesis.  Seeing how to use the inductive hypotheses is usually straight forward when proving a fact about a sum like this. In other proofs, it can be less obvious where it fits in.</div>
+<article class="example example-like" id="YKS"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.5.2</span><span class="period">.</span>
+</h4>
+<div class="para" id="yHq">Prove that for all <span class="process-math">\(n \in \N\text{,}\)</span> <span class="process-math">\(6^n - 1\)</span> is a multiple of 5.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-VQm" id="VQm"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-VQm"><div class="solution solution-like">
+<div class="para" id="eeF">Again, start by understanding the dynamics of the problem. What does increasing <span class="process-math">\(n\)</span> do? Let's try with a few examples. If <span class="process-math">\(n = 1\text{,}\)</span> then yes, <span class="process-math">\(6^1 - 1 = 5\)</span> is a multiple of 5. What does incrementing <span class="process-math">\(n\)</span> to 2 look like? We get <span class="process-math">\(6^2 - 1 = 35\text{,}\)</span> which again is a multiple of 5. Next, <span class="process-math">\(n = 3\text{:}\)</span> but instead of just finding <span class="process-math">\(6^3 - 1\text{,}\)</span> what did the increase in <span class="process-math">\(n\)</span> do? We will still subtract 1, but now we are multiplying by another 6 first. Viewed another way, we are multiplying a number which is one more than a multiple of 5 by 6 (because <span class="process-math">\(6^2 - 1\)</span> is a multiple of 5, so <span class="process-math">\(6^2\)</span> is one more than a multiple of 5). What do numbers which are one more than a multiple of 5 look like? They must have last digit 1 or 6. What happens when you multiply such a number by 6? Depends on the number, but in any case, the last digit of the new number must be a 6. And then if you subtract 1, you get last digit 5, so a multiple of 5.</div> <div class="para" id="KlO">The point is, every time we multiply by just one more six, we still get a number with last digit 6, so subtracting 1 gives us a multiple of 5. Now the formal proof:</div> <article class="proof" id="BXv"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="qsX">Let <span class="process-math">\(P(n)\)</span> be the statement, “<span class="process-math">\(6^n - 1\)</span> is a multiple of 5.” We will prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div> <div class="para" id="WAg">Base case: <span class="process-math">\(P(0)\)</span> is true: <span class="process-math">\(6^0 -1 = 0\)</span> which is a multiple of 5.</div> <div class="para logical" id="CHp">
+<div class="para">Inductive case: Let <span class="process-math">\(k\)</span> be an arbitrary natural number. Assume, for induction, that <span class="process-math">\(P(k)\)</span> is true. That is, <span class="process-math">\(6^k - 1\)</span> is a multiple of <span class="process-math">\(5\text{.}\)</span> Then <span class="process-math">\(6^k - 1 = 5j\)</span> for some integer <span class="process-math">\(j\text{.}\)</span> This means that <span class="process-math">\(6^k = 5j + 1\text{.}\)</span> Multiply both sides by <span class="process-math">\(6\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+6^{k+1} = 6(5j+1) = 30j + 6\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="iOy">
+<div class="para">But we want to know about <span class="process-math">\(6^{k+1} - 1\text{,}\)</span> so subtract 1 from both sides:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+6^{k+1} - 1 = 30j + 5\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="OVH">Of course <span class="process-math">\(30j+5 = 5(6j+1)\text{,}\)</span> so is a multiple of 5.</div> <div class="para" id="vcQ">Therefore <span class="process-math">\(6^{k+1} - 1\)</span> is a multiple of 5, or in other words, <span class="process-math">\(P(k+1)\)</span> is true. Thus, by the principle of mathematical induction <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article>
+</div></div>
+</div></article><div class="para" id="aOA">We had to be a little bit clever (i.e., use some algebra) to locate the <span class="process-math">\(6^k - 1\)</span> inside of <span class="process-math">\(6^{k+1} - 1\)</span> before we could apply the inductive hypothesis. This is what can make inductive proofs challenging.</div>
+<div class="para" id="GVJ">In the two examples above, we started with <span class="process-math">\(n = 1\)</span> or <span class="process-math">\(n = 0\text{.}\)</span> We can start later if we need to.</div>
+<article class="example example-like" id="ESb"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.5.3</span><span class="period">.</span>
+</h4>
+<div class="para" id="eOz">Prove that <span class="process-math">\(n^2 \lt 2^n\)</span> for all integers <span class="process-math">\(n \ge 5\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-ieE" id="ieE"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-ieE"><div class="solution solution-like">
+<div class="para logical" id="bjZ">
+<div class="para">First, the idea of the argument. What happens when we increase <span class="process-math">\(n\)</span> by 1? On the left-hand side, we increase the base of the square and go to the next square number. On the right-hand side, we increase the power of 2. This means we double the number. So the question is, how does doubling a number relate to increasing to the next square? Think about what the difference of two consecutive squares looks like. We have <span class="process-math">\((n+1)^2 - n^2\text{.}\)</span> This factors:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(n+1)^2 - n^2 = (n+1-n)(n+1+n) = 2n+1\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="Hri">But doubling the right-hand side increases it by <span class="process-math">\(2^n\text{,}\)</span> since <span class="process-math">\(2^{n+1} = 2^n + 2^n\text{.}\)</span> When <span class="process-math">\(n\)</span> is large enough, <span class="process-math">\(2^n &gt; 2n + 1\text{.}\)</span>
+</div> <div class="para" id="nyr">What we are saying here is that each time <span class="process-math">\(n\)</span> increases, the left-hand side grows by less than the right-hand side. So if the left-hand side starts smaller (as it does when <span class="process-math">\(n = 5\)</span>), it will never catch up. Now the formal proof:</div> <article class="proof" id="OlN"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="TFA">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(n^2 \lt 2^n\text{.}\)</span> We will prove <span class="process-math">\(P(n)\)</span> is true for all integers <span class="process-math">\(n \ge 5\text{.}\)</span>
+</div> <div class="para" id="zMJ">Base case: <span class="process-math">\(P(5)\)</span> is the statement <span class="process-math">\(5^2 \lt 2^5\text{.}\)</span> Since <span class="process-math">\(5^2 = 25\)</span> and <span class="process-math">\(2^5 = 32\text{,}\)</span> we see that <span class="process-math">\(P(5)\)</span> is indeed true.</div> <div class="para logical" id="fTS">
+<div class="para">Inductive case: Let <span class="process-math">\(k \ge 5\)</span> be an arbitrary integer. Assume, for induction, that <span class="process-math">\(P(k)\)</span> is true. That is, assume <span class="process-math">\(k^2 \lt  2^k\text{.}\)</span> We will prove that <span class="process-math">\(P(k+1)\)</span> is true, i.e., <span class="process-math">\((k+1)^2 \lt  2^{k+1}\text{.}\)</span> To prove such an inequality, start with the left-hand side and work towards the right-hand side:</div>
+<div class="displaymath process-math" id="SeI">
+\begin{align*}
+(k+1)^2 \amp = k^2 + 2k + 1 \amp\\
+\amp \lt 2^k + 2k + 1 \amp \ldots\text{by the inductive hypothesis.}\\
+\amp \lt 2^k + 2^k \amp \ldots\text{ since } 2k + 1 \lt  2^k \text{ for }k \ge 5.\\
+\amp = 2^{k+1}. \amp
+\end{align*}
+</div>
+</div> <div class="para" id="Mbb">Following the equalities and inequalities through, we get <span class="process-math">\((k+1)^2 \lt 2^{k+1}\text{,}\)</span> in other words, <span class="process-math">\(P(k+1)\text{.}\)</span> Therefore by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 5\text{.}\)</span>
+</div></article>
+</div></div>
+</div></article><div class="para" id="ncS">The previous example might remind you of the <em class="emphasis">racetrack principle</em> from calculus,  which says that if <span class="process-math">\(f(a) \lt g(a)\text{,}\)</span> and <span class="process-math">\(f'(x) \lt g'(x)\)</span> for <span class="process-math">\(x &gt;
+a\text{,}\)</span> then <span class="process-math">\(f(x) \lt g(x)\)</span> for <span class="process-math">\(x &gt; a\text{.}\)</span> Same idea: the larger function is increasing at a faster rate than the smaller function, so the larger function will stay larger. In discrete math, we don't have derivatives, so we look at differences. Thus induction is the way to go.</div>
+<section class="paragraphs" id="Aii"><h4 class="heading"><span class="title">Warning:.</span></h4>  <div class="para" id="jys">With great power, comes great responsibility. Induction isn't magic. It seems very powerful to be able to assume <span class="process-math">\(P(k)\)</span> is true. After all, we are trying to prove <span class="process-math">\(P(n)\)</span> is true and the only difference is in the variable: <span class="process-math">\(k\)</span> vs. <span class="process-math">\(n\text{.}\)</span> Are we assuming that what we want to prove is true? Not really. We assume <span class="process-math">\(P(k)\)</span> is true only for the sake of proving that <span class="process-math">\(P(k+1)\)</span> is true.</div> <div class="para" id="PFB">Still you might start to believe that you can prove anything with induction. Consider this incorrect “proof” that every Canadian  has the same eye color: Let <span class="process-math">\(P(n)\)</span> be the statement that any <span class="process-math">\(n\)</span> Canadians have the same eye color. <span class="process-math">\(P(1)\)</span> is true, since everyone has the same eye color as themselves. Now assume <span class="process-math">\(P(k)\)</span> is true. That is, assume that in any group of <span class="process-math">\(k\)</span> Canadians, everyone has the same eye color. Now consider an arbitrary group of <span class="process-math">\(k+1\)</span> Canadians. The first <span class="process-math">\(k\)</span> of these must all have the same eye color, since <span class="process-math">\(P(k)\)</span> is true. Also, the last <span class="process-math">\(k\)</span> of these must have the same eye color, since <span class="process-math">\(P(k)\)</span> is true. So in fact, everyone the group must have the same eye color. Thus <span class="process-math">\(P(k+1)\)</span> is true. So by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n\text{.}\)</span>
+</div> <div class="para" id="vMK">Clearly something went wrong. The problem is that the proof that <span class="process-math">\(P(k)\)</span> implies <span class="process-math">\(P(k+1)\)</span> assumes that <span class="process-math">\(k \ge 2\text{.}\)</span> We have only shown <span class="process-math">\(P(1)\)</span> is true. In fact, <span class="process-math">\(P(2)\)</span> is false.</div></section></section><section class="subsection" id="nTQ"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Strong Induction</span>
+</h3>
+<article class="project-like" id="xnC"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para" id="Drj">Start with a square piece of paper. You want to cut this square into smaller squares, leaving no waste (every piece of paper you end up with must be a square). Obviously it is possible to cut the square into 4 squares. You can also cut it into 9 squares. It turns out you can cut the square into 7 squares (although not all the same size). What other numbers of squares could you end up with?</div></article><div class="para" id="Tkb">Sometimes, to prove that <span class="process-math">\(P(k+1)\)</span> is true, it would be helpful to know that <span class="process-math">\(P(k)\)</span> <em class="emphasis">and</em> <span class="process-math">\(P(k-1)\)</span> <em class="emphasis">and</em> <span class="process-math">\(P(k-2)\)</span> are all true. Consider the following puzzle:</div>
+<blockquote class="blockquote" id="SVG"> <div class="para" id="GlP">You have a rectangular chocolate bar, made up of <span class="process-math">\(n\)</span> identical squares of chocolate. You can take such a bar and break it along any row or column. How many times will you have to break the bar to reduce it to <span class="process-math">\(n\)</span> single chocolate squares?</div>
+</blockquote>
+<div class="para" id="zrk">At first, this question might seem impossible. Perhaps I meant to ask for the <em class="emphasis">smallest</em> number of breaks needed? Let's investigate.</div>
+<div class="para" id="fyt">Start with some small cases. If <span class="process-math">\(n=2\text{,}\)</span> you must have a <span class="process-math">\(1\times 2\)</span> rectangle, which can be reduced to single pieces in one break. With <span class="process-math">\(n=3\text{,}\)</span> we must have a <span class="process-math">\(1\times 3\)</span> bar, which requires two breaks: the first break creates a single square and a <span class="process-math">\(1\times 2\)</span> bar, which we know takes one (more) break.</div>
+<div class="para" id="LFC">What about <span class="process-math">\(n=4\text{?}\)</span> Now we could have a <span class="process-math">\(2\times 2\)</span> bar, or a <span class="process-math">\(1 \times 4\)</span> bar. In the first case, break the bar into two <span class="process-math">\(2\times 2\)</span> bars, each which require one more break (that's a total of three breaks required). If we started with a <span class="process-math">\(1 \times 4\)</span> bar, we have choices for our first break. We could break the bar in half, creating two <span class="process-math">\(1\times 2\)</span> bars, or we could break off a single square, leaving a <span class="process-math">\(1\times 3\)</span> bar. But either way, we still need two more breaks, giving a total of three.</div>
+<div class="para" id="rML">It is starting to look like no matter how we break the bar (and no matter how the <span class="process-math">\(n\)</span> squares are arranged into a rectangle), we will always have the same number of breaks required. It also looks like that number is one less than <span class="process-math">\(n\text{:}\)</span>
+</div>
+<article class="conjecture theorem-like" id="kZk"><h4 class="heading">
+<span class="type">Conjecture</span><span class="space"> </span><span class="codenumber">3.5.4</span><span class="period">.</span>
+</h4>
+<div class="para" id="msY">Given a <span class="process-math">\(n\)</span>-square rectangular chocolate bar, it always takes <span class="process-math">\(n-1\)</span> breaks to reduce the bar to single squares.</div></article><div class="para" id="XTU">It makes sense to prove this by induction because after breaking the bar once, you are left with <em class="emphasis">smaller</em> chocolate bars. Reducing to smaller cases is what induction is all about. We can inductively assume we already know how to deal with these smaller bars. The problem is, if we are trying to prove the inductive case about a <span class="process-math">\((k+1)\)</span>-square bar, we don't know that after the first break the remaining bar will have <span class="process-math">\(k\)</span> squares. So we really need to assume that our conjecture is true for all cases less than <span class="process-math">\(k+1\text{.}\)</span>
+</div>
+<div class="para" id="Ebd">Is it valid to make this stronger assumption? Remember, in induction we are attempting to prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n\text{.}\)</span> What if that were not the case? Then there would be some first <span class="process-math">\(n_0\)</span> for which <span class="process-math">\(P(n_0)\)</span> was false. Since <span class="process-math">\(n_0\)</span> is the <em class="emphasis">first</em> counterexample, we know that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \lt n_0\text{.}\)</span> Now we proceed to prove that <span class="process-math">\(P(n_0)\)</span> is actually true, based on the assumption that <span class="process-math">\(P(n)\)</span> is true for all smaller <span class="process-math">\(n\text{.}\)</span>
+</div>
+<div class="para" id="kim">This is quite an advantage: we now have a stronger inductive hypothesis.  We can assume that <span class="process-math">\(P(1)\text{,}\)</span> <span class="process-math">\(P(2)\text{,}\)</span> <span class="process-math">\(P(3)\text{,}\)</span> … <span class="process-math">\(P(k)\)</span> is true, just to show that <span class="process-math">\(P(k+1)\)</span> is true. Previously, we just assumed <span class="process-math">\(P(k)\)</span> for this purpose.</div>
+<div class="para" id="Qpv">It is slightly easier if we change our variables for strong induction. Here is what the formal proof would look like:</div>
+<article class="assemblage assemblage-like" id="gpr"><h4 class="heading"><span class="title">Strong Induction Proof Structure.</span></h4>
+<div class="para logical" id="oil">
+<div class="para">Again, start by saying what you want to prove: “Let <span class="process-math">\(P(n)\)</span> be the statement…” Then establish two facts:</div>
+<ol class="decimal">
+<li id="Qba"><div class="para" id="ASc">Base case: Prove that <span class="process-math">\(P(0)\)</span> is true. </div></li>
+<li id="wij"><div class="para" id="gZl">Inductive case: Assume <span class="process-math">\(P(k)\)</span> is true for all <span class="process-math">\(k \lt n\text{.}\)</span> Prove that <span class="process-math">\(P(n)\)</span> is true. </div></li>
+</ol>
+<div class="para">Conclude, “therefore, by strong induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \gt 0\text{.}\)</span>”</div>
+</div></article><div class="para" id="wwE">Of course, it is acceptable to replace 0 with a larger base case if needed.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-13" id="fn-13"><sup> 5 </sup></a>
+</div>
+<div class="para" id="cDN">Let's prove our conjecture about the chocolate bar puzzle:</div>
+<article class="proof" id="mOx"><h4 class="heading"><span class="type">Proof<span class="period">.</span></span></h4>
+<div class="para" id="BBW">Let <span class="process-math">\(P(n)\)</span> be the statement, “it takes <span class="process-math">\(n-1\)</span> breaks to reduce a <span class="process-math">\(n\)</span>-square chocolate bar to single squares.”</div> <div class="para" id="hJf">Base case: Consider <span class="process-math">\(P(2)\text{.}\)</span> The squares must be arranged into a <span class="process-math">\(1\times 2\)</span> rectangle, and we require <span class="process-math">\(2-1 = 1\)</span> breaks to reduce this to single squares.</div> <div class="para" id="NQo">Inductive case: Fix an arbitrary <span class="process-math">\(n\ge 2\)</span> and assume <span class="process-math">\(P(k)\)</span> is true for all <span class="process-math">\(k \lt n\text{.}\)</span> Consider a <span class="process-math">\(n\)</span>-square rectangular chocolate bar. Break the bar once along any row or column. This results in two chocolate bars, say of sizes <span class="process-math">\(a\)</span> and <span class="process-math">\(b\text{.}\)</span> That is, we have an <span class="process-math">\(a\)</span>-square rectangular chocolate bar, a <span class="process-math">\(b\)</span>-square rectangular chocolate bar, and <span class="process-math">\(a+b = n\text{.}\)</span>
+</div> <div class="para" id="tXx">We also know that <span class="process-math">\(a \lt n\)</span> and <span class="process-math">\(b \lt n\text{,}\)</span> so by our inductive hypothesis, <span class="process-math">\(P(a)\)</span> and <span class="process-math">\(P(b)\)</span> are true. To reduce the <span class="process-math">\(a\)</span>-square bar to single squares takes <span class="process-math">\(a-1\)</span> breaks; to reduce the <span class="process-math">\(b\)</span>-square bar to single squares takes <span class="process-math">\(b-1\)</span> breaks. Doing this results in our original bar being reduced to single squares. All together it took the initial break, plus the <span class="process-math">\(a-1\)</span> and <span class="process-math">\(b-1\)</span> breaks, for a total of <span class="process-math">\(1+a-1+b-1 = a+b-1 = n-1\)</span> breaks. Thus <span class="process-math">\(P(n)\)</span> is true.</div> <div class="para" id="aeG">Therefore, by strong induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 2\text{.}\)</span>
+</div></article><div class="para" id="IKW">Here is a more mathematically relevant example:</div>
+<article class="example example-like" id="Rgt"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.5.5</span><span class="period">.</span>
+</h4>
+<div class="para" id="KVI">Prove that any natural number greater than 1 is either prime  or can be written as the product of primes.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-usW" id="usW"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-usW"><div class="solution solution-like">
+<div class="para" id="sik">First, the idea: if we take some number <span class="process-math">\(n\text{,}\)</span> maybe it is prime. If so, we are done. If not, then it is composite, so it is the product of two smaller numbers. Each of these factors is smaller than <span class="process-math">\(n\)</span> (but at least 2), so we can repeat the argument with these numbers. We have reduced to a smaller case.</div> <div class="para" id="Ypt">Now the formal proof:</div> <article class="proof" id="aAf"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="EwC">Let <span class="process-math">\(P(n)\)</span> be the statement, “<span class="process-math">\(n\)</span> is either prime or can be written as the product of primes.” We will prove <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 2\text{.}\)</span>
+</div> <div class="para" id="kDL">Base case: <span class="process-math">\(P(2)\)</span> is true because <span class="process-math">\(2\)</span> is indeed prime.</div> <div class="para" id="QKU">Inductive case: assume <span class="process-math">\(P(k)\)</span> is true for all <span class="process-math">\(k \lt n\text{.}\)</span> We want to show that <span class="process-math">\(P(n)\)</span> is true. That is, we want to show that <span class="process-math">\(n\)</span> is either prime or is the product of primes. If <span class="process-math">\(n\)</span> is prime, we are done. If not, then <span class="process-math">\(n\)</span> has more than 2 divisors, so we can write <span class="process-math">\(n = m_1 \cdot m_2\text{,}\)</span> with <span class="process-math">\(m_1\)</span> and <span class="process-math">\(m_2\)</span> less than <span class="process-math">\(n\)</span> (and greater than 1). By the inductive hypothesis, <span class="process-math">\(m_1\)</span> and <span class="process-math">\(m_2\)</span> are each either prime or can be written as the product of primes. In either case, we have that <span class="process-math">\(n\)</span> is written as the product of primes.</div> <div class="para" id="wSd">Thus by the strong induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 2\text{.}\)</span>
+</div></article>
+</div></div>
+</div></article><div class="para" id="oSf">Whether you use regular induction or strong induction depends on the statement you want to prove. If you wanted to be safe, you could always use strong induction. It really is <em class="emphasis">stronger</em>, so can accomplish everything “weak” induction can.  That said, using regular induction is often easier since there is only one place you can use the induction hypothesis. There is also something to be said for <em class="emphasis">elegance</em> in proofs. If you can prove a statement using simpler tools, it is nice to do so.</div>
+<div class="para" id="UZo"> As a final contrast between the two forms of induction, consider once more the stamp problem. Regular induction worked by showing how to increase postage by one cent (either replacing three 5-cent stamps with two 8-cent stamps, or three 8-cent stamps with five 5-cent stamps). We could give a slightly different proof using strong induction. First, we could show <em class="emphasis">five</em> base cases: it is possible to make 28, 29, 30, 31, and 32 cents (we would actually say how each of these is made). Now assume that it is possible to make <span class="process-math">\(k\)</span> cents of postage for all <span class="process-math">\(k \lt n\)</span> as long as <span class="process-math">\(k \ge 28\text{.}\)</span> As long as <span class="process-math">\(n &gt; 32\text{,}\)</span> this means in particular we can make <span class="process-math">\(k = n-5\)</span> cents. Now add a 5-cent stamp to get make <span class="process-math">\(n\)</span> cents.</div></section><section class="exercises" id="YsG"><h3 class="heading hide-type">
+<span class="type">Exercises</span> <span class="codenumber"></span> <span class="title">Exercises</span>
+</h3>
+<article class="exercise exercise-like" id="Qlr"><h4 class="heading"><span class="codenumber">1<span class="period">.</span></span></h4>
+<div class="para logical" id="ihR">
+<div class="para">On the way to the market, you exchange your cow for some magic dark chocolate espresso beans. These beans have the property that every night at midnight, each bean splits into two, effectively doubling your collection. You decide to take advantage of this and each morning (around 8am) you eat 5 beans.</div>
+<ol class="lower-alpha">
+<li id="xMo"><div class="para" id="aYR">Explain why it is true that <em class="emphasis">if</em> at noon on day <span class="process-math">\(n\)</span> you have a number of beans ending in a 5, then at noon on day <span class="process-math">\(n+1\)</span> you will still have a number of beans ending in a 5.</div></li>
+<li id="dTx"><div class="para" id="Hga">Why is the previous fact not enough to conclude that you will always have a number of beans ending in a 5? What additional fact would you need?</div></li>
+<li id="KaG"><div class="para" id="nnj">Assuming you have the additional fact in part (b), and have successfully proved the fact in part (a), how do you know that you will always have a number of beans ending in a 5? Illustrate what is going on by carefully explaining how the two facts above prove that you will have a number of beans ending in a 5 on <em class="emphasis">day 4</em> specifically. In other words, explain why induction works in this context.</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Mls" id="Mls"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Mls"><div class="solution solution-like"><div class="para logical" id="ksD"><ol class="lower-alpha">
+<li id="qhP"><div class="para" id="Tus">If we have a number of beans ending in a 5 and we double it, we will get a number of beans ending in a 0 (since <span class="process-math">\(5\cdot 2 = 10\)</span> ). Then if we subtract 5, we will once again get a number of beans ending in a 5. Thus if on any day we have a number ending in a 5, the next day will also have a number ending in a 5.</div></li>
+<li id="WoY"><div class="para" id="zBB">If you don't <em class="emphasis">start</em> with a number of beans ending in a 5 (on day 1), the above reasoning is still correct but not helpful. For example, if you start with a number ending in a 3, the next day you will have a number ending in a 1.</div></li>
+<li id="Cwh">
+<div class="para" id="fIK">Part (b) is the base case and part (a) is the inductive case. If on day 1 we have a number ending in a 5 (by part (b)), then on day 2 we will also have a number ending in a 5 (by part (a)). Then by part (a) again, we will have a number ending in a 5 on day 3. By part (a) again, this means we will have a number ending in a 5 on day 4</div>
+<div class="para" id="LPT">The proof by induction would say that on <em class="emphasis">every</em> day we will have a number ending in a 5, and this works because we can start with the base case, then use the inductive case over and over until we get up to our desired <span class="process-math">\(n\text{.}\)</span>
+</div>
+</li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="wsA"><h4 class="heading"><span class="codenumber">2<span class="period">.</span></span></h4>
+<div class="para" id="Opa">Use induction to prove for all <span class="process-math">\(n \in \N\)</span> that <span class="process-math">\(\d\sum_{k=0}^n 2^k = 2^{n+1} - 1\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-ssB" id="ssB"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-ssB"><div class="solution solution-like"><article class="proof" id="YzK"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="QzM">
+<div class="para">We must prove that <span class="process-math">\(1 + 2 + 2^2 + 2^3 + \cdots +2^n = 2^{n+1} - 1\)</span> for all <span class="process-math">\(n \in \N\text{.}\)</span> Thus let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(1 + 2 + 2^2 + \cdots + 2^n = 2^{n+1} - 1\text{.}\)</span> We will prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span> First we establish the base case, <span class="process-math">\(P(0)\text{,}\)</span> which claims that <span class="process-math">\(1 = 2^{0+1} -1\text{.}\)</span> Since <span class="process-math">\(2^1 - 1 = 2 - 1 = 1\text{,}\)</span> we see that <span class="process-math">\(P(0)\)</span> is true. Now for the inductive case. Assume that <span class="process-math">\(P(k)\)</span> is true for an arbitrary <span class="process-math">\(k \in \N\text{.}\)</span> That is, <span class="process-math">\(1 + 2 + 2^2 + \cdots + 2^k = 2^{k+1} - 1\text{.}\)</span> We must show that <span class="process-math">\(P(k+1)\)</span> is true (i.e., that <span class="process-math">\(1 + 2 + 2^2 + \cdots + 2^{k+1} = 2^{k+2} - 1\)</span>). To do this, we start with the left-hand side of <span class="process-math">\(P(k+1)\)</span> and work to the right-hand side:</div>
+<div class="displaymath process-math" id="nBE">
+\begin{align*}
+1 + 2 + 2^2 + \cdots + 2^k + 2^{k+1} = \amp ~ 2^{k+1} - 1 + 2^{k+1} \amp \text{by inductive hypothesis}\\
+= \amp ~2\cdot 2^{k+1} - 1 \amp\\
+= \amp ~ 2^{k+2} - 1 \amp
+\end{align*}
+</div>
+</div> <div class="para" id="wGV">Thus <span class="process-math">\(P(k+1)\)</span> is true so by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="czJ"><h4 class="heading"><span class="codenumber">3<span class="period">.</span></span></h4>
+<div class="para" id="uwj">Prove that <span class="process-math">\(7^n - 1\)</span> is a multiple of 6 for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-EGT" id="EGT"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-EGT"><div class="solution solution-like"><article class="proof" id="kOc"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="cOe">
+<div class="para">Let <span class="process-math">\(P(n)\)</span> be the statement “<span class="process-math">\(7^n - 1\)</span> is a multiple of 6.” We will show <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span> First we establish the base case, <span class="process-math">\(P(0)\text{.}\)</span> Since <span class="process-math">\(7^0 - 1 = 0\text{,}\)</span> and <span class="process-math">\(0\)</span> is a multiple of 6, <span class="process-math">\(P(0)\)</span> is true. Now for the inductive case. Assume <span class="process-math">\(P(k)\)</span> holds for an arbitrary <span class="process-math">\(k \in \N\text{.}\)</span> That is, <span class="process-math">\(7^k - 1\)</span> is a multiple of 6, or in other words, <span class="process-math">\(7^k - 1 = 6j\)</span> for some integer <span class="process-math">\(j\text{.}\)</span> Now consider <span class="process-math">\(7^{k+1} - 1\text{:}\)</span>
+</div>
+<div class="displaymath process-math" id="TIN">
+\begin{align*}
+7^{k+1} - 1 ~ \amp = 7^{k+1} - 7 + 6 \amp \text{by cleverness:} -1 = -7 + 6\\
+\amp = 7(7^k - 1) + 6 \amp \text{factor out a 7 from the first two terms}\\
+\amp = 7(6j) + 6 \amp \text{by the inductive hypothesis}\\
+\amp = 6(7j + 1) \amp \text{factor out a 6}
+\end{align*}
+</div>
+</div> <div class="para" id="IVn">Therefore <span class="process-math">\(7^{k+1} - 1\)</span> is a multiple of 6, or in other words, <span class="process-math">\(P(k+1)\)</span> is true. Therefore by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="IGS"><h4 class="heading"><span class="codenumber">4<span class="period">.</span></span></h4>
+<div class="para" id="aDs">Prove that <span class="process-math">\(1 + 3 + 5 + \cdots + (2n-1) = n^2\)</span> for all <span class="process-math">\(n \ge 1\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-QVl" id="QVl"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-QVl"><div class="solution solution-like"><article class="proof" id="xcu"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="pcw">
+<div class="para">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(1+3 +5 + \cdots + (2n-1) = n^2\text{.}\)</span> We will prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 1\text{.}\)</span> First the base case, <span class="process-math">\(P(1)\text{.}\)</span> We have <span class="process-math">\(1 = 1^2\)</span> which is true, so <span class="process-math">\(P(1)\)</span> is established. Now the inductive case. Assume that <span class="process-math">\(P(k)\)</span> is true for some fixed arbitrary <span class="process-math">\(k \ge 1\text{.}\)</span> That is, <span class="process-math">\(1 + 3 + 5 + \cdots + (2k-1) = k^2\text{.}\)</span> We will now prove that <span class="process-math">\(P(k+1)\)</span> is also true (i.e., that <span class="process-math">\(1 + 3 + 5 + \cdots + (2k+1) = (k+1)^2\)</span>). We start with the left-hand side of <span class="process-math">\(P(k+1)\)</span> and work to the right-hand side:</div>
+<div class="displaymath process-math" id="zPW">
+\begin{align*}
+1 + 3 + 5 + \cdots + (2k-1) + (2k+1) ~ \amp = k^2 + (2k+1) \amp \text{by ind. hyp.}\\
+\amp = (k+1)^2 \amp \text{by factoring}
+\end{align*}
+</div>
+</div> <div class="para" id="VjF">Thus <span class="process-math">\(P(k+1)\)</span> holds, so by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 1\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="oOb"><h4 class="heading"><span class="codenumber">5<span class="period">.</span></span></h4>
+<div class="para" id="GKB">Prove that <span class="process-math">\(F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1\)</span> where <span class="process-math">\(F_n\)</span> is the <span class="process-math">\(n\)</span>th Fibonacci number.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-djD" id="djD"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-djD"><div class="solution solution-like"><article class="proof" id="JqM"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="BqO">
+<div class="para">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1\text{.}\)</span> We will show that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 0\text{.}\)</span> First the base case is easy because <span class="process-math">\(F_0 = 0\)</span> and <span class="process-math">\(F_1 = 1\)</span> so <span class="process-math">\(F_0 = F_1 - 1\text{.}\)</span> Now consider the inductive case. Assume <span class="process-math">\(P(k)\)</span> is true, that is, assume <span class="process-math">\(F_0 + F_2 + F_4 + \cdots + F_{2k} = F_{2k+1} - 1\text{.}\)</span> To establish <span class="process-math">\(P(k+1)\)</span> we work from left to right:</div>
+<div class="displaymath process-math" id="fXf">
+\begin{align*}
+F_0 + F_2 + \cdots + F_{2k} + F_{2k+2} ~ \amp = F_{2k+1} - 1 + F_{2k+2} \amp \text{by ind. hyp.}\\
+\amp = F_{2k+1} + F_{2k+2} - 1 \amp\\
+\amp = F_{2k+3} - 1 \amp \text{by recursive def.}
+\end{align*}
+</div>
+</div> <div class="para" id="hxX">Therefore <span class="process-math">\(F_0 + F_2 + F_4 + \cdots + F_{2k+2} = F_{2k+3} - 1\text{,}\)</span> which is to say <span class="process-math">\(P(k+1)\)</span> holds. Therefore by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 0\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="UVk"><h4 class="heading"><span class="codenumber">6<span class="period">.</span></span></h4>
+<div class="para" id="mRK">Prove that <span class="process-math">\(2^n \lt n!\)</span> for all <span class="process-math">\(n \ge 4\text{.}\)</span> (Recall, <span class="process-math">\(n! = 1\cdot 2 \cdot 3 \cdot \cdots\cdot n\text{.}\)</span>)</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-pxV" id="pxV"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-pxV"><div class="solution solution-like"><article class="proof" id="VFe"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="NFg">
+<div class="para">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(2^n \lt  n!\text{.}\)</span> We will show <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 4\text{.}\)</span> First, we check the base case and see that yes, <span class="process-math">\(2^4 \lt  4!\)</span> (as <span class="process-math">\(16 \lt  24\)</span>) so <span class="process-math">\(P(4)\)</span> is true. Now for the inductive case. Assume <span class="process-math">\(P(k)\)</span> is true for an arbitrary <span class="process-math">\(k \ge 4\text{.}\)</span> That is, <span class="process-math">\(2^k \lt  k!\text{.}\)</span> Now consider <span class="process-math">\(P(k+1)\text{:}\)</span> <span class="process-math">\(2^{k+1} \lt  (k+1)!\text{.}\)</span> To prove this, we start with the left side and work to the right side.</div>
+<div class="displaymath process-math" id="Meo">
+\begin{align*}
+2^{k+1}~ \amp = 2\cdot 2^k \amp\\
+\amp \lt 2\cdot k! \amp \text{by the inductive hypothesis}\\
+\amp \lt (k+1) \cdot k! \amp \text{ since } k+1 \gt 2\\
+\amp = (k+1)! \amp
+\end{align*}
+</div>
+</div> <div class="para" id="tMp">Therefore <span class="process-math">\(2^{k+1} \lt (k+1)!\)</span> so we have established <span class="process-math">\(P(k+1)\text{.}\)</span> Thus by the principle of mathematical induction <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 4\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="Bct"><h4 class="heading"><span class="codenumber">7<span class="period">.</span></span></h4>
+<div class="para" id="SYT">Prove, by mathematical induction, that <span class="process-math">\(F_0 + F_1 + F_2 + \cdots + F_{n} = F_{n+2} - 1\text{,}\)</span> where <span class="process-math">\(F_n\)</span> is the <span class="process-math">\(n\)</span>th Fibonacci number (<span class="process-math">\(F_0 = 0\text{,}\)</span> <span class="process-math">\(F_1 = 1\)</span> and <span class="process-math">\(F_n = F_{n-1} + F_{n-2}\)</span>).</div></article><article class="exercise exercise-like" id="hjC"><h4 class="heading"><span class="codenumber">8<span class="period">.</span></span></h4>
+<div class="para" id="zgc">Zombie Euler and Zombie Cauchy, two famous zombie mathematicians, have just signed up for Twitter accounts. After one day, Zombie Cauchy has more followers than Zombie Euler. Each day after that, the number of new followers of Zombie Cauchy is exactly the same as the number of new followers of Zombie Euler (and neither lose any followers). Explain how a proof by mathematical induction can show that on every day after the first day, Zombie Cauchy will have more followers than Zombie Euler. That is, explain what the base case and inductive case are, and why they together prove that Zombie Cauchy will have more followers on the 4th day.</div></article><article class="exercise exercise-like" id="NqL"><h4 class="heading"><span class="codenumber">9<span class="period">.</span></span></h4>
+<div class="para" id="fnl">Find the largest number of points which a football team cannot get exactly using just 3-point field goals and 7-point touchdowns (ignore the possibilities of safeties, missed extra points, and two point conversions). Prove your answer is correct by mathematical induction.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-BMn" id="BMn"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-BMn"><div class="hint solution-like"><div class="para" id="Put">It is not possible to score exactly 11 points.  Can you prove that you can score <span class="process-math">\(n\)</span> points for any <span class="process-math">\(n \ge 12\text{?}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="txU"><h4 class="heading"><span class="codenumber">10<span class="period">.</span></span></h4>
+<div class="para logical" id="Luu">
+<div class="para">Prove that the sum of <span class="process-math">\(n\)</span> squares can be found as follows</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1^2 +2^2 +3^2+...+n^2 = \frac{n(n+1)(2n+1)}{6}\text{.}
+\end{equation*}
+</div>
+</div></article><article class="exercise exercise-like" id="ZFd"><h4 class="heading"><span class="codenumber">11<span class="period">.</span></span></h4>
+<div class="para" id="rBD">Prove that the sum of the interior angles of a convex <span class="process-math">\(n\)</span>-gon is <span class="process-math">\((n-2)\cdot 180^\circ\text{.}\)</span> (A convex <span class="process-math">\(n\)</span>-gon is a polygon with <span class="process-math">\(n\)</span> sides for which each interior angle is less than <span class="process-math">\(180^\circ\text{.}\)</span>)</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-hTw" id="hTw"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-hTw"><div class="hint solution-like"><div class="para" id="vBC">Start with <span class="process-math">\((k+1)\)</span>-gon and divide it up into a <span class="process-math">\(k\)</span>-gon and a triangle.</div></div></div>
+</div></article><article class="exercise exercise-like" id="FMm"><h4 class="heading"><span class="codenumber">12<span class="period">.</span></span></h4>
+<div class="para" id="XIM">What is wrong with the following “proof” of the “fact” that <span class="process-math">\(n+3 = n+7\)</span> for all values of <span class="process-math">\(n\)</span> (besides of course that the thing it is claiming to prove is false)?</div> <article class="proof" id="uhO"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="JFh">Let <span class="process-math">\(P(n)\)</span> be the statement that <span class="process-math">\(n + 3 = n + 7\text{.}\)</span> We will prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span> Assume, for induction that <span class="process-math">\(P(k)\)</span> is true. That is, <span class="process-math">\(k+3 = k+7\text{.}\)</span> We must show that <span class="process-math">\(P(k+1)\)</span> is true. Now since <span class="process-math">\(k + 3 = k + 7\text{,}\)</span> add 1 to both sides. This gives <span class="process-math">\(k + 3 + 1 = k + 7 + 1\text{.}\)</span> Regrouping <span class="process-math">\((k+1) + 3 = (k+1) + 7\text{.}\)</span> But this is simply <span class="process-math">\(P(k+1)\text{.}\)</span> Thus by the principle of mathematical induction <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article><div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-OaF" id="OaF"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-OaF"><div class="solution solution-like"><div class="para" id="ZTy">The only problem is that we never established the base case. Of course, when <span class="process-math">\(n = 0\text{,}\)</span> <span class="process-math">\(0+3 \ne 0+7\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="lTv"><h4 class="heading"><span class="codenumber">13<span class="period">.</span></span></h4>
+<div class="para" id="DPV">The proof in the previous problem does not work. But if we modify the “fact,” we can get a working proof. Prove that <span class="process-math">\(n + 3 \lt n + 7\)</span> for all values of <span class="process-math">\(n \in \N\text{.}\)</span> You can do this proof with algebra (without induction), but the goal of this exercise is to write out a valid induction proof.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-aoX" id="aoX"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-aoX"><div class="solution solution-like"><article class="proof" id="Gwg"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="GaH">Let <span class="process-math">\(P(n)\)</span> be the statement that <span class="process-math">\(n + 3 \lt n + 7\text{.}\)</span> We will prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span> First, note that the base case holds: <span class="process-math">\(0+3 \lt 0+7\text{.}\)</span> Now assume for induction that <span class="process-math">\(P(k)\)</span> is true. That is, <span class="process-math">\(k+3 \lt k+7\text{.}\)</span> We must show that <span class="process-math">\(P(k+1)\)</span> is true. Now since <span class="process-math">\(k + 3 \lt k + 7\text{,}\)</span> add 1 to both sides. This gives <span class="process-math">\(k + 3 + 1 \lt k + 7 + 1\text{.}\)</span> Regrouping <span class="process-math">\((k+1) + 3 \lt (k+1) + 7\text{.}\)</span> But this is simply <span class="process-math">\(P(k+1)\text{.}\)</span> Thus by the principle of mathematical induction <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="SaE"><h4 class="heading"><span class="codenumber">14<span class="period">.</span></span></h4>
+<div class="para" id="jXe">Find the flaw in the following “proof” of the “fact” that <span class="process-math">\(n \lt 100\)</span> for every <span class="process-math">\(n \in \N\text{.}\)</span>
+</div> <article class="proof" id="SKy"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="pMq">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(n \lt 100\text{.}\)</span> We will prove <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span> First we establish the base case: when <span class="process-math">\(n = 0\text{,}\)</span> <span class="process-math">\(P(n)\)</span> is true, because <span class="process-math">\(0 \lt 100\text{.}\)</span> Now for the inductive step, assume <span class="process-math">\(P(k)\)</span> is true. That is, <span class="process-math">\(k \lt 100\text{.}\)</span> Now if <span class="process-math">\(k \lt 100\text{,}\)</span> then <span class="process-math">\(k\)</span> is some number, like 80. Of course <span class="process-math">\(80+1 = 81\)</span> which is still less than 100. So <span class="process-math">\(k +1 \lt 100\)</span> as well. But this is what <span class="process-math">\(P(k+1)\)</span> claims, so we have shown that <span class="process-math">\(P(k) \imp P(k+1)\text{.}\)</span> Thus by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article><div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-mDp" id="mDp"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-mDp"><div class="solution solution-like"><div class="para" id="mhQ">The problem here is that while <span class="process-math">\(P(0)\)</span> is true, and while <span class="process-math">\(P(k) \imp P(k+1)\)</span> for <em class="emphasis">some</em> values of <span class="process-math">\(k\text{,}\)</span> there is at least one value of <span class="process-math">\(k\)</span> (namely <span class="process-math">\(k = 99\)</span>) when that implication fails. For a valid proof by induction, <span class="process-math">\(P(k) \imp P(k+1)\)</span> must be true for all values of <span class="process-math">\(k\)</span> greater than or equal to the base case.</div></div></div>
+</div></article><article class="exercise exercise-like" id="yhN"><h4 class="heading"><span class="codenumber">15<span class="period">.</span></span></h4>
+<div class="para" id="Qen">While the above proof does not work (it better not since the statement it is trying to prove is false!) we can prove something similar. Prove that there is a strictly increasing sequence <span class="process-math">\(a_1, a_2, a_3, \ldots\)</span> of numbers (not necessarily integers) such that <span class="process-math">\(a_n \lt 100\)</span> for all <span class="process-math">\(n \in \N\text{.}\)</span> (By <dfn class="terminology">strictly increasing</dfn> we mean <span class="process-math">\(a_n \lt a_{n+1}\)</span> for all <span class="process-math">\(n\text{.}\)</span> So each term must be larger than the last.)</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-yRH" id="yRH"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-yRH"><div class="hint solution-like"><div class="para" id="bIL">For the inductive step, you can assume you have a strictly increasing sequence up to <span class="process-math">\(a_k\)</span> where <span class="process-math">\(a_k \lt 100\text{.}\)</span>  Now you just need to find the next term <span class="process-math">\(a_{k+1}\)</span> so that <span class="process-math">\(a_{k} \lt a_{k+1} \lt 100\text{.}\)</span>  What should <span class="process-math">\(a_{k+1}\)</span> be?</div></div></div>
+</div></article><article class="exercise exercise-like" id="eoW"><h4 class="heading"><span class="codenumber">16<span class="period">.</span></span></h4>
+<div class="para" id="wlw">What is wrong with the following “proof” of the “fact” that for all <span class="process-math">\(n \in \N\text{,}\)</span> the number <span class="process-math">\(n^2 + n\)</span> is odd?</div> <article class="proof" id="LfZ"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="VTz">Let <span class="process-math">\(P(n)\)</span> be the statement “<span class="process-math">\(n^2 + n\)</span> is odd.” We will prove that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span> Suppose for induction that <span class="process-math">\(P(k)\)</span> is true, that is, that <span class="process-math">\(k^2 + k\)</span> is odd. Now consider the statement <span class="process-math">\(P(k+1)\text{.}\)</span> Now <span class="process-math">\((k+1)^2 + (k+1) = k^2 + 2k + 1 + k + 1 = k^2 + k + 2k + 2\text{.}\)</span> By the inductive hypothesis, <span class="process-math">\(k^2 + k\)</span> is odd, and of course <span class="process-math">\(2k + 2\)</span> is even. An odd plus an even is always odd, so therefore <span class="process-math">\((k+1)^2 + (k+1)\)</span> is odd. Therefore by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \in \N\text{.}\)</span>
+</div></article><div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-eYQ" id="eYQ"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-eYQ"><div class="solution solution-like"><div class="para" id="SoZ">We once again failed to establish the base case: when <span class="process-math">\(n = 0\text{,}\)</span> <span class="process-math">\(n^2 + n = 0\)</span> which is even, not odd.</div></div></div>
+</div></article><article class="exercise exercise-like" id="Kwf"><h4 class="heading"><span class="codenumber">17<span class="period">.</span></span></h4>
+<div class="para" id="csF">Now give a valid proof (by induction, even though you might be able to do so without using induction) of the statement, “for all <span class="process-math">\(n \in \N\text{,}\)</span> the number <span class="process-math">\(n^2 + n\)</span> is even.”</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-rni" id="rni"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-rni"><div class="hint solution-like"><div class="para" id="HPU">For the inductive case, you will need to show that <span class="process-math">\((k+1)^2 + (k+1)\)</span> is even.  Factor this out and locate the part of it that is <span class="process-math">\(k^2 + k\text{.}\)</span>  What have you assumed about that quantity?</div></div></div>
+</div></article><article class="exercise exercise-like" id="qDo"><h4 class="heading"><span class="codenumber">18<span class="period">.</span></span></h4>
+<div class="para" id="IzO">Prove that there is a sequence of positive real numbers <span class="process-math">\(a_0, a_1, a_2, \ldots\)</span> such that the partial sum <span class="process-math">\(a_0 + a_1 + a_2 + \cdots + a_n\)</span> is strictly less than <span class="process-math">\(2\)</span> for all <span class="process-math">\(n \in \N\text{.}\)</span> Hint: think about how you could define what <span class="process-math">\(a_{k+1}\)</span> is to make the induction argument work.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-Xur" id="Xur"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Xur"><div class="hint solution-like"><div class="para" id="nXd">This is similar to <a href="" class="xref" data-knowl="./knowl/exc-seq-lessthan-100.html" title="Exercise 3.5.15">Exercise 3.5.15</a>, although there you were showing that a sequence had all its terms less than some value, and here you are showing that the sum is less than some value.  But the partial sums forms a sequence, so this is actually very similar.</div></div></div>
+</div></article><article class="exercise exercise-like" id="WKx"><h4 class="heading"><span class="codenumber">19<span class="period">.</span></span></h4>
+<div class="para" id="oGX">Prove that every positive integer is either a power of 2, or can be written as the sum of distinct powers of 2.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-DBA" id="DBA"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-DBA"><div class="solution solution-like">
+<div class="para" id="ywi">The proof will be by strong induction.</div> <article class="proof" id="jIJ"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="eDr">Let <span class="process-math">\(P(n)\)</span> be the statement “<span class="process-math">\(n\)</span> is either a power of 2 or can be written as the sum of distinct powers of 2.” We will show that <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 1\text{.}\)</span>
+</div> <div class="para" id="KKA">Base case: <span class="process-math">\(1 = 2^0\)</span> is a power of 2, so <span class="process-math">\(P(1)\)</span> is true.</div> <div class="para" id="qRJ">Inductive case: Suppose <span class="process-math">\(P(k)\)</span> is true for all <span class="process-math">\(k \lt n\text{.}\)</span> Now if <span class="process-math">\(n\)</span> is a power of 2, we are done. If not, let <span class="process-math">\(2^x\)</span> be the largest power of 2 strictly less than <span class="process-math">\(n\text{.}\)</span> Consider <span class="process-math">\(n - 2^x\text{,}\)</span> which is a smaller number, in fact smaller than both <span class="process-math">\(n\)</span> and <span class="process-math">\(2^x\text{.}\)</span> Thus <span class="process-math">\(n-2^x\)</span> is either a power of 2 or can be written as the sum of distinct powers of 2, but none of them are going to be <span class="process-math">\(2^x\text{,}\)</span> so the together with <span class="process-math">\(2^x\)</span> we have written <span class="process-math">\(n\)</span> as the sum of distinct powers of 2.</div> <div class="para" id="WYS">Therefore, by the principle of (strong) mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 1\text{.}\)</span>
+</div></article>
+</div></div>
+</div></article><article class="exercise exercise-like" id="CRG"><h4 class="heading"><span class="codenumber">20<span class="period">.</span></span></h4>
+<div class="para" id="UOg">Prove, using strong induction, that every natural number is either a Fibonacci number or can be written as the <em class="emphasis">sum</em> of <em class="emphasis">distinct</em> Fibonacci numbers.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-PPS" id="PPS"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-PPS"><div class="hint solution-like">
+<div class="para" id="Uem">As with the previous question, we will want to subtract something from <span class="process-math">\(n\)</span> in the inductive step.  There we subtracted the largest power of 2 less than <span class="process-math">\(n\text{.}\)</span>  So what should you subtract here?</div> <div class="para" id="Alv">Note, you will still need to take care here that the sum you get from the inductive hypothesis, together with the number you subtracted will be a sum of <em class="emphasis">distinct</em> Fibonacci numbers.  In fact, you could prove that the Fibonacci numbers in the sum are non-consecutive!</div>
+</div></div>
+</div></article><article class="exercise exercise-like" id="iYP"><h4 class="heading"><span class="codenumber">21<span class="period">.</span></span></h4>
+<div class="para" id="AVp">Use induction to prove that if <span class="process-math">\(n\)</span> people all shake hands with each other, that the total number of handshakes is <span class="process-math">\(\frac{n(n-1)}{2}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-vXb" id="vXb"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-vXb"><div class="hint solution-like">
+<div class="para" id="gsE">We have already proved this without using induction, but looking at it inductively sheds light onto the problem (and is fun).</div> <div class="para" id="MzN">The question you need to answer to complete the inductive step is, how many new handshakes take place when a person <span class="process-math">\(k+1\)</span> enters the room.  Why does adding this give you the correct formula?</div>
+</div></div>
+</div></article><article class="exercise exercise-like" id="PfY"><h4 class="heading"><span class="codenumber">22<span class="period">.</span></span></h4>
+<div class="para" id="hcy">Suppose that a particular real number <span class="process-math">\(x\)</span> has the property that <span class="process-math">\(x + \frac{1}{x}\)</span> is an integer. Prove that <span class="process-math">\(x^n + \frac{1}{x^n}\)</span> is an integer for all natural numbers <span class="process-math">\(n\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-cek" id="cek"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-cek"><div class="hint solution-like"><div class="para" id="sGW">You will need to use strong induction. For the inductive case, try multiplying <span class="process-math">\(\left (x^k + \frac{1}{x^{k}}\right)\left(x+\frac{1}{x}\right)\)</span> and collect which terms together are integers.</div></div></div>
+</div></article><article class="exercise exercise-like" id="vnh"><h4 class="heading"><span class="codenumber">23<span class="period">.</span></span></h4>
+<div class="para" id="NjH">Use induction to prove that <span class="process-math">\(\d\sum_{k=0}^n {n \choose k} = 2^n\text{.}\)</span> That is, the sum of the <span class="process-math">\(n\)</span>th row of Pascal's Triangle is <span class="process-math">\(2^n\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-Ilt" id="Ilt"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Ilt"><div class="hint solution-like"><div class="para" id="YOf">Here's the idea: since every entry in Pascal's Triangle is the sum of the two entries above it, we can get the <span class="process-math">\(k+1\)</span>st row by adding up all the pairs of entry from the <span class="process-math">\(k\)</span>th row. But doing this uses each entry on the <span class="process-math">\(k\)</span>th row twice. Thus each time we drop to the next row, we double the total. Of course, row 0 has sum <span class="process-math">\(1 = 2^0\)</span> (the base case). Now try to make this precise with a formal induction proof. You will use the fact that <span class="process-math">\({n \choose k} = {n-1 \choose k-1} + {n-1 \choose k}\)</span> for the inductive case.</div></div></div>
+</div></article><article class="exercise exercise-like" id="buq"><h4 class="heading"><span class="codenumber">24<span class="period">.</span></span></h4>
+<div class="para" id="tqQ">Use induction to prove <span class="process-math">\({4 \choose 0} + {5 \choose 1} + {6 \choose 2} + \cdots + {4+n \choose n} = {5+n \choose n}\text{.}\)</span> (This is an example of the hockey stick theorem.)</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-osC" id="osC"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-osC"><div class="hint solution-like"><div class="para" id="EVo">To see why this works, try it on a copy of Pascal's triangle. We are adding up the entries along a diagonal, starting with the 1 on the left-hand side of the 4th row. Suppose we add up the first 5 entries on this diagonal. The claim is that the sum is the entry below and to the left of the last of these 5 entries. Note that if this is true, and we instead add up the first 6 entries, we will need to add the entry one spot to the right of the previous sum. But these two together give the entry below them, which is below and left of the last of the 6 entries on the diagonal. If you follow that, you can see what is going on. But it is not a great proof. A formal induction proof is needed.</div></div></div>
+</div></article><article class="exercise exercise-like" id="HBz"><h4 class="heading"><span class="codenumber">25<span class="period">.</span></span></h4>
+<div class="para" id="ZxZ">Use the product rule for logarithms (<span class="process-math">\(\log(ab) = \log(a) + \log(b)\)</span>) to prove, by induction on <span class="process-math">\(n\text{,}\)</span> that <span class="process-math">\(\log(a^n) = n \log(a)\text{,}\)</span> for all natural numbers <span class="process-math">\(n \ge 2\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-UzL" id="UzL"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-UzL"><div class="solution solution-like">
+<div class="para" id="Dgb">The idea here is that if we take the logarithm of <span class="process-math">\(a^n\text{,}\)</span> we can increase <span class="process-math">\(n\)</span> by 1 if we multiply by another <span class="process-math">\(a\)</span> (inside the logarithm). This results in adding 1 more <span class="process-math">\(\log(a)\)</span> to the total.</div> <article class="proof" id="AGU"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="jnk">
+<div class="para">Let <span class="process-math">\(P(n)\)</span> be the statement <span class="process-math">\(\log(a^n) = n \log(a)\text{.}\)</span> The base case, <span class="process-math">\(P(2)\)</span> is true, because <span class="process-math">\(\log(a^2) = \log(a\cdot a) = \log(a) + \log(a) = 2\log(a)\text{,}\)</span> by the product rule for logarithms. Now assume, for induction, that <span class="process-math">\(P(k)\)</span> is true. That is, <span class="process-math">\(\log(a^k) = k\log(a)\text{.}\)</span> Consider <span class="process-math">\(\log(a^{k+1})\text{.}\)</span> We have</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\log(a^{k+1}) = \log(a^k\cdot a) = \log(a^k) + \log(a) = k\log(a) + \log(a)\text{,}
+\end{equation*}
+</div>
+<div class="para">with the last equality due to the inductive hypothesis. But this simplifies to <span class="process-math">\((k+1) \log(a)\text{,}\)</span> establishing <span class="process-math">\(P(k+1)\text{.}\)</span> Therefore by the principle of mathematical induction, <span class="process-math">\(P(n)\)</span> is true for all <span class="process-math">\(n \ge 2\text{.}\)</span>
+</div>
+</div></article>
+</div></div>
+</div></article><article class="exercise exercise-like" id="nII"><h4 class="heading"><span class="codenumber">26<span class="period">.</span></span></h4>
+<div class="para logical" id="FFi">
+<div class="para">Let <span class="process-math">\(f_1, f_2,\ldots, f_n\)</span> be differentiable functions. Prove, using induction, that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(f_1 + f_2 + \cdots + f_n)' = f_1' + f_2' + \cdots + f_n'\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="lMr">You may assume <span class="process-math">\((f+g)' = f' + g'\)</span> for any differentiable functions <span class="process-math">\(f\)</span> and <span class="process-math">\(g\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-MVm" id="MVm"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-MVm"><div class="hint solution-like"><div class="para" id="lcx">You are allowed to assume the base case. For the inductive case, group all but the last function together as one sum of functions, then apply the usual sum of derivatives rule, and then the inductive hypothesis.</div></div></div>
+</div></article><article class="exercise exercise-like" id="TPR"><h4 class="heading"><span class="codenumber">27<span class="period">.</span></span></h4>
+<div class="para logical" id="RTA">
+<div class="para">Suppose <span class="process-math">\(f_1, f_2, \ldots, f_n\)</span> are differentiable functions. Use mathematical induction to prove the generalized product rule:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(f_1 f_2 f_3 \cdots f_n)' = f_1' f_2 f_3 \cdots f_n + f_1 f_2' f_3 \cdots f_n + f_1 f_2 f_3' \cdots f_n + \cdots + f_1 f_2 f_3 \cdots f_n'\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="yaJ">You may assume the product rule for two functions is true.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-tcv" id="tcv"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-tcv"><div class="hint solution-like">
+<div class="para logical" id="RjG">
+<div class="para">For the inductive step, we know by the product rule for two functions that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(f_1f_2f_3 \cdots f_k f_{k+1})' = (f_1f_2f_3\cdots f_k)'f_{k+1} + (f_1f_2f_3\cdots f_k)f_{k+1}'\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="xqP">Then use the inductive hypothesis on the first summand, and distribute.</div>
+</div></div>
+</div></article><article class="exercise exercise-like" id="zXa"><h4 class="heading"><span class="codenumber">28<span class="period">.</span></span></h4>
+<div class="para logical" id="ehS">
+<div class="para">You will prove that the Fibonacci numbers satisfy the identity <span class="process-math">\(F_n^2 + F_{n+1}^2 = F_{2n+1}\text{.}\)</span> One way to do this is to prove the more general identity,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+F_mF_n + F_{m+1}F_{n+1} = F_{m+n+1}\text{,}
+\end{equation*}
+</div>
+<div class="para">and realize that when <span class="process-math">\(m = n\)</span> we get our desired result.</div>
+</div> <div class="para logical" id="Kpb">
+<div class="para">Note that we now have two variables, so we want to prove this for all <span class="process-math">\(m \ge 0\)</span> <em class="emphasis">and</em> all <span class="process-math">\(n \ge 0\)</span> at the same time. For each such pair <span class="process-math">\((m,n)\text{,}\)</span> let <span class="process-math">\(P(m,n)\)</span> be the statement <span class="process-math">\(F_mF_n + F_{m+1}F_{n+1} = F_{m+n+1}\)</span>
+</div>
+<ol class="lower-alpha">
+<li id="iDq"><div class="para" id="rXc">First fix <span class="process-math">\(m = 0\)</span> and give a proof by mathematical induction that <span class="process-math">\(P(0,n)\)</span> holds for all <span class="process-math">\(n \ge 0\text{.}\)</span> Note this proof will be very easy.</div></li>
+<li id="OKz"><div class="para" id="Yel">Now fix an arbitrary <span class="process-math">\(n\)</span> and give a proof by <em class="emphasis">strong</em> mathematical induction that <span class="process-math">\(P(m,n)\)</span> holds for all <span class="process-math">\(m \ge 0\text{.}\)</span>
+</div></li>
+<li id="uRI"><div class="para" id="Elu">You can now conclude that <span class="process-math">\(P(m,n)\)</span> holds for all <span class="process-math">\(m,n\ge 0\text{.}\)</span> Do you believe that? Explain why this sort of induction is valid. For example, why do your proofs above guarantee that <span class="process-math">\(P(2,3)\)</span> is true?</div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="gej"><h4 class="heading"><span class="codenumber">29<span class="period">.</span></span></h4>
+<div class="para" id="qwk">Given a square, you can cut the square into smaller squares by cutting along lines parallel to the sides of the original square (these lines do not need to travel the entire side length of the original square). For example, by cutting along the lines below, you will divide a square into 6 smaller squares:</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:32.5%;margin-right:32.5%;"><div class="sbspanel top" style="width:100%;"><img src="generated/latex-image/image-57.svg" role="img" class="contained" alt="One large square with five squares of half the side length wrapping around the top and right side, forming an even larger square."></div></div></div> <div class="para" id="WDt">Prove, using strong induction, that it is possible to cut a square into <span class="process-math">\(n\)</span> smaller squares for any <span class="process-math">\(n \ge 6\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-ZjE" id="ZjE"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-ZjE"><div class="hint solution-like"><div class="para" id="dxY">You will need three base cases.  This is a very good hint actually, as it suggests that to prove <span class="process-math">\(P(n)\)</span> is true, you would want to use the fact that <span class="process-math">\(P(n-3)\)</span> is true.  So somehow you need to increase the number of squares by 3.</div></div></div>
+</div></article></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-11"><div class="fn">You might or might not be familiar with these yet. We will consider these in <a href="ch_logic.html" class="internal" title="Chapter 1: Symbolic Logic and Proofs">Chapter 1</a>.</div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-12"><div class="fn">This is not claiming that there are no amounts less than 27 cents which can also be made.</div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-13"><div class="fn">Technically, strong induction does not require you to prove a separate base case. This is because when proving the inductive case, you must show that <span class="process-math">\(P(0)\)</span> is true, assuming <span class="process-math">\(P(k)\)</span> is true for all <span class="process-math">\(k \lt 0\text{.}\)</span> But this is not any help so you end up proving <span class="process-math">\(P(0)\)</span> anyway. To be on the safe side, we will always include the base case separately.</div></div>
+</div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="sec_recurrence.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="sec_sequences-conc.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+</div></main>
+</div>
+<div class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
+<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
+<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+</div>
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</body>
+</html>

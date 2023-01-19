@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Generating Functions</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Discrete Mathematics">
+<meta property="book:author" content="Oscar Levin">
+<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    tags: "none",
+    tagSide: "right",
+    tagIndent: ".8em",
+    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  },
+  options: {
+    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
+    processHtmlClass: "process-math",
+    renderActions: {
+        findScript: [10, function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        }, '']
+    },
+  },
+  chtml: {
+    scale: 0.98,
+    mtextInheritFont: true
+  },
+  loader: {
+    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
+    paths: {pretext: "https://pretextbook.org/js/lib"},
+  },
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  },
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link href="https://webwork.runestone.academy/webwork2_files/js/apps/MathView/mathview.css" rel="stylesheet">
+<script src="https://pretextbook.org/js/0.2/pretext-webwork/2.16/pretext-webwork.js"></script><script src="https://webwork.runestone.academy/webwork2_files/node_modules/iframe-resizer/js/iframeResizer.min.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/style_oscarlevin.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="external/custom-styles.css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '5.0.1';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runtime.a26418f1c7af0a01.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/637.d54be67956c5c660.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runestone.38c38879674c28b2.bundle.js"></script><link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/637.0fa6cababf056764.css">
+<link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/runestone.93e720e6c6581fb5.css">
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</head>
+<body id="dmoi-4" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" href="http://discrete.openmathbooks.org/dmoi3.html" target="_blank"><img src="external/images/cover.png" alt="Logo image"></a><div class="title-container">
+<h1 class="heading"><a href="dmoi4.html"><span class="title">Discrete Mathematics:</span> <span class="subtitle">An Open Introduction, 4th edition (preview)</span></a></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+<div id="searchresultsplaceholder" style="display: none">
+<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
+</h2>
+<div id="searchempty"><span>No results.</span></div>
+<ol id="searchresults"></ol>
+</div>
+</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><a class="index-button button" href="index-1.html" title="Index"><span class="name">Index</span></a><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
+<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden avatar">
+<li data-val="You!" tabindex="-1">
+<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
+<li data-val="😺" tabindex="-1">
+<span id="the😺" class="avatarcheck"></span>😺</li>
+<li data-val="👤" tabindex="-1">
+<span id="the👤" class="avatarcheck"></span>👤</li>
+<li data-val="👽" tabindex="-1">
+<span id="the👽" class="avatarcheck"></span>👽</li>
+<li data-val="🐶" tabindex="-1">
+<span id="the🐶" class="avatarcheck"></span>🐶</li>
+<li data-val="🐼" tabindex="-1">
+<span id="the🐼" class="avatarcheck"></span>🐼</li>
+<li data-val="🌈" tabindex="-1">
+<span id="the🌈" class="avatarcheck"></span>🌈</li>
+</ol>
+</li>
+<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fontfamily">
+<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
+<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
+<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+</ol>
+</li>
+<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fonts">
+<li>Size</li>
+<li><span id="thesize">12</span></li>
+<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
+<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
+<li>Width</li>
+<li><span id="thewdth">100</span></li>
+<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
+<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
+<li>Weight</li>
+<li><span id="thewght">400</span></li>
+<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
+<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
+<li>Letter spacing</li>
+<li>
+<span id="thelspace">0</span><span class="byunits">/200</span>
+</li>
+<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
+<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
+<li>Word spacing</li>
+<li>
+<span id="thewspace">0</span><span class="byunits">/50</span>
+</li>
+<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
+<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
+<li>Line Spacing</li>
+<li>
+<span id="theheight">135</span><span class="byunits">/100</span>
+</li>
+<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
+<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
+</ol>
+</li>
+<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden atmosphere">
+<li data-val="default" tabindex="-1">
+<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
+<li data-val="pastel" tabindex="-1">
+<span id="thepastel" class="atmospherecheck"></span>pastel</li>
+<li data-val="darktwilight" tabindex="-1">
+<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
+<li data-val="dark" tabindex="-1">
+<span id="thedark" class="atmospherecheck"></span>dark</li>
+<li data-val="darkmidnight" tabindex="-1">
+<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
+</ol>
+</li>
+<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden ruler">
+<li data-val="none" tabindex="-1">
+<span id="thenone" class="rulercheck">✔️</span>none</li>
+<li data-val="underline" tabindex="-1">
+<span id="theunderline" class="rulercheck"></span>underline</li>
+<li data-val="lunderline" tabindex="-1">
+<span id="thelunderline" class="rulercheck"></span>L-underline</li>
+<li data-val="greybar" tabindex="-1">
+<span id="thegreybar" class="rulercheck"></span>grey bar</li>
+<li data-val="lightbox" tabindex="-1">
+<span id="thelightbox" class="rulercheck"></span>light box</li>
+<li data-val="sunrise" tabindex="-1">
+<span id="thesunrise" class="rulercheck"></span>sunrise</li>
+<li data-val="sunriseunderline" tabindex="-1">
+<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
+<li class="moveQ">Motion by:</li>
+<li data-val="mouse" tabindex="-1">
+<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
+<li data-val="arrow" tabindex="-1">
+<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
+<li data-val="eye" tabindex="-1">
+<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
+</ol>
+</li>
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="ch_additionalTopics.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="ch_additionalTopics.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="sec_addtops-numbth.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
+</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\renewcommand{\d}{\displaystyle}
+\newcommand{\N}{\mathbb N}
+\newcommand{\B}{\mathbf B}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\U}{\mathcal U}
+\newcommand{\pow}{\mathcal P}
+\newcommand{\inv}{^{-1}}
+\newcommand{\st}{:}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\Imp}{\Rightarrow}
+\newcommand{\isom}{\cong}
+
+\renewcommand{\bar}{\overline}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar"><nav id="ptx-toc" class="depth3"><ul class="structural">
+<li>
+<div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="colophon-1.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li><div class="toc-item"><a href="dedication-1.html" class="internal"><span class="title">Dedication</span></a></div></li>
+<li><div class="toc-item"><a href="acknowledgement-1.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+<li><div class="toc-item"><a href="preface.html" class="internal"><span class="title">Preface</span></a></div></li>
+<li><div class="toc-item"><a href="preface-2.html" class="internal"><span class="title">How to use this book</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_intro.html" class="internal"><span class="codenumber">0</span> <span class="title">Introduction and Preliminaries</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_intro-intro.html" class="internal"><span class="codenumber">0.1</span> <span class="title">What is Discrete Mathematics?</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_intro-intro.html#rqs-intro-intro" class="internal"><span class="codenumber">0.1</span> <span class="title">Reading Questions</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-structures.html" class="internal"><span class="codenumber">0.2</span> <span class="title">Discrete Structures</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sets" class="internal"><span class="title">Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-functions" class="internal"><span class="title">Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sequences" class="internal"><span class="title">Sequences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec-relations" class="internal"><span class="title">Relations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-graphs" class="internal"><span class="title">Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsubsec_structures-statements" class="internal"><span class="title">Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-even-more" class="internal"><span class="title">Even More Structures</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#rqs-intro-structures" class="internal"><span class="codenumber">0.2</span> <span class="title">Reading Questions</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-sets.html" class="internal"><span class="codenumber">0.3</span> <span class="title">Sets</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-sets.html#RBf" class="internal"><span class="title">Notation</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#xIo" class="internal"><span class="title">Relationships Between Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#dPx" class="internal"><span class="title">Operations On Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#JWG" class="internal"><span class="title">Venn Diagrams</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#ww_intro-sets" class="internal"><span class="codenumber">0.3</span> <span class="title">Interactive Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-functions.html" class="internal"><span class="codenumber">0.4</span> <span class="title">Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-functions.html#irZ" class="internal"><span class="title">Describing Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#Ozi" class="internal"><span class="title">Surjections, Injections, and Bijections</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#uGr" class="internal"><span class="title">Image and Inverse Image</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#XHz" class="internal"><span class="codenumber">0.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_logic.html" class="internal"><span class="codenumber">1</span> <span class="title">Symbolic Logic and Proofs</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_logic-statements.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Mathematical Statements</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-statements.html#wKm" class="internal"><span class="title">Atomic and Molecular Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#cRv" class="internal"><span class="title">Implications</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#IYE" class="internal"><span class="title">Predicates and Quantifiers</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#rqs-logic-statements" class="internal"><span class="codenumber">1.1</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#iCD" class="internal"><span class="codenumber">1.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_propositional.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Propositional Logic</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_propositional.html#DTz" class="internal"><span class="title">Truth Tables</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#kaI" class="internal"><span class="title">Logical Equivalence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#QhR" class="internal"><span class="title">Deductions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#wpa" class="internal"><span class="title">Beyond Propositions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#rqs-logic-prop" class="internal"><span class="codenumber">1.2</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#Shv" class="internal"><span class="codenumber">1.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-proofs.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Ruo" class="internal"><span class="title">Direct Proof</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#xBx" class="internal"><span class="title">Proof by Contrapositive</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#dIG" class="internal"><span class="title">Proof by Contradiction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#JPP" class="internal"><span class="title">Proof by (counter) Example</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#pWY" class="internal"><span class="title">Proof by Cases</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#rqs-logic-proof" class="internal"><span class="codenumber">1.3</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Fqn" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-conc.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_logic-conc.html#MrW" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_counting.html" class="internal"><span class="codenumber">2</span> <span class="title">Counting</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_counting-addmult.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-addmult.html#YQj" class="internal"><span class="title">Counting With Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#EXs" class="internal"><span class="title">Principle of Inclusion/Exclusion</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#WHK" class="internal"><span class="codenumber">2.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-binom.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Binomial Coefficients</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-binom.html#cgB" class="internal"><span class="title">Subsets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#InK" class="internal"><span class="title">Bit Strings</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#ouT" class="internal"><span class="title">Lattice Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#UCc" class="internal"><span class="title">Binomial Coefficients</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#AJl" class="internal"><span class="title">Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#uWm" class="internal"><span class="codenumber">2.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-combperm.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Combinations and Permutations</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_counting-combperm.html#jkK" class="internal"><span class="codenumber">2.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_comb-proofs.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Combinatorial Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_comb-proofs.html#zbp" class="internal"><span class="title">Patterns in Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#fiy" class="internal"><span class="title">More Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#lYz" class="internal"><span class="codenumber">2.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_stars-and-bars.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Stars and Bars</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_stars-and-bars.html#zVa" class="internal"><span class="codenumber">2.5</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_advPIE.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_advPIE.html#nSd" class="internal"><span class="title">Counting Derangements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#TZm" class="internal"><span class="title">Counting Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#nUq" class="internal"><span class="codenumber">2.6</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_count-conc.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_count-conc.html#Ejh" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_sequences.html" class="internal"><span class="codenumber">3</span> <span class="title">Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq_intro.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Describing Sequences</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_seq_intro.html#vPK" class="internal"><span class="codenumber">3.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html#RQa" class="internal"><span class="title">Sums of Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#xXj" class="internal"><span class="title">Summing Arithmetic Sequences: Reverse and Add</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#ees" class="internal"><span class="title">Summing Geometric Sequences: Multiply, Shift and Subtract</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#EGG" class="internal"><span class="codenumber">3.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_polyfit.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Polynomial Fitting</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_polyfit.html#FTD" class="internal"><span class="codenumber">3.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_recurrence.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Solving Recurrence Relations</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_recurrence.html#Hke" class="internal"><span class="title">The Characteristic Root Technique</span></a></div></li>
+<li><div class="toc-item"><a href="sec_recurrence.html#bQc" class="internal"><span class="codenumber">3.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-induction.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Induction</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-induction.html#vyp" class="internal"><span class="title">Stamps</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#bFy" class="internal"><span class="title">Formalizing Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#HMH" class="internal"><span class="title">Examples</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#nTQ" class="internal"><span class="title">Strong Induction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#YsG" class="internal"><span class="codenumber">3.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_sequences-conc.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_sequences-conc.html#XPQ" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_graphtheory.html" class="internal"><span class="codenumber">4</span> <span class="title">Graph Theory</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_gt-intro.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Definitions</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-intro.html#QMu" class="internal"><span class="codenumber">4.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_trees.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Trees</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_trees.html#MvA" class="internal"><span class="title">Properties of Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#sCJ" class="internal"><span class="title">Rooted Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#YJS" class="internal"><span class="title">Spanning Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#iQl" class="internal"><span class="codenumber">4.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_planar.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Planar Graphs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_planar.html#ZAQ" class="internal"><span class="title">Non-planar Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#FHZ" class="internal"><span class="title">Polyhedra</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#Pey" class="internal"><span class="codenumber">4.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_coloring.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Coloring</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_coloring.html#WFX" class="internal"><span class="title">Coloring in General</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#CNg" class="internal"><span class="title">Coloring Edges</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#MxN" class="internal"><span class="codenumber">4.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_paths.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Euler Paths and Circuits</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_paths.html#ZWp" class="internal"><span class="title">Hamilton Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_paths.html#wMz" class="internal"><span class="codenumber">4.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_matchings.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Matching in Bipartite Graphs</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_matchings.html#wye" class="internal"><span class="codenumber">4.6</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_gt-conc.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-conc.html#WIK" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_additionalTopics.html" class="internal"><span class="codenumber">5</span> <span class="title">Additional Topics</span></a></div>
+<ul class="structural">
+<li class="active">
+<div class="toc-item"><a href="sec_addtops-genfun.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Generating Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#DhS" class="internal"><span class="title">Building Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#jpb" class="internal"><span class="title">Differencing</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#Pwk" class="internal"><span class="title">Multiplication and Partial Sums</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#vDt" class="internal"><span class="title">Solving Recurrence Relations with Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#iOL" class="internal"><span class="codenumber">5.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_addtops-numbth.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#CqU" class="internal"><span class="title">Divisibility</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#iyd" class="internal"><span class="title">Remainder Classes</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#OFm" class="internal"><span class="title">Properties of Congruence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#uMv" class="internal"><span class="title">Solving Congruences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#aTE" class="internal"><span class="title">Solving Linear Diophantine Equations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#TUi" class="internal"><span class="codenumber">5.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="solutions-1.html" class="internal"><span class="codenumber">A</span> <span class="title">Selected Hints</span></a></div></li>
+<li><div class="toc-item"><a href="solutions-2.html" class="internal"><span class="codenumber">B</span> <span class="title">Selected Solutions</span></a></div></li>
+<li><div class="toc-item"><a href="appendix-1.html" class="internal"><span class="codenumber">C</span> <span class="title">List of Symbols</span></a></div></li>
+<li><div class="toc-item"><a href="index-1.html" class="internal"><span class="title">Index</span></a></div></li>
+<li><div class="toc-item"><a href="colophon-2.html" class="internal"><span class="title">Colophon</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="XaJ"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">5.1</span> <span class="title">Generating Functions</span>
+</h2>
+<section class="introduction" id="YPW"><div class="para" id="tsH">There is an extremely powerful tool in discrete mathematics used to manipulate sequences called the generating function. The idea is this: instead of an infinite sequence (for example: <span class="process-math">\(2, 3, 5, 8, 12, \ldots\)</span>) we look at a single function which encodes the sequence. But not a function which gives the <span class="process-math">\(n\)</span>th term as output. Instead, a function whose power series (like from calculus) “displays” the terms of the sequence. So for example, we would look at the power series <span class="process-math">\(2 + 3x + 5x^2 + 8x^3 + 12x^4 + \cdots\)</span> which displays the sequence <span class="process-math">\(2, 3, 5, 8, 12, \ldots\)</span> as coefficients.</div> <div class="para logical" id="ZzQ">
+<div class="para">An infinite power series is simply an infinite sum of terms of the form <span class="process-math">\(c_nx^n\)</span> were <span class="process-math">\(c_n\)</span> is some constant. So we might write a power series like this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\sum_{k=0}^\infty c_k x^k\text{.}
+\end{equation*}
+</div>
+<div class="para">or expanded like this</div>
+<div class="displaymath process-math">
+\begin{equation*}
+c_0 + c_1x + c_2x^2 + c_3x^3 + c_4x^4 + c_5x^5 + \cdots\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="FGZ">
+<div class="para">When viewed in the context of generating functions, we call such a power series a <em class="emphasis">generating series</em>. The generating series generates the sequence</div>
+<div class="displaymath process-math">
+\begin{equation*}
+c_0, c_1, c_2, c_3, c_4, c_5, \ldots\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="lOi">In other words, the sequence generated by a generating series is simply the sequence of <em class="emphasis">coefficients</em> of the infinite polynomial.</div> <article class="example example-like" id="sIN"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.1.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="IBF">What sequence is represented by the generating series <span class="process-math">\(3 + 8x^2 + x^3 + \frac{x^5}{7} + 100x^6 + \cdots\text{?}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-EXf" id="EXf"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-EXf"><div class="solution solution-like">
+<div class="para logical" id="pOh">
+<div class="para">We just read off the coefficients of each <span class="process-math">\(x^n\)</span> term. So <span class="process-math">\(a_0 = 3\)</span> since the coefficient of <span class="process-math">\(x^0\)</span> is 3 (<span class="process-math">\(x^0 = 1\)</span> so this is the constant term). What is <span class="process-math">\(a_1\text{?}\)</span> It is NOT 8, since 8 is the coefficient of <span class="process-math">\(x^2\text{,}\)</span> so 8 is the term <span class="process-math">\(a_2\)</span> of the sequence. To find <span class="process-math">\(a_1\)</span> we need to look for the coefficient of <span class="process-math">\(x^1\)</span> which in this case is 0. So <span class="process-math">\(a_1 = 0\text{.}\)</span> Continuing, we have <span class="process-math">\(a_2 = 8\text{,}\)</span> <span class="process-math">\(a_3 = 1\text{,}\)</span> <span class="process-math">\(a_4 = 0\text{,}\)</span> and <span class="process-math">\(a_5 = \frac{1}{7}\text{.}\)</span> So we have the sequence</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3, 0, 8, 1, 0, \frac{1}{7}, 100, \ldots\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="VVq">Note that when discussing generating functions, we always start our sequence with <span class="process-math">\(a_0\text{.}\)</span>
+</div>
+</div></div>
+</div></article> <div class="para" id="RVr">Now you might very naturally ask why we would do such a thing. One reason is that encoding a sequence with a power series helps us keep track of which term is which in the sequence. For example, if we write the sequence <span class="process-math">\(1, 3, 4, 6, 9, \ldots, 24, 41,\ldots\)</span> it is impossible to determine which term <span class="process-math">\(24\)</span> is (even if we agreed that the first term was supposed to be <span class="process-math">\(a_0\)</span>). However, if we wrote the generating series instead, we would have <span class="process-math">\(1 + 3x + 4x^2 + 6x^3 + 9x^4 + \cdots + 24 x^{17} + 41 x^{18} + \cdots\text{.}\)</span> Now it is clear that 24 is the 17th term of the sequence (that is, <span class="process-math">\(a_{17} = 24\)</span>). Of course to get this benefit we could have displayed our sequence in any number of ways, perhaps <span class="process-math">\(\fbox{1}_0 \fbox{3}_1 \fbox{4}_2 \fbox{6}_3 \fbox{9}_4 \cdots \fbox{24}_{17}\fbox{41}_{18}\cdots\text{,}\)</span> but we do not do this. The reason is that the generating series looks like an ordinary power series (although we are interpreting it differently) so we can do things with it that we ordinarily do with power series such as write down what it converges to.</div> <div class="para logical" id="ycA">
+<div class="para">For example, from calculus we know that the power series <span class="process-math">\(1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \frac{x^4}{24} + \cdots + \frac{x^n}{n!} + \cdots\)</span> converges to the function <span class="process-math">\(e^x\text{.}\)</span> So we can use <span class="process-math">\(e^x\)</span> as a way of talking about the sequence of coefficients of the power series for <span class="process-math">\(e^x\text{.}\)</span> When we write down a nice compact function which has an infinite power series that we view as a generating series, then we call that function a <em class="emphasis">generating function</em>. In this example, we would say</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1, 1, \frac{1}{2}, \frac{1}{6}, \frac{1}{24}, \ldots, \frac{1}{n!}, \ldots \mbox{ has generating function }  e^x\text{.}
+\end{equation*}
+</div>
+</div></section><section class="subsection" id="DhS"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Building Generating Functions</span>
+</h3>
+<div class="para" id="qyb">The <span class="process-math">\(e^x\)</span> example is very specific. We have a rather odd sequence, and the only reason we know its generating function is because we happen to know the Taylor series for <span class="process-math">\(e^x\text{.}\)</span> Our goal now is to gather some tools to build the generating function of a particular given sequence.</div>
+<div class="para logical" id="WFk">
+<div class="para">Let's see what the generating functions are for some very simple sequences. The simplest of all: 1, 1, 1, 1, 1, …. What does the <em class="emphasis">generating series</em> look like? It is simply <span class="process-math">\(1 + x + x^2 + x^3 + x^4 + \cdots\text{.}\)</span> Now, can we find a closed formula for this power series? Yes! This particular series is really just a geometric series with common ratio <span class="process-math">\(x\text{.}\)</span> So if we use our “multiply, shift and subtract” technique from <a href="sec_seq-arithgeom.html" class="internal" title="Section 3.2: Arithmetic and Geometric Sequences">Section 3.2</a>, we have</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/sec_seq-arithgeom.html" id="lsJ">
+\begin{align*}
+S \amp  = 1 + x + x^2 + x^3 + \cdots\\
+\underline{-\qquad xS} \amp  \underline{\,\, = ~~~~~~ x + x^2 + x^3 + x^4 + \cdots}\\
+(1-x)S \amp  = 1
+\end{align*}
+</div>
+</div>
+<div class="para logical" id="CMt">
+<div class="para">Therefore we see that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1 + x + x^2 + x^3 \cdots = \dfrac{1}{1-x}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="iTC">You might remember from calculus that this is only true on the interval of convergence for the power series, in this case when <span class="process-math">\(|x| \lt 1\text{.}\)</span> That is true for us, but we don't care. We are never going to plug anything in for <span class="process-math">\(x\text{,}\)</span> so as long as there is some value of <span class="process-math">\(x\)</span> for which the generating function and generating series agree, we are happy. And in this case we are happy.</div>
+<article class="assemblage assemblage-like" id="bKC"><h4 class="heading"><span class="title"><span class="process-math">\(1,1,1,\ldots\)</span>.</span></h4>
+<div class="para" id="ejJ">The generating function for <span class="process-math">\(1,1,1,1,1,1,\ldots\)</span> is <span class="process-math">\(\dfrac{1}{1-x}\)</span>
+</div></article><div class="para logical" id="PaL">
+<div class="para">Let's use this basic generating function to find generating functions for more sequences. What if we replace <span class="process-math">\(x\)</span> by <span class="process-math">\(-x\text{.}\)</span> We get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{1+x} = 1 - x + x^2 - x^3 + \cdots \mbox{ which generates }  1, -1, 1, -1, \ldots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="vhU">
+<div class="para">If we replace <span class="process-math">\(x\)</span> by <span class="process-math">\(3x\)</span> we get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{1-3x} = 1 + 3x + 9x^2 + 27x^3 + \cdots \mbox{ which generates }  1, 3, 9, 27, \ldots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="bpd">
+<div class="para">By replacing the <span class="process-math">\(x\)</span> in <span class="process-math">\(\frac{1}{1-x}\)</span> we can get generating functions for a variety of sequences, but not all. For example, you cannot plug in anything for <span class="process-math">\(x\)</span> to get the generating function for <span class="process-math">\(2,2,2,2, \ldots\text{.}\)</span> However, we are not lost yet. Notice that each term of <span class="process-math">\(2, 2, 2, 2, \ldots\)</span> is the result of multiplying the terms of <span class="process-math">\(1, 1, 1, 1, \ldots\)</span> by the constant 2. So multiply the generating function by 2 as well.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{2}{1-x} = 2 + 2x + 2x^2 + 2x^3 + \cdots \mbox{ which generates }  2, 2, 2, 2, \ldots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="Hwm">
+<div class="para">Similarly, to find the generating function for the sequence <span class="process-math">\(3, 9, 27, 81, \ldots\text{,}\)</span> we note that this sequence is the result of multiplying each term of <span class="process-math">\(1, 3, 9, 27, \ldots\)</span> by 3. Since we have the generating function for <span class="process-math">\(1, 3, 9, 27, \ldots\)</span> we can say</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{3}{1-3x} = 3\cdot 1 + 3\cdot 3x + 3\cdot 9x^2 + 3\cdot 27x^3 + \cdots \mbox{ which generates }  3, 9, 27, 81, \ldots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="nDv">
+<div class="para">What about the sequence <span class="process-math">\(2, 4, 10, 28, 82, \ldots\text{?}\)</span> Here the terms are always 1 more than powers of 3. That is, we have added the sequences <span class="process-math">\(1,1,1,1,\ldots\)</span> and <span class="process-math">\(1,3,9, 27,\ldots\)</span> term by term. Therefore we can get a generating function by adding the respective generating functions:</div>
+<div class="displaymath process-math" id="RzS">
+\begin{align*}
+2 + 4x + 10x^2 + 28x^3 + \cdots  \amp  = (1 + 1) + (1 + 3)x + (1 + 9)x^2 + (1 + 27)x^3 + \cdots\\
+\amp  = 1 + x + x^2 + x^3 + \cdots + 1 + 3x + 9x^2 + 27x^3 + \cdots\\
+\amp  = \frac{1}{1-x} + \frac{1}{1-3x}
+\end{align*}
+</div>
+</div>
+<div class="para logical" id="TKE">
+<div class="para">The fun does not stop there: if we replace <span class="process-math">\(x\)</span> in our original generating function by <span class="process-math">\(x^2\)</span> we get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{1-x^2} = 1 + x^2  + x^4 + x^6\cdots \mbox{ which generates }  1, 0, 1, 0, 1, 0, \ldots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="zRN">
+<div class="para">How could we get <span class="process-math">\(0,1,0,1,0,1,\ldots\text{?}\)</span> Start with the previous sequence and <em class="emphasis">shift</em> it over by 1. But how do you do this? To see how shifting works, let's first try to get the generating function for the sequence <span class="process-math">\(0, 1, 3, 9, 27, \ldots\text{.}\)</span> We know that <span class="process-math">\(\frac{1}{1-3x} = 1 + 3x + 9x^2 + 27x^3 + \cdots\text{.}\)</span> To get the zero out front, we need the generating series to look like <span class="process-math">\(x + 3x^2 + 9x^3 + 27x^4+ \cdots\)</span> (so there is no constant term). Multiplying by <span class="process-math">\(x\)</span> has this effect. So the generating function for <span class="process-math">\(0, 1, 3, 9, 27, \ldots\)</span> is <span class="process-math">\(\frac{x}{1-3x}\text{.}\)</span> This will also work to get the generating function for <span class="process-math">\(0,1,0,1,0,1,\ldots\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{x}{1-x^2} = x + x^3 + x^5 + \cdots \mbox{ which generates }  0, 1, 0, 1, 0 , 1 \ldots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="fYW">
+<div class="para">What if we add the sequences <span class="process-math">\(1,0,1,0,1,0,\ldots\)</span> and <span class="process-math">\(0,1,0,1,0,1,\ldots\)</span> term by term? We should get <span class="process-math">\(1,1,1,1,1,1\ldots\text{.}\)</span> What happens when we add the generating functions? It works (try it)!</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{1-x^2} + \frac{x}{1-x^2} = \frac{1}{1-x}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="Mgf">Here's a sneaky one: what happens if you take the <em class="emphasis">derivative</em> of <span class="process-math">\(\frac{1}{1-x}\text{?}\)</span> We get <span class="process-math">\(\frac{1}{(1-x)^2}\text{.}\)</span> On the other hand, if we differentiate term by term in the power series, we get <span class="process-math">\((1 + x + x^2 + x^3 + \cdots)' = 1 + 2x + 3x^2 + 4x^3 + \cdots\)</span> which is the generating series for <span class="process-math">\(1, 2, 3, 4, \ldots\text{.}\)</span> This says</div>
+<article class="assemblage assemblage-like" id="HRL"><h4 class="heading"><span class="title"><span class="process-math">\(1,2,3,\ldots\)</span>.</span></h4>
+<div class="para" id="KqS">The generating function for <span class="process-math">\(1, 2, 3, 4, 5, \ldots\)</span> is <span class="process-math">\(\d\frac{1}{(1-x)^2}\text{.}\)</span>
+</div></article><div class="para" id="sno">Take a second derivative: <span class="process-math">\(\frac{2}{(1-x)^3} = 2 + 6x + 12x^2 + 20x^3 + \cdots\text{.}\)</span> So <span class="process-math">\(\frac{1}{(1-x)^3} = 1 + 3x + 6x^2 + 10x^3 + \cdots\)</span> is a generating function for the triangular numbers, <span class="process-math">\(1,3,6,10\ldots\)</span> (although here we have <span class="process-math">\(a_0 = 1\)</span> while <span class="process-math">\(T_0 = 0\)</span> usually).</div></section><section class="subsection" id="jpb"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Differencing</span>
+</h3>
+<div class="para" id="Yux">We have seen how to find generating functions from <span class="process-math">\(\frac{1}{1-x}\)</span> using multiplication (by a constant or by <span class="process-math">\(x\)</span>), substitution, addition, and differentiation. To use each of these, you must notice a way to transform the sequence <span class="process-math">\(1,1,1,1,1\ldots\)</span> into your desired sequence. This is not always easy. It is also not really the way we have analyzed sequences. One thing we have considered often is the sequence of differences between terms of a sequence. This will turn out to be helpful in finding generating functions as well. The sequence of differences is often simpler than the original sequence. So if we know a generating function for the differences, we would like to use this to find a generating function for the original sequence.</div>
+<div class="para logical" id="EBG">
+<div class="para">For example, consider the sequence <span class="process-math">\(2, 4, 10, 28, 82, \ldots\text{.}\)</span> How could we move to the sequence of first differences: <span class="process-math">\(2, 6, 18, 54,\ldots\text{?}\)</span> We want to subtract 2 from the 4, 4 from the 10, 10 from the 28, and so on. So if we subtract (term by term) the sequence <span class="process-math">\(0, 2, 4, 10, 28,\ldots\)</span> from <span class="process-math">\(2, 4, 10, 28\ldots\text{,}\)</span> we will be set. We can get the generating function for <span class="process-math">\(0,2,4,10,28,\ldots\)</span> from the generating function for <span class="process-math">\(2,4,10,28\ldots\)</span> by multiplying by <span class="process-math">\(x\text{.}\)</span> Use <span class="process-math">\(A\)</span> to represent the generating function for <span class="process-math">\(2, 4, 10, 28, 82, \ldots\)</span> Then:</div>
+<div class="displaymath process-math" id="xHb">
+\begin{align*}
+A \amp  = 2 + 4x + 10x^2 +28x^3 + 82x^4 + \cdots\\
+\underline{-\qquad xA} \amp  \underline{\,\,= 0 + 2x + 4x^2 + 10x^3 + 28 x^4 + 82x^5 + \cdots}\\
+(1-x)A \amp  = 2 + 2x + 6x^2 + 18x^3 + 54x^4 + \cdots
+\end{align*}
+</div>
+</div>
+<div class="para" id="kIP">While we don't get exactly the sequence of differences, we do get something close. In this particular case, we already know the generating function <span class="process-math">\(A\)</span> (we found it in the previous section) but most of the time we will use this differencing technique to <em class="emphasis">find</em> <span class="process-math">\(A\text{:}\)</span> if we have the generating function for the sequence of differences, we can then solve for <span class="process-math">\(A\text{.}\)</span>
+</div>
+<article class="example example-like" id="nYU"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.1.2</span><span class="period">.</span>
+</h4>
+<div class="para" id="oIO">Find a generating function for <span class="process-math">\(1, 3, 5, 7, 9,\ldots\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-leo" id="leo"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-leo"><div class="solution solution-like">
+<div class="para logical" id="Ccz">
+<div class="para">Notice that the sequence of differences is constant. We know how to find the generating function for any constant sequence. So denote the generating function for <span class="process-math">\(1, 3, 5, 7, 9, \ldots\)</span> by <span class="process-math">\(A\text{.}\)</span> We have</div>
+<div class="displaymath process-math" id="dOk">
+\begin{align*}
+A \amp  = 1 + 3x + 5x^2 + 7x^3 + 9x^4 + \cdots\\
+\underline{-\qquad xA} \amp  \underline{\,\,= 0 + x + 3x^2 +  5x^3 + 7x^4 + 9x^5 + \cdots}\\
+(1-x)A \amp  = 1 + 2x + 2x^2 + 2x^3 + 2x^4 + \cdots
+\end{align*}
+</div>
+</div> <div class="para logical" id="ijI">
+<div class="para">We know that <span class="process-math">\(2x + 2x^2 + 2x^3 + 2x^4 + \cdots = \dfrac{2x}{1-x}\text{.}\)</span> Thus</div>
+<div class="displaymath process-math">
+\begin{equation*}
+(1-x)A = 1 + \frac{2x}{1-x}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="OqR">
+<div class="para">Now solve for <span class="process-math">\(A\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A = \frac{1}{1-x} + \frac{2x}{(1-x)^2} = \frac{1+x}{(1-x)^2}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="uya">Does this makes sense? Before we simplified the two fractions into one, we were adding the generating function for the sequence <span class="process-math">\(1,1,1,1,\ldots\)</span> to the generating function for the sequence <span class="process-math">\(0, 2, 4, 6, 8, 10, \ldots\)</span> (remember <span class="process-math">\(\frac{1}{(1-x)^2}\)</span> generates <span class="process-math">\(1,2,3,4,5, \ldots\text{,}\)</span> multiplying by <span class="process-math">\(2x\)</span> shifts it over, putting the zero out front, and doubles each term). If we add these term by term, we get the correct sequence <span class="process-math">\(1,3,5,7, 9, \ldots\text{.}\)</span>
+</div>
+</div></div>
+</div></article><div class="para" id="QPY">Now that we have a generating function for the odd numbers, we can use that to find the generating function for the squares:</div>
+<article class="example example-like" id="Ugd"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.1.3</span><span class="period">.</span>
+</h4>
+<div class="para" id="UPX">Find the generating function for <span class="process-math">\(1, 4, 9, 16, \ldots\text{.}\)</span> Note we take <span class="process-math">\(1 = a_0\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Rlx" id="Rlx"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Rlx"><div class="solution solution-like">
+<div class="para logical" id="aFj">
+<div class="para">Again we call the generating function for the sequence <span class="process-math">\(A\text{.}\)</span> Using differencing:</div>
+<div class="displaymath process-math" id="JVt">
+\begin{align*}
+A \amp  = 1 + 4x + 9x^2 + 16x^3 + \cdots\\
+\underline{-\qquad xA} \amp  \underline{\,\, = 0 + x + 4x^2 + 9x^3 + 16x^4 + \cdots}\\
+(1-x)A \amp  = 1 + 3x + 5x^2 + 7x^3 + \cdots
+\end{align*}
+</div>
+</div> <div class="para" id="GMs">Since <span class="process-math">\(1 + 3x + 5x^2 + 7x^3 + \cdots = \d\frac{1+x}{(1-x)^2}\)</span> we have <span class="process-math">\(A = \d\frac{1+x}{(1-x)^3}\text{.}\)</span>
+</div>
+</div></div>
+</div></article><div class="para" id="wXh">In each of the examples above, we found the difference between consecutive terms which gave us a sequence of differences for which we knew a generating function. We can generalize this to more complicated relationships between terms of the sequence. For example, if we know that the sequence satisfies the recurrence relation <span class="process-math">\(a_n = 3a_{n-1} - 2a_{n-2}\text{?}\)</span> In other words, if we take a term of the sequence and subtract 3 times the previous term and then add 2 times the term before that, we get 0 (since <span class="process-math">\(a_n - 3a_{n-1} + 2a_{n-2} = 0\)</span>). That will hold for all but the first two terms of the sequence. So after the first two terms, the sequence of results of these calculations would be a sequence of 0's, for which we definitely know a generating function.</div>
+<article class="example example-like" id="Anm"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.1.4</span><span class="period">.</span>
+</h4>
+<div class="para" id="AXg">The sequence <span class="process-math">\(1, 3, 7, 15, 31, 63, \ldots\)</span> satisfies the recurrence relation <span class="process-math">\(a_n = 3a_{n-1} - 2a_{n-2}\text{.}\)</span> Find the generating function for the sequence.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-xsG" id="xsG"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-xsG"><div class="solution solution-like">
+<div class="para logical" id="mTB">
+<div class="para">Call the generating function for the sequence <span class="process-math">\(A\text{.}\)</span> We have</div>
+<div class="displaymath process-math" id="qcC">
+\begin{align*}
+A \amp  = 1 + 3x + 7x^2 + 15x^3 + 31x^4 + \cdots + a_nx^n + \cdots\\
+-3xA \amp  = 0 - 3x - 9x^2 - 21x^3 - 45x^4 - \cdots - 3a_{n-1}x^n - \cdots\\
+\underline{+~~~2x^2A_{~}^{~^{~}}} \amp  \underline{\,\, = 0 + 0x + 2x^2 + 6x^3 + 14x^4 + \cdots + 2a_{n-2}x^n + \cdots}\\
+(1-3x+2x^2)A \amp  = 1
+\end{align*}
+</div>
+</div> <div class="para" id="TaK">We multiplied <span class="process-math">\(A\)</span> by <span class="process-math">\(-3x\)</span> which shifts every term over one spot and multiplies them by <span class="process-math">\(-3\text{.}\)</span> On the third line, we multiplied <span class="process-math">\(A\)</span> by <span class="process-math">\(2x^2\text{,}\)</span> which shifted every term over two spots and multiplied them by 2. When we add up the corresponding terms, we are taking each term, subtracting 3 times the previous term, and adding 2 times the term before that. This will happen for each term after <span class="process-math">\(a_1\)</span> because <span class="process-math">\(a_n - 3a_{n-1} + 2a_{n-2} = 0\text{.}\)</span> In general, we might have two terms from the beginning of the generating series, although in this case the second term happens to be 0 as well.</div> <div class="para logical" id="zhT">
+<div class="para">Now we just need to solve for <span class="process-math">\(A\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+A = \frac{1}{1 - 3x + 2x^2}\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article></section><section class="subsection" id="Pwk"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Multiplication and Partial Sums</span>
+</h3>
+<div class="para logical" id="deq">
+<div class="para">What happens to the sequences when you multiply two generating functions? Let's see: <span class="process-math">\(A = a_0 + a_1x + a_2x^2 + \cdots\)</span> and <span class="process-math">\(B = b_0 + b_1x + b_2x^2 + \cdots\text{.}\)</span> To multiply <span class="process-math">\(A\)</span> and <span class="process-math">\(B\text{,}\)</span> we need to do a lot of distributing (infinite FOIL?) but keep in mind we will group like terms and only need to write down the first few terms to see the pattern. The constant term is <span class="process-math">\(a_0b_0\text{.}\)</span> The coefficient of <span class="process-math">\(x\)</span> is <span class="process-math">\(a_0b_1 + a_1b_0\text{.}\)</span> And so on. We get:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+AB = a_0b_0 + (a_0b_1 + a_1b_0)x + (a_0b_2 + a_1b_1 + a_2b_0)x^2 + (a_0b_3 + a_1b_2 + a_2b_1 + a_3b_0)x^3 + \cdots\text{.}
+\end{equation*}
+</div>
+</div>
+<article class="example example-like" id="guv"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.1.5</span><span class="period">.</span>
+</h4>
+<div class="para" id="hep">“Multiply” the sequence <span class="process-math">\(1, 2, 3, 4, \ldots\)</span> by the sequence <span class="process-math">\(1, 2, 4, 8, 16, \ldots\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-dzP" id="dzP"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-dzP"><div class="solution solution-like">
+<div class="para logical" id="fpc">
+<div class="para">The new constant term is just <span class="process-math">\(1 \cdot 1\text{.}\)</span> The next term will be <span class="process-math">\(1\cdot 2 + 2 \cdot 1 = 4\text{.}\)</span> The next term: <span class="process-math">\(1 \cdot 4 + 2 \cdot 2 + 3 \cdot 1 = 11\text{.}\)</span> One more: <span class="process-math">\(1 \cdot 8 + 2 \cdot 4 + 3 \cdot 2 + 4 \cdot 1 = 26\text{.}\)</span> The resulting sequence is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1, 4, 11, 26, 57, \ldots\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="Lwl">Since the generating function for <span class="process-math">\(1,2,3,4, \ldots\)</span> is <span class="process-math">\(\frac{1}{(1-x)^2}\)</span> and the generating function for <span class="process-math">\(1,2,4,8, 16, \ldots\)</span> is <span class="process-math">\(\frac{1}{1-2x}\text{,}\)</span> we have that the generating function for <span class="process-math">\(1,4, 11, 26, 57, \ldots\)</span> is <span class="process-math">\(\frac{1}{(1-x)^2(1-2x)}\)</span>
+</div>
+</div></div>
+</div></article><div class="para" id="Jlz">Consider the special case when you multiply a sequence by <span class="process-math">\(1, 1, 1, \ldots\text{.}\)</span> For example, multiply <span class="process-math">\(1,1,1,\ldots\)</span> by <span class="process-math">\(1, 2, 3, 4, 5\ldots\text{.}\)</span> The first term is <span class="process-math">\(1\cdot 1 = 1\text{.}\)</span> Then <span class="process-math">\(1\cdot 2 + 1 \cdot 1 = 3\text{.}\)</span> Then <span class="process-math">\(1\cdot 3 + 1\cdot 2 + 1 \cdot 1 = 6\text{.}\)</span> The next term will be 10. We are getting the triangular numbers. More precisely, we get the sequence of partial sums of <span class="process-math">\(1,2,3,4,5, \ldots\text{.}\)</span> In terms of generating functions, we take <span class="process-math">\(\frac{1}{1-x}\)</span> (generating <span class="process-math">\(1,1,1,1,1\ldots\)</span>) and multiply it by <span class="process-math">\(\frac{1}{(1-x)^2}\)</span> (generating <span class="process-math">\(1,2,3,4,5,\ldots\)</span>) and this give <span class="process-math">\(\frac{1}{(1-x)^3}\text{.}\)</span> This should not be a surprise as we found the same generating function for the triangular numbers earlier.</div>
+<div class="para" id="psI">The point is, if you need to find a generating function for the sum of the first <span class="process-math">\(n\)</span> terms of a particular sequence, and you know the generating function for <em class="emphasis">that</em> sequence, you can multiply it by <span class="process-math">\(\frac{1}{1-x}\text{.}\)</span> To go back from the sequence of partial sums to the original sequence, you look at the sequence of differences. When you get the sequence of differences you end up multiplying by <span class="process-math">\(1-x\text{,}\)</span> or equivalently, dividing by <span class="process-math">\(\frac{1}{1-x}\text{.}\)</span> Multiplying by <span class="process-math">\(\frac{1}{1-x}\)</span> gives partial sums, dividing by <span class="process-math">\(\frac{1}{1-x}\)</span> gives differences.</div></section><section class="subsection" id="vDt"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Solving Recurrence Relations with Generating Functions</span>
+</h3>
+<div class="para" id="VzR">We conclude with an example of one of the many reasons studying generating functions is helpful. We can use generating functions to solve recurrence relations.</div>
+<article class="example example-like" id="MBE"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.1.6</span><span class="period">.</span>
+</h4>
+<div class="para" id="Nly">Solve the recurrence relation <span class="process-math">\(a_n = 3a_{n-1} - 2a_{n-2}\)</span> with initial conditions <span class="process-math">\(a_0 = 1\)</span> and <span class="process-math">\(a_1 = 3\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-JGY" id="JGY"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-JGY"><div class="solution solution-like">
+<div class="para" id="rDu">We saw in an example above that this recurrence relation gives the sequence <span class="process-math">\(1, 3, 7, 15, 31, 63, \ldots\)</span> which has generating function <span class="process-math">\(\dfrac{1}{1 - 3x + 2x^2}\text{.}\)</span> We did this by calling the generating function <span class="process-math">\(A\)</span> and then computing <span class="process-math">\(A - 3xA + 2x^2A\)</span> which was just 1, since every other term canceled out.</div> <div class="para logical" id="XKD">
+<div class="para">But how does knowing the generating function help us? First, break up the generating function into two simpler ones. For this, we can use partial fraction decomposition. Start by factoring the denominator:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{1-3x + 2x^2} = \frac{1}{(1-x)(1-2x)}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="DRM">
+<div class="para">Partial fraction decomposition tells us that we can write this faction as the sum of two fractions (we decompose the given fraction):</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{(1-x)(1-2x)} = \frac{a}{1-x} + \frac{b}{1-2x} \text{ ~~ for some constants } a \text{ and } b\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="jYV">
+<div class="para">To find <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> we add the two decomposed fractions using a common denominator. This gives</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{(1-x)(1-2x)} = \frac{a(1-2x) + b(1-x)}{(1-x)(1-2x)}\text{.}
+\end{equation*}
+</div>
+<div class="para">so</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1 = a(1-2x) + b(1-x)\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="Qge">
+<div class="para">This must be true for all values of <span class="process-math">\(x\text{.}\)</span> If <span class="process-math">\(x = 1\text{,}\)</span> then the equation becomes <span class="process-math">\(1 = -a\)</span> so <span class="process-math">\(a = -1\text{.}\)</span> When <span class="process-math">\(x = \frac{1}{2}\)</span> we get <span class="process-math">\(1 = b/2\)</span> so <span class="process-math">\(b = 2\text{.}\)</span> This tells us that we can decompose the fraction like this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{1}{(1-x)(1-2x)} = \frac{-1}{1-x} + \frac{2}{1-2x}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="wnn">
+<div class="para">This completes the partial fraction decomposition. Notice that these two fractions are generating functions we know. In fact, we should be able to expand each of them.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{-1}{1-x} = -1 - x - x^2 -x^3 - x^4 - \cdots \mbox{ which generates }  -1, -1, -1, -1, -1, \ldots\text{.}
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\frac{2}{1-2x} = 2 + 4x + 8x^2 + 16x^3 + 32x^4 + \cdots \mbox{ which generates }  2, 4, 8, 16, 32, \ldots\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="cuw">
+<div class="para">We can give a closed formula for the <span class="process-math">\(n\)</span>th term of each of these sequences. The first is just <span class="process-math">\(a_n = -1\text{.}\)</span> The second is <span class="process-math">\(a_n = 2^{n+1}\text{.}\)</span> The sequence we are interested in is just the sum of these, so the solution to the recurrence relation is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a_n = 2^{n+1} - 1\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article><div class="para" id="BHa">We can now add generating functions to our list of methods for solving recurrence relations.</div></section><section class="exercises" id="iOL"><h3 class="heading hide-type">
+<span class="type">Exercises</span> <span class="codenumber"></span> <span class="title">Exercises</span>
+</h3>
+<article class="exercise exercise-like" id="Gtg"><h4 class="heading"><span class="codenumber">1<span class="period">.</span></span></h4>
+<div class="para logical" id="oDX">
+<div class="para">Find the generating function for each of the following sequences by relating them back to a sequence with known generating function.</div>
+<ol class="lower-alpha">
+<li id="LMT"><div class="para" id="p-derived-LMT"><span class="process-math">\(4,4,4,4,4,\ldots\text{.}\)</span></div></li>
+<li id="rUc"><div class="para" id="p-derived-rUc"><span class="process-math">\(2, 4, 6, 8, 10, \ldots\text{.}\)</span></div></li>
+<li id="Ybl"><div class="para" id="p-derived-Ybl"><span class="process-math">\(0,0,0,2,4,6,8,10,\ldots\text{.}\)</span></div></li>
+<li id="Eiu"><div class="para" id="p-derived-Eiu"><span class="process-math">\(1, 5, 25, 125, \ldots\text{.}\)</span></div></li>
+<li id="kpD"><div class="para" id="p-derived-kpD"><span class="process-math">\(1, -3, 9, -27, 81, \ldots\text{.}\)</span></div></li>
+<li id="QwM"><div class="para" id="p-derived-QwM"><span class="process-math">\(1, 0, 5, 0, 25, 0, 125, 0, \ldots\text{.}\)</span></div></li>
+<li id="wDV"><div class="para" id="p-derived-wDV"><span class="process-math">\(0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, \ldots\text{.}\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-gLd" id="gLd"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-gLd"><div class="solution solution-like"><div class="para logical" id="SVT"><ol class="lower-alpha cols3">
+<li id="cLe"><div class="para" id="p-derived-cLe"><span class="process-math">\(\dfrac{4}{1-x}\text{.}\)</span></div></li>
+<li id="ISn"><div class="para" id="p-derived-ISn"><span class="process-math">\(\dfrac{2}{(1-x)^2}\text{.}\)</span></div></li>
+<li id="oZw"><div class="para" id="p-derived-oZw"><span class="process-math">\(\dfrac{2x^3}{(1-x)^2}\text{.}\)</span></div></li>
+<li id="VgF"><div class="para" id="p-derived-VgF"><span class="process-math">\(\dfrac{1}{1-5x}\text{.}\)</span></div></li>
+<li id="BnO"><div class="para" id="p-derived-BnO"><span class="process-math">\(\dfrac{1}{1+3x}\text{.}\)</span></div></li>
+<li id="huX"><div class="para" id="p-derived-huX"><span class="process-math">\(\dfrac{1}{1-5x^2}\text{.}\)</span></div></li>
+<li id="NCg"><div class="para" id="p-derived-NCg"><span class="process-math">\(\dfrac{x}{(1-x^3)^2}\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="mAp"><h4 class="heading"><span class="codenumber">2<span class="period">.</span></span></h4>
+<div class="para logical" id="ULg">
+<div class="para">Find the sequence generated by the following generating functions:</div>
+<ol class="lower-alpha">
+<li id="tJp"><div class="para" id="p-derived-tJp"><span class="process-math">\(\dfrac{4x}{1-x}\text{.}\)</span></div></li>
+<li id="ZQy"><div class="para" id="p-derived-ZQy"><span class="process-math">\(\dfrac{1}{1-4x}\text{.}\)</span></div></li>
+<li id="FXH"><div class="para" id="p-derived-FXH"><span class="process-math">\(\dfrac{x}{1+x}\text{.}\)</span></div></li>
+<li id="meQ"><div class="para" id="p-derived-meQ"><span class="process-math">\(\dfrac{3x}{(1+x)^2}\text{.}\)</span></div></li>
+<li id="SlZ"><div class="para" id="p-derived-SlZ">
+<span class="process-math">\(\dfrac{1+x+x^2}{(1-x)^2}\)</span> (Hint: multiplication).</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-MSm" id="MSm"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-MSm"><div class="solution solution-like"><div class="para logical" id="zdc"><ol class="lower-alpha">
+<li id="yti"><div class="para" id="p-derived-yti"><span class="process-math">\(0, 4, 4, 4, 4, 4, \ldots\text{.}\)</span></div></li>
+<li id="eAr"><div class="para" id="p-derived-eAr"><span class="process-math">\(1, 4, 16, 64, 256, \ldots\text{.}\)</span></div></li>
+<li id="KHA"><div class="para" id="p-derived-KHA"><span class="process-math">\(0, 1, -1, 1, -1, 1, -1, \ldots\text{.}\)</span></div></li>
+<li id="qOJ"><div class="para" id="p-derived-qOJ"><span class="process-math">\(0, 3, -6, 9, -12, 15, -18, \ldots\text{.}\)</span></div></li>
+<li id="WVS"><div class="para" id="p-derived-WVS"><span class="process-math">\(1, 3, 6, 9, 12, 15, \ldots\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="SHy"><h4 class="heading"><span class="codenumber">3<span class="period">.</span></span></h4>
+<div class="para logical" id="ASp">
+<div class="para">Show how you can get the generating function for the triangular numbers in three different ways:</div>
+<ol class="lower-alpha">
+<li id="Ddb"><div class="para" id="ieR">Take two derivatives of the generating function for <span class="process-math">\(1,1,1,1,1, \ldots\)</span>
+</div></li>
+<li id="jkk"><div class="para" id="Oma">Use differencing.</div></li>
+<li id="Prt"><div class="para" id="utj">Multiply two known generating functions.</div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="yOH"><h4 class="heading"><span class="codenumber">4<span class="period">.</span></span></h4>
+<div class="para" id="gZy">Use differencing to find the generating function for <span class="process-math">\(4, 5, 7, 10, 14, 19, 25, \ldots\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-sZv" id="sZv"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-sZv"><div class="solution solution-like"><div class="para" id="fkl">Call the generating function <span class="process-math">\(A\text{.}\)</span> Compute <span class="process-math">\(A - xA = 4 + x + 2x^2 + 3x^3 + 4x^4 + \cdots\text{.}\)</span> Thus <span class="process-math">\(A - xA = 4 + \dfrac{x}{(1-x)^2}\text{.}\)</span> Solving for <span class="process-math">\(A\)</span> gives <span class="process-math">\(\d\frac{4}{1-x} + \frac{x}{(1-x)^3}\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="eVQ"><h4 class="heading"><span class="codenumber">5<span class="period">.</span></span></h4>
+<div class="para" id="NgH">Find a generating function for the sequence with recurrence relation <span class="process-math">\(a_n = 3a_{n-1} - a_{n-2}\)</span> with initial terms <span class="process-math">\(a_0 = 1\)</span> and <span class="process-math">\(a_1 = 5\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-ZgE" id="ZgE"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-ZgE"><div class="solution solution-like"><div class="para" id="Lru"><span class="process-math">\(\dfrac{1+2x}{1-3x + x^2}\text{.}\)</span></div></div></div>
+</div></article><article class="exercise exercise-like" id="LcZ"><h4 class="heading"><span class="codenumber">6<span class="period">.</span></span></h4>
+<div class="para" id="tnQ">Use the recurrence relation for the Fibonacci numbers to find the generating function for the Fibonacci sequence.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-FnN" id="FnN"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-FnN"><div class="solution solution-like"><div class="para" id="ryD">Compute <span class="process-math">\(A - xA - x^2A\)</span> and the solve for <span class="process-math">\(A\text{.}\)</span> The generating function will be <span class="process-math">\(\dfrac{x}{1-x-x^2}\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="rki"><h4 class="heading"><span class="codenumber">7<span class="period">.</span></span></h4>
+<div class="para" id="ZuZ">Use multiplication to find the generating function for the sequence of partial sums of Fibonacci numbers, <span class="process-math">\(S_0, S_1, S_2, \ldots\)</span> where <span class="process-math">\(S_0 = F_0\text{,}\)</span> <span class="process-math">\(S_1 = F_0 + F_1\text{,}\)</span> <span class="process-math">\(S_2 = F_0 + F_1 + F_2\text{,}\)</span> <span class="process-math">\(S_3 = F_0 + F_1 + F_2 + F_3\)</span> and so on.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-luW" id="luW"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-luW"><div class="solution solution-like"><div class="para" id="XFM"><span class="process-math">\(\dfrac{x}{(1-x)(1-x-x^2)}\text{.}\)</span></div></div></div>
+</div></article><article class="exercise exercise-like" id="Xrr"><h4 class="heading"><span class="codenumber">8<span class="period">.</span></span></h4>
+<div class="para" id="FCi">Find the generating function for the sequence with closed formula <span class="process-math">\(a_n = 2(5^n) + 7(-3)^n\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-RCf" id="RCf"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-RCf"><div class="solution solution-like"><div class="para" id="DMV"><span class="process-math">\(\dfrac{2}{1-5x} + \dfrac{7}{1+3x}\text{.}\)</span></div></div></div>
+</div></article><article class="exercise exercise-like" id="DyA"><h4 class="heading"><span class="codenumber">9<span class="period">.</span></span></h4>
+<div class="para" id="lJr">Find a closed formula for the <span class="process-math">\(n\)</span>th term of the sequence with generating function <span class="process-math">\(\dfrac{3x}{1-4x} + \dfrac{1}{1-x}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-xJo" id="xJo"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-xJo"><div class="solution solution-like"><div class="para" id="jUe"><span class="process-math">\(a_n = 3\cdot 4^{n-1} + 1\text{.}\)</span></div></div></div>
+</div></article><article class="exercise exercise-like" id="jFJ"><h4 class="heading"><span class="codenumber">10<span class="period">.</span></span></h4>
+<div class="para" id="RQA">Find <span class="process-math">\(a_7\)</span> for the sequence with generating function <span class="process-math">\(\dfrac{2}{(1-x)^2}\cdot\dfrac{x}{1-x-x^2}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-dQx" id="dQx"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-dQx"><div class="hint solution-like"><div class="para" id="IwO">You should “multiply” the two sequences.</div></div></div>
+</div></article><article class="exercise exercise-like" id="vUb"><h4 class="heading"><span class="codenumber">11<span class="period">.</span></span></h4>
+<div class="para" id="xXJ">Explain how we know that <span class="process-math">\(\dfrac{1}{(1-x)^2}\)</span> is the generating function for <span class="process-math">\(1, 2, 3, 4, \ldots\text{.}\)</span>
+</div></article><article class="exercise exercise-like" id="cbk"><h4 class="heading"><span class="codenumber">12<span class="period">.</span></span></h4>
+<div class="para logical" id="eeS">
+<div class="para">Starting with the generating function for <span class="process-math">\(1,2,3,4, \ldots\text{,}\)</span> find a generating function for each of the following sequences.</div>
+<ol class="lower-alpha">
+<li id="vyC"><div class="para" id="p-derived-vyC"><span class="process-math">\(1, 0, 2, 0, 3, 0, 4,\ldots\text{.}\)</span></div></li>
+<li id="bFL"><div class="para" id="p-derived-bFL"><span class="process-math">\(1, -2, 3, -4, 5, -6, \ldots\text{.}\)</span></div></li>
+<li id="HMU"><div class="para" id="p-derived-HMU"><span class="process-math">\(0, 3, 6, 9, 12, 15, 18, \ldots\text{.}\)</span></div></li>
+<li id="nUd"><div class="para" id="p-derived-nUd">
+<span class="process-math">\(0, 3, 9, 18, 30, 45, 63,\ldots\text{.}\)</span> (Hint: relate this sequence to the previous one.)</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-JXG" id="JXG"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-JXG"><div class="solution solution-like"><div class="para logical" id="Qbn"><ol class="lower-alpha">
+<li id="Ubm"><div class="para" id="p-derived-Ubm"><span class="process-math">\(\frac{1}{(1-x^2)^2}\text{.}\)</span></div></li>
+<li id="Aiv"><div class="para" id="p-derived-Aiv"><span class="process-math">\(\frac{1}{(1+x)^2}\text{.}\)</span></div></li>
+<li id="gpE"><div class="para" id="p-derived-gpE"><span class="process-math">\(\frac{3x}{(1-x)^2}\text{.}\)</span></div></li>
+<li id="MwN"><div class="para" id="p-derived-MwN">
+<span class="process-math">\(\frac{3x}{(1-x)^3}\text{.}\)</span> (partial sums).</div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="Iit"><h4 class="heading"><span class="codenumber">13<span class="period">.</span></span></h4>
+<div class="para logical" id="Kmb">
+<div class="para">You may assume that <span class="process-math">\(1, 1, 2, 3, 5, 8,\ldots\)</span> has generating function <span class="process-math">\(\dfrac{1}{1-x-x^2}\)</span> (because it does). Use this fact to find the sequence generated by each of the following generating functions.</div>
+<ol class="lower-alpha">
+<li id="sDW"><div class="para" id="p-derived-sDW"><span class="process-math">\(\frac{x^2}{1-x-x^2}\text{.}\)</span></div></li>
+<li id="YLf"><div class="para" id="p-derived-YLf"><span class="process-math">\(\frac{1}{1-x^2-x^4}\text{.}\)</span></div></li>
+<li id="ESo"><div class="para" id="p-derived-ESo"><span class="process-math">\(\frac{1}{1-3x-9x^2}\text{.}\)</span></div></li>
+<li id="kZx"><div class="para" id="p-derived-kZx"><span class="process-math">\(\frac{1}{(1-x-x^2)(1-x)}\text{.}\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-qeP" id="qeP"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-qeP"><div class="solution solution-like"><div class="para logical" id="wiw"><ol class="lower-alpha">
+<li id="RgG"><div class="para" id="p-derived-RgG"><span class="process-math">\(0,0,1,1,2,3,5,8, \ldots\text{.}\)</span></div></li>
+<li id="xnP"><div class="para" id="p-derived-xnP"><span class="process-math">\(1, 0, 1, 0, 2, 0, 3, 0, 5, 0, 8, 0, \ldots\text{.}\)</span></div></li>
+<li id="duY"><div class="para" id="p-derived-duY"><span class="process-math">\(1, 3, 18, 81, 405, \ldots\text{.}\)</span></div></li>
+<li id="JCh"><div class="para" id="p-derived-JCh"><span class="process-math">\(1, 2, 4, 7, 12, 20, \ldots\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="opC"><h4 class="heading"><span class="codenumber">14<span class="period">.</span></span></h4>
+<div class="para" id="qtk">Find the generating function for the sequence <span class="process-math">\(1, -2, 4, -8, 16, \ldots\text{.}\)</span>
+</div></article><article class="exercise exercise-like" id="UwL"><h4 class="heading"><span class="codenumber">15<span class="period">.</span></span></h4>
+<div class="para" id="WAt">Find the generating function for the sequence <span class="process-math">\(1, 1, 1, 2, 3, 4, 5, 6, \ldots\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-WlY" id="WlY"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-WlY"><div class="solution solution-like"><div class="para" id="cpF"><span class="process-math">\(\frac{x^3}{(1-x)^2} + \frac{1}{1-x}\text{.}\)</span></div></div></div>
+</div></article><article class="exercise exercise-like" id="ADU"><h4 class="heading"><span class="codenumber">16<span class="period">.</span></span></h4>
+<div class="para logical" id="CHC">
+<div class="para">Suppose <span class="process-math">\(A\)</span> is the generating function for the sequence <span class="process-math">\(3, 5, 9, 15, 23, 33, \ldots\text{.}\)</span>
+</div>
+<ol class="lower-alpha">
+<li id="pJq"><div class="para" id="aAs">Find a generating function (in terms of <span class="process-math">\(A\)</span>) for the sequence of differences between terms.</div></li>
+<li id="VQz"><div class="para" id="GHB">Write the sequence of differences between terms and find a generating function for it (without referencing <span class="process-math">\(A\)</span>).</div></li>
+<li id="BXI"><div class="para" id="mOK">Use your answers to parts (a) and (b) to find the generating function for the original sequence.</div></li>
+</ol>
+</div></article></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="ch_additionalTopics.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="sec_addtops-numbth.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+</div></main>
+</div>
+<div class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
+<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
+<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+</div>
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</body>
+</html>

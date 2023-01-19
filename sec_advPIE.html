@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Advanced Counting Using PIE</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Discrete Mathematics">
+<meta property="book:author" content="Oscar Levin">
+<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    tags: "none",
+    tagSide: "right",
+    tagIndent: ".8em",
+    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  },
+  options: {
+    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
+    processHtmlClass: "process-math",
+    renderActions: {
+        findScript: [10, function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        }, '']
+    },
+  },
+  chtml: {
+    scale: 0.98,
+    mtextInheritFont: true
+  },
+  loader: {
+    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
+    paths: {pretext: "https://pretextbook.org/js/lib"},
+  },
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  },
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link href="https://webwork.runestone.academy/webwork2_files/js/apps/MathView/mathview.css" rel="stylesheet">
+<script src="https://pretextbook.org/js/0.2/pretext-webwork/2.16/pretext-webwork.js"></script><script src="https://webwork.runestone.academy/webwork2_files/node_modules/iframe-resizer/js/iframeResizer.min.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/style_oscarlevin.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="external/custom-styles.css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '5.0.1';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runtime.a26418f1c7af0a01.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/637.d54be67956c5c660.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runestone.38c38879674c28b2.bundle.js"></script><link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/637.0fa6cababf056764.css">
+<link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/runestone.93e720e6c6581fb5.css">
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</head>
+<body id="dmoi-4" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" href="http://discrete.openmathbooks.org/dmoi3.html" target="_blank"><img src="external/images/cover.png" alt="Logo image"></a><div class="title-container">
+<h1 class="heading"><a href="dmoi4.html"><span class="title">Discrete Mathematics:</span> <span class="subtitle">An Open Introduction, 4th edition (preview)</span></a></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+<div id="searchresultsplaceholder" style="display: none">
+<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
+</h2>
+<div id="searchempty"><span>No results.</span></div>
+<ol id="searchresults"></ol>
+</div>
+</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><a class="index-button button" href="index-1.html" title="Index"><span class="name">Index</span></a><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
+<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden avatar">
+<li data-val="You!" tabindex="-1">
+<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
+<li data-val="😺" tabindex="-1">
+<span id="the😺" class="avatarcheck"></span>😺</li>
+<li data-val="👤" tabindex="-1">
+<span id="the👤" class="avatarcheck"></span>👤</li>
+<li data-val="👽" tabindex="-1">
+<span id="the👽" class="avatarcheck"></span>👽</li>
+<li data-val="🐶" tabindex="-1">
+<span id="the🐶" class="avatarcheck"></span>🐶</li>
+<li data-val="🐼" tabindex="-1">
+<span id="the🐼" class="avatarcheck"></span>🐼</li>
+<li data-val="🌈" tabindex="-1">
+<span id="the🌈" class="avatarcheck"></span>🌈</li>
+</ol>
+</li>
+<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fontfamily">
+<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
+<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
+<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+</ol>
+</li>
+<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fonts">
+<li>Size</li>
+<li><span id="thesize">12</span></li>
+<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
+<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
+<li>Width</li>
+<li><span id="thewdth">100</span></li>
+<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
+<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
+<li>Weight</li>
+<li><span id="thewght">400</span></li>
+<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
+<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
+<li>Letter spacing</li>
+<li>
+<span id="thelspace">0</span><span class="byunits">/200</span>
+</li>
+<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
+<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
+<li>Word spacing</li>
+<li>
+<span id="thewspace">0</span><span class="byunits">/50</span>
+</li>
+<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
+<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
+<li>Line Spacing</li>
+<li>
+<span id="theheight">135</span><span class="byunits">/100</span>
+</li>
+<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
+<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
+</ol>
+</li>
+<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden atmosphere">
+<li data-val="default" tabindex="-1">
+<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
+<li data-val="pastel" tabindex="-1">
+<span id="thepastel" class="atmospherecheck"></span>pastel</li>
+<li data-val="darktwilight" tabindex="-1">
+<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
+<li data-val="dark" tabindex="-1">
+<span id="thedark" class="atmospherecheck"></span>dark</li>
+<li data-val="darkmidnight" tabindex="-1">
+<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
+</ol>
+</li>
+<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden ruler">
+<li data-val="none" tabindex="-1">
+<span id="thenone" class="rulercheck">✔️</span>none</li>
+<li data-val="underline" tabindex="-1">
+<span id="theunderline" class="rulercheck"></span>underline</li>
+<li data-val="lunderline" tabindex="-1">
+<span id="thelunderline" class="rulercheck"></span>L-underline</li>
+<li data-val="greybar" tabindex="-1">
+<span id="thegreybar" class="rulercheck"></span>grey bar</li>
+<li data-val="lightbox" tabindex="-1">
+<span id="thelightbox" class="rulercheck"></span>light box</li>
+<li data-val="sunrise" tabindex="-1">
+<span id="thesunrise" class="rulercheck"></span>sunrise</li>
+<li data-val="sunriseunderline" tabindex="-1">
+<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
+<li class="moveQ">Motion by:</li>
+<li data-val="mouse" tabindex="-1">
+<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
+<li data-val="arrow" tabindex="-1">
+<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
+<li data-val="eye" tabindex="-1">
+<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
+</ol>
+</li>
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="sec_stars-and-bars.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="ch_counting.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="sec_count-conc.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
+</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\renewcommand{\d}{\displaystyle}
+\newcommand{\N}{\mathbb N}
+\newcommand{\B}{\mathbf B}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\U}{\mathcal U}
+\newcommand{\pow}{\mathcal P}
+\newcommand{\inv}{^{-1}}
+\newcommand{\st}{:}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\Imp}{\Rightarrow}
+\newcommand{\isom}{\cong}
+
+\renewcommand{\bar}{\overline}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar"><nav id="ptx-toc" class="depth3"><ul class="structural">
+<li>
+<div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="colophon-1.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li><div class="toc-item"><a href="dedication-1.html" class="internal"><span class="title">Dedication</span></a></div></li>
+<li><div class="toc-item"><a href="acknowledgement-1.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+<li><div class="toc-item"><a href="preface.html" class="internal"><span class="title">Preface</span></a></div></li>
+<li><div class="toc-item"><a href="preface-2.html" class="internal"><span class="title">How to use this book</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_intro.html" class="internal"><span class="codenumber">0</span> <span class="title">Introduction and Preliminaries</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_intro-intro.html" class="internal"><span class="codenumber">0.1</span> <span class="title">What is Discrete Mathematics?</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_intro-intro.html#rqs-intro-intro" class="internal"><span class="codenumber">0.1</span> <span class="title">Reading Questions</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-structures.html" class="internal"><span class="codenumber">0.2</span> <span class="title">Discrete Structures</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sets" class="internal"><span class="title">Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-functions" class="internal"><span class="title">Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sequences" class="internal"><span class="title">Sequences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec-relations" class="internal"><span class="title">Relations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-graphs" class="internal"><span class="title">Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsubsec_structures-statements" class="internal"><span class="title">Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-even-more" class="internal"><span class="title">Even More Structures</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#rqs-intro-structures" class="internal"><span class="codenumber">0.2</span> <span class="title">Reading Questions</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-sets.html" class="internal"><span class="codenumber">0.3</span> <span class="title">Sets</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-sets.html#RBf" class="internal"><span class="title">Notation</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#xIo" class="internal"><span class="title">Relationships Between Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#dPx" class="internal"><span class="title">Operations On Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#JWG" class="internal"><span class="title">Venn Diagrams</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#ww_intro-sets" class="internal"><span class="codenumber">0.3</span> <span class="title">Interactive Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-functions.html" class="internal"><span class="codenumber">0.4</span> <span class="title">Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-functions.html#irZ" class="internal"><span class="title">Describing Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#Ozi" class="internal"><span class="title">Surjections, Injections, and Bijections</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#uGr" class="internal"><span class="title">Image and Inverse Image</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#XHz" class="internal"><span class="codenumber">0.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_logic.html" class="internal"><span class="codenumber">1</span> <span class="title">Symbolic Logic and Proofs</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_logic-statements.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Mathematical Statements</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-statements.html#wKm" class="internal"><span class="title">Atomic and Molecular Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#cRv" class="internal"><span class="title">Implications</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#IYE" class="internal"><span class="title">Predicates and Quantifiers</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#rqs-logic-statements" class="internal"><span class="codenumber">1.1</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#iCD" class="internal"><span class="codenumber">1.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_propositional.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Propositional Logic</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_propositional.html#DTz" class="internal"><span class="title">Truth Tables</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#kaI" class="internal"><span class="title">Logical Equivalence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#QhR" class="internal"><span class="title">Deductions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#wpa" class="internal"><span class="title">Beyond Propositions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#rqs-logic-prop" class="internal"><span class="codenumber">1.2</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#Shv" class="internal"><span class="codenumber">1.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-proofs.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Ruo" class="internal"><span class="title">Direct Proof</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#xBx" class="internal"><span class="title">Proof by Contrapositive</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#dIG" class="internal"><span class="title">Proof by Contradiction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#JPP" class="internal"><span class="title">Proof by (counter) Example</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#pWY" class="internal"><span class="title">Proof by Cases</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#rqs-logic-proof" class="internal"><span class="codenumber">1.3</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Fqn" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-conc.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_logic-conc.html#MrW" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_counting.html" class="internal"><span class="codenumber">2</span> <span class="title">Counting</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_counting-addmult.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-addmult.html#YQj" class="internal"><span class="title">Counting With Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#EXs" class="internal"><span class="title">Principle of Inclusion/Exclusion</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#WHK" class="internal"><span class="codenumber">2.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-binom.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Binomial Coefficients</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-binom.html#cgB" class="internal"><span class="title">Subsets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#InK" class="internal"><span class="title">Bit Strings</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#ouT" class="internal"><span class="title">Lattice Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#UCc" class="internal"><span class="title">Binomial Coefficients</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#AJl" class="internal"><span class="title">Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#uWm" class="internal"><span class="codenumber">2.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-combperm.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Combinations and Permutations</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_counting-combperm.html#jkK" class="internal"><span class="codenumber">2.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_comb-proofs.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Combinatorial Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_comb-proofs.html#zbp" class="internal"><span class="title">Patterns in Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#fiy" class="internal"><span class="title">More Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#lYz" class="internal"><span class="codenumber">2.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_stars-and-bars.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Stars and Bars</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_stars-and-bars.html#zVa" class="internal"><span class="codenumber">2.5</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li class="active">
+<div class="toc-item"><a href="sec_advPIE.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_advPIE.html#nSd" class="internal"><span class="title">Counting Derangements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#TZm" class="internal"><span class="title">Counting Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#nUq" class="internal"><span class="codenumber">2.6</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_count-conc.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_count-conc.html#Ejh" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_sequences.html" class="internal"><span class="codenumber">3</span> <span class="title">Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq_intro.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Describing Sequences</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_seq_intro.html#vPK" class="internal"><span class="codenumber">3.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html#RQa" class="internal"><span class="title">Sums of Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#xXj" class="internal"><span class="title">Summing Arithmetic Sequences: Reverse and Add</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#ees" class="internal"><span class="title">Summing Geometric Sequences: Multiply, Shift and Subtract</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#EGG" class="internal"><span class="codenumber">3.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_polyfit.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Polynomial Fitting</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_polyfit.html#FTD" class="internal"><span class="codenumber">3.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_recurrence.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Solving Recurrence Relations</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_recurrence.html#Hke" class="internal"><span class="title">The Characteristic Root Technique</span></a></div></li>
+<li><div class="toc-item"><a href="sec_recurrence.html#bQc" class="internal"><span class="codenumber">3.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-induction.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Induction</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-induction.html#vyp" class="internal"><span class="title">Stamps</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#bFy" class="internal"><span class="title">Formalizing Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#HMH" class="internal"><span class="title">Examples</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#nTQ" class="internal"><span class="title">Strong Induction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#YsG" class="internal"><span class="codenumber">3.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_sequences-conc.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_sequences-conc.html#XPQ" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_graphtheory.html" class="internal"><span class="codenumber">4</span> <span class="title">Graph Theory</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_gt-intro.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Definitions</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-intro.html#QMu" class="internal"><span class="codenumber">4.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_trees.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Trees</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_trees.html#MvA" class="internal"><span class="title">Properties of Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#sCJ" class="internal"><span class="title">Rooted Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#YJS" class="internal"><span class="title">Spanning Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#iQl" class="internal"><span class="codenumber">4.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_planar.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Planar Graphs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_planar.html#ZAQ" class="internal"><span class="title">Non-planar Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#FHZ" class="internal"><span class="title">Polyhedra</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#Pey" class="internal"><span class="codenumber">4.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_coloring.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Coloring</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_coloring.html#WFX" class="internal"><span class="title">Coloring in General</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#CNg" class="internal"><span class="title">Coloring Edges</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#MxN" class="internal"><span class="codenumber">4.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_paths.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Euler Paths and Circuits</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_paths.html#ZWp" class="internal"><span class="title">Hamilton Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_paths.html#wMz" class="internal"><span class="codenumber">4.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_matchings.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Matching in Bipartite Graphs</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_matchings.html#wye" class="internal"><span class="codenumber">4.6</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_gt-conc.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-conc.html#WIK" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_additionalTopics.html" class="internal"><span class="codenumber">5</span> <span class="title">Additional Topics</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_addtops-genfun.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Generating Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#DhS" class="internal"><span class="title">Building Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#jpb" class="internal"><span class="title">Differencing</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#Pwk" class="internal"><span class="title">Multiplication and Partial Sums</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#vDt" class="internal"><span class="title">Solving Recurrence Relations with Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#iOL" class="internal"><span class="codenumber">5.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_addtops-numbth.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#CqU" class="internal"><span class="title">Divisibility</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#iyd" class="internal"><span class="title">Remainder Classes</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#OFm" class="internal"><span class="title">Properties of Congruence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#uMv" class="internal"><span class="title">Solving Congruences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#aTE" class="internal"><span class="title">Solving Linear Diophantine Equations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#TUi" class="internal"><span class="codenumber">5.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="solutions-1.html" class="internal"><span class="codenumber">A</span> <span class="title">Selected Hints</span></a></div></li>
+<li><div class="toc-item"><a href="solutions-2.html" class="internal"><span class="codenumber">B</span> <span class="title">Selected Solutions</span></a></div></li>
+<li><div class="toc-item"><a href="appendix-1.html" class="internal"><span class="codenumber">C</span> <span class="title">List of Symbols</span></a></div></li>
+<li><div class="toc-item"><a href="index-1.html" class="internal"><span class="title">Index</span></a></div></li>
+<li><div class="toc-item"><a href="colophon-2.html" class="internal"><span class="title">Colophon</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="section" id="HKU"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span>
+</h2>
+<section class="introduction" id="BVI"><article class="project-like" id="icR"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para logical" id="lVM">
+<div class="para">You have 11 identical mini key-lime pies to give to 4 children. However, you don't want any kid to get more than 3 pies. How many ways can you distribute the pies?</div>
+<ol class="decimal">
+<li id="Wyt"><div class="para" id="cXz">How many ways are there to distribute the pies without any restriction?</div></li>
+<li id="CFC"><div class="para" id="JeI">Let's get rid of the ways that one or more kid gets too many pies. How many ways are there to distribute the pies if Al gets too many pies? What if Bruce gets too many? Or Cat? Or Dent?</div></li>
+<li id="iML"><div class="para" id="plR">What if two kids get too many pies? How many ways can this happen? Does it matter which two kids you pick to overfeed?</div></li>
+<li id="OTU"><div class="para" id="Vta">Is it possible that three kids get too many pies? If so, how many ways can this happen?</div></li>
+<li id="vbd"><div class="para" id="BAj">How should you combine all the numbers you found above to answer the original question?</div></li>
+</ol>
+</div> <div class="para" id="ScV">Suppose now you have 13 pies and 7 children. No child can have more than 2 pies. How many ways can you distribute the pies?</div></article> <div class="para" id="yke">Stars and bars allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to <span class="process-math">\(x+y+z = 11\text{,}\)</span> for example. A relatively easy modification allows us to put a <em class="emphasis">lower bound</em> restriction on these problems: perhaps each kid must get at least two cookies or <span class="process-math">\(x,y,z \ge 2\text{.}\)</span> This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using stars and bars.</div> <div class="para" id="ern"> What if we wanted an <em class="emphasis">upper bound</em> restriction? For example, we might insist that no kid gets more than 4 cookies or that <span class="process-math">\(x,
+y, z \le 4\text{.}\)</span> It turns out this is considerably harder, but still possible. The idea is to count all the distributions and then remove those that violate the condition. In other words, we must count the number of ways to distribute 11 cookies to 3 kids in which <em class="emphasis">one or more</em> of the kids gets more than 4 cookies. For any particular kid, this is not a problem; we do this using stars and bars. But how to combine the number of ways for kid A, or B or C? We must use the PIE.</div> <div class="para logical" id="Kyw">
+<div class="para">The Principle of Inclusion/Exclusion (PIE) gives a method for finding the cardinality of the union of not necessarily disjoint sets. We saw in <a href="sec_counting-addmult.html" class="internal" title="Section 2.1: Additive and Multiplicative Principles">Section 2.1</a> how this works with three sets. To find how many things are in <em class="emphasis">one or more</em> of the sets <span class="process-math">\(A\text{,}\)</span> <span class="process-math">\(B\text{,}\)</span> and <span class="process-math">\(C\text{,}\)</span> we should just add up the number of things in each of these sets. However, if there is any overlap among the sets, those elements are counted multiple times. So we subtract the things in each intersection of a pair of sets. But doing this removes elements which are in all three sets once too often, so we need to add it back in. In terms of cardinality of sets, we have</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/sec_counting-addmult.html">
+\begin{equation*}
+|A \cup B \cup C| = |A| + |B| + |C| - |A \cap B| - |A \cap C| - |B \cap C| + |A\cap B \cap C|\text{.}
+\end{equation*}
+</div>
+</div> <article class="example example-like" id="JAh"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="QnI">Three kids, Alberto, Bernadette, and Carlos, decide to share 11 cookies. They wonder how many ways they could split the cookies up provided that none of them receive more than 4 cookies (someone receiving no cookies is for some reason acceptable to these kids).</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Oka" id="Oka"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Oka"><div class="solution solution-like">
+<div class="para" id="UnH">Without the “no more than 4” restriction, the answer would be <span class="process-math">\({13 \choose 2}\text{,}\)</span> using 11 stars and 2 bars (separating the three kids). Now count the number of ways that one or more of the kids violates the condition, i.e., gets at least 4 cookies.</div> <div class="para" id="AuQ">Let <span class="process-math">\(A\)</span> be the set of outcomes in which Alberto gets more than 4 cookies. Let <span class="process-math">\(B\)</span> be the set of outcomes in which Bernadette gets more than 4 cookies. Let <span class="process-math">\(C\)</span> be the set of outcomes in which Carlos gets more than 4 cookies. We then are looking (for the sake of subtraction) for the size of the set <span class="process-math">\(A \cup B \cup C\text{.}\)</span> Using PIE, we must find the sizes of <span class="process-math">\(|A|\text{,}\)</span> <span class="process-math">\(|B|\text{,}\)</span> <span class="process-math">\(|C|\text{,}\)</span> <span class="process-math">\(|A\cap B|\)</span> and so on. Here is what we find.</div> <div class="para logical" id="gBZ"><ul class="disc">
+<li id="AQp"><div class="para" id="p-derived-AQp">
+<span class="process-math">\(|A| = {8 \choose 2}\text{.}\)</span> First give Alberto 5 cookies, then distribute the remaining 6 to the three kids without restrictions, using 6 stars and 2 bars.</div></li>
+<li id="gXy"><div class="para" id="p-derived-gXy">
+<span class="process-math">\(|B| = {8 \choose 2}\text{.}\)</span> Just like above, only now Bernadette gets 5 cookies at the start.</div></li>
+<li id="NeH"><div class="para" id="p-derived-NeH">
+<span class="process-math">\(|C| = {8 \choose 2}\text{.}\)</span> Carlos gets 5 cookies first.</div></li>
+<li id="tlQ"><div class="para" id="p-derived-tlQ">
+<span class="process-math">\(|A \cap B| = {3 \choose 2}\text{.}\)</span> Give Alberto and Bernadette 5 cookies each, leaving 1 (star) to distribute to the three kids (2 bars).</div></li>
+<li id="ZsZ"><div class="para" id="p-derived-ZsZ">
+<span class="process-math">\(|A \cap C| = {3 \choose 2}\text{.}\)</span> Alberto and Carlos get 5 cookies first.</div></li>
+<li id="FAi"><div class="para" id="p-derived-FAi">
+<span class="process-math">\(|B \cap C| = {3 \choose 2}\text{.}\)</span> Bernadette and Carlos get 5 cookies first.</div></li>
+<li id="lHr"><div class="para" id="p-derived-lHr">
+<span class="process-math">\(|A \cap B \cap C| = 0\text{.}\)</span> It is not possible for all three kids to get 4 or more cookies.</div></li>
+</ul></div> <div class="para logical" id="MJi">
+<div class="para">Combining all of these we see</div>
+<div class="displaymath process-math">
+\begin{equation*}
+|A \cup B \cup C| = {8 \choose 2} + {8 \choose 2} + {8 \choose 2} - {3 \choose 2} - {3 \choose 2} - {3 \choose 2} + 0 = 75\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="sQr">Thus the answer to the original question is <span class="process-math">\({13 \choose 2} - 75 = 78 - 75 = 3\text{.}\)</span> This makes sense now that we see it. The only way to ensure that no kid gets more than 4 cookies is to give two kids 4 cookies and one kid 3; there are three choices for which kid that should be. We could have found the answer much quicker through this observation, but the point of the example is to illustrate that PIE works!</div>
+</div></div>
+</div></article> <div class="para" id="qFF"> For four or more sets, we do not write down a formula for PIE. Instead, we just think of the principle: add up all the elements in single sets, then subtract out things you counted twice (elements in the intersection of a <em class="emphasis">pair</em> of sets), then add back in elements you removed too often (elements in the intersection of groups of three sets), then take back out elements you added back in too often (elements in the intersection of groups of four sets), then add back in, take back out, add back in, etc. This would be very difficult if it wasn't for the fact that in these problems, all the cardinalities of the single sets are equal, as are all the cardinalities of the intersections of two sets, and that of three sets, and so on. Thus we can group all of these together and multiply by how many different combinations of 1, 2, 3, … sets there are.</div> <article class="example example-like" id="pHq"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.2</span><span class="period">.</span>
+</h3>
+<div class="para" id="wuR">How many ways can you distribute 10 cookies to 4 kids so that no kid gets more than 2 cookies?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-urj" id="urj"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-urj"><div class="solution solution-like">
+<div class="para" id="YXA">There are <span class="process-math">\({13 \choose 3}\)</span> ways to distribute 10 cookies to 4 kids (using 10 stars and 3 bars). We will subtract all the outcomes in which a kid gets 3 or more cookies. How many outcomes are there like that? We can force kid A to eat 3 or more cookies by giving him 3 cookies before we start. Doing so reduces the problem to one in which we have 7 cookies to give to 4 kids without any restrictions. In that case, we have 7 stars (the 7 remaining cookies) and 3 bars (one less than the number of kids) so we can distribute the cookies in <span class="process-math">\({10 \choose 3}\)</span> ways. Of course we could choose any one of the 4 kids to give too many cookies, so it would appear that there are <span class="process-math">\({4 \choose 1}{10 \choose 3}\)</span> ways to distribute the cookies giving too many to one kid. But in fact, we have over counted.</div> <div class="para" id="FeJ">We must get rid of the outcomes in which two kids have too many cookies. There are <span class="process-math">\({4 \choose 2}\)</span> ways to select 2 kids to give extra cookies. It takes 6 cookies to do this, leaving only 4 cookies. So we have 4 stars and still 3 bars. The remaining 4 cookies can thus be distributed in <span class="process-math">\({7 \choose 3}\)</span> ways (for each of the <span class="process-math">\({4 \choose 2}\)</span> choices of which 2 kids to over-feed).</div> <div class="para" id="llS">But now we have removed too much. We must add back in all the ways to give too many cookies to three kids. This uses 9 cookies, leaving only 1 to distribute to the 4 kids using stars and bars, which can be done in <span class="process-math">\({4 \choose 3}\)</span> ways. We must consider this outcome for every possible choice of which three kids we over-feed, and there are <span class="process-math">\({4 \choose 3}\)</span> ways of selecting that set of 3 kids.</div> <div class="para" id="Rtb">Next we would subtract all the ways to give four kids too many cookies, but in this case, that number is 0.</div> <div class="para logical" id="xAk">
+<div class="para">All together we get that the number of ways to distribute 10 cookies to 4 kids without giving any kid more than 2 cookies is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+{13 \choose 3} - \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right]
+\end{equation*}
+</div>
+<div class="para">which is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+286 - [480 - 210 + 16] = 0\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="dHt">
+<div class="para">This makes sense: there is NO way to distribute 10 cookies to 4 kids and make sure that nobody gets more than 2. It is slightly surprising that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+{13 \choose 3} = \left[{4 \choose 1}{10 \choose 3} - {4 \choose 2}{7 \choose 3} + {4\choose 3}{4\choose 3}\right]\text{,}
+\end{equation*}
+</div>
+<div class="para">but since PIE works, this equality must hold.</div>
+</div>
+</div></div>
+</div></article> <div class="para" id="WMO">Just so you don't think that these problems always have easier solutions, consider the following example.</div> <article class="example example-like" id="VOz"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.3</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="cCa">
+<div class="para">Earlier (<a href="" class="xref" data-knowl="./knowl/example-stars-bars-int-sol.html" title="Example 2.5.3">Example 2.5.3</a>) we counted the number of solutions to the equation</div>
+<div class="displaymath process-math" data-contains-math-knowls="./knowl/example-stars-bars-int-sol.html">
+\begin{equation*}
+x_1 + x_2 + x_3 + x_4 + x_5 = 13\text{,}
+\end{equation*}
+</div>
+<div class="para">where <span class="process-math">\(x_i \ge 0\)</span> for each <span class="process-math">\(x_i\text{.}\)</span>
+</div>
+</div> <div class="para" id="IJj">How many of those solutions have <span class="process-math">\(0 \le x_i \le 3\)</span> for each <span class="process-math">\(x_i\text{?}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-ays" id="ays"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-ays"><div class="solution solution-like">
+<div class="para" id="JOC">We must subtract off the number of solutions in which one or more of the variables has a value greater than 3. We will need to use PIE because counting the number of solutions for which each of the five variables separately are greater than 3 counts solutions multiple times. Here is what we get:</div> <div class="para logical" id="pVL"><ul class="disc">
+<li id="ROA"><div class="para" id="hHs">Total solutions: <span class="process-math">\({17 \choose 4}\text{.}\)</span>
+</div></li>
+<li id="xVJ"><div class="para" id="NOB">Solutions where <span class="process-math">\(x_1 &gt; 3\text{:}\)</span> <span class="process-math">\({13 \choose 4}\text{.}\)</span> Give <span class="process-math">\(x_1\)</span> 4 units first, then distribute the remaining 9 units to the 5 variables.</div></li>
+<li id="ecS"><div class="para" id="tVK">Solutions where <span class="process-math">\(x_1 &gt; 3\)</span> and <span class="process-math">\(x_2 &gt; 3\text{:}\)</span> <span class="process-math">\({9 \choose 4}\text{.}\)</span> After you give 4 units to <span class="process-math">\(x_1\)</span> and another 4 to <span class="process-math">\(x_2\text{,}\)</span> you only have 5 units left to distribute.</div></li>
+<li id="Kkb"><div class="para" id="acT">Solutions where <span class="process-math">\(x_1 &gt; 3\text{,}\)</span> <span class="process-math">\(x_2 &gt; 3\)</span> and <span class="process-math">\(x_3 &gt; 3\text{:}\)</span> <span class="process-math">\({5 \choose 4}\text{.}\)</span>
+</div></li>
+<li id="qrk"><div class="para" id="Gkc">Solutions where <span class="process-math">\(x_1 &gt; 3\text{,}\)</span> <span class="process-math">\(x_2 &gt; 3\text{,}\)</span> <span class="process-math">\(x_3 &gt; 3\text{,}\)</span> and <span class="process-math">\(x_4 &gt; 3\text{:}\)</span> 0.</div></li>
+</ul></div> <div class="para logical" id="WcU">
+<div class="para">We also need to account for the fact that we could choose any of the five variables in the place of <span class="process-math">\(x_1\)</span> above (so there will be <span class="process-math">\({5 \choose 1}\)</span> outcomes like this), any pair of variables in the place of <span class="process-math">\(x_1\)</span> and <span class="process-math">\(x_2\)</span> (<span class="process-math">\({5 \choose 2}\)</span> outcomes) and so on. It is because of this that the double counting occurs, so we need to use PIE. All together we have that the number of solutions with <span class="process-math">\(0 \le x_i \le 3\)</span> is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+{17 \choose 4} - \left[{5\choose 1}{13 \choose 4} - {5 \choose 2}{9 \choose 4} + {5 \choose 3}{5 \choose 4}\right] = 15\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article></section><section class="subsection" id="nSd"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Counting Derangements</span>
+</h3>
+<article class="project-like" id="MuN"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para" id="CTX">For your senior prank, you decide to switch the nameplates on your favorite 5 professors' doors. So that none of them feel left out, you want to make sure that all of the nameplates end up on the wrong door. How many ways can this be accomplished?</div></article><div class="para logical" id="Pip">
+<div class="para">The advanced use of PIE has applications beyond stars and bars. A <dfn class="terminology">derangement</dfn>  of <span class="process-math">\(n\)</span> elements <span class="process-math">\(\{1,2,3,\ldots,
+n\}\)</span> is a permutation in which no element is fixed. For example, there are <span class="process-math">\(6\)</span> permutations of the three elements <span class="process-math">\(\{1,2,3\}\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+123 ~~ 132 ~~ 213 ~~ 231 ~~ 312 ~~ 321\text{.}
+\end{equation*}
+</div>
+<div class="para">but most of these have one or more elements fixed: <span class="process-math">\(123\)</span> has all three elements fixed since all three elements are in their original positions, <span class="process-math">\(132\)</span> has the first element fixed (1 is in its original first position), and so on. In fact, the only derangements of three elements are</div>
+<div class="displaymath process-math">
+\begin{equation*}
+231 \text{ and } 312\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="vpy">If we go up to 4 elements, there are 24 permutations (because we have 4 choices for the first element, 3 choices for the second, 2 choices for the third leaving only 1 choice for the last). How many of these are derangements? If you list out all 24 permutations and eliminate those which are not derangements, you will be left with just 9 derangements. Let's see how we can get that number using PIE.</div>
+<article class="example example-like" id="Agv"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.4</span><span class="period">.</span>
+</h4>
+<div class="para" id="oQs">How many derangements are there of 4 elements?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-GFB" id="GFB"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-GFB"><div class="solution solution-like">
+<div class="para" id="Ckd">We count all permutations, and subtract those which are not derangements. There are <span class="process-math">\(4! = 24\)</span> permutations of 4 elements. Now for a permutation to <em class="emphasis">not</em> be a derangement, at least one of the 4 elements must be fixed. There are <span class="process-math">\({4 \choose 1}\)</span> choices for which single element we fix. Once fixed, we need to find a permutation of the other three elements. There are <span class="process-math">\(3!\)</span> permutations on 3 elements.</div> <div class="para logical" id="irm">
+<div class="para">But now we have counted too many non-derangements, so we must subtract those permutations which fix two elements. There are <span class="process-math">\({4 \choose 2}\)</span> choices for which two elements we fix, and then for each pair, <span class="process-math">\(2!\)</span> permutations of the remaining elements. But this subtracts too many, so add back in permutations which fix 3 elements, all <span class="process-math">\({4 \choose 3}1!\)</span> of them. Finally subtract the <span class="process-math">\({4 \choose 4}0!\)</span> permutations (recall <span class="process-math">\(0! = 1\)</span>) which fix all four elements. All together we get that the number of derangements of 4 elements is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4}0!\right] = 24 - 15 = 9\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article><div class="para" id="bwH">Of course we can use a similar formula to count the derangements of any number of elements. However, the more elements we have, the longer the formula gets. Here is another example:</div>
+<article class="example example-like" id="gnE"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.5</span><span class="period">.</span>
+</h4>
+<div class="para" id="UXB">Five gentlemen attend a party, leaving their hats at the door. At the end of the party, they hastily grab hats on their way out. How many different ways could this happen so that none of the gentlemen leave with his own hat?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-mMK" id="mMK"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-mMK"><div class="solution solution-like"><div class="para logical" id="Oyv">
+<div class="para">We are counting derangements on 5 elements. There are <span class="process-math">\(5!\)</span> ways for the gentlemen to grab hats in any order—but many of these permutations will result in someone getting their own hat. So we subtract all the ways in which one or more of the men get their own hat. In other words, we subtract the non-derangements. Doing so requires PIE. Thus the answer is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right]\text{.}
+\end{equation*}
+</div>
+</div></div></div>
+</div></article></section><section class="subsection" id="TZm"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Counting Functions</span>
+</h3>
+<article class="project-like" id="dsY"><h6 class="heading">
+<span class="type">Investigate!</span> </h6>
+<div class="para logical" id="jbg"><ol class="decimal">
+<li id="bim"><div class="para" id="mrl">Consider all functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}\text{.}\)</span> How many functions are there all together? How many of those are injective? Remember, a function is an injection if every input goes to a different output.</div></li>
+<li id="Hpv">
+<div class="para" id="Syu">Consider all functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}\text{.}\)</span> How many of the <em class="emphasis">injections</em> have the property that <span class="process-math">\(f(x) \ne x\)</span> for any <span class="process-math">\(x \in \{1,2,3,4,5\}\text{?}\)</span> </div>
+<div class="para logical" id="yFD">
+<div class="para">Your friend claims that the answer is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+5! - \left[ {5\choose 1}4! - {5 \choose 2}3! + {5\choose 3}2! - {5 \choose 4}1! + {5\choose 5}0! \right]\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="eMM">Explain why this is correct.</div>
+</li>
+<li id="nwE"><div class="para" id="KTV">Recall that a <em class="emphasis">surjection</em>  is a function for which every element of the codomain is in the range. How many of the functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{1,2,3,4,5\}\)</span> are surjective? Use PIE!</div></li>
+</ol></div></article><div class="para" id="HDQ">We have seen throughout this chapter that many counting questions can be rephrased as questions about counting functions with certain properties. This is reasonable since many counting questions can be thought of as counting the number of ways to assign elements from one set to elements of another.</div>
+<article class="example example-like" id="sBW"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.6</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="BeK">
+<div class="para">You decide to give away your video game collection so as to better spend your time studying advanced mathematics. How many ways can you do this, provided:</div>
+<ol class="decimal">
+<li id="TDN"><div class="para" id="p-derived-TDN">You want to distribute your 3 different PS4 games among 5 friends, so that no friend gets more than one game?</div></li>
+<li id="zKW"><div class="para" id="p-derived-zKW">You want to distribute your 8 different 3DS games among 5 friends?</div></li>
+<li id="fSf"><div class="para" id="p-derived-fSf">You want to distribute your 8 different SNES games among 5 friends, so that each friend gets at least one game?</div></li>
+</ol>
+<div class="para">In each case, model the counting question as a function counting question.</div>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-STT" id="STT"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-STT"><div class="solution solution-like"><div class="para logical" id="uFE"><ol class="decimal">
+<li id="LZo">
+<div class="para" id="rbe">We must use the three games (call them 1, 2, 3) as the domain and the 5 friends (a,b,c,d,e) as the codomain (otherwise the function would not be defined for the whole domain when a friend didn't get any game). So how many functions are there with domain <span class="process-math">\(\{1,2,3\}\)</span> and codomain <span class="process-math">\(\{a,b,c,d,e\}\text{?}\)</span> The answer to this is <span class="process-math">\(5^3=125\text{,}\)</span> since we can assign any of 5 elements to be the image of 1, any of 5 elements to be the image of 2 and any of 5 elements to be the image of 3.</div>
+<div class="para" id="Xin">But this is not the correct answer to our counting problem, because one of these functions is <span class="process-math">\(f= \twoline{1\amp 2\amp 3}{a\amp a\amp a}\text{;}\)</span> one friend can get more than one game. What we really need to do is count <em class="emphasis">injective</em> functions. This gives <span class="process-math">\(P(5,3) = 60\)</span> functions, which is the answer to our counting question.</div>
+</li>
+<li id="sgx"><div class="para" id="Dpw">Again, we need to use the 8 games as the domain and the 5 friends as the codomain. We are counting all functions, so the number of ways to distribute the games is <span class="process-math">\(5^8\text{.}\)</span>
+</div></li>
+<li id="YnG"><div class="para" id="jwF">This question is harder. Use the games as the domain and friends as the codomain (the reverse would not give a function). To ensure that every friend gets at least one game means that every element of the codomain is in the range. In other words, we are looking for <em class="emphasis">surjective</em> functions. How do you count those??</div></li>
+</ol></div></div></div>
+</div></article><div class="para" id="nKZ">In <a href="" class="xref" data-knowl="./knowl/example-counting-functions-all.html" title="Example 2.1.5: Counting functions">Example 2.1.5</a> we saw how to count all functions (using the multiplicative principle) and in <a href="" class="xref" data-knowl="./knowl/example-counting-functions-injective.html" title="Example 2.3.4: Counting injective functions">Example 2.3.4</a> we learned how to count injective functions (using permutations). Surjective functions are not as easily counted (unless the size of the domain is smaller than the codomain, in which case there are none).</div>
+<div class="para" id="TSi">The idea is to count the functions which are <em class="emphasis">not</em> surjective, and then subtract that from the total number of functions. This works very well when the codomain has two elements in it:</div>
+<article class="example example-like" id="YJf"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.7</span><span class="period">.</span>
+</h4>
+<div class="para" id="hlT">How many functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{a,b\}\)</span> are surjective?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-zbc" id="zbc"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-zbc"><div class="solution solution-like"><div class="para" id="aMN">There are <span class="process-math">\(2^5\)</span> functions all together, two choices for where to send each of the 5 elements of the domain. Now of these, the functions which are <em class="emphasis">not</em> surjective must exclude one or more elements of the codomain from the range. So first, consider functions for which <span class="process-math">\(a\)</span> is not in the range. This can only happen one way: everything gets sent to <span class="process-math">\(b\text{.}\)</span> Alternatively, we could exclude <span class="process-math">\(b\)</span> from the range. Then everything gets sent to <span class="process-math">\(a\text{,}\)</span> so there is only one function like this. These are the only ways in which a function could not be surjective (no function excludes both <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> from the range) so there are exactly <span class="process-math">\(2^5 - 2\)</span> surjective functions.</div></div></div>
+</div></article><div class="para" id="zZr">When there are three elements in the codomain, there are now three choices for a single element to exclude from the range. Additionally, we could pick pairs of two elements to exclude from the range, and we must make sure we don't over count these. It's PIE time!</div>
+<article class="example example-like" id="EQo"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.8</span><span class="period">.</span>
+</h4>
+<div class="para" id="Ntc">How many functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{a,b,c\}\)</span> are surjective?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-fil" id="fil"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-fil"><div class="solution solution-like">
+<div class="para" id="GTW">Again start with the total number of functions: <span class="process-math">\(3^5\)</span> (as each of the five elements of the domain can go to any of three elements of the codomain). Now we count the functions which are <em class="emphasis">not</em> surjective.</div> <div class="para" id="nbf">Start by excluding <span class="process-math">\(a\)</span> from the range. Then we have two choices (<span class="process-math">\(b\)</span> or <span class="process-math">\(c\)</span>) for where to send each of the five elements of the domain. Thus there are <span class="process-math">\(2^5\)</span> functions which exclude <span class="process-math">\(a\)</span> from the range. Similarly, there are <span class="process-math">\(2^5\)</span> functions which exclude <span class="process-math">\(b\text{,}\)</span> and another <span class="process-math">\(2^5\)</span> which exclude <span class="process-math">\(c\text{.}\)</span> Now have we counted all functions which are not surjective? Yes, but in fact, we have counted some multiple times. For example, the function which sends everything to <span class="process-math">\(c\)</span> was one of the <span class="process-math">\(2^5\)</span> functions we counted when we excluded <span class="process-math">\(a\)</span> from the range, and also one of the <span class="process-math">\(2^5\)</span> functions we counted when we excluded <span class="process-math">\(b\)</span> from the range. We must subtract out all the functions which specifically exclude two elements from the range. There is 1 function when we exclude <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> (everything goes to <span class="process-math">\(c\)</span>), one function when we exclude <span class="process-math">\(a\)</span> and <span class="process-math">\(c\text{,}\)</span> and one function when we exclude <span class="process-math">\(b\)</span> and <span class="process-math">\(c\text{.}\)</span>
+</div> <div class="para logical" id="Tio">
+<div class="para">We are using PIE: to count the functions which are not surjective, we added up the functions which exclude <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> and <span class="process-math">\(c\)</span> separately, then subtracted the functions which exclude pairs of elements. We would then add back in the functions which exclude groups of three elements, except that there are no such functions. We find that the number of functions which are <em class="emphasis">not</em> surjective is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+2^5 + 2^5 + 2^5 - 1 - 1 - 1 + 0\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="zpx">
+<div class="para">Perhaps a more descriptive way to write this is</div>
+<div class="displaymath process-math">
+\begin{equation*}
+{3 \choose 1}2^5 - {3 \choose 2}1^5 + {3 \choose 3}0^5\text{.}
+\end{equation*}
+</div>
+<div class="para">since each of the <span class="process-math">\(2^5\)</span>'s was the result of choosing 1 of the 3 elements of the codomain to exclude from the range, each of the three <span class="process-math">\(1^5\)</span>'s was the result of choosing 2 of the 3 elements of the codomain to exclude. Writing <span class="process-math">\(1^5\)</span> instead of 1 makes sense too: we have 1 choice of where to send each of the 5 elements of the domain.</div>
+</div> <div class="para logical" id="fwG">
+<div class="para">Now we can finally count the number of surjective functions:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3^5 - \left[{3 \choose 1}2^5 - {3 \choose 2}1^5\right] = 150\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article><div class="para" id="ggA">You might worry that to count surjective functions when the codomain is larger than 3 elements would be too tedious. We need to use PIE but with more than 3 sets the formula for PIE is very long. However, we have lucked out. As we saw in the example above, the number of functions which exclude a single element from the range is the same no matter which single element is excluded. Similarly, the number of functions which exclude a pair of elements will be the same for every pair. With larger codomains, we will see the same behavior with groups of 3, 4, and more elements excluded. So instead of adding/subtracting each of these, we can simply add or subtract all of them at once, if you know how many there are. This works just like it did in for the other types of counting questions in this section, only now the size of the various combinations of sets is a number raised to a power, as opposed to a binomial coefficient or factorial. Here's what happens with <span class="process-math">\(4\)</span> and <span class="process-math">\(5\)</span> elements in the codomain.</div>
+<article class="example example-like" id="kXx"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.9</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="tAl"><ol class="decimal">
+<li id="EuP"><div class="para" id="PDO">How many functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{a,b,c,d\}\)</span> are surjective?</div></li>
+<li id="kBY"><div class="para" id="vKX">How many functions <span class="process-math">\(f: \{1,2,3,4,5\} \to \{a,b,c,d,e\}\)</span> are surjective?</div></li>
+</ol></div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Lpu" id="Lpu"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Lpu"><div class="solution solution-like"><div class="para logical" id="LDP"><ol class="decimal">
+<li id="QJh"><div class="para logical" id="bSg">
+<div class="para">There are <span class="process-math">\(4^5\)</span> functions all together; we will subtract the functions which are not surjective. We could exclude any one of the four elements of the codomain, and doing so will leave us with <span class="process-math">\(3^5\)</span> functions for each excluded element. This counts too many so we subtract the functions which exclude two of the four elements of the codomain, each pair giving <span class="process-math">\(2^5\)</span> functions. But this excludes too many, so we add back in the functions which exclude three of the four elements of the codomain, each triple giving <span class="process-math">\(1^5\)</span> function. There are <span class="process-math">\({4 \choose 1}\)</span> groups of functions excluding a single element, <span class="process-math">\({4 \choose 2}\)</span> groups of functions excluding a pair of elements, and <span class="process-math">\({4 \choose 3}\)</span> groups of functions excluding a triple of elements. This means that the number of functions which are <em class="emphasis">not</em> surjective is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\text{.}
+\end{equation*}
+</div>
+<div class="para">We can now say that the number of functions which are surjective is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+4^5 - \left[{4 \choose 1}3^5 - {4 \choose 2}2^5 + {4 \choose 3}1^5\right]\text{.}
+\end{equation*}
+</div>
+</div></li>
+<li id="wQq">
+<div class="para logical" id="HZp">
+<div class="para">The number of surjective functions is:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+5^5 - \left[{5 \choose 1}4^5 - {5 \choose 2}3^5 + {5 \choose 3}2^5 - {5 \choose 4}1^5\right]\text{.}
+\end{equation*}
+</div>
+<div class="para">We took the total number of functions <span class="process-math">\(5^5\)</span> and subtracted all that were not surjective. There were <span class="process-math">\({5 \choose 1}\)</span> ways to select a single element from the codomain to exclude from the range, and for each there were <span class="process-math">\(4^5\)</span> functions. But this double counts, so we use PIE and subtract functions excluding two elements from the range: there are <span class="process-math">\({5 \choose 2}\)</span> choices for the two elements to exclude, and for each pair, <span class="process-math">\(3^5\)</span> functions. This takes out too many functions, so we add back in functions which exclude 3 elements from the range: <span class="process-math">\({5 \choose 3}\)</span> choices for which three to exclude, and then <span class="process-math">\(2^5\)</span> functions for each choice of elements. Finally we take back out the 1 function which excludes 4 elements for each of the <span class="process-math">\({5 \choose 4}\)</span> choices of 4 elements.</div>
+</div>
+<div class="para logical" id="ogy">
+<div class="para">If you happen to calculate this number precisely, you will get 120 surjections. That happens to also be the value of <span class="process-math">\(5!\text{.}\)</span> This might seem like an amazing coincidence until you realize that every surjective function <span class="process-math">\(f:X \to Y\)</span> with <span class="process-math">\(\card{X} = \card{Y}\)</span> finite must necessarily be a bijection. The number of bijections is always <span class="process-math">\(\card{X}!\)</span> in this case. What we have here is a <em class="emphasis">combinatorial proof</em> of the following identity:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+n^n - \left[{n\choose 1}(n-1)^n - {n \choose 2}(n-2)^n + \cdots + {n \choose n-1}1^n \right] = n!\text{.}
+\end{equation*}
+</div>
+</div>
+</li>
+</ol></div></div></div>
+</div></article><div class="para" id="MnJ"> We have seen that counting surjective functions is another nice example of the advanced use of the Principle of Inclusion/Exclusion. Also, counting injective functions turns out to be equivalent to permutations, and counting all functions has a solution akin to those counting problems where order matters but repeats are allowed (like counting the number of words you can make from a given set of letters).</div>
+<div class="para" id="suS">These are not just a few more examples of the techniques we have developed in this chapter. Quite the opposite: everything we have learned in this chapter are examples of <em class="emphasis">counting functions</em>!</div>
+<article class="example example-like" id="ReG"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.10</span><span class="period">.</span>
+</h4>
+<div class="para" id="ZHu">How many 5-letter words can you make using the eight letters <span class="process-math">\(a\)</span> through <span class="process-math">\(h\text{?}\)</span> How many contain no repeated letters?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-rwD" id="rwD"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-rwD"><div class="solution solution-like">
+<div class="para" id="rKY">By now it should be no surprise that there are <span class="process-math">\(8^5\)</span> words, and <span class="process-math">\(P(8,5)\)</span> words without repeated letters. The new piece here is that we are actually counting functions. For the first problem, we are counting all functions from <span class="process-math">\(\{1,2,\ldots, 5\}\)</span> to <span class="process-math">\(\{a,b,\ldots, h\}\text{.}\)</span> The numbers in the domain represent the <em class="emphasis">position</em> of the letter in the word, the codomain represents the letter that could be assigned to that position. If we ask for no repeated letters, we are asking for injective functions.</div> <div class="para" id="XSh">If <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> are <em class="emphasis">any</em> sets with <span class="process-math">\(|A| = 5\)</span> and <span class="process-math">\(|B| = 8\text{,}\)</span> then the number of functions <span class="process-math">\(f: A \to B\)</span> is <span class="process-math">\(8^5\)</span> and the number of injections is <span class="process-math">\(P(8,5)\text{.}\)</span> So if you can represent your counting problem as a function counting problem, most of the work is done.</div>
+</div></div>
+</div></article><article class="example example-like" id="xlP"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">2.6.11</span><span class="period">.</span>
+</h4>
+<div class="para" id="FOD">How many subsets are there of <span class="process-math">\(\{1,2,\ldots, 9\}\text{?}\)</span> How many 9-bit strings are there (of any weight)?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-XDM" id="XDM"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-XDM"><div class="solution solution-like">
+<div class="para" id="DZq">We saw in <a href="sec_counting-binom.html" class="internal" title="Section 2.2: Binomial Coefficients">Section 2.2</a> that the answer to both these questions is <span class="process-math">\(2^9\text{,}\)</span> as we can say yes or no (or 0 or 1) to each of the 9 elements in the set (positions in the bit-string). But <span class="process-math">\(2^9\)</span> also looks like the answer you get from counting functions. In fact, if you count all functions <span class="process-math">\(f: A \to B\)</span> with <span class="process-math">\(|A| = 9\)</span> and <span class="process-math">\(|B| = 2\text{,}\)</span> this is exactly what you get.</div> <div class="para" id="kgz">This makes sense! Let <span class="process-math">\(A = \{1,2,\ldots, 9\}\)</span> and <span class="process-math">\(B = \{y, n\}\text{.}\)</span> We are assigning each element of the set either a yes or a no. Or in the language of bit-strings, we would take the 9 positions in the bit string as our domain and the set <span class="process-math">\(\{0,1\}\)</span> as the codomain.</div>
+</div></div>
+</div></article><div class="para logical" id="YCb">
+<div class="para"> So far we have not used a function as a model for binomial coefficients (combinations). Think for a moment about the relationship between combinations and permutations, say specifically <span class="process-math">\({9 \choose 3}\)</span> and <span class="process-math">\(P(9,3)\text{.}\)</span> We <em class="emphasis">do</em> have a function model for <span class="process-math">\(P(9,3)\text{.}\)</span> This is the number of <em class="emphasis">injective</em> functions from a set of size 3 (say <span class="process-math">\(\{1,2,3\}\)</span> to a set of size 9 (say <span class="process-math">\(\{1,2,\ldots, 9\}\)</span>) since there are 9 choices for where to send the first element of the domain, then only 8 choices for the second, and 7 choices for the third. For example, the function might look like this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(1) = 5 \qquad f(2) = 8 \qquad f(3) = 4\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="EJk">
+<div class="para">This is a different function from:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+f(1) = 4 \qquad f(2) = 5 \qquad f(3) = 8\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="kQt">Now <span class="process-math">\(P(9,3)\)</span> counts these as different outcomes correctly, but <span class="process-math">\({9\choose 3}\)</span> will count these (among others) as just one outcome. In fact, in terms of functions <span class="process-math">\({9 \choose 3}\)</span> just counts the number of different ranges possible of injective functions. This should not be a surprise since binomial coefficients counts subsets, and the range is a possible subset of the codomain.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-8" id="fn-8"><sup> 3 </sup></a>
+</div>
+<div class="para" id="QXC">While it is possible to interpret combinations as functions, perhaps the better advice is to instead use combinations (or stars and bars) when functions are not quite the right way to interpret the counting question.</div></section><section class="exercises" id="nUq"><h3 class="heading hide-type">
+<span class="type">Exercises</span> <span class="codenumber"></span> <span class="title">Exercises</span>
+</h3>
+<article class="exercise exercise-like" id="COT"><h4 class="heading"><span class="codenumber">1<span class="period">.</span></span></h4>
+<div id="webwork-74" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="74" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMxID0gQ29tcHV0ZSgiQyg5LDYpIik7CiRhbnMyID0gQ29tcHV0ZSgiQygxNiw2KSIpOwokYW5zMyA9IENvbXB1dGUoIkMoMTYsNiktIChDKDcsMSkqQygxMyw2KSAtIEMoNywyKSpDKDEwLDYpICsgQyg3LDMpKkMoNyw2KSkiKTsKCkJFR0lOX1BHTUwKVGhlIGRvbGxhciBtZW51IGF0IHlvdXIgZmF2b3JpdGUgdGF4LWZyZWUgZmFzdCBmb29kIHJlc3RhdXJhbnQgaGFzIDcgaXRlbXMuIFlvdSBoYXZlICQxMCB0byBzcGVuZC4gSG93IG1hbnkgZGlmZmVyZW50IG1lYWxzIGNhbiB5b3UgYnV5IGlmIHlvdSBzcGVuZCBhbGwgeW91ciBtb25leSBhbmQ6CmEuICBQdXJjaGFzZSBhdCBsZWFzdCBvbmUgb2YgZWFjaCBpdGVtLgoKICAgIFtfXXskYW5zMX17NX0KCgphLiAgUG9zc2libHkgc2tpcCBzb21lIGl0ZW1zLgoKICAgIFtfXXskYW5zMn17NX0KCgphLiAgRG9uJ3QgZ2V0IG1vcmUgdGhhbiAyIG9mIGFueSBwYXJ0aWN1bGFyIGl0ZW0uCgogICAgW19deyRhbnMzfXsxNX0KCgoKRU5EX1BHTUwKCkJFR0lOX1BHTUxfU09MVVRJT04KYS4gIFtgezkgXGNob29zZSAzfWBdIG1lYWxzLiBGaXJzdCBzcGVuZCAkNyB0byBidXkgb25lIG9mIGVhY2ggaXRlbSwgdGhlbiB1c2UgMyBzdGFycyB0byBzZWxlY3QgaXRlbXMgYmV0d2VlbiA2IGJhcnMuCmEuICBbYHsxNiBcY2hvb3NlIDZ9YF0gbWVhbHMuIEhlcmUgeW91IGhhdmUgMTAgc3RhcnMgYW5kIDYgYmFycyAoc2VwYXJhdGluZyB0aGUgNyBpdGVtcykuCmEuICBbYHsxNiBcY2hvb3NlIDZ9IC0gXGxlZnRbezcgXGNob29zZSAxfXsxMyBcY2hvb3NlIDZ9IC0gezcgXGNob29zZSAyfXsxMCBcY2hvb3NlIDZ9ICsgezcgXGNob29zZSAzfXs3IFxjaG9vc2UgNn1ccmlnaHRdYF0gbWVhbHMuIFVzZSBQSUUgdG8gc3VidHJhY3QgYWxsIHRoZSBtZWFscyBpbiB3aGljaCB5b3UgZ2V0IDMgb3IgbW9yZSBvZiBhIHBhcnRpY3VsYXIgaXRlbS4gICAKCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para logical" id="p-2353">
+<div class="para">The dollar menu at your favorite tax-free fast food restaurant has 7 items. You have $10 to spend. How many different meals can you buy if you spend all your money and:</div>
+<ol class="lower-alpha">
+<li id="li-976"><div class="para" id="p-2354">Purchase at least one of each item.</div></li>
+<li id="li-977"><div class="para" id="p-2355">Possibly skip some items.</div></li>
+<li id="li-978"><div class="para" id="p-2356">Don’t get more than 2 of any particular item.</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-170" id="solution-170"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-170"><div class="solution solution-like"><div class="para logical" id="p-2360"><ol class="lower-alpha">
+<li id="li-979"><div class="para" id="p-2361">
+<span class="process-math">\({9 \choose 3}\)</span> meals. First spend $7 to buy one of each item, then use 3 stars to select items between 6 bars.</div></li>
+<li id="li-980"><div class="para" id="p-2362">
+<span class="process-math">\({16 \choose 6}\)</span> meals. Here you have 10 stars and 6 bars (separating the 7 items).</div></li>
+<li id="li-981"><div class="para" id="p-2363">
+<span class="process-math">\({16 \choose 6} - \left[{7 \choose 1}{13 \choose 6} - {7 \choose 2}{10 \choose 6} + {7 \choose 3}{7 \choose 6}\right]\)</span> meals. Use PIE to subtract all the meals in which you get 3 or more of a particular item.</div></li>
+</ol></div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-74')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="iWc"><h4 class="heading"><span class="codenumber">2<span class="period">.</span></span></h4>
+<div class="para logical" id="EiH">
+<div class="para">After a late night of math studying, you and your friends decide to go to your favorite tax-free fast food Mexican restaurant, <em class="emphasis">Burrito Chime</em>. You decide to order off of the dollar menu, which has 7 items. Your group has $16 to spend (and will spend all of it).</div>
+<ol class="lower-alpha">
+<li id="PNf"><div class="para" id="lvj">How many different orders are possible? Explain. (The <em class="emphasis">order</em> in which the order is placed does not matter - just which and how many of each item that is ordered.)</div></li>
+<li id="vUo"><div class="para" id="RCs">How many different orders are possible if you want to get at least one of each item? Explain.</div></li>
+<li id="cbx"><div class="para" id="xJB">How many different orders are possible if you don't get more than 4 of any one item? Explain.</div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="Pdl"><h4 class="heading"><span class="codenumber">3<span class="period">.</span></span></h4>
+<div id="webwork-75" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="75" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCJDKDE4LDQpIC0gKEMoNSwxKSpDKDExLDQpIC0gQyg1LDIpKkMoNCw0KSkiKTsKCkJFR0lOX1BHTUwKQWZ0ZXIgYW5vdGhlciBneW0gY2xhc3MgeW91IGFyZSB0YXNrZWQgd2l0aCBwdXR0aW5nIHRoZSAxNCBpZGVudGljYWwgZG9kZ2ViYWxscyBhd2F5IGludG8gNSBiaW5zLiBUaGlzIHRpbWUsIG5vIGJpbiBjYW4gaG9sZCBtb3JlIHRoYW4gNiBiYWxscy4gSG93IG1hbnkgd2F5cyBjYW4geW91IGNsZWFuIHVwPwoKW19deyRhbnN9ezEwfQoKCkVORF9QR01MCgpCRUdJTl9QR01MX1NPTFVUSU9OCltgezE4IFxjaG9vc2UgNH0gLSBcbGVmdFsgezUgXGNob29zZSAxfXsxMSBcY2hvb3NlIDR9IC0gezUgXGNob29zZSAyfXs0IFxjaG9vc2UgNH1ccmlnaHRdXHRleHR7Ln1gXQoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2368">After another gym class you are tasked with putting the 14 identical dodgeballs away into 5 bins. This time, no bin can hold more than 6 balls. How many ways can you clean up?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-171" id="solution-171"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-171"><div class="solution solution-like"><div class="para" id="p-2370"><span class="process-math">\({18 \choose 4} - \left[ {5 \choose 1}{11 \choose 4} - {5 \choose 2}{4 \choose 4}\right]\text{.}\)</span></div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-75')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="vku"><h4 class="heading"><span class="codenumber">4<span class="period">.</span></span></h4>
+<div id="webwork-76" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="76" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCJDKDEwLDcpIC0gQyg0LDEpKkMoNiwzKSIpOwoKQkVHSU5fUEdNTApDb25zaWRlciB0aGUgZXF1YXRpb24gW2B4XzEgKyB4XzIgKyB4XzMgKyB4XzQgPSAxNVx0ZXh0ey59YF0gSG93IG1hbnkgc29sdXRpb25zIGFyZSB0aGVyZSB3aXRoIFtgMiBcbGUgeF9pIFxsZSA1YF0gZm9yIGFsbCBbYGkgXGluIFx7MSwyLDMsNFx9XHRleHR7P31gXQoKW19deyRhbnN9ezEwfQoKCkVORF9QR01MCgpCRUdJTl9QR01MX0hJTlQKSW5zdGVhZCwgY291bnQgdGhlIHNvbHV0aW9ucyB0byBbYHlfMSArIHlfMiArIHlfMyArIHlfNCA9IDdgXSB3aXRoIFtgMCBcbGUgeV9pIFxsZSAzXHRleHR7Ln1gXSAgV2h5IGlzIHRoaXMgZXF1aXZhbGVudD8KCgpFTkRfUEdNTF9ISU5UCgpCRUdJTl9QR01MX1NPTFVUSU9OClRoZXJlIGFyZSBbYAogICAgICAgICAgICAgIHsxMCBcY2hvb3NlIDd9IC0gezRcY2hvb3NlIDF9IHs2IFxjaG9vc2UgM30KICAgICAgICAgICAgYF0gc29sdXRpb25zLgoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2371">Consider the equation <span class="process-math">\(x_1 + x_2 + x_3 + x_4 = 15\text{.}\)</span> How many solutions are there with <span class="process-math">\(2 \le x_i \le 5\)</span> for all <span class="process-math">\(i \in \{1,2,3,4\}\text{?}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-hint-41" id="hint-41"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-hint-41"><div class="hint solution-like"><div class="para" id="p-2372">Instead, count the solutions to <span class="process-math">\(y_1 + y_2 + y_3 + y_4 = 7\)</span> with <span class="process-math">\(0 \le y_i \le 3\text{.}\)</span>  Why is this equivalent?</div></div></div>
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-172" id="solution-172"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-172"><div class="solution solution-like"><div class="para" id="p-2374">There are <span class="process-math">\({10 \choose 7} - {4\choose 1} {6 \choose 3}\)</span> solutions.</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-76')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="brD"><h4 class="heading"><span class="codenumber">5<span class="period">.</span></span></h4>
+<div id="webwork-77" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="77" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCJDKDEzLDcpIik7CgpCRUdJTl9QR01MClN1cHBvc2UgeW91IHBsYW5uZWQgb24gZ2l2aW5nIDcgZ29sZCBzdGFycyB0byBzb21lIG9mIHRoZSAxMyBzdGFyIHN0dWRlbnRzIGluIHlvdXIgY2xhc3MuIEVhY2ggc3R1ZGVudCBjYW4gcmVjZWl2ZSBhdCBtb3N0IG9uZSBzdGFyLiBIb3cgbWFueSB3YXlzIGNhbiB5b3UgZG8gdGhpcz8KCltfXXskYW5zfXs1fQoKVXNlIFBJRS4gVGhlbiwgZmluZCB0aGUgbnVtZXJpYyBhbnN3ZXIgaW4gUGFzY2FsJ3MgdHJpYW5nbGUgYW5kIGV4cGxhaW4gd2h5IHRoYXQgbWFrZXMgc2Vuc2UuCgoKRU5EX1BHTUwKCkJFR0lOX1BHTUxfU09MVVRJT04KV2l0aG91dCBhbnkgcmVzdHJpY3Rpb24sIHRoZXJlIHdvdWxkIGJlIFtgezE5XGNob29zZSA3fWBdIHdheXMgdG8gZGlzdHJpYnV0ZSB0aGUgc3RhcnMuIE5vdyB3ZSBtdXN0IHVzZSBQSUUgdG8gZWxpbWluYXRlIGFsbCBkaXN0cmlidXRpb25zIGluIHdoaWNoIG9uZSBvciBtb3JlIHN0dWRlbnQgZ2V0cyBtb3JlIHRoYW4gb25lIHN0YXI6CgpbYGBgCiAgICAgICAgICAgICAgezE5IFxjaG9vc2UgN30gLSBcbGVmdFt7MTMgXGNob29zZSAxfXsxNyBcY2hvb3NlIDV9IC0gezEzXGNob29zZSAyfXsxNSBcY2hvb3NlIDN9ICsgezEzXGNob29zZSAzfXsxMyBcY2hvb3NlIDF9XHJpZ2h0XSA9IDE3MTYKICAgICAgICAgICAgXHRleHR7Ln1gYGBdCgoKCkludGVyZXN0aW5nbHkgZW5vdWdoLCB0aGlzIG51bWJlciBpcyBhbHNvIHRoZSB2YWx1ZSBvZiBbYHsxMyBcY2hvb3NlIDd9XHRleHR7LH1gXSB3aGljaCBtYWtlcyBzZW5zZTogaWYgZWFjaCBzdHVkZW50IGNhbiBoYXZlIGF0IG1vc3Qgb25lIHN0YXIsIHdlIG11c3QganVzdCBwaWNrIHRoZSA3IG91dCBvZiAxMyBzdHVkZW50cyB0byByZWNlaXZlIHRoZW0uCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2375">Suppose you planned on giving 7 gold stars to some of the 13 star students in your class. Each student can receive at most one star. How many ways can you do this?</div> <div class="para" id="p-2376">Use PIE. Then, find the numeric answer in Pascal’s triangle and explain why that makes sense.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-173" id="solution-173"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-173"><div class="solution solution-like">
+<div class="para" id="p-2378">Without any restriction, there would be <span class="process-math">\({19\choose 7}\)</span> ways to distribute the stars. Now we must use PIE to eliminate all distributions in which one or more student gets more than one star:</div> <div class="para logical" id="p-2379"><div class="displaymath process-math">
+\begin{equation*}
+{19 \choose 7} - \left[{13 \choose 1}{17 \choose 5} - {13\choose 2}{15 \choose 3} + {13\choose 3}{13 \choose 1}\right] = 1716
+\text{.}
+\end{equation*}
+</div></div> <div class="para" id="p-2380">Interestingly enough, this number is also the value of <span class="process-math">\({13 \choose 7}\text{,}\)</span> which makes sense: if each student can have at most one star, we must just pick the 7 out of 13 students to receive them.</div>
+</div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-77')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="HyM"><h4 class="heading"><span class="codenumber">6<span class="period">.</span></span></h4>
+<div class="para logical" id="Bob">
+<div class="para">Based on the previous question, give a combinatorial proof for the identity:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+{n \choose k} = {n+k-1 \choose k} - \sum_{j=1}^n (-1)^{j+1}{n \choose j}{n+k-(2j+1) \choose k - 2j}\text{.}
+\end{equation*}
+</div>
+</div></article><article class="exercise exercise-like" id="nFV"><h4 class="heading"><span class="codenumber">7<span class="period">.</span></span></h4>
+<div class="para" id="hvk">Illustrate how the counting of derangements works by writing all permutations of <span class="process-math">\(\{1,2,3,4\}\)</span> and the crossing out those which are not derangements. Keep track of the permutations you cross out more than once, using PIE.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-pvi" id="pvi"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-pvi"><div class="solution solution-like"><div class="para" id="aWe">The 9 derangements are: 2143, 2341, 2413, 3142, 3412, 3421, 4123, 4312, 4321.</div></div></div>
+</div></article><article class="exercise exercise-like" id="TNe"><h4 class="heading"><span class="codenumber">8<span class="period">.</span></span></h4>
+<div id="webwork-78" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="78" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCJDKDUsMSkqKDQhIC0gKEMoNCwxKSozISAtIEMoNCwyKSoyISArIEMoNCwzKSoxISAtIEMoNCw0KSowISkpIik7CgpCRUdJTl9QR01MCkhvdyBtYW55IHBlcm11dGF0aW9ucyBvZiBbYFx7MSwyLDMsNCw1XH1gXSBsZWF2ZSBleGFjdGx5IDEgZWxlbWVudCBmaXhlZD8KCltfXXskYW5zfXsxNX0KCgpFTkRfUEdNTAoKQkVHSU5fUEdNTF9TT0xVVElPTgpGaXJzdCBwaWNrIG9uZSBvZiB0aGUgZml2ZSBlbGVtZW50cyB0byBiZSBmaXhlZC4gRm9yIGVhY2ggc3VjaCBjaG9pY2UsIGRlcmFuZ2UgdGhlIHJlbWFpbmluZyBmb3VyLCB1c2luZyB0aGUgc3RhbmRhcmQgYWR2YW5jZWQgUElFIGZvcm11bGEuIFdlIGdldCBbYHs1IFxjaG9vc2UgMX1cbGVmdCggNCEgLSBcbGVmdFt7NCBcY2hvb3NlIDF9MyEgLSB7NCBcY2hvb3NlIDJ9MiEgKyB7NCBcY2hvb3NlIDN9IDEhIC0gezQgXGNob29zZSA0fSAwIVxyaWdodF0gXHJpZ2h0KWBdIHBlcm11dGF0aW9ucy4KCgpFTkRfUEdNTF9TT0xVVElPTgoKRU5ERE9DVU1FTlQoKTs=" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2384">How many permutations of <span class="process-math">\(\{1,2,3,4,5\}\)</span> leave exactly 1 element fixed?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-175" id="solution-175"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-175"><div class="solution solution-like"><div class="para" id="p-2386">First pick one of the five elements to be fixed. For each such choice, derange the remaining four, using the standard advanced PIE formula. We get <span class="process-math">\({5 \choose 1}\left( 4! - \left[{4 \choose 1}3! - {4 \choose 2}2! + {4 \choose 3} 1! - {4 \choose 4} 0!\right] \right)\)</span> permutations.</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-78')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="zUn"><h4 class="heading"><span class="codenumber">9<span class="period">.</span></span></h4>
+<div id="webwork-79" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="79" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCJDKDEwLDYpKig0ISAtIChDKDQsMSkqMyEgLSBDKDQsMikqMiEgKyBDKDQsMykqMSEgLSBDKDQsNCkqMCEpKSIpOwoKQkVHSU5fUEdNTApUZW4gbGFkaWVzIG9mIGEgY2VydGFpbiBhZ2UgZHJvcCBvZmYgdGhlaXIgcmVkIGhhdHMgYXQgdGhlIGhhdCBjaGVjayBvZiBhIG11c2V1bS4gQXMgdGhleSBhcmUgbGVhdmluZywgdGhlIGhhdCBjaGVjayBhdHRlbmRhbnQgZ2l2ZXMgdGhlIGhhdHMgYmFjayByYW5kb21seS4gSW4gaG93IG1hbnkgd2F5cyBjYW4gZXhhY3RseSBzaXggb2YgdGhlIGxhZGllcyByZWNlaXZlIHRoZWlyIG93biBoYXQgKGFuZCB0aGUgb3RoZXIgZm91ciBub3QpPyBFeHBsYWluLgoKW19deyRhbnN9ezE1fQoKCkVORF9QR01MCgpCRUdJTl9QR01MX1NPTFVUSU9OCltgezEwIFxjaG9vc2UgNn1cbGVmdCg0ISAtIFxsZWZ0W3s0IFxjaG9vc2UgMX0gMyEgLSB7NCBcY2hvb3NlIDJ9MiEgKyB7NCBcY2hvb3NlIDN9MSEgLSB7NCBcY2hvb3NlIDR9MCFccmlnaHRdXHJpZ2h0KWBdIHdheXMuIFdlIGNob29zZSA2IG9mIHRoZSAxMCBsYWRpZXMgdG8gZ2V0IHRoZWlyIG93biBoYXQsIGFuZCB0aGUgbXVsdGlwbHkgYnkgdGhlIG51bWJlciBvZiB3YXlzIHRoZSByZW1haW5pbmcgaGF0cyBjYW4gYmUgZGVyYW5nZWQuCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2387">Ten ladies of a certain age drop off their red hats at the hat check of a museum. As they are leaving, the hat check attendant gives the hats back randomly. In how many ways can exactly six of the ladies receive their own hat (and the other four not)? Explain.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-176" id="solution-176"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-176"><div class="solution solution-like"><div class="para" id="p-2389">
+<span class="process-math">\({10 \choose 6}\left(4! - \left[{4 \choose 1} 3! - {4 \choose 2}2! + {4 \choose 3}1! - {4 \choose 4}0!\right]\right)\)</span> ways. We choose 6 of the 10 ladies to get their own hat, and the multiply by the number of ways the remaining hats can be deranged.</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-79')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="gbw"><h4 class="heading"><span class="codenumber">10<span class="period">.</span></span></h4>
+<div class="para logical" id="mfd">
+<div class="para">The Grinch sneaks into a room with 6 Christmas presents to 6 different people. He proceeds to switch the name-labels on the presents. How many ways could he do this if:</div>
+<ol class="lower-alpha">
+<li id="IiG"><div class="para" id="dQK">No present is allowed to end up with its original label? Explain what each term in your answer represents.</div></li>
+<li id="opP"><div class="para" id="JXT">Exactly 2 presents keep their original labels? Explain.</div></li>
+<li id="UwY"><div class="para" id="qfc">Exactly 5 presents keep their original labels? Explain.</div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="MiF"><h4 class="heading"><span class="codenumber">11<span class="period">.</span></span></h4>
+<div id="webwork-80" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="80" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMxID0gQ29tcHV0ZSgiNSo2XjMgKyA1KjZeMyAtIDVeMio2XjIiKTsKCkJFR0lOX1BHTUwKQ29uc2lkZXIgZnVuY3Rpb25zIFtgZjogXHsxLDIsMyw0XH0gXHRvIFx7YSxiLGMsZCxlLGZcfVx0ZXh0ey59YF0gSG93IG1hbnkgZnVuY3Rpb25zIGhhdmUgdGhlIHByb3BlcnR5IHRoYXQgW2BmKDEpIFxuZSBhYF0gb3IgW2BmKDIpIFxuZSBiXHRleHR7LH1gXSBvciBib3RoPwoKW19deyRhbnMxfXsxMH0KCgpFTkRfUEdNTAoKQkVHSU5fUEdNTF9TT0xVVElPTgpUaGVyZSBhcmUgW2A1IFxjZG90IDZeM2BdIGZ1bmN0aW9ucyBmb3Igd2hpY2ggW2BmKDEpIFxuZSBhYF0gYW5kIGFub3RoZXIgW2A1IFxjZG90IDZeM2BdIGZ1bmN0aW9ucyBmb3Igd2hpY2ggW2BmKDIpIFxuZSBiXHRleHR7Ln1gXSBUaGVyZSBhcmUgW2A1XjIgXGNkb3QgNl4yYF0gZnVuY3Rpb25zIGZvciB3aGljaCBib3RoIFtgZigxKSBcbmUgYWBdIGFuZCBbYGYoMikgXG5lIGJcdGV4dHsufWBdIFNvIHRoZSB0b3RhbCBudW1iZXIgb2YgZnVuY3Rpb25zIGZvciB3aGljaCBbYGYoMSkgXG5lIGFgXSBvciBbYGYoMikgXG5lIGJgXSBvciBib3RoIGlzCgpbYGBgCiAgICAgICAgICAgICAgNSBcY2RvdCA2XjMgKyA1IFxjZG90IDZeMyAtIDVeMiBcY2RvdCA2XjIgPSAxMjYwCiAgICAgICAgICAgIFx0ZXh0ey59YGBgXQoKCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2394">Consider functions <span class="process-math">\(f: \{1,2,3,4\} \to \{a,b,c,d,e,f\}\text{.}\)</span> How many functions have the property that <span class="process-math">\(f(1) \ne a\)</span> or <span class="process-math">\(f(2) \ne b\text{,}\)</span> or both?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-177" id="solution-177"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-177"><div class="solution solution-like">
+<div class="para" id="p-2396">There are <span class="process-math">\(5 \cdot 6^3\)</span> functions for which <span class="process-math">\(f(1) \ne a\)</span> and another <span class="process-math">\(5 \cdot 6^3\)</span> functions for which <span class="process-math">\(f(2) \ne b\text{.}\)</span> There are <span class="process-math">\(5^2 \cdot 6^2\)</span> functions for which both <span class="process-math">\(f(1) \ne a\)</span> and <span class="process-math">\(f(2) \ne b\text{.}\)</span> So the total number of functions for which <span class="process-math">\(f(1) \ne a\)</span> or <span class="process-math">\(f(2) \ne b\)</span> or both is</div> <div class="para logical" id="p-2397"><div class="displaymath process-math">
+\begin{equation*}
+5 \cdot 6^3 + 5 \cdot 6^3 - 5^2 \cdot 6^2 = 1260
+\text{.}
+\end{equation*}
+</div></div>
+</div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-80')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="spO"><h4 class="heading"><span class="codenumber">12<span class="period">.</span></span></h4>
+<div id="webwork-81" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="81" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCI1XjEwIC0gKEMoNSwxKSo0XjEwIC0gQyg1LDIpKjNeMTAgKyBDKDUsMykqMl4xMCAtIEMoNSw0KSoxXjEwKSIpOwoKQkVHSU5fUEdNTApDb25zaWRlciBzZXRzIFtgQWBdIGFuZCBbYEJgXSB3aXRoIFtgfEF8ID0gMTBgXSBhbmQgW2B8QnwgPSA1XHRleHR7Ln1gXSBIb3cgbWFueSBmdW5jdGlvbnMgW2BmOiBBIFx0byBCYF0gYXJlIHN1cmplY3RpdmU/CgpbX117JGFuc317MTV9CgoKRU5EX1BHTUwKCkJFR0lOX1BHTUxfU09MVVRJT04KW2A1XnsxMH0gLSBcbGVmdFt7NSBcY2hvb3NlIDF9NF57MTB9IC0gezUgXGNob29zZSAyfTNeezEwfSArIHs1IFxjaG9vc2UgM30yXnsxMH0gLSB7NSBcY2hvb3NlIDR9MV57MTB9XHJpZ2h0XWBdIGZ1bmN0aW9ucy4gVGhlIFtgNV57MTB9YF0gaXMgYWxsIHRoZSBmdW5jdGlvbnMgZnJvbSBbYEFgXSB0byBbYEJcdGV4dHsufWBdIFdlIHN1YnRyYWN0IHRob3NlIHRoYXQgYXJlbid0IHN1cmplY3RpdmUuIFBpY2sgb25lIG9mIHRoZSBmaXZlIGVsZW1lbnRzIGluIFtgQmBdIHRvIG5vdCBoYXZlIGluIHRoZSByYW5nZSAoaW4gW2B7NSBcY2hvb3NlIDF9YF0gd2F5cykgYW5kIGNvdW50IGFsbCB0aG9zZSBmdW5jdGlvbnMgKFtgNF57MTB9YF0pLiBCdXQgdGhpcyBvdmVyY291bnRzIHRoZSBmdW5jdGlvbnMgd2hlcmUgdHdvIGVsZW1lbnRzIGZyb20gW2BCYF0gYXJlIGV4Y2x1ZGVkIGZyb20gdGhlIHJhbmdlLCBzbyBzdWJ0cmFjdCB0aG9zZS4gQW5kIHNvIG9uLCB1c2luZyBQSUUuCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2398">Consider sets <span class="process-math">\(A\)</span> and <span class="process-math">\(B\)</span> with <span class="process-math">\(|A| = 10\)</span> and <span class="process-math">\(|B| = 5\text{.}\)</span> How many functions <span class="process-math">\(f: A \to B\)</span> are surjective?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-178" id="solution-178"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-178"><div class="solution solution-like"><div class="para" id="p-2400">
+<span class="process-math">\(5^{10} - \left[{5 \choose 1}4^{10} - {5 \choose 2}3^{10} + {5 \choose 3}2^{10} - {5 \choose 4}1^{10}\right]\)</span> functions. The <span class="process-math">\(5^{10}\)</span> is all the functions from <span class="process-math">\(A\)</span> to <span class="process-math">\(B\text{.}\)</span> We subtract those that aren’t surjective. Pick one of the five elements in <span class="process-math">\(B\)</span> to not have in the range (in <span class="process-math">\({5 \choose 1}\)</span> ways) and count all those functions (<span class="process-math">\(4^{10}\)</span>). But this overcounts the functions where two elements from <span class="process-math">\(B\)</span> are excluded from the range, so subtract those. And so on, using PIE.</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-81')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="YwX"><h4 class="heading"><span class="codenumber">13<span class="period">.</span></span></h4>
+<div id="webwork-82" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="82" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJjb250ZXh0SW50ZWdlckZ1bmN0aW9ucy5wbCIsIlBHY291cnNlLnBsIiwpO1RFWFQoYmVnaW5wcm9ibGVtKCkpOwpDb250ZXh0KCJJbnRlZ2VyRnVuY3Rpb25zIik7CiRhbnMgPSBDb21wdXRlKCI1ISAtIChDKDUsMSkqNCEgLSBDKDUsMikqMyEgKyBDKDUsMykqMiEgLSBDKDUsNCkqMSEgKyBDKDUsNSkqMCEpIik7CgpCRUdJTl9QR01MCkxldCBbYEEgPSBcezEsMiwzLDQsNVx9XHRleHR7Ln1gXSBIb3cgbWFueSBpbmplY3RpdmUgZnVuY3Rpb25zIFtgZjpBIFx0byBBYF0gaGF2ZSB0aGUgcHJvcGVydHkgdGhhdCBmb3IgZWFjaCBbYHggXGluIEFcdGV4dHssfWBdIFtgZih4KSBcbmUgeFx0ZXh0ez99YF0KCltfXXskYW5zfXsxNX0KCgpFTkRfUEdNTAoKQkVHSU5fUEdNTF9ISU5UClRoaXMgaXMgYSBzbmVha3kgd2F5IHRvIGFzayBmb3IgdGhlIG51bWJlciBvZiBkZXJhbmdlbWVudHMgb24gNSBlbGVtZW50cy4gIERvIHlvdSBzZWUgd2h5PwoKCkVORF9QR01MX0hJTlQKCkJFR0lOX1BHTUxfU09MVVRJT04KW2A1ISAtIFxsZWZ0W3s1IFxjaG9vc2UgMX00ISAtIHs1IFxjaG9vc2UgMn0zISArIHs1IFxjaG9vc2UgM30yISAtIHs1IFxjaG9vc2UgNH0xISArIHs1IFxjaG9vc2UgNX0wIVxyaWdodF1gXSBmdW5jdGlvbnMuCgoKRU5EX1BHTUxfU09MVVRJT04KCkVORERPQ1VNRU5UKCk7" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para" id="p-2401">Let <span class="process-math">\(A = \{1,2,3,4,5\}\text{.}\)</span> How many injective functions <span class="process-math">\(f:A \to A\)</span> have the property that for each <span class="process-math">\(x \in A\text{,}\)</span> <span class="process-math">\(f(x) \ne x\text{?}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-hint-42" id="hint-42"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-hint-42"><div class="hint solution-like"><div class="para" id="p-2402">This is a sneaky way to ask for the number of derangements on 5 elements.  Do you see why?</div></div></div>
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-179" id="solution-179"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-179"><div class="solution solution-like"><div class="para" id="p-2404">
+<span class="process-math">\(5! - \left[{5 \choose 1}4! - {5 \choose 2}3! + {5 \choose 3}2! - {5 \choose 4}1! + {5 \choose 5}0!\right]\)</span> functions.</div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-82')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="EEg"><h4 class="heading"><span class="codenumber">14<span class="period">.</span></span></h4>
+<div class="para logical" id="Ddo">
+<div class="para">Let <span class="process-math">\(d_n\)</span> be the number of derangements of <span class="process-math">\(n\)</span> objects. For example, using the techniques of this section, we find</div>
+<div class="displaymath process-math">
+\begin{equation*}
+d_3 = 3!-\left({3 \choose 1}2! - {3 \choose 2}1! + {3 \choose 3}0! \right)\text{.}
+\end{equation*}
+</div>
+<div class="para">We can use the formula for <span class="process-math">\({n \choose k}\)</span> to write this all in terms of factorials. After simplifying, for <span class="process-math">\(d_3\)</span> we would get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+d_3 = 3!\left(1 - \frac{1}{1} + \frac{1}{2} - \frac{1}{6} \right)\text{.}
+\end{equation*}
+</div>
+<div class="para">Generalize this to find a nicer formula for <span class="process-math">\(d_n\text{.}\)</span> Bonus: For large <span class="process-math">\(n\text{,}\)</span> approximately what fraction of all permutations are derangements? Use your knowledge of Taylor series from calculus.</div>
+</div></article></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-8"><div class="fn">A more mathematically sophisticated interpretation of combinations is that we are defining two injective functions to be <em class="emphasis">equivalent</em> if they have the same range, and then counting the number of equivalence classes under this notion of equivalence.</div></div>
+</div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="sec_stars-and-bars.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="sec_count-conc.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+</div></main>
+</div>
+<div class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
+<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
+<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+</div>
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</body>
+</html>

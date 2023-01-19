@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Introduction to Number Theory</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Discrete Mathematics">
+<meta property="book:author" content="Oscar Levin">
+<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    tags: "none",
+    tagSide: "right",
+    tagIndent: ".8em",
+    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  },
+  options: {
+    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
+    processHtmlClass: "process-math",
+    renderActions: {
+        findScript: [10, function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        }, '']
+    },
+  },
+  chtml: {
+    scale: 0.98,
+    mtextInheritFont: true
+  },
+  loader: {
+    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
+    paths: {pretext: "https://pretextbook.org/js/lib"},
+  },
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  },
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link href="https://webwork.runestone.academy/webwork2_files/js/apps/MathView/mathview.css" rel="stylesheet">
+<script src="https://pretextbook.org/js/0.2/pretext-webwork/2.16/pretext-webwork.js"></script><script src="https://webwork.runestone.academy/webwork2_files/node_modules/iframe-resizer/js/iframeResizer.min.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/style_oscarlevin.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="external/custom-styles.css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '5.0.1';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runtime.a26418f1c7af0a01.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/637.d54be67956c5c660.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runestone.38c38879674c28b2.bundle.js"></script><link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/637.0fa6cababf056764.css">
+<link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/runestone.93e720e6c6581fb5.css">
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</head>
+<body id="dmoi-4" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" href="http://discrete.openmathbooks.org/dmoi3.html" target="_blank"><img src="external/images/cover.png" alt="Logo image"></a><div class="title-container">
+<h1 class="heading"><a href="dmoi4.html"><span class="title">Discrete Mathematics:</span> <span class="subtitle">An Open Introduction, 4th edition (preview)</span></a></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+<div id="searchresultsplaceholder" style="display: none">
+<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
+</h2>
+<div id="searchempty"><span>No results.</span></div>
+<ol id="searchresults"></ol>
+</div>
+</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><a class="index-button button" href="index-1.html" title="Index"><span class="name">Index</span></a><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
+<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden avatar">
+<li data-val="You!" tabindex="-1">
+<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
+<li data-val="😺" tabindex="-1">
+<span id="the😺" class="avatarcheck"></span>😺</li>
+<li data-val="👤" tabindex="-1">
+<span id="the👤" class="avatarcheck"></span>👤</li>
+<li data-val="👽" tabindex="-1">
+<span id="the👽" class="avatarcheck"></span>👽</li>
+<li data-val="🐶" tabindex="-1">
+<span id="the🐶" class="avatarcheck"></span>🐶</li>
+<li data-val="🐼" tabindex="-1">
+<span id="the🐼" class="avatarcheck"></span>🐼</li>
+<li data-val="🌈" tabindex="-1">
+<span id="the🌈" class="avatarcheck"></span>🌈</li>
+</ol>
+</li>
+<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fontfamily">
+<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
+<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
+<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+</ol>
+</li>
+<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fonts">
+<li>Size</li>
+<li><span id="thesize">12</span></li>
+<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
+<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
+<li>Width</li>
+<li><span id="thewdth">100</span></li>
+<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
+<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
+<li>Weight</li>
+<li><span id="thewght">400</span></li>
+<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
+<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
+<li>Letter spacing</li>
+<li>
+<span id="thelspace">0</span><span class="byunits">/200</span>
+</li>
+<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
+<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
+<li>Word spacing</li>
+<li>
+<span id="thewspace">0</span><span class="byunits">/50</span>
+</li>
+<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
+<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
+<li>Line Spacing</li>
+<li>
+<span id="theheight">135</span><span class="byunits">/100</span>
+</li>
+<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
+<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
+</ol>
+</li>
+<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden atmosphere">
+<li data-val="default" tabindex="-1">
+<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
+<li data-val="pastel" tabindex="-1">
+<span id="thepastel" class="atmospherecheck"></span>pastel</li>
+<li data-val="darktwilight" tabindex="-1">
+<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
+<li data-val="dark" tabindex="-1">
+<span id="thedark" class="atmospherecheck"></span>dark</li>
+<li data-val="darkmidnight" tabindex="-1">
+<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
+</ol>
+</li>
+<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden ruler">
+<li data-val="none" tabindex="-1">
+<span id="thenone" class="rulercheck">✔️</span>none</li>
+<li data-val="underline" tabindex="-1">
+<span id="theunderline" class="rulercheck"></span>underline</li>
+<li data-val="lunderline" tabindex="-1">
+<span id="thelunderline" class="rulercheck"></span>L-underline</li>
+<li data-val="greybar" tabindex="-1">
+<span id="thegreybar" class="rulercheck"></span>grey bar</li>
+<li data-val="lightbox" tabindex="-1">
+<span id="thelightbox" class="rulercheck"></span>light box</li>
+<li data-val="sunrise" tabindex="-1">
+<span id="thesunrise" class="rulercheck"></span>sunrise</li>
+<li data-val="sunriseunderline" tabindex="-1">
+<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
+<li class="moveQ">Motion by:</li>
+<li data-val="mouse" tabindex="-1">
+<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
+<li data-val="arrow" tabindex="-1">
+<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
+<li data-val="eye" tabindex="-1">
+<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
+</ol>
+</li>
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="sec_addtops-genfun.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="ch_additionalTopics.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
+</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\renewcommand{\d}{\displaystyle}
+\newcommand{\N}{\mathbb N}
+\newcommand{\B}{\mathbf B}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\U}{\mathcal U}
+\newcommand{\pow}{\mathcal P}
+\newcommand{\inv}{^{-1}}
+\newcommand{\st}{:}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\Imp}{\Rightarrow}
+\newcommand{\isom}{\cong}
+
+\renewcommand{\bar}{\overline}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar"><nav id="ptx-toc" class="depth3"><ul class="structural">
+<li>
+<div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="colophon-1.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li><div class="toc-item"><a href="dedication-1.html" class="internal"><span class="title">Dedication</span></a></div></li>
+<li><div class="toc-item"><a href="acknowledgement-1.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+<li><div class="toc-item"><a href="preface.html" class="internal"><span class="title">Preface</span></a></div></li>
+<li><div class="toc-item"><a href="preface-2.html" class="internal"><span class="title">How to use this book</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_intro.html" class="internal"><span class="codenumber">0</span> <span class="title">Introduction and Preliminaries</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_intro-intro.html" class="internal"><span class="codenumber">0.1</span> <span class="title">What is Discrete Mathematics?</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_intro-intro.html#rqs-intro-intro" class="internal"><span class="codenumber">0.1</span> <span class="title">Reading Questions</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-structures.html" class="internal"><span class="codenumber">0.2</span> <span class="title">Discrete Structures</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sets" class="internal"><span class="title">Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-functions" class="internal"><span class="title">Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sequences" class="internal"><span class="title">Sequences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec-relations" class="internal"><span class="title">Relations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-graphs" class="internal"><span class="title">Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsubsec_structures-statements" class="internal"><span class="title">Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-even-more" class="internal"><span class="title">Even More Structures</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#rqs-intro-structures" class="internal"><span class="codenumber">0.2</span> <span class="title">Reading Questions</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-sets.html" class="internal"><span class="codenumber">0.3</span> <span class="title">Sets</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-sets.html#RBf" class="internal"><span class="title">Notation</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#xIo" class="internal"><span class="title">Relationships Between Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#dPx" class="internal"><span class="title">Operations On Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#JWG" class="internal"><span class="title">Venn Diagrams</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#ww_intro-sets" class="internal"><span class="codenumber">0.3</span> <span class="title">Interactive Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-functions.html" class="internal"><span class="codenumber">0.4</span> <span class="title">Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-functions.html#irZ" class="internal"><span class="title">Describing Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#Ozi" class="internal"><span class="title">Surjections, Injections, and Bijections</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#uGr" class="internal"><span class="title">Image and Inverse Image</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#XHz" class="internal"><span class="codenumber">0.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_logic.html" class="internal"><span class="codenumber">1</span> <span class="title">Symbolic Logic and Proofs</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_logic-statements.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Mathematical Statements</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-statements.html#wKm" class="internal"><span class="title">Atomic and Molecular Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#cRv" class="internal"><span class="title">Implications</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#IYE" class="internal"><span class="title">Predicates and Quantifiers</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#rqs-logic-statements" class="internal"><span class="codenumber">1.1</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#iCD" class="internal"><span class="codenumber">1.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_propositional.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Propositional Logic</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_propositional.html#DTz" class="internal"><span class="title">Truth Tables</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#kaI" class="internal"><span class="title">Logical Equivalence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#QhR" class="internal"><span class="title">Deductions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#wpa" class="internal"><span class="title">Beyond Propositions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#rqs-logic-prop" class="internal"><span class="codenumber">1.2</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#Shv" class="internal"><span class="codenumber">1.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-proofs.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Ruo" class="internal"><span class="title">Direct Proof</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#xBx" class="internal"><span class="title">Proof by Contrapositive</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#dIG" class="internal"><span class="title">Proof by Contradiction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#JPP" class="internal"><span class="title">Proof by (counter) Example</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#pWY" class="internal"><span class="title">Proof by Cases</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#rqs-logic-proof" class="internal"><span class="codenumber">1.3</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Fqn" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-conc.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_logic-conc.html#MrW" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_counting.html" class="internal"><span class="codenumber">2</span> <span class="title">Counting</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_counting-addmult.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-addmult.html#YQj" class="internal"><span class="title">Counting With Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#EXs" class="internal"><span class="title">Principle of Inclusion/Exclusion</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#WHK" class="internal"><span class="codenumber">2.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-binom.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Binomial Coefficients</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-binom.html#cgB" class="internal"><span class="title">Subsets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#InK" class="internal"><span class="title">Bit Strings</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#ouT" class="internal"><span class="title">Lattice Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#UCc" class="internal"><span class="title">Binomial Coefficients</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#AJl" class="internal"><span class="title">Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#uWm" class="internal"><span class="codenumber">2.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-combperm.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Combinations and Permutations</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_counting-combperm.html#jkK" class="internal"><span class="codenumber">2.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_comb-proofs.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Combinatorial Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_comb-proofs.html#zbp" class="internal"><span class="title">Patterns in Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#fiy" class="internal"><span class="title">More Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#lYz" class="internal"><span class="codenumber">2.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_stars-and-bars.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Stars and Bars</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_stars-and-bars.html#zVa" class="internal"><span class="codenumber">2.5</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_advPIE.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_advPIE.html#nSd" class="internal"><span class="title">Counting Derangements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#TZm" class="internal"><span class="title">Counting Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#nUq" class="internal"><span class="codenumber">2.6</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_count-conc.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_count-conc.html#Ejh" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_sequences.html" class="internal"><span class="codenumber">3</span> <span class="title">Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq_intro.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Describing Sequences</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_seq_intro.html#vPK" class="internal"><span class="codenumber">3.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html#RQa" class="internal"><span class="title">Sums of Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#xXj" class="internal"><span class="title">Summing Arithmetic Sequences: Reverse and Add</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#ees" class="internal"><span class="title">Summing Geometric Sequences: Multiply, Shift and Subtract</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#EGG" class="internal"><span class="codenumber">3.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_polyfit.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Polynomial Fitting</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_polyfit.html#FTD" class="internal"><span class="codenumber">3.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_recurrence.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Solving Recurrence Relations</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_recurrence.html#Hke" class="internal"><span class="title">The Characteristic Root Technique</span></a></div></li>
+<li><div class="toc-item"><a href="sec_recurrence.html#bQc" class="internal"><span class="codenumber">3.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-induction.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Induction</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-induction.html#vyp" class="internal"><span class="title">Stamps</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#bFy" class="internal"><span class="title">Formalizing Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#HMH" class="internal"><span class="title">Examples</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#nTQ" class="internal"><span class="title">Strong Induction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#YsG" class="internal"><span class="codenumber">3.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_sequences-conc.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_sequences-conc.html#XPQ" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_graphtheory.html" class="internal"><span class="codenumber">4</span> <span class="title">Graph Theory</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_gt-intro.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Definitions</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-intro.html#QMu" class="internal"><span class="codenumber">4.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_trees.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Trees</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_trees.html#MvA" class="internal"><span class="title">Properties of Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#sCJ" class="internal"><span class="title">Rooted Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#YJS" class="internal"><span class="title">Spanning Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#iQl" class="internal"><span class="codenumber">4.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_planar.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Planar Graphs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_planar.html#ZAQ" class="internal"><span class="title">Non-planar Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#FHZ" class="internal"><span class="title">Polyhedra</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#Pey" class="internal"><span class="codenumber">4.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_coloring.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Coloring</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_coloring.html#WFX" class="internal"><span class="title">Coloring in General</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#CNg" class="internal"><span class="title">Coloring Edges</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#MxN" class="internal"><span class="codenumber">4.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_paths.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Euler Paths and Circuits</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_paths.html#ZWp" class="internal"><span class="title">Hamilton Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_paths.html#wMz" class="internal"><span class="codenumber">4.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_matchings.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Matching in Bipartite Graphs</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_matchings.html#wye" class="internal"><span class="codenumber">4.6</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_gt-conc.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-conc.html#WIK" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_additionalTopics.html" class="internal"><span class="codenumber">5</span> <span class="title">Additional Topics</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_addtops-genfun.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Generating Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#DhS" class="internal"><span class="title">Building Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#jpb" class="internal"><span class="title">Differencing</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#Pwk" class="internal"><span class="title">Multiplication and Partial Sums</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#vDt" class="internal"><span class="title">Solving Recurrence Relations with Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#iOL" class="internal"><span class="codenumber">5.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li class="active">
+<div class="toc-item"><a href="sec_addtops-numbth.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#CqU" class="internal"><span class="title">Divisibility</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#iyd" class="internal"><span class="title">Remainder Classes</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#OFm" class="internal"><span class="title">Properties of Congruence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#uMv" class="internal"><span class="title">Solving Congruences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#aTE" class="internal"><span class="title">Solving Linear Diophantine Equations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#TUi" class="internal"><span class="codenumber">5.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="solutions-1.html" class="internal"><span class="codenumber">A</span> <span class="title">Selected Hints</span></a></div></li>
+<li><div class="toc-item"><a href="solutions-2.html" class="internal"><span class="codenumber">B</span> <span class="title">Selected Solutions</span></a></div></li>
+<li><div class="toc-item"><a href="appendix-1.html" class="internal"><span class="codenumber">C</span> <span class="title">List of Symbols</span></a></div></li>
+<li><div class="toc-item"><a href="index-1.html" class="internal"><span class="title">Index</span></a></div></li>
+<li><div class="toc-item"><a href="colophon-2.html" class="internal"><span class="title">Colophon</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content">
+<section class="section" id="WjL"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span>
+</h2>
+<section class="introduction" id="NzT"><div class="para" id="MIV">We have used the natural numbers to solve problems. This was the right set of numbers to work with in discrete mathematics because we always dealt with a whole number of things. The natural numbers have been a tool. Let's take a moment now to inspect that tool. What mathematical discoveries can we make <em class="emphasis">about</em> the natural numbers themselves?</div> <div class="para" id="sQe">This is the main question of number theory: a huge, ancient, complex, and above all, beautiful branch of mathematics. Historically, number theory was known as the Queen of Mathematics and was very much a branch of <em class="emphasis">pure</em> mathematics, studied for its own sake instead of as a means to understanding real world applications. This has changed in recent years however, as applications of number theory have been unearthed. Probably the most well known example of this is RSA cryptography, one of the methods used in encrypt data on the internet. It is number theory that makes this possible.</div> <div class="para" id="YXn">What sorts of questions belong to the realm of number theory? Here is a motivating example. Recall in our study of induction, we asked:</div> <blockquote class="blockquote" id="KFn"><div class="para" id="Dpj">Which amounts of postage can be made exactly using just 5-cent and 8-cent stamps?</div></blockquote> <div class="para" id="Few">We were able to prove that <em class="emphasis">any</em> amount greater than 27 cents could be made. You might wonder what would happen if we changed the denomination of the stamps. What if we instead had 4- and 9-cent stamps? Would there be some amount after which all amounts would be possible? Well, again, we could replace two 4-cent stamps with a 9-cent stamp, or three 9-cent stamps with seven 4-cent stamps. In each case we can create one more cent of postage. Using this as the inductive case would allow us to prove that any amount of postage greater than 23 cents can be made.</div> <div class="para" id="llF">What if we had 2-cent and 4-cent stamps. Here it looks less promising. If we take some number of 2-cent stamps and some number of 4-cent stamps, what can we say about the total? Could it ever be odd? Doesn't look like it.</div> <div class="para" id="RsO">
+<em class="emphasis">Why</em> does 5 and 8 work, 4 and 9 work, but 2 and 4 not work? What is it about these numbers? If I gave you a pair of numbers, could you tell me right away if they would work or not? We will answer these questions, and more, after first investigating some simpler properties of numbers themselves.</div></section><section class="subsection" id="CqU"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Divisibility</span>
+</h3>
+<div class="para" id="LDC">It is easy to add and multiply natural numbers. If we extend our focus to all integers, then subtraction is also easy (we need the negative numbers so we can subtract any number from any other number, even larger from smaller). Division is the first operation that presents a challenge. If we wanted to extend our set of numbers so any division would be possible (maybe excluding division by 0) we would need to look at the rational numbers (the set of all numbers which can be written as fractions). This would be going too far, so we will refuse this option.</div>
+<div class="para" id="rKL">In fact, it is a good thing that not every number can be divided by other numbers. This helps us understand the structure of the natural numbers and opens the door to many interesting questions and applications.</div>
+<div class="para" id="XRU">If given numbers <span class="process-math">\(a\)</span> and <span class="process-math">\(b\text{,}\)</span> it is possible that <span class="process-math">\(a \div b\)</span> gives a whole number. In this case, we say that <span class="process-math">\(b\)</span> <em class="emphasis">divides</em>  <span class="process-math">\(a\text{,}\)</span> in symbols, we write <span class="process-math">\(b \mid a\text{.}\)</span> If this holds, then <span class="process-math">\(b\)</span> is a divisor or factor of <span class="process-math">\(a\text{,}\)</span> and <span class="process-math">\(a\)</span> is a multiple of <span class="process-math">\(b\text{.}\)</span> In other words, if <span class="process-math">\(b \mid a\text{,}\)</span> then <span class="process-math">\(a = bk\)</span> for some integer <span class="process-math">\(k\)</span> (this is saying <span class="process-math">\(a\)</span> is some multiple of <span class="process-math">\(b\)</span>).</div>
+<article class="assemblage assemblage-like" id="HaN"><h4 class="heading"><span class="title">The Divisibility Relation.</span></h4>
+<div class="para logical" id="xzX">
+<div class="para"> Given integers <span class="process-math">\(m\)</span> and <span class="process-math">\(n\text{,}\)</span> we say “<span class="process-math">\(m\)</span> divides <span class="process-math">\(n\)</span>” and write</div>
+<div class="displaymath process-math">
+\begin{equation*}
+m \mid n
+\end{equation*}
+</div>
+<div class="para">provided <span class="process-math">\(n \div m\)</span> is an integer. Thus the following assertions mean the same thing:</div>
+<ol class="decimal">
+<li id="gnr"><div class="para" id="p-derived-gnr"><span class="process-math">\(\displaystyle m \mid n\)</span></div></li>
+<li id="MuA"><div class="para" id="p-derived-MuA">
+<span class="process-math">\(n = mk\)</span> for some integer <span class="process-math">\(k\)</span>
+</div></li>
+<li id="sBJ"><div class="para" id="p-derived-sBJ">
+<span class="process-math">\(m\)</span> is a factor (or divisor) of <span class="process-math">\(n\)</span>
+</div></li>
+<li id="YIS"><div class="para" id="p-derived-YIS">
+<span class="process-math">\(n\)</span> is a multiple of <span class="process-math">\(m\text{.}\)</span>
+</div></li>
+</ol>
+</div></article><div class="para" id="DZd">Notice that <span class="process-math">\(m \mid n\)</span> is a statement. It is either true or false. On the other hand, <span class="process-math">\(n \div m\)</span> or <span class="process-math">\(n/m\)</span> is some number. If we want to claim that <span class="process-math">\(n/m\)</span> is not an integer, so <span class="process-math">\(m\)</span> does not divide <span class="process-math">\(n\text{,}\)</span> then we can write <span class="process-math">\(m \nmid n\text{.}\)</span>
+</div>
+<article class="example example-like" id="Quz"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.1</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="PDB">
+<div class="para">Decide whether each of the statements below are true or false.</div>
+<ol class="decimal cols3">
+<li id="EQb"><div class="para" id="p-derived-EQb"><span class="process-math">\(\displaystyle 4 \mid 20\)</span></div></li>
+<li id="kXk"><div class="para" id="p-derived-kXk"><span class="process-math">\(\displaystyle 20 \mid 4\)</span></div></li>
+<li id="Ret"><div class="para" id="p-derived-Ret"><span class="process-math">\(\displaystyle 0 \mid 5\)</span></div></li>
+<li id="xlC"><div class="para" id="p-derived-xlC"><span class="process-math">\(\displaystyle 5 \mid 0\)</span></div></li>
+<li id="dsL"><div class="para" id="p-derived-dsL"><span class="process-math">\(\displaystyle 7 \mid 7\)</span></div></li>
+<li id="JzU"><div class="para" id="p-derived-JzU"><span class="process-math">\(\displaystyle 1 \mid 37\)</span></div></li>
+<li id="pHd"><div class="para" id="p-derived-pHd"><span class="process-math">\(\displaystyle -3 \mid 12\)</span></div></li>
+<li id="VOm"><div class="para" id="p-derived-VOm"><span class="process-math">\(\displaystyle 8 \mid 12\)</span></div></li>
+<li id="BVv"><div class="para" id="p-derived-BVv"><span class="process-math">\(\displaystyle 1642 \mid 136299\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-tHc" id="tHc"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-tHc"><div class="solution solution-like"><div class="para logical" id="Ynt"><ol class="decimal">
+<li id="icE"><div class="para" id="lHe">True. 4 “goes into” 20 five times without remainder. In other words, <span class="process-math">\(20 \div 4 = 5\text{,}\)</span> an integer. We could also justify this by saying that <span class="process-math">\(20\)</span> is a multiple of 4: <span class="process-math">\(20 = 4\cdot 5\text{.}\)</span>
+</div></li>
+<li id="OjN"><div class="para" id="ROn">False. While 20 is a multiple of 4, it is false that <span class="process-math">\(4\)</span> is a multiple of 20.</div></li>
+<li id="uqW"><div class="para" id="xVw">False. <span class="process-math">\(5 \div 0\)</span> is not even defined, let alone an integer.</div></li>
+<li id="ayf"><div class="para" id="ecF">True. In fact, <span class="process-math">\(x \mid 0\)</span> is true for all <span class="process-math">\(x\text{.}\)</span> This is because 0 is a multiple of every number: <span class="process-math">\(0 = x\cdot 0\text{.}\)</span>
+</div></li>
+<li id="GFo"><div class="para" id="KjO">True. In fact, <span class="process-math">\(x \mid x\)</span> is true for all <span class="process-math">\(x\text{.}\)</span>
+</div></li>
+<li id="mMx"><div class="para" id="qqX">True. 1 divides every number (other than 0).</div></li>
+<li id="STG"><div class="para" id="Wyg">True. Negative numbers work just fine for the divisibility relation. Here <span class="process-math">\(12 = -3 \cdot 4\text{.}\)</span>	It is also true that <span class="process-math">\(3 \mid -12\)</span> and that <span class="process-math">\(-3 \mid -12\text{.}\)</span>
+</div></li>
+<li id="zaP"><div class="para" id="CFp">False. Both 8 and 12 are divisible by 4, but this does not mean that <span class="process-math">\(12\)</span> is divisible by <span class="process-math">\(8\text{.}\)</span>
+</div></li>
+<li id="fhY"><div class="para" id="iMy">False. See below.</div></li>
+</ol></div></div></div>
+</div></article><div class="para" id="kgm">This last example raises a question: how might one decide whether <span class="process-math">\(m \mid n\text{?}\)</span> Of course, if you had a trusted calculator, you could ask it for the value of <span class="process-math">\(n \div m\text{.}\)</span> If it spits out anything other than an integer, you know <span class="process-math">\(m \nmid n\text{.}\)</span> This seems a little like cheating though: we don't have division, so should we really use division to check divisibility?</div>
+<div class="para" id="Qnv">While we don't really know how to divide, we do know how to multiply. We might try multiplying <span class="process-math">\(m\)</span> by larger and larger numbers until we get close to <span class="process-math">\(n\text{.}\)</span> How close? Well, we want to be sure that if we multiply <span class="process-math">\(m\)</span> by the next larger integer, we go over <span class="process-math">\(n\text{.}\)</span>
+</div>
+<div class="para logical" id="wuE">
+<div class="para">For example, let's try this to decide whether <span class="process-math">\(1642 \mid 136299\text{.}\)</span> Start finding multiples of 1642:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1642 \cdot 2 = 3284 \qquad 1642 \cdot 3 = 4926 \qquad 1642\cdot 4 = 6568 \qquad \cdots\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="cBN">
+<div class="para">All of these are well less than 136299. I suppose we can jump ahead a bit:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1642 \cdot 50 = 82100 \qquad 1642 \cdot 80 = 131360 \qquad 1642 \cdot 85 = 139570\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="IIW">
+<div class="para">Ah, so we need to look somewhere between 80 and 85. Try 83:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+1642 \cdot 83 = 136286\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="oQf">
+<div class="para">Is this the best we can do? How far are we from our desired 136299? If we subtract, we get <span class="process-math">\(136299 - 136286 = 13\text{.}\)</span> So we know we cannot go up to 84, that will be too much. In other words, we have found that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+136299 = 83 \cdot 1642 + 13\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="UXo">Since <span class="process-math">\(13 \lt 1642\text{,}\)</span> we can now safely say that <span class="process-math">\(1642 \nmid 136299\text{.}\)</span>
+</div>
+<div class="para" id="Bex"> It turns out that the process we went through above can be repeated for any pair of numbers. We can always write the number <span class="process-math">\(a\)</span> as some multiple of the number <span class="process-math">\(b\)</span> plus some remainder. We know this because we know about <dfn class="terminology">division with remainder</dfn> from elementary school. This is just a way of saying it using multiplication. Due to the procedural nature that can be used to find the remainder, this fact is usually called the <dfn class="terminology">division algorithm</dfn>:</div>
+<article class="assemblage assemblage-like" id="nhW"><h4 class="heading"><span class="title">The Division Algorithm.</span></h4>
+<div class="para logical" id="dHg">
+<div class="para"> Given any two integers <span class="process-math">\(a\)</span> and <span class="process-math">\(b\text{,}\)</span> we can always find an integer <span class="process-math">\(q\)</span> such that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a = qb + r
+\end{equation*}
+</div>
+<div class="para">where <span class="process-math">\(r\)</span> is an integer satisfying <span class="process-math">\(0 \le r \lt  |b|\)</span>
+</div>
+</div></article><div class="para" id="hlG">The idea is that we can always take a large enough multiple of <span class="process-math">\(b\)</span> so that the remainder <span class="process-math">\(r\)</span> is as small as possible. We do allow the possibility of <span class="process-math">\(r = 0\text{,}\)</span> in which case we have <span class="process-math">\(b \mid a\text{.}\)</span>
+</div></section><section class="subsection" id="iyd"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Remainder Classes</span>
+</h3>
+<div class="para" id="NsP">The division algorithm tells us that there are only <span class="process-math">\(b\)</span> possible remainders when dividing by <span class="process-math">\(b\text{.}\)</span> If we fix this divisor, we can group integers by the remainder. Each group is called a <dfn class="terminology">remainder class modulo <span class="process-math">\(b\)</span></dfn> (or sometimes <dfn class="terminology">residue class</dfn>).</div>
+<article class="example example-like" id="wBI"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.2</span><span class="period">.</span>
+</h4>
+<div class="para" id="vKK">Describe the remainder classes modulo <span class="process-math">\(5\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-ZOl" id="ZOl"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-ZOl"><div class="solution solution-like">
+<div class="para" id="EuC">We want to classify numbers by what their remainder would be when divided by <span class="process-math">\(5\text{.}\)</span> From the division algorithm, we know there will be exactly 5 remainder classes, because there are only 5 choices for what <span class="process-math">\(r\)</span> could be (<span class="process-math">\(0 \le r \lt 5\)</span>).</div> <div class="para logical" id="kBL">
+<div class="para">First consider <span class="process-math">\(r = 0\text{.}\)</span> Here we are looking for all the numbers divisible by <span class="process-math">\(5\)</span> since <span class="process-math">\(a = 5q+0\text{.}\)</span> In other words, the multiples of 5. We get the infinite set</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\{\ldots, -15, -10, -5, 0, 5, 10, 15, 20, \ldots\}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="QIU">Notice we also include negative integers.</div> <div class="para logical" id="wQd">
+<div class="para">Next consider <span class="process-math">\(r = 1\text{.}\)</span> Which integers, when divided by 5, have remainder 1? Well, certainly 1, does, as does 6, and 11. Negatives? Here we must be careful: <span class="process-math">\(-6\)</span> does NOT have remainder 1. We can write <span class="process-math">\(-6 = -2\cdot 5 + 4\)</span> or <span class="process-math">\(-6 = -1 \cdot 5 - 1\text{,}\)</span> but only one of these is a “correct” instance of the division algorithm: <span class="process-math">\(r = 4\)</span> since we need <span class="process-math">\(r\)</span> to be non-negative. So in fact, to get <span class="process-math">\(r = 1\text{,}\)</span> we would have <span class="process-math">\(-4\text{,}\)</span> or <span class="process-math">\(-9\text{,}\)</span> etc. Thus we get the remainder class</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\{\ldots, -14, -9, -4, 1, 6, 11, 16, 21, \ldots\}\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="cXm">
+<div class="para">There are three more to go. The remainder classes for <span class="process-math">\(2\text{,}\)</span> <span class="process-math">\(3\text{,}\)</span> and <span class="process-math">\(4\)</span> are, respectively</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\{\ldots, -13, -8, -3, 2, 7, 12, 17, 22,\ldots\}
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\{\ldots, -12, -7, -2, 3, 8, 13, 18, 23, \ldots\}
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\{\ldots, -11, -6, -1, 4, 9, 14, 19, 24, \ldots\}\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article><div class="para" id="tzY"> Note that in the example above, <em class="emphasis">every</em> integer is in exactly one remainder class. The technical way to say this is that the remainder classes modulo <span class="process-math">\(b\)</span> form a <dfn class="terminology">partition</dfn> of the integers.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-27" id="fn-27"><sup> 1 </sup></a> The most important fact about partitions, is that it is possible to define an <dfn class="terminology">equivalence relation</dfn> from a partition: this is a relationship between pairs of numbers which acts in all the important ways like the “equals” relationship.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-28" id="fn-28"><sup> 2 </sup></a>
+</div>
+<div class="para" id="ZHh">All fun technical language aside, the idea is really simple. If two numbers belong to the same remainder class, then in some way, they are the same. That is, they are the same <em class="emphasis">up to division by <span class="process-math">\(b\)</span></em>. In the case where <span class="process-math">\(b = 5\)</span> above, the numbers <span class="process-math">\(8\)</span> and <span class="process-math">\(23\text{,}\)</span> while not the same number, are the same when it comes to dividing by 5, because both have remainder <span class="process-math">\(3\text{.}\)</span>
+</div>
+<div class="para" id="FOq">It matters what the divisor is: <span class="process-math">\(8\)</span> and <span class="process-math">\(23\)</span> are the same up to division by <span class="process-math">\(5\text{,}\)</span> but not up to division by <span class="process-math">\(7\text{,}\)</span> since <span class="process-math">\(8\)</span> has remainder of 1 when divided by 7 while 23 has a remainder of 2.</div>
+<div class="para logical" id="lVz">
+<div class="para">With all this in mind, let's introduce some notation. We want to say that <span class="process-math">\(8\)</span> and 23 are basically the same, even though they are not equal. It would be wrong to say <span class="process-math">\(8 = 23\text{.}\)</span> Instead, we write <span class="process-math">\(8 \equiv 23\text{.}\)</span> But this is not always true. It works if we are thinking division by 5, so we need to denote that somehow. What we will actually write is this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+8 \equiv 23 \pmod{5}
+\end{equation*}
+</div>
+<div class="para">which is read, “8 is congruent to 23 modulo 5” (or just “mod 5”).  Of course then we could observe that</div>
+<div class="displaymath process-math">
+\begin{equation*}
+8 \not\equiv 23 \pmod{7}\text{.}
+\end{equation*}
+</div>
+</div>
+<article class="assemblage assemblage-like" id="Tpf"><h4 class="heading"><span class="title">Congruence Modulo <span class="process-math">\(n\)</span>.</span></h4>
+<div class="para logical" id="JOp">
+<div class="para">We say <dfn class="terminology"><span class="process-math">\(a\)</span> is congruent to <span class="process-math">\(b\)</span> modulo <span class="process-math">\(n\)</span></dfn>, and write,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a \equiv b \pmod{n}
+\end{equation*}
+</div>
+<div class="para">provided <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> have the same remainder when divided by <span class="process-math">\(n\text{.}\)</span> In other words, provided <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> belong to the same remainder class modulo <span class="process-math">\(n\text{.}\)</span>
+</div>
+</div></article><div class="para" id="ScI">Many books define congruence modulo <span class="process-math">\(n\)</span> slightly differently. They say that <span class="process-math">\(a \equiv b \pmod{n}\)</span> if and only if <span class="process-math">\(n \mid a-b\text{.}\)</span> In other words, two numbers are congruent modulo <span class="process-math">\(n\text{,}\)</span> if their difference is a multiple of <span class="process-math">\(n\text{.}\)</span> So which definition is correct? Turns out, it doesn't matter: they are equivalent.</div>
+<div class="para logical" id="yjR">
+<div class="para">To see why, consider two numbers <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> which are congruent modulo <span class="process-math">\(n\text{.}\)</span> Then <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> have the same remainder when divided by <span class="process-math">\(n\text{.}\)</span> We have</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a = q_1 n + r \qquad\qquad b = q_2 n + r\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="era">
+<div class="para">Here the two <span class="process-math">\(r\)</span>'s really are the same. Consider what we get when we take the difference of <span class="process-math">\(a\)</span> and <span class="process-math">\(b\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a-b = q_1n + r - (q_2n + r) = q_1n - q_2 n = (q_1-q_2)n\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="Kyj">So <span class="process-math">\(a-b\)</span> is a multiple of <span class="process-math">\(n\text{,}\)</span> or equivalently, <span class="process-math">\(n \mid a-b\text{.}\)</span>
+</div>
+<div class="para" id="qFs">On the other hand, if we assume first that <span class="process-math">\(n \mid a-b\text{,}\)</span> so <span class="process-math">\(a-b = kn\text{,}\)</span> then consider what happens if we divide each term by <span class="process-math">\(n\text{.}\)</span> Dividing <span class="process-math">\(a\)</span> by <span class="process-math">\(n\)</span> will leave some remainder, as will dividing <span class="process-math">\(b\)</span> by <span class="process-math">\(n\text{.}\)</span> However, dividing <span class="process-math">\(kn\)</span> by <span class="process-math">\(n\)</span> will leave 0 remainder. So the remainders on the left-hand side must cancel out. That is, the remainders must be the same.</div>
+<div class="para" id="WMB">Thus we have:</div>
+<article class="assemblage assemblage-like" id="zwo"><h4 class="heading"><span class="title">Congruence and Divisibility.</span></h4>
+<div class="para logical" id="pVy">
+<div class="para">For any integers <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> and <span class="process-math">\(n\text{,}\)</span> we have</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a \equiv b \pmod{n} \qquad \text{ if and only if }  \qquad n \mid a-b\text{.}
+\end{equation*}
+</div>
+</div></article><div class="para" id="CTK">It will also be useful to switch back and forth between congruences and regular equations. The above fact helps with this. We know that <span class="process-math">\(a \equiv b \pmod{n}\)</span> if and only if <span class="process-math">\(n \mid a-b\text{,}\)</span> if and only if <span class="process-math">\(a-b = kn\)</span> for some integer <span class="process-math">\(k\text{.}\)</span> Rearranging that equation, we get <span class="process-math">\(a = b + kn\text{.}\)</span> In other words, if <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> are congruent modulo <span class="process-math">\(n\text{,}\)</span> then <span class="process-math">\(a\)</span> is <span class="process-math">\(b\)</span> more than some multiple of <span class="process-math">\(n\text{.}\)</span> This conforms with our earlier observation that all the numbers in a particular remainder class are the same amount larger than the multiples of <span class="process-math">\(n\text{.}\)</span>
+</div>
+<article class="assemblage assemblage-like" id="fDx"><h4 class="heading"><span class="title">Congruence and Equality.</span></h4>
+<div class="para logical" id="WcH">
+<div class="para">For any integers <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> and <span class="process-math">\(n\text{,}\)</span> we have</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a \equiv b \pmod{n} \qquad \text{ if and only if }  \qquad a = b + kn \mbox{ for some integer } k \text{.}
+\end{equation*}
+</div>
+</div></article></section><section class="subsection" id="OFm"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Properties of Congruence</span>
+</h3>
+<div class="para" id="jaT">We said earlier that congruence modulo <span class="process-math">\(n\)</span> behaves, in many important ways, the same way equality does. Specifically, we could prove that congruence modulo <span class="process-math">\(n\)</span> is an <dfn class="terminology">equivalence relation</dfn>, which would require checking the following three facts:</div>
+<article class="assemblage assemblage-like" id="LKG"><h4 class="heading"><span class="title">Congruence Modulo <span class="process-math">\(n\)</span> is an Equivalence Relation.</span></h4>
+<div class="para" id="CjQ">Given any integers <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> and <span class="process-math">\(c\text{,}\)</span> and any positive integer <span class="process-math">\(n\text{,}\)</span> the following hold:</div>
+<div class="para logical" id="iqZ"><ol class="decimal">
+<li id="Lph"><div class="para" id="p-derived-Lph"><span class="process-math">\(a \equiv a \pmod{n}\text{.}\)</span></div></li>
+<li id="rwq"><div class="para" id="OTH">If <span class="process-math">\(a \equiv b \pmod{n}\)</span> then <span class="process-math">\(b \equiv a \pmod{n}\text{.}\)</span>
+</div></li>
+<li id="XDz"><div class="para" id="vaQ">If <span class="process-math">\(a \equiv b \pmod{n}\)</span> and <span class="process-math">\(b \equiv c \pmod{n}\text{,}\)</span> then <span class="process-math">\(a \equiv c \pmod{n}\text{.}\)</span>
+</div></li>
+</ol></div>
+<div class="para" id="Oyi">In other words, congruence modulo <span class="process-math">\(n\)</span> is reflexive, symmetric, and transitive, so is an equivalence relation.</div></article><div class="para" id="Pic">You should take a minute to convince yourself that each of the properties above actually hold of congruence. Try explaining each using both the remainder and divisibility definitions.</div>
+<div class="para" id="vpl">Next, consider how congruence behaves when doing basic arithmetic. We already know that if you subtract two congruent numbers, the result will be congruent to 0 (be a multiple of <span class="process-math">\(n\)</span>). What if we add something congruent to 1 to something congruent to 2? Will we get something congruent to 3?</div>
+<article class="assemblage assemblage-like" id="rRP"><h4 class="heading"><span class="title">Congruence and Arithmetic.</span></h4>
+<div class="para" id="uFr"> Suppose <span class="process-math">\(a \equiv b \pmod{n}\)</span> and <span class="process-math">\(c \equiv d \pmod{n}\text{.}\)</span> Then the following hold:</div>
+<div class="para logical" id="aMA"><ol class="decimal">
+<li id="DKI"><div class="para" id="p-derived-DKI"><span class="process-math">\(a+c \equiv b+d \pmod{n}\text{.}\)</span></div></li>
+<li id="jRR"><div class="para" id="p-derived-jRR"><span class="process-math">\(a-c \equiv b-d \pmod{n}\text{.}\)</span></div></li>
+<li id="PZa"><div class="para" id="p-derived-PZa"><span class="process-math">\(ac \equiv bd \pmod{n}\text{.}\)</span></div></li>
+</ol></div></article><div class="para" id="bwu">The above facts might be written a little strangely, but the idea is simple. If we have a true congruence, and we add the same thing to both sides, the result is still a true congruence. This sounds like we are saying:</div>
+<blockquote class="blockquote" id="DaO"><div class="para" id="jws">If <span class="process-math">\(a \equiv b \pmod{n}\)</span> then <span class="process-math">\(a+c \equiv b+c \pmod{n}\text{.}\)</span>
+</div></blockquote>
+<div class="para" id="HDD">Of course this is true as well, it is the special case where <span class="process-math">\(c = d\text{.}\)</span> But what we have works in more generality. Think of congruence as being “basically equal.” If we have two numbers which are basically equal, and we add basically the same thing to both sides, the result will be basically equal.</div>
+<div class="para" id="nKM">This seems reasonable. Is it really true? Let's prove the first fact:</div>
+<article class="proof" id="qMw"><h4 class="heading"><span class="type">Proof<span class="period">.</span></span></h4>
+<div class="para logical" id="raR">
+<div class="para">Suppose <span class="process-math">\(a \equiv b \pmod{n}\)</span> and <span class="process-math">\(c \equiv d \pmod{n}\text{.}\)</span> That means <span class="process-math">\(a = b + kn\)</span> and <span class="process-math">\(c = d + jn\)</span> for integers <span class="process-math">\(k\)</span> and <span class="process-math">\(j\text{.}\)</span> Add these equations:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a+c = b+d + kn + jn\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="Xia">But <span class="process-math">\(kn + jn = (k+j)n\text{,}\)</span> which is just a multiple of <span class="process-math">\(n\text{.}\)</span> So <span class="process-math">\(a+c = b+d + (j+k)n\text{,}\)</span> or in other words, <span class="process-math">\(a+c \equiv b+d \pmod{n}\)</span>
+</div></article><div class="para" id="TRV">The other two facts can be proved in a similar way. </div>
+<div class="para" id="zZe">One of the important consequences of these facts about congruences, is that we can basically replace any number in a congruence with any other number it is congruent to. Here are some examples to see how (and why) that works:</div>
+<article class="example example-like" id="cIR"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.3</span><span class="period">.</span>
+</h4>
+<div class="para" id="bRT">Find the remainder of <span class="process-math">\(3491\)</span> divided by <span class="process-math">\(9\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-FVu" id="FVu"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-FVu"><div class="solution solution-like">
+<div class="para logical" id="Jev">
+<div class="para">We could do long division, but there is another way. We want to find <span class="process-math">\(x\)</span> such that <span class="process-math">\(x \equiv 3491 \pmod{9}\text{.}\)</span> Now <span class="process-math">\(3491 = 3000 + 400 + 90 + 1\text{.}\)</span> Of course <span class="process-math">\(90 \equiv 0 \pmod 9\text{,}\)</span> so we can replace the 90 in the sum with 0. Why is this okay? We are actually subtracting the “same” thing from both sides:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}x \amp  \equiv 3000 + 400 + 90 + 1 \pmod 9 \\
+- ~~ 0 \amp  \equiv 90 \pmod 9 \\
+x \amp  \equiv 3000 + 400 + 0 + 1\pmod 9.
+\end{aligned}
+\end{equation*}
+</div>
+</div> <div class="para" id="plE">Next, note that <span class="process-math">\(400 = 4 \cdot 100\text{,}\)</span> and <span class="process-math">\(100 \equiv 1 \pmod 9\)</span> (since <span class="process-math">\(9 \mid 99\)</span>). So we can in fact replace the 400 with simply a 4. Again, we are appealing to our claim that we can replace congruent elements, but we are really appealing to property 3 about the arithmetic of congruence: we know <span class="process-math">\(100 \equiv 1 \pmod{9}\text{,}\)</span> so if we multiply both sides by <span class="process-math">\(4\text{,}\)</span> we get <span class="process-math">\(400 \equiv 4 \pmod 9\text{.}\)</span>
+</div> <div class="para logical" id="VsN">
+<div class="para">Similarly, we can replace 3000 with 3, since <span class="process-math">\(1000 = 1 + 999 \equiv 1 \pmod 9\text{.}\)</span> So our original congruence becomes</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x \equiv 3 + 4 + 0 + 1 \pmod 9
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x \equiv 8 \pmod 9\text{.}
+\end{equation*}
+</div>
+<div class="para">Therefore <span class="process-math">\(3491\)</span> divided by 9 has remainder 8.</div>
+</div>
+</div></div>
+</div></article><div class="para" id="ggn">The above example should convince you that the well known divisibility test for 9 is true: the sum of the digits of a number is divisible by 9 if and only if the original number is divisible by 9. In fact, we now know something more: any number is congruent to the sum of its digits, modulo 9.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-29" id="fn-29"><sup> 3 </sup></a>
+</div>
+<div class="para" id="Mnw">Let's try another:</div>
+<article class="example example-like" id="IQa"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.4</span><span class="period">.</span>
+</h4>
+<div class="para" id="HZc">Find the remainder when <span class="process-math">\(3^{123}\)</span> is divided by 7.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-mcD" id="mcD"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-mcD"><div class="solution solution-like">
+<div class="para logical" id="BzW">
+<div class="para">Of course, we are working with congruence because we want to find the smallest positive <span class="process-math">\(x\)</span> such that <span class="process-math">\(x \equiv 3^{123} \pmod 7\text{.}\)</span> Now first write <span class="process-math">\(3^{123} = (3^3)^{41}\text{.}\)</span> We have:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3^{123} = 27^{41} \equiv 6^{41} \pmod 7\text{,}
+\end{equation*}
+</div>
+<div class="para">since <span class="process-math">\(27 \equiv 6 \pmod 7\text{.}\)</span> Notice further that <span class="process-math">\(6^2 = 36\)</span> is congruent to 1 modulo 7. Thus we can simplify further:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+6^{41} = 6\cdot (6^2)^{20} \equiv 6 \cdot 1^{20} \pmod 7\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="hHf">
+<div class="para">But <span class="process-math">\(1^{20} = 1\text{,}\)</span> so we are done:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3^{123} \equiv 6 \pmod 7\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article><div class="para" id="suF">In the above example, we are using the fact that if <span class="process-math">\(a \equiv b \pmod n\text{,}\)</span> then <span class="process-math">\(a^p \equiv b^p \pmod n\text{.}\)</span> This is just applying property 3 a bunch of times.</div>
+<div class="para logical" id="YBO">
+<div class="para">So far we have seen how to add, subtract and multiply with congruences. What about division? There is a reason we have waited to discuss it. It turns out that we cannot simply divide. In other words, even if <span class="process-math">\(ad \equiv bd \pmod n\text{,}\)</span> we do not know that <span class="process-math">\(a \equiv b \pmod n\text{.}\)</span> Consider, for example:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+18 \equiv 42 \pmod 8\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="EIX">
+<div class="para">This is true. Now <span class="process-math">\(18\)</span> and <span class="process-math">\(42\)</span> are both divisible by 6. However,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3 \not\equiv 7 \pmod 8\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="kQg">While this doesn't work, note that <span class="process-math">\(3 \equiv 7 \pmod 4\text{.}\)</span> We cannot divide <span class="process-math">\(8\)</span> by 6, but we can divide 8 by the greatest common factor of <span class="process-math">\(8\)</span> and <span class="process-math">\(6\text{.}\)</span> Will this always happen?</div>
+<div class="para" id="QXp">Suppose <span class="process-math">\(ad \equiv bd \pmod n\text{.}\)</span> In other words, we have <span class="process-math">\(ad = bd + kn\)</span> for some integer <span class="process-math">\(k\text{.}\)</span> Of course <span class="process-math">\(ad\)</span> is divisible by <span class="process-math">\(d\text{,}\)</span> as is <span class="process-math">\(bd\text{.}\)</span> So <span class="process-math">\(kn\)</span> must also be divisible by <span class="process-math">\(d\text{.}\)</span> Now if <span class="process-math">\(n\)</span> and <span class="process-math">\(d\)</span> have no common factors (other than 1), then we must have <span class="process-math">\(d \mid k\text{.}\)</span> But in general, if we try to divide <span class="process-math">\(kn\)</span> by <span class="process-math">\(d\text{,}\)</span> we don't know that we will get an integer multiple of <span class="process-math">\(n\text{.}\)</span> Some of the <span class="process-math">\(n\)</span> might get divided as well. To be safe, let's divide as much of <span class="process-math">\(n\)</span> as we can. Take the largest factor of both <span class="process-math">\(d\)</span> and <span class="process-math">\(n\text{,}\)</span> and cancel that out from <span class="process-math">\(n\text{.}\)</span> The rest of the factors of <span class="process-math">\(d\)</span> will come from <span class="process-math">\(k\text{,}\)</span> no problem.</div>
+<div class="para" id="xey">We will call the largest factor of both <span class="process-math">\(d\)</span> and <span class="process-math">\(n\)</span> the <span class="process-math">\(\gcd(d,n)\text{,}\)</span> for <em class="emphasis">greatest common divisor</em>.  In our example above, <span class="process-math">\(\gcd(6,8) = 2\)</span> since the greatest divisor common to 6 and 8 is 2.</div>
+<article class="assemblage assemblage-like" id="XYY"><h4 class="heading"><span class="title">Congruence and Division.</span></h4>
+<div class="para" id="GTJ">Suppose <span class="process-math">\(ad \equiv bd \pmod n\text{.}\)</span> Then <span class="process-math">\(a \equiv b \pmod{\frac{n}{\gcd(d,n)}}\text{.}\)</span>
+</div>
+<div class="para" id="naS">If <span class="process-math">\(d\)</span> and <span class="process-math">\(n\)</span> have no common factors then <span class="process-math">\(\gcd(d,n) = 1\text{,}\)</span> so <span class="process-math">\(a \equiv b \pmod n\text{.}\)</span>
+</div></article><article class="example example-like" id="oXj"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.5</span><span class="period">.</span>
+</h4>
+<div class="para" id="ogl">Simplify the following congruences using division: (a) <span class="process-math">\(24 \equiv 39 \pmod 5\)</span> and (b) <span class="process-math">\(24 \equiv 39 \pmod{15}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-SjM" id="SjM"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-SjM"><div class="solution solution-like">
+<div class="para logical" id="NOo">
+<div class="para">(a) Both <span class="process-math">\(24\)</span> and <span class="process-math">\(39\)</span> are divisible by <span class="process-math">\(3\text{,}\)</span> and <span class="process-math">\(3\)</span> and <span class="process-math">\(5\)</span> have no common factors, so we get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+8 \equiv 13 \pmod 5\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="tVx">
+<div class="para">(b) Again, we can divide by 3. However, doing so blindly gives us <span class="process-math">\(8 \equiv 13 \pmod{15}\)</span> which is no longer true. Instead, we must also divide the modulus 15 by the greatest common factor of <span class="process-math">\(3\)</span> and <span class="process-math">\(15\text{,}\)</span> which is <span class="process-math">\(3\text{.}\)</span> Again we get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+8 \equiv 13 \pmod 5\text{.}
+\end{equation*}
+</div>
+</div>
+</div></div>
+</div></article></section><section class="subsection" id="uMv"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Solving Congruences</span>
+</h3>
+<div class="para logical" id="dlH">
+<div class="para">Now that we have some algebraic rules to govern congruence relations, we can attempt to solve for an unknown in a congruence. For example, is there a value of <span class="process-math">\(x\)</span> that satisfies,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3x + 2 \equiv 4 \pmod{5}\text{,}
+\end{equation*}
+</div>
+<div class="para">and if so, what is it?</div>
+</div>
+<div class="para" id="JsQ">In this example, since the modulus is small, we could simply try every possible value for <span class="process-math">\(x\text{.}\)</span> There are really only 5 to consider, since any integer that satisfied the congruence could be replaced with any other integer it was congruent to modulo 5. Here, when <span class="process-math">\(x = 4\)</span> we get <span class="process-math">\(3x + 2 = 14\)</span> which is indeed congruent to 4 modulo 5. This means that <span class="process-math">\(x = 9\)</span> and <span class="process-math">\(x = 14\)</span> and <span class="process-math">\(x = 19\)</span> and so on will each also be a solution because as we saw above, replacing any number in a congruence with a congruent number does not change the truth of the congruence.</div>
+<div class="para" id="pzZ">So in this example, simply compute <span class="process-math">\(3x + 2\)</span> for values of <span class="process-math">\(x \in \{0,1,2,3,4\}\text{.}\)</span> This gives 2, 5, 8, 11, and 14 respectively, for which only 14 is congruent to 4.</div>
+<div class="para logical" id="VHi">
+<div class="para">Let's also see how you could solve this using our rules for the algebra of congruences. Such an approach would be much simpler than the trial and error tactic if the modulus was larger. First, we know we can subtract 2 from both sides:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3x \equiv 2 \pmod{5}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="BOr">
+<div class="para">Then to divide both sides by 3, we first add 0 to both sides. Of course, on the right-hand side, we want that 0 to be a 10 (yes, <span class="process-math">\(10\)</span> really is 0 since they are congruent modulo 5). This gives,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3x \equiv 12 \pmod{5}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="hVA">
+<div class="para">Now divide both sides by 3. Since <span class="process-math">\(\gcd(3,5) = 1\text{,}\)</span> we do not need to change the modulus:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x \equiv 4 \pmod{5}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="OcJ">Notice that this in fact gives the <em class="emphasis">general solution</em>: not only can <span class="process-math">\(x = 4\text{,}\)</span> but <span class="process-math">\(x\)</span> can be any number which is congruent to 4. We can leave it like this, or write “<span class="process-math">\(x = 4 + 5k\)</span> for any integer <span class="process-math">\(k\text{.}\)</span>”</div>
+<article class="example example-like" id="Ves"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.6</span><span class="period">.</span>
+</h4>
+<div class="para" id="Unu">Solve the following congruences for <span class="process-math">\(x\text{.}\)</span>
+</div> <div class="para logical" id="AuD"><ol class="decimal">
+<li id="wgj"><div class="para" id="p-derived-wgj"><span class="process-math">\(7x \equiv 12 \pmod{13}\text{.}\)</span></div></li>
+<li id="cns"><div class="para" id="p-derived-cns"><span class="process-math">\(84x - 38 \equiv 79 \pmod{15}\text{.}\)</span></div></li>
+<li id="IuB"><div class="para" id="p-derived-IuB"><span class="process-math">\(20x \equiv 23 \pmod{14}\text{.}\)</span></div></li>
+</ol></div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-yqV" id="yqV"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-yqV"><div class="solution solution-like"><div class="para logical" id="acG"><ol class="decimal">
+<li id="oBK"><div class="para logical" id="bhZ">
+<div class="para">All we need to do here is divide both sides by 7. We add 13 to the right-hand side repeatedly until we get a multiple of 7 (adding 13 is the same as adding 0, so this is legal). We get <span class="process-math">\(25\text{,}\)</span> <span class="process-math">\(38\text{,}\)</span> <span class="process-math">\(51\text{,}\)</span> <span class="process-math">\(64\text{,}\)</span> <span class="process-math">\(77\)</span> – got it. So we have:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}7x \amp  \equiv 12 \pmod{13} \\
+7x \amp  \equiv 77 \pmod{13} \\
+x \amp  \equiv 11 \pmod{13}.
+\end{aligned}
+\end{equation*}
+</div>
+</div></li>
+<li id="UIT"><div class="para logical" id="Hpi">
+<div class="para">Here, since we have numbers larger than the modulus, we can reduce them prior to applying any algebra. We have <span class="process-math">\(84 \equiv 9\text{,}\)</span> <span class="process-math">\(38 \equiv 8\)</span> and <span class="process-math">\(79 \equiv 4\text{.}\)</span> Thus,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}84x - 38 \amp  \equiv 79 \pmod{15} \\
+9x - 8 \amp  \equiv 4 \pmod{15} \\
+9x \amp  \equiv 12 \pmod{15} \\
+9x \amp  \equiv 72 \pmod{15}.
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">We got the 72 by adding <span class="process-math">\(0 \equiv 60 \pmod{15}\)</span> to both sides of the congruence. Now divide both sides by 9. However, since <span class="process-math">\(\gcd(9, 15) = 3\text{,}\)</span> we must divide the modulus by 3 as well:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x \equiv 8 \pmod 5\text{.}
+\end{equation*}
+</div>
+<div class="para">So the solutions are those values which are congruent to 8, or equivalently 3, modulo 5. This means that in some sense there are 3 solutions modulo 15: 3, 8, and 13. We can write the solution:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x \equiv 3 \pmod{15}; ~~ x \equiv 8 \pmod{15}; ~~x \equiv 13 \pmod{15}\text{.}
+\end{equation*}
+</div>
+</div></li>
+<li id="AQc"><div class="para logical" id="nwr">
+<div class="para">First, reduce modulo 14:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+20x \equiv 23 \pmod{14}
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+6x \equiv 9 \pmod{14}\text{.}
+\end{equation*}
+</div>
+<div class="para">We could now divide both sides by 3, or try to increase 9 by a multiple of 14 to get a multiple of 6. If we divide by 3, we get,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+2x \equiv 3 \pmod{14}\text{.}
+\end{equation*}
+</div>
+<div class="para">Now try adding multiples of 14 to 3, in hopes of getting a number we can divide by 2. This will not work! Every time we add 14 to the right side, the result will still be odd. We will never get an even number, so we will never be able to divide by 2. Thus there are no solutions to the congruence.</div>
+</div></li>
+</ol></div></div></div>
+</div></article><div class="para logical" id="ujS">
+<div class="para">The last congruence above illustrates the way in which congruences might not have solutions. We could have seen this immediately in fact. Look at the original congruence:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+20x \equiv 23 \pmod{14}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="arb">
+<div class="para">If we write this as an equation, we get</div>
+<div class="displaymath process-math">
+\begin{equation*}
+20x = 23 + 14k\text{,}
+\end{equation*}
+</div>
+<div class="para">or equivalently <span class="process-math">\(20x - 14k = 23\text{.}\)</span> We can easily see there will be no solution to this equation in integers. The left-hand side will always be even, but the right-hand side is odd. A similar problem would occur if the right-hand side was divisible by <em class="emphasis">any</em> number the left-hand side was not.</div>
+</div>
+<div class="para logical" id="Gyk">
+<div class="para">So in general, given the congruence</div>
+<div class="displaymath process-math">
+\begin{equation*}
+ax \equiv b \pmod{n}\text{,}
+\end{equation*}
+</div>
+<div class="para">if <span class="process-math">\(a\)</span> and <span class="process-math">\(n\)</span> are divisible by a number which <span class="process-math">\(b\)</span> is not divisible by, then there will be no solutions. In fact, we really only need to check one divisor of <span class="process-math">\(a\)</span> and <span class="process-math">\(n\text{:}\)</span> the greatest common divisor. Thus, a more compact way to say this is:</div>
+</div>
+<article class="assemblage assemblage-like" id="Egh"><h4 class="heading"><span class="title">Congruences with no solutions.</span></h4>
+<div class="para" id="Tib">If <span class="process-math">\(\gcd(a,n) \nmid b\text{,}\)</span> then <span class="process-math">\(ax \equiv b \pmod{n}\)</span> has no solutions.</div></article></section><section class="subsection" id="aTE"><h3 class="heading hide-type">
+<span class="type">Subsection</span> <span class="codenumber"></span> <span class="title">Solving Linear Diophantine Equations</span>
+</h3>
+<div class="para" id="mFt"> Discrete math deals with whole numbers of things. So when we want to solve equations, we usually are looking for <em class="emphasis">integer</em> solutions. Equations which are intended to only have integer solutions were first studied by in the third century by the Greek mathematician Diophantus of Alexandria, and as such are called <em class="emphasis">Diophantine equations</em>. Probably the most famous example of a Diophantine equation is <span class="process-math">\(a^2 + b^2 = c^2\text{.}\)</span> The integer solutions to this equation are called <dfn class="terminology">Pythagorean triples</dfn>. In general, solving Diophantine equations is hard (in fact, there is provably no general algorithm for deciding whether a Diophantine equation has a solution, a result known as Matiyasevich's Theorem). We will restrict our focus to <em class="emphasis">linear</em> Diophantine equations, which are considerably easier to work with.</div>
+<article class="assemblage assemblage-like" id="knq"><h4 class="heading"><span class="title">Diophantine Equations.</span></h4>
+<div class="para" id="zpk">An equation in two or more variables is called a <dfn class="terminology">Diophantine equation</dfn> if only integers solutions are of interest. A <dfn class="terminology">linear</dfn> Diophantine equation takes the form <span class="process-math">\(a_1x_1 + a_2x_x + \cdots + a_nx_n = b\)</span> for constants <span class="process-math">\(a_1,\ldots,
+a_n, b\text{.}\)</span>
+</div>
+<div class="para" id="fwt"> A <dfn class="terminology">solution</dfn> to a Diophantine equation is a solution to the equation consisting only of integers.</div></article><div class="para logical" id="SMC">
+<div class="para">We have the tools we need to solve linear Diophantine equations. We will consider, as a main example, the equation</div>
+<div class="displaymath process-math">
+\begin{equation*}
+51x + 87y = 123\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="yTL"> The general strategy will be to convert the equation to a congruence, then solve that congruence.<a href="" data-knowl="" class="id-ref fn-knowl original" data-refid="hk-fn-30" id="fn-30"><sup> 4 </sup></a> Let's work this particular example to see how this might go.</div>
+<div class="para logical" id="faU">
+<div class="para">First, check if perhaps there are no solutions because a divisor of <span class="process-math">\(51\)</span> and <span class="process-math">\(87\)</span> is not a divisor of <span class="process-math">\(123\text{.}\)</span> Really, we just need to check whether <span class="process-math">\(\gcd(51, 87) \mid 123\text{.}\)</span> This greatest common divisor is 3, and yes <span class="process-math">\(3 \mid 123\text{.}\)</span> At this point, we might as well factor out this greatest common divisor. So instead, we will solve:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+17x + 29y = 41\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="Lid">
+<div class="para">Now observe that if there are going to be solutions, then for those values of <span class="process-math">\(x\)</span> and <span class="process-math">\(y\text{,}\)</span> the two sides of the equation must have the same remainder as each other, no matter what we divide by. In particular, if we divide both sides by 17, we must get the same remainder. Thus we can safely write</div>
+<div class="displaymath process-math">
+\begin{equation*}
+17x + 29y \equiv 41 \pmod{17}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="rpm">
+<div class="para">We choose 17 because <span class="process-math">\(17x\)</span> will have remainder 0. This will allow us to reduce the congruence to just one variable. We could have also moved to a congruence modulo 29, although there is usually a good reason to select the smaller choice, as this will allow us to reduce the other coefficient. In our case, we reduce the congruence as follows:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}17x + 29y \amp  \equiv 41 \pmod{17} \\
+0x + 12y \amp  \equiv 7 \pmod{17} \\
+12 y \amp  \equiv 24 \pmod{17} \\
+y \amp  \equiv 2 \pmod{17}.
+\end{aligned}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="Xwv">
+<div class="para">Now at this point we know <span class="process-math">\(y = 2 + 17k\)</span> will work for any integer <span class="process-math">\(k\text{.}\)</span> If we haven't made a mistake, we should be able to plug this back into our original Diophantine equation to find <span class="process-math">\(x\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}17x + 29(2 + 17k) \amp  = 41\\
+17x \amp  = -17 - 29\cdot 17k\\
+x \amp  = -1-29k.
+\end{aligned}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="DDE">We have now found all solutions to the Diophantine equation. For each <span class="process-math">\(k\text{,}\)</span> <span class="process-math">\(x = -1-29k\)</span> and <span class="process-math">\(y = 2 + 17k\)</span> will satisfy the equation. We could check this for a few cases. If <span class="process-math">\(k = 0\text{,}\)</span> the solution is <span class="process-math">\((-1,2)\text{,}\)</span> and yes, <span class="process-math">\(-17 + 2\cdot 29 = 41\text{.}\)</span> If <span class="process-math">\(k = 3\text{,}\)</span> the solution is <span class="process-math">\((-88, 53)\text{.}\)</span> If <span class="process-math">\(k = -2\text{,}\)</span> we get <span class="process-math">\((57, -32)\text{.}\)</span>
+</div>
+<div class="para" id="jKN">To summarize this process, to solve <span class="process-math">\(ax + by = c\text{,}\)</span> we,</div>
+<div class="para logical" id="PRW"><ol class="decimal">
+<li id="gXl"><div class="para" id="TDA">Divide both sides of the equation by <span class="process-math">\(\gcd(a,b)\)</span> (if this does not leave the right-hand side as an integer, there are no solutions). Let's assume that <span class="process-math">\(ax + by = c\)</span> has already been reduced in this way.</div></li>
+<li id="Neu"><div class="para logical" id="zKJ">
+<div class="para">Pick the smaller of <span class="process-math">\(a\)</span> and <span class="process-math">\(b\)</span> (here, assume it is <span class="process-math">\(b\)</span>), and convert to a congruence modulo <span class="process-math">\(b\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+ax + by \equiv c \pmod{b}\text{.}
+\end{equation*}
+</div>
+<div class="para">This will reduce to a congruence with one variable, <span class="process-math">\(x\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+ax \equiv c \pmod{b}\text{.}
+\end{equation*}
+</div>
+</div></li>
+<li id="tlD"><div class="para logical" id="fRS">
+<div class="para">Solve the congruence as we did in the previous section. Write your solution as an equation, such as,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+x = n + kb\text{.}
+\end{equation*}
+</div>
+</div></li>
+<li id="ZsM"><div class="para" id="LZb">Plug this into the original Diophantine equation, and solve for <span class="process-math">\(y\text{.}\)</span>
+</div></li>
+<li id="FzV"><div class="para" id="sgk">If we want to know solutions in a particular range (for example, <span class="process-math">\(0 \le x, y \le 20\)</span>), pick different values of <span class="process-math">\(k\)</span> until you have all required solutions.</div></li>
+</ol></div>
+<div class="para" id="vZf">Here is another example:</div>
+<article class="example example-like" id="BlB"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">5.2.7</span><span class="period">.</span>
+</h4>
+<div class="para" id="gBM">How can you make $6.37 using just 5-cent and 8-cent stamps? What is the smallest and largest number of stamps you could use?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original has-tabular" data-refid="hk-eye" id="eye"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-eye"><div class="solution solution-like">
+<div class="para logical" id="GjP">
+<div class="para">First, we need a Diophantine equation. We will work in numbers of cents. Let <span class="process-math">\(x\)</span> be the number of <span class="process-math">\(5\)</span>-cent stamps, and <span class="process-math">\(y\)</span> be the number of 8-cent stamps. We have:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+5x + 8y = 637\text{.}
+\end{equation*}
+</div>
+</div> <div class="para logical" id="mqY">
+<div class="para">Convert to a congruence and solve:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}8y \amp  \equiv 637 \pmod{5}\\
+3y \amp  \equiv 2 \pmod 5\\
+3y \amp  \equiv 12 \pmod 5\\
+y \amp  \equiv 4 \pmod 5.
+\end{aligned}
+\end{equation*}
+</div>
+</div> <div class="para" id="Syh">Thus <span class="process-math">\(y = 4 + 5k\text{.}\)</span> Then <span class="process-math">\(5x + 8(4+5k) = 637\text{,}\)</span> so <span class="process-math">\(x = 121 - 8k\text{.}\)</span>
+</div> <div class="para" id="yFq">This says that one way to make $6.37 is to take 121 of the 5-cent stamps and 4 of the 8-cent stamps. To find the smallest and largest number of stamps, try different values of <span class="process-math">\(k\text{.}\)</span>
+</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:0%;margin-right:0%;"><div class="sbspanel fixed-width top" style="width:100%;"><table class="tabular" id="MBR">
+<tr>
+<td class="l m b0 r1 l0 t0 lines"><span class="process-math">\(k\)</span></td>
+<td class="l m b0 r1 l0 t0 lines"><span class="process-math">\((x,y)\)</span></td>
+<td class="l m b0 r0 l0 t0 lines">Stamps</td>
+</tr>
+<tr>
+<td class="l m b1 r1 l0 t0 lines"></td>
+<td class="l m b1 r1 l0 t0 lines"></td>
+<td class="l m b1 r0 l0 t0 lines"></td>
+</tr>
+<tr>
+<td class="l m b0 r1 l0 t0 lines">-1</td>
+<td class="l m b0 r1 l0 t0 lines">(129, -1)</td>
+<td class="l m b0 r0 l0 t0 lines">not possible</td>
+</tr>
+<tr>
+<td class="l m b0 r1 l0 t0 lines">0</td>
+<td class="l m b0 r1 l0 t0 lines">(121, 4)</td>
+<td class="l m b0 r0 l0 t0 lines">125</td>
+</tr>
+<tr>
+<td class="l m b0 r1 l0 t0 lines">1</td>
+<td class="l m b0 r1 l0 t0 lines">(113, 9)</td>
+<td class="l m b0 r0 l0 t0 lines">122</td>
+</tr>
+<tr>
+<td class="l m b0 r1 l0 t0 lines">2</td>
+<td class="l m b0 r1 l0 t0 lines">(105, 13)</td>
+<td class="l m b0 r0 l0 t0 lines">119</td>
+</tr>
+<tr>
+<td class="l m b0 r1 l0 t0 lines"><span class="process-math">\(\vdots\)</span></td>
+<td class="l m b0 r1 l0 t0 lines"><span class="process-math">\(\vdots\)</span></td>
+<td class="l m b0 r0 l0 t0 lines"><span class="process-math">\(\vdots\)</span></td>
+</tr>
+</table></div></div></div> <div class="para" id="eMz">This is no surprise. Having the most stamps means we have as many 5-cent stamps as possible, and to get the smallest number of stamps would require have the least number of 5-cent stamps. To minimize the number of 5-cent stamps, we want to pick <span class="process-math">\(k\)</span> so that <span class="process-math">\(121-8k\)</span> is as small as possible (but still positive). When <span class="process-math">\(k = 15\text{,}\)</span> we have <span class="process-math">\(x = 1\)</span> and <span class="process-math">\(y = 79\text{.}\)</span>
+</div> <div class="para" id="KTI">Therefore, to make $6.37, you can us as few as 80 stamps (1 5-cent stamp and 79 8-cent stamps) or as many as 125 stamps (121 5-cent stamps and 4 8-cent stamps).</div>
+</div></div>
+</div></article><div class="para logical" id="cgo">
+<div class="para">Using this method, as long as you can solve linear congruences in one variable, you can solve linear Diophantine equations of two variables. There are times though that solving the linear congruence is a lot of work. For example, suppose you need to solve,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+13x \equiv 6 \pmod{51}\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="Inx">
+<div class="para">You <em class="emphasis">could</em> keep adding 51 to the right side until you get a multiple of 13: You would get 57, 108, 159, 210, 261, 312, and 312 is the first of these that is divisible by 13. This works, but is really too much work. Instead we could convert <em class="emphasis">back</em> to a Diophantine equation:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+13x = 6 + 51k\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="para logical" id="ouG">
+<div class="para">Now solve <em class="emphasis">this</em> like we have in this section. Write it as a congruence modulo 13:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}0 \amp \equiv 6 + 51k \pmod{13}\\
+-12k \amp \equiv 6 \pmod{13}\\
+2k \amp \equiv -1 \pmod{13}\\
+2k \amp \equiv 12 \pmod{13}\\
+k \amp \equiv 6 \pmod{13}.
+\end{aligned}
+\end{equation*}
+</div>
+<div class="para">so <span class="process-math">\(k = 6 + 13j\text{.}\)</span> Now go back and figure out <span class="process-math">\(x\text{:}\)</span>
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+\begin{aligned}13x \amp  = 6 + 51(6+13j)\\
+x \amp  = 24 + 51j.
+\end{aligned}
+\end{equation*}
+</div>
+</div>
+<div class="para" id="UBP">Of course you could do this switching back and forth between congruences and Diophantine equations as many times as you like. If you <em class="emphasis">only</em> used this technique, you would essentially replicate the Euclidean algorithm, a more standard way to solve Diophantine equations.</div></section><section class="exercises" id="TUi"><h3 class="heading hide-type">
+<span class="type">Exercises</span> <span class="codenumber"></span> <span class="title">Exercises</span>
+</h3>
+<article class="exercise exercise-like" id="OVU"><h4 class="heading"><span class="codenumber">1<span class="period">.</span></span></h4>
+<div class="para" id="oSs">Suppose <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> and <span class="process-math">\(c\)</span> are integers. Prove that if <span class="process-math">\(a \mid b\text{,}\)</span> then <span class="process-math">\(a \mid bc\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Vva" id="Vva"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Vva"><div class="solution solution-like"><article class="proof" id="BCj"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para" id="ndf">Suppose <span class="process-math">\(a \mid b\text{.}\)</span> Then <span class="process-math">\(b\)</span> is a multiple of <span class="process-math">\(a\text{,}\)</span> or in other words, <span class="process-math">\(b = ak\)</span> for some <span class="process-math">\(k\text{.}\)</span> But then <span class="process-math">\(bc = akc\text{,}\)</span> and since <span class="process-math">\(kc\)</span> is an integer, this says <span class="process-math">\(bc\)</span> is a multiple of <span class="process-math">\(a\text{.}\)</span> In other words, <span class="process-math">\(a \mid bc\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="vdd"><h4 class="heading"><span class="codenumber">2<span class="period">.</span></span></h4>
+<div class="para" id="UZB">Suppose <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> and <span class="process-math">\(c\)</span> are integers. Prove that if <span class="process-math">\(a \mid b\)</span> and <span class="process-math">\(a \mid c\)</span> then <span class="process-math">\(a \mid b+c\)</span> and <span class="process-math">\(a \mid b-c\text{.}\)</span>
+</div></article><article class="exercise exercise-like" id="bkm"><h4 class="heading"><span class="codenumber">3<span class="period">.</span></span></h4>
+<div class="para" id="BgK">Write out the remainder classes for <span class="process-math">\(n = 4\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-hJs" id="hJs"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-hJs"><div class="solution solution-like">
+<div class="para" id="Tko">
+<span class="process-math">\(\{\ldots, -8, -4, 0, 4, 8, 12, \ldots\}\text{,}\)</span> <span class="process-math">\(\{\ldots, -7, -3, 1, 5, 9, 13, \ldots\}\text{,}\)</span>
+</div> <div class="para" id="zrx">
+<span class="process-math">\(\{\ldots, -6, -2, 2, 6, 10, 14, \ldots\}\text{,}\)</span> and <span class="process-math">\(\{\ldots, -5, -1, 3, 7, 11, 15, \ldots\}\text{.}\)</span>
+</div>
+</div></div>
+</div></article><article class="exercise exercise-like" id="Hrv"><h4 class="heading"><span class="codenumber">4<span class="period">.</span></span></h4>
+<div class="para" id="hnT">What is the largest <span class="process-math">\(n\)</span> such that <span class="process-math">\(16\)</span> and <span class="process-math">\(25\)</span> are in the same remainder class modulo <span class="process-math">\(n\text{?}\)</span>  Write out the remainder class they both belong to and give an example of a number more than 100 in that class.</div></article><article class="exercise exercise-like" id="nyE"><h4 class="heading"><span class="codenumber">5<span class="period">.</span></span></h4>
+<div class="para" id="Nvc">Let <span class="process-math">\(a\text{,}\)</span> <span class="process-math">\(b\text{,}\)</span> <span class="process-math">\(c\text{,}\)</span> and <span class="process-math">\(n\)</span> be integers. Prove that if <span class="process-math">\(a \equiv b \pmod{n}\)</span> and <span class="process-math">\(c \equiv d \pmod{n}\text{,}\)</span> then <span class="process-math">\(a-c \equiv b-d \pmod{n}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-NQB" id="NQB"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-NQB"><div class="solution solution-like"><article class="proof" id="tXK"><h5 class="heading"><span class="type">Proof<span class="period">.</span></span></h5>
+<div class="para logical" id="fyG">
+<div class="para">Assume <span class="process-math">\(a \equiv b \pmod n\)</span> and <span class="process-math">\(c \equiv d \pmod n\text{.}\)</span> This means <span class="process-math">\(a = b + kn\)</span> and <span class="process-math">\(c = d + jn\)</span> for some integers <span class="process-math">\(k\)</span> and <span class="process-math">\(j\text{.}\)</span> Consider <span class="process-math">\(a-c\text{.}\)</span> We have:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a-c = b+kn - (d+jn) = b-d + (k-j)n\text{.}
+\end{equation*}
+</div>
+</div> <div class="para" id="LFP">In other words, <span class="process-math">\(a-c\)</span> is <span class="process-math">\(b-d\)</span> more than some multiple of <span class="process-math">\(n\text{,}\)</span> so <span class="process-math">\(a-c \equiv b-d \pmod n\text{.}\)</span>
+</div></article></div></div>
+</div></article><article class="exercise exercise-like" id="TFN"><h4 class="heading"><span class="codenumber">6<span class="period">.</span></span></h4>
+<div class="para logical" id="tCl">
+<div class="para">Find the remainder of <span class="process-math">\(3^{456}\)</span> when divided by</div>
+<ol class="lower-alpha cols4">
+<li id="bUg"><div class="para" id="Cmd">2.</div></li>
+<li id="Ibp"><div class="para" id="itm">5.</div></li>
+<li id="oiy"><div class="para" id="OAv">7.</div></li>
+<li id="UpH"><div class="para" id="uHE">9.</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-aeT" id="aeT"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-aeT"><div class="solution solution-like"><div class="para logical" id="rMY"><ol class="lower-alpha">
+<li id="AwQ"><div class="para" id="p-derived-AwQ"><span class="process-math">\(3^{456} \equiv 1^{456} = 1 \pmod 2\text{.}\)</span></div></li>
+<li id="gDZ"><div class="para" id="p-derived-gDZ"><span class="process-math">\(3^{456} = 9^{228} \equiv (-1)^{228} = 1 \pmod{5}\text{.}\)</span></div></li>
+<li id="MLi"><div class="para" id="p-derived-MLi"><span class="process-math">\(3^{456} = 9^{228} \equiv 2^{228} = 8^{76} \equiv 1^{76} = 1 \pmod 7\text{.}\)</span></div></li>
+<li id="sSr"><div class="para" id="p-derived-sSr"><span class="process-math">\(3^{456} = 9^{228} \equiv 0^{228} = 0 \pmod{9}\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="zMW"><h4 class="heading"><span class="codenumber">7<span class="period">.</span></span></h4>
+<div class="para" id="ZJu">Repeat the previous exercise, this time dividing <span class="process-math">\(2^{2019}\text{.}\)</span>
+</div></article><article class="exercise exercise-like" id="fUf"><h4 class="heading"><span class="codenumber">8<span class="period">.</span></span></h4>
+<div class="para logical" id="FQD">
+<div class="para">Determine which of the following congruences have solutions, and find any solutions (between 0 and the modulus) by trial and error.</div>
+<ol class="lower-alpha">
+<li id="YZA"><div class="para" id="p-derived-YZA"><span class="process-math">\(4x \equiv 5 \pmod 6\text{.}\)</span></div></li>
+<li id="FgJ"><div class="para" id="p-derived-FgJ"><span class="process-math">\(6x \equiv 3 \pmod 9\text{.}\)</span></div></li>
+<li id="lnS"><div class="para" id="p-derived-lnS"><span class="process-math">\(x^2 \equiv 2 \pmod 4\text{.}\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Gmc" id="Gmc"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Gmc"><div class="solution solution-like"><div class="para logical" id="XUh">
+<div class="para">For all of these, just plug in all integers between 0 and the modulus to see which, if any, work.</div>
+<ol class="lower-alpha">
+<li id="Rvb"><div class="para" id="aON">No solutions.</div></li>
+<li id="xCk"><div class="para" id="p-derived-xCk">
+<span class="process-math">\(x = 2\text{,}\)</span> <span class="process-math">\(x = 5\text{,}\)</span> <span class="process-math">\(x = 8\text{.}\)</span>
+</div></li>
+<li id="dJt"><div class="para" id="GVW">No solutions.</div></li>
+</ol>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="Mbo"><h4 class="heading"><span class="codenumber">9<span class="period">.</span></span></h4>
+<div class="para logical" id="lXM">
+<div class="para">Determine which of the following congruences have solutions, and find any solutions (between 0 and the modulus) by trial and error.</div>
+<ol class="lower-alpha">
+<li id="JQC"><div class="para" id="p-derived-JQC"><span class="process-math">\(4x \equiv 5 \pmod 7\text{.}\)</span></div></li>
+<li id="pXL"><div class="para" id="p-derived-pXL"><span class="process-math">\(6x \equiv 4 \pmod 9\text{.}\)</span></div></li>
+<li id="WeU"><div class="para" id="p-derived-WeU"><span class="process-math">\(x^2 \equiv 2 \pmod 7\text{.}\)</span></div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="six"><h4 class="heading"><span class="codenumber">10<span class="period">.</span></span></h4>
+<div class="para" id="SeV">Solve the following congruence <span class="process-math">\(5x + 8 \equiv 11 \pmod{22}\text{.}\)</span>  That is, describe the general solution.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-mtl" id="mtl"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-mtl"><div class="solution solution-like"><div class="para" id="Ebq">
+<span class="process-math">\(x = 5+22k\)</span> for <span class="process-math">\(k \in \Z\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="YpG"><h4 class="heading"><span class="codenumber">11<span class="period">.</span></span></h4>
+<div class="para" id="yme">Solve the congruence: <span class="process-math">\(6x \equiv 4 \pmod{10}\text{.}\)</span>
+</div></article><article class="exercise exercise-like" id="EwP"><h4 class="heading"><span class="codenumber">12<span class="period">.</span></span></h4>
+<div class="para" id="etn">Solve the congruence: <span class="process-math">\(4x \equiv 24 \pmod{30}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-SAu" id="SAu"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-SAu"><div class="solution solution-like"><div class="para" id="kiz">
+<span class="process-math">\(x = 6 + 15k\)</span> for <span class="process-math">\(k \in \Z\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="kDY"><h4 class="heading"><span class="codenumber">13<span class="period">.</span></span></h4>
+<div class="para" id="KAw">Solve the congruence: <span class="process-math">\(341x \equiv 2941 \pmod{9}\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-yHD" id="yHD"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-yHD"><div class="hint solution-like"><div class="para" id="cEa">First reduce each number modulo 9, which can be done by adding up the digits of the numbers.</div></div></div>
+</div></article><article class="exercise exercise-like" id="QLh"><h4 class="heading"><span class="codenumber">14<span class="period">.</span></span></h4>
+<div class="para" id="qHF">I'm thinking of a number. If you multiply my number by 7, add 5, and divide the result by 11, you will be left with a remainder of 2. What remainder would you get if you divided my original number by 11?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-eOM" id="eOM"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-eOM"><div class="solution solution-like"><div class="para" id="QpI">We must solve <span class="process-math">\(7x + 5 \equiv 2 \pmod{11}\text{.}\)</span> This gives <span class="process-math">\(x \equiv 9 \pmod{11}\text{.}\)</span> In general, <span class="process-math">\(x = 9 + 11k\text{,}\)</span> but when you divide any such <span class="process-math">\(x\)</span> by 11, the remainder will be 9.</div></div></div>
+</div></article><article class="exercise exercise-like" id="wSq"><h4 class="heading"><span class="codenumber">15<span class="period">.</span></span></h4>
+<div class="para logical" id="WOO">
+<div class="para">Solve the following linear Diophantine equation, using modular arithmetic (describe the general solutions).</div>
+<div class="displaymath process-math">
+\begin{equation*}
+6x + 10y = 32\text{.}
+\end{equation*}
+</div>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-KVV" id="KVV"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-KVV"><div class="solution solution-like"><div class="para" id="wwR">Divide through by 2: <span class="process-math">\(3x + 5y = 16\text{.}\)</span> Convert to a congruence, modulo 3: <span class="process-math">\(5y \equiv 16 \pmod 3\text{,}\)</span> which reduces to <span class="process-math">\(2y \equiv 1 \pmod 3\text{.}\)</span> So <span class="process-math">\(y \equiv 2 \pmod 3\)</span> or <span class="process-math">\(y = 2 + 3k\text{.}\)</span> Plug this back into <span class="process-math">\(3x + 5y = 16\)</span> and solve for <span class="process-math">\(x\text{,}\)</span> to get <span class="process-math">\(x = 2-5k\text{.}\)</span> So the general solution is <span class="process-math">\(x = 2-5k\)</span> and <span class="process-math">\(y = 2+3k\)</span> for <span class="process-math">\(k \in \Z\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="cZz"><h4 class="heading"><span class="codenumber">16<span class="period">.</span></span></h4>
+<div class="para logical" id="CVX">
+<div class="para">Solve the following linear Diophantine equation, using modular arithmetic (describe the general solutions).</div>
+<div class="displaymath process-math">
+\begin{equation*}
+17x + 8y = 31\text{.}
+\end{equation*}
+</div>
+</div></article><article class="exercise exercise-like" id="JgI"><h4 class="heading"><span class="codenumber">17<span class="period">.</span></span></h4>
+<div class="para logical" id="jdg">
+<div class="para">Solve the following linear Diophantine equation, using modular arithmetic (describe the general solutions).</div>
+<div class="displaymath process-math">
+\begin{equation*}
+35x + 47y = 1\text{.}
+\end{equation*}
+</div>
+</div></article><article class="exercise exercise-like" id="pnR"><h4 class="heading"><span class="codenumber">18<span class="period">.</span></span></h4>
+<div class="para" id="Pkp">You have a 13 oz. bottle and a 20 oz. bottle, with which you wish to measure exactly 2 oz. However, you have a limited supply of water. If any water enters either bottle and then gets dumped out, it is gone forever. What is the least amount of water you can start with and still complete the task?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-rde" id="rde"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-rde"><div class="hint solution-like"><div class="para" id="ILj">Solve the Diophantine equation <span class="process-math">\(13x + 20 y = 2\)</span> (why?).  Then consider which value of <span class="process-math">\(k\)</span> (the parameter in the solution) is optimal.</div></div></div>
+</div></article></section></section><div class="hidden-content tex2jax_ignore" id="hk-fn-27"><div class="fn">It is possible to develop a mathematical theory of partitions, prove statements about all partitions in general and then apply those observations to our case here.</div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-28"><div class="fn">Again, there is a mathematical theory of equivalence relations which applies in many more instances than the one we look at here.</div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-29"><div class="fn">This works for 3 as well, but definitely not for any modulus in general.</div></div>
+<div class="hidden-content tex2jax_ignore" id="hk-fn-30"><div class="fn">This is certainly not the only way to proceed. A more common technique would be to apply the <dfn class="terminology">Euclidean algorithm</dfn>. Our way can be a little faster, and is presented here primarily for variety.</div></div>
+</div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="sec_addtops-genfun.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="backmatter.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+</div></main>
+</div>
+<div class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
+<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
+<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+</div>
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</body>
+</html>

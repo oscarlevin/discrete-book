@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<!--********************************************-->
+<!--*       Generated from PreTeXt source      *-->
+<!--*                                          *-->
+<!--*         https://pretextbook.org          *-->
+<!--*                                          *-->
+<!--********************************************-->
+<html lang="en-US">
+<head xmlns:og="http://ogp.me/ns#" xmlns:book="https://ogp.me/ns/book#">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Describing Sequences</title>
+<meta name="Keywords" content="Authored in PreTeXt">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:type" content="book">
+<meta property="book:title" content="Discrete Mathematics">
+<meta property="book:author" content="Oscar Levin">
+<script>var runestoneMathReady = new Promise((resolve) => window.rsMathReady = resolve);
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    tags: "none",
+    tagSide: "right",
+    tagIndent: ".8em",
+    packages: {'[+]': ['base', 'extpfeil', 'ams', 'amscd', 'color', 'newcommand', 'knowl']}
+  },
+  options: {
+    ignoreHtmlClass: "tex2jax_ignore|ignore-math",
+    processHtmlClass: "process-math",
+    renderActions: {
+        findScript: [10, function (doc) {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(function(node) {
+                var display = !!node.type.match(/; *mode=display/);
+                var math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                var text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = {node: text, delim: '', n: 0};
+                math.end = {node: text, delim: '', n: 0};
+                doc.math.push(math);
+            });
+        }, '']
+    },
+  },
+  chtml: {
+    scale: 0.98,
+    mtextInheritFont: true
+  },
+  loader: {
+    load: ['input/asciimath', '[tex]/extpfeil', '[tex]/amscd', '[tex]/color', '[tex]/newcommand', '[pretext]/mathjaxknowl3.js'],
+    paths: {pretext: "https://pretextbook.org/js/lib"},
+  },
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+      console.log("in ready function");
+      rsMathReady();
+      }
+    )}
+  },
+};
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><link href="https://webwork.runestone.academy/webwork2_files/js/apps/MathView/mathview.css" rel="stylesheet">
+<script src="https://pretextbook.org/js/0.2/pretext-webwork/2.16/pretext-webwork.js"></script><script src="https://webwork.runestone.academy/webwork2_files/node_modules/iframe-resizer/js/iframeResizer.min.js"></script><script src="https://unpkg.com/lunr/lunr.js"></script><script src="lunr-pretext-search-index.js"></script><script src="https://pretextbook.org/js/0.2/pretext_search.js"></script><link href="https://pretextbook.org/css/0.6/pretext_search.css" rel="stylesheet" type="text/css">
+<script>js_version = 0.2</script><script src="https://pretextbook.org/js/lib/jquery.min.js"></script><script src="https://pretextbook.org/js/lib/jquery.sticky.js"></script><script src="https://pretextbook.org/js/lib/jquery.espy.min.js"></script><script src="https://pretextbook.org/js/0.2/pretext.js"></script><script>miniversion=0.1</script><script src="https://pretextbook.org/js/0.2/pretext_add_on.js?x=1"></script><script src="https://pretextbook.org/js/0.2/user_preferences.js"></script><script src="https://pretextbook.org/js/lib/knowl.js"></script><!--knowl.js code controls Sage Cells within knowls--><script>sagecellEvalName='Evaluate (Sage)';
+</script><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/dejavu-serif" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wdth,wght@8..144,50..150,100..900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,300..800&amp;display=swap" rel="stylesheet">
+<link href="https://pretextbook.org/css/0.6/pretext.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/pretext_add_on.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/shell_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/banner_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/navbar_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/toc_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/knowls_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/style_oscarlevin.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/colors_default.css" rel="stylesheet" type="text/css">
+<link href="https://pretextbook.org/css/0.6/setcolors.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="external/custom-styles.css">
+<!--** eBookCongig is necessary to configure interactive       **-->
+<!--** Runestone components to run locally in reader's browser **-->
+<!--** No external communication:                              **-->
+<!--**     log level is 0, Runestone Services are disabled     **-->
+<script type="text/javascript">
+eBookConfig = {};
+eBookConfig.useRunestoneServices = false;
+eBookConfig.host = 'http://127.0.0.1:8000';
+eBookConfig.course = 'PTX_Course_Title_Here';
+eBookConfig.basecourse = 'PTX_Base_Course';
+eBookConfig.isLoggedIn = false;
+eBookConfig.email = '';
+eBookConfig.isInstructor = false;
+eBookConfig.logLevel = 0;
+eBookConfig.username = '';
+eBookConfig.readings = null;
+eBookConfig.activities = null;
+eBookConfig.downloadsEnabled = false;
+eBookConfig.allow_pairs = false;
+eBookConfig.enableScratchAC = false;
+eBookConfig.build_info = "";
+eBookConfig.python3 = null;
+eBookConfig.runestone_version = '5.0.1';
+eBookConfig.jobehost = '';
+eBookConfig.proxyuri_runs = '';
+eBookConfig.proxyuri_files = '';
+eBookConfig.enable_chatcodes =  false;
+</script>
+<!--*** Runestone Services ***-->
+<script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runtime.a26418f1c7af0a01.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/637.d54be67956c5c660.bundle.js"></script><script type="text/javascript" src="https://runestone.academy/cdn/runestone/6.4.2/runestone.38c38879674c28b2.bundle.js"></script><link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/637.0fa6cababf056764.css">
+<link rel="stylesheet" type="text/css" href="https://runestone.academy/cdn/runestone/6.4.2/runestone.93e720e6c6581fb5.css">
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</head>
+<body id="dmoi-4" class="pretext book ignore-math">
+<a class="assistive" href="#ptx-content">Skip to main content</a><header id="ptx-masthead"><div class="ptx-banner">
+<a id="logo-link" href="http://discrete.openmathbooks.org/dmoi3.html" target="_blank"><img src="external/images/cover.png" alt="Logo image"></a><div class="title-container">
+<h1 class="heading"><a href="dmoi4.html"><span class="title">Discrete Mathematics:</span> <span class="subtitle">An Open Introduction, 4th edition (preview)</span></a></h1>
+<p class="byline">Oscar Levin</p>
+</div>
+<div id="searchresultsplaceholder" style="display: none">
+<button id="closesearchresults" onclick="document.getElementById('searchresultsplaceholder').style.display = 'none'; return false;">x</button><h2>Search Results: <span id="searchterms"></span>
+</h2>
+<div id="searchempty"><span>No results.</span></div>
+<ol id="searchresults"></ol>
+</div>
+</div></header><nav id="ptx-navbar" class="navbar"><button class="toc-toggle button" aria-label="Show or hide table of contents"><span class="icon">☰</span><span class="name">Contents</span></button><a class="index-button button" href="index-1.html" title="Index"><span class="name">Index</span></a><button id="user-preferences-button" class="user-preferences-button button" title="Modify user preferences"><span id="theavatarbutton" class="name">You!</span><div id="preferences_menu_holder" class="hidden"><ol id="preferences_menu" style="font-family: 'Roboto Serif', serif;">
+<li data-env="avatar" tabindex="-1">Choose avatar<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden avatar">
+<li data-val="You!" tabindex="-1">
+<span id="theYou!" class="avatarcheck">✔️</span>You!</li>
+<li data-val="😺" tabindex="-1">
+<span id="the😺" class="avatarcheck"></span>😺</li>
+<li data-val="👤" tabindex="-1">
+<span id="the👤" class="avatarcheck"></span>👤</li>
+<li data-val="👽" tabindex="-1">
+<span id="the👽" class="avatarcheck"></span>👽</li>
+<li data-val="🐶" tabindex="-1">
+<span id="the🐶" class="avatarcheck"></span>🐶</li>
+<li data-val="🐼" tabindex="-1">
+<span id="the🐼" class="avatarcheck"></span>🐼</li>
+<li data-val="🌈" tabindex="-1">
+<span id="the🌈" class="avatarcheck"></span>🌈</li>
+</ol>
+</li>
+<li data-env="fontfamily" tabindex="-1">Font family<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fontfamily">
+<li data-val="face" data-change="OS" tabindex="-1" style="font-family: 'Open Sans'">
+<span id="theOS" class="ffcheck">✔️</span><span class="name">Open Sans</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+<li data-val="face" data-change="RS" tabindex="-1" style="font-family: 'Roboto Serif'">
+<span id="theRS" class="ffcheck"></span><span class="name">Roboto Serif</span><span class="sample">AaBbCc 123 PreTeXt</span>
+</li>
+</ol>
+</li>
+<li data-env="font" tabindex="-1">Adjust font<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden fonts">
+<li>Size</li>
+<li><span id="thesize">12</span></li>
+<li data-val="size" data-change="-1" tabindex="-1" style="font-size: 80%">Smaller</li>
+<li data-val="size" data-change="1" tabindex="-1" style="font-size: 110%">Larger</li>
+<li>Width</li>
+<li><span id="thewdth">100</span></li>
+<li data-val="wdth" data-change="-5" tabindex="-1" style="font-variation-settings: 'wdth' 60">narrower</li>
+<li data-val="wdth" data-change="5" tabindex="-1" style="font-variation-settings: 'wdth' 150">wider</li>
+<li>Weight</li>
+<li><span id="thewght">400</span></li>
+<li data-val="wght" data-change="-50" tabindex="-1" style="font-weight: 200">thinner</li>
+<li data-val="wght" data-change="50" tabindex="-1" style="font-weight: 700">heavier</li>
+<li>Letter spacing</li>
+<li>
+<span id="thelspace">0</span><span class="byunits">/200</span>
+</li>
+<li data-val="lspace" data-change="-1" tabindex="-1">closer</li>
+<li data-val="lspace" data-change="1" tabindex="-1">f a r t h e r</li>
+<li>Word spacing</li>
+<li>
+<span id="thewspace">0</span><span class="byunits">/50</span>
+</li>
+<li data-val="wspace" data-change="-1" tabindex="-1">smaller gap </li>
+<li data-val="wspace" data-change="1" tabindex="-1">larger gap</li>
+<li>Line Spacing</li>
+<li>
+<span id="theheight">135</span><span class="byunits">/100</span>
+</li>
+<li data-val="height" data-change="-5" tabindex="-1" style="line-height: 1">closer<br>together</li>
+<li data-val="height" data-change="5" tabindex="-1" style="line-height: 1.75">further<br>apart</li>
+</ol>
+</li>
+<li data-env="atmosphere" tabindex="-1">Light/dark mode<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden atmosphere">
+<li data-val="default" tabindex="-1">
+<span id="thedefault" class="atmospherecheck">✔️</span>default</li>
+<li data-val="pastel" tabindex="-1">
+<span id="thepastel" class="atmospherecheck"></span>pastel</li>
+<li data-val="darktwilight" tabindex="-1">
+<span id="thedarktwilight" class="atmospherecheck"></span>twilight</li>
+<li data-val="dark" tabindex="-1">
+<span id="thedark" class="atmospherecheck"></span>dark</li>
+<li data-val="darkmidnight" tabindex="-1">
+<span id="thedarkmidnight" class="atmospherecheck"></span>midnight</li>
+</ol>
+</li>
+<li data-env="ruler" tabindex="-1">Reading ruler<div class="wrap_to_submenu"><span class="to_submenu">▻</span></div>
+<ol class="hidden ruler">
+<li data-val="none" tabindex="-1">
+<span id="thenone" class="rulercheck">✔️</span>none</li>
+<li data-val="underline" tabindex="-1">
+<span id="theunderline" class="rulercheck"></span>underline</li>
+<li data-val="lunderline" tabindex="-1">
+<span id="thelunderline" class="rulercheck"></span>L-underline</li>
+<li data-val="greybar" tabindex="-1">
+<span id="thegreybar" class="rulercheck"></span>grey bar</li>
+<li data-val="lightbox" tabindex="-1">
+<span id="thelightbox" class="rulercheck"></span>light box</li>
+<li data-val="sunrise" tabindex="-1">
+<span id="thesunrise" class="rulercheck"></span>sunrise</li>
+<li data-val="sunriseunderline" tabindex="-1">
+<span id="thesunriseunderline" class="rulercheck"></span>sunrise underline</li>
+<li class="moveQ">Motion by:</li>
+<li data-val="mouse" tabindex="-1">
+<span id="themouse" class="motioncheck">✔️</span>follow the mouse</li>
+<li data-val="arrow" tabindex="-1">
+<span id="thearrow" class="motioncheck"></span>up/down arrows - not yet</li>
+<li data-val="eye" tabindex="-1">
+<span id="theeye" class="motioncheck"></span>eye tracking - not yet</li>
+</ol>
+</li>
+</ol></div></button><span class="treebuttons"><a class="previous-button button" href="ch_sequences.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="up-button button" href="ch_sequences.html" title="Up"><span class="icon">^</span><span class="name">Up</span></a><a class="next-button button" href="sec_seq-arithgeom.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a></span><div class="searchbox"><div class="searchwidget">
+<input id="ptxsearch" type="text" name="terms" placeholder="Search" onchange="doSearch()"><button id="searchbutton" type="button" onclick="doSearch()">🔍</button>
+</div></div></nav><div id="latex-macros" class="hidden-content process-math" style="display:none"><span class="process-math">\(\renewcommand{\d}{\displaystyle}
+\newcommand{\N}{\mathbb N}
+\newcommand{\B}{\mathbf B}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\U}{\mathcal U}
+\newcommand{\pow}{\mathcal P}
+\newcommand{\inv}{^{-1}}
+\newcommand{\st}{:}
+\renewcommand{\iff}{\leftrightarrow}
+\newcommand{\Iff}{\Leftrightarrow}
+\newcommand{\imp}{\rightarrow}
+\newcommand{\Imp}{\Rightarrow}
+\newcommand{\isom}{\cong}
+
+\renewcommand{\bar}{\overline}
+\newcommand{\card}[1]{\left| #1 \right|}
+\newcommand{\twoline}[2]{\begin{pmatrix}#1 \\ #2 \end{pmatrix}}
+
+\newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}}
+\newcommand{\va}[1]{\vtx{above}{#1}}
+\newcommand{\vb}[1]{\vtx{below}{#1}}
+\newcommand{\vr}[1]{\vtx{right}{#1}}
+\newcommand{\vl}[1]{\vtx{left}{#1}}
+\renewcommand{\v}{\vtx{above}{}}
+\newcommand{\lt}{&lt;}
+\newcommand{\gt}{&gt;}
+\newcommand{\amp}{&amp;}
+\definecolor{fillinmathshade}{gray}{0.9}
+\newcommand{\fillinmath}[1]{\mathchoice{\colorbox{fillinmathshade}{$\displaystyle     \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\textstyle        \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptstyle      \phantom{\,#1\,}$}}{\colorbox{fillinmathshade}{$\scriptscriptstyle\phantom{\,#1\,}$}}}
+\)</span></div>
+<div class="ptx-page">
+<div id="ptx-sidebar"><nav id="ptx-toc" class="depth3"><ul class="structural">
+<li>
+<div class="toc-item"><a href="frontmatter.html" class="internal"><span class="title">Front Matter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="colophon-1.html" class="internal"><span class="title">Colophon</span></a></div></li>
+<li><div class="toc-item"><a href="dedication-1.html" class="internal"><span class="title">Dedication</span></a></div></li>
+<li><div class="toc-item"><a href="acknowledgement-1.html" class="internal"><span class="title">Acknowledgements</span></a></div></li>
+<li><div class="toc-item"><a href="preface.html" class="internal"><span class="title">Preface</span></a></div></li>
+<li><div class="toc-item"><a href="preface-2.html" class="internal"><span class="title">How to use this book</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_intro.html" class="internal"><span class="codenumber">0</span> <span class="title">Introduction and Preliminaries</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_intro-intro.html" class="internal"><span class="codenumber">0.1</span> <span class="title">What is Discrete Mathematics?</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_intro-intro.html#rqs-intro-intro" class="internal"><span class="codenumber">0.1</span> <span class="title">Reading Questions</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-structures.html" class="internal"><span class="codenumber">0.2</span> <span class="title">Discrete Structures</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sets" class="internal"><span class="title">Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-functions" class="internal"><span class="title">Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-sequences" class="internal"><span class="title">Sequences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec-relations" class="internal"><span class="title">Relations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-graphs" class="internal"><span class="title">Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsubsec_structures-statements" class="internal"><span class="title">Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#subsec_structures-even-more" class="internal"><span class="title">Even More Structures</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-structures.html#rqs-intro-structures" class="internal"><span class="codenumber">0.2</span> <span class="title">Reading Questions</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-sets.html" class="internal"><span class="codenumber">0.3</span> <span class="title">Sets</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-sets.html#RBf" class="internal"><span class="title">Notation</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#xIo" class="internal"><span class="title">Relationships Between Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#dPx" class="internal"><span class="title">Operations On Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#JWG" class="internal"><span class="title">Venn Diagrams</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-sets.html#ww_intro-sets" class="internal"><span class="codenumber">0.3</span> <span class="title">Interactive Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_intro-functions.html" class="internal"><span class="codenumber">0.4</span> <span class="title">Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_intro-functions.html#irZ" class="internal"><span class="title">Describing Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#Ozi" class="internal"><span class="title">Surjections, Injections, and Bijections</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#uGr" class="internal"><span class="title">Image and Inverse Image</span></a></div></li>
+<li><div class="toc-item"><a href="sec_intro-functions.html#XHz" class="internal"><span class="codenumber">0.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_logic.html" class="internal"><span class="codenumber">1</span> <span class="title">Symbolic Logic and Proofs</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_logic-statements.html" class="internal"><span class="codenumber">1.1</span> <span class="title">Mathematical Statements</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-statements.html#wKm" class="internal"><span class="title">Atomic and Molecular Statements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#cRv" class="internal"><span class="title">Implications</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#IYE" class="internal"><span class="title">Predicates and Quantifiers</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#rqs-logic-statements" class="internal"><span class="codenumber">1.1</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-statements.html#iCD" class="internal"><span class="codenumber">1.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_propositional.html" class="internal"><span class="codenumber">1.2</span> <span class="title">Propositional Logic</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_propositional.html#DTz" class="internal"><span class="title">Truth Tables</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#kaI" class="internal"><span class="title">Logical Equivalence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#QhR" class="internal"><span class="title">Deductions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#wpa" class="internal"><span class="title">Beyond Propositions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#rqs-logic-prop" class="internal"><span class="codenumber">1.2</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_propositional.html#Shv" class="internal"><span class="codenumber">1.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-proofs.html" class="internal"><span class="codenumber">1.3</span> <span class="title">Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Ruo" class="internal"><span class="title">Direct Proof</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#xBx" class="internal"><span class="title">Proof by Contrapositive</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#dIG" class="internal"><span class="title">Proof by Contradiction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#JPP" class="internal"><span class="title">Proof by (counter) Example</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#pWY" class="internal"><span class="title">Proof by Cases</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#rqs-logic-proof" class="internal"><span class="codenumber">1.3</span> <span class="title">Reading Questions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_logic-proofs.html#Fqn" class="internal"><span class="codenumber">1.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_logic-conc.html" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_logic-conc.html#MrW" class="internal"><span class="codenumber">1.4</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_counting.html" class="internal"><span class="codenumber">2</span> <span class="title">Counting</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_counting-addmult.html" class="internal"><span class="codenumber">2.1</span> <span class="title">Additive and Multiplicative Principles</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-addmult.html#YQj" class="internal"><span class="title">Counting With Sets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#EXs" class="internal"><span class="title">Principle of Inclusion/Exclusion</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-addmult.html#WHK" class="internal"><span class="codenumber">2.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-binom.html" class="internal"><span class="codenumber">2.2</span> <span class="title">Binomial Coefficients</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_counting-binom.html#cgB" class="internal"><span class="title">Subsets</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#InK" class="internal"><span class="title">Bit Strings</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#ouT" class="internal"><span class="title">Lattice Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#UCc" class="internal"><span class="title">Binomial Coefficients</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#AJl" class="internal"><span class="title">Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_counting-binom.html#uWm" class="internal"><span class="codenumber">2.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_counting-combperm.html" class="internal"><span class="codenumber">2.3</span> <span class="title">Combinations and Permutations</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_counting-combperm.html#jkK" class="internal"><span class="codenumber">2.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_comb-proofs.html" class="internal"><span class="codenumber">2.4</span> <span class="title">Combinatorial Proofs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_comb-proofs.html#zbp" class="internal"><span class="title">Patterns in Pascal's Triangle</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#fiy" class="internal"><span class="title">More Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_comb-proofs.html#lYz" class="internal"><span class="codenumber">2.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_stars-and-bars.html" class="internal"><span class="codenumber">2.5</span> <span class="title">Stars and Bars</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_stars-and-bars.html#zVa" class="internal"><span class="codenumber">2.5</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_advPIE.html" class="internal"><span class="codenumber">2.6</span> <span class="title">Advanced Counting Using PIE</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_advPIE.html#nSd" class="internal"><span class="title">Counting Derangements</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#TZm" class="internal"><span class="title">Counting Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_advPIE.html#nUq" class="internal"><span class="codenumber">2.6</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_count-conc.html" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_count-conc.html#Ejh" class="internal"><span class="codenumber">2.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_sequences.html" class="internal"><span class="codenumber">3</span> <span class="title">Sequences</span></a></div>
+<ul class="structural">
+<li class="active">
+<div class="toc-item"><a href="sec_seq_intro.html" class="internal"><span class="codenumber">3.1</span> <span class="title">Describing Sequences</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_seq_intro.html#vPK" class="internal"><span class="codenumber">3.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html" class="internal"><span class="codenumber">3.2</span> <span class="title">Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_seq-arithgeom.html#RQa" class="internal"><span class="title">Sums of Arithmetic and Geometric Sequences</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#xXj" class="internal"><span class="title">Summing Arithmetic Sequences: Reverse and Add</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#ees" class="internal"><span class="title">Summing Geometric Sequences: Multiply, Shift and Subtract</span></a></div></li>
+</ul>
+</li>
+<li><div class="toc-item"><a href="sec_seq-arithgeom.html#EGG" class="internal"><span class="codenumber">3.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_polyfit.html" class="internal"><span class="codenumber">3.3</span> <span class="title">Polynomial Fitting</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_polyfit.html#FTD" class="internal"><span class="codenumber">3.3</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_recurrence.html" class="internal"><span class="codenumber">3.4</span> <span class="title">Solving Recurrence Relations</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_recurrence.html#Hke" class="internal"><span class="title">The Characteristic Root Technique</span></a></div></li>
+<li><div class="toc-item"><a href="sec_recurrence.html#bQc" class="internal"><span class="codenumber">3.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_seq-induction.html" class="internal"><span class="codenumber">3.5</span> <span class="title">Induction</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_seq-induction.html#vyp" class="internal"><span class="title">Stamps</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#bFy" class="internal"><span class="title">Formalizing Proofs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#HMH" class="internal"><span class="title">Examples</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#nTQ" class="internal"><span class="title">Strong Induction</span></a></div></li>
+<li><div class="toc-item"><a href="sec_seq-induction.html#YsG" class="internal"><span class="codenumber">3.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_sequences-conc.html" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_sequences-conc.html#XPQ" class="internal"><span class="codenumber">3.6</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_graphtheory.html" class="internal"><span class="codenumber">4</span> <span class="title">Graph Theory</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_gt-intro.html" class="internal"><span class="codenumber">4.1</span> <span class="title">Definitions</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-intro.html#QMu" class="internal"><span class="codenumber">4.1</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_trees.html" class="internal"><span class="codenumber">4.2</span> <span class="title">Trees</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_trees.html#MvA" class="internal"><span class="title">Properties of Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#sCJ" class="internal"><span class="title">Rooted Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#YJS" class="internal"><span class="title">Spanning Trees</span></a></div></li>
+<li><div class="toc-item"><a href="sec_trees.html#iQl" class="internal"><span class="codenumber">4.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_planar.html" class="internal"><span class="codenumber">4.3</span> <span class="title">Planar Graphs</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_planar.html#ZAQ" class="internal"><span class="title">Non-planar Graphs</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#FHZ" class="internal"><span class="title">Polyhedra</span></a></div></li>
+<li><div class="toc-item"><a href="sec_planar.html#Pey" class="internal"><span class="codenumber">4.3</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_coloring.html" class="internal"><span class="codenumber">4.4</span> <span class="title">Coloring</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_coloring.html#WFX" class="internal"><span class="title">Coloring in General</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#CNg" class="internal"><span class="title">Coloring Edges</span></a></div></li>
+<li><div class="toc-item"><a href="sec_coloring.html#MxN" class="internal"><span class="codenumber">4.4</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_paths.html" class="internal"><span class="codenumber">4.5</span> <span class="title">Euler Paths and Circuits</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_paths.html#ZWp" class="internal"><span class="title">Hamilton Paths</span></a></div></li>
+<li><div class="toc-item"><a href="sec_paths.html#wMz" class="internal"><span class="codenumber">4.5</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_matchings.html" class="internal"><span class="codenumber">4.6</span> <span class="title">Matching in Bipartite Graphs</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_matchings.html#wye" class="internal"><span class="codenumber">4.6</span> <span class="title">Exercises</span></a></div></li></ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_gt-conc.html" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Summary</span></a></div>
+<ul class="structural"><li><div class="toc-item"><a href="sec_gt-conc.html#WIK" class="internal"><span class="codenumber">4.7</span> <span class="title">Chapter Review</span></a></div></li></ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="ch_additionalTopics.html" class="internal"><span class="codenumber">5</span> <span class="title">Additional Topics</span></a></div>
+<ul class="structural">
+<li>
+<div class="toc-item"><a href="sec_addtops-genfun.html" class="internal"><span class="codenumber">5.1</span> <span class="title">Generating Functions</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#DhS" class="internal"><span class="title">Building Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#jpb" class="internal"><span class="title">Differencing</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#Pwk" class="internal"><span class="title">Multiplication and Partial Sums</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#vDt" class="internal"><span class="title">Solving Recurrence Relations with Generating Functions</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-genfun.html#iOL" class="internal"><span class="codenumber">5.1</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="sec_addtops-numbth.html" class="internal"><span class="codenumber">5.2</span> <span class="title">Introduction to Number Theory</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#CqU" class="internal"><span class="title">Divisibility</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#iyd" class="internal"><span class="title">Remainder Classes</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#OFm" class="internal"><span class="title">Properties of Congruence</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#uMv" class="internal"><span class="title">Solving Congruences</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#aTE" class="internal"><span class="title">Solving Linear Diophantine Equations</span></a></div></li>
+<li><div class="toc-item"><a href="sec_addtops-numbth.html#TUi" class="internal"><span class="codenumber">5.2</span> <span class="title">Exercises</span></a></div></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<div class="toc-item"><a href="backmatter.html" class="internal"><span class="title">Backmatter</span></a></div>
+<ul class="structural">
+<li><div class="toc-item"><a href="solutions-1.html" class="internal"><span class="codenumber">A</span> <span class="title">Selected Hints</span></a></div></li>
+<li><div class="toc-item"><a href="solutions-2.html" class="internal"><span class="codenumber">B</span> <span class="title">Selected Solutions</span></a></div></li>
+<li><div class="toc-item"><a href="appendix-1.html" class="internal"><span class="codenumber">C</span> <span class="title">List of Symbols</span></a></div></li>
+<li><div class="toc-item"><a href="index-1.html" class="internal"><span class="title">Index</span></a></div></li>
+<li><div class="toc-item"><a href="colophon-2.html" class="internal"><span class="title">Colophon</span></a></div></li>
+</ul>
+</li>
+</ul></nav></div>
+<main class="ptx-main"><div id="ptx-content" class="ptx-content"><section class="section" id="tgm"><h2 class="heading hide-type">
+<span class="type">Section</span> <span class="codenumber">3.1</span> <span class="title">Describing Sequences</span>
+</h2>
+<article class="project-like" id="iHh"><h6 class="heading">
+<span class="type">Investigate!</span> </h6> <div class="para logical" id="PMF">
+<div class="para">You have a large collection of <span class="process-math">\(1\times 1\)</span> squares and <span class="process-math">\(1\times 2\)</span> dominoes. You want to arrange these to make a <span class="process-math">\(1 \times 15\)</span> strip. How many ways can you do this?</div>
+<ol class="decimal">
+<li id="NIX"><div class="para" id="IDF">Start by collecting data. How many length <span class="process-math">\(1\times 1\)</span> strips can you make? How many <span class="process-math">\(1\times 2\)</span> strips? How many <span class="process-math">\(1\times 3\)</span> strips? And so on.</div></li>
+<li id="tQg"><div class="para" id="oKO">How are the <span class="process-math">\(1\times 3\)</span> and <span class="process-math">\(1 \times 4\)</span> strips related to the <span class="process-math">\(1\times 5\)</span> strips?</div></li>
+<li id="ZXp"><div class="para" id="URX">How many <span class="process-math">\(1\times 15\)</span> strips can you make?</div></li>
+<li id="Gey"><div class="para" id="AZg">What if I asked you to find the number of <span class="process-math">\(1\times 1000\)</span> strips? Would the method you used to calculate the number fo <span class="process-math">\(1 \times 15\)</span> strips be helpful?</div></li>
+</ol>
+</div></article><div class="para logical" id="MRZ">
+<div class="para">A <dfn class="terminology">sequence</dfn>  is simply an ordered list of numbers. For example, here is a sequence: 0, 1, 2, 3, 4, 5, …. This is different from the set <span class="process-math">\(\N\)</span> because, while the sequence is a complete list of every element in the set of natural numbers, in the sequence we very much care what order the numbers come in. For this reason, when we use variables to represent terms in a sequence they will look like this:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a_0, a_1, a_2, a_3, \ldots\text{.}
+\end{equation*}
+</div>
+<div class="para">To refer to the <em class="emphasis">entire</em> sequence at once, we will write <span class="process-math">\((a_n)_{n\in\N}\)</span> or <span class="process-math">\((a_n)_{n\ge 0}\text{,}\)</span> or sometimes if we are being sloppy, just <span class="process-math">\((a_n)\)</span> (in which case we assume we start the sequence with <span class="process-math">\(a_0\)</span>). </div>
+</div>
+<div class="para" id="sZi">We might replace the <span class="process-math">\(a\)</span> with another letter, and sometimes we omit <span class="process-math">\(a_0\text{,}\)</span> starting with <span class="process-math">\(a_1\text{,}\)</span> in which case we would use <span class="process-math">\((a_n)_{n \ge 1}\)</span> to refer to the sequence as a whole. The numbers in the subscripts are called <dfn class="terminology">indices</dfn> (the plural of <dfn class="terminology">index</dfn>).</div>
+<div class="para" id="Zgr"> While we often just think of a sequence as an ordered list of numbers, it is really a type of function. Specifically, the sequence <span class="process-math">\((a_n)_{n\ge 0}\)</span> is a function with domain <span class="process-math">\(\N\)</span> where <span class="process-math">\(a_n\)</span> is the image of the natural number <span class="process-math">\(n\text{.}\)</span> Later we will manipulate sequences in much the same way you have manipulated functions in algebra or calculus. We can shift a sequence up or down, add two sequences, or ask for the rate of change of a sequence. These are done exactly as you would for functions.</div>
+<div class="para" id="FnA">That said, while keeping the rigorous mathematical definition in mind is helpful, we often describe sequences by writing out the first few terms.</div>
+<article class="example example-like" id="Kex"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.1.1</span><span class="period">.</span>
+</h3>
+<div class="para" id="alK">Can you find the next term in the following sequences?</div> <div class="para logical" id="GsT"><ol class="decimal">
+<li id="mlH"><div class="para" id="p-derived-mlH"><span class="process-math">\(\displaystyle 7,7,7,7,7, \ldots\)</span></div></li>
+<li id="SsQ"><div class="para" id="p-derived-SsQ"><span class="process-math">\(\displaystyle 3, -3, 3, -3, 3, \ldots\)</span></div></li>
+<li id="yzZ"><div class="para" id="p-derived-yzZ"><span class="process-math">\(\displaystyle 1, 5, 2, 10, 3, 15, \ldots\)</span></div></li>
+<li id="eHi"><div class="para" id="p-derived-eHi"><span class="process-math">\(\displaystyle 1, 2, 4, 8, 16, 32, \ldots\)</span></div></li>
+<li id="KOr"><div class="para" id="p-derived-KOr"><span class="process-math">\(\displaystyle 1, 4, 9, 16, 25, 36, \ldots\)</span></div></li>
+<li id="qVA"><div class="para" id="p-derived-qVA"><span class="process-math">\(\displaystyle 1, 2, 3, 5, 8, 13, 21, \ldots\)</span></div></li>
+<li id="XcJ"><div class="para" id="p-derived-XcJ"><span class="process-math">\(\displaystyle 1, 3, 6, 10, 15, 21, \ldots\)</span></div></li>
+<li id="DjS"><div class="para" id="p-derived-DjS"><span class="process-math">\(\displaystyle 2, 3, 5, 7, 11, 13, \ldots\)</span></div></li>
+<li id="jrb"><div class="para" id="p-derived-jrb"><span class="process-math">\(\displaystyle 3, 2, 1, 0, -1, \ldots\)</span></div></li>
+<li id="Pyk"><div class="para" id="p-derived-Pyk"><span class="process-math">\(\displaystyle 1, 1, 2, 6, \ldots\)</span></div></li>
+</ol></div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-OOq" id="OOq"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-OOq"><div class="solution solution-like">
+<div class="para" id="EDG">No you cannot. You might guess that the next terms are:</div> <div class="para logical" id="kKP"><ol class="decimal cols4">
+<li id="vFt"><div class="para" id="p-derived-vFt"><span class="process-math">\(\displaystyle 7\)</span></div></li>
+<li id="bMC"><div class="para" id="p-derived-bMC"><span class="process-math">\(\displaystyle -3\)</span></div></li>
+<li id="HTL"><div class="para" id="p-derived-HTL"><span class="process-math">\(\displaystyle 4\)</span></div></li>
+<li id="oaU"><div class="para" id="hgp">64</div></li>
+<li id="Uid"><div class="para" id="Nny">49</div></li>
+<li id="Apm"><div class="para" id="tuH">34</div></li>
+<li id="gwv"><div class="para" id="ZBQ">28</div></li>
+<li id="MDE"><div class="para" id="FIZ">17</div></li>
+<li id="sKN"><div class="para" id="p-derived-sKN"><span class="process-math">\(\displaystyle -2\)</span></div></li>
+<li id="YRW"><div class="para" id="p-derived-YRW"><span class="process-math">\(\displaystyle 24\)</span></div></li>
+</ol></div> <div class="para" id="QRY">In fact, those are the next terms of the sequences I had in mind when I made up the example, but there is no way to be sure they are correct.</div> <div class="para" id="wZh">Still, we will often do this. Given the first few terms of a sequence, we can ask what the pattern in the sequence suggests the next terms are.</div>
+</div></div>
+</div></article><div class="para" id="luJ">Given that no number of initial terms in a sequence is enough to say for certain which sequence we are dealing with, we need to find another way to specify a sequence. We consider two ways to do this:</div>
+<article class="assemblage assemblage-like" id="FuE"><h3 class="heading"><span class="title">Closed formula.</span></h3>
+<div class="para" id="Uwy">A <dfn class="terminology">closed formula</dfn>  for a sequence <span class="process-math">\((a_n)_{n\in\N}\)</span> is a formula for <span class="process-math">\(a_n\)</span> using a fixed finite number of operations on <span class="process-math">\(n\text{.}\)</span> This is what you normally think of as a formula in <span class="process-math">\(n\text{,}\)</span> just as if you were defining a function in terms of <span class="process-math">\(n\)</span> (because that is exactly what you are doing).</div></article><article class="assemblage assemblage-like" id="lBN"><h3 class="heading"><span class="title">Recursive definition.</span></h3>
+<div class="para" id="ADH">A <dfn class="terminology">recursive definition</dfn>  (sometimes called an <dfn class="terminology">inductive definition</dfn>) for a sequence <span class="process-math">\((a_n)_{n\in\N}\)</span> consists of a <dfn class="terminology">recurrence relation</dfn>  : an equation relating a term of the sequence to previous terms (terms with smaller index) and an <dfn class="terminology">initial condition</dfn>:  a list of a few terms of the sequence (one less than the number of terms in the recurrence relation).</div></article><div class="para" id="RBS">It is easier to understand what is going on here with an example:</div>
+<article class="example example-like" id="qlG"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.1.2</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="mAc">
+<div class="para">Here are a few closed formulas for sequences: </div>
+<ul class="disc">
+<li id="cRV"><div class="para" id="p-derived-cRV"><span class="process-math">\(a_n = n^2\text{.}\)</span></div></li>
+<li id="IZe"><div class="para" id="p-derived-IZe"><span class="process-math">\(\d a_n = \frac{n(n+1)}{2}\text{.}\)</span></div></li>
+<li id="pgn"><div class="para" id="p-derived-pgn"><span class="process-math">\(\d a_n = \frac{\left(\frac{1 + \sqrt 5}{2}\right)^n - \left(\frac{1 - \sqrt 5}{2}\right)^{-n}}{\sqrt{5}}\text{.}\)</span></div></li>
+</ul>
+</div> <div class="para" id="SHl">Note in each formula, if you are given <span class="process-math">\(n\text{,}\)</span> you can calculate <span class="process-math">\(a_n\)</span> directly: just plug in <span class="process-math">\(n\text{.}\)</span> For example, to find <span class="process-math">\(a_3\)</span> in the second sequence, just compute <span class="process-math">\(a_3 = \frac{3(3+1)}{2} = 6\text{.}\)</span>
+</div> <div class="para logical" id="yOu">
+<div class="para">Here are a few recursive definitions for sequences: </div>
+<ul class="disc">
+<li id="Vnw"><div class="para" id="p-derived-Vnw">
+<span class="process-math">\(a_n = 2a_{n-1}\)</span> with <span class="process-math">\(a_0 = 1\text{.}\)</span>
+</div></li>
+<li id="BuF"><div class="para" id="p-derived-BuF">
+<span class="process-math">\(a_n = 2a_{n-1}\)</span> with <span class="process-math">\(a_0 = 27\text{.}\)</span>
+</div></li>
+<li id="hBO"><div class="para" id="p-derived-hBO">
+<span class="process-math">\(a_n = a_{n-1} + a_{n-2}\)</span> with <span class="process-math">\(a_0 = 0\)</span> and <span class="process-math">\(a_1 = 1\text{.}\)</span>
+</div></li>
+</ul>
+</div> <div class="para" id="eVD">In these formulas, if you are given <span class="process-math">\(n\text{,}\)</span> you cannot calculate <span class="process-math">\(a_n\)</span> directly, you first need to find <span class="process-math">\(a_{n-1}\)</span> (or <span class="process-math">\(a_{n-1}\)</span> and <span class="process-math">\(a_{n-2}\)</span>). In the second sequence, to find <span class="process-math">\(a_3\)</span> you would take <span class="process-math">\(2a_2\text{,}\)</span> but to find <span class="process-math">\(a_2 = 2a_1\)</span> we would need to know <span class="process-math">\(a_1 = 2a_0\text{.}\)</span> We do know this, so we could trace back through these equations to find <span class="process-math">\(a_1 = 54\text{,}\)</span> <span class="process-math">\(a_2 = 108\)</span> and finally <span class="process-math">\(a_3 = 216\text{.}\)</span> </div></article><div class="para" id="xJb">You might wonder why we would bother with recursive definitions for sequences. After all, it is harder to find <span class="process-math">\(a_n\)</span> with a recursive definition than with a closed formula. This is true, but it is also harder to find a closed formula for a sequence than it is to find a recursive definition. So to find a useful closed formula, we might first find the recursive definition, then use that to find the closed formula.</div>
+<div class="para" id="dQk">This is not to say that recursive definitions aren't useful in finding <span class="process-math">\(a_n\text{.}\)</span> You can always calculate <span class="process-math">\(a_n\)</span> given a recursive definition, it might just take a while.</div>
+<article class="example example-like" id="WsP"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.1.3</span><span class="period">.</span>
+</h3>
+<div class="para" id="LcM">Find <span class="process-math">\(a_6\)</span> in the sequence defined by <span class="process-math">\(a_n = 2a_{n-1} - a_{n-2}\)</span> with <span class="process-math">\(a_0 = 3\)</span> and <span class="process-math">\(a_1 = 4\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-uVz" id="uVz"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-uVz"><div class="solution solution-like">
+<div class="para logical" id="dgq">
+<div class="para">We know that <span class="process-math">\(a_6 = 2a_5 - a_4\text{.}\)</span> So to find <span class="process-math">\(a_6\)</span> we need to find <span class="process-math">\(a_5\)</span> and <span class="process-math">\(a_4\text{.}\)</span> Well</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a_5 = 2a_4 - a_3 \qquad \text{and} \qquad a_4 = 2a_3 - a_2\text{,}
+\end{equation*}
+</div>
+<div class="para">so if we can only find <span class="process-math">\(a_3\)</span> and <span class="process-math">\(a_2\)</span> we would be set. Of course</div>
+<div class="displaymath process-math">
+\begin{equation*}
+a_3 = 2a_2 - a_1 \qquad \text{and} \qquad a_2 = 2a_1 - a_0\text{,}
+\end{equation*}
+</div>
+<div class="para">so we only need to find <span class="process-math">\(a_1\)</span> and <span class="process-math">\(a_0\text{.}\)</span> But we are given these. Thus</div>
+<div class="displaymath process-math" id="LMG">
+\begin{align*}
+a_0 \amp = 3\\
+a_1 \amp = 4\\
+a_2 \amp = 2\cdot 4 - 3 = 5\\
+a_3 \amp = 2\cdot 5 - 4 = 6\\
+a_4 \amp = 2\cdot 6 - 5 = 7\\
+a_5 \amp = 2\cdot 7 - 6 = 8\\
+a_6 \amp = 2\cdot 8 - 7 = 9\text{.}
+\end{align*}
+</div>
+</div> <div class="para logical" id="Jnz">
+<div class="para">Note that now we can guess a closed formula for the <span class="process-math">\(n\)</span>th term of the sequence: <span class="process-math">\(a_n = n+3\text{.}\)</span> To be sure this will always work, we could plug in this formula into the recurrence relation:</div>
+<div class="displaymath process-math" id="rTP">
+\begin{align*}
+2a_{n-1} - a_{n-2} \amp = 2((n-1) + 3) - ((n-2) + 3)\\
+\amp = 2n + 4 - n - 1\\
+\amp = n + 3\\
+\amp = a_n\text{.}
+\end{align*}
+</div>
+</div> <div class="para" id="puI">That is not quite enough though, since there can be multiple closed formulas that satisfy the same recurrence relation; we must also check that our closed formula agrees on the initial terms of the sequence. Since <span class="process-math">\(a_0 = 0 + 3 = 3\)</span> and <span class="process-math">\(a_1 = 1+3 = 4\)</span> are the correct initial conditions, we can now conclude we have the correct closed formula.</div>
+</div></div>
+</div></article><div class="para" id="JXt">Finding closed formulas, or even recursive definitions, for sequences is not trivial. There is no one method for doing this. Just as in evaluating integrals or solving differential equations, it is useful to have a bag of tricks you can apply, but sometimes there is no easy answer.</div>
+<div class="para" id="qeC">One useful method is to relate a given sequence to another sequence for which we already know the closed formula.  To do this, we need a few “known sequences” to compare mystery sequences to.  Here are a few that are good to know.  We will verify the formulas for these in the coming sections.</div>
+<article class="assemblage assemblage-like" id="RIW"><h3 class="heading"><span class="title">Common Sequences.</span></h3>
+<div class="para logical" id="gKQ"><dl class="description-list">
+<dt id="kaV"><span class="process-math">\(1, 4, 9, 16, 25, \ldots\)</span></dt>
+<dd><div class="para" id="lQi">The <dfn class="terminology">square numbers</dfn>.  The sequence <span class="process-math">\((s_n)_{n \ge 1}\)</span> has closed formula <span class="process-math">\(s_n = n^2\)</span>
+</div></dd>
+<dt id="Qie"><span class="process-math">\(1, 3, 6, 10, 15, 21, \ldots\)</span></dt>
+<dd><div class="para" id="RXr">The <dfn class="terminology">triangular numbers</dfn>.  The sequence <span class="process-math">\((T_n)_{n \ge 1}\)</span> has closed formula <span class="process-math">\(T_n = \frac{n(n+1)}{2}\text{.}\)</span>
+</div></dd>
+<dt id="wpn"><span class="process-math">\(1, 2, 4, 8, 16, 32,\ldots\)</span></dt>
+<dd><div class="para" id="yeA">The <dfn class="terminology">powers of 2</dfn>.  The sequence <span class="process-math">\((a_n)_{n \ge 0}\)</span> with closed formula <span class="process-math">\(a_n = 2^n\text{.}\)</span>
+</div></dd>
+<dt id="cww"><span class="process-math">\(1, 1, 2, 3, 5, 8, 13, \ldots\)</span></dt>
+<dd><div class="para" id="elJ">The <dfn class="terminology">Fibonacci numbers</dfn> (or Fibonacci sequence), defined recursively by <span class="process-math">\(F_n = F_{n-1} + F_{n-2}\)</span> with <span class="process-math">\(F_1 = F_2 = 1\text{.}\)</span>
+</div></dd>
+</dl></div></article><article class="example example-like" id="CzY"><h3 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.1.4</span><span class="period">.</span>
+</h3>
+<div class="para logical" id="rjV">
+<div class="para">Use the formulas <span class="process-math">\(T_n = \frac{n(n+1)}{2}\)</span> and <span class="process-math">\(a_n = 2^n\)</span> to find closed formulas that agree with the following sequences.  Assume each first term corresponds to <span class="process-math">\(n=0\text{.}\)</span>
+</div>
+<ol class="decimal">
+<li id="EZf"><div class="para" id="KsS">
+<span class="process-math">\((b_n)\text{:}\)</span> <span class="process-math">\(1, 2, 4, 7, 11, 16, 22, \ldots \text{.}\)</span>
+</div></li>
+<li id="lgo"><div class="para" id="qAb">
+<span class="process-math">\((c_n)\text{:}\)</span> <span class="process-math">\(3, 5, 9, 17, 33,\ldots \text{.}\)</span>
+</div></li>
+<li id="Rnx"><div class="para" id="WHk">
+<span class="process-math">\((d_n)\text{:}\)</span> <span class="process-math">\(0, 2, 6, 12, 20, 30, 42,\ldots \text{.}\)</span>
+</div></li>
+<li id="xuG"><div class="para" id="COt">
+<span class="process-math">\((e_n)\text{:}\)</span> <span class="process-math">\(3, 6, 10, 15, 21, 28, \ldots\text{.}\)</span>
+</div></li>
+<li id="dBP"><div class="para" id="iVC">
+<span class="process-math">\((f_n)\text{:}\)</span> <span class="process-math">\(0, 1, 3, 7, 15, 31, \ldots \text{.}\)</span>
+</div></li>
+<li id="JIY"><div class="para" id="PcL">
+<span class="process-math">\((g_n)\)</span> <span class="process-math">\(3, 6, 12, 24, 48, \ldots \text{.}\)</span>
+</div></li>
+<li id="pQh"><div class="para" id="vjU">
+<span class="process-math">\((h_n)\text{:}\)</span> <span class="process-math">\(6, 10, 18, 34, 66, \ldots \text{.}\)</span>
+</div></li>
+<li id="VXq"><div class="para" id="brd">
+<span class="process-math">\((j_n)\text{:}\)</span> <span class="process-math">\(15, 33, 57, 87, 123, \ldots\text{.}\)</span>
+</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-bcI" id="bcI"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-bcI"><div class="solution solution-like"><div class="para logical" id="VBR">
+<div class="para"> We wish to compare these sequences to the triangular numbers <span class="process-math">\((0, 1, 3, 6, 10, 15, 21,\ldots)\text{,}\)</span> when we start with <span class="process-math">\(n=0\text{,}\)</span> and the powers of 2: <span class="process-math">\((1, 2, 4, 8, 16, \ldots)\text{.}\)</span>
+</div>
+<ol class="decimal">
+<li id="Cez"><div class="para" id="Hym">
+<span class="process-math">\((1, 2, 4, 7, 11, 16, 22, \ldots)\text{.}\)</span> Note that if subtract 1 from each term, we get the sequence <span class="process-math">\((T_n)\text{.}\)</span> So we have <span class="process-math">\(b_n = T_n + 1\text{.}\)</span> Therefore a closed formula is <span class="process-math">\(b_n = \frac{n(n+1)}{2} + 1\text{.}\)</span> A quick check of the first few <span class="process-math">\(n\)</span> confirms we have it right.</div></li>
+<li id="ilI"><div class="para" id="nFv">
+<span class="process-math">\((3, 5, 9, 17, 33, \ldots )\text{.}\)</span> Each term in this sequence is one more than a power of 2, so we might guess the closed formula is <span class="process-math">\(c_n = a_n+1 = 2^n + 1\text{.}\)</span> If we try this though, we get <span class="process-math">\(c_0 = 2^0 + 1 = 2\)</span> and <span class="process-math">\(c_1 = 2^1 + 1 = 3\text{.}\)</span> We are off because the indices are shifted. What we really want is <span class="process-math">\(c_n = a_{n+1}+1\)</span> giving <span class="process-math">\(c_n = 2^{n+1} + 1\text{.}\)</span>
+</div></li>
+<li id="OsR"><div class="para" id="TME">(<span class="process-math">\(0, 2, 6, 12, 20, 30, 42,\ldots \)</span>). Notice that all these terms are even. What happens if we factor out a 2? We get <span class="process-math">\((T_n)\text{!}\)</span> More precisely, we find that <span class="process-math">\(d_n/2 = T_n\text{,}\)</span> so this sequence has closed formula <span class="process-math">\(d_n = n(n+1)\text{.}\)</span>
+</div></li>
+<li id="uAa"><div class="para" id="zTN">
+<span class="process-math">\((3, 6, 10, 15, 21, 28, \ldots)\text{.}\)</span> These are all triangular numbers. However, we are starting with 3 as our initial term instead of as our third term. So if we could plug in 2 instead of 0 into the formula for <span class="process-math">\(T_n\text{,}\)</span> we would be set. Therefore the closed formula is <span class="process-math">\(e_n = \frac{(n+2)(n+3)}{2}\)</span> (where <span class="process-math">\(n+3\)</span> came from <span class="process-math">\((n+2)+1\)</span>). Thinking about sequences as functions, we are doing a horizontal shift by 2: <span class="process-math">\(e_n = T_{n+2}\)</span> which would cause the graph to shift 2 units to the left.</div></li>
+<li id="aHj"><div class="para" id="gaW">
+<span class="process-math">\((0, 1, 3, 7, 15, 31, \ldots )\text{.}\)</span> Try adding 1 to each term and we get powers of 2. You might guess this because each term is a little more than twice the previous term (the powers of 2 are <em class="emphasis">exactly</em> twice the previous term). Closed formula: <span class="process-math">\(f_n = 2^{n} - 1\text{.}\)</span>
+</div></li>
+<li id="GOs"><div class="para" id="Mif">
+<span class="process-math">\((3, 6, 12, 24, 48, \ldots )\text{.}\)</span> These numbers are also doubling each time, but are also all multiples of 3. Dividing each by 3 gives 1, 2, 4, 8, …. Aha. We get the closed formula <span class="process-math">\(g_n = 3\cdot 2^{n}\text{.}\)</span>
+</div></li>
+<li id="mVB"><div class="para" id="spo">
+<span class="process-math">\((6, 10, 18, 34, 66, \ldots )\text{.}\)</span> To get from one term to the next, we almost double each term. So maybe we can relate this back to <span class="process-math">\(2^n\text{.}\)</span> Yes, each term is 2 more than a power of 2. So we get <span class="process-math">\(h_n = 2^{n+2} + 2\)</span> (the <span class="process-math">\(n+2\)</span> is because the first term is 2 more than <span class="process-math">\(2^2\text{,}\)</span> not <span class="process-math">\(2^0\)</span>). Alternatively, we could have related this sequence to the second sequence in this example: starting with 3, 5, 9, 17, … we see that this sequence is twice the terms from that sequence. That sequence had closed formula <span class="process-math">\(c_n = 2^{n+1} + 1\text{.}\)</span> Our sequence here would be twice this, so <span class="process-math">\(h_n = 2(2^n + 1)\text{,}\)</span> which is the same as we got before.</div></li>
+<li id="TcK"><div class="para" id="Ywx">
+<span class="process-math">\((15, 33, 57, 87, 123, \ldots)\text{.}\)</span> Try dividing each term by 3. That gives the sequence <span class="process-math">\(5, 11, 19, 29, 41,\ldots\text{.}\)</span> Now add 1 to each term: <span class="process-math">\(6, 12, 20, 30, 42, \ldots\text{,}\)</span> which is <span class="process-math">\((d_n)\)</span> in this example, except starting with 6 instead of 0. So let's start with the formula <span class="process-math">\(d_n= n(n+1)\text{.}\)</span> To start with the 6, we shift: <span class="process-math">\((n+2)(n+3)\text{.}\)</span> But this is one too many, so subtract 1: <span class="process-math">\((n+2)(n+3) - 1\text{.}\)</span> That gives us our sequence, but divided by 3. So we want <span class="process-math">\(j_n = 3((n+2)(n+3) - 1)\text{.}\)</span>
+</div></li>
+</ol>
+</div></div></div>
+</div></article><section class="paragraphs" id="Znv"><h3 class="heading"><span class="title">Partial sums.</span></h3> <div class="para" id="vTO">Some sequences naturally arise as the sum of terms of another sequence.</div> <article class="example example-like" id="xQf"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.1.5</span><span class="period">.</span>
+</h4>
+<div class="para logical" id="Xre">
+<div class="para">Sam keeps track of how many push-ups she does each day of her “do lots of push-ups challenge.”  Let <span class="process-math">\((a_n)_{n \ge 1}\)</span> be the sequence that describes the number of push-ups done on the <span class="process-math">\(n\)</span>th day of the challenge.  The sequence starts</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3, 5, 6, 10, 9, 0, 12, \ldots\text{.}
+\end{equation*}
+</div>
+<div class="para">Describe a sequence <span class="process-math">\((b_n)_{n \ge 1}\)</span> that describes the total number of push-ups done by Sam after the <span class="process-math">\(n\)</span>th day.</div>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-HjR" id="HjR"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-HjR"><div class="solution solution-like">
+<div class="para logical" id="BJa">
+<div class="para">We can find the terms of this sequence easily enough.</div>
+<div class="displaymath process-math">
+\begin{equation*}
+3, 8, 14, 24, 33, 33, 45,\ldots\text{.}
+\end{equation*}
+</div>
+<div class="para">Here <span class="process-math">\(b_1\)</span> is just <span class="process-math">\(a_1\text{,}\)</span> but then</div>
+<div class="displaymath process-math">
+\begin{equation*}
+b_2 = 3+5 = a_1 + a_2\text{,}
+\end{equation*}
+</div>
+<div class="displaymath process-math">
+\begin{equation*}
+b_3 = 3+5+6 = a_1 + a_2 + a_3\text{,}
+\end{equation*}
+</div>
+<div class="para">and so on.</div>
+</div> <div class="para logical" id="hQj">
+<div class="para">There are a few ways we might describe <span class="process-math">\(b_n\)</span> in general.  We could do so recursively as,</div>
+<div class="displaymath process-math">
+\begin{equation*}
+b_n = b_{n-1} + a_n\text{,}
+\end{equation*}
+</div>
+<div class="para">since the total number of push-ups done after <span class="process-math">\(n\)</span> days will be the number done after <span class="process-math">\(n-1\)</span> days, plus the number done on day <span class="process-math">\(n\text{.}\)</span>
+</div>
+</div> <div class="para logical" id="NXs">
+<div class="para">For something closer to a closed formula, we could write</div>
+<div class="displaymath process-math">
+\begin{equation*}
+b_n = a_1 + a_2 + a_3 + \cdots + a_n\text{,}
+\end{equation*}
+</div>
+<div class="para">or the same thing using <em class="emphasis">summation notation</em>:</div>
+<div class="displaymath process-math">
+\begin{equation*}
+b_n = \sum_{i=1}^n a_i\text{.}
+\end{equation*}
+</div>
+<div class="para"> However, note that these are not really closed formulas since even if we had a formula for <span class="process-math">\(a_n\text{,}\)</span> we would still have an increasing number of computations to do as <span class="process-math">\(n\)</span> increases.</div>
+</div>
+</div></div>
+</div></article> <div class="para logical" id="caX">
+<div class="para">Given any sequence <span class="process-math">\((a_n)_{n \in \N}\text{,}\)</span> we can always form a new sequence <span class="process-math">\((b_n)_{n \in \N}\)</span> by</div>
+<div class="displaymath process-math">
+\begin{equation*}
+b_n = a_0 + a_1 + a_2 + \cdots + a_n\text{.}
+\end{equation*}
+</div>
+<div class="para">Since the terms of <span class="process-math">\((b_n)\)</span> are the sums of the initial part of the sequence <span class="process-math">\((a_n)\)</span> ways call <span class="process-math">\((b_n)\)</span> the <dfn class="terminology">sequence of partial sums of <span class="process-math">\((a_n)\)</span></dfn>.  Soon we will see that it is sometimes possible to find a closed formula for <span class="process-math">\((b_n)\)</span> from the closed formula for <span class="process-math">\((a_n)\text{.}\)</span>
+</div>
+</div> <div class="para" id="Iig">To simplify writing out these sums, we will often use notation like <span class="process-math">\(\d\sum_{k=1}^n a_k\text{.}\)</span> This means add up the <span class="process-math">\(a_k\)</span>'s where <span class="process-math">\(k\)</span> changes from 1 to <span class="process-math">\(n\text{.}\)</span> </div> <article class="example example-like" id="dXo"><h4 class="heading">
+<span class="type">Example</span><span class="space"> </span><span class="codenumber">3.1.6</span><span class="period">.</span>
+</h4>
+<div class="para" id="Dyn">Use <span class="process-math">\(\sum\)</span> notation to rewrite the sums:</div> <div class="para logical" id="jFw"><ol class="decimal">
+<li id="zjT"><div class="para" id="p-derived-zjT"><span class="process-math">\(\displaystyle 1 + 2 + 3 + 4 + \cdots + 100\)</span></div></li>
+<li id="frc"><div class="para" id="p-derived-frc"><span class="process-math">\(\displaystyle 1 + 2 + 4 + 8 + \cdots + 2^{50}\)</span></div></li>
+<li id="Lyl"><div class="para" id="p-derived-Lyl"><span class="process-math">\(6 + 10 + 14 + \cdots + (4n - 2)\text{.}\)</span></div></li>
+</ol></div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-nra" id="nra"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-nra"><div class="solution solution-like"><div class="para logical" id="ueB"><ol class="decimal cols3">
+<li id="rFu"><div class="para" id="p-derived-rFu"><span class="process-math">\(\displaystyle \d\sum_{k=1}^{100} k\)</span></div></li>
+<li id="XMD"><div class="para" id="p-derived-XMD"><span class="process-math">\(\displaystyle \d\sum_{k=0}^{50} 2^k\)</span></div></li>
+<li id="DTM"><div class="para" id="p-derived-DTM"><span class="process-math">\(\displaystyle \d\sum_{k=2}^{n} (4k -2)\)</span></div></li>
+</ol></div></div></div>
+</div></article> <div class="para" id="opp">If we want to multiply the <span class="process-math">\(a_k\)</span> instead, we could write <span class="process-math">\(\d\prod_{k=1}^n a_k\text{.}\)</span> For example, <span class="process-math">\(\d\prod_{k=1}^n k = n!\text{.}\)</span> </div></section><section class="exercises" id="vPK"><h3 class="heading hide-type">
+<span class="type">Exercises</span> <span class="codenumber"></span> <span class="title">Exercises</span>
+</h3>
+<article class="exercise exercise-like" id="QUY"><h4 class="heading"><span class="codenumber">1<span class="period">.</span></span></h4>
+<div id="webwork-99" class="exercise-wrapper" data-domain="https://webwork.runestone.academy" data-seed="99" data-localize-correct="Correct" data-localize-incorrect="Incorrect" data-localize-blank="Blank" data-localize-submit="Submit" data-localize-check-responses="Check Responses" data-localize-reveal="Reveal" data-localize-randomize="Randomize" data-localize-reset="Reset" data-problemSource="RE9DVU1FTlQoKTsKbG9hZE1hY3JvcygiUEdzdGFuZGFyZC5wbCIsIk1hdGhPYmplY3RzLnBsIiwiUEdNTC5wbCIsIkFuc3dlckZvcm1hdEhlbHAucGwiLCJQQ0NtYWNyb3MucGwiLCJQR2NvdXJzZS5wbCIsKTtURVhUKGJlZ2lucHJvYmxlbSgpKTsKQ29udGV4dCgpLT52YXJpYWJsZXMtPmFyZShuID0+ICJSZWFsIik7CiRhbnMxID0gRm9ybXVsYSgibl4yICsgMSIpOwokYW5zMiA9IEZvcm11bGEoIihuKihuLTEpKS8yIC0gMSIpOwokYW5zMyA9IEZvcm11bGEoIigobisyKSoobiszKSkvMiArIDIiKTsKJGFuczQgPSBGb3JtdWxhKCIobisxKSEgLSAxIik7CgpCRUdJTl9QR01MCkZpbmQgdGhlIGNsb3NlZCBmb3JtdWxhIGZvciBlYWNoIG9mIHRoZSBmb2xsb3dpbmcgc2VxdWVuY2VzIGJ5IHJlbGF0aW5nIHRoZW0gdG8gYSB3ZWxsIGtub3duIHNlcXVlbmNlLiBBc3N1bWUgdGhlIGZpcnN0IHRlcm0gZ2l2ZW4gaXMgW2BhXzFcdGV4dHsufWBdCmEuICBbYDIsIDUsIDEwLCAxNywgMjYsIFxsZG90c2BdCgogICAgW0BLZXlib2FyZEluc3RydWN0aW9ucygnW2BhX24gPSBgXSBbX117JGFuczF9ezEwfScpQF0qKgoKCmEuICBbYDAsIDIsIDUsIDksIDE0LCAyMCwgXGxkb3RzYF0KCiAgICBbQEtleWJvYXJkSW5zdHJ1Y3Rpb25zKCdbYGFfbiA9IGBdIFtfXXskYW5zMn17MTB9JylAXSoqCgoKYS4gIFtgOCwgMTIsIDE3LCAyMywgMzAsXGxkb3RzYF0KCiAgICBbQEtleWJvYXJkSW5zdHJ1Y3Rpb25zKCdbYGFfbiA9IGBdIFtfXXskYW5zM317MTB9JylAXSoqCgoKYS4gIFtgMSwgNSwgMjMsIDExOSwgNzE5LFxsZG90c2BdCgogICAgW0BLZXlib2FyZEluc3RydWN0aW9ucygnW2BhX24gPSBgXSBbX117JGFuczR9ezEwfScpQF0qKgoKCgoKCkVORF9QR01MCgpCRUdJTl9QR01MX1NPTFVUSU9OCmEuICBOb3RlIHRoYXQgaWYgd2Ugc3VidHJhY3QgMSBmcm9tIGVhY2ggdGVybSwgd2UgZ2V0IHRoZSBzcXVhcmUgbnVtYmVycy4gVGh1cyBbYGFfbiA9IG5eMiArIDFcdGV4dHsufWBdCmEuICBUaGVzZSBsb29rIGxpa2UgdGhlIHRyaWFuZ3VsYXIgbnVtYmVycywgb25seSBzaGlmdGVkIGJ5IDEuIFdlIGdldDogW2BhX24gPSBcZnJhY3tuKG4rMSl9ezJ9IC0gMVx0ZXh0ey59YF0KYS4gIElmIHlvdSBzdWJ0cmFjdCAyIGZyb20gZWFjaCB0ZXJtLCB5b3UgZ2V0IHRyaWFuZ3VsYXIgbnVtYmVycywgb25seSBzdGFydGluZyB3aXRoIDYgaW5zdGVhZCBvZiAxLiBTbyB3ZSBtdXN0IHNoaWZ0IHZlcnRpY2FsbHkgYW5kIGhvcml6b250YWxseS4gW2BhX24gPSBcZnJhY3sobisyKShuKzMpfXsyfSArIDJcdGV4dHsufWBdCmEuICBUaGVzZSBzZWVtIHRvIGdyb3cgdmVyeSBxdWlja2x5LiBGdXJ0aGVyLCBpZiB3ZSBhZGQgMSB0byBlYWNoIHRlcm0sIHdlIGZpbmQgdGhlIGZhY3RvcmlhbHMsIGFsdGhvdWdoIHN0YXJ0aW5nIHdpdGggMiBpbnN0ZWFkIG9mIDEuIFRoaXMgZ2l2ZXMsIFtgYV9uID0gKG4rMSkhIC0gMWBdICh3aGVyZSBbYG4hID0gMSBcY2RvdCAyIFxjZG90IDMgXGNkb3RzIG5gXSkuICAgCgoKCkVORF9QR01MX1NPTFVUSU9OCgpFTkRET0NVTUVOVCgpOw==" data-courseID="unco-levin-development" data-userID="anonymous" data-coursePassword="anonymous" aria-live="polite">
+<div class="problem-contents">
+<div class="para logical" id="p-2695">
+<div class="para">Find the closed formula for each of the following sequences by relating them to a well known sequence. Assume the first term given is <span class="process-math">\(a_1\text{.}\)</span>
+</div>
+<ol class="lower-alpha">
+<li id="li-1178"><div class="para" id="p-2696"><span class="process-math">\(\displaystyle 2, 5, 10, 17, 26, \ldots\)</span></div></li>
+<li id="li-1179"><div class="para" id="p-2697"><span class="process-math">\(\displaystyle 0, 2, 5, 9, 14, 20, \ldots\)</span></div></li>
+<li id="li-1180"><div class="para" id="p-2698"><span class="process-math">\(\displaystyle 8, 12, 17, 23, 30,\ldots\)</span></div></li>
+<li id="li-1181"><div class="para" id="p-2699"><span class="process-math">\(\displaystyle 1, 5, 23, 119, 719,\ldots\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-solution-205" id="solution-205"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-solution-205"><div class="solution solution-like"><div class="para logical" id="p-2700"><ol class="lower-alpha">
+<li id="li-1182"><div class="para" id="p-2701">Note that if we subtract 1 from each term, we get the square numbers. Thus <span class="process-math">\(a_n = n^2 + 1\text{.}\)</span>
+</div></li>
+<li id="li-1183"><div class="para" id="p-2702">These look like the triangular numbers, only shifted by 1. We get: <span class="process-math">\(a_n = \frac{n(n+1)}{2} - 1\text{.}\)</span>
+</div></li>
+<li id="li-1184"><div class="para" id="p-2703">If you subtract 2 from each term, you get triangular numbers, only starting with 6 instead of 1. So we must shift vertically and horizontally. <span class="process-math">\(a_n = \frac{(n+2)(n+3)}{2} + 2\text{.}\)</span>
+</div></li>
+<li id="li-1185"><div class="para" id="p-2704">These seem to grow very quickly. Further, if we add 1 to each term, we find the factorials, although starting with 2 instead of 1. This gives, <span class="process-math">\(a_n = (n+1)! - 1\)</span> (where <span class="process-math">\(n! = 1 \cdot 2 \cdot 3 \cdots n\)</span>).</div></li>
+</ol></div></div></div>
+</div>
+</div>
+<div class="problem-buttons"><button class="webwork-button" onclick="handleWW('webwork-99')">Activate</button></div>
+</div></article><article class="exercise exercise-like" id="xch"><h4 class="heading"><span class="codenumber">2<span class="period">.</span></span></h4>
+<div class="para logical" id="QNU">
+<div class="para">For each sequence given below, find a closed formula for <span class="process-math">\(a_n\text{,}\)</span> the <span class="process-math">\(n\)</span>th term of the sequence (assume the first terms are <span class="process-math">\(a_0\)</span>) by relating it to another sequence for which you already know the formula. In each case, briefly say how you got your answers.</div>
+<ol class="lower-alpha">
+<li id="IVa"><div class="para" id="XIz">4, 5, 7, 11, 19, 35, …</div></li>
+<li id="pcj"><div class="para" id="DPI">0, 3, 8, 15, 24, 35, …</div></li>
+<li id="Vjs"><div class="para" id="jWR">6, 12, 20, 30, 42, …</div></li>
+<li id="BqB"><div class="para" id="Qea">0, 2, 7, 15, 26, 40, 57, … (Cryptic Hint: these might be called “house numbers”)</div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="djq"><h4 class="heading"><span class="codenumber">3<span class="period">.</span></span></h4>
+<div class="para logical" id="wVd">
+<div class="para">Write out the first 5 terms (starting with <span class="process-math">\(a_0\)</span> ) of each of the sequences described below. Then give either a closed formula or a recursive definition for the sequence (whichever is NOT given in the problem).</div>
+<ol class="lower-alpha">
+<li id="hxK"><div class="para" id="wlj"><span class="process-math">\(a_n = \frac{1}{2}(n^2 + n)\text{.}\)</span></div></li>
+<li id="NET"><div class="para" id="css">
+<span class="process-math">\(a_n = 2a_{n-1} - a_{n-2}\)</span> with <span class="process-math">\(a_0 = 0\)</span> and <span class="process-math">\(a_1 = 1\text{.}\)</span>
+</div></li>
+<li id="tMc"><div class="para" id="IzB">
+<span class="process-math">\(a_n = na_{n-1}\)</span> with <span class="process-math">\(a_0 = 1\text{.}\)</span>
+</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-jIw" id="jIw"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-jIw"><div class="solution solution-like"><div class="para logical" id="WDg"><ol class="lower-alpha">
+<li id="ZTl"><div class="para" id="oGK">
+<span class="process-math">\(a_0 = 0\text{,}\)</span> <span class="process-math">\(a_1 = 1\text{,}\)</span> <span class="process-math">\(a_2 = 3\text{,}\)</span> <span class="process-math">\(a_3 = 6\)</span> <span class="process-math">\(a_4 = 10\text{.}\)</span> The sequence was described by a closed formula. These are the triangular numbers. A recursive definition is: <span class="process-math">\(a_n = a_{n-1} + n\)</span> with <span class="process-math">\(a_0 = 0\text{.}\)</span>
+</div></li>
+<li id="Gau"><div class="para" id="UNT">This is a recursive definition. We continue <span class="process-math">\(a_2 = 2\text{,}\)</span> <span class="process-math">\(a_3 = 3\text{,}\)</span> <span class="process-math">\(a_4 = 4\text{,}\)</span> <span class="process-math">\(a_5 = 5\text{,}\)</span> and so on. A closed formula is <span class="process-math">\(a_n = n\text{.}\)</span>
+</div></li>
+<li id="mhD"><div class="para" id="AVc">We have <span class="process-math">\(a_0 = 1\text{,}\)</span> <span class="process-math">\(a_1 = 1\text{,}\)</span> <span class="process-math">\(a_2 = 2\text{,}\)</span> <span class="process-math">\(a_3 = 6\text{,}\)</span> <span class="process-math">\(a_4 = 24\text{,}\)</span> <span class="process-math">\(a_5 = 120\text{,}\)</span> and so on. The closed formula is <span class="process-math">\(a_n = n!\text{.}\)</span>
+</div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="Jqz"><h4 class="heading"><span class="codenumber">4<span class="period">.</span></span></h4>
+<div class="para logical" id="dcm">
+<div class="para">Consider the sequence <span class="process-math">\((a_n)_{n \ge 1}\)</span> that starts <span class="process-math">\(1, 3, 5, 7, 9, \ldots\)</span> (i.e., the odd numbers in order).</div>
+<ol class="lower-alpha">
+<li id="SoM"><div class="para" id="hcl">Give a recursive definition and closed formula for the sequence.</div></li>
+<li id="yvV"><div class="para" id="Nju">Write out the sequence <span class="process-math">\((b_n)_{n \ge 2}\)</span> of partial sums of <span class="process-math">\((a_n)\text{.}\)</span>  Write down the recursive definition for <span class="process-math">\((b_n)\)</span> and guess at the closed formula.</div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-PPF" id="PPF"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-PPF"><div class="solution solution-like"><div class="para logical" id="CKp"><ol class="lower-alpha">
+<li id="eDe"><div class="para" id="tqD">The recursive definition is <span class="process-math">\(a_n = a_{n-1} + 2\)</span> with <span class="process-math">\(a_1 = 1\text{.}\)</span>  A closed formula is <span class="process-math">\(a_n = 2n-1\text{.}\)</span>
+</div></li>
+<li id="KKn"><div class="para" id="ZxM">The sequence of partial sums is <span class="process-math">\(1, 4, 9, 16, 25, 36, \ldots\text{.}\)</span>  A recursive definition is (as always) <span class="process-math">\(b_n = b_{n-1} + a_n\)</span> which in this case is <span class="process-math">\(b_n = b_{n-1} + 2n-1\text{.}\)</span>  It appears that the closed formula is <span class="process-math">\(b_n = n^2\)</span>
+</div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="pxI"><h4 class="heading"><span class="codenumber">5<span class="period">.</span></span></h4> <div class="para logical" id="Jjv">
+<div class="para">The Fibonacci sequence is <span class="process-math">\(0, 1, 1, 2, 3, 5, 8, 13, \ldots\)</span> (where <span class="process-math">\(F_0 = 0\)</span>).</div>
+<ol class="lower-alpha">
+<li id="qRw"><div class="para" id="FEV">Write out the first few terms of the sequence of partial sums: <span class="process-math">\(0\text{,}\)</span> <span class="process-math">\(0+1\text{,}\)</span> <span class="process-math">\(0+1+1\text{,}\)</span>…</div></li>
+<li id="WYF"><div class="para" id="lMe">Guess a formula for the sequence of partial sums expressed in terms of a single Fibonacci number.  For example, you might say <span class="process-math">\(F_0 + F_1 + \cdots + F_n = 3F_{n-1}^2 + n\text{,}\)</span> although that is definitely not correct. </div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-vWO" id="vWO"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-vWO"><div class="solution solution-like"><div class="para logical" id="iRy"><ol class="lower-alpha">
+<li id="DfO"><div class="para" id="p-derived-DfO"><span class="process-math">\(0, 1, 2, 4, 7, 12, 20, \ldots\text{.}\)</span></div></li>
+<li id="jmX"><div class="para" id="p-derived-jmX"><span class="process-math">\(F_0 + F_1 + \cdots + F_n = F_{n+2} - 1\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="VER"><h4 class="heading"><span class="codenumber">6<span class="period">.</span></span></h4>
+<div class="para logical" id="pqE">
+<div class="para">Consider the three sequences below. For each, find a recursive definition. How are these sequences related?</div>
+<ol class="lower-alpha">
+<li id="Pug"><div class="para" id="p-derived-Pug"><span class="process-math">\(2, 4, 6, 10, 16, 26, 42, \ldots\text{.}\)</span></div></li>
+<li id="vBp"><div class="para" id="p-derived-vBp"><span class="process-math">\(5, 6, 11, 17, 28, 45, 73, \ldots\text{.}\)</span></div></li>
+<li id="bIy"><div class="para" id="p-derived-bIy"><span class="process-math">\(0, 0 , 0 , 0 , 0 , 0 , 0 ,\ldots\text{.}\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-cdX" id="cdX"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-cdX"><div class="solution solution-like"><div class="para" id="OYH">The sequences all have the same recurrence relation: <span class="process-math">\(a_n = a_{n-1} + a_{n-2}\)</span> (the same as the Fibonacci numbers). The only difference is the initial conditions.</div></div></div>
+</div></article><article class="exercise exercise-like" id="BMa"><h4 class="heading"><span class="codenumber">7<span class="period">.</span></span></h4>
+<div class="para" id="VxN">Write out the first few terms of the sequence given by <span class="process-math">\(a_1 = 3\text{;}\)</span> <span class="process-math">\(a_n = 2a_{n-1} + 4\text{.}\)</span> Then find a recursive definition for the sequence <span class="process-math">\(10, 24, 52, 108, \ldots\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Ilg" id="Ilg"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Ilg"><div class="solution solution-like"><div class="para" id="vfQ">
+<span class="process-math">\(3, 10, 24, 52, 108,\ldots\text{.}\)</span> The recursive definition for <span class="process-math">\(10, 24, 52, \ldots\)</span> is <span class="process-math">\(a_n = 2a_{n-1} + 4\)</span> with <span class="process-math">\(a_1 = 10\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="hTj"><h4 class="heading"><span class="codenumber">8<span class="period">.</span></span></h4>
+<div class="para" id="BEW">Write out the first few terms of the sequence given by <span class="process-math">\(a_n = n^2 - 3n + 1\text{.}\)</span> Then find a closed formula for the sequence (starting with <span class="process-math">\(a_1\)</span>) <span class="process-math">\(0, 2, 6, 12, 20, \ldots\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-osp" id="osp"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-osp"><div class="solution solution-like"><div class="para" id="bmZ">
+<span class="process-math">\(-1, -1, 1, 5, 11, 19,\ldots\)</span> Thus the sequence <span class="process-math">\(0, 2, 6, 12, 20,\ldots\)</span> has closed formula <span class="process-math">\(a_n = (n+1)^2 - 3(n+1) + 2\text{.}\)</span>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="Oas"><h4 class="heading"><span class="codenumber">9<span class="period">.</span></span></h4>
+<div class="para" id="hMf">Show that <span class="process-math">\(a_n = 3\cdot 2^n + 7\cdot 5^n\)</span> is a solution to the recurrence relation <span class="process-math">\(a_n = 7a_{n-1} - 10a_{n-2}\text{.}\)</span> What would the initial conditions need to be for this to be the closed formula for the sequence?</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-Uzy" id="Uzy"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Uzy"><div class="solution solution-like"><div class="para logical" id="Hui">
+<div class="para">This closed formula would have <span class="process-math">\(a_{n-1} = 3\cdot 2^{n-1} + 7 \cdot 5^{n-1}\)</span> and <span class="process-math">\(a_{n-2} = 3\cdot 2^{n-2} + 7 \cdot 5^{n-2}\text{.}\)</span> Then we would have</div>
+<div class="displaymath process-math" id="jBs">
+\begin{align*}
+7a_{n-1} - 10a_{n-2} = \amp 7(3\cdot 2^{n-1} + 7 \cdot 5^{n-1}) - 10(3\cdot 2^{n-2} + 7 \cdot 5^{n-2})\\
+= \amp 21\cdot 2^{n-1} + 49 \cdot 5^{n-1} - 30\cdot 2^{n-2} - 70 \cdot 5^{n-2})\\
+= \amp 21\cdot 2^{n-1} + 49 \cdot 5^{n-1} - 15\cdot 2^{n-1} - 14 \cdot 5^{n-1})\\
+= \amp 6\cdot 2^{n-1} + 35 \cdot 5^{n-1}\\
+= \amp 3\cdot 2^{n} + 7 \cdot 5^{n} = a_n\text{.}
+\end{align*}
+</div>
+<div class="para">So the closed formula agrees with the recurrence relation. The closed formula has initial terms <span class="process-math">\(a_0 = 10\)</span> and <span class="process-math">\(a_1 = 41\text{.}\)</span>
+</div>
+</div></div></div>
+</div></article><article class="exercise exercise-like" id="uhB"><h4 class="heading"><span class="codenumber">10<span class="period">.</span></span></h4>
+<div class="para" id="NTo">Show that <span class="process-math">\(a_n = 2^n - 5^n\)</span> is also a solution to the recurrence relation <span class="process-math">\(a_n = 7a_{n-1} - 10a_{n-2}\text{.}\)</span> What would the initial conditions need to be for this to be the closed formula for the sequence?</div></article><article class="exercise exercise-like" id="aoK"><h4 class="heading"><span class="codenumber">11<span class="period">.</span></span></h4>
+<div class="para" id="uax">Find a closed formula for the sequence with recursive definition <span class="process-math">\(a_n = 2a_{n-1} - a_{n-2}\)</span> with <span class="process-math">\(a_1 = 1\)</span> and <span class="process-math">\(a_2 = 2\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-AGH" id="AGH"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-AGH"><div class="hint solution-like"><div class="para" id="zPJ">You will want to write out the sequence, guess a closed formula, and then verify that you are correct.</div></div></div>
+</div></article><article class="exercise exercise-like" id="GvT"><h4 class="heading"><span class="codenumber">12<span class="period">.</span></span></h4>
+<div class="para" id="ahG">Give two different recursive definitions for the sequence with closed formula <span class="process-math">\(a_n = 3 + 2n\text{.}\)</span>  Prove you are correct. At least one of the recursive definitions should makes use of two previous terms and no constants.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-gNQ" id="gNQ"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-gNQ"><div class="hint solution-like"><div class="para" id="fWS">Write out the sequence, guess a recursive definition, and verify that the closed formula is a solution to that recursive definition.</div></div></div>
+</div></article><article class="exercise exercise-like" id="mDc"><h4 class="heading"><span class="codenumber">13<span class="period">.</span></span></h4>
+<div class="para logical" id="GoP">
+<div class="para">Use summation (<span class="process-math">\(\sum\)</span>) or product (<span class="process-math">\(\prod\)</span>) notation to rewrite the following.</div>
+<ol class="lower-alpha cols2">
+<li id="HPH"><div class="para" id="p-derived-HPH"><span class="process-math">\(2 + 4 + 6 + 8 + \cdots + 2n\text{.}\)</span></div></li>
+<li id="nWQ"><div class="para" id="p-derived-nWQ"><span class="process-math">\(1 + 5 + 9 + 13 + \cdots + 425\text{.}\)</span></div></li>
+<li id="UdZ"><div class="para" id="p-derived-UdZ"><span class="process-math">\(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \cdots + \frac{1}{50}\text{.}\)</span></div></li>
+<li id="Ali"><div class="para" id="p-derived-Ali"><span class="process-math">\(2 \cdot 4 \cdot 6 \cdot \cdots \cdot 2n\text{.}\)</span></div></li>
+<li id="gsr"><div class="para" id="p-derived-gsr"><span class="process-math">\((\frac{1}{2})(\frac{2}{3})(\frac{3}{4})\cdots(\frac{100}{101})\text{.}\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-MUZ" id="MUZ"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-MUZ"><div class="solution solution-like"><div class="para logical" id="nBr"><ol class="lower-alpha cols2">
+<li id="MzA"><div class="para" id="p-derived-MzA"><span class="process-math">\(\d\sum_{k=1}^n 2k\text{.}\)</span></div></li>
+<li id="sGJ"><div class="para" id="p-derived-sGJ"><span class="process-math">\(\d\sum_{k=1}^{107} (1 + 4(k-1))\text{.}\)</span></div></li>
+<li id="YNS"><div class="para" id="p-derived-YNS"><span class="process-math">\(\d\sum_{k=1}^{50} \frac{1}{k}\text{.}\)</span></div></li>
+<li id="EVb"><div class="para" id="p-derived-EVb"><span class="process-math">\(\d\prod_{k=1}^n 2k\text{.}\)</span></div></li>
+<li id="lck"><div class="para" id="p-derived-lck"><span class="process-math">\(\d\prod_{k=1}^{100} \frac{k}{k+1}\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="SKl"><h4 class="heading"><span class="codenumber">14<span class="period">.</span></span></h4>
+<div class="para logical" id="mvY">
+<div class="para">Expand the following sums and products. That is, write them out the long way.</div>
+<ol class="lower-alpha cols2">
+<li id="Rjt"><div class="para" id="p-derived-Rjt"><span class="process-math">\(\d\sum_{k=1}^{100} (3+4k)\text{.}\)</span></div></li>
+<li id="xqC"><div class="para" id="p-derived-xqC"><span class="process-math">\(\d\sum_{k=0}^n 2^k\text{.}\)</span></div></li>
+<li id="dxL"><div class="para" id="p-derived-dxL"><span class="process-math">\(\d\sum_{k=2}^{50}\frac{1}{(k^2 - 1)}\text{.}\)</span></div></li>
+<li id="JEU"><div class="para" id="p-derived-JEU"><span class="process-math">\(\d\prod_{k=2}^{100}\frac{k^2}{(k^2-1)}\text{.}\)</span></div></li>
+<li id="pMd"><div class="para" id="p-derived-pMd"><span class="process-math">\(\d\prod_{k=0}^n (2+3k)\text{.}\)</span></div></li>
+</ol>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref solution-knowl original" data-refid="hk-tci" id="tci"><span class="type">Solution</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-tci"><div class="solution solution-like"><div class="para logical" id="TIA"><ol class="lower-alpha">
+<li id="VTm"><div class="para" id="p-derived-VTm"><span class="process-math">\(\d\sum_{k=1}^{100} (3+4k) = 7 + 11 + 15 + \cdots + 403\text{.}\)</span></div></li>
+<li id="Cav"><div class="para" id="p-derived-Cav"><span class="process-math">\(\d\sum_{k=0}^n 2^k = 1 + 2 + 4 + 8 + \cdots + 2^n\text{.}\)</span></div></li>
+<li id="ihE"><div class="para" id="p-derived-ihE"><span class="process-math">\(\d\sum_{k=2}^{50}\frac{1}{(k^2 - 1)} = 1 + \frac{1}{3} + \frac{1}{8} + \frac{1}{15} + \cdots + \frac{1}{2499}\text{.}\)</span></div></li>
+<li id="OoN"><div class="para" id="p-derived-OoN"><span class="process-math">\(\d\prod_{k=2}^{100}\frac{k^2}{(k^2-1)} = \frac{4}{3}\cdot\frac{9}{8}\cdot\frac{16}{15}\cdots\frac{10000}{9999}\text{.}\)</span></div></li>
+<li id="uvW"><div class="para" id="p-derived-uvW"><span class="process-math">\(\d\prod_{k=0}^n (2+3k) = (2)(5)(8)(11)(14)\cdots(2+3n)\text{.}\)</span></div></li>
+</ol></div></div></div>
+</div></article><article class="exercise exercise-like" id="yRu"><h4 class="heading"><span class="codenumber">15<span class="period">.</span></span></h4>
+<div class="para" id="SDh">Suppose you draw <span class="process-math">\(n\)</span> lines in the plane so that every pair of lines cross (no lines are parallel) and no three lines cross at the same point.  This will create some number of regions in the plane, including some unbounded regions.  Call the number of regions <span class="process-math">\(R_n\text{.}\)</span>  Find a recursive formula for the number of regions created by <span class="process-math">\(n\)</span> lines, and justify why your recursion is correct.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-Zjr" id="Zjr"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-Zjr"><div class="hint solution-like"><div class="para" id="Meb">Try an example: when you draw the 4th line, it will cross three other lines, so will be divided into four segments, two of which are infinite.  Each segment will divide a previous region into two.</div></div></div>
+</div></article><article class="exercise exercise-like" id="eYD"><h4 class="heading"><span class="codenumber">16<span class="period">.</span></span></h4>
+<div class="para" id="yKq">A <dfn class="terminology">ternary</dfn> string is a sequence of 0's, 1's and 2's.  Just like a bit string, but with three symbols.</div> <div class="para" id="eRz">Let's call a ternary string <em class="emphasis">good</em> provided it never contains a 2 followed immediately by a 0.  Let <span class="process-math">\(G_n\)</span> be the number of good strings of length <span class="process-math">\(n\text{.}\)</span>  For example, <span class="process-math">\(G_1 = 3\text{,}\)</span> and <span class="process-math">\(G_2 = 8\)</span> (since of the 9 ternary strings of length 2, only one is not good).</div> <div class="para" id="KYI">Find, with justification, a recursive formula for <span class="process-math">\(G_n\text{,}\)</span> and use it to compute <span class="process-math">\(G_5\text{.}\)</span>
+</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-FqA" id="FqA"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-FqA"><div class="hint solution-like"><div class="para" id="slk">Consider three cases: the last digit is a 0, a 1, or a 2.  Two of these should be easy to count, but strings ending in 0 cannot be proceeded by a 2, so require a little more work.</div></div></div>
+</div></article><article class="exercise exercise-like" id="LfM"><h4 class="heading"><span class="codenumber">17<span class="period">.</span></span></h4>
+<div class="para logical" id="rfR">
+<div class="para">Consider bit strings with length <span class="process-math">\(l\)</span> and weight <span class="process-math">\(k\)</span> (so strings of <span class="process-math">\(l\)</span> 0's and 1's, including <span class="process-math">\(k\)</span> 1's). We know how to count the number of these for a fixed <span class="process-math">\(l\)</span> and <span class="process-math">\(k\text{.}\)</span> Now, we will count the number of strings for which the <em class="emphasis">sum</em> of the length and the weight is fixed. For example, let's count all the bit strings for which <span class="process-math">\(l+k = 11\text{.}\)</span>
+</div>
+<ol class="lower-alpha">
+<li id="aDf"><div class="para" id="RTn">Find examples of these strings of different lengths. What is the longest string possible? What is the shortest?</div></li>
+<li id="GKo"><div class="para" id="yaw">How many strings are there of each of these lengths. Use this to count the total number of strings (with sum 11).</div></li>
+<li id="mRx"><div class="para" id="ehF">The other approach: Let <span class="process-math">\(n = l+k\)</span> vary. How many strings have sum <span class="process-math">\(n = 1\text{?}\)</span> How many have sum <span class="process-math">\(n = 2\text{?}\)</span> And so on. Find and explain a recurrence relation for the sequence <span class="process-math">\((a_n)\)</span> which gives the number of strings with sum <span class="process-math">\(n\text{.}\)</span>
+</div></li>
+<li id="SYG"><div class="para" id="KoO">Describe what you have found above in terms of Pascal's Triangle. What pattern have you discovered?</div></li>
+</ol>
+</div></article><article class="exercise exercise-like" id="rmV"><h4 class="heading"><span class="codenumber">18<span class="period">.</span></span></h4>
+<div class="para" id="Xna">When bees play chess, they use a hexagonal board like the one shown below. The queen bee can move one space at a time either directly to the right or angled up-right or down-right (but can never move leftwards). How many different paths can the queen take from the top left hexagon to the bottom right hexagon? Explain your answer, and this relates to the previous question. (As an example, there are three paths to get to the second hexagon on the bottom row.)</div> <div class="sidebyside"><div class="sbsrow" style="margin-left:15%;margin-right:15%;"><div class="sbspanel top" style="width:100%;"><img src="generated/latex-image/bee-chess.svg" role="img" class="contained"></div></div></div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-lxJ" id="lxJ"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-lxJ"><div class="hint solution-like"><div class="para" id="Yst">Think recursively, like you did in Pascal's triangle.</div></div></div>
+</div></article><article class="exercise exercise-like" id="Xue"><h4 class="heading"><span class="codenumber">19<span class="period">.</span></span></h4>
+<div class="para" id="Duj">Let <span class="process-math">\(t_n\)</span> denote the number of ways to tile a <span class="process-math">\(2\times n\)</span> chessboard using <span class="process-math">\(1\times 2\)</span> dominoes.  Write out the first few terms of the sequence <span class="process-math">\((t_n)_{n \ge 1}\)</span> and then give a recursive definition.  Explain why your recursive formula is correct.</div>
+<div class="solutions">
+<a href="" data-knowl="" class="id-ref hint-knowl original" data-refid="hk-RES" id="RES"><span class="type">Hint</span><span class="period">.</span></a><div class="hidden-content tex2jax_ignore" id="hk-RES"><div class="hint solution-like"><div class="para" id="EzC">There is only one way to tile a <span class="process-math">\(2 \times 1\)</span> board, and two ways to tile a <span class="process-math">\(2\times 2\)</span> board (you can orient the dominoes in two ways).  In general, consider the two ways the domino covering the top left corner could be oriented.</div></div></div>
+</div></article></section></section></div>
+<div class="ptx-content-footer">
+<a class="previous-button button" href="ch_sequences.html" title="Previous"><span class="icon">&lt;</span><span class="name">Prev</span></a><a class="top-button button" href="#" title="Top"><span class="icon">^</span><span class="name">Top</span></a><a class="next-button button" href="sec_seq-arithgeom.html" title="Next"><span class="name">Next</span><span class="icon">&gt;</span></a>
+</div></main>
+</div>
+<div class="ptx-page-footer">
+<a class="pretext-link" href="https://pretextbook.org"><div class="name">Authored in PreTeXt</div>
+<div class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="338 3000 8772 6866"><g style="stroke-width:.025in; stroke:black; fill:none"><polyline points="472,3590 472,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,9448 A 4660 4660  0  0  1  8598  9259 "></path><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4488,9685 A 4228 4228  0  0  0  472  9732 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:butt;" d="M 4724,3590 A 4241 4241  0  0  1  8598  3496 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,3496 A 4241 4241  0  0  1  4724  3590 "></path><path style="stroke:#000000;stroke-width:126;stroke-linecap:round;" d="M 850,9259 A 4507 4507  0  0  1  4724  9448 "></path><polyline points="5385,4299 4062,8125 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8598,3496 8598,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="850,3496 850,9259 " style="stroke:#000000;stroke-width:126; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="4960,9685 4488,9685 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="3070,4582 1889,6141 3070,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="6418,4582 7600,6141 6418,7700 " style="stroke:#000000;stroke-width:300; stroke-linejoin:miter; stroke-linecap:round; "></polyline><polyline points="8976,3590 8976,9732 " style="stroke:#000000;stroke-width:174; stroke-linejoin:miter; stroke-linecap:round; "></polyline><path style="stroke:#000000;stroke-width:174;stroke-linecap:butt;" d="M 4960,9685 A 4228 4228  0  0  1  8976  9732 "></path></g></svg></div></a><a class="runestone-link" href="https://runestone.academy"><div class="name">Powered by Runestone</div>
+<img class="logo" title="Powered by Runestone" src="https://runestone.academy/runestone/static/rectangle_badge.png" alt="Powered by Runestone"></a><a class="mathjax-logo" href="https://www.mathjax.org"><img title="Powered by MathJax" src="https://www.mathjax.org/badge/badge.gif" alt="Powered by MathJax"></a>
+</div>
+<!--Start: Google Global Site Tag code--><!--*** DO NOT COPY ANOTHER PROJECT'S MAGIC NUMBERS/ID ***--><!--***           GET YOUR OWN FROM GOOGLE             ***-->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-66485406-1"></script><script>  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-66485406-1');
+</script><!--End: Google Global Site Tag code-->
+</body>
+</html>
