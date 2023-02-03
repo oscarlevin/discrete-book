@@ -244,11 +244,15 @@
     </proposition>
 
     <p permid="KUI">
-      The proposition is quite useful when proving statements about trees, because we often prove statements about trees by <em>induction</em>.  To do so, we need to reduce a given tree to a smaller tree (so we can apply the inductive hypothesis).  Getting rid of a vertex of degree one is an obvious choice, and now we know there is always one to get rid of.
+      The proposition is quite useful when proving statements about trees. because we often prove statements about trees by <term>induction</term>.  This is a proof technique that we investigate fully in <xref ref="sec_seq-induction"/>, but for now, all we need to understand is that it is useful to compare a given tree to smaller trees. To show something is true of a tree with <m>v</m> vertices, we will assume the thing is true of all trees with <m>v-1</m> vertices.  By removing a vertex of degree 1, we get this smaller tree, and then we just need to show that putting the vertex back doesn't mess us up.
     </p>
     
+    <!-- <p>
+      For just a moment, don't worry about whether this sort of reasoning is valid.  Let's look at an example of such a proof, and then we will examine the logic to convince ourselves we are okay.
+    </p> -->
+
     <p permid="rbR">
-      To illustrate how induction is used on trees, we will consider the relationship between the number of vertices and number of edges in trees.  Is there a tree with exactly 7 vertices and 7 edges?  Try to draw one.  Could a tree with 7 vertices have only 5 edges?  There is a good reason that these seem impossible to draw.
+      Is there a tree with exactly 7 vertices and 7 edges?  Try to draw one.  Could a tree with 7 vertices have only 5 edges?  There is a good reason that these seem impossible to draw.
     </p>
     
     <proposition xml:id="prop-tree-edge-vertex" permid="dtL">
@@ -258,32 +262,36 @@
           Let <m>T</m> be a tree with <m>v</m> vertices and <m>e</m> edges.  Then <m>e = v-1</m>. 
         </p>
       </statement>
+    </proposition>
+      <p permid="Wzg">
+        We will prove that this proposition is true for all possible values of <m>v \ge 1</m>.   Note that if <m>v = 1</m>, then the tree must have <m>0</m> edges, so yes, <m>e = v-1</m>.  We could then look at trees with <m>v=2</m> vertices (there is only one, and it has <m>e = 1 = v-1</m> edges) and then all trees with <m>v=3</m> vertices, and then <m>v=4</m>, and so on, but that would take forever.  Literally!
+      </p>
+
+      <p>
+        <idx><h>minimal criminal</h></idx>
+        Instead, we will do a version of <em>proof by contradiction</em> called the <term>minimal criminal</term>.  We will assume the proposition is not true (just like we would start any proof by contradiction).  This means that there is some <em>smallest</em> tree for which it isn't true.  If this smallest counterexample (i.e., minimal criminal) has <m>v</m> vertices, then we are guaranteed that <em>all</em> trees with <m>v-1</m> vertices are <em>not</em> counterexamples.  Let's see how this works out.
+      </p>
       <proof permid="Lqh">
-        <p permid="Wzg">
-          We will give a proof by induction on the number of vertices in the tree.  That is, we will prove that every tree with <m>v</m> vertices has exactly <m>v-1</m> edges, and then use induction to show this is true for all <m>v \ge 1</m>.
-        </p>
         
         <p permid="CGp">
-          For the base case, consider all trees with <m>v = 1</m> vertices.  There is only one such tree: the graph with a single isolated vertex.  This graph has <m>e = 0</m> edges, so we see that <m>e = v-1</m> as needed.
+          Suppose, for the sake of contradiction, that the proposition is not true for all trees.  Let <m>T</m> be a tree for which the proposition is not true with smallest number of vertices among all the counterexamples.  Let <m>v</m> be the number of vertices of <m>T</m>.
         </p>
+
+        <p>
+          Since the only tree with one vertex has zero edges, that cannot be our tree <m>T</m>, so we can assume <m>v \ge 2</m>.  In particular, we know by <xref ref="prop-leaves-in-trees" /> that <m>T</m> must contain at least one vertex of degree 1, call it <m>v_0</m>.
+      </p>
         
         <p permid="iNy">
-          Now for the inductive case, fix <m>k \ge 1</m> and assume that all trees with <m>v=k</m> vertices have exactly <m>e=k-1</m> edges.  Now consider an arbitrary tree <m>T</m> with <m>v = k+1</m> vertices.  By <xref ref="prop-leaves-in-trees"/>, <m>T</m> has a vertex <m>v_0</m> of degree one.  Let <m>T'</m> be the tree resulting from removing <m>v_0</m> from <m>T</m> (together with its incident edge).  Since we removed a leaf, <m>T'</m> is still a tree (the unique paths between pairs of vertices in <m>T'</m> are the same as the unique paths between them in <m>T</m>). 
+          Let <m>T'</m> be the tree resulting from removing <m>v_0</m> from <m>T</m> (together with its incident edge).  Since we removed a leaf, <m>T'</m> is still a tree (the unique paths between pairs of vertices in <m>T'</m> are the same as the unique paths between them in <m>T</m>). 
         </p>
         
         <p permid="OUH">
-          Now <m>T'</m> has <m>k</m> vertices, so by the inductive hypothesis, has <m>k-1</m> edges.  What can we say about <m>T</m>?  Well, it has one more edge than <m>T'</m>, so it has <m>k</m> edges.  But this is exactly what we wanted: <m>v=k+1</m>, <m>e=k</m> so indeed <m>e = v-1</m>.  This completes the inductive case, and the proof.
+          Now <m>T'</m> has <m>v-1</m> vertices.  Since <m>T</m> was the smallest tree for which the proposition isn't true, we know that the proposition is true for <m>T'</m>: must have one fewer edges than vertices.  That is <m>T'</m> has <m>v-2</m> edges.  But <m>T</m> has one more edge than <m>T'</m>, so it has <m>v-1</m> edges.  This contradicts our assumption that <m>T</m> does not satisfy the proposition, which completes our proof.
         </p>
       </proof>
-    </proposition>
 
-    <p permid="Xja">
-      There is a very important feature of this induction proof that is worth noting.  Induction makes sense for proofs about graphs because we can think of graphs as growing into larger graphs.  However, this does NOT work.  It would not be correct to start with a tree with <m>k</m> vertices, and then add a new vertex and edge to get a tree with <m>k+1</m> vertices, and note that the number of edges also grew by one.  Why is this bad?  Because how do you know that <em>every</em> tree with <m>k+1</m> vertices is the result of adding a vertex to your arbitrary starting tree?  You don't!
-    </p>
-    
-    <p permid="Dqj">
-      The point is that whenever you give an induction proof that a statement about graphs that holds for all graphs with <m>v</m> vertices, you must start with an arbitrary graph with <m>v+1</m> vertices, then <em>reduce</em> that graph to a graph with <m>v</m> vertices, to which you can apply your inductive hypothesis.
-    </p>
+
+      <!-- TODO: add something more about the style of proof. -->
   </subsection>
 
 
