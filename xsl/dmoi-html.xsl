@@ -24,7 +24,7 @@
 <xsl:import href="dmoi-common.xsl" />
 
 <!-- List Chapters and Sections in sidebar Table of Contents -->
-<xsl:param name="toc.level" select="''" />
+<!-- <xsl:param name="toc.level" select="''" /> -->
 
 
 <!-- Exercises -->
@@ -56,8 +56,8 @@
 <!-- For an inline exercise (webwork or otherwise) statements, hints,    -->
 <!-- and solutions are always shown. The -common params mentioned above  -->
 <!-- do not apply. Whether static is "yes" or "no" doesn't matter.       -->
-<xsl:param name="webwork.inline.static" select="'no'" />
-<xsl:param name="webwork.divisional.static" select="'no'" />
+<!-- <xsl:param name="webwork.inline.static" select="'no'" /> -->
+<!-- <xsl:param name="webwork.divisional.static" select="'no'" /> -->
 
 
 
@@ -132,12 +132,12 @@
 <!--       Prev and Next remain at same depth/level in tree                  -->
 <!--       Must follow a summary link to descend to finer subdivisions       -->
 <!--   'linear' is the default, 'tree' is an option                          -->
-<xsl:param name="html.navigation.logic"  select="'linear'" />
+<!-- <xsl:param name="html.navigation.logic"  select="'linear'" /> -->
 <!-- The "up" button is optional given the contents sidebar, default is to have it -->
 <!-- An up button is very desirable if you use the tree-like logic                 -->
-<xsl:param name="html.navigation.upbutton"  select="'yes'" />
+<!-- <xsl:param name="html.navigation.upbutton"  select="'yes'" /> -->
 <!-- There are also "compact" versions of the navigation buttons in the top right -->
-<xsl:param name="html.navigation.style"  select="'full'" />
+<!-- <xsl:param name="html.navigation.style"  select="'full'" /> -->
 
 <!-- WeBWorK -->
 <!-- There is no default server provided         -->
@@ -255,9 +255,9 @@
 </xsl:template>
 
 <!-- And its CSS class -->
-<xsl:template match="&PROJECT-LIKE;" mode="body-css-class">
+<!-- <xsl:template match="&PROJECT-LIKE;" mode="body-css-class">
     <xsl:text>project-like</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- Analytics Footers -->
 
