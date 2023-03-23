@@ -693,6 +693,158 @@
     </p>
   </paragraphs>
 
+  <paragraphs>
+    <title>Sequences in python</title>
+    
+    <p>
+      It is easy to check whether a closed formula is correct using a calculator, or better yet, a programming language like python.  One way you can do this is to define a function that returns the <m>n</m>th term of the sequence.  
+    </p>
+    <p>
+      Here is an example: suppose you wanted to check whether a formula you found for the sequence <m>(a_n)_{n \in \N} = (1, 3, 7, 15, 31,\ldots</m> is correct.  Perhaps you guess that <m>a_n = 2^n-1</m>.  Try running the code below.  (Note: in python, the <c>^</c> symbol means something else, so to do exponentiation, you would use <c>**</c>.)
+    </p>
+    <program interactive="activecode" language="python" label="a-n-seq1">
+<input>
+def a(n):
+  return 2**n-1
+  
+print(a(3))
+</input>
+    </program>
+    <p>
+      Looks promising, but we should be careful: our sequence started with <m>a_0 = 1</m>, which makes <m>a_3 = 15</m>.  Now try modifying the definition of <c>a(n)</c> (by changing the return value) to get the correct closed formula.
+    </p>
+    <p>
+      Perhaps you want to print out the first 20 terms of the sequence?  This is easy to do with python, by putting the terms in a list:
+    </p>
+    <program interactive="activecode" language="python" label="a-n-seq1-list">
+<input>
+def a(n):
+  return 2**(n+1) - 1
+
+sequence = []
+for n in range(20):
+  sequence.append(a(n))
+
+print(sequence)
+</input>
+    </program>
+
+    <p>
+      Note that <c>range(20)</c> starts at 0 and stops at 19 (it is the list <c>[0,1,2,...,19]</c>).
+    </p>
+
+    <p>
+      We can also use python to generate terms for a sequence given a recursive definition.  Suppose we wanted to explore the sequence <m>a_n = 2a_{n-1}+1</m> with initial condition <m>a_0 = 1</m>.  In python, we could generate the sequence as follows.
+    </p>
+    <program interactive="activecode" language="python" label="req-a-n">
+<input>
+def a(n):
+  if n == 0:
+    return 1
+  else:
+    return 2*a(n-1)+1
+
+# just print out the first 10 terms
+for i in range(10):
+  print(a(i))
+</input>
+    </program>
+    <p>
+      Do you see how to translate a recurrence relation into a recursive python function?  Try playing around with the code above to explore other sequences.
+    </p>
+  </paragraphs>
+
+  <reading-questions xml:id="rqs-seq-basics">
+
+    <exercise label="rq-seq-basics-closed-vs-recursive">
+      <statement>
+        <p> 
+          For the formulas for sequences below, select all that are <em>closed</em> formulas (as opposed to <em>recursive</em> formulas).
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>a_n = 3(n-1) + 2</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct.  You can compute the value of <m>a_n</m> for any specified <m>n</m> directly (in a fixed, finite number of steps).
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>a_n = \frac{n^2 + 2n + 3}{4n}</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct.  Computing <m>a_n</m> can be done directly from the definition, not relying on knowing other terms in the sequence.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              <m>a_n = 3a_{n-1}+2</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              This is a recursive formula: to find <m>a_8</m> for example, you need to know <m>a_7</m>.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              <m>a_n = a_{n-1} + a_{n-2} + a_{n-3}</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Can you find <m>a_9</m> just from the number 9?  Or do you need to know other terms in the sequence?
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+    <exercise label="rq-seq-basics-match">
+      <statement>
+        <p>
+          Drag each sequence on the left to a recurrence relation that agrees with the sequence.
+        </p>
+      </statement>
+      <match>
+        <premise><m>1, 2, 3, 4, 5, \ldots</m></premise>
+        <response><m>a_n = a_{n-1}+1</m></response>
+      </match>
+      <match>
+        <premise><m>5,5,5,5,5, \ldots</m></premise>
+        <response><m>a_n = 2a_{n-1}-a_{n-2}</m></response>
+      </match>
+      <match>
+        <premise><m>2,3,5,9,17, \ldots</m></premise>
+        <response><m>a_n = 2a_{n-1}-1</m></response>
+      </match>
+      <match>
+        <premise><m>3, 4, 7, 11, 18, \ldots</m></premise>
+        <response><m>a_n = a_{n-1}+a_{n-2}</m></response>
+      </match>
+    </exercise>
+    <exercise label="rq-seq-basic-q" component="runestone">
+      <statement>
+        <p> What questions do you have? Write at
+          least one question about the content of this section that you or a classmate might be curious about after reading this section.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
   <xi:include href="exercises/seq-basics.ptx"/>
 </section>
 
