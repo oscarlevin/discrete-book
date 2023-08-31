@@ -54,7 +54,21 @@
 
       <image xml:id="pascal-small" permid="lAA">
 
-        <latex-image> \begin{tikzpicture} \def\r{.5} % Pascal's triangle %put row of 1's down left side: \foreach \row in {0,...,7} { \hexbox{\row}{0}{ 1} } %fill in the rest of the triangle: \foreach \row in {1,...,7} { \pgfmathsetmacro{\entry}{1}; \foreach \col in {1,...,\row} { % iterative formula : val = precval * (row-col+1)/col % (+ 0.5 to bypass rounding errors) \pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5}; \global\let\entry=\entry \ifnum \entry&lt;100 \hexbox{\row}{\col}{\entry} \else \ifnum \entry&lt;1000 \hexbox{\row}{\col}{\footnotesize \entry} \else \ifnum \entry&lt;10000 \hexbox{\row}{\col}{\footnotesize \entry} \else \hexbox{\row}{\col}{\scriptsize \entry} \fi \fi \fi } } \end{tikzpicture} </latex-image>
+        <latex-image> 
+          \begin{tikzpicture} 
+          \def\r{.5} 
+          % Pascal's triangle 
+          %put row of 1's down left side: 
+          \foreach \row in {0,...,7} { \hexbox{\row}{0}{ 1} } 
+          %fill in the rest of the triangle: 
+          \foreach \row in {1,...,7} { \pgfmathsetmacro{\entry}{1}; \foreach \col in {1,...,\row} { 
+            % iterative formula : val = precval * (row-col+1)/col 
+            % (+ 0.5 to bypass rounding errors) 
+          \pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5}; \global\let\entry=\entry \ifnum \entry&lt;100 \hexbox{\row}{\col}{\entry} \else \ifnum \entry&lt;1000 \hexbox{\row}{\col}{\footnotesize \entry} \else \ifnum \entry&lt;10000 \hexbox{\row}{\col}{\footnotesize \entry} \else \hexbox{\row}{\col}{\scriptsize \entry} \fi \fi \fi 
+        } } 
+        \end{tikzpicture} 
+
+        </latex-image>
         <description> The first 7 rows of Pascal's Triangle. A triangular array of hexagons, each row containing one more hexagon that the row above it. In each hexagon is an integer: 1's on the border of the triangle, and every integer inside the triangle the sum of the two integers above it. The last row contains the numbers 1, 7, 21, 35, 35, 21, 7, and 1. </description>
       </image>
 
