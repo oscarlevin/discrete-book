@@ -66,15 +66,7 @@
 <!-- (2) LaTeX labels near definition and use                  -->
 <!--     N.B. Some are author-defined; others are internal,    -->
 <!--     and CANNOT be used as xml:id's (will raise a warning) -->
-<!--  -->
-<!-- Draft Copies                                              -->
-<!-- Various options for working copies for authors            -->
-<!-- (1) LaTeX's draft mode                                    -->
-<!-- (2) Crop marks on letter paper, centered                  -->
-<!--     presuming geometry sets smaller page size             -->
-<!--     with paperheight, paperwidth                          -->
-<xsl:param name="latex.draft" select="'no'"/>
-<!--  -->
+
 <!-- Print Option                                         -->
 <!-- For a non-electronic copy, inactive links in black   -->
 <!-- Any color options go to black and white, as possible -->
