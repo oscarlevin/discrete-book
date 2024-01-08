@@ -1,252 +1,527 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_intro-structures">
-  <title>Discrete Structures</title>
-  <subsection>
-    <title>Introduction</title>
+	<title>Discrete Structures</title>
+	<subsection>
+		<title>Introduction</title>
+		<investigation>
+		<p>
+			A double-six domino set consists of tiles containing pairs of numbers, each from 0 to 6.
+			How many tiles are in a double-six domino set?  How many dominoes are in a double-nine domino set?  How many dominoes are in a double-<m>n</m> domino set?
+		</p>
+		</investigation>
 
+		<exercise label="mp_intro_structures">
+			<statement>
+				<p>
+					Spend a few minutes thinking about the questions above.
+					Then write 2-3 sentences describing your thoughts.
+					You do not need to find a complete solution, but you should describe what you could try and what you think you might need to do to find a solution.
+				</p>
+			</statement>
+			<response/>
+		</exercise>
 
-    <investigation>
+		<p>
+			We are taking a <em>problem solving</em> approach to discrete mathematics: we will consider a large variety of questions that have a discrete feel to them, and consider how to answer those questions (and prove that our answers are correct).
+			This is not the only way to study discrete math.
+			Another approach would be to study the tools used to solve the problems.
+			We could study paint brushes and easels and the composition of paint, which would be interesting for sure, but I think it is more enjoyable to actually paint and learn how to create happy little trees.
+		</p>
+
+		<p>
+			However, understanding your tools does help you use them, so in this section we will consider some of the basic tools used in discrete mathematics.
+			We will come back to these throughout our studies and understand them better as we need to.
+		</p>
+
+		<p>
+			<idx>
+			<h>discrete structures</h>
+			<see>structures</see>
+			</idx>
+			<idx>
+			<h>structures</h>
+			</idx> The tools in our subject are called <term>discrete structures</term>.
+			They are the mathematical objects that we use to represent parts of the problems we are solving.
+			<q>Structure</q> is a good word here, since these <q>things</q> have fairly rigid constraints that make them what they are, just like an apartment building is going to have different characteristics than an airplane hanger or a suspension bridge (these types of physical structures, not mathematical structures, just to be overly clear and destroy the metaphor).
+		</p>
+
+		<p>
+			The structures we will use most in discrete math are <term>sets</term>, <term>functions</term>, <term>sequences</term>, <term>relations</term>, and <term>graphs</term>.
+			We will now briefly preview each of these.
+			As we progress through our studies, each will be explored in more detail.
+			<!-- In particular, if you need a refresher on sets and functions, or have not played with these much at all yet, they are treated in greater detail in <xref ref="sec_intro-sets" /> and <xref ref="sec_intro-functions" />.
+      -->
+		</p>
+	</subsection>
+
+	<subsection xml:id="subsec_structures-sets">
+		<title>Sets</title>
+		<p>
+			A <term>set</term> is an <em>unordered</em> collection of elements.
+			This is fairly vague, but unless we want to spend a whole book trying to understand sets more precisely, it will be good enough for us.
+			It is possible to define all of mathematics using just sets (even numbers can be thought of as sets themselves), but this is also not what we will do.
+			Rather, we want to be able to talk about collections of numbers and other objects, and we will collect them in something we call a <term>set</term>.
+		</p>
+
+		<p>
+			We can describe sets by saying exactly what elements are members of the set.
+			We could specify this membership in words (e.g., Let <m>A</m> be the set of all natural numbers less than 10), or by explicitly listing all the elements (e.g.
+			<m>A = \{3, 5, 7\}</m>) or using something called <term>set comprehension</term> (also called <term>set builder notation</term>).
+			And example of this is <m>A = \{x \in \N \st x \lt 10\}</m>.
+			We would read that as <q><m>A</m> is the set of all natural numbers that satisfy the property that they are less than 10.</q> More precisely, the <m>\N</m> symbol represents the natural numbers, which is itself a set: <m>\N = \{0, 1, 2, 3, \ldots\}</m> (this shows another way to describe a set).
+			The <m>\in</m> symbol means <q>is an element of</q>.
+			The <m>\st</m> is read <q>such that</q> and tells us that what comes next is the <em>condition</em> that must be true of the set's elements.
+		</p>
+
+		<aside>
       <p>
-        A double-sixes domino set consists of tiles containing pairs of numbers, each from 0 to 6.  How many tiles are in a double-sixes domino set?  How many dominoes are in a double-nines domino set?  How many dominoes are in a double-<m>n</m> domino set?
+        In this book, we have defined the <term>natural numbers</term> to be the whole numbers starting with 0.
+        Not every book includes 0 in this set.
+        It usually depends on what area of mathematics you study.
       </p>
+		</aside>
 
-    </investigation>
+		<p>
+			Since there are multiple ways to describe the same set, we should be careful about what it means for sets to be the same or different.
+			A set is <em>determined</em> by its membership, so all four of the following describe exactly the same set:
+			<ol>
+				<li>
+					<p>
+						<m>\{1, 2, 3, 4\}</m>.
+					</p>
+				</li>
 
-    <exercise label="mp_intro_structures">
-      <statement>
-      <p>
-        Spend a few minutes thinking about the questions above.  Then write 2-3 sentences describing your thoughts.  You do not need to find a complete solution, but you should describe what you could try and what you think you might need to do to find a solution.
-      </p>
-      </statement>
-      <response/>
-    </exercise>
+				<li>
+					<p>
+						<m>\{1, 2, 1+1, 1+2, 2+2\}</m>.
+						(How many numbers belong to this set? It's not 5.)
+					</p>
+				</li>
 
+				<li>
+					<p>
+						<m>\{2, 4, 1, 3\}</m>.
+						(All that matters is what elements are in the collection, not what order they were written down in.)
+					</p>
+				</li>
 
-    <p> We are taking a <em>problem solving</em> approach to discrete mathematics: we will consider a large variety of questions that have a discrete feel to them, and consider how to answer those questions (and prove that our answers are correct). This is not the only way to study discrete math. Another approach would be to study the tools used to solve the problems. We could study paint brushes and easels and the composition of paint, which would be interesting for sure, but I think it is more enjoyable to actually paint and learn how to create happy little trees. </p>
+				<li>
+					<p>
+						<m>\{x \in \N \st x \lt 5 \text{ and } x \ge 1\}</m>.
+					</p>
+				</li>
+			</ol>
+		</p>
 
-    <p> However, understanding your tools does help you use them, so in this section we will consider some of the basic tools used in discrete mathematics. We will come back to these throughout our studies and understand them better as we need to. </p>
+		<p>
+			There are lots of things you can <em>do</em> with sets, which we will consider in more detail as we need to.
+			We will see that it is often helpful to build new sets from ones we already have (by taking the <term>union</term> or <term>intersection</term> of sets, for example), to compare sets (asking if one set is a <term>subset</term> of another), and to find the number of elements of a set (called its <term>cardinality</term>).
+			We might also want to match up elements of one set with another: to do this, we might use a <term>function</term>, which we will discuss next.
+			Awesomely, we can also use sets themselves to describe functions.
+			Let's check it out.
+		</p>
+	</subsection>
 
-    <p>
-      <idx>
-        <h>discrete structures</h>
-        <see>structures</see>
-      </idx>
-      <idx>
-        <h>structures</h>
-      </idx> The tools in our subject are called <term>discrete structures</term>. They are the mathematical objects that we use to represent parts of the problems we are solving. <q>Structure</q> is a good word here, since these <q>things</q> have fairly rigid constraints that make them what they are, just like an apartment building is going to have different characteristics than an airplane hanger or a suspension bridge (these types of physical structures, not mathematical structures, just to be overly clear and destroy the metaphor). </p>
+	<subsection xml:id="subsec_structures-functions">
+		<title>Functions</title>
+		<p>
+			<idx>
+			<h>function</h>
+			</idx>
+			<idx>
+			<h>domain</h>
+			</idx>
+			<idx>
+			<h>codomain</h>
+			</idx>
+			<idx>
+			<h>image</h>
+			<h>of an element</h>
+			</idx> 
+      One way to define a <term>function</term> is as a rule that assigns each input exactly one output.
+			The output is called the <term>image</term> of the input.
+			Functions also come equipped with a <term>domain</term>, the set of all inputs, and <term>codomain</term>, the set of all allowable outputs.
+			You might also speak of the <term>range</term> of the function, which is the set of all <em>actual</em> outputs, or put another way, the set of all <em>images</em> of elements from the domain.
+		</p>
 
-    <p> The structures we will use most in discrete math are <term>sets</term>, <term>functions</term>, <term>sequences</term>, <term>relations</term>, <term>graphs</term>, and <term>statements</term>. We will now briefly preview each of these. As we progress through our studies, each will be explored in more detail. In particular, if you need a refresher on sets and functions, or have not played with these much at all yet, they are treated in greater detail in <xref ref="sec_intro-sets" /> and <xref ref="sec_intro-functions" />. </p>
+		<p>
+			We write <m>f:X \to Y</m> to describe a function with name <m>f</m>, domain <m>X</m> and codomain <m>Y</m>.
+			This does not tell us <em>which</em> function <m>f</m> is though.
+			To define the function, we must describe the rule.
+			Often ths is done with a formula (for example, <m>f(x) = x^2</m> says that each element of the domain is mapped to its square), or in words (like how we just described the squaring function).
+			You could also define a function with a table or a graph.
+		</p>
 
-  </subsection>
+		<p>
+			The key thing that makes a rule a <em>function</em> is that there is <em>exactly one</em> output for each input.
+			That is, it is important that the rule be a good rule.
+			What output do we assign to the input 7? There can only be one answer for any particular function.
+		</p>
 
-  <subsection xml:id="subsec_structures-sets">
-    <title>Sets</title>
-    <p> A <term>set</term> is an <em>unordered</em> collection of elements. This is fairly vague, but unless we want to spend a whole book trying to understand sets more precisely, it will be good enough for us. It is possible to define all of mathematics using just sets (even numbers can be thought of as sets themselves), but this is also not what we will do. Rather, we want to be able to talk about collections of numbers and other objects, and we will collect them in something we call a <term>set</term>. </p>
+		<p>
+			Since a function maps one set (the domain) to another set (the codomain), there is an obvious connection between sets and function.
+			There is another connection worth considering though: the graph of a function is often described as a <alert>set</alert> of points.
+			Here is an example.
+		</p>
 
-    <p> We can describe sets by saying exactly what elements are members of the set. We could specify this membership in words (e.g., Let <m>A</m> be the set of all natural numbers less than 10), or by explicitly listing all the elements (e.g. <m>A = \{3, 5, 7\}</m>) or using something called <term>set comprehension</term> (also called <term>set builder notation</term>). And example of this is <m>A = \{x \in \N \st x \lt 10\}</m>. We would read that as <q><m>A</m> is the set of all natural numbers that satisfy the property that they are less than 10.</q> More precisely, the <m>\N</m> symbol represents the natural numbers, which is itself a set: <m>\N = \{0, 1, 2, 3, \ldots\}</m> (this shows another way to describe a set). The <m>\in</m> symbol means <q>is an element of</q>. The <m>\st</m> is read <q>such that</q> and tells us that what comes next is the <em>condition</em> that must be true of the set's elements. </p>
+		<example>
+			<p>
+				Consider the function <m>f:\{1,2,3\} \to \{2, 4, 6\}</m> defined by <m>f(x) = 2x</m>.
+				If we wanted to plot a graph of this function, we would draw the points <m>(1,2)</m>, <m>(2,4)</m>, and <m>(3,6)</m> (but we would not connect these points with lines, since we are studying discrete math; the domain only contains three elements, not the infinitely many between them).
+			</p>
 
-    <aside>
-      <p>
-        In this book, we have defined the <term>natural numbers</term> to be the whole numbers starting with 0.  Not every book includes 0 in this set.  It usually depends on what area of mathematics you study.
-      </p>
-    </aside>
+			<p>
+				So associated with the function is the set of points <m>\{(1,2), (2, 4), (3,6)\}</m>.
+				In fact, this set of points is associated exactly with this (and only this) function.
+				So we can think of this set of points <em>as the function itself</em>.
+			</p>
+		</example>
 
-    <p> Since there are multiple ways to describe the same set, we should be careful about what it means for sets to be the same or different. A set is <em>determined</em> by its membership, so all four of the following describe exactly the same set: <ol>
-        <li>
-          <p>
-            <m>\{1, 2, 3, 4\}</m>. </p>
-        </li>
-        <li>
-          <p>
-            <m>\{1, 2, 1+1, 1+2, 2+2\}</m>. (How many numbers belong to this set? It's not 5.) </p>
-        </li>
-        <li>
-          <p>
-            <m>\{2, 4, 1, 3\}</m>. (All that matters is what elements are in the collection, not what order they were written down in.) </p>
-        </li>
-        <li>
-          <p>
-            <m>\{x \in \N \st x \lt 5 \text{ and } x \ge 1\}</m>. </p>
-        </li>
-      </ol>
+		<p>
+			Of course, we are using a mathematical object here: an <term>ordered pair</term>.
+			This is not a set (since sets are unordered).
+			How should we talk about ordered things? We will take this question up in the next section.
+		</p>
+
+		<p>
+			One last important consideration about how we describe a function: we will consider two basic sorts of formulas: closed and recursive.
+			A <term>closed formula</term> is one in which each output is given by an explicit rule based solely on its input.
+			This is what most of us think of as a formula.
+			For example, <m>f(n) = 3n + 1</m> is a closed formula, since to find <m>f(5)</m> (say) we take the input 5 and so something to it: multiply it by 5 and then add 1.
+		</p>
+
+		<p>
+			What else could a formula possibly be? A <term>recursive definition</term> of a function tells us how to compute the output for a given input <em>based on other outputs of the function</em>.
+			For example, we might insist that <m>f(n) = 2\cdot f(n-1)</m>.
+			If we also specify an <term>initial condition</term> that <m>f(0) = 3</m>, then we can find <m>f(1) = 2\cdot 3 = 6</m>, and then <m>f(2) = 2\cdot 6 = 12</m>, and so on.
+			What is <m>f(5)</m> here? The only way to answer that is to find <m>f(4)</m>, which means we need to find <m>f(3)</m>, which we could do, since we have computed <m>f(2)</m>.
+		</p>
+
+		<p>
+			Recursive definitions of functions are often less useful in finding a particular output, but they are often easier to find for a particular application.
+			We will explore this phenomenon more when we study sequences.
+			Speaking of which...
+		</p>
+	</subsection>
+
+	<subsection xml:id="subsec_structures-sequences">
+		<title>Sequences</title>
+		<p>
+			Sometimes we are interested not just in a collection of numbers, but in what <em>order</em> those numbers appear.
+			In such cases, we cannot use <em>sets</em>, since they do not distinguish between the order of their elements.
+			Instead, we consider <term>sequences</term>.
+		</p>
+
+		<p>
+			We will consider both <term>finite</term> and <term>infinite</term> sequences.
+			A finite sequence my be something as simple as <m>(1,2,3)</m>; that is a sequence with 3 elements, in that particular order.
+			We might also call this an <term>ordered triple</term>, the same way that <m>(7,3)</m> is an ordered pair.  In general, we could call this an <term><m>n</m>-tuple</term> if it has <m>n</m> elements (we assume that tuples are ordered).
     </p>
-
-    <p> There are lots of things you can <em>do</em> with sets, which we will consider in more detail as we need to. We will see that it is often helpful to build new sets from ones we already have (by taking the <term>union</term> or <term>intersection</term> of sets, for example), to compare sets (asking if one set is a <term>subset</term> of another), and to find the number of elements of a set (called its <term>cardinality</term>). We might also want to match up elements of one set with another: to do this, we might use a <term>function</term>, which we will discuss next. Awesomely, we can also use sets themselves to describe functions. Let's check it out. </p>
-
-
-  </subsection>
-
-  <subsection xml:id="subsec_structures-functions">
-    <title>Functions</title>
+    
     <p>
-      <idx>
-        <h>function</h>
-      </idx>
-      <idx>
-        <h>domain</h>
-      </idx>
-      <idx>
-        <h>codomain</h>
-      </idx>
-      <idx>
-        <h>image</h>
-        <h>of an element</h>
-      </idx> One way to define a <term>function</term> is as a rule that assigns each input exactly one output. The output is called the <term>image</term> of the input. Functions also come equipped with a <term>domain</term>, the set of all inputs, and <term>codomain</term>, the set of all allowable outputs. You might also speak of the <term>range</term> of the function, which is the set of all <em>actual</em> outputs, or put another way, the set of all <em>images</em> of elements from the domain. </p>
+			The key difference between the sequence <m>(1,2,3)</m> and the set <m>\{1,2,3\}</m> is that we <q>care</q> about the order.
+			That is, the sequence <m>(1,2,3)</m> is different from the sequence <m>(2,3,1)</m>, while the set <m>\{1,2,3\}</m> is exactly the same set as <m>\{2,3,1\}</m>.
+		</p>
 
-    <p> We write <m>f:X \to Y</m> to describe a function with name <m>f</m>, domain <m>X</m> and codomain <m>Y</m>. This does not tell us <em>which</em> function <m>f</m> is though. To define the function, we must describe the rule. Often ths is done with a formula (for example, <m>f(x) = x^2</m> says that each element of the domain is mapped to its square), or in words (like how we just described the squaring function). You could also define a function with a table or a graph. </p>
+		<p>
+			We will often use sequences as a counting tool.
+			For example, a very simple counting question is, <q>how many wheels do 100 cars have?</q> Instead of answering just this one question, we could generalize and ask how many wheels <m>n</m> cars have, and get a sequence of answers.
+			This yields the infinite sequence <m>(4, 8, 12, \ldots )</m>.
+			The order these multiples of 4 appear in is important, since each number in the sequence corresponds to a specific version of the question.
+		</p>
 
-    <p> The key thing that makes a rule a <em>function</em> is that there is <em>exactly one</em> output for each input. That is, it is important that the rule be a good rule. What output do we assign to the input 7? There can only be one answer for any particular function. </p>
+		<p>
+			It is fine to think of a sequence of numbers as an ordered list.
+			We can refer to the <term>terms</term> simply as
+			<me>
+				a_0, a_1, a_2,\ldots
+			</me>
+			and might refer to the entire sequence as <m>(a_n)_{n\ge 0}</m> or <m>(a_n)_{n\in \N}</m>.
+		</p>
 
-    <p> Since a function maps one set (the domain) to another set (the codomain), there is an obvious connection between sets and function. There is another connection worth considering though: the graph of a function is often described as a <alert>set</alert> of points. Here is an example. </p>
+		<p>
+			If we want to be a little more precise and more abstract, we can think of a sequence as a <em>function</em>.
+			The domain is the natural numbers or some subset of consecutive natural numbers (like <m>\{1,2,3,4\}</m>).
+			The codomain is some set.
+			We think of the domain as the positions in the sequence, and the image of those inputs as the terms in the sequence.
+		</p>
 
-    <example>
-      <p> Consider the function <m>f:\{1,2,3\} \to \{2, 4, 6\}</m> defined by <m>f(x) = 2x</m>. If we wanted to plot a graph of this function, we would draw the points <m>(1,2)</m>, <m>(2,4)</m>, and <m>(3,6)</m> (but we would not connect these points with lines, since we are studying discrete math; the domain only contains three elements, not the infinitely many between them). </p>
+		<p>
+			For example, we might consider the Fibonacci sequence <m>(f_n)_{n\ge 1}</m>, which starts <m> 1, 1, 2, 3, 5, 8,\ldots</m>.
+			What is the 4th term in the sequence? We might say <m>f_4 = 3</m> (this is assuming the the first 1 is the first term and not the 0th term).
+			Note that there can only be one 4th term.
+			There can only be one <m>n</m>-th term for any particular value of <m>n</m>.
+			So for any input (the position of the term) there is only one output (the term).
+			It would be perfectly reasonable to write <m>f(4) = 3</m>, and that really does look like a function.
+			But we like to use subscripts.
+		</p>
 
-      <p> So associated with the function is the set of points <m>\{(1,2), (2, 4), (3,6)\}</m>. In fact, this set of points is associated exactly with this (and only this) function. So we can think of this set of points <em>as the function itself</em>. </p>
-    </example>
+		<p>
+			We can also describe the terms in a sequence using a table.
+			We might write something like the following:
+		</p>
 
-    <p> Of course, we are using a mathematical object here: an <term>ordered pair</term>. This is not a set (since sets are unordered). How should we talk about ordered things? We will take this question up in the next section. </p>
+		<tabular>
+			<col right="minor" />
+			<col />
+			<col />
+			<col />
+			<col />
+			<col />
+			<row bottom="minor">
+			<cell>
+			<m>n</m>
+			</cell>
+			<cell>1</cell>
+			<cell>2</cell>
+			<cell>3</cell>
+			<cell>4</cell>
+			<cell>...</cell>
+			</row>
+			<row>
+			<cell>
+			<m>a_n</m>
+			</cell>
+			<cell>1</cell>
+			<cell>3</cell>
+			<cell>6</cell>
+			<cell>10</cell>
+			<cell>...</cell>
+			</row>
+		</tabular>
 
-    <p> One last important consideration about how we describe a function: we will consider two basic sorts of formulas: closed and recursive. A <term>closed formula</term> is one in which each output is given by an explicit rule based solely on its input. This is what most of us think of as a formula. For example, <m>f(n) = 3n + 1</m> is a closed formula, since to find <m>f(5)</m> (say) we take the input 5 and so something to it: multiply it by 5 and then add 1. </p>
+		<p>
+			This looks exactly like how you would describe a function, even though this table is describing the sequence of <term>triangular numbers</term> (we will see why they are called this later).
+		</p>
 
-    <p> What else could a formula possibly be? A <term>recursive definition</term> of a function tells us how to compute the output for a given input <em>based on other outputs of the function</em>. For example, we might insist that <m>f(n) = 2\cdot f(n-1)</m>. If we also specify an <term>initial condition</term> that <m>f(0) = 3</m>, then we can find <m>f(1) = 2\cdot 3 = 6</m>, and then <m>f(2) = 2\cdot 6 = 12</m>, and so on. What is <m>f(5)</m> here? The only way to answer that is to find <m>f(4)</m>, which means we need to find <m>f(3)</m>, which we could do, since we have computed <m>f(2)</m>. </p>
+		<p>
+			Since sequences are functions, we can use any of the techniques to describe functions to describe sequences.
+			In particular, we might give a <term>closed formula</term> for a sequence by explicitly giving the function for the <m>n</m>-th term.
+			For example,
+			<me>
+				a_n = \frac{n(n+1)}{2}
+			</me>.
+			Alternatively, we could define a sequence recursively by saying how to get from one term to the next.
+			This is especially useful for the Fibonacci sequence:
+			<me>
+				f_n = f_{n-1} + f_{n-2}; f_1 = 1, f_2 = 1
+			</me>.
+		</p>
 
-    <p> Recursive definitions of functions are often less useful in finding a particular output, but they are often easier to find for a particular application. We will explore this phenomenon more when we study sequences. Speaking of which... </p>
+		<p>
+			A large amount of our effort in understanding sequences will go into taking a recursive definition and finding a closed formula for the sequence.
+			We will study this, and everything else sequence related in <xref ref="ch_sequences" />.
+		</p>
+	</subsection>
 
-  </subsection>
+	<subsection xml:id="subsec-relations">
+		<title>Relations</title>
+		<p>
+			How are the numbers <m>2</m> and <m>6</m> related? Oh, I know: <m>2 \lt 6</m>.
+			Also, <m>6</m> is a multiple of <m>2</m>.
+			The two numbers are also both even.
+			And here is another fact: they are <em>not equal</em>.
+			All four of these are examples of <term>relations</term>: less than, multiple of, both even, not equal.
+			And there are many more (infinitely many) relations that might or might not hold of a pair of two numbers.
+		</p>
 
+		<p>
+			The examples above are all <term>binary relations</term> in that they relate two elements.
+			You could also consider relations between more than two elements.
+			For example, we could consider the relation <q>Pythagorean triple</q> that holds of three numbers precisely if they are the side lengths of a right triangle.
+			So the the relation is true of the triple <m>(3,4,5)</m>, but not of <m>(4,5,6)</m> (since <m>3^2 + 4^2 = 5^2</m> but <m>4^2 + 5^2 \ne 6^2</m>).
+		</p>
 
-  <subsection xml:id="subsec_structures-sequences">
-    <title>Sequences</title>
-    <p> Sometimes we are interested not just in a collection of numbers, but in what <em>order</em> those numbers appear. In such cases, we cannot use <em>sets</em>, since they do not distinguish between the order of their elements. Instead, we consider <term>sequences</term>. </p>
+		<p>
+			Notice that we can talk about a pair or triple <em>satisfying</em> a relation.
+			We might say that a pair <em>belongs</em> to the relation.
+			In fact, the careful and formal way to define a relation is as a <em>set</em> of ordered pairs (or triples or etc.).
+			Consider the (infinite) set of all ordered pairs <m>(a,b)</m> such that <m>a \lt b</m>.
+			Every element of this set contains numbers for which the relation <q>less than</q> is true, and every pair of numbers for which the relation is true is a pair in the set.
+			So we can say that this set of pairs <alert>is</alert> the relation.
+		</p>
 
-    <p> We will consider both <term>finite</term> and <term>infinite</term> sequences. A finite sequence my be something as simple as <m>(1,2,3)</m>; that is a sequence with 3 elements, in that particular order. We might also call this an <term>ordered triple</term>, the same way that <m>(7,3)</m> is an ordered pair. The key difference between the sequence <m>(1,2,3)</m> and the set <m>\{1,2,3\}</m> is that we <q>care</q> about the order. That is, the sequence <m>(1,2,3)</m> is different from the sequence <m>(2,3,1)</m>, while the set <m>\{1,2,3\}</m> is exactly the same set as <m>\{2,3,1\}</m>. </p>
+		<p>
+			Relations can have some standard properties, and deciding whether a particular relation has a given property can often help us understand the relation better.
+			The less-than relation is, for example, <term>irreflexive</term> because there are no elements that are less than themselves.
+			It is also <term>antisymmetric</term> since there are no distinct numbers <m>a</m> and <m>b</m> such that <m>a \lt b</m> and <m>b \lt a</m>.
+			It is also <term>transitive</term> since if <m>a \lt b</m> and <m>b \lt c</m> then it must follow that <m>a \lt c</m>.
+			These are just a few examples of relation properties though.
+		</p>
 
-    <p> We will often use sequences as a counting tool. For example, a very simple counting question is, <q>how many wheels do 100 cars have?</q> Instead of answering just this one question, we could generalize and ask how many wheels <m>n</m> cars have, and get a sequence of answers. This yields the infinite sequence <m>(4, 8, 12, \ldots )</m>. The order these multiples of 4 appear in is important, since each number in the sequence corresponds to a specific version of the question. </p>
+		<p>
+			Why would we care about these properties? It turns out that some groups of properties happen together often, and for such collections of properties, we can prove general results about the relations that satisfy them.
+			So if we can prove that a given relation is <term>reflexive</term>, <term>symmetric</term>, and <term>transitive</term> (whatever those mean), then we know the relation is a <term>equivalence relation</term>, and therefore we know it has a bunch of other properties.
+			A large portion of discrete mathematics is about studying particular types of relations.
+			One of my favorites is a relation that gives us a graph.
+		</p>
+	</subsection>
 
-    <p> It is fine to think of a sequence of numbers as an ordered list. We can refer to the <term>terms</term> simply as <me> a_0, a_1,a_2,\ldots </me> and might refer to the entire sequence as <m>(a_n)_{n\ge 0}</m> or <m>(a_n)_{n\in \N}</m>. </p>
+	<subsection xml:id="subsec_structures-graphs">
+		<title>Graphs</title>
+		<p>
+			Consider the set <m>V = \{1, 2, 3, 4, 5, 6\}</m>.
+			Which pairs of numbers from that set add up to 7? We could have <m>\{1,6\}</m> or <m>\{2, 5\}</m> or <m>\{3,4\}</m>.
+			We can picture the set and the interesting (unordered) pairs (i.e., two-element subsets) as a picture called a graph:
+		</p>
 
-    <p> If we want to be a little more precise and more abstract, we can think of a sequence as a <em>function</em>. The domain is the natural numbers or some subset of consecutive natural numbers (like <m>\{1,2,3,4\}</m>). The codomain is some set. We think of the domain as the positions in the sequence, and the image of those inputs as the terms in the sequence. </p>
+		<image xml:id="graphs-7sum" width="20%">
+			<description>The graph of pairs of numbers 1 to 6 that sum to 7</description>
+			<latex-image> \begin{tikzpicture} \foreach \x in {1,...,6}{ \coordinate (a\x) at (120-\x*60: 1); } \draw (a1) node[above]{1} -- (a6) node[above]{6} (a2) node[right]{2} -- (a5) node[left]{5} (a3) node[below]{3} -- (a4) node[below]{4}; \foreach \x in {1,...,6}{ \fill (a\x) \v; } \end{tikzpicture} </latex-image>
+		</image>
 
-    <p> For example, we might consider the Fibonacci sequence <m>(f_n)_{n\ge 1}</m>, which starts <m> 1, 1, 2, 3, 5, 8,\ldots</m>. What is the 4th term in the sequence? We might say <m>f_4 = 3</m> (this is assuming the the first 1 is the first term and not the 0th term). Note that there can only be one 4th term. There can only be one <m>n</m>-th term for any particular value of <m>n</m>. So for any input (the position of the term) there is only one output (the term). It would be perfectly reasonable to write <m>f(4) = 3</m>, and that really does look like a function. But we like to use subscripts. </p>
+		<p>
+			On the other hand, we might want to consider pairs of numbers whose sum is even.
+			Then, we would get the following picture.
+		</p>
 
-    <p> We can also describe the terms in a sequence using a table. We might write something like the following: </p>
+		<image xml:id="graphs-evensum" width="20%">
+			<description>The graph of pairs of numbers 1 to 6 that have an even sum</description>
+			<latex-image> \begin{tikzpicture} \foreach \x in {1,...,6}{ \coordinate (a\x) at (120-\x*60: 1); } \draw (a1) node[above]{1} -- (a5) node[left]{5} (a2) node[right]{2} -- (a6) node[above]{6} (a3) node[below]{3} -- (a1) (a4) node[below]{4} -- (a6) (a2) -- (a4) (a3) -- (a5); \foreach \x in {1,...,6}{ \fill (a\x) \v; } \end{tikzpicture} </latex-image>
+		</image>
 
-    <tabular>
-      <col right="minor" />
-      <col />
-      <col />
-      <col />
-      <col />
-      <col />
-      <row bottom="minor">
-        <cell>
-          <m>n</m>
-        </cell>
-        <cell>1</cell>
-        <cell>2</cell>
-        <cell>3</cell>
-        <cell>4</cell>
-        <cell>...</cell>
-      </row>
-      <row>
-        <cell>
-          <m>a_n</m>
-        </cell>
-        <cell>1</cell>
-        <cell>3</cell>
-        <cell>6</cell>
-        <cell>10</cell>
-        <cell>...</cell>
-      </row>
-    </tabular>
+		<p>
+			We call these discrete structures <term>graphs</term>.
+			A graph is a type of relation, in particular one that is <term>symmetric</term> (if <m>a</m> is related to <m>b</m>, then <m>b</m> is related to <m>a</m>) and <term>irreflexive</term> (no element is related to itself).
+		</p>
 
-    <p> This looks exactly like how you would describe a function, even though this table is describing the sequence of <term>triangular numbers</term> (we will see why they are called this later). </p>
+		<p>
+			However, we mostly think of graphs as the drawings of dots and lines, or more precisely as a set of <term>vertices</term> together with a set of <term>edges</term>, where each edge is a two-element subset of the vertices.
+			Notice, even here, we are using the structure <em>set</em> to define the structure <em>graph</em>.
+		</p>
 
-    <p> Since sequences are functions, we can use any of the techniques to describe functions to describe sequences. In particular, we might give a <term>closed formula</term> for a sequence by explicitly giving the function for the <m>n</m>-th term. For example, <me> a_n = \frac{n(n+1)}{2} </me>. Alternatively, we could define a sequence recursively by saying how to get from one term to the next. This is especially useful for the Fibonacci sequence: <me> f_n = f_{n-1} + f_{n-2}; f_1 = 1, f_2 = 1 </me>. </p>
+		<p>
+			Graphs show up in all sorts of real-world applications: in a class, some students are friends with each other, so take the students to be the vertices and the edges to be the friendships.
+			In geography, some countries share a border, so take the countries to be the vertices and connect a pair of vertices with an edge if the countries share a border.
+			Perhaps you are planning a trip and want to fly from Denver to Paris.
+			Is there a direct flight, or do you need to stop in Newark? That is, does the graph of flights have an edge between Denver and Paris or only between Denver and Newark and between Newark and Paris? When your Amazon driver delivers packages to 10 houses in your neighborhood, how does her app know in which order to deliver the package? Graph theory!
+		</p>
 
-    <p> A large amount of our effort in understanding sequences will go into taking a recursive definition and finding a closed formula for the sequence. We will study this, and everything else sequence related in <xref ref="ch_sequences" />. </p>
-  </subsection>
+		<p>
+			The study of graphs is a subject in its own right, in which many mathematicians hold doctorate degrees and write hundreds of papers about each year.
+			We will scratch the surface of this fascinating subject in <xref ref="ch_graphtheory" />
+		</p>
+	</subsection>
 
-  <subsection xml:id="subsec-relations">
-    <title>Relations</title>
-    <p> How are the numbers <m>2</m> and <m>6</m> related? Oh, I know: <m>2 \lt 6</m>. Also, <m>6</m> is a multiple of <m>2</m>. The two numbers are also both even. And here is another fact: they are <em>not equal</em>. All four of these are examples of <term>relations</term>: less than, multiple of, both even, not equal. And there are many more (infinitely many) relations that might or might not hold of a pair of two numbers. </p>
+	<!-- <subsection xml:id="subsubsec_structures-statements">
+		<title>Statements</title>
+		<p>
+			Time to get <em>meta</em>: we use language to make claims about mathematics, but we can also use mathematics to study the language and claims themselves.
+			<term>Mathematical logic</term> is the study of how statements behave and interact.
+			Since a particular statement can only be either <term>true</term> or <term>false</term>, such study falls squarely in the realm of discrete mathematics.
+		</p>
 
-    <p> The examples above are all <term>binary relations</term> in that they relate two elements. You could also consider relations between more than two elements. For example, we could consider the relation <q>Pythagorean triple</q> that holds of three numbers precisely if they are the side lengths of a right triangle. So the the relation is true of the triple <m>(3,4,5)</m>, but not of <m>(4,5,6)</m> (since <m>3^2 + 4^2 = 5^2</m> but <m>4^2 + 5^2 \ne 6^2</m>). </p>
+		<p>
+			Logic considers the formal structure of statements, and how we can be sure that some statements must be a consequence of others.
+			For example, suppose you believe the following three statements:
+			<ol>
+				<li>
+					<p>
+						Bow ties are cool or mushrooms are good on pizza.
+					</p>
+				</li>
 
-    <p> Notice that we can talk about a pair or triple <em>satisfying</em> a relation. We might say that a pair <em>belongs</em> to the relation. In fact, the careful and formal way to define a relation is as a <em>set</em> of ordered pairs (or triples). Consider the (infinite) set of all ordered pairs <m>(a,b)</m> such that <m>a \lt b</m>. Every element of this set contains numbers for which the relation <q>less than</q> is true, and every pair of numbers for which the relation is true is a pair in the set. So we can say that this set of pairs <alert>is</alert> the relation. </p>
+				<li>
+					<p>
+						If bow ties are cool, then Oscar wears bow ties.
+					</p>
+				</li>
 
-    <p> Relations can have some standard properties, and deciding whether a particular relation has a given property can often help us understand the relation better. The less-than relation is, for example, <term>irreflexive</term> because there are no elements that are less than themselves. It is also <term>antisymmetric</term> since there are no distinct numbers <m>a</m> and <m>b</m> such that <m>a \lt b</m> and <m>b \lt a</m>. It is also <term>transitive</term> since if <m>a \lt b</m> and <m>b \lt c</m> then it must follow that <m>a \lt c</m>. These are just a few examples of relation properties though. </p>
+				<li>
+					<p>
+						Mushrooms are <em>not</em> good on pizza.
+					</p>
+				</li>
+			</ol>
+			Can you conclude anything about whether Oscar wears bow ties? Yes! Since mushrooms are not good on pizza, it must be that bow ties are cool, and thus Oscar wears them.
+		</p>
 
-    <p> Why would we care about these properties? It turns out that some groups of properties happen together often, and for such collections of properties, we can prove general results about the relations that satisfy them. So if we can prove that a given relation is <term>reflexive</term>, <term>symmetric</term>, and <term>transitive</term> (whatever those mean), then we know the relation is a <term>equivalence relation</term>, and therefore we know it has a bunch of other properties. A large portion of discrete mathematics is about studying particular types of relations. One of my favorites is a relation that gives us a graph. </p>
-  </subsection>
+		<p>
+			They key that makes this argument work is the logical form of the statements involved and our agreement about the relationship between those forms and truth.
+			The first statement has the form <q><m>P</m> or <m>Q</m></q>, which in symbols we write <m>P \vee Q</m>.
+			We set rules for the conditions under which this <term>disjunction</term> (i.e.
+			<q>or</q> statement) is true, depending only on the truth values of <m>P</m> and <m>Q</m>.
+			Similarly, the second statement has the form <m>P \imp Q</m>, which is true precisely when <m>P</m> is false or <m>Q</m> is true (we will convince ourselves this is the right choice later).
+		</p>
 
+		<p>
+			We will use statements throughout our studies of discrete math, but will consider them carefully in <xref ref="ch_logic" />.
+		</p>
+	</subsection> -->
 
-  <subsection xml:id="subsec_structures-graphs">
-    <title>Graphs</title>
-    <p> Consider the set <m>V = \{1, 2, 3, 4, 5, 6\}</m>. Which pairs of numbers from that set add up to 7? We could have <m>\{1,6\}</m> or <m>\{2, 5\}</m> or <m>\{3,4\}</m>. We can picture the set and the interesting (unordered) pairs (i.e., two-element subsets) as a picture called a graph: </p>
+	<subsection xml:id="subsec_structures-even-more">
+		<title>Even More Structures</title>
+		<p>
+			Our list of structures could go on and on, but we will stop here.
+			We will not spend much time at all looking at <term>multisets</term>, which are just like sets except can have repeated elements.
+			Since this is not a geometry class, we will not consider <term>finite geometries</term>, or <term>designs</term> (which are somewhere between graphs and geometries).
+			Discrete structures are useful in computer science, but we will stop short of studying <term>linked lists</term> or <term>rooted trees</term>.
+			Although abstract algebra is a fascinating subject, we will not get to <term>groups</term> or <term>rings</term> or <term>metroids</term> or <term>POSets</term> or <term>Boolean algebras</term> or ...
+			These are examples of sets on which we define additional operations and study the algebraic structure of how the sets and operations interact.
+		</p>
 
-    <image xml:id="graphs-7sum" width="20%">
-      <description>The graph of pairs of numbers 1 to 6 that sum to 7</description>
-      <latex-image> \begin{tikzpicture} \foreach \x in {1,...,6}{ \coordinate (a\x) at (120-\x*60: 1); } \draw (a1) node[above]{1} -- (a6) node[above]{6} (a2) node[right]{2} -- (a5) node[left]{5} (a3) node[below]{3} -- (a4) node[below]{4}; \foreach \x in {1,...,6}{ \fill (a\x) \v; } \end{tikzpicture} </latex-image>
-    </image>
+		<p>
+			The point is, discrete mathematics is awesome and you can spend multiple lifetimes studying it.
+			So what are we waiting for? Let's dive in and solve some problems.
+		</p>
+	</subsection>
 
-    <p> On the other hand, we might want to consider pairs of numbers whose sum is even. Then, we would get the following picture. </p>
-
-    <image xml:id="graphs-evensum" width="20%">
-      <description>The graph of pairs of numbers 1 to 6 that have an even sum</description>
-      <latex-image> \begin{tikzpicture} \foreach \x in {1,...,6}{ \coordinate (a\x) at (120-\x*60: 1); } \draw (a1) node[above]{1} -- (a5) node[left]{5} (a2) node[right]{2} -- (a6) node[above]{6} (a3) node[below]{3} -- (a1) (a4) node[below]{4} -- (a6) (a2) -- (a4) (a3) -- (a5); \foreach \x in {1,...,6}{ \fill (a\x) \v; } \end{tikzpicture} </latex-image>
-    </image>
-    <p> We call these discrete structures <term>graphs</term>. A graph is a type of relation, in particular one that is <term>symmetric</term> (if <m>a</m> is related to <m>b</m>, then <m>b</m> is related to <m>a</m>) and <term>irreflexive</term> (no element is related to itself). </p>
-    <p> However, we mostly think of graphs as the drawings of dots and lines, or more precisely as a set of <term>vertices</term> together with a set of <term>edges</term>, where each edge is a two-element subset of the vertices. Notice, even here, we are using the structure <em>set</em> to define the structure <em>graph</em>. </p>
-
-    <p> Graphs show up in all sorts of real-world applications: in a class, some students are friends with each other, so take the students to be the vertices and the edges to be the friendships. In geography, some countries share a border, so take the countries to be the vertices and connect a pair of vertices with an edge if the countries share a border. Perhaps you are planning a trip and want to fly from Denver to Paris. Is there a direct flight, or do you need to stop in Newark? That is, does the graph of flights have an edge between Denver and Paris or only between Denver and Newark and between Newark and Paris? When your Amazon driver delivers packages to 10 houses in your neighborhood, how does her app know in which order to deliver the package? Graph theory! </p>
-
-    <p> The study of graphs is a subject in its own right, in which many mathematicians hold doctorate degrees and write hundreds of papers about each year. We will scratch the surface of this fascinating subject in <xref ref="ch_graphtheory" />
-    </p>
-  </subsection>
-
-  <subsection xml:id="subsubsec_structures-statements">
-    <title>Statements</title>
-    <p> Time to get <em>meta</em>: we use language to make claims about mathematics, but we can also use mathematics to study the language and claims themselves. <term>Mathematical logic</term> is the study of how statements behave and interact. Since a particular statement can only be either <term>true</term> or <term>false</term>, such study falls squarely in the realm of discrete mathematics. </p>
-
-    <p> Logic considers the formal structure of statements, and how we can be sure that some statements must be a consequence of others. For example, suppose you believe the following three statements: <ol>
-        <li>
-          <p> Bow ties are cool or mushrooms are good on pizza. </p>
-        </li>
-        <li>
-          <p> If bow ties are cool, then Oscar wears bow ties. </p>
-        </li>
-        <li>
-          <p> Mushrooms are <em>not</em> good on pizza. </p>
-        </li>
-      </ol> Can you conclude anything about whether Oscar wears bow ties? Yes! Since mushrooms are not good on pizza, it must be that bow ties are cool, and thus Oscar wears them. </p>
-
-    <p> They key that makes this argument work is the logical form of the statements involved and our agreement about the relationship between those forms and truth. The first statement has the form <q><m>P</m> or <m>Q</m></q>, which in symbols we write <m>P \vee Q</m>. We set rules for the conditions under which this <term>disjunction</term> (i.e. <q>or</q> statement) is true, depending only on the truth values of <m>P</m> and <m>Q</m>. Similarly, the second statement has the form <m>P \imp Q</m>, which is true precisely when <m>P</m> is false or <m>Q</m> is true (we will convince ourselves this is the right choice later). </p>
-
-    <p> We will use statements throughout our studies of discrete math, but will consider them carefully in <xref ref="ch_logic" />. </p>
-  </subsection>
-  <subsection xml:id="subsec_structures-even-more">
-    <title>Even More Structures</title>
-    <p> Our list of structures could go on and on, but we will stop here. We will not spend much time at all looking at <term>multisets</term>, which are just like sets except can have repeated elements. Since this is not a geometry class, we will not consider <term>finite geometries</term>, or <term>designs</term> (which are somewhere between graphs and geometries). Discrete structures are useful in computer science, but we will stop short of studying <term>linked lists</term> or <term>rooted trees</term>. Although abstract algebra is a fascinating subject, we will not get to <term>groups</term> or <term>rings</term> or <term>metroids</term> or <term>POSets</term> or <term>Boolean algebras</term> or ... These are examples of sets on which we define additional operations and study the algebraic structure of how the sets and operations interact. </p>
-
-    <p> The point is, discrete mathematics is awesome and you can spend multiple lifetimes studying it. So what are we waiting for? Let's dive in and solve some problems. </p>
-  </subsection>
-
-  <reading-questions xml:id="rqs-intro-structures" component="runestone">
-    <exercise label="rq-intro-structures-sets">
+	<reading-questions xml:id="rqs-intro-structures" component="runestone">
+    <exercise label="rq-intro-structures-domino-set">
       <statement>
-        <p> Which discrete structures discussed in this section can be defined in terms of sets? Give an example of one such structure and explain how it is really a type of set. </p>
+        <p>
+          Think back to the domino problem at the beginning of this section.  We asked how many dominoes are in a double-six domino <em>set</em>.  Is this really a set, in our mathematical sense?  What discrete structure would you use to represent each domino individually?
+        </p>
       </statement>
       <response />
     </exercise>
+
+    <exercise label="rq-intro-structures-domino-sequence">
+
+      <statement>
+        <p>
+          A double-zero domino set would contain only one domino (both sides showing 0).  A double-one set would contain this plus the dominos <m>(1,0)</m> and <m>(1,1)</m>.  We can continue in this way, creating a sequence of domino sets.  Find the next three terms of the sequence.
+        </p>
+        
+        <p>
+            1, 3, <var width="1"/> , <var width="1"/> , <var width="1"/> , ...
+        </p>
+      </statement>      
+      <setup>
+        <var>
+          <condition number="6">
+          <feedback>Correct</feedback>
+          </condition>
+          <condition string=".*">
+            <feedback>Try listing all the dominoes in the double-two set.</feedback>
+          </condition>
+        </var>
+        <var>
+          <condition number="10">
+          <feedback>Correct</feedback>
+          </condition>
+          <condition string=".*">
+            <feedback>Try again</feedback>
+          </condition>
+        </var>
+        <var>
+          <condition number="15">
+          <feedback>Correct</feedback>
+          </condition>
+          <condition string=".*">
+            <feedback>Try again</feedback>
+          </condition>
+        </var>
+      </setup>
+    </exercise>
+
     <exercise label="rq-intro-structures-q">
       <statement>
-        <p> What questions do you have after reading this section? Write at least one question about the content of this section that we could answer in class or online. </p>
+        <p>
+          What questions do you have after reading this section? Write at least one question about the content of this section that you are curious about.
+        </p>
       </statement>
       <response />
     </exercise>
-  </reading-questions>
+	</reading-questions>
 </section>
-
