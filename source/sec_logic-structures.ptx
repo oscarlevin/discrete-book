@@ -11,6 +11,14 @@
   
   <subsection xml:id="subsec-logic-structures-intro" label="logic-structures-intro">
     <title>Introduction</title>
+    <investigation>
+      <statement>
+        <p>
+          Suppose there are 15 people at a party.  Most people know each other already, but there are still some people who decide to shake hands.  Is it possible for everyone at the party to shake hands with exactly three other people?
+        </p>
+      </statement>
+    </investigation>
+
     <p>
       So far we have seen how the logical form of a statement we wish to prove can inform how the build the scaffolding of a proof.  The proof structure can only get us so far though: to flesh out the proof skeleton requires understanding of the mathematical objects and structures the proofs are about.  Some of this can come from carefully reading definitions.  Yet there is also some less concrete understanding and intuition that comes from working with the objects and structures that can lead to that <q>ah-ha!</q> moment of inspiration that suggests how to proceed with a proof. 
     </p>
@@ -20,6 +28,10 @@
         Why are we writing proofs?  Besides practice for becoming better reasoners, diving into careful proofs about discrete structures is a way to learn more about the structures themselves.  They are a playground for exploring mathematics, to help us build intuition for mathematical structures.  So we study structures to help us write proofs about them, and we write proofs about them to help understand the structures.  Bootstrapping!
       </p>
     </aside>
+
+    <p>
+      Another reason to shift our focus toward proofs about discrete structures is that doing so illustrates an important feature of mathematics: abstraction.  We have been proving particular facts about particular problems.  We might even start to notice similarities about the proofs of some solutions.  This very well could be due to the underlying mathematical structures that the problems are (secretly) about.  If we prove the general facts about these structures, then we can apply these <q>theorems</q> to many different problems.
+    </p>
 
     <p>
       Some discrete structures lend themselves to particular styles of proof and there are some <q>standard</q> proof techniques that apply to particular structures.  We will see some of this here, but mostly we take this opportunity to remind ourselves of some of the basic definitions and properties for discrete structures, and use the proofs about them to help understand these better.
@@ -103,7 +115,94 @@
       </proof>
     </proposition>
 
+    <p>
+      Let's now prove this fact about numbers: every multiple of 9100 is also a multiple of 13.  We could factor 9100, but here is an easier way.  The set of multiples of 9100 is a subset of the set of multiples of 91.  And the set of multiples of 91 is a subset of the set of multiples of 13.  Now apply the proposition above.
+    </p>
+
   </subsection>
   
+  <subsection xml:id="subsec-logic-proofs-functions">
+    <title>Proofs about functions</title>
+    
+    <p>
+      A function <m>f:A \to B</m> is a rule that assigns each element of the set <m>A</m> (the domain) to exactly one element of the set <m>B</m> (the codomain). It is any rule: there doesn't have to be a formula or rational for it, we just need to match up elements from <m>A</m> to elements in <m>B</m>.  For example, we could let <m>A</m> be the set of students enrolled in a particular Discrete Math course and let <m>B</m> be the set of months of the year.  Now define the function <m>f:A \to B</m> to be the rule that assigns to each student the month in which their birthday falls.  Since every student has an assigned month, and no more than one month, this is a function.
+    </p>
+
+    <p>
+      Here is a definition of a particular type of function.
+    </p>
+
+    <definition xml:id="def-func-inj">
+      <statement>
+        <p>
+          A function <m>f:A \to B</m> is <term>injective</term> (or <term>one-to-on</term>) provided every element in <m>B</m> is the image of at most one element in <m>A</m>.  In other words, no element in <m>B</m> is the <em>output</em> for more than one <em>input</em> from <m>A</m>. 
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In the example below, we use <em>two-line notation</em> to describe a function.  The top row are the inputs, and the bottom row are the corresponding outputs. So <m>f:\{1,2,3,4\} \to \{a,b,c,d\}</m> might be defined as,
+      <me>
+        f = \twoline{1 \amp 2 \amp 3 \amp 4}{a \amp b \amp c \amp d}
+      </me>,
+      which means that <m>f(1) = a</m>, <m>f(2) = b</m>, <m>f(3) = c</m>, and <m>f(4) = d</m>.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Let <m>A = \{1,2,3\}</m> and <m>B = \{2, 4, 6, 8\}</m>.  Consider the functions <m>f:A \to B</m> and <m>g:A \to B</m> defined by,
+          <me>
+            f = \twoline{1 \amp 2 \amp 3}{2 \amp 8 \amp 6}, \qquad g = \twoline{1 \amp 2 \amp 3}{4 \amp 6 \amp 4}.
+          </me>
+          Which of these functions is injective?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The function <m>f</m> is injective: each element of <m>B</m> is the image of at most one element of <m>A</m>.  The function <m>g</m> is not injective: the element 4 in <m>B</m> is the image of both 1 and 3 in <m>A</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Consider the student to birth month function again.  Could this possibly injective?  Or put another way, must there be two students in the course with the same birth month (which would say the function is <em>not</em> injective)?  The answer seems to depend on how many students are in the class.  
+    </p>
+
+    <p>
+      But let's pause and think about the more general fact about functions we have here.  Let's prove the following fact.  Recall that <m>|A|</m> denotes the <term>cardinality</term> (size) of the set <m>A</m>: the number of elements in <m>A</m>.
+    </p>
+
+    <proposition xml:id="prop-non-injective">
+      <statement>
+        <p>
+          Suppose <m>f:A \to B</m> is a function with <m>A</m> and <m>B</m> both finite sets.  If <m>|A| \gt |B|</m>, then <m>f</m> is <em>not</em> injective.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will give a proof of the contrapositive: if <m>f</m> is injective, then <m>|A| \le |B|</m>.  Let <m>|B| = n</m>.  Since <m>f</m> is injective, each element of <m>B</m> must be the output for <em>at most</em> one element of <m>A</m>.  Thus there at most <m>n</m> elements in <m>A</m> that get mapped to <m>B</m> by <m>f</m>.  But the definition of a function requires that every element of the domain is mapped to exactly one element of the codomain, so there must be at most <m>n</m> elements in <m>A</m>.
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      Does this proof remind you of our pigeonhole-like proofs?  It should, since this is precisely (one of) the carful formulations of the pigeonhole principle.  We could definitely have proved the fact about students sharing a birth month, but now we can just apply the proposition above and be done.  When you apply a theorem or proposition to get directly prove another result, we call the latter result a <term>corollary</term>.
+    </p>
+
+    <corollary xml:id="cor-birth-month">
+      <statement>
+        <p>
+          Suppose a class has 25 students.  Then at least two students share the same birth month.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Consider the function that maps each student to their birth month.  Since the domain has 25 elements and the codomain has 12 elements, the function is not injective, by <xref ref="prop-non-injective"/>.  Therefore, at least two students share the same birth month.
+        </p>
+      </proof>
+    </corollary>
+
+  </subsection>
 
 </section>
