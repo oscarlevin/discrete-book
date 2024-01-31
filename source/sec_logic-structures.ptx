@@ -39,7 +39,7 @@
   </subsection>
 
   <subsection>
-    <title>Proofs about Sets</title>
+    <title>Proofs about sets</title>
     <p>
       Recall that a set is an unordered collection of elements.  We can describe a set by listing these elements, or by specifying a property that elements in the set all satisfy.  For example, 
       <me>
@@ -203,6 +203,91 @@
       </proof>
     </corollary>
 
+  </subsection>
+
+  <subsection xml:id="subsec-proofs-about-graphs">
+    <title>Proofs about graphs</title>
+    
+    <p>
+      We will spend all of <xref ref="ch_graphtheory"/> studying proofs about graphs, since this is such a rich area of mathematics.  As a preview, here is an example of how graph proofs can go.
+    </p>
+
+    <p>
+      A <term>graph</term> is a set <m>V</m> of <term>vertices</term> and a set <m>E</m> of <term>edges</term>.  The edges are two-element subsets of the vertices, and we can think of them as representing relationships between the vertices.  Note this is an abstract definition of a graph using sets, but we often draw graphs using dots for the vertices connected by lines for the edges, as this gives us a nice picture of what is going on.
+    </p>
+
+    <p>
+      Since graphs represent a type of relationship between elements (vertices), we can use graphs to represent many real world problems.  For example, the vertices of a graph might represent people at a party.  Each edge can represent a handshake between two people.  So if we wondered whether it is possible for the 15 people at a party to each shake hands with exactly 3 people there, we are really asking whether there is a graph with 15 vertices where each vertex belongs to 3 edges.  (<q>Belongs to</q>?? Yes, because an edges is two-element subset of the vertices, so if an edge <q>touches</q> or <q>comes out of</q> a vertex, that means the vertex belongs to that particular two-element subset.)
+    </p>
+
+    <p>
+      Here is a definition related to this idea.      
+    </p>
+
+    <definition xml:id="def-degree">
+      <statement>
+        <p>
+          Let <m>v</m> be a vertex in a graph <m>G</m>.  The <term>degree</term> of <m>v</m>, written <m>d(v)</m>, is the number of edges that contain <m>v</m>,  i.e., the number of edges <term>incident</term> to <m>v</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <statement>
+        <p>
+          Consider the graph <m>G</m> with vertices <m>V = \{1,2,3,4\}</m> and edges <m>E = \{\{1,2\}, \{1,3\}, \{1,4\}, \{2,3\}\}</m>.  What is the degree of each vertex in <m>G</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          It might be helpful to picture the graph:
+        </p>
+
+        <image width="20%">
+          <description>A graph with four vertices labeled 1 through 4. There are edges from vertex 1 to each of the other vertices, and an edge between vertices 2 and 3.</description>
+          <latex-image label="graph-for-degrees">
+            \begin{tikzpicture}[scale=2]
+              \draw (0,1) \vl{1} -- (1,1) \vr{2} -- (1,0) \vr{3}  (0,0) \vl{4} -- (0,1) -- (1,0);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+        <p>
+          We have <m>d(1) = 3</m>, <m>d(2) = 2</m>, <m>d(3) = 2</m>, and <m>d(4) = 1</m>.  You can see this by counting how many edges are incident to each vertex, or by counting how many edge-subsets each vertex belongs to.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      So is it possible for among 15 people for everyone to shake hands with exactly three people?  Well, is there a graph with 15 vertices, all of degree 3?  The answer is no!  
+    </p>
+    
+    <p>
+      One way you can see this is if you ask how many edges such a graph would have.  Each vertex is incident to three edges, so counting incidences, we get <m>15\cdot 3 = 45</m>.  But every edge is incident to two vertices, so we have counted each edge twice.  So the number of edges in such a graph would be <m>45/2 = 22.5</m>.  But the number of edges in a graph must be a whole number, so there is no such graph.
+    </p>
+
+    <p>
+      This suggests that we can say something more in general.  The following proposition is a simple consequence of the <xref ref="lem-handshake">Handshake Lemma</xref>, which we will prove in <xref ref="sec_gt-intro" />.  Here we give a complete proof of this particular formulation of it.
+    </p>
+
+    <proposition xml:id="prop-handshake-parity">
+      <statement>
+        <p>
+          In any graph, the number of vertices with odd degree must be even.       
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will prove this by contradiction.  Suppose there was a graph with and odd number of vertices with odd degree.  If we take the sum of all the degrees of all the vertices, then the sum of the degrees of odd degree vertices would be odd (since the sum of an odd number of odd numbers is odd).  The sum of all the even-degree vertices will be even (any sum of even numbers must be even).  The sum of an odd number and an even number is odd. Thus the sum of all the degrees will be odd.
+        </p>
+        <p>
+          However, the number of edges in a graph is half the sum of the degrees (by <xref ref="lem-handshake"/>, or simply because each edge contributes one to the count of the degree of two vertices).  Since the number of edges is a whole number, we see that the sum of the degrees must be even.  This contradicts what we found in the previous paragraph.
+        </p>
+
+        <p>
+          Therefore, in any graph, the number of vertices with odd degree must be even.
+        </p>
+      </proof>
+    </proposition>
   </subsection>
 
 </section>
