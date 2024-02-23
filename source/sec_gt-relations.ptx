@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec_gt-relations" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<title>Relations and Graphs</title>
+	<subsection xml:id="subsec-relations-generally">
+		<title>Relations Generally</title>
+		<p>
+			A graph is a way to represent some ways that different objects are related.
+			We have seen how to use graphs to represent which people are friends, or which classes have time conflicts, or which radio stations are too close to have the same frequency.
+			Not all ways in which things can be related can be represented by a graph, however.
+			In this section we will consider the more general concept of a relation and see how those might be related to graphs.
+		</p>
+
+		<p>
+			Consider the example of the relation between students and classes that holds when a student is in that class (in a particular semester).
+			This is a relation between two different sets (the students and the classes).
+			If we used a graph to illustrate this relation, the graph would be <em>bipartite</em>, since two students are never related to each other, and two classes are never related to each other.
+		</p>
+
+		<p>
+			A graph is really a set of vertices and a set of edges: <m>G = (V, E)</m>; each element of the set <m>E</m> is a two-element subset of <m>V</m>.
+			If we want to draw attention to the bipartiteness of the graph, we can split up <m>V</m> into its two sets and write <m>G = ((A, B), E)</m>.
+			In this notation, for the graph to be bipartite, we want each edge to be a pair <m>(a,b)</m> where <m>a</m> is an element of <m>A</m> and <m>b</m> is an element of <m>B</m>.
+			In other words, each edge is an element of the <term>Cartesian product</term> of <m>A</m> and <m>B</m>, written,
+			<me>
+				A \times B = \{(a,b) \st a \in A,~b \in B\}.
+			</me>
+			(Another way to say this is that <m>A \times B</m> is <q>the set of all ordered pairs of elements from <m>A</m> and <m>B</m>.</q>)
+		</p>
+
+		<note>
+			<p>
+				There is one subtlety here we should point out: the bipartite graph we have described really has <em>directed edges</em> from <m>A</m> to <m>B</m> since we are considering <em>ordered</em> pairs.
+				Our definition of a graph has edges as two-element <em>subsets</em> of vertices, and subsets are not ordered.
+				As long as <m>A</m> and <m>B</m> are disjoint sets, there is no confusion here, but we see relations in which <m>A</m> and <m>B</m> share some elements, but we still care about the order.
+				More on that soon.
+			</p>
+		</note>
+
+		<p>
+			This example exactly illustrates what a general binary relation is.
+			Here is the careful definition.
+		</p>
+
+		<definition xml:id="def-binary-relation">
+			<statement>
+				<p>
+					A <term>binary relation</term> is a set of ordered pairs.
+					We say the binary relation is a <term>relation on sets <m>A</m> and <m>B</m></term> provided the ordered pairs are a subset of <m>A \times B</m>.
+					We say a binary relation is a <term>relation on a set <m>A</m></term> provided the ordered pairs are a subset of <m>A \times A</m>.
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			Note that <m>A \times A</m> is just the set of all ordered pairs where both coordinates are elements from <m>A</m>.
+		</p>
+
+		<example xml:id="rel-in-class">
+			<statement>
+				<p>
+					Consider a set <m>A</m> of students and a set <m>B</m> of classes.
+					Say <m>A = \{\text{Al, Bob, Cat, Dirk, Eva}\}</m> and <m>B = \{\text{Calculus, Discrete, Statistics}\}</m>.
+					Everyone except Dirk is in Calculus, Bob and Eva are in Discrete, and Al, Cat, and Dirk are in Statistics.
+				</p>
+
+				<p>
+					We can define a relation <m>T</m> of <q>is taking</q> <m>A</m> and <m>B</m> that holds of a student and class precisely if that student is taking that class.
+					Write this relation as a subset of <m>A\times B</m> and draw its bipartite graph.
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					To write the relation precisely, we just give the set of ordered pairs:
+					<md>
+						<mrow>T = \{\amp (\text{Al}, \text{Calculus}), (\text{Al}, \text{Statistics}),</mrow>
+						<mrow>  \amp (\text{Bob}, \text{Calculus}), (\text{Bob}, \text{Discrete})</mrow>
+						<mrow> \amp (\text{Cat}, \text{Calculus}), (\text{Cat}, \text{Statistics})</mrow>
+						<mrow> \amp (\text{Dirk}, \text{Statistics})</mrow>
+						<mrow> \amp (\text{Eva}, \text{Calculus}), (\text{Eva}, \text{Discrete})\}</mrow>
+					</md>
+					We can draw this relation as a bipartite graph:
+				</p>
+
+				<image>
+					<shortdescription>A bipartite graph representing the "is taking" relation.</shortdescription>
+					<latex-image label="class-relation">
+					<xi:include href="assets/class-relation.tex" parse="text"/>
+					</latex-image>
+				</image>
+			</solution>
+		</example>
+
+		<example xml:id="rel-multiple-of">
+			<statement>
+				<p>
+					Consider the relation <m>M</m> for <q>is a multiple of</q> on the set <m>A = \{1,2,3,4,5,6\}</m>.
+					Write this as a set of ordered pairs.
+					Does this relation create a graph?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					First, let's think about which elements should be related and which should not.
+					We know that <m>6</m> is a multiple of <m>2</m>, so the relation is true of the pair <m>(6,2)</m>, but <m>6</m> is not a multiple of <m>4</m>, so the pair <m>(6,4)</m> does not satisfy the relation.
+					More precisely, we we say that <m>(6,2) \in M</m> but <m>(6,4) \notin M</m>.
+				</p>
+
+				<p>
+					Let's list all the elements of <m>M</m>:
+					<md>
+						<mrow>M =  \{\amp(1,1), (2,1), (2,2), (3,1), (3,3), (4,1), (4,2), (4,4), </mrow>
+						<mrow> \amp (5,1), (5,5), (6,1), (6,2) (6,3), (6,6)\}.</mrow>
+					</md>
+					This relation is not a graph for two reasons: first, elements are related to themselves, and second, the order of elements in the relation is not symmetric (<m>6</m> is related to <m>2</m>, but <m>2</m> is not related to <m>6</m>, for example).
+				</p>
+
+				<p>
+					We can, however, still draw something like a graph to illustrate this relation: Since the direction of the relation matters, we will have <em>directed</em> edges.
+					This alone would create a <term>directed graph</term>.
+					Since vertices can have edges going to themselves, we would call the structure a <term>multigraph</term>, so the relation can be thought of as a <term>directed multigraph</term>
+				</p>
+
+				<image width="30%">
+					<shortdescription>A directed multigraph for the relation "is a multiple of" on the set 1, 2, 3, 4, 5, 6</shortdescription>
+					<latex-image label="dir-multigraph-relation">
+					<xi:include href="assets/dir-multigraph-relation.tex" parse="text" />
+					</latex-image>
+				</image>
+			</solution>
+		</example>
+
+		<p>
+			A binary relation <m>R</m> on sets <m>A</m> and <m>B</m> can always be <q>turned around</q> to give a relation on sets <m>B</m> and <m>A</m>.
+			That is, <m>R</m> says how things in <m>A</m> are related to things in <m>B</m>; those things in <m>B</m> are related to things in <m>A</m>, just in a <em>inverse</em> (backwards) way.
+			We will call this new relation the <term>inverse</term> of <m>R</m>.
+		</p>
+
+		<definition xml:id="def-relation-inverse">
+			<statement>
+				<p>
+					Given a binary relation <m>R</m>, define <m>R\inv</m> to be the <term>inverse</term> of <m>R</m> as the set
+					<me>
+						R\inv = \{(b,a) \st (a,b) \in R\}
+					</me>.
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			The relation <m>T</m> from <xref ref="rel-in-class"/> said that a given student was in a particular class.
+			The inverse relation <m>T\inv</m> says that a given class has a particular student in it.
+			For example, <m>(\text{Calculus}, \text{Al})</m> is an element of <m>T\inv</m>.
+			Graphically, there won't be any difference in the picture, although we could put the set of classes on top and students on bottom.
+		</p>
+
+		<p>
+			The relation <m>M</m> from <xref ref="rel-multiple-of"/> game us that, for example, <m>6</m> is a multiple of <m>2</m>, since <m>(6,2) \in M</m>.
+			For the inverse, we have <m>(2,6) \in M\inv</m>, which means that <m>2 is a factor of 6</m>.
+			For this example, we have represented a relation as a directed multigraph.
+			The graph of the inverse will look exactly the same, but with all the arrows will point in the opposite direction.
+		</p>
+
+		<p>
+			Another way to create a new relation is to combine two relations.
+			Suppose in addition to the <q>is taking</q> relation from <xref ref="rel-in-class"/>, we define a relation <q>is taught by</q> that matches up each course with its instructor.
+			Perhaps Professor X teaches Calculus.
+			In that case, since Al is taking Calculus, and Calculus is taught by Professor X, we can conclude that Al is taking a class with Professor X.
+		</p>
+
+		<definition xml:id="def-relation-composition">
+			<statement>
+				<p>
+					Let <m>R</m> be a relation from set <m>A</m> to <m>B</m> and <m>S</m> be a relation from <m>B</m> to <m>C</m>.
+					The <term>composition</term> of <m>R</m> and <m>S</m> is
+					<me>
+						S \circ R = \{(a,c) \in A \times C \st (a,b) \in R \text{ and } (b,c) \in S \text{ for some } b \in B\}
+					</me>
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			Note the order in which we wrote the two relations: it's <m>S \circ R</m>, not <m>R \circ S</m>.
+			The reason we do this (which might seem backward) is that it agrees with the usual notation for composition of <em>functions</em>.
+			In fact, functions are nothing but a specific type of relation!
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Write out the relation <m>P \circ T</m>, composing the relations of <xref ref="rel-in-class"/> and <m>P = \{(\text{Calculus}, \text{Prof X\}), (\text{Discrete}, \text{Prof L}), (\text{Statistics}, \text{Prof X}), (\text{Statistics}, \text{Prof S})\} </m>.
+					Note that here we are saying the the statistic course is co-taught by professors X and S.
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					The relation we are looking for is a relation between students and professors.
+					We can start with each element of <m>T</m>, and <em>extend</em> it by following the course to the professor(s) via <m>P</m>.
+					So for example, start with Cat, and notice that <m>(\text{Cat}, \text{Calculus}) \in T</m>.
+					Now look at what Calculus is related to via <m>P</m>: <m>(\text{Calculus}, \text{Prof X}) \in P </m>.
+					Thus we can push these together to conclude that <m>(\text{Cat}, \text{Prof X}) \in P \circ T</m>.
+				</p>
+
+				<p>
+					An alternative approach would be to simply consider which pairs of students and professors are linked by a common class.
+					Should the pair <m>(\text{Al}, \text{Prof L})</m> be an element of the composition?  No, because there is no class that is both taken by Al and taught by Professor L.
+					On the other hand, we can conclude the <m>(\text{Al}, \text{Prof X}) \in P \circ T</m> since there is a common course.
+					In fact, the common course could be Calculus or Statistics (it doesn't matter how many common middle steps there are, as long as there is at least one).
+				</p>
+
+				<p>
+					Here is the complete relation:
+					<md>
+						<mrow>P \circ T = \{\amp (\text{Al}, \text{Prof X}), (\text{Al}, \text{Prof S}), (\text{Bob}, \text{Prof X}), (\text{Bob}, \text{Prof L}), </mrow>
+						<mrow> \amp (\text{Cat}, \text{Prof X}), (\text{Cat}, \text{Prof S}), (\text{Dirk}, \text{Prof X}), (\text{Dirk}, \text{Prof S}),</mrow>
+						<mrow> \amp (\text{Eva}, \text{Prof X}), (\text{Eva}, \text{Prof L})\}</mrow>
+					</md>
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			Something interesting often happens when you compose a relation with its inverse.
+			You might have seen something like this for
+			<me>
+				functions
+			</me>
+			in calculus or algebra: <m>f(x) = e^x</m> has an inverse function $f\inv(x) = \ln(x)</m>, and we know that <m>f(f\inv(x)) = e^{\ln(x)} = x</m>.
+			But functions are relations in which every <q>input</q> has exactly one <q>output</q>, so perhaps it is not surprising that composing with an inverse just gives you the identity function.
+			When inputs can have multiple outputs, and outputs can have multiple inputs, then we get something more.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Describe the relation <m>T\inv \circ T</m> (using our familiar relation <m>T</m> from <xref ref="rel-in-class"/>).
+					What does this tell us about students and classes?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					By following the relation, we could start by saying Al is in Calculus, and Calculus is taken by Al, so Al is related to Al.
+					But also , Calculus is taken by Bob, so now Al is also related to Bob.
+					Is Bob related to Al as well?  Yes, since Bob is taking Calculus and Calculus is taken by Al.
+				</p>
+
+				<p>
+					The composition is telling us which pairs of students have at least one class in common.
+					That's almost all pairs of students, except that Dirk is not related to Bob or Eva, since they don't take Statistics, and that is the only class he takes.
+				</p>
+
+				<p>
+					Instead of writing out the relation (which will almost be all of <m>A \times A</m>), here is the graph representation.
+				</p>
+
+				<image xml:id="">
+					<shortdescription>The graph representing the composition of T and its inverse.</shortdescription>
+					<latex-image>
+					<xi:include href="assets/dir-class-inv-relation.tex" parse="text"/>
+					</latex-image>
+				</image>
+
+				<p>
+					While we drew a directed multigraph here, the arrows going both ways mean that we really could have drawn just a multigraph.
+				</p>
+			</solution>
+		</example>
+	</subsection>
+
+	<subsection xml:id="subsec-properties-of-relations">
+		<title>Properties of Relations</title>
+		<p>
+			From this point on, we will just consider relations on a single set (so from a set to itself).
+			To help understand these relations, let's consider some basic properties a relation might or might not have.
+		</p>
+
+    <definition xml:id="def-relation-properties">
+      <title>Reflexive, Symmetric, and Transitive</title>
+      
+      <statement>
+        <p>
+          Ler <m>R</m> be a relation on the set <m>A</m>.  We say,
+          <ul>
+            <li>
+              <p>
+                <m>R</m> is <term>reflexive</term> provided <m>(a,a) \in A</m> for all <m>a \in A</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>R</m> is <term>symmetric</term> provided, for all <m>a, b \in A</m>, if <m>(a,b) \in R</m> then <m>(b,a) \in R</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>R</m> is <term>transitive</term> provided, for all <m>a, b,c \in A</m>, if <m>(a,b) \in R</m> and <m>(b,c) \in R</m>, then <m>(a,c)\in R</m>. 
+              </p>
+            </li>
+          </ul>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Let's examine each of these properties carefully.  
+      
+    </p>
+    
+    <p>
+      It will be helpful to consider a few standard examples of relations on sets as we go.  Most relations we consider here will be written using <em>infix</em> notation, just meaning that we put the relation symbol between the two things it is relating.  For example, the <em>less than</em> relation is almost always written as <m>2 \lt 6</m> rather than writing <m>(2,6) \in \lt</m>.  
+    </p>
+
+    <example>
+      <title>Reflexive and non-reflexive relations</title>
+      <p>
+        A relation is reflexive when every element is related to itself.  The following are reflexive relations:
+        <ul>
+          <li>
+            <p>
+              The <q>less-that-or-equal-to</q> relation on any set of numbers.  Is it the case that <m>3 \le 3</m>?  More importantly, is every number no greater than itself?  Since the answer is yes, this relation is reflexive
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>within 3</q> relation, that holds of two numbers <m>a</m> and <m>b</m> provided <m>|a-b| \le 3</m>.  To prove that this is reflexive, we simply note that <m>|a-a| = 0 \le 3</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>is a multiple of</q> relation from <xref ref="rel-multiple-of"/>.  Note that the directed multigraph for this relation had loops at every vertex.
+            </p>
+          </li>
+        </ul>
+      </p>
+
+      <p>
+        However, these relations are not reflexive:
+        <ul>
+          <li>
+            <p>
+              The <q>sums to zero</q> relation, that holds on numbers <m>a</m> and <m>b</m> if <m>a+b = 0</m>.  Note that while <m>0 + 0 = 0</m>, so <m>(0,0)</m> is an element of the relation, every other number is not related to itself.
+            </p>
+          </li>
+          <li>
+            <p>
+              Any relation that is described by a graph.  Remember, graphs cannot have edges looping back to a single vertex, so the edge relation on a graph is not reflexive.  (A multigraph could be reflexive or not).
+            </p>
+          </li>
+        </ul>
+      </p>
+    </example>
+
+    <p>
+      If no element is related to itself (such as in the edge relation for a graph), then we call the relation <term>irreflexive</term>.  Of course, there are relations that are neither reflexive nor irreflexive.
+    </p>
+
+    <p>
+      Checking that a relation is reflexive is relatively easy.  The other two properties are phrased as implications, which makes them a little more complex.
+    </p>
+
+    <example>
+      <title>Symmetric and non-symmetric relations</title>
+      <p>
+        Essentially, symmetric relations are the ones that work <q>both ways.</q>  More precisely, if <m>a</m> is related to <m>b</m>, then <m>b</m> is also related to <m>a</m>.
+      </p>
+
+      <p>
+        The following relations are symmetric.
+        <ul>
+          <li>
+            <p>
+              The <q>within 3</q> relation: if <m>|a-b| \le 3</m> then <m>|b-a| \le 3</m>.  
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>sums to zero</q> relation: if <m>a+b = 0</m>, then certainly <m>b + a = 0</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              For any graph, the edge relation is symmetric.  Of course, for <em>directed</em> graphs this is usually not true.
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        On the other hand, these relations are not symmetric.
+        <ul>
+          <li>
+            <p>
+              <m>\le</m> is not symmetric.  All we need to do to prove that a relation is not symmetric is to find some <m>a</m> and <m>b</m> such that <m>a \le b</m> ut <m>b \not\le a</m>.  Well, <m>3 \le 4</m>, but <m>4 \not\le 3</m>.  QED.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <m>is a multiple of</m> relation is not symmetric.  <m>6</m> is a multiple of <m>2</m> but <m>2</m> is not a multiple of <m>6</m>.
+            </p>
+          </li>
+        </ul>
+      </p>
+    </example>
+
+    <p>
+      Relations that are not symmetric could in fact by <term>antisymmetric</term>, meaning the <em>only</em> elements for which both <m>(a,b)</m> and <m>(b,a)</m> are in the relation is when <m>a = b</m>.  Note that there are relations that are neither symmetric nor antisymmetric.
+    </p>
+
+    <p>
+      Using the language of inverse relations, a relation is symmetric if and only if the relation is equal to its inverse.
+    </p>
+
+    <example>
+      <title>Transitive and non-transitive relations</title>
+      <p>
+        If <m>a</m> is related to <m>b</m>, and <m>b</m> is related to <m>c</m>, does that mean <m>a</m> is related to <m>c</m>?  If this is true no matter what <m>a</m>, <m>b</m>, and <m>c</m> are, then we say the relation is transitive.
+      </p>
+
+      <p>
+        Here are some transitive relations.
+        <ul>
+          <li>
+            <p>
+              <m>\le</m>.  Suppose <m>a \le b</m> and <m>b \le c</m>.  Then clearly <m>a \le c</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>is a multiple of</q> relation.  This is a good one to write a proof for: Suppose <m>a</m> is a multiple of <m>b</m> and that <m>b</m> is a multiple of <m>c</m>.  Then <m>a = bk</m> for some integer <m>k</m> and <m>b = cj</m> for some integer <m>j</m>.  By substitution, <m>a = cjk</m>, so <m>a</m> is a multiple of <m>c</m>. 
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        However, the following relations are not transitive.
+        <ul>
+          <li>
+            <p>
+              The <q>within 3</q> relation is not transitive.  All we need to do is find three numbers that fail to meet the condition.  How about <m>1</m>, <m>3</m>, and <m>5</m>.  Here <m>1</m> is within 3 of <m>3</m>, and <m>3</m> is within 3 of <m>5</m>, but <m>|1 - 5| = 4</m> so the relation does not hold of <m>(1,5)</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>sums to zero</q> relation is not transitive.  Notice that we never claimed that <m>a</m>, <m>b</m>, and <m>c</m> need to be different numbers.  Let <m>a = 5</m>, <m>b = -5</m> and <m>c = 5</m>.  Then <m>a+b = 0</m> and <m>b + c = 0</m>, so the relation holds of <m>(a,b)</m> and <m>(b,c)</m>.  But <m>a + c = 10</m> so the relation does not hold of <m>(a,c)</m>.
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        The edge relation for a graph might or might not be transitive.  What would a graph look like if its edge relation was transitive?
+      </p>
+    </example>
+
+    
+	</subsection>
+</section>
