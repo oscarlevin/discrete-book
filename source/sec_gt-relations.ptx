@@ -453,7 +453,318 @@
         The edge relation for a graph might or might not be transitive.  What would a graph look like if its edge relation was transitive?
       </p>
     </example>
+  </subsection>
+    <subsection xml:id="subsec_equivalence-relations">
+      <title>Equivalence Relations</title>
+      <p>
+        Now we will do something very typical for mathematics: we will look at our most common types of relations, consider what properties these have, and then classify other relations that also have these properties as a specific class of relations.
+      </p>
+
+      <p>
+        The relation we are all most familiar with is <term>equality</term>.  Which properties of relations does the equality relation possess?  Certainly everything is equal to itself, so equality is <em>reflexive</em>.  If <m>a = b</m>, then <m>b = a</m>, so equality is <em>symmetric</em>.  If <m>a = b</m> and <m>b = c</m>, then <m>a = c</m>, so equality is <em>transitive</em>.
+      </p>
+
+      <p>
+        What other relations are all three of <em>reflexive</em>, <em>symmetric</em>, and <em>transitive</em>?  Exactly those relations that behave like equality.  We call such relations <term>equivalence relations</term>.  
+      </p>
+
+      <definition xml:id="def-equivalence-relation">
+        <title>Equivalence Relation</title>
+        <statement>
+          <p>
+            A relation that is reflexive, symmetric, and transitive is called an <term>equivalence relation</term>.            
+          </p>
+        </statement>
+      </definition>
+
+      <remark>
+        <p>
+          Another example of a type of relation that is modeled after a classic relation is a <term>partial order</term>.  This is a relation that is reflexive, <em>antisymmetric</em>, and transitive, just like less-than-or-equal-to.  Perhaps you noticed already that the subset relation, written <m>\subseteq</m> feels a lot like <m>\le</m>.  This is because <m>\subseteq</m> is also a partial order.  So is the <q>is a multiple of</q> relation we saw above.  
+        </p>
+        <p>
+          There are lots of interesting things we can say about partial orders and the sets they partially order, called <term>partially ordered sets</term> or <term>PoSets</term>.  Another time.
+        </p>  
+      </remark>
+
+      <p>
+        None of the examples we have considered so far in this section have been equivalence relations, but they are ubiquitous in mathematics.  They are so common, it is easy to overlook them as anything worth saying something about at all.  Let's see some examples.
+      </p>
+
+      <example xml:id="eg_cong-mod-2">
+        <statement>
+          <p>
+            Prove that the relation <m>\equiv_2</m>, which holds of two integers if their difference is even, is an equivalence relation.  That is, <m>a \equiv_2 b</m> if and only if <m>b-a = 2k</m> for some integer <m>k</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            We simply check the three required properties.
+            <ol>
+              <li>
+                <p>
+                  <m>\equiv_2</m> is reflexive: for any integer <m>a</m>, we have <m>a - a = 0</m> and <m>0 = 2k</m> for <m>k = 0</m>, so <m>a \equiv_2 a</m>.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <m>\equiv_2</m> is symmetric: Fix arbitrary integers <m>a</m> and <m>b</m>, and assume <m>a \equiv_2 b</m>.  That means that <m>b-a = 2k</m> for some integer <m>k</m>.  What about <m>a - b</m>?  Well, we will have <m>a-b = 2(-k)</m>, and <m>-k</m> is an integer, so we have <m>b \equiv_2 a</m>.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <m>\equiv_2</m> is transitive: Fix arbitrary integers <m>a</m>, <m>b</m>, and <m>c</m> and assume <m>a \equiv_2 b</m> and <m>b \equiv_2 c</m>.  This means that <m>b-a = 2k</m> and <m>c-b = 2j</m> for some integers <m>k</m> and <m>j</m>.  What about <m>c - a</m>?  Well, <me>c - a = (c- b) + (b - a) = 2k+2j = 2(k+j)</me>.
+                  Since <m>k+j</m> is an integer, we see that <m>a \equiv_2 c</m> as required.
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+      </example>
+
+      <example>
+        <statement>
+          <p>
+            Let's call two graphs <q>degree-sequence-equivalent</q> if they have the same degree sequence.  Is this an equivalence relation?
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Yes it is.  Clearly every graph has the same degree sequence as itself, so the relation is reflexive.  If <m>G_1</m> has the same degree sequence as <m>G_2</m>, then <m>G_2</m> has the same degree sequence as <m>G_1</m>, so the relation is transitive.  Finally, if <m>G_1</m> has the same degree sequence as <m>G_2</m>, which has the same degree sequence as <m>G_3</m>, then they all have the same degree sequence, so <m>G_1</m> has the same degree sequence as <m>G_3</m> (i.e., the relation is transitive).
+          </p>
+
+        </solution>
+      </example>
+      
+      <p>
+        This example is almost too obvious.  That's because we said that two things are related if a well-defined property of those things was <em>equal</em>, and that equality is of course satisfies the properties of an equivalence relation.  Our next goal is to try to make better sense of this and see that it is exactly what gives us an equivalence relation.
+      </p>
+
+    </subsection>
+    
+
+    <subsection xml:id="subsec-equivalence-classes-and-partitions">
+      <title>Equivalence Classes and Partitions</title>
+      
+      <p>
+        Give <em>any</em> relation <m>R</m>, we can look at the <em>set</em> of elements that are related to a given element.  For the <q>is taking</q> relation, we can ask what classes is Al taking (i.e., the classes related to Al).  For the <q>is a multiple of</q>, we can ask which numbers is 6 a multiple of.  then one way to study the relation is to study the sets of thing related to each element.
+      </p>
+
+      <definition xml:id="def-relation-classes">
+        <statement>
+          <p>
+            Let <m>R</m> be a relation on the set <m>A</m> and let <m>a</m> be an element of <m>A</m>.  The <term>relation class</term> of <m>a</m>, written <m>[a]</m> is the set of all elements <m>b</m> such that <m>(a,b) \in R</m> (the set of <m>b</m> that are related to <m>a</m> by <m>R</m>).  That is,
+            <me>
+              [a] = \{b \in A \st (a,b) \in R\}
+            </me>.
+          </p>
+
+          <p>
+            When <m>R</m> is an equivalence relation, we call relation classes <term>equivalence classes</term>.
+          </p>
+        </statement>
+      </definition>
+
+      <example>
+        <statement>
+          <p>
+            Find the relation classes for the <q>is a multiple of</q> relation on the set <m>A = \{1,2,3,4,5,6\}</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            There will be six relation classes, since each element has a relation class.  They are:
+            <md>
+              <mrow>[1] =  \amp \{1\}</mrow>
+              <mrow>[2] =  \amp \{1,2\}</mrow>
+              <mrow>[3] = \amp \{1,3\}</mrow>
+              <mrow>[4] = \amp \{1,2,4\}</mrow>
+              <mrow>[5] = \amp \{1,5\}</mrow>
+              <mrow>[6] = \amp \{1,2,3,6\}.</mrow>
+            </md>
+            For example, we found <m>[4]</m> by considering all pairs <m>(4,b)</m> that satisfied the relation: 4 is a multiple of 1, 2, and 4, so those are the possible values of <m>b</m> that we find.
+          </p>
+
+          <p>
+            Look back at the directed multigraph for this relation shown in the solution to <xref ref="rel-multiple-of"/>.  What are the relation classes?  They are nothing but the neighbors of each vertex (where neighbor means you follow the arrows in the correct direction).
+          </p>
+        </solution>
+      </example>
+
+      <example>
+        <statement>
+          <p>
+            Find the equivalence classes for the <m>\equiv_2</m> relation on the integers.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            On no!  Our set is infinite, so we will have infinitely many relation classes? Well, we better get started...
+          </p>
+
+          <p>
+            What numbers are related to 1?  Remember, we want integers whose difference with 1 is a multiple of 2.  So 3 for sure.  Also 5, and 7, and -1, and -3, and... all the odds?  Yes, because the difference of any two odd numbers is even.  We can also say that the difference between any two even numbers is even, so the equivalence class of 2 will contain all the even numbers.  So far we have:
+            <md>
+              <mrow>[1] =  \amp \{\ldots, -3, -1, 1, 3, 5, \ldots\}</mrow>
+              <mrow>[2] =  \amp \{\ldots, -4, -2, 2, 4, 6, \ldots\}</mrow>
+            </md>
+          </p>
+
+          <p>
+            Actually, I think we are done.  While <m>[3]</m>, <m>[4]</m>, <m>[5]</m>, and so on are all completely valid equivalence classes, the elements that are related to <m>3</m> will be exactly the elements related to <m>1</m>, since <m>1 \equiv_2 3</m>.  This is because the relation is transitive!  If <m>3 \equiv_2 b</m>, then we know <m>1 \equiv_2 b</m>.  
+          </p>
+
+          <p>
+            So we have exactly two equivalence classes.  Every integer is in exactly one of these two equivalence classes, and the equivalence class of any integer is exactly the class it belongs to.
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        Examine the two examples above carefully.  For the <q>is a multiple of</q> relation, which is NOT an equivalence relation, the some elements belong to more than one (different) relation class.  But for <m>\equiv_2</m>, which is an equivalence relation, every element is in exactly one equivalence class.  This is no accident.  To make sense of this, we will define a new term.
+      </p>
+
+      <definition xml:id="def-partition">
+        <statement>
+          <p>
+            Given a non-empty set <m>A</m>, a <term>partition</term> of <m>A</m> is a set <m>P</m> of non-empty subsets of <m>A</m> such that every element of <m>A</m> is in exactly one element of <m>P</m>. 
+          </p>
+        </statement>
+      </definition>
+
+      <p>
+        That definition has a lot of symbols and sets involved.  It's really not complicated though: a partition is a way to break up a set into <em>disjoint</em> subsets that <em>cover</em> the whole set.  That the subsets are disjoint means no element is in <em>more than one</em> subset.  That the subsets cover the set means every element is in <em>at least one</em> subset. 
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            Give a few different partitions of the set <m>A = \{1,2,3,4,5\}</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            There are so many choices here! One choice is:
+            <me>
+              P_1 = \{\{1,2,3\}, \{4,5\}\}
+            </me>.
+            That's a partition of <m>A</m> into two subsets.
+            Another partition:
+            <me>
+              P_2 = \{\{1\}, \{2\}, \{3\}, \{4\}, \{5\}\}
+            </me>.
+            Another:
+            <me>P_3 = \{\{1,3,5\}, \{2,4\}\}</me>, which happens to be a partition into even and odd numbers.  We also have the trivial partition:
+            <me>P_4 = \{\{1,2,3,4,5\}\}</me>.  Note that is a single set inside the set <m>P_4</m>.  
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        It is sometimes a little confusing the think of the elements of a partition as subsets since the partition is a set, and a set of sets can be difficult to talk about.  We sometimes call the partition a <em>collection</em> and each of the elements of the partition <em>parts</em> or <em>blocks</em>.
+      </p>
+
+      <p>
+        Now the big idea: for any equivalence relation, the equivalence classes form a partition, and for any partition, we can define a relation <q>are in the same subset</q> which will be an equivalence relation.  We have already seen that the equivalence classes of <m>\equiv_2</m> form a partition.  Let's go the other direction.
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            Define an equivalence relation <m>\sim</m> on the set <m>A = \{1,2,3,4,5\}</m> from the partition <m>P = \{\{1,4\}, \{2,3,5\}\}</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Say two elements of <m>A</m> are equivalent provided they belong to the same element of <m>P</m>.  That is, <m>1 \sim 4</m> and <m>4\sim 1</m>, and <m>2 \sim 3</m>, <m>2 \sim 5</m>, <m>3 \sim 5</m>, <m>3\sim 2</m>, <m>5\sim 2</m>, and <m>5\sim 3</m>.  Wait, we also have <m>1\sim 1</m>, <m>2\sim 2</m>, and so on, since every number is in the same subset as itself.
+          </p>
+          <p>
+            It is clear from looking that this relation is reflexive, symmetric, and transitive, so is an equivalence relation.
+          </p>
+        </solution>
+      </example>
+
+      <theorem xml:id="thm-equivalence-partition">
+        <statement>
+          <p>
+            Given any equivalence relation <m>R</m> on a set <m>A</m>, the equivalence classes form a partition of <m>A</m>.
+          </p>
+
+          <p>
+            Given any partition <m>P = \{B_1, B_2, \ldots, \}</m> of a set <m>A</m>, the relation <m>\equiv_P</m> defined by <m>a \equiv_P b</m> if and only if <m>a</m> and <m>b</m> belong to the same block of <m>P</m>, is an equivalence relation.
+          </p>
+
+          <p>
+            Further, the equivalence classes for the equivalence relation formed by a partition are exactly the original partition, and the equivalence relation built by the partition of its equivalence classes is exactly the original equivalence relation.
+          </p>
+        </statement>
+      </theorem>
+      
+    </subsection>
+
+    <reading-questions xml:id="rqs-gt-relations">
+      <exercise label="rq-gt-rel-prop">
+        <statement>
+          <p>
+            Consider the relation <m>R</m> defined on the integers that holds of <m>a</m> and <m>b</m> precisely if <m>b-a \ge 4</m>.  So for example, <m>(2,7) \in R</m> but <m>(8,6) \notin R</m>.  Which of the following properties of relations does <m>R</m> have?
+          </p>
+        </statement>
+        <choices>
+          <choice>
+            <statement>
+              <p>
+                <m>R</m> is reflexive.
+              </p>
+            </statement>
+          </choice correct="yes">
+          <choice>
+            <statement>
+              <p>
+                <m>R</m> is irreflexive.
+              </p>
+            </statement>
+          </choice>
+          <choice>
+            <statement>
+              <p>
+                <m>R</m> is symmetric.
+              </p>
+            </statement>
+          </choice>
+          <choice correct="yes">
+            <statement>
+              <p>
+                <m>R</m> is antisymmetric.
+              </p>
+            </statement>
+          </choice>
+          <choice correct="yes">
+            <statement>
+              <p>
+                <m>R</m> is transitive.
+              </p>
+            </statement>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise label="rq-gt-rel-transgraph">
+        <statement>
+        <p>
+          Not all graphs have a transitive edge relation.  But do some of them?  If so, give an example and explain why it is transitive.  If not, explain why.
+        </p>
+      </statement>
+        <response />
+        
+      </exercise>
+
+      <exercise label="rq-gt-rel-q">
+        <statement>
+          <p>
+            After reading this section, what questions do you have?  Ask at least one question about this section that you are curious about.
+          </p>
+        </statement>
+      </exercise>
+    </reading-questions>
 
     
-	</subsection>
 </section>
