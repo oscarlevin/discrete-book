@@ -10,79 +10,157 @@
   <idx><h>stars and bars</h><see>sticks and stones</see></idx>
   <idx>distribution (counting)</idx>
 
-  <introduction>
+  <subsection xml:id="subsec_introduction">
+    <title>Introduction</title>
     <investigation>
-      <p>
-        Suppose you have some number of identical Rubik's cubes to distribute to your friends.
-        Imagine you start with a single row of the cubes.
-
-        <ol>
-          <li>
-            <p>
-              Find the number of different ways you can distribute the cubes provided:
-            </p>
-
-            <p>
-              <ol>
-                <li>
-                  <p>
-                    You have 3 cubes to give to 2 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 4 cubes to give to 2 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 5 cubes to give to 2 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 3 cubes to give to 3 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 4 cubes to give to 3 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 5 cubes to give to 3 people.
-                  </p>
-                </li>
-              </ol>
-            </p>
-          </li>
-
-          <li>
-            <p>
-              Make a conjecture about how many different ways you could distribute 7 cubes to 4 people.
-              Explain.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              What if each person were required to get
-              <em>at least one</em>
-              cube?
-              How would your answers change?
-            </p>
-          </li>
-        </ol>
-      </p>
+      <introduction>
+        <p>
+          Suppose you have some number of identical Rubik's cubes to distribute to your friends.  It might be helpful to picture these cubes in a row sitting in front of you.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            Say you have three cubes that you want to divide up between two of your friends.  Picture what you could do with the row of three cubes in front of you to accomplish this.  Write down the three distinct ways you could distribute the cubes.
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            If you instead have four cubes to give to these two friends, how many outcomes are possible?  List them.
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many ways can you distribute <m>n</m> cubes to two friends?
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Repeat the above tasks, this time considering how to distribute the cubes to three friends.  You should write out some particular outcomes (if not all of them).
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Make a conjecture about how many different ways you could distribute 7 cubes to 4 people.
+          </p>
+        </statement>
+      </task>
     </investigation>
+
     <p>
-      Consider the following counting problem:
+      Let's take stock of what sorts of counting questions we know how to answer.  
+    </p>
+    
+    <example xml:id="eg-ice-cream">
+      <statement>
+        <p>
+          Suppose an ice cream shop has 31 flavors.  After saving your allowance, you decide to splurge on a three-scoop ice cream treat.
+          How many choices do you have?  And why are there at least three correct answers to this question?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          What the answer is depends on how we interpret the question.  We want to buy three scoops.  Do those scoops have to be all different flavors?  Are we getting a cone or a shake?  (Because perhaps we care about which scoop is on top in a cone, but in a shake, they will be blended up).
+        </p>
+
+        <p>
+          Suppose first we want three distinct flavors in a cone.  Each option is then a <em>sequence</em> of <em>distinct</em> elements.  Some of these are:
+          <ol>
+            <li>
+              <p>
+                (Chocolate, Vanilla, Strawberry)
+              </p>
+            </li>
+            <li>
+              <p>
+                (Vanilla, Strawberry, Chocolate)
+              </p>
+            </li>
+            <li>
+              <p>
+                (Rocky road, Strawberry, Mint chocolate chip)
+              </p>
+            </li>
+            <li>
+              <p>
+                etc.
+              </p>
+            </li>
+          </ol>
+          Since we are counting sequences, we use a permutation: <me>P(31,3) = 31\cdot 30 \cdot 29 = 26970</me>.
+        </p>
+
+        <p>
+          If we wanted a shake with three distinct flavors, we need only specify which flavors are in our <em>set</em> of flavors, not the order/sequence they come in.  So we count subsets, which is done with a combination: <me>\binom{31}{3} = \frac{31\cdot 30\cdot 29}{3\cdot 2\cdot 1} = 4495</me>.  As we noticed previously, this will be <m>1/6</m> the number of sequences, since each set of three flavors corresponds to six sequences with those flavors.
+        </p>
+
+        <p>
+          What if we allow repeated flavors?  For cones, we know how to answer this.  We are counting sequences of not-necessarily-distinct elements.  (Chocolate, Vanilla, Chocolate) is one outcome.  A separate one is (Chocolate, Chocolate, Vanilla).  We have 31 choices for each position, so our answer is <m>31^3</m>.
+        </p>
+
+        <p>
+          Could we count how many shakes there are with repeat flavors allowed?  This would be like counting sets, but where we can include an element in the set more than once.  This is what we don't know how to do yet.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      The goal of this section is to determine how to count unordered collections of elements, where we allow elements to occur more than once.  Such collections are called <term>multisets</term>.
+    </p>
+
+    <definition xml:id="def-multiset">
+      <statement>
+        <p>
+          A <term>multiset</term> is an unordered collection of elements, where each element can occur a finite number of times.
+        </p>
+
+        <p>
+          The number of times an element <m>x</m> occurs in a multiset is called the <term>multiplicity</term> of <m>x</m>.  
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      We use squiggly braces for multisets, just like sets.  So we might have the multiset <m>\{1,1,3,4\}</m>, which is the same multiset as <m>\{1,3,1,4\}</m>: they are both a collection containing two instances of 1, and single instances of 3 and 4.  The <term>size</term> or <term>cardinality</term> of this multiset is 4; we count each occurrence of each element. (As <em>sets</em>, both of these are identical to the set <m>\{1,3,4\}</m>.) 
+    </p>
+
+    <p>
+      When we started counting the number of sets in <xref ref="sec_counting-binom"/>, we gave the number of <m>k</m>-element subsets of a set of size <m>n</m> a name: <m>n</m> choose <m>k</m>, written <m>\binom{n}{k}</m>.  We can do that for multisets as well.
+    </p>
+
+    <definition xml:id="def-multichoose">
+      <statement>
+        <p>
+          The number of multisets of size <m>k</m> with elements chosen from a set of size <m>n</m> is <m>n</m> <term>multichoose</term> <m>k</m>, written,
+          <me>
+            \mchoose{n}{k}
+          </me>. 
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Returning to <xref ref="eg-ice-cream"/>, we can now say the number of shakes you can make using three scoops of ice cream, possibly repeating flavors, when you have 31 flavors to choose from is
+      <me>
+        \mchoose{31}{3}
+      </me>.
+      Of course, we want to determine a way to compute the numerical value of this expression.
+    </p>
+
+    </subsection>
+    <subsection xml:id="subsec-giving-cookies-to-kids">
+      <title>Giving cookies to kids</title>
+      
+    <p>
+      It turns out that thinking about a related counting problem will be helpful in this quest.  Consider the following:
     </p>
 
     <blockquote>
@@ -93,88 +171,30 @@
     </blockquote>
 
     <p>
-      Take a moment to think about how you might solve this problem.
-      You may assume that it is acceptable to give a kid no cookies.
+      Assume that it is acceptable to give a kid no cookies.
       Also, the cookies are all identical and the order in which you give out the cookies does not matter.
     </p>
 
     <p>
-      Before solving the problem,
-      here is a wrong answer: You might guess that the answer should be
-      <m>4^7</m>
-      because for each of the 7 cookies,
-      there are 4 choices of kids to which you can give the cookie.
-      This is reasonable, but wrong.
-      To see why, consider a few possible outcomes:
-      we could assign the first six cookies to kid A, and the seventh cookie to
-      kid B. Another outcome would assign the first cookie to kid B and the six remaining cookies to kid A. Both outcomes are included in the
-      <m>4^7</m>
-      answer.
-      But for our counting problem,
-      both outcomes are really the same
-      <ndash/>
-      kid A gets six cookies and kid B gets one cookie.
+      First, what's wrong with the answer <m>4^7</m>?  Well, that counts the number of sequences of length seven where each term in the sequence is chosen from a set of size four: four choices for the first term, four for the second, and so on.  In our problem, we have four kids and seven cookies.  Is one outcome <m>(A,A,B,A,D,C,D)</m>?  That is, we give the first cookie to kid <m>A</m>, the second to kid <m>A</m>, the third to kid <m>B</m>, and so on? 
     </p>
 
     <p>
-      What do outcomes actually look like?
-      How can we represent them?
-      One approach would be to write an outcome as a string of four numbers like this:
-      <me>
-        3112
-      </me>,
-      which represent the outcome in which the first kid gets 3 cookies,
-      the second and third kid each get 1 cookie,
-      and the fourth kid gets 2 cookies.
-      Represented this way,
-      the order in which the numbers occur matters. 1312 is a different outcome, because
-      the first kid gets a one cookie instead of 3.
-      Each number in the string can be any integer between 0 and 7.
-      But the answer is not
-      <m>7^4</m>.
-      We need the
-      <em>sum</em>
-      of the numbers to be 7.
+      That actually looks promising.  But by considering a sequence, we are claiming that a <me>different</me> outcome is <m>(A,A,A,B,C,D,D)</m>.  Of course, this is the same result: three cookies for <m>A</m>, one for <m>B</m> and <m>C</m>, and two for <m>D</m>.
     </p>
 
     <p>
-      Another way we might represent outcomes is to write a string of seven letters:
-      <me>
-        \text{ABAADCD} 
-      </me>,
-      which represents that the first cookie goes to kid A, the second cookie goes to kid B, the third and fourth cookies go to kid A, and so on.
-      In fact, this outcome is identical to the previous one<mdash/>A gets 3 cookies, B and C get 1 each and D gets 2.
-      Each of the seven letters in the string can be any of the 4 possible letters
-      (one for each kid),
-      but the number of such strings is not
-      <m>4^7</m>, because here order does
-      <em>not</em>
-      matter.
-      In fact, another way to write the same outcome is
-      <me>
-        \text{AAABCDD} 
-      </me>.
+      This does suggest though that what we are actually after is a multiset: <m>\{A, A, A, B, C, D, D\}</m>.  Since any order of these seven occurrences is the same outcome, it is indeed a set-like structure we want, rather than sequence-like. We therefore know that the answer to our question will be <me>\mchoose{7}{4}</me>.
     </p>
 
     <p>
-      This will be the preferred representation of the outcome.
-      Since we can write the letters in any order,
-      we might as well write them in
-      <em>alphabetical</em>
-      order for the purposes of counting.
-      So we will write all the A's first,
-      then all the B's, and so on.
-    </p>
-
-    <p>
-      Now think about how you could specify such an outcome.
-      All we really need to do is say when to switch from one letter to the next.
+      Let's consider a different way to represent this outcome.  All we really need to do is say when to switch from one letter to the next (we might as well assume the letters come in alphabetical order).
       In terms of cookies,
       we need to say after how many cookies do we stop giving cookies to the first kid and start giving
       cookies to the second kid.
       And then after how many do we switch to the third kid?
       And after how many do we switch to the fourth?
-      So yet another way to represent an outcome is like this:
+      So another way to represent an outcome is like this:
       <me>
         ○○○|○|○|○○
       </me>.
@@ -184,35 +204,25 @@
       Three cookies go to the first kid,
       then we switch and give one cookie to the second kid, then switch,
       one to the third kid, switch, two to the fourth kid.
-      Notice that we need 7 stones and 3 sticks
-      <ndash/>
-      one stone for each cookie,
-      and one stick for each switch between kids,
-      so one fewer sticks than there are kids
-      (we don't need to switch after the last kid
-      <ndash/>
-      we are done).
+      Notice that we need seven cookie symbols and three (not four) switching symbols
+      (we don't need to switch after the last kid).
     </p>
 
     <p>
       Why have we done all of this?
       Simple: to count the number of ways to distribute 7 cookies to 4 kids,
-      all we need to do is count how many
-      <em>sticks and stones</em>
-      charts there are.
-      But a <term>sticks and stones chart</term>
-      <idx><h>sticks and stones</h><h>chart</h></idx>
-      is just a string of symbols, some sticks and some stones.
-      If instead of sticks and stones we would use 0's and 1's, it would just be a bit string.
+      all we need to do is count how many strings of this type there are.  We will call such a string a <term>sticks and stones chart</term>
+      <idx><h>sticks and stones</h><h>chart</h></idx>.  They are just strings of two symbols, some sticks and some stones.
+      If instead of sticks and stones we would use 1's and 0's, it would just be a bit string.
       <idx><h>bit string</h><h>relation to sticks and stones</h></idx>
-      We know how to count those.
+      We know how to count those!
     </p>
 
     <p>
       Before we get too excited, we should make sure that really
       <em>any</em>
-      string of (in our case) 7 stones and 3 stickscorresponds to a different way to distribute cookies to kids.
-      In particular consider a string like this:
+      string of (in our case) 7 stones and 3 sticks corresponds to a different way to distribute cookies to kids.
+      Consider a string like this:
       <me>
         |○○○||○○○○
       </me>.
@@ -221,37 +231,34 @@
     <p>
       Does that correspond to a cookie distribution?
       Yes.
-      It represents the distribution in which kid A gets 0 cookies
-      (because we switch to kid B before any stones),
-      kid B gets three cookies
-      (three stones before the next bar),
-      kid C gets 0 cookies
+      It represents the distribution in which kid <m>A</m> gets 0 cookies
+      (because we switch to kid <m>B</m> before any stones),
+      kid <m>B</m> gets three cookies
+      (three stones before the next stick),
+      kid <m>C</m> gets 0 cookies
       (no stones
       before the next bar)
-      and kid D gets the remaining 4 cookies.
+      and kid <m>D</m> gets the remaining 4 cookies.
       No matter how the sticks and stones are arranged,
       we can distribute cookies in that way.
       Also, given any way to distribute cookies,
       we can represent that with a sticks and stones chart.
-      For
-      example, the distribution in which kid A gets 6 cookies and kid B gets 1 cookie has the following chart:
+      For example, the distribution in which kid <m>A</m> gets 6 cookies and kid <m>B</m> gets 1 cookie has the following chart:
       <me>
         ○○○○○○|○||
       </me>.
     </p>
 
     <p>
-      After all that work we are finally ready to count.
+      After all this work we are finally ready to count.
       Each way to distribute cookies corresponds to a sticks and stones chart with 7 stones and 3 sticks.
-      So there are 10 symbols, and we must choose 3 of them to be sticks.
-      Thus:
-      <me>
-        \mbox{ There are } {10 \choose 3}\mbox{ ways to distribute 7 cookies to 4 kids}
-      </me>.
+      So there are 10 symbols, and we must choose 7 of them to be stones.
+      Thus there are <m>\binom{10}{7}</m>  ways to distribute 7 cookies to 4 kids.
     </p>
 
+
     <p>
-      While we are at it, we can also answer a related question:
+      While we are thinking about cookies, we can also answer a related question:
       how many ways are there to distribute 7 cookies to 4 kids so that each kid gets at least one cookie?
       What can you say about the corresponding sticks and stones charts?
       The charts must start and
@@ -279,12 +286,17 @@
       ways to distribute the cookies.
     </p>
 
+    </subsection>
+
+    <subsection xml:id="subsec-more-sticks-and-stones">
+      <title>More Sticks and Stones</title>
+      
     <p>
       Sticks and stones can be used in counting problems other than kids and cookies.
       Here are a few examples:
     </p>
 
-    <example>
+    <example xml:id="eg-sticks-stones-ice-cream">
       <idx>distribution (counting)</idx>
       <statement>
         <p>
@@ -312,26 +324,26 @@
           again (since you already have said yes six times).
           There are ten flavors to choose from,
           so we must switch from considering one flavor to the next nine times.
-          These are the nine bars.
+          These are the nine sticks.
         </p>
 
         <p>
           Now that we are confident that we have the right number of sticks and stones,
           we answer the question simply:
-          there are 6 stones and 9 bars, so 15 symbols.
-          We need to pick 9 of them to be bars,
+          there are 6 stones and 9 sticks, so 15 symbols.
+          We need to pick 6 of them to be stones,
           so the number of milkshakes possible is
           <me>
-            \binom{15}{9}
+            \binom{15}{6}
           </me>.
         </p>
       </solution>
     </example>
 
-    <example>
+    <example xml:id="eg-sticks-stones-phone-number">
       <statement>
         <p>
-          How many 7 digit phone numbers are there in which the digits are non-increasing?
+          How many 7-digit phone numbers are there in which the digits are non-increasing?
           That is, every digit is less than or equal to the previous one.
         </p>
       </statement>
@@ -347,9 +359,9 @@
 
         <p>
           There are 10 choices for each digit (0-9) so we must switch between choices 9 times.
-          We have 7 stones and 9 bars, so the total number of phone numbers is
+          We have 7 stones and 9 sticks, so the total number of phone numbers is
           <me>
-            {16 \choose 9}
+            \binom{16}{7}
           </me>.
         </p>
       </solution>
@@ -405,7 +417,7 @@
         <p>
           This problem is just like giving 13 cookies to 5 kids.
           We need to say how many of the 13 units go to each of the 5 variables.
-          In other words, we have 13 stones and 4 bars
+          In other words, we have 13 stones and 4 sticks
           (the sticks are like the
           <q>+</q>
           signs in the equation).
@@ -419,7 +431,7 @@
                 <m>x_i</m>
                 can be 0 or greater, we are in the standard case with no restrictions.
                 So 13 stones and 4 sticks can be arranged in
-                <m>{17 \choose 4}</m>
+                <m>\binom{17}{13}</m>
                 ways.
               </p>
             </li>
@@ -428,9 +440,9 @@
               <p>
                 Now each variable must be at least 1.
                 So give one unit to each variable to satisfy that restriction.
-                Now there are 8 stones left, and still 4 bars,
+                Now there are 8 stones left, and still 4 sticks,
                 so the number of solutions is
-                <m>{12 \choose 4}</m>.
+                <m>\binom{12}{8}</m>.
               </p>
             </li>
 
@@ -438,8 +450,8 @@
               <p>
                 Now each variable must be 2 or greater.
                 So before any counting, give each variable 2 units.
-                We now have 3 remaining stones and 4 bars, so there are
-                <m>{7 \choose 4}</m>
+                We now have 3 remaining stones and 4 sticks, so there are
+                <m>\binom{7}{3}</m>
                 solutions.
               </p>
             </li>
@@ -459,7 +471,7 @@
         just like you assign elements of the domain of a function to elements in the codomain.
         However, the number of
         ways to assign 7 cookies to 4 kids is
-        <m>{10 \choose 7} = 120</m>, while the number of functions
+        <m>\binom{10}{7} = 120</m>, while the number of functions
         <m>f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}</m>
         is
         <m>4^7 = 16384</m>.
@@ -495,7 +507,55 @@
         (not).
       </p>
     </paragraphs>
-  </introduction>
+  </subsection>
+
+  <subsection xml:id="subsec-A formula for multichoose">
+    <title>A formula for multichoose</title>
+    <p>
+      When solving the examples above, we went directly from the counting problem to the sticks and stones representations.  We could have also determined what multisets we are counting.  Let's do that.
+    </p>  
+
+    <p>
+      <ol>
+        <li>
+          <p>
+            The number of ways to distribute seven cookies to four kids is <m>\binom{10}{7}</m>, representing outcomes with 3 sticks and 7 stones.  Each distribution is also a length 7 multiset with element chosen from a set of size 4.  Thus the number of outcomes is 
+            <me>
+              \mchoose{4}{7} = \binom{10}{7}
+            </me>.
+          </p>
+        </li>
+        <li>
+          <p>
+            The number of 6-scoop shakes choosing from 10 flavors, as in <xref ref="eg-sticks-stones-ice-cream"/> is <m>\binom{15}{6}</m>, representing outcomes as strings of 9 sticks and 6 stones.  We can also represent each outcome as a 6-element multiset with elements chosen from a set of 10 flavors, so we have that <me>\mchoose{10}{6} = \binom{15}{6}</me>.
+          </p>
+        </li>
+        <li>
+          <p>
+            The number of 7-digit phone numbers with digits non-increasing is <m>\binom{16}{7}</m>, representing outcomes as strings of 9 sticks and 7 stones, as in <xref ref="eg-sticks-stones-phone-number"/>.  But we can represent each outcome as a multiset of size 7, with element chosen from the 10 digits 0-9.  Thus <me>\mchoose{10}{7} = \binom{16}{7}</me>.
+          </p>
+        </li>
+        <li>
+          <p>
+            The number of non-negative integer solutions to the equation <m>x_1 + x_2 + x_3 + x_4 + x_5 = 13</m>, as in <xref ref="example-multisets-int-sol"/>, is <m>\binom{17}{13}</m>.  Each outcome can also be represented as a multiset of size 13 with elements chosen from <m>\{x_1, x_2, \ldots, x_5\}</m>.  Thus we have <me>\mchoose{5}{13} = \binom{17}{13}</me>.
+          </p>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      In general, if we want a multiset of size <m>k</m> with element chosen from a set of size <m>n</m>, we can create a sticks and stones chart in which each stone represents us choosing one of the <m>k</m> spots in the multiset, and each stick representing a switch to the next of the <m>n</m> different options for that spot.  There are then <m>k</m> stones and <m>n-1</m> sticks, for a total of <m>n+k-1</m> symbols, <m>k</m> of which are stones.  Therefore we get:
+    </p>
+
+    <theorem xml:id="thm-multichoose">
+      <statement>
+        <p>
+          The number of <m>k</m>-element multisets with elements chosen from a set of size <m>n</m> is <me>\mchoose{n}{k} = \binom{n+k-1}{k}</me>.
+        </p>
+      </statement>
+    </theorem>
+    
+  </subsection>
 
   <reading-questions xml:id="rqs-counting-multisets">
 
