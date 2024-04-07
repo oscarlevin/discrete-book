@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<section xml:id="sec-counting-probability" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Application: Probability</title>
+  <introduction>
+      
+    <p>
+      Most of the questions we have considered in this chapter can also be asked as a question about probability.  How many ways passwords of length 8 can you make using just lower-case letters?  What is the probability that randomly selecting 8 lower-case letters will give you your password?  
+    </p>
+    
+    <p>
+      While the subject of probability is vast and complex, at least for discrete probability, there is little more than counting involved.  So here we will take just a brief look at how our study of counting can help us understand probability.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-computing-probabilities">
+    <title>Computing Probabilities</title>
+    
+    <p>
+      What do we even mean by a <em>probability</em>?  Of course we can define mathematical concepts however we like, but since we want to make claims about the real world, we should pick some definitions that correspond to our intuition about what probability means.   
+    </p>
+
+    <p>
+      Let's think about how we use the language of probability normally.  We might say that tossing a coin has a 50% chance of coming up heads.  Or that when rolling two dice, having the sum of the dice result in a 7 is more likely than having the sum be a 2.  Casinos certainly rely on certain pairs of cards being consistently more likely than others when setting payouts for Blackjack.  All this assumes that there is some <em>randomness</em> to events, and that even in this randomness, there is some <em>consistency</em> to what can happen.  We will assume this model of reality.
+    </p>
+
+    <p>
+      To make this all precise, we will freely talk about <term>random experiments</term> that can have different possible <term>outcomes</term>.  We will call the <em>set</em> of possible outcomes to a random experiment the <term>sample space</term>. When performing the experiment, it will always result in exactly one outcome from the sample space.
+    </p>
+
+    <p>
+      We will often want to group outcomes into <term>events</term>, by which we simply mean subsets of the sample space.  Note that a given outcome can belong to more than one event, or none at all.  When we ask questions about probability, we we be asking for the probability of an <em>event</em>, rather than an outcome (although an event could be a single outcome, but this would be a very easy question to answer).
+    </p>
+
+    <p>
+      To compute the <term>probability</term> of a chance event, we consider the <em>set</em> of possible outcomes, called this the <term>sample space</term>.  
+    </p>
+    
+    <p>
+      We used the <term>uniform probability model</term> which means we required that each outcome of the sample space was equally likely, and in fact had probability <m>1/S</m> where <m>S</m> is the size of the sample space.
+      An <term>event</term> is just a set of outcomes from the sample space.  Given our definition of probability, the probability that a particular event occurs is then simply the number of outcomes in the event divided by the size of the sample space.
+    </p>
+  </subsection>
+
+    <example>
+      <statement>
+        <p>
+          Suppose you roll a regular 6-sided die (each side contains a number from 1 to 6).  What is the probability that you will roll an even number?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The sample space is the set <m>\{1,2,3,4,5,6\}</m> of possible rolls.  The event, call it <m>E</m> for even, is the set of outcomes <m>\{2, 4, 6\}</m>.  Thus the probability of <m>E</m> occurring is 
+          <me>
+            P(E) = \frac{3}{6}.
+          </me>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      In <xref ref="ch_counting"/> we spent a lot of effort learning how to count the size of sets.  We can then use this to compute probabilities by counting the size of the sample space (set) and the size of the event (set).
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          If you draw 5 cards from a regular deck of 52 cards, what is the probability that you will draw 4-of-a-kind?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First, let's count the sample space, which will consist of all 5-card hands.  The order of the cards in a hand is not important, so we will just count 5-element subsets of the 52 cards.  The sample space therefore contains <m>\binom{52}{5}</m> elements.
+        </p>
+
+        <p>
+          Now how many of those will be 4-of-a-kind?  One way we could count this would be to first select which of the 13 values will be the 4-of-a-kind, which can be done in <m>\binom{13}{1} = 13</m> ways.  What about the other card in the hand?  Well, there are 48 other cards it could be, so the number of 4-of-a-kind hands is <m>13\cdot 48</m>.
+        </p>
+
+        <p>
+          This makes the probability of getting 4-of-a-kind,
+          <me>
+            P(\text{4-of-a-kind}) = \frac{13\cdot 48}{\binom{52}{5}}.
+          </me>
+        </p>
+      </solution>
+
+    </example>
+      
+    <p>
+      An important subtlety: whenever counting the size of the sample space and the event, make sure that you are really counting which elements <em>of</em> the sample space are in the event.  In particular, if you are counting <em>subsets</em> of cards in the sample space (using a combination instead of a permutation to count sequences of cards) then make sure that the elements of your event are also subsets (and not sequences).  
+    </p>
+
+    <paragraphs>
+      <title>Conditional Probability</title>
+      <p>
+        Sometimes we want to compute the probability of one event <em>given</em> than another event occurred.  To write <q>the probability of <m>A</m> given <m>B</m></q> we write <m>P(A|B)</m>.  The formula for conditional probability is,
+        <me>
+          P(A|B) = \frac{P(A\cap B)}{P(B)}
+        </me>
+        where <m>P(A\cap B)</m> is the probability that both <m>A</m> and <m>B</m> occur (so the probability of those outcomes that are in the intersection of <m>A</m> and <m>B</m>).
+      </p>
+
+      <p>
+        This formula makes sense when you think that what we are really doing with conditional probability is limiting the size of the sample space to only those elements in the event <m>B</m>.  Since <m>P(B) = \frac{\card{B}}{\card{S}}</m> (where <m>S</m> is the sample space), and <m>P(A\cap B) = \frac{\card{A \cap B}}{\card{S}}</m>, we see that 
+        <me>
+          P(A|B) = \frac{P(A\cap B)}{P(B)} = \frac{\frac{\card{A \cap B}}{\card{S}}}{\frac{\card{B}}{\card{S}}} = \frac{\card{A \cap B}}{\card{B}}
+        </me>.
+      </p>
+
+      <p>
+        There are times when the conditional probability <m>P(A|B)</m> is just the probability of <m>A</m>.  For example, if you flip a fair coin two times, what is the probability of getting tails on your second flip, <em>given</em> that you got tails on your first flip?  This is no different than the probability of getting tails on your second flip, since the first flip has no influence on what happens on the first flip.  It is clear that the two flips are <term>independent</term>.  
+        
+      </p>
+      <p>
+        We could define events <m>A</m> and <m>B</m> to be independent provided that <m>P(A|B) = P(A)</m>.  This would say that 
+        <me>P(A) = P(A|B) = \frac{P(A \cap B)}{P(B)}</me>
+        which, if we multiply both sides by <m>P(B)</m> gives
+        <me>
+          P(A)P(B) = P(A\cap B)
+        </me>.
+        This is how independence is usually defined.  This also meshes with our intuition about coin flipping: the probability of getting two tails should be <m>P(T)P(T) = \frac{1}{2}\frac{1}{2} = \frac{1}{4}</m>, confirmed by the observation that of the 4 equally likely outcomes, only one is tails followed by tails.
+      </p>  
+    </paragraphs>
+
+    <paragraphs>
+      <title>Expected Value</title>
+      
+      <p>
+        We can use probability to guide our decisions.  This relies on the principle of probability that if an experiment is performed many times, then the proportion of times an event occurs will be close to the probability of that event occurring.  Here we using <em>probability</em> to mean <term>theoretical probability</term>, which is just what we have defined above.  This is in contrast to <term>empirical probability</term> which is exactly the proportion of times an event occurs to the number of times the experiment was performed. 
+      </p>
+
+      <p>
+        Suppose we assign value to events, set of outcomes from our sample space.  For example, when rolling a die, we might assign $2 to even rolls and $1 to odd rolls.  We can then ask, what should we <em>expect</em> to earn each time we roll the die?  This is a little silly, since sometimes we will earn $2, and sometimes only $1.  So what do we mean by this?
+      </p>
+
+      <p>
+        If you performed the experiment 100 times, how much money would be a reasonable <em>expectation</em> for your earnings?  Well, half of the time you would earn $2, the other half $1 (since the empirical probability will be close to the theoretical probability; maybe not exactly half, but close to it).  So you could expect to earn $150.  That comes to, on average, $1.50 per roll.  We would say that $1.50 is the <term>expected value</term> of the experiment.
+      </p>
+    </paragraphs>
+
+
+
+</section>
