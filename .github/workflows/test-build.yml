@@ -1,0 +1,35 @@
+# <!-- Managed automatically by PreTeXt authoring tools -->
+# (delete the above line to manage this file manually)
+
+name: Test Build
+on:
+    # Runs on pull requests, when a pull request is merged into main,
+    # and when a commit is otherwise pushed to main.
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["*"]
+
+jobs:
+    # This job builds the book. You can download the resulting build "artifact" by
+    # navigating to your actions manager in Github, selecting this run, and clicking
+    # "download artifact" on the "website" artifact.
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout source
+              uses: actions/checkout@v4
+
+            - name: Build web target with PreTeXt
+              uses: siefkenj/pretext-build-action@main
+              with:
+                  pretext-command: build web
+                  project-root: "."
+                  output-dir: "."
+
+            - name: Bundle output/web as artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: website
+                  path: output/web
