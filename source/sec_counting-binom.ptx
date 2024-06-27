@@ -599,13 +599,99 @@
 	<idx>subset</idx>
 	<idx><h>subset</h><h>counting</h></idx>
 	<p>
-		A <term>subset</term> of a set <m>A</m> is any set all of whose elements are also in <m>A</m>.
+		A <term>subset</term> of a set <m>A</m> is any set all of whose elements are also in <m>A</m>.  Think of starting with the set <m>A</m> and removing some (or none or all) of its elements: the resulting set is a subset of <m>A</m>.
 		(More information about sets can be found in <xref ref="sec_intro-structures"/> and <xref ref="sec_structures-sets"/>.)
+
 		Suppose we look at the set <m>A = \{1,2,3,4,5\}</m>.
-		A few of the 3-element subsets of <m>A</m> are <m>\{1,2,3\}</m>, <m>\{1,3,4\}</m>, and <m>\{2,4,5\}</m>.
-		How many subsets of <m>A</m> contain exactly 3 elements all together?
+		How many subsets of <m>A</m> contain exactly 3 elements?
 	</p>
 
+
+	<p>
+		Let's list them all:
+		
+		<md>
+			<mrow>\{1,2,3\} \qquad \{1,2,4\} \qquad \{1,3,4\} \qquad \{2,3,4\}</mrow>
+			<mrow>\{1,2,5\} \qquad \{1,3,5\} \qquad \{2,3,5\} \qquad \{1,4,5\} \qquad \{2,4,5\} \qquad \{3,4,5\}</mrow>
+		</md>.
+	</p>
+		
+	<p>
+		Again, we see there are ten.  In fact, we have listed them in the same order as we listed the ten 5-bit strings of weight 3 and the ten lattice paths from (0,0) to (3,2).  Wait, does this even make sense?  In what way is a subset the same as a bit-string?
+	</p>
+
+	<p>
+		Think of each bit in a bit string as representing one of the elements in a set.  So the set <m>A</m> has five elements, so we need five bits to represent a subset of <m>A</m>.  If the bit in position <m>n</m> is a 0, that means we do <em>not</em> include <m>n</m> in our subset, while a 1 in that position tells us that <m>n</m> is in the subset.  Three 1's means we have said, <q>yes</q> to three elements.  
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				Which subsets of <m>\{1,2,3,4,5,6\}</m> correspond to the bit strings:
+				<me>
+					101011 \quad 001000 \quad 111111 \quad 000000
+				</me>
+			</p>
+		</statement>
+		<solution>
+			<p>
+				Here we are not fixing the weight of the strings, so our subsets will not all have the same size.  Here is the correspondence:
+			</p>
+				<tabular>
+					<col right="minor"/><col/>
+					<row>
+						<cell>101011</cell> <cell>\{1,3,4,6\}</cell>
+					</row>
+					<row>
+						<cell>001000</cell> <cell>\{3\}</cell>
+					</row>
+					<row>
+						<cell>111111</cell> <cell>\{1,2,3,4,5,6\}</cell>
+					</row>
+					<row>
+						<cell>000000</cell> <cell>\{\}</cell>
+					</row>
+				</tabular>
+			<p>
+				The last subset is the <term>empty set</term>: the set that contains no elements.  This is a subset of <em>every</em> set!
+			</p>
+		</solution>
+	</example>
+
+	<remark>
+		<statement>
+			<p>
+				What we have done here is give a <em>bijection</em> between the set of 5-bit strings of weight 3 and the set of 3-element subsets of <m>A</m>.  A <term>bijection</term> is a function <m>f: X \to Y</m> such that each element of <m>Y</m> is the image of exactly one element from <m>X</m>.  You can prove that if there is a bijection between two sets, then they have the same number of elements.  This is a common counting technique we will use in the upcoming sections.
+			</p>
+		</statement>
+	</remark>
+
+	<p>
+		This example illustrates that once again, Pascal's triangle can give us the answer to a counting question.  The number of <m>k</m>-element subsets of a set with <m>n</m> elements is the same as the number of <m>n</m>-bit strings of weight <m>k</m>, and that is the number in row <m>n</m>, column <m>k</m> of the triangle: <m>\binom{n}{k}</m>.
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				How many subsets of the set <m>\{a,b,c,d,e,f,g\}</m> exactly 4 elements?
+			</p>
+		</statement>
+		<solution>
+			<p>
+				The set contains 7 elements, so the number of 4-element subsets is the same as the number of 7-bit strings of weight 4, namely <m>\binom{7}{4} = 35</m>.
+			</p>
+		</solution>
+	</example>
+
+	<p>
+		At this point I'm sure we are all getting pretty hungry, so let's get some pizza.  But which pizza shall we order?  Let's not overdue it and just choose three toppings from the ten available.  How many different pizzas can we order? 
+	</p>
+
+	<p>
+		Aha!  So that's why we care about counting subsets!!  Each pizza choice is nothing more than a 3-element subset of the set of 10 toppings.  We now know how to count this: <m>\binom{10}{3} = 120</m> different pizzas.
+	</p>
+
+<!-- 
 	<p>
 		First, a simpler question: How many subsets of <m>A</m> are there total? We call the set of all subsets of a set <m>A</m> the <term>power set</term> of <m>A</m>, written <m>\pow(A)</m>.
 		So we are now asking for
@@ -628,79 +714,22 @@
 	</p>
 
 	<p>
-		Of those 32 subsets, how many have 3 elements?
-		This is not obvious.
-		Note that we cannot just use the multiplicative principle.
-		Maybe we want to say we have 2 choices (yes/no) for the first element, 2 choices for the second, 2 choices for the third,
-		and then only 1 choice for the other two.
-		But what if we said <q>no</q> to one of the first three elements?
-		Then we would have two choices for the 4th element.
-		What a mess!
+		Of those 32 subsets, how many have 3 elements? This is not obvious. Note that we cannot just use the multiplicative principle. Maybe we want to say we have 2 choices (yes/no) for the first element, 2 choices for the second, 2 choices for the third, and then only 1 choice for the other two. But what if we said <q>no</q> to one of the first three elements? Then we would have two choices for the 4th element. What a mess!
 	</p>
 
 	<p>
-		Another idea:
-		we need to pick three elements to be in our subset.
-		There are 5 elements to choose from.
-		So there are 5 choices for the first element,
-		and for each of those 4 choices for the second,
-		and then 3 for the third (last) element.
-		The multiplicative principle would say then that there are a total of
-		<m>5 \cdot 4 \cdot 3 = 60</m> ways to select the 3-element subset.
-		But this cannot be correct
-		(<m>60 &gt; 32</m> for one thing).
-		One of the outcomes we would get from these choices would be the set <m>\{3,2,5\}</m>,
-		by choosing the element 3 first,
-		then the element 2, then the element 5.
-		Another outcome would be <m>\{5,2,3\}</m> by choosing the element 5 first,
-		then the element 2, then the element 3.
-		But these are the same set!
-		We can correct this by dividing:
-		for each set of three elements,
-		there are 6 outcomes counted among our 60
-		(since there are 3 choices for which element we list first, 2 for which we list second,
-		and 1 for which we list last).
-		So we expect there to be
-		10 3-element subsets of <m>A</m>.
-	</p>
+		Another idea: we need to pick three elements to be in our subset. There are 5 elements to choose from. So there are 5 choices for the first element, and for each of those 4 choices for the second, and then 3 for the third (last) element. The multiplicative principle would say then that there are a total of <m>5 \cdot 4 \cdot 3 = 60</m> ways to select the 3-element subset. But this cannot be correct (<m>60 &gt; 32</m> for one thing). One of the outcomes we would get from these choices would be the set <m>\{3,2,5\}</m>, by choosing the element 3 first, then the element 2, then the element 5. Another outcome would be <m>\{5,2,3\}</m> by choosing the element 5 first, then the element 2, then the element 3. But these are the same set! We can correct this by dividing: for each set of three elements, there are 6 outcomes counted among our 60 (since there are 3 choices for which element we list first, 2 for which we list second, and 1 for which we list last). So we expect there to be 10 3-element subsets of <m>A</m>.
+	</p> -->
 
-	<p>
-		Is this right?
-		Well, we could list out all 10 of them,
-		being very systematic in doing so,
-		to make sure we don't miss any or list any twice.
-		Or we could try to count how many subsets of <m>A</m>
-		<em>don't</em> have 3 elements in them.
-		How many have no elements?
-		Just 1
-		(the empty set).
-		How many have 5?
-		Again, just 1.
-		These are the cases in which we say
-		<q>no</q> to all elements,
-		or <q>yes</q> to all elements.
-		Okay, what about the subsets which contain a single element?
-		There are 5 of these.
-		We must say <q>yes</q> to exactly one element,
-		and there are 5 to choose from.
-		This is also the number of subsets containing 4 elements.
-		Those are the ones for which we must say
-		<q>no</q> to exactly one element.
-	</p>
+	<!-- <p>
+		Is this right? Well, we could list out all 10 of them, being very systematic in doing so, to make sure we don't miss any or list any twice. Or we could try to count how many subsets of <m>A</m> <em>don't</em> have 3 elements in them. How many have no elements? Just 1 (the empty set). How many have 5? Again, just 1. These are the cases in which we say <q>no</q> to all elements, or <q>yes</q> to all elements. Okay, what about the subsets which contain a single element? There are 5 of these. We must say <q>yes</q> to exactly one element, and there are 5 to choose from. This is also the number of subsets containing 4 elements. Those are the ones for which we must say <q>no</q> to exactly one element.
+	</p> -->
 
-	<p>
-		So far we have counted 12 of the 32 subsets.
-		We have not yet counted the subsets with cardinality 2 and with cardinality 3.
-		There are a total of 20 subsets left to split up between these two groups.
-		But the number of each must be the same!
-		If we say <q>yes</q> to exactly two elements,
-		that can be accomplished in exactly the same number of ways as the number of ways we can say
-		<q>no</q> to exactly two elements.
-		So the number of 2-element subsets is equal to the number of 3-element subsets.
-		Together there are 20 of these subsets, so 10 each.
-	</p>
+	<!-- <p>
+		So far we have counted 12 of the 32 subsets. We have not yet counted the subsets with cardinality 2 and with cardinality 3. There are a total of 20 subsets left to split up between these two groups. But the number of each must be the same! If we say <q>yes</q> to exactly two elements, that can be accomplished in exactly the same number of ways as the number of ways we can say <q>no</q> to exactly two elements. So the number of 2-element subsets is equal to the number of 3-element subsets. Together there are 20 of these subsets, so 10 each.
+	</p> -->
 
-	<sidebyside>
+	<!-- <sidebyside>
 		<tabular>
 			<row bottom="minor" halign="center">
 			<cell>Number of elements:</cell>
@@ -721,7 +750,7 @@
 			<cell>1</cell>
 			</row>
 		</tabular>
-	</sidebyside>
+	</sidebyside> -->
 </subsection>
 
 <subsection>
