@@ -208,7 +208,61 @@
 		</example>
 
 		<p>
-			The sum principle also works with more than two events.
+			We often use the principle when the sets of outcomes need to be counted using other counting techniques.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many <m>10</m>-bit strings of weight <m>6</m> start with either <m>11</m> or <m>00</m>?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					We learned how to count bit strings with a fixed length and weight in <xref ref="sec_counting-pascal"/>.  The total number of <m>10</m>-bit strings of weight <m>6</m> is <m>\binom{10}{6} = 210</m> (where that value was found using <xref ref="fig-pascal-large">Pascal's Triangle</xref>).  However, not all of these are ones we want to count: we want to count just those that start with <m>11</m> or <m>00</m> (and not those that start with <m>10</m> or <m>01</m>).
+				</p>
+
+				<p>
+					Since there are no bit strings that start with both <m>11</m> and <m>00</m>, we can apply the sum principle.  We will compute the size of each set of outcomes, and then add the results.  
+				</p>
+
+				<p>
+					How many <m>10</m>-bit strings of weight <m>6</m> start with <m>11</m>?  If the string starts with <m>11</m>, then of the remaining eight bits, there must be four 1's, so that the total weight is <m>6</m>.  This is just like asking for the number of <m>8</m>-bit strings with weight 4, so there are <m>\binom{8}{4} = 70</m> such strings.	Similarly, there are <m>\binom{8}{6} = 28</m> strings that start with <m>00</m> (all six 1's must be in the remaining 8 bits).  By the sum principle, the total number of strings we want to count is <m>70 + 28 = 98</m>. 
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			We can also use the sum principle <em>indirectly</em> in a way that might be called the <em>subtraction principle</em> (but isn't).
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many <m>10</m>-bit strings of weight <m>6</m> have at least one 1 in their first three bits?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					There are lots of different ways a string can have at least one 1 in its first three bits: it could start with 100, 010, 001, 101, 110, 011, or 111.  We could count the number of strings that start with each of them and then apply the sum principle a bunch of times.  But let's not.
+				</p>
+
+				<p>
+					Suppose the number of strings we want to count is <m>x</m>.  Let <m>y</m> be the number of <m>10</m>-bit strings of weight 6 that <em>do not</em> have a 1 in any of their first three bits.  What is <m>x + y</m>?  This is the number of <m>10</m>-bit strings of weight 6 in total, which is <m>\binom{10}{6} = 210</m>.  It is also easy to find <m>y</m>: bit strings with length 10 and weight 6 that start with 000 must end in a bit string with length 7 and weight 6.  There are <m>\binom{7}{6} = 7</m> of these.
+				</p>
+
+				<p>
+					Thus, we have
+					<me>
+						x + 7 = 210
+					</me>,
+					so <m>x = 210 - 7 = 203</m>.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			While we didn't want to use the sum principle multiple times in the previous example, we could have.  The sum principle works with more than two events.
 			Say, in addition to your four bow ties and seven pairs of socks,
 			you could also pick one of five belt buckles?
 			How many choices do you have now?
@@ -231,7 +285,7 @@
 			</solution>
 		</example>
 
-		<example>
+		<!-- <example>
 			<statement>
 				<p>
 					Suppose you are going for some fro-yo.
@@ -251,10 +305,10 @@
 					so the total number of outcomes is <m>6 + 6 + 6 + 6 = 24</m>.
 				</p>
 			</solution>
-		</example>
+		</example> -->
 
 		<p>
-			Note that in both of the previous examples,
+			Note that in the previous example,
 			when using the sum principle on a bunch of outcome sets of the same size, it is quicker to multiply.
 			Let's take advantage of this observation and state it as a new principle.
 		</p>
@@ -341,7 +395,41 @@
 			The product principle combines the elements in those sets to make a set of new outcomes (outcomes not present in any of the sets being combined).
 		</p>
 
+		<p>
+			As with the sum principle, we often use the product prnciple to define sets of outcomes that first need to be counted carefully.
+		</p>
 
+		<example>
+			<statement>
+				<p>
+					How many lattice paths from <m>(0,0)</m> to <m>(10,10)</m> pass through the point <m>(4,7)</m>?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					We can count lattice paths with <xref ref="fig-pascal-large" text="custom">Pascal's Triangle</xref>, but how do we ensure that the path passes through a particular point?  Well, any path that passes through <m>(4,7)</m> must first go from <m>(0,0)</m> to <m>(4,7)</m>, and then complete its journey with a path from <m>(4,7)</m> to <m>(10,10)</m>. 
+				</p>
+				<p>
+					The number of paths from <m>(0,0)</m> to <m>(4,7)</m> is <m>\binom{11}{4} = 330</m>.
+				</p>
+
+				<p>
+					The number of paths from <m>(4,7)</m> to <m>(10,10)</m> is <m>\binom{9}{3} = 84</m>.  (The paths have length 9 and with 6 steps in the <m>x</m> direction.)
+				</p>
+
+				<p>
+					Now combine these with the... wait, what principle?  To get a path from <m>(0,0)</m> to <m>(10,10)</m> that passes through <m>(4,7)</m>, we need to first select a path from <m>(0,0)</m> to <m>(4,7)</m> and then <em>add on</em> a path from <m>(4,7)</m> to <m>(10,10)</m>.  So is this the sum principle???
+				</p>
+
+				<p>
+					No!  Remember that the sum principle combines the two sets of outcomes.  If we applied the sum principle, we would get a larger set contiaining the <m>330 + 84</m> paths that are contained in each individual set.  None of these are paths we want to count.  We want to combine the different elements in our sets of outcomes in every possible combination.  That is why the product principle is correct here.
+				</p>
+
+				<p>
+					Thus, the total number of paths we want to count is <m>330 \cdot 84 = 27720</m>.
+				</p>
+			</solution>
+		</example>
 
 		<p>
 			The product principle generalizes to more than two events as well.
@@ -386,6 +474,44 @@
 
 				<p>
 					All together, there were <m>26^3</m> choices for the three letters, and <m>10^3</m> choices for the numbers, so we have a total of <m>26^3 \cdot 10^3</m> choices of license plates.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			The previous example had an answer that used exponents.  So is there an <term>exponential principle</term> we should learn?  We don't separate one out as there really isn't anything different in the way we think of constructing our outcome sets.  But we will often see the product principle applied to the same event repeated multiple times.  Here are two examples.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Suppose you roll a 12-sided die seven times, recording the number that appears after each roll.  How many sequences of seven rolls are possible?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					Each roll can result in 12 different outcomes, so by the product principle, the total number of sequences is <m>12^7</m>.
+				</p>
+			</solution>
+		</example>
+
+		<example>
+			<statement>
+				<p>
+					How many different pizzas can you make if you can choose from 10 toppings and you can have any number of toppings on your pizza?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					If we want to apply the product principle, we must think of the compound event of picking a pizza as the result of combining some number of individual events in every possible combination.  What are those events?  There are multiple answers to this question, but the following is the most useful.
+				</p>
+
+				<p>
+					First, decide whether you want to include anchovies on your pizza or not.  This event could result in two outcomes (yes or no to the anchovies).  Second, decide whether you want black olives.  Then Canadian bacon, then diced tomatoes, etc.  Each event has two outcomes, and we must combine all ten of these outcomes to create a single outcome corresponding to a single pizza.  Thus, by the product principle, there are <m>2^{10}</m> possible pizzas.
+				</p>
+
+				<p>
+					By the way, another approach to this problem is to <q>code</q> each pizza as a bit-string, where a 1 means the topping is included and a 0 means it is not.  Then the number of pizzas is the number of bit-strings of length 10.  Each bit in the string has two possible values, so there are <m>2^{10}</m> 10-bit strings.
 				</p>
 			</solution>
 		</example>
