@@ -521,15 +521,7 @@
 			The answer is 6, and we needed to know something about cards to answer that question.
 		</p>
 
-		<p>
-			Another caution: how many ways can you select two cards, so that the first one is a red card and the second one is a face card? This looks more like the product principle but the answer is not <m>26 \cdot 12</m> here either.
-			The problem is that while there are 26 ways for the first card to be selected, it is not the case that <em>for each</em> of those there are 12 ways to select the second card.
-			If the first card was both red and a face card, then there would be only 11 choices for the second card.<fn> To solve this problem, you could break it into two cases.
-			First, count how many ways there are to select the two cards when the first card is a red non-face card.
-			Second, count how many ways when the first card is a red face card.
-			Doing so makes the events in each separate case independent, so the product principle can be applied.
-			</fn>
-		</p>
+
 
 		<example xml:id="example-counting-functions-all">
 			<title>Counting functions</title>
@@ -566,6 +558,97 @@
 					(where <m>n</m> is the number of times the event is repeated)
 					to <m>\{1,2,\ldots,k\}</m>
 					(where <m>k</m> is the number of ways that event can occur).
+				</p>
+			</solution>
+		</example>
+	</subsection>
+
+	<subsection xml:id="subsec-sum_product">
+		<title>Combining principles</title>
+		
+		<p>
+			Let's return the our final question from this section's <em>Investigate!</em> activity: How many ways can you select two cards from a standard deck of 52, so that the first one is a red card and the second one is a face card? 
+		</p>
+			
+		<p>
+			This looks a little like the product principle since the outcomes consist of pairs of cards.  There are 26 red cards that are outcomes for the first event, and 12 face ccards that are outcomes for the second event.  However, the answer is not <m>26 \cdot 12</m>.
+			The problem is that while there are 26 ways for the first card to be selected, it is not the case that <em>for each</em> of those there are 12 ways to select the second card.
+			If the first card was both red and a face card, then there would be only 11 choices for the second card.  			
+		</p>
+
+		<p>
+			In <xref ref="sec_counting-repeats"/> we will explore some ways to adjust for counting problems when events are not disjoint or independent, but we can solve our card problem now if we are careful.  Think about the entire set of two-card outcomes.  Can we split these outcomes into two disjoint sets (so to apply the sum principle) such that each set can be formed using the product principle?
+		</p>
+
+		<p>
+			Of all the outcomes, first we count those that have a red non-face card first.  Of the 26 red cards, there are 6 that are face cards, so there are 20 red non-face cards.  For each of these, there are 12 face cards that can be selected as the second card.  By the product principle, the number of two-card outcomes with a red non-face card first is <m>20 \cdot 12 = 240</m>.
+		</p>
+
+		<p>
+			Now, what outcomes have we not yet counted?  It is exactly the two-card outcomes that start with a red face card.  There are 6 of these, and for each there are 11 choices for the second card.  So the number of two-card outcomes with a red face card first is <m>6 \cdot 11 = 66</m>.
+		</p>
+
+		<p>
+			Finally, apply the sum principle to these two disjoint sets of outcomes to see that the total number of two-card outcomes is <m>240 + 66 = 306</m>.
+		</p>
+		
+		<p>
+			We conclude this section with two more examples of how you can use both the sum and product principles in a single counting problem.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many lattice paths from <m>(0,0)</m> to <m>(9,9)</m> pass through either <m>(2,6)</m> or <m>(6,2)</m>?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					We are quite fortunate that no paths from <m>(0,0)</m> to <m>(9,9)</m> pass through both <m>(2,6)</m> and <m>(6,2)</m>.  This means we can apply the sum principle to the two sets of outcomes: the paths that pass through <m>(2,6)</m> and the paths that pass through <m>(6,2)</m>.  We will apply the product principle to determine the number of paths in each of these disjoint sets of outcomes.
+				</p>
+
+				<p>
+					The paths from <m>(0,0)</m> to <m>(9,9)</m> that pass through <m>(2,6)</m> are each the concatination of paths from <m>(0,0)</m> to <m>(2,6)</m> and paths from <m>(2,6)</m> to <m>(9,9)</m>.  There are <m>\binom{8}{2} = 28</m> paths for the first part and <m>\binom{10}{7} = 120</m> paths for the second part, so applying the product principle gives us <m>28 \cdot 120 = 3360</m> paths that pass through <m>(2,6)</m>.
+				</p>
+
+				<p>
+					The paths from <m>(0,0)</m> to <m>(9,9)</m> that pass through <m>(6,2)</m> can similarly be calculated as
+					<me>
+						\binom{8}{6} \cdot \binom{10}{3} = 28 \cdot 120 = 3360
+					</me>
+					(and upon reflection, it is not surprising that the two numbers are the same, since each path that passes through <m>(2,6)</m> can be reflected to create a path that passes through <m>(6,2)</m>).
+				</p>
+				<p>
+					Thus, the total number of paths that pass through either <m>(2,6)</m> or <m>(6,2)</m> is <m>3360 + 3360 = 6720</m>.
+				</p>
+			</solution>
+		</example>
+
+		<example>
+			<statement>
+				<p>
+					How many two digit numbers, using only the digits <m>\{1,2,3,4,5\}</m> have the <em>sum</em> of their digits even?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					First think about the set ouf outcomes.  Some two digit numbers that have the sum of their digits even are <m>11, 13, 15, 22, 24, 31, \ldots</m>.  Okay, maybe it isn't all that difficult to just list them all (and this would be a nice way to check our work).  Let's try to use the sum and product principles anyway.
+				</p>
+
+				<p>
+					What do we notice about all these numbers?  It looks like both digits must be even or both digits must be odd, to make the sum even.  We can consider these two cases, counting each case with the product principle.
+				</p>
+
+				<p>
+					Counting <q>odd-odd</q> numbers: three choices for the first digit and three choices for the second digit.  So there are <m>3 \cdot 3 = 9</m> odd-odd numbers.
+				</p>
+
+				<p>
+					Counting <q>even-even</q> numbers: two choices for the first digit and two choices for the second digit.  So there are <m>2 \cdot 2 = 4</m> even-even numbers.
+				</p>
+
+				<p>
+					Combined, there are <m>9 + 4 = 13</m> two-digit numbers with an even sum of digits.
 				</p>
 			</solution>
 		</example>
