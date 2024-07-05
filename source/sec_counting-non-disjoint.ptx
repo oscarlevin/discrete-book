@@ -478,7 +478,68 @@
     </p>
 
     <p>
-      Not really.  One use of the product principle is when computing probabilities, and in that context, we do make a dinstinction between the events being <term>independent</term> or <term>dependent</term>.  We will explore this more in <xref ref="sec-counting-probability"/>.  Essentially, to find the probability of two events occuring, we can multiply their respective probabilities if and only if the two events are <em>independent</em>: if the outcome of one event does not affect the outcome of the other. 
+      Not really.  
+    </p>
+    <p>
+      One use of the product principle is when computing probabilities, and in that context, we do make a dinstinction between the events being <term>independent</term> or <term>dependent</term>.  We will explore this more in <xref ref="sec-counting-probability"/>.  Essentially, to find the probability of two events occuring, we can multiply their respective probabilities if and only if the two events are <em>independent</em>: if the outcome of one event does not affect the outcome of the other. 
+    </p>
+
+    <p>
+      While finding probability is closely related to counting outcomes, the product principle itself does not require that sets of outcomes be disjoint or make a distinction between dependent or independent events.  What <em>does</em> matter is that the number of outcomes for the second event does not change based on which outcome was the result of the first event.
+    </p>
+
+    <p>
+      A distinction we <em>do</em> often make when applying the product principle is whether the outcomes of events can be <q>repeated.</q>  Consider the following example.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          How many 3-letter words (sequences of three letters) are there when,
+          <ol>
+            <li>repeats are allowed?</li>
+            <li>repeats are not allowed?</li>
+          </ol> 
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Being careful with the product principle, we are combining three events: <m>A</m> is the event of selecting the first letter, <m>B</m> is the event of selecting the second letter, and <m>C</m> is the event of selecting the third letter.  If we want to count the number of words when letters in the word can be repeated, then each event contains 26 outcomes.  So the number of 3-letter words is <m>26^3 = 17,576</m> when repeats are allowed.
+        </p>
+
+        <p>
+          When repeats are not allowed, then the number of outcomes for event <m>A</m> is still 26, but the number of outcomes for <m>B</m> is only 25, since no matter what the outcome of event <m>A</m> is, that letter cannot be selected for the second position in the word. Similarly, no matter what the outcomes of event <m>A</m> and <m>B</m> are, the number of outcomes for event <m>C</m> is always 24: any letter not selected in the frist two events.   Thus the number of 3-letter words containing no repeated letters is <m>26\cdot 25\cdot 24 = 15,600</m>.
+        </p>
+        
+        <p>
+          What is a little strange is that the actual set of outcomes for event <m>B</m> is different for each possible outcome of event <m>A</m>.  This doesn't matter though, as long as the <em>size</em> of the outcome set doesn't change. 
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      We will explore problems such as the previous example in much more depth next in <xref ref="sec_counting-combperm"/>.  Before that though, here is a final example of where the product principle does NOT easily work.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Explain why the product principle does NOT apply to the following counting question: How many 3-letter words have their letters in alphabetical order?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The first thing we might try is to make event <m>A</m> be selecting the first letter, <m>B</m> be selecting the second letter, and <m>C</m> be selecting the third letter.  There are 26 outcomes to event <m>A</m>.  How many outcomes are there for event <m>B</m>?  If we selected <m>w</m> as the first letter, then we can select a letter in the set <m>\{w, x, y, z\}</m> as our second letter, so it appears there are <m>4</m> outcomes for event <m>B</m>.  However, if we selected <m>a</m> as our first letter, then any letter could be used for the second letter, so event <m>B</m> has <m>26</m> outcomes.  Oh no!
+        </p>
+
+        <p>
+          The problem is that the number of outcomes for the second (and third) letter in the word changes depending on the outcome of the previous event.  The events are not independent, but more than that, their <em>size</em> is not independent, so the product principle does not apply.
+        </p>
+
+      </solution>
+    </example>
+    <p>
+      We will see how to answer the counting problem above in the case that letters can be repeated in <xref ref="sec_counting-multisets"/>.  If we restricted the question further and required that the letters are distininct (and in alphabetical order) we actually know how to answer the question already.  Since for any <em>set</em> of three letters, there is exactly one 3-letter word that has those letters in alphabetical order, we can simply count the number of sets of three letters.  This is <m>\binom{26}{3}</m>.  Then we just look at Pascal's Triangle to find the value... oh shoot.  Our triangle doesn't go down that far.  I guess we should think of a way to compute the value without the triangle.  Read on!
     </p>
   </subsection>
   <reading-questions xml:id="rqs-counting-addmult">
