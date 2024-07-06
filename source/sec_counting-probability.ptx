@@ -5,41 +5,73 @@
   <introduction>
       
     <p>
-      Most of the questions we have considered in this chapter can also be asked as a question about probability.  How many ways passwords of length 8 can you make using just lower-case letters?  What is the probability that randomly selecting 8 lower-case letters will give you your password?  
+      Most of the questions we have considered in this chapter can also be asked as a question about probability.  For example: How many ways passwords of length 8 can you make using just lower-case letters?  What is the probability that randomly selecting 8 lower-case letters will give you your password?  
     </p>
     
     <p>
-      While the subject of probability is vast and complex, at least for discrete probability, there is little more than counting involved.  So here we will take just a brief look at how our study of counting can help us understand probability.
+      While the subject of probability is vast and complex, the basics of discrete probability is little more than counting.  So here we will take a brief look at how our study of counting can help us understand probability.
     </p>
   </introduction>
 
   <subsection xml:id="subsec-computing-probabilities">
     <title>Computing Probabilities</title>
+
+    <!-- Invesitagion of classic probability question about dice? -->
+
+    <p>
+      Think about how we use the language of probability in our everyday lives. We might say that tossing a coin has a 50% chance of coming up heads.  Or that when rolling two dice, having the sum of the dice result in a 7 is more likely than having the sum be a 2.  Casinos certainly rely on certain pairs of cards being consistently more likely than others when setting payouts for Blackjack.  All of this assumes that there is some <em>randomness</em> to events, and that even in this randomness, there is some <em>consistency</em> to what can happen.  We will assume this model of reality.
+    </p>
+
+    <p>
+      The sort of thing that we can assign probabilities to are called <term>random experiments</term>.  These can have different possible <term>outcomes</term>.  We will call the (finite) <em>set</em> of possible outcomes to a random experiment the <term>sample space</term> (we will usually denote this set as <m>S</m>). By definition, performing a random experiment will always result in exactly one outcome from the sample space.
+    </p>
+
+    <p>
+      Throughout this section, we will always assume the <term>uniform probability model</term>, which means that each outcome in the sample space is equally likely.  Then the probability of any particular outcome in the sample space <m>S</m> is exactly <m>\frac{1}{\card{S}}</m>.  
+    </p>
+    <note>
+      <p>
+        The uniform probability model is a common and reasonable assumption to make, but does preclude us from asking some questions.  For example, throwing a dart at a dartboard is not uniformly distributed, and similarly rolling weighted dice would not be.  What is the probability that a thumb tac lands point up?  But how would we even start to answer these questions?  We would have to make some assumption about what the probability of the outcomes actually are (perhaps via some repeated experiments).
+      </p>
+      
+    </note>
+
+    <example>
+      <statement>
+        <p>
+          Suppose you flip two fair coins (a penny and a nickel).  What is the sample space of possible outcomes?  What is the probability of getting two heads?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The same space is the set of all possible outcomes of the experiment, which in this case is the set <m>\{HH, HT, TH, TT\}</m>.  The probability of getting two heads is then <m>\frac{1}{4}</m>.  In fact, every outcome has probability <m>\frac{1}{4}</m> since there are 4 outcomes in the sample space.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      There really is nothing more complicated about finding probabilities of <em>outcomes</em>.  Where things get more fun is if we look for the probability of an <term>event</term>: a subset of the sample space.  For a particular random experiment, there might be lots of different events we ask about, and they do not need to be mutually exclusive.  An event can also be a set containing just a single outcome, or might contain no outcomes.
+    </p>
     
     <p>
-      What do we even mean by a <em>probability</em>?  Of course, we can define mathematical concepts however we like, but since we want to make claims about the real world, we should pick some definitions that correspond to our intuition about what probability means.   
+      For example, suppose you roll a fair 6-side die.  The sample space contains six outcomes <m>\{1,2,3,4,5,6\}</m>.  Some events we might care about include rolling an even number (the subset <m>\{2,4,6\}</m>), rolling a number less than <m>3</m> (the set <m>\{1,2\}</m>), or rolling a number less than <m>10</m> (the subset <m>\{1,2,3,4,5,6\}</m>).  In fact, we now know that there are exactly <m>2^6 = 64</m> different events we could ask about, since there are <m>64</m> subsets of the sample space.
     </p>
 
     <p>
-      Let's think about how we use the language of probability normally.  We might say that tossing a coin has a 50% chance of coming up heads.  Or that when rolling two dice, having the sum of the dice result in a 7 is more likely than having the sum be a 2.  Casinos certainly rely on certain pairs of cards being consistently more likely than others when setting payouts for Blackjack.  All this assumes that there is some <em>randomness</em> to events, and that even in this randomness, there is some <em>consistency</em> to what can happen.  We will assume this model of reality.
+      What does our intuition suggest about the example events described above?  Rolling an even number should be just as likely as rolling an odd number, so we hope that the probability of rolling an even number is <m>\frac{1}{2}</m>.  Similarly, the probability of rolling a number less than <m>3</m> should be <m>\frac{1}{3}</m> since a third of the possible outcomes are less than 3.  What about rolling a number less than <m>10</m>?  Well, this <em>must</em> happen, so it would be <m>100\%</m>, which as a fraction is just <m>1</m>. 
     </p>
 
     <p>
-      To make this all precise, we will talk about <term>random experiments</term> that can have different possible <term>outcomes</term>.  We will call the <em>set</em> of possible outcomes to a random experiment the <term>sample space</term>. When performing the experiment, it will always result in exactly one outcome from the sample space.
+      Consistent with our intuition, we define the probability of an event as follows.
     </p>
 
-    <p>
-      We will often want to group outcomes into <term>events</term>, by which we simply mean subsets of the sample space.  Note that a given outcome can belong to more than one event, or none at all.  When we ask questions about probability, we we be asking for the probability of an <em>event</em>, rather than an outcome (although an event could be a single outcome, but this would be a very easy question to answer).
-    </p>
-
-    <p>
-      To compute the <term>probability</term> of a chance event, we consider the <em>set</em> of possible outcomes, called this the <term>sample space</term>.  
-    </p>
-    
-    <p>
-      In what follows, we will always use the <term>uniform probability model</term>, which means we required that each outcome of the sample space is equally likely, and in fact has probability <m>1/S</m> where <m>S</m> is the size of the sample space.
-      An <term>event</term> is just a set of outcomes from the sample space.  Given our definition of probability, the probability that a particular event occurs is then simply the number of outcomes in the event divided by the size of the sample space.
-    </p>
+    <definition xml:id="def-probability">
+      <statement>
+        <p>
+          Suppose a random experiment has sample space <m>S</m>.  The <term>probability</term> of an event <m>E</m> is the number of outcomes in <m>E</m> divided by the number of outcomes in <m>S</m>.  We write this as <m>P(E) = \frac{\card{E}}{\card{S}}</m>.
+        </p>
+      </statement>
+    </definition>
 
     <example>
       <statement>
@@ -51,14 +83,14 @@
         <p>
           The sample space is the set <m>\{1,2,3,4,5,6\}</m> of possible rolls.  The event, call it <m>E</m> for even, is the set of outcomes <m>\{2, 4, 6\}</m>.  Thus the probability of <m>E</m> occurring is 
           <me>
-            P(E) = \frac{3}{6}.
-          </me>
+            P(E) = \frac{3}{6} = \frac{1}{2}
+          </me>.
         </p>
       </solution>
     </example>
 
     <p>
-      In <xref ref="ch_counting"/> we spent a lot of effort learning how to count the size of sets.  We can then use this to compute probabilities by counting the size of the sample space (set) and the size of the event (set).
+       We have spent a lot of effort learning how to count the size of sets.  We can then use this to compute probabilities by counting the size of the sample space (set) and the size of the event (set).
     </p>
 
     <example>
@@ -69,25 +101,40 @@
       </statement>
       <solution>
         <p>
-          First, let's count the sample space, which will consist of all 5-card hands.  The order of the cards in a hand is not important, so we will just count 5-element subsets of the 52 cards.  The sample space therefore contains <m>\binom{52}{5}</m> elements.
+          First, let's count the sample space, which will consist of all 5-card hands.  The order of the cards in a hand is not important, so we will just count 5-element subsets of the 52 cards.  The sample space therefore contains <m>\binom{52}{5}</m> elements.  (This number is just under 2.6 million: <m>2,598,960</m> to be exact.)
         </p>
 
         <p>
-          Now how many of those will be 4-of-a-kind?  One way we could count this would be to first select which of the 13 values will be the 4-of-a-kind, which can be done in <m>\binom{13}{1} = 13</m> ways.  What about the other card in the hand?  Well, there are 48 other cards it could be, so the number of 4-of-a-kind hands is <m>13\cdot 48</m>.
+          Now, how many of those will be 4-of-a-kind?  One way we could count this would be to first select which of the 13 values will be the 4-of-a-kind, which can be done in <m>\binom{13}{1} = 13</m> ways.  What about the other card in the hand?  Well, there are 48 other cards it could be, so the number of 4-of-a-kind hands is <m>13\cdot 48 = 624</m>.
         </p>
 
         <p>
           This makes the probability of getting 4-of-a-kind,
           <me>
-            P(\text{4-of-a-kind}) = \frac{13\cdot 48}{\binom{52}{5}}.
+            P(\text{4-of-a-kind}) = \frac{13\cdot 48}{\binom{52}{5}} \approx 0.00024.
           </me>
         </p>
       </solution>
-
     </example>
-      
+
     <p>
-      An important subtlety: whenever counting the size of the sample space and the event, make sure that you are really counting which elements <em>of</em> the sample space are in the event.  In particular, if you are counting <em>subsets</em> of cards in the sample space (using a combination instead of a permutation to count sequences of cards) then make sure that the elements of your event are also subsets (and not sequences).  
+      An important subtlety: whenever counting the size of the sample space and the event, we must make sure that we are really counting the number of elements <em>of</em> the sample space that are in the event.  In particular, if we count <em>subsets</em> of cards in the sample space (using a combination instead of using a permutation to count sequences of cards) then we must count the number of <em>subsets</em> of cards in the event.  
+    </p>
+
+    <p>
+      Interestingly, we can find the probability of getting 4-of-a-kind using permutations too: The number of 5-card sequences is <m>P(52,5) = 311,875,200</m>.  Finding the number of 4-of-a-kind sequences is a little more complicated.  There are 13 possible values for the 4-of-a-kind, and 48 remaining cards for the fifth card.  But those five cards can be arranged in <m>5!</m> different ways.  So the number of 4-of-a-kind sequences is <m>13\cdot 48\cdot 5!</m>.  This gives, <me>P(\text{4-of-a-kind} = \frac{13\cdot 48\cdot 5!}{P(52,5)} \approx 0.00024</me>.
+      Is this close to the same answer we had before?  It is <em>exactly</em> the same (we can verify this by noticing the extra <m>5!</m> in both the numerator and denominator).
+    </p>
+
+    <p>
+      While picking between combinations and permutations (as long as you pick the same for both the sample space and the event) will give you the same probability, this is not always true, as you are asked to explore in some of the additional exercises.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-probability-rules">
+    <title>Probability Rules</title>
+    <p>
+      Here are a few basic probability facts that follow easily from our definition of probability and understanding of counting.
     </p>
   </subsection>
 
