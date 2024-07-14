@@ -984,11 +984,32 @@
 		</p>
 		
 		<p>
-			This will require considering a new sort of basic sentence called a <term>predicate</term>, which is like a statement, but contains a <term>free variable</term>.  When you replace that variable with a constant of some sort, then the sentence becomes a statement proper.
+			This will require considering a new sort of basic sentence called a <term>predicate</term>, which is like a statement, but contains a <term>free variable</term>.  When you replace that variable with a constant of some sort, then the sentence becomes a statement proper. Think of a predicate as making a claim about the values that are substituted for the <q>placeholder</q> variable(s).
 		</p>
 
 		<p>
-			We will then introduce two new logical symbols, the <term>universal quantifier</term> and the <term>existential quantifier</term>, which allow us to talk about the predicates in a general way (without replacing the variables with a specific value). Let's start with an example.
+			A predicate can be made into a true or false statement by evaluating it at some constant(s), or we can make a claim about whether some or all possible constants would make the the resulting statement true or false.  This is done using <term>quantifiers</term>, of which we will only consider two. 
+		</p>
+
+		<definition xml:id="def-quantifiers">
+			<title>Quantifiers</title>
+			<idx><h>quantifier</h></idx>
+			<idx><h>universal quantifier</h></idx>
+			<idx><h>existential quantifier</h></idx>
+			<idx><h>for all</h></idx>
+			<idx><h>exists</h></idx>
+			<statement>
+				<p>
+					The <term>universal quantifier</term> is written <m>\forall</m> and is read, <q>for all.</q>
+				</p>
+				<p>
+					The <term>existential quantifier</term> is written <m>\exists</m> and is read, <q>there exists</q> or <q>for some.</q>
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			We usually write predicates similar to how you write a function, although use capital letters.  For example, we might use the predicate <m>P(x)</m> to represent <q><m>x</m> is prime</q>.  We can then say that <m>P(7)</m> is true (since 7 is prime) and that <m>P(8)</m> is false.  Or using quantifiers, we can (falsely) claim that all numbers are prime by writing <m>\forall x P(x)</m> or (truthfully) claim that there is at least one prime number, by writing <m>\exists x P(x)</m>.
 		</p>
 
 		<example>
@@ -999,10 +1020,107 @@
 			</statement>
 			<solution>
 				<p>
-					 
+					Before we even start using symbols, it is helpful to rephrase this in a way that captures the logical structure of the statement.  What is the claim really saying?  Given any number, it will either be the case that the number is even, or that the number is odd.  In particular, we are not claiming that either all numbers are even or all numbers are odd. 
+				</p>
+				<p>
+					Let's use <m>E(x)</m> to say that <m>x</m> is even, and <m>O(x)</m> to say that <m>x</m> is odd.  Then we can write,
+					<me>
+						E(x) \vee O(x)
+					</me>
+					to say that <m>x</m> is even or <m>x</m> is odd.  Which <m>x</m> is that true for (according to the claim)?  <em>All</em> of them.  So we write the statement as,
+					<me>
+						\forall x (O(x) \vee E(x))
+					</me>.
+					We added some parentheses to make it very clear that the <term>scope</term> of the universal quantifier includes both predicates.  
+				</p>
+
+				<p>
+					Note that if we incorrectly interpreted the statement as claiming that either all numbers are even or all numbers are odd, we could write that as <m>\forall x O(x) \vee \forall x E(x)</m>.  This is not the same!
 				</p>
 			</solution>
 		</example>
+
+		<p>
+			Just like we did for propositional logic and the logical connectives, we should decide what it means for a quantified predicate statement to be true or false.	Basically, we say <m>\forall x P(x)</m> is true if <m>P(a)</m> is true no matter what constant <m>a</m> we substitute for <m>x</m>.  And similarly, <m>\exists x P(x)</m> is true if there is at least one value <m>a</m> for which <m>P(a)</m> is true.
+		</p>
+			
+		
+		
+		<p>
+			However, we must be careful here.  Consider the statement
+				<me>
+					\forall x \exists y (y \lt x)
+				</me>.
+				You would read this,
+				<q>for every <m>x</m> there is some <m>y</m> such that <m>y</m> is less than <m>x</m>.</q> Note that <m>\lt</m> is a predicate with two free variables, we have chosen to write it with the symbol between the variables instead of the funky-looking <m>L(y,x)</m> or <m>\lt(y,x)</m>.
+			</p>
+			
+			<p>
+				Is this statement true?
+				The answer depends on what our <term>domain of discourse</term> is:
+				when we say <q>for all</q> <m>x</m>,
+				do we mean all positive integers or all real numbers or all elements of some other set?
+				Usually this information is implied by the context of the statement.
+				In discrete mathematics,
+				we almost always quantify over the
+				<em>natural numbers</em>, <m>0, 1, 2,\ldots </m>, so let's take that for our domain of discourse here.
+			</p>
+	
+			<p>
+				For the statement to be true,
+				we need it to be the case that no matter what natural number we select,
+				there is always some natural number that is strictly smaller.
+				Perhaps we could let
+				<m>y</m> be
+				<m>x-1</m>?
+				But here is the problem: what if
+				<m>x = 0</m>?
+				Then
+				<m>y = -1</m> and that is
+				<em>not a number!</em>
+				(in our domain of discourse).
+				Thus we see that the statement is false because there is a number which is less than or equal to all other numbers.
+				We could say this using symbols as,
+				<me>
+					\exists x \forall y (y \ge x)
+				</me>.
+		</p>
+
+		<p>
+			We will explore some rules for working with quantifiers and other connectives in <xref ref="sec-logic-rules"/>.  For now, we will focus on the task of translating between informal statements in ordinary language and the more precise language of logic.  There is no perfect algorithm for doing this translation, but here are a few useful rules of thumb.
+		</p>
+
+		<assemblage xml:id="assemblage-universal-rot">
+			<title>Every blank is blank</title>
+			<p>
+				Any statement of the form, <q>every <m>P</m>-thing is a <m>Q</m>-thing</q> can be written as, <me>\forall x(P(x) \imp Q(x))</me>.
+			</p>
+			<p>
+				Example: all mammals have hair, becomes <m>\forall x (M(x) \imp H(x))</m>, where <m>M(x)</m> means <m>x</m> is a mammal, and <m>H(x)</m> means <m>x</m> has hair.
+			</p>
+		</assemblage>
+
+		<p>
+			To make sense of this, think about what we mean by statements like these in terms of sets.  We are really claiming that the set of mammals is contained in, or is a subset of, the set of hairy things.  What we mean by <q><m>A</m> is a subset of <m>B</m></q> is precisely that every element of <m>x</m> is an element of <m>y</m>.  This can also be expressed by saying that if <m>x</m> is an element of <m>A</m>, then <m>x</m> is also an element of <m>B</m>.   
+		</p>
+
+		<assemblage xml:id="assemblage-existential-rot">
+			<title>Some blanks are blank</title>
+			<p>
+				Any statement of the form <q>Some <m>P</m>-things are <m>Q</m>-things</q> can be written as 
+				<me>
+					\exists x (P(x) \wedge Q(x))
+				</me>.
+			</p>
+			<p>
+				Example: Some cats can swim, becomes <m>\exists x (C(x) \wedge S(x))</m>, where <m>C(x)</m> means <m>x</m> is a cat, and <m>S(x)</m> means <m>x</m> can swim.
+			</p>
+		</assemblage>
+
+		<p>
+			Again, it is helpful to think of how to express such statements in terms of sets.  To say that some cats can swim is to say that there are things that belong both to the set of cats and to the set of swimming things.  Such animals belong to the <em>intersection</em> of these two sets, which you can describe as belonging to the first set <em>and</em> the second set.  Existential statements of this form are really claiming that the intersection of the two sets is not empty.
+		</p>
+
 	</subsection>
 	
 
