@@ -291,7 +291,7 @@
 		<proposition xml:id="prop-mini-sudoku-full">
 			<statement>
 				<p>
-					Any solution to a mini sudoku puzzle will have each digit from 1 to 4 appear exactly four times, and each digit will appear exactly once in each row, in each column, and each box.
+					Any solution to a mini sudoku puzzle will have each digit from 1 to 4 will appear exactly once in each row, in each column, and in each box, appearing a total of four times
 				</p>
 			</statement>
 		</proposition>
@@ -334,20 +334,20 @@
 		<example>
 			<statement>
 				<p>
-					Prove that any solution to the mini sudoku puzzle below will contain a 2 in the bottom-right square.
+					Prove that any solution to the mini sudoku puzzle below will contain a 2 in the bottom-left square (r4c1).
 				</p>
 
-				<image>
+				<image width="40%">
 					<shortdescription>
 						A mini sudoku puzzle.
 					</shortdescription>
 					<latex-image>
 						\begin{tikzpicture}
 							\sudokuFour{
-								~,3,1,4,
-								1,~,~,~,
-								4,2,~,~,
-								~,~,4,~
+								3,1,4,~,
+								~,~,~,1,
+								~,~,2,3,
+								~,3,~,~
 							}
 						\end{tikzpicture}
 					</latex-image>
@@ -356,14 +356,35 @@
 
 			<solution>
 				<p>
-					We do not know whether the puzzle is solvable, although note that it is valid right now.
+					We do not know whether the puzzle is solvable, although note that it is valid right now.  What we want to prove is that <em>if</em> <m>S</m> is a particular solution, then <m>S</m> contains a 2 in the bottom-left square.
 				</p>
+
+				<proof>
+					<p>
+						Let <m>S</m> be a solution to the puzzle.
+						Then <m>S</m> is a valid puzzle, so no digit repeats in any row, any column, or any box.
+						Look first at the top row.  By <xref ref="prop-mini-sudoku-full"/>, this row must contain a 2, which must be in r1c4 (top-right square) since that is the only open spot for it.
+					</p>
+					<p>
+						Now look at column 4 (the rightmost column).  By <xref ref="prop-mini-sudoku-full"/>, this column must contain a 4, which must be in r4c4 (bottom-right square) since that is the only open spot for it, once we have placed the 2 in r1c4.
+					</p>
+					<p>
+						Now look at the bottom right <em>box</em>.  Again, by <xref ref="prop-mini-sudoku-full"/>, this box must contain a 1, which must be in r4c3 since that is the only open spot for it, once we have placed the 4 in r4c4.
+					</p>
+					<p>
+						Finally, look at row 4.  It must contain a 2, which must be in r4c1 (bottom-left square) since that is the only open spot for it, once we have placed the 1 in r4c3 and the 4 in r4c4.
+					</p>
+						<p>
+							Thus <m>S</m> contains a 2 in the bottom-left square.
+						</p>
+				</proof>
 			</solution>
 		</example>
 
 		<p>
-			To see where to start a direct proof, it is useful to express the statement you are proving as an implication.
-			The general format to prove <m>P \imp Q</m> is this:
+			Observe the general form of the argument above.  We were trying to prove an implication <m>P \imp Q</m>.  We started by assuming <m>P</m> was true.  From that, we deduced something, and from that something we deduced something else, and so on, until we at last deduced <m>Q</m>.
+
+			This is exactly what a direct proof of an implication <m>P \imp Q</m> looks like.
 		</p>
 
 		<blockquote>
@@ -375,12 +396,53 @@
 		</blockquote>
 
 		<p>
-			For example, if we wanted to prove that, <q>all squares are rectangles,</q>, first realize that this is the same as saying, <q>for any shape, if the shape is a square, then it is a rectangle.</q>  In symbols, <m>\forall x (S(x) \imp R(x))</m>.
-			Often we want to prove universal statements, perhaps of the form <m>\forall x (P(x) \imp Q(x))</m>.
-			Again, we will want to assume <m>P(x)</m> is true and deduce <m>Q(x)</m>.
-			But what about the <m>x</m>? We want this to work for <em>all</em> <m>x</m>.
-			We accomplish this by fixing <m>x</m> to be an arbitrary element (of the sort we are interested in).
+			The one additional consideration we must make is that often we are proving a general statement.  So really we will prove a statement of the form <m>\forall x (P(x) \imp Q(x))</m>.  (In the example above, <m>P(x)</m> was <q><m>x</m> is a solution to the puzzle</q> and <m>Q(x)</m> was <q><m>x</m> contains a 2 in the bottom-left square.</q>)  To handle the quantifier, we fix an <em>arbitrary</em> instance of <m>x</m>.  (Above, we said, <q>Suppose <m>S</m> is a solution to the puzzle.</q>)  
 		</p>
+		<p>
+			For example, if we wanted to prove that, <q>all squares are rectangles,</q>, first realize that this is the same as saying, <q>for any shape, if the shape is a square, then it is a rectangle.</q>  In symbols, <m>\forall x (S(x) \imp R(x))</m>.
+			We will want to assume <m>P(x)</m> is true and deduce <m>Q(x)</m>.
+			Which <m>x</m> do we use?  An arbitrary one, so our proof can be applied to <em>all</em> possible <m>x</m>.  
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Prove that for any valid mini sudoku puzzle, if the puzzle has exactly one empty square, then the puzzle is is solvable.
+				</p>
+			</statement>
+			<solution>
+				<p>
+					This is obviously true: if you have one square left to fill in, you can solve the puzzle!  Let's focus on the logical structure of the proof though.  Notice that we are proving that the claim is true no matter what mini sudoku puzzle we start with.  We might start with this puzzle:
+				</p>
+				
+				<image>
+					<shortdescription>4x4 sudoku with only one missing digit.</shortdescription>
+					<latex-image label="img-sudoku-almost-done-eg">
+						\begin{tikzpicture}
+							\sudokuFour{
+								3,1,4,2,
+								2,4,3,1,
+								1,2,~,3,
+								4,3,1,2
+							}
+						\end{tikzpicture}
+					</latex-image>
+				</image>
+				<p>
+					Looking at a single example can often be helpful when crafting a proof, but proving a general statement with an example is never a correct proof. 
+				</p>	
+				<p>
+					While there are <em>only</em> around 152.58 billion mini sudoku puzzles (and most of those are not valid and even fewer have exactly one empty square), we really don't want to check all possible puzzles.  So instead, we fix an arbitrary valid mini sudoku puzzle.  We assume that it is valid and has exactly one open square and prove that it is solvable.
+				</p>
+
+				<proof>
+					<p>
+						Let <m>P</m> be an arbitrary mini sudoku puzzle and assume <m>P</m> is valid and has exactly one empty square.  Suppose that the empty square is in row <m>i</m> and column <m>j</m>.  Since <m>P</m> is valid, row <m>i</m> of the puzzle does not contain any digit more than once, so contains three of the four digits 1 to 4.  Let <m>n</m> be the digit (1 to 4) that row <m>i</m> does not contain.
+						<!-- here -->
+					</p>
+				</proof>
+			</solution>
+		</example>
 
 		<p>
 			Here are a few examples.
