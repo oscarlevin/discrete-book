@@ -725,23 +725,73 @@
 
 		<idx> <h>contradiction</h> </idx>
 		<idx> <h>proof</h> <h>by contradiction</h> </idx>
-		<!-- This next paragraph is confusing, and there is likely a better way to describe it. -->
 		<p>
-			There might be statements which really cannot be rephrased as implications.
-			For example, <q><m>\sqrt 2</m> is irrational.</q> In this case, it is hard to know where to start.
-			What can we assume? Well, say we want to prove the statement <m>P</m>.
-			What if we could prove that <m>\neg P \imp Q</m> where <m>Q</m> was false? If this implication is true, and <m>Q</m> is false, what can we say about <m>\neg P</m>? It must be false as well, which makes <m>P</m> true!
+			Take a step back and consider what it would mean if the conclusion of an argument were false.  There are two reasons this could happen.  Either the logic in the argument is faulty, or at least one assumption must be false.  A <term>proof by contradiction</term> exploits this second possibility.  We start with a single assumption, and construct a <em>valid</em> proof that leads to a false conclusion, the only possibility is that the single assumption was false.  The false conclusion is the <q>contradiction,</q> which just means a necessarily false statement (technically a statement of the form <m>P \wedge \neg P</m>).
 		</p>
 
 		<p>
-			This is why <term>proof by contradiction</term> works.
-			If we can prove that <m>\neg P</m> leads to a contradiction, then the only conclusion is that <m>\neg P</m> is false, so <m>P</m> is true.
-			That's what we wanted to prove.
-			In other words, if it is impossible for <m>P</m> to be false, <m>P</m> must be true.
+			The general form of a proof by contradiction to prove a statement <m>P</m> is:
+		</p>
+
+		<blockquote>
+			<p>
+				Assume <m>\neg P</m> (that <m>P</m> is not true).
+				This means that..., which tells us..., so we can say...
+				But that is a contradiction, so <m>P</m> must in fact be true.
+			</p>
+		</blockquote>
+
+		<p>
+			Note that if we think of this style of argument as a direct proof of something, it is a direct proof of
+			<me>
+				\neg P \imp \text{ contradiction}
+			</me>.
+			So we have a valid proof of this implication.  How can a true implication have a false conclusion?  Recall the truth table for an implication (<xref ref="fig-implication-tt"/>).  The only row in which the implication is true but the conclusion is false is row 4, and here the hypothesis is also false.  So <m>\neg P</m> is false, which is to say <m>P</m> is true.
 		</p>
 
 		<p>
-			Here are three examples of proofs by contradiction:
+			Once you start writing proofs by contradiction, it becomes very natural.  Let's see how with a sudoku proof.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Prove that any solution to the mini sudoku puzzle below must contain a 3 in the top-right corner (r1c4).
+				</p>
+
+				<image width="40%">
+					<shortdescription>4x4 sudoku puzzle.</shortdescription>
+					<latex-image>
+						\begin{tikzpicture}
+							\sudokuFour{
+								~,2,~,~,
+								~,3,~,~,
+								3,~,~,~,
+								~,~,~,1
+							}
+						\end{tikzpicture}
+					</latex-image>
+				</image>
+			</statement>
+			<solution>
+				<p>
+					There are multiple ways we could prove this, which is often the case for proofs by contradiction.  While we would always start with the same initial assumption (the opposite of what we want to prove), where the contradiction is found can vary.
+				</p>
+
+				<proof>
+					<p>
+						Let <m>S</m> be a solution to the puzzle but assume that <m>S</m> does <em>not</em> contain a 3 in the top-right corner.
+						Then the top row must contain a 3 somewhere else.  It cannot be in column 1, since it already has a 3.  It cannot be in column 2, since that square is already filled in (with the 2).  It also cannot be in column 3, since if it was, there would be no place to put a three in the bottom row.  So there would be no 3 in the top row, contradicting that <m>S</m> is a solution.
+					</p>
+					<p>
+						Therefore <m>S</m> must contain a 3 in the top-right corner.
+					</p>
+				</proof>
+			</solution>
+		</example>
+
+		<p>
+			Here are three examples of proofs by contradiction about numbers:
 		</p>
 
 		<example>
@@ -840,7 +890,87 @@
 		</example>
 	</subsection>
 
+	<subsection xml:id="subsec-summary-of-proof-styles">
+		<title>Summary of Proof Styles</title>
+		<p>
+			We have considered three styles of proof: direct proof, proof by contrapositive, and proof by contradiction.  It can be challenging to decide which style of proof to use on a given problem, and there is no rule that will always tell us what to do.  Often, there are multiple ways you can proceed in a proof, which is one reason math is so exciting.
+		</p>
 
+		<p>
+			A good starting point when writing proofs is to consider what the initial assumption would be with each style, and what the conclusion you would be looking for is.  A proof is a little like a kids-menu maze.  There is a <em>START</em> and an <em>EXIT</em>, and you need to find your way from one to the other.  Sometimes it helps to work your way in to the maze from both sides, and hopefully meet in the middle.
+		</p>
+
+		<assemblage xml:id="assemblage-proof-start-end">
+			<title>Starts and Ends Proofs</title>
+			<p>
+				To prove an implication <m>P \imp Q</m>:
+				<dl width="wide">
+					<li>
+						<title>Direct</title>
+						<p>
+							<dl width="wide">
+								<li>
+									<title>Start</title>
+									<p>
+										Assume <m>P</m>.
+									</p>
+								</li>
+								<li>
+									<title>End</title>
+									<p>
+										Therefore <m>Q</m>.
+									</p>
+								</li>
+							</dl>
+						</p>
+					</li>
+					<li>
+						<title>Contrapositive</title>
+						<p>
+							<dl width="wide">
+								<li>
+									<title>Start</title>
+									<p>
+										Assume <m>\neg Q</m>.
+									</p>
+								</li>
+								<li>
+									<title>End</title>
+									<p>
+										Therefore <m>\neg P</m>.
+									</p>
+								</li>
+							</dl>
+						</p>
+					</li>
+					<li>
+						<title>Contradiction</title>
+						<p>
+							<dl width="wide">
+								<li>
+									<title>Start</title>
+									<p>
+										Assume <m>\neg (P \imp Q)</m>.
+									</p>
+								</li>
+								<li>
+									<title>End</title>
+									<p>
+										...which is a contradiction.
+									</p>
+								</li>
+							</dl>
+						</p>
+					</li>
+				</dl>
+			</p>
+		</assemblage>
+
+		<p>
+			You can use a proof by contradiction even if you are not trying to prove an implication, but if the statement is an implication, then assuming <m>\neg (P \imp Q)</m> is really powerful.  Remember, the only way for an implication to be false is for <m>P</m> to be true and <m>Q</m> to be false.  So we are actually assuming <m>P \wedge \neg Q</m>.  Aha!  <m>P</m> is what we assume in a direct proof.  <m>\neg Q</m> is what we assume in a proof by contrapositive.  So a <em>proof by contradiction is like doing the other two proofs at the same time, and meeting in the middle!</em>
+		</p>
+	</subsection>
+<!-- 
 	<subsection>
 		<title>Proof by (counter) Example</title>
 
@@ -1020,7 +1150,7 @@
 				</proof>
 			</solution>
 		</example>
-	</subsection>
+	</subsection> -->
 
 	<reading-questions xml:id="rqs-logic-proof">
 		<exercise label="rq-logic-proofs-direct">
