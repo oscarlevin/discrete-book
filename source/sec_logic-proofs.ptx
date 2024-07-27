@@ -77,9 +77,10 @@
 			Writing proofs is a bit of an art.
 			Like any art, to be truly great at it, you need some sort of inspiration, as well as some foundational technique.
 			Just as musicians can learn proper fingering, and painters can learn the proper way to hold a brush, we can look at the proper way to construct arguments.
-			A good place to start might be to study a classic.
+			<!-- A good place to start might be to study a classic.
+			-->
 		</p>
-
+		<!--
 		<theorem>
 			<statement>
 				<p>
@@ -88,8 +89,7 @@
 				</p>
 			</statement>
 		</theorem>
-
-
+		--> <!--
 		<proof>
 			<p>
 				Suppose this were not the case.
@@ -192,13 +192,17 @@
 			The sort of line-by-line analysis we did above is a great way to really understand what is going on.
 			Whenever you come across a proof in a textbook, you really should make sure you understand what each line is saying and why it is true.
 		</p>
+		-->
+		<p>
+			We can view a proof through two distinct but intersecting lenses.
+			First, we can think about the <em>logical</em> structure of a proof.
+			Below we will consider three styles of proof that vary precisely in their logical structure.
+			Second, we can look at the <em>mathematical content</em> of the proof.
+			How does the proof illustrate understanding of mathematical concepts?  Does it use definitions of mathematical objects correctly?  How do the definitions interact with each other?
+		</p>
 
 		<p>
-			Thinking about the proof as a whole, we can analyze the proof through two distinct but intersecting lenses.
-			First, we can think about the <em>logical</em> structure of the proof.
-			Recognizing the above proof as a proof by contradiction is an example of this.
-			Second, we can look at the <em>mathematical content</em> of the proof.
-			How does the proof illustrate understanding of mathematical concepts?  Does it use definitions of mathematical objects correctly?  How do the definitions interact with each other?  Recall that in <xref ref="sec_logic-rules"/> we said that a <term>tautology</term> is a necessarily true statement, but doesn't tell us anything interesting.
+			Recall that in <xref ref="sec_logic-rules"/> we said that a <term>tautology</term> is a necessarily true statement, but doesn't tell us anything interesting.
 			Similarly, if a proof relied entirely on the logical form of the statement it was proving, it wouldn't tell us anything interesting about mathematics.
 			Thus all the proofs we consider <em>must</em> involve some combining of mathematical concepts in addition to their logical structure.
 		</p>
@@ -211,7 +215,7 @@
 
 		<p>
 			It is often challenging to be careful about proofs when the statements we try to prove seem too obvious or familiar.
-			While we will definitely want to prove simple facts about numbers, liked that the sum of two even numbers is even, our familiarity with numbers can make it difficult to take this task seriously.
+			While we will definitely want to prove simple facts about numbers, like that the sum of two even numbers is even, our familiarity with numbers can make it difficult to take this task seriously.
 			So instead, we will start by proving some facts in what is hopefully a novel setting: mini sudoku puzzles.
 		</p>
 
@@ -284,7 +288,7 @@
 		</definition>
 
 		<p>
-			First, let's prove a useful fact about any valid mini sudoku puzzle.
+			First, let's prove a useful and <q>obvious</q> fact about any valid mini sudoku puzzle.
 		</p>
 
 
@@ -325,30 +329,36 @@
 				The proof contained one key mathematical idea, besides just explaining definitions: that if you have four distinct numbers from a set of four numbers, you have each of them included.
 				Perhaps you want to also explain why this is true.
 				How much you explain depends on who you are writing the proof for.
+				A little paranoia when writing proofs is healthy.
+			</p>
+
+			<p>
+				Indeed, in most contexts, we wouldn't even need to write out any of the above proof.
+				It would probably be sufficient to say, <q>clearly this follows from the definitions.</q>  However, we are currently trying to learn how to write proofs, and it can be useful to be overly pedantic so we can focus on the proof structure and importance of applying definitions.
 			</p>
 		</remark>
 
 		<p>
-			Here is another example of a direct proof.
+			Let's prove something about a particular sudoku puzzle.
 		</p>
 
 		<example>
 			<statement>
 				<p>
-					Prove that any solution to the mini sudoku puzzle below will contain a 2 in the bottom-left square (r4c1).
+					Prove that for any solution to the mini sudoku puzzle below, if the solution has a 2 in the top-left square (r1c1), then it will contain a 2 in the bottom-right square (r4c4).
 				</p>
 
 				<image width="40%">
 					<shortdescription>
 						A mini sudoku puzzle.
 					</shortdescription>
-					<latex-image>
+					<latex-image label="img-sudoku-first-proof">
 						\begin{tikzpicture}
 							\sudokuFour{
-								3,1,4,~,
+								~,1,3,~,
 								~,~,~,1,
-								~,~,2,3,
-								~,3,~,~
+								~,~,~,3,
+								~,~,~,~
 							}
 						\end{tikzpicture}
 					</latex-image>
@@ -357,36 +367,27 @@
 
 			<solution>
 				<p>
-					We do not know whether the puzzle is solvable, although note that it is valid right now (it might have more than one solution, perhaps).
-					What we want to prove is that <em>if</em> <m>S</m> is a particular solution, then <m>S</m> contains a 2 in the bottom-left square.
+					We do not know whether the puzzle is solvable (in fact, it is not), although note that it is valid right now.
+					What we want to prove is that <em>if</em> 2 is in the top-left square in any particular solution, <em>then</em> that solution contains a 2 in the bottom-right square.
 				</p>
 
 
 				<proof>
 					<p>
-						Let <m>S</m> be a solution to the puzzle.
-						Then <m>S</m> is a valid puzzle, so no digit repeats in any row, any column, or any box.
+						Let <m>S</m> be a solution to the puzzle, and assume that <m>S</m> contains a 2 in the top-left square.
+						Since <m>S</m> is a valid puzzle, no digit repeats in any row, any column, or any box.
 						Look first at the top row.
-						By <xref ref="prop-mini-sudoku-full"/>, this row must contain a 2, which must be in r1c4 (top-right square) since that is the only open spot for it.
+						Since the row already contains 1, 2, and 3, the remaining open square (r1c4) must be a 4.
 					</p>
 
 					<p>
-						Now look at column 4 (the rightmost column).
-						By <xref ref="prop-mini-sudoku-full"/>, this column must contain a 4, which must be in r4c4 (bottom-right square) since that is the only open spot for it, once we have placed the 2 in r1c4.
+						Now look at column 4 (the right-most column).
+						Since we now know the top-right square is a 4, this column already contains 1, 3, and 4.
+						So the last open square (r4c4) must be a 2.
 					</p>
 
 					<p>
-						Now look at the bottom right <em>box</em>.
-						Again, by <xref ref="prop-mini-sudoku-full"/>, this box must contain a 1, which must be in r4c3 since that is the only open spot for it, once we have placed the 4 in r4c4.
-					</p>
-
-					<p>
-						Finally, look at row 4.
-						It must contain a 2, which must be in r4c1 (bottom-left square) since that is the only open spot for it, once we have placed the 1 in r4c3 and the 4 in r4c4.
-					</p>
-
-					<p>
-						Thus <m>S</m> contains a 2 in the bottom-left square.
+						Thus <m>S</m> contains a 2 in the bottom-left square, which is what we needed to prove.
 					</p>
 				</proof>
 			</solution>
@@ -394,10 +395,10 @@
 
 		<p>
 			Observe the general form of the argument above.
-			We were trying to prove an implication <m>P \imp Q</m>.
+			We were trying to prove an implication <m>P \imp Q</m>: if there was a 2 in r1c1, then there was a 2 in r4c4.
 			We started by assuming <m>P</m> was true.
-			From that, we deduced something, and from that something we deduced something else, and so on, until we at last deduced <m>Q</m>.
-			This is exactly what a direct proof of an implication <m>P \imp Q</m> looks like.
+			From that, we deduced something, and from that something we deduced <m>Q</m>.
+			This is exactly what a direct proof of an implication <m>P \imp Q</m> looks like (we could have had more steps between the <m>P</m> and <m>Q</m> as well).
 		</p>
 
 		<blockquote>
@@ -409,14 +410,14 @@
 		</blockquote>
 
 		<p>
-			The one additional consideration we must make is that often we are proving a general statement.
-			So really we will prove a statement of the form <m>\forall x (P(x) \imp Q(x))</m>.
-			(In the example above, <m>P(x)</m> was <q><m>x</m> is a solution to the puzzle</q> and <m>Q(x)</m> was <q><m>x</m> contains a 2 in the bottom-left square.</q>)  To handle the quantifier, we fix an <em>arbitrary</em> instance of <m>x</m>.
-			(Above, we said, <q>Suppose <m>S</m> is a solution to the puzzle.</q>)
+			The one additional consideration we must make is that often we are proving a general, universal statement.
+			So really we prove a statement of the form <m>\forall x (P(x) \imp Q(x))</m>.
+			To handle the quantifier, we fix an <em>arbitrary</em> instance of <m>x</m>.
+			Above, we said, <q>Let <m>S</m> be a solution to the puzzle.</q>  Since we made no additional assumptions about <m>S</m> besides that <m>P</m> held of it, we say that <m>S</m> was an <em>arbitrary</em> solution.
 		</p>
 
 		<p>
-			For example, if we wanted to prove that, <q>all squares are rectangles,</q>, first realize that this is the same as saying, <q>for any shape, if the shape is a square, then it is a rectangle.</q>  In symbols, <m>\forall x (S(x) \imp R(x))</m>.
+			If we wanted to prove that all squares are rectangles, we first realize that this is the same as saying, <q>for any shape, if the shape is a square, then it is a rectangle.</q>  In symbols, <m>\forall x (S(x) \imp R(x))</m>.
 			We will want to assume <m>P(x)</m> is true and deduce <m>Q(x)</m>.
 			Which <m>x</m> do we use?  An arbitrary one, so our proof can be applied to <em>all</em> possible <m>x</m>.
 		</p>
@@ -424,13 +425,18 @@
 		<example>
 			<statement>
 				<p>
-					Prove that for any valid mini sudoku puzzle, if the puzzle has a solution, then the puzzle is is solvable.
+					Prove that for any mini sudoku puzzle with three empty squares, if the puzzle has a solution, then the puzzle is is solvable.
 				</p>
 			</statement>
 
 			<solution>
 				<p>
-					This is obviously true: if you have one square left to fill in, and it is possible to solve the puzzle, you <em>can</em> solve the puzzle!  Let's focus on the logical structure of the proof though.
+					Is this obvious?  If a puzzle has a solution, then it is solvable, right?  Not at all!  Look again at the <xref ref="def-mini-sudoku" text="title"/>: just because a puzzle has a solution doesn't mean that it has exactly one solution (i.e.
+					it is solvable).
+					But even if we don't think this needs a proof, let's be paranoid again and use this as an excuse to focus on the logical structure of the proof.
+				</p>
+
+				<p>
 					Notice that we are proving that the claim is true no matter what mini sudoku puzzle we start with.
 					We might start with this puzzle:
 				</p>
@@ -442,9 +448,9 @@
 					<latex-image label="img-sudoku-almost-done-eg">
 						\begin{tikzpicture}
 							\sudokuFour{
-								3,1,4,2,
+								3,~,4,2,
 								2,4,3,1,
-								1,3,~,4,
+								1,~,~,4,
 								4,2,1,3
 							}
 						\end{tikzpicture}
@@ -452,27 +458,45 @@
 				</image>
 
 				<p>
-					Clearly there is only one way to complete the puzzle, so exactly one solution, which is the definition of <em>solvable</em>.
-					Looking at a single example can often be helpful when crafting a proof, but proving a general statement with an example is never a correct proof.
+					Clearly there is only one way to complete the puzzle: the top row has only one open square, so we can only put one digit in it, and then columns 2 and 3 only have one open square each, so we can fill those uniquely.
+				</p>
+
+				<p>
+					Looking at a single example can often be helpful when crafting a proof, but proving a general statement with an example is <alert>NEVER</alert> a correct proof.
 				</p>
 
 				<p>
 					While there are <em>only</em> around 152.58 billion mini sudoku puzzles (and most of those are not valid, fewer have solutions, and even fewer have exactly one empty square), we really don't want to check all possible puzzles.
 					So instead, we fix an arbitrary valid mini sudoku puzzle.
-					We assume that it has a solution and has exactly one open square.
-					From this, we prove that it is solvable.
+					We assume that it has a solution and has exactly three open squares.
+					From this, we prove that there is only one possible solution.
 				</p>
 
 
 				<proof>
 					<p>
-						Let <m>P</m> be an arbitrary mini sudoku puzzle Assume <m>P</m> has exactly one empty square and that <m>S</m> is a solution.
-						Suppose that the empty square is in row <m>i</m> and column <m>j</m>.
-						Let <m>n</m> be the digit that appears in the empty square in the solution <m>S</m>.
-						Since a solution is necessarily valid, <m>n</m> does not appear in row <m>i</m>, column <m>j</m>, or the box containing its square.
-						In particular, in row <m>i</m>, the squares that are not empty in <m>P</m> contain the three digits 1 to 4 that are not <m>n</m>.
-						Therefore, the <em>only</em> possible digit that can go in the empty square is <m>n</m>.
-						Thus <m>P</m> is solvable.
+						Let <m>P</m> be an arbitrary mini sudoku puzzle.
+						Assume <m>P</m> has exactly three empty squares and that <m>S</m> is a solution.
+					</p>
+						
+					<p>
+						Since <m>P</m> is arbitrary, we don't know how the three empty squares are arranged.  They could all be in different rows, or two could be in the same row, or all three could be in the same row.  
+					</p>
+
+					<p>
+						If all the empty squares are in different rows, then in each row, there is exactly one empty square.  The other three squares are filled with three different digits (since the puzzle is valid), so there is only one choice to fill the empty square.  This number must be the number used in the solution <m>S</m>.
+					</p>
+
+					<p>
+						Now consider the case where two of the empty squares are in the same row, and the third square is in a different row.  The third empty square's row has three different digits, so there is only one choice for the last square, and it must agree with <m>S</m>.  Once this is filled in, the other two empty squares must be in two different columns, each of which have three filled-in digits.  In each of these columns, the three filled-in digits are different, so there is only one choice for the empty square.  So again, any solution must be exactly <m>S</m>.
+					</p>
+
+					<p>
+						Finally, if all three empty squares are in the same row, then they are all in different columns.  So using the same argument as we did when the empty squares were in different rows, but using columns instead, we see that <m>S</m> is the only solution.
+					</p>
+
+					<p>
+						We have considered all possible cases, and in each case <m>S</m> is the only solution, so <m>P</m> is solvable.
 					</p>
 				</proof>
 			</solution>
@@ -851,6 +875,43 @@
 
 					<p>
 						Therefore <m>S</m> must contain a 3 in the top-right corner.
+					</p>
+				</proof>
+			</solution>
+		</example>
+
+		<example>
+			<statement>
+				<p>
+					Prove that there is no solution to the sudoku puzzle below.
+				</p>
+				<image width="40%">
+					<shortdescription>A mini sudoku puzzle</shortdescription>
+					<latex-image label="img-sudoku-counterexample">
+						\begin{tikzpicture}
+							\sudokuFour{
+								4, ~, ~, ~,
+								~, ~, ~, ~,
+								~, 1, ~, ~,
+								~, ~, ~, 4
+							}
+						\end{tikzpicture}
+					</latex-image>
+				</image>
+			</statement>
+			<solution>
+				<p>
+					Look at the logical format of this statement: <me>\neg \exists S (S \text{ is a solution })</me>.  Using the rules for negation of quantifiers, this is the same as <me>\forall S (S \text{ is not a solution})</me>.
+					If we were to prove this directly, we would need to consider all possible solutions and show that they are not valid.  That seems quite challenging.
+				</p>
+
+				<p>
+					On the other hand, if we try a proof by contradiction, we get to assume the negation of the statement we are asked to prove.  That is, we can assume that there <em>is</em> a solution.  That is a single solution we can reason about.  Much more manageable.
+				</p>
+
+				<proof>
+					<p>
+						Suppose, for the sake of contradiction, that there <em>does</em> exist a solution to the puzzle.  This solution must have a 4 in the bottom-left box.  But the only squares that can hold a 4 are either in row 4 or column 1 (or both).  In either case, this contradicts that there is a 4 already in column 1 and row 4.  
 					</p>
 				</proof>
 			</solution>
