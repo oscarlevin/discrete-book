@@ -73,50 +73,13 @@
 
 
   <subsection xml:id="subsec-formulas-for-sequences">
-    <title>Formulas for Sequences</title>
+    <title>Sequences and Formulas</title>
 
-    <!--
-    <investigation>
-      <idx>domino</idx>
-      <p>
-        You have a large collection of <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
-        You want to arrange these to make a <m>1 \times 15</m> strip.
-        How many ways can you do this?
-        <ol>
-          <li>
-            <p>
-              Start by collecting data.
-              How many length <m>1\times 1</m> strips can you make? How many <m>1\times 2</m> strips? How many <m>1\times 3</m> strips? And so on.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              How are the <m>1\times 3</m> and <m>1 \times 4</m> strips related to the <m>1\times 5</m> strips?
-            </p>
-          </li>
-
-          <li>
-            <p>
-              How many <m>1\times 15</m> strips can you make?
-            </p>
-          </li>
-
-          <li>
-            <p>
-              What if I asked you to find the number of <m>1\times 1000</m> strips? Would the method you used to calculate the number of <m>1 \times 15</m> strips be helpful?
-            </p>
-          </li>
-        </ol>
-      </p>
-    </investigation>
-    -->
     <p>
       A <term>sequence</term>
       <idx> <h>sequence</h> </idx>
       is simply an ordered list of numbers.
-      For example, here is a sequence: 0, 1, 2, 3, 4, 5, <ellipsis />.
-      This is different from the set <m>\N</m> because, while the sequence is a complete list of every element in the set of natural numbers, in the sequence we very much care what order the numbers come in.
+      Unlike a <em>set</em> of numbers, the order of the numbers in a sequence is a essential characteristic of the sequence.
       For this reason, when we use variables to represent terms in a sequence they will look like this:
       <me>
         a_0, a_1, a_2, a_3, \ldots
@@ -203,10 +166,10 @@
       <solution>
         <p>
           No you cannot.
-          You might guess that the next terms are:
         </p>
-
+        
         <p>
+          You might guess that the next terms are:
           <ol cols="4">
             <li>
               <m>7</m>
@@ -273,12 +236,12 @@
 
     <p>
       Given that no number of initial terms in a sequence is enough to say for certain which sequence we are dealing with, we need to find another way to specify a sequence.
-      We consider two ways to do this:
+      We consider two main ways to do this:
     </p>
 
-    <assemblage>
+    <definition>
       <title>Closed formula</title>
-
+      <statement>
       <p>
         A <term>closed formula</term>
         <idx> <h>closed formula</h> </idx>
@@ -286,11 +249,12 @@
         for a sequence <m>(a_n)_{n\in\N}</m> is a formula for <m>a_n</m> using a fixed finite number of operations on <m>n</m>.
         This is what you normally think of as a formula in <m>n</m>, just as if you were defining a function in terms of <m>n</m> (because that is exactly what you are doing).
       </p>
-    </assemblage>
+    </statement>
+    </definition>
 
-    <assemblage>
+    <definition>
       <title>Recursive definition</title>
-
+      <statement>
       <p>
         A <term>recursive definition</term>
         <idx> <h>recursive definition</h> </idx>
@@ -302,7 +266,8 @@
         <idx> <h>initial condition</h> </idx>
         a list of a few terms of the sequence (one less than the number of terms in the recurrence relation).
       </p>
-    </assemblage>
+    </statement>
+    </definition>
 
     <p>
       It is easier to understand what is going on here with an example:
@@ -366,6 +331,54 @@
       This is true, but it is also harder to find a closed formula for a sequence than it is to find a recursive definition.
       So to find a useful closed formula, we might first find the recursive definition, then use that to find the closed formula.
     </p>
+
+    <example xml:id="eg-rice">
+      <statement>
+        <p>
+          For defeating the evil dragon, the king promises you a reward of one grain of rice on the first day, and the twice as many grains the next day as the previous, for the rest of the month.  
+        </p>
+
+        <p>
+          Not to be swindled, you barter and get him to agree to add one additional grain of rice each day as well.
+        </p>
+
+        <p>
+          How many grains of rice will you receive on the 30th day?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We can write down the first few terms of the sequence <m>(a_n)_{n \ge 1}</m> which gives the number of grains of rice you receive on day <m>n</m>.  We get
+          <me>
+            1, 3, 7, 15, \ldots
+          </me>,
+          since, for example, on day 4, you take the number of grains of rice you had on day 3 (all seven of them), double that and add 1, to get 15.  The next day you would get <m>2 \cdot 15 + 1 = 31</m>.
+        </p>
+
+        <p>
+          By actually computing these values, we see right away what the recurrence relation is:
+          <me>
+            a_n = 2a_{n-1} + 1
+          </me>.
+          This is justified because the problem the sequence is modeling says that we double the number of grains each day, and then add 1.  We can read the recurrence relation right off the problem.
+        </p>
+
+        <p>
+          The original question asked about <m>a_{30}</m>.  We could find this using the recurrence relation, but we would first need to find <m>a_{29}</m>, and to find that we would need <m>a_{28}</m>, which requires <m>a_{27}</m> first, and so on.  While I'm sure we could work all the way back to <m>a_4</m> which we already found, this sounds like a lot of work.
+        </p>
+
+        <p>
+          It would be so much nicer to have a closed formula.  If we could <em>solve the recurrence relation</em> and find that closed formula, we could just substitute <m>30</m> for <m>n</m>.
+        </p>
+
+        <p>
+          Let's guess.  It looks like the sequence is close to <m>2, 4, 8, 16,\ldots</m> which has closed formula <m>2^n</m>.  That sequence has terms one greater than the terms in our sequence, so we might guess that <me>a_n = 2^n - 1</me>. To be clear, we have no good reason to believe this guess is correct, but maybe later in this chapter we will.  However, if it <em>is</em> correct, then we are golden (and incredibly sick of rice):
+          <me>
+            a_{30} = 2^{30} - 1 = 1,073,741,823
+          </me>.
+        </p>
+      </solution>
+    </example>
 
     <p>
       This is not to say that recursive definitions aren't useful in finding <m>a_n</m>.
@@ -461,15 +474,15 @@
           <p>
             The <term>triangular numbers</term>.
             The sequence <m>(T_n)_{n \ge 1}</m> has closed formula <m>T_n = \frac{n(n+1)}{2}</m>.
+            
+            <notation>
+              <usage> <m>T_n</m> </usage>
+              <description>
+                the <m>n</m>th triangular number
+              </description>
+            </notation>
           </p>
-
-          <notation>
-            <usage> <m>T_n</m> </usage>
-            <description>
-              the <m>n</m>th triangular number
-            </description>
-          </notation>
-        </li>
+          </li>
 
         <li>
           <title> <m>1, 2, 4, 8, 16, 32,\ldots</m> </title>
@@ -611,7 +624,7 @@
 
 
   <subsection xml:id="subsec-partial-sums">
-    <title>Partial Sums</title>
+    <title>Partial Sums and Differences</title>
 
     <p>
       Some sequences naturally arise as the sum of terms of another sequence.
@@ -625,7 +638,7 @@
           <me>
             3, 5, 6, 10, 9, 0, 12, \ldots
           </me>.
-          Describe a sequence <m>(b_n)_{n \ge 1}</m> that describes the total number of push-ups done by Sam after the <m>n</m>th day.
+          Describe a sequence <m>(b_n)_{n \ge 1}</m> that gives the <em>total number</em> of push-ups done by Sam after the <m>n</m>th day.
         </p>
       </statement>
 
@@ -730,11 +743,63 @@
       </solution>
     </example>
 
-    <p>
+    <!-- <p>
       If we want to multiply the <m>a_k</m> instead, we could write <m>\d\prod_{k=1}^n a_k</m>.
       For example, <m>\d\prod_{k=1}^n k = n!</m>.
       <idx> <h>product notation</h> </idx>
+    </p> -->
+
+    <p>
+      It is also often useful to look at the <term>sequence of difference</term> of a sequence <m>(a_{n})</m>.  By this we just mean the sequence <m>(d_n)</m> where 
+      <me>
+        d_n = a_{n+1} - a_{n}
+      </me>.
+      For example, if <m>(a_n) = (1, 4, 9, 16, 25, \ldots)</m> (the square numbers, so <m>a_n = n^2</m>), then the sequence of differences is <m>(d_n) = (3, 5, 7, 9, \ldots)</m> since <m>4-1 = 3</m>, <m>9-4 = 5</m>, and so on.  We could also find a closed formula for the sequence of differences here, since we have a closed formula for <m>a_n</m>.  We would have
+      <me>
+        d_n = a_{n+1} - a_n = (n+1)^2 - n^2 = n^2 + 2n + 1 - n^2 = 2n+1
+      </me>.
     </p>
+
+    <p>
+      In general, it is easy to go from a closed formula for a sequence to a closed formula for the sequence of differences.  It is not always easy to go the other way around.  In fact, what would it look like to start with a sequence of differences and get the <q>original</q> sequence?  
+    </p>
+    <p>
+      Thinking about a recurrence relation is helpful here.  Since <me>d_n = a_{n+1} - a_n</me>,
+      we have that <me>a_{n+1} = a_n + d_n</me>.  This makes sense: to get from one term of a sequence to the next, you add the difference between those terms.  Ah!  You add the differences.  So the <alert>original sequence is the sequence of partial sums of the sequence of differences!</alert>
+    </p>
+
+    <p>
+      In upcoming sections we will see that understanding the sequence of differences can tell us exactly where to look for a closed formula.  The differences also suggest how to create a recursive definition.
+    </p>
+    
+    <example>
+      <idx><h>recurrence relation</h><h>finding for sequence</h></idx>
+      <statement>
+        <p>
+          Find a recurrence relation and initial conditions that agrees with the terms of this sequence: <m>1, 5, 17, 53, 161, 485\ldots</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Finding the recurrence relation would be easier if we had some context for the problem
+          (like the Tower of Hanoi, for example).
+          Alas, we have only the sequence.
+          Remember, the recurrence relation tells you how to get from previous terms to future terms.
+          What is going on here?
+          We could look at the differences between terms:
+          <m>4, 12, 36, 108, \ldots</m>.
+          Notice that these are growing by a factor of 3.
+          Is the original sequence as well? <m>1\cdot 3 = 3</m>,
+          <m>5 \cdot 3 = 15</m>, <m>17 \cdot 3 = 51</m> and so on.
+          It appears that we always end up with 2 less than the next term.
+          Aha!
+        </p>
+  
+        <p>
+          So <m>a_n = 3a_{n-1} + 2</m> is our recurrence relation and the initial condition is <m>a_0 = 1</m>.
+        </p>
+      </solution>
+    </example>
   </subsection>
 
 
@@ -742,7 +807,7 @@
     <title>Sequences in python</title>
 
     <p>
-      It is easy to check whether a closed formula is correct using a calculator, or better yet, a programming language like python.
+      Checking that a closed formula agrees with the initial terms in a sequence is easy with a calculator, or better yet, a programming language like python.
       One way you can do this is to define a function that returns the <m>n</m>th term of the sequence.
     </p>
 
@@ -750,7 +815,7 @@
       Here is an example: suppose you wanted to check whether a formula you found for the sequence <m>(a_n)_{n \in \N} = (1, 3, 7, 15, 31,\ldots)</m> is correct.
       Perhaps you guess that <m>a_n = 2^n-1</m>.
       Try running the code below.
-      (Note: in python, the <c>^</c> symbol means something else, so to do exponentiation, you would use <c>**</c>.)
+      (Note: in python, the <c>^</c> symbol means something else, so to do exponentiation, we use <c>**</c>.)
     </p>
 
 
