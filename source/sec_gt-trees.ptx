@@ -295,6 +295,120 @@
   </subsection>
 
 
+
+
+  <subsection>
+    <title>Spanning Trees</title>
+    <idx><h>spanning tree</h></idx>
+    <idx><h>tree</h><h>spanning</h></idx>
+    <p>
+      One of the advantages of trees is that they give us a few simple ways to travel through the vertices.  If a connected graph is not a tree, then we can still use these traversal algorithms if we identify a subgraph that <em>is</em> a tree.
+    </p>
+    
+    <p>
+      First we should consider if this even makes sense.  Given any connected graph <m>G</m>, will there always be a subgraph that is a tree?  Well, that is actually too easy: you could just take a single vertex of <m>G</m>.  If we want to use this subgraph to tell us how to visit all vertices, then we want our subgraph to include all of the vertices.  We call such a tree a <term>spanning tree</term>.  It turns out that every connected graph has one (and usually many).
+    </p>
+    
+    <assemblage xml:id="assemblage-spanningtree">
+    <idx>
+      <h>spanning tree</h>
+    </idx>
+    <idx>
+      <h>tree</h>
+      <h>spanning</h>
+    </idx>
+      <title>Spanning tree</title>
+      <p>
+        Given a connected graph <m>G</m>, a <term>spanning tree</term> of <m>G</m> is a subgraph of <m>G</m> which is a tree and includes all the vertices of <m>G</m>. 
+      </p>
+      
+      <p>
+        Every connected graph has a spanning tree.
+      </p>
+    </assemblage>
+    
+    <p>
+      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with a connected graph <m>G</m>.  If there is no cycle, then <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
+    </p>
+    
+    <p>
+      This is by no means the only algorithm for finding a spanning tree.  You could have started with the empty graph and added edges that belong to <m>G</m> as long as adding them would not create a cycle.  You have some choices as to which edges you add first: you could always add an edge adjacent to edges you have already added (after the first one, of course), or add them using some other order.  Which spanning tree you end up with depends on these choices.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Find two different spanning trees of the graph,
+        </p>
+        <sidebyside width="35%">
+          <image xml:id="gt-trees-spanning-q">
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with seven vertices arranged in three rows: two on top, three in the middle, and two on bottom.  The four vertices on top and bottom have edges forming a square.  The vertex in the middle of the middle row is adjacent to the four vertices on top and bottom.  The vertices on the left and right of the middle row are adjacent to the top and bottom vertices closest to them.
+          </description>
+          </image>
+        </sidebyside>
+      </statement>
+      <solution>
+        <p>
+          Here are two spanning trees.  
+        </p>
+        
+        <sidebyside widths="30% 30%">
+          <image xml:id="gt-trees-spanning1">
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v (1,2) \v -- (-1, 2) \v  (-1,0)  (-1,2) -- (0,1) \v;
+                \draw (-1,0) (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with seven vertices arranged in three rows: two on top, three in the middle, and two on bottom.  The vertex on the middle left is adjacent to the vertex on the top left.  This is adjacent to the vertex in the middle of the middle row, and the vertex on the top right.  The top right vertex is adjacent to the middle right, which is adjacent to the vertex on the bottom right, which is adjacent to the vertex on the bottom left.  Thus there are a total of 6 edges.
+            </description>
+          </image>
+          
+          <image xml:id="gt-trees-spanning2">
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v  (1,0)\v  (1,2) \v (-1, 2) \v  (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v;
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with seven vertices arranged in three rows: two on top, three in the middle, and two on bottom.  The vertex in the middle of the middle row is adjacent to the four vertices on the top and bottom rows.  The vertices on the top row are each adjacent to the vertices in the middle row on their side. Thus there are a total of 6 edges.
+            </description>
+          </image>
+        </sidebyside>
+      </solution>
+    </example>
+    
+    <p>
+    <idx>
+      <h>spanning tree</h><h>minimum</h>
+    </idx>
+    <idx>
+      <h>minimum spanning tree</h>
+    </idx>
+
+      Although we will not consider this in detail, these algorithms are usually applied to <em>weighted</em> graphs.  Here every edge has some weight or cost assigned to it.  The goal is to find a spanning tree that has the smallest possible combined weight.  Such a tree is called a <term>minimum spanning tree</term>.  Finding the minimum spanning tree uses basically the same algorithms as we described above, but when picking an edge to add, you always pick the smallest (or when removing an edge, you always remove the largest).<fn>
+      <idx>
+        <h>Prim's algorithm</h>
+      </idx>
+      <idx>
+        <h>Kruskal's algorithm</h>
+      </idx>
+      If you add the smallest edge adjacent to edges you have already added, you are doing <em>Prim's algorithm</em>.  If you add the smallest edge in the entire graph, you are following <em>Kruskal's algorithm</em>.</fn>
+    </p>
+    
+    
+    
+
+  </subsection>
   <subsection xml:id="subsec-rooted-trees">
     <title>Rooted Trees</title>
     <idx><h>rooted tree</h></idx>
@@ -416,120 +530,6 @@
       These algorithmic explanations can serve as a proof that every tree is bipartite, although care needs to be spent to prove that the algorithms are <em>correct</em>.  Another approach to prove that all trees are bipartite, using induction, is requested in the exercises.
     </p>
   </subsection>
-
-  <subsection>
-    <title>Spanning Trees</title>
-    <idx><h>spanning tree</h></idx>
-    <idx><h>tree</h><h>spanning</h></idx>
-    <p>
-      One of the advantages of trees is that they give us a few simple ways to travel through the vertices.  If a connected graph is not a tree, then we can still use these traversal algorithms if we identify a subgraph that <em>is</em> a tree.
-    </p>
-    
-    <p>
-      First we should consider if this even makes sense.  Given any connected graph <m>G</m>, will there always be a subgraph that is a tree?  Well, that is actually too easy: you could just take a single vertex of <m>G</m>.  If we want to use this subgraph to tell us how to visit all vertices, then we want our subgraph to include all of the vertices.  We call such a tree a <term>spanning tree</term>.  It turns out that every connected graph has one (and usually many).
-    </p>
-    
-    <assemblage xml:id="assemblage-spanningtree">
-    <idx>
-      <h>spanning tree</h>
-    </idx>
-    <idx>
-      <h>tree</h>
-      <h>spanning</h>
-    </idx>
-      <title>Spanning tree</title>
-      <p>
-        Given a connected graph <m>G</m>, a <term>spanning tree</term> of <m>G</m> is a subgraph of <m>G</m> which is a tree and includes all the vertices of <m>G</m>. 
-      </p>
-      
-      <p>
-        Every connected graph has a spanning tree.
-      </p>
-    </assemblage>
-    
-    <p>
-      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with a connected graph <m>G</m>.  If there is no cycle, then <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
-    </p>
-    
-    <p>
-      This is by no means the only algorithm for finding a spanning tree.  You could have started with the empty graph and added edges that belong to <m>G</m> as long as adding them would not create a cycle.  You have some choices as to which edges you add first: you could always add an edge adjacent to edges you have already added (after the first one, of course), or add them using some other order.  Which spanning tree you end up with depends on these choices.
-    </p>
-    
-    <example>
-      <statement>
-        <p>
-          Find two different spanning trees of the graph,
-        </p>
-        <sidebyside width="35%">
-          <image xml:id="gt-trees-spanning-q">
-            <latex-image>
-              \begin{tikzpicture}[scale=0.9]
-                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
-              \end{tikzpicture}
-            </latex-image>
-            <description>
-              A graph with seven vertices arranged in three rows: two on top, three in the middle, and two on bottom.  The four vertices on top and bottom have edges forming a square.  The vertex in the middle of the middle row is adjacent to the four vertices on top and bottom.  The vertices on the left and right of the middle row are adjacent to the top and bottom vertices closest to them.
-          </description>
-          </image>
-        </sidebyside>
-      </statement>
-      <solution>
-        <p>
-          Here are two spanning trees.  
-        </p>
-        
-        <sidebyside widths="30% 30%">
-          <image xml:id="gt-trees-spanning1">
-            <latex-image>
-              \begin{tikzpicture}[scale=0.9]
-                \draw (-1,0) \v -- (1,0)\v (1,2) \v -- (-1, 2) \v  (-1,0)  (-1,2) -- (0,1) \v;
-                \draw (-1,0) (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
-              \end{tikzpicture}
-            </latex-image>
-            <description>
-              A graph with seven vertices arranged in three rows: two on top, three in the middle, and two on bottom.  The vertex on the middle left is adjacent to the vertex on the top left.  This is adjacent to the vertex in the middle of the middle row, and the vertex on the top right.  The top right vertex is adjacent to the middle right, which is adjacent to the vertex on the bottom right, which is adjacent to the vertex on the bottom left.  Thus there are a total of 6 edges.
-            </description>
-          </image>
-          
-          <image xml:id="gt-trees-spanning2">
-            <latex-image>
-              \begin{tikzpicture}[scale=0.9]
-                \draw (-1,0) \v  (1,0)\v  (1,2) \v (-1, 2) \v  (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                \draw (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v;
-              \end{tikzpicture}
-            </latex-image>
-            <description>
-              A graph with seven vertices arranged in three rows: two on top, three in the middle, and two on bottom.  The vertex in the middle of the middle row is adjacent to the four vertices on the top and bottom rows.  The vertices on the top row are each adjacent to the vertices in the middle row on their side. Thus there are a total of 6 edges.
-            </description>
-          </image>
-        </sidebyside>
-      </solution>
-    </example>
-    
-    <p>
-    <idx>
-      <h>spanning tree</h><h>minimum</h>
-    </idx>
-    <idx>
-      <h>minimum spanning tree</h>
-    </idx>
-
-      Although we will not consider this in detail, these algorithms are usually applied to <em>weighted</em> graphs.  Here every edge has some weight or cost assigned to it.  The goal is to find a spanning tree that has the smallest possible combined weight.  Such a tree is called a <term>minimum spanning tree</term>.  Finding the minimum spanning tree uses basically the same algorithms as we described above, but when picking an edge to add, you always pick the smallest (or when removing an edge, you always remove the largest).<fn>
-      <idx>
-        <h>Prim's algorithm</h>
-      </idx>
-      <idx>
-        <h>Kruskal's algorithm</h>
-      </idx>
-      If you add the smallest edge adjacent to edges you have already added, you are doing <em>Prim's algorithm</em>.  If you add the smallest edge in the entire graph, you are following <em>Kruskal's algorithm</em>.</fn>
-    </p>
-    
-    
-    
-
-  </subsection>
-
   <reading-questions xml:id="rqs-gt-trees">
     <exercise label="rq-gt-tree-facts">
       <statement>
