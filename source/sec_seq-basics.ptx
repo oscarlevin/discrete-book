@@ -3,8 +3,35 @@
 <section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq_intro">
   <title>Describing Sequences</title>
 
+	<objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+					Use proper notation to represent a sequence.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Explain the difference between a closed formula and a recursive definition for a sequence.
+				</p>
+			</li> 
+			<li>
+				<p>
+					Find a recursive definition for a sequence based on its description.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+	
+
   <subsection xml:id="subsec-preview">
-    <title>Preview</title>
+    <title>Section Preview</title>
 
     <investigation>
       <idx><h>Hanoi</h></idx>
@@ -12,36 +39,17 @@
       <idx><h>puzzle</h><h>Tower of Hanoi</h></idx>
       <p>
         There is a monastery in Hanoi, as the legend goes, with a great hall containing three tall pillars.
-        Resting on the first pillar are 64 giant disks (or washers), all different sizes, stacked from largest to smallest.
-        The monks are charged with the following task: they must move the entire stack of disks to the third pillar.
+        Resting on the first pillar were 64 giant disks (or washers), all different sizes, stacked from largest to smallest.
+        The monks of the monastery are charged with the following task: they must move the entire stack of disks to the third pillar.
         However, due to the size of the disks, the monks cannot move more than one at a time.
         Each disk must be placed on one of the pillars before the next disk is moved.
         And because the disks are so heavy and fragile, the monks may never place a larger disk on top of a smaller disk.
         When the monks finally complete their task, the world shall come to an end.
+      </p>
+
+      
+      <p>
         Your task: figure out how long before we need to start worrying about the end of the world.
-        <ol>
-          <li>
-            <p>
-              First, let's find the minimum number of moves required for a smaller number of disks.
-              Collect some data.
-              Make a table.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              Conjecture a formula for the minimum number of moves required to move <m>n</m> disks.
-              Test your conjecture.
-              How do you know your formula is correct?
-            </p>
-          </li>
-
-          <li>
-            <p>
-              If the monks were able to move one disk every second without ever stopping, how long before the world ends?
-            </p>
-          </li>
-        </ol>
       </p>
     </investigation>
 
@@ -54,10 +62,23 @@
     </p>
 
     <p>
-      The answer depends on the number of disks you need to move.
+      The answer to the puzzle depends on the number of disks you need to move.
       In fact, we could answer the puzzle first for 1 disk, then 2, then 3 and so on.
       If we list out all of the answers for each number of disks, we will get a <term>sequence</term> of numbers.
-      The <m>n</m>th term in the sequence is the answer to the question, <q>what is the smallest number of moves required to complete the Tower of Hanoi puzzle with <m>n</m> disks?</q> You might wonder why we would create such a sequence instead of just answering the question.
+      The <m>n</m>th term in the sequence is the answer to the question, <q>what is the smallest number of moves required to complete the Tower of Hanoi puzzle with <m>n</m> disks?</q> 
+    </p>
+
+    <p>
+      Give it a try.  Find the smallest number of moves needed to transport the stack of <m>n</m> disks to another pillar, for different values of <m>n</m>.
+    </p>
+
+    <figure xml:id="interactive-hanoi">
+      <caption>The Towers of Hanoi puzzle.</caption>
+      <interactive geogebra="rT5MXG9Q" aspect="3:2"/>
+    </figure>
+      
+    <p>
+      You might wonder why we would create such a sequence instead of just answering the question.
       By looking at how the sequence of numbers grows, we gain insight into the problem.
       It is easy to count the number of moves required for a small number of disks.
       We can then look for a pattern among the first few terms of the sequence.
@@ -66,9 +87,100 @@
     </p>
 
     <p>
-      Sequences are also interesting mathematical objects to study in their own right.
-      Let's see why.
+      In this section we will explore how to represent sequences of numbers in various ways, and two sorts of formulas that can be used to describe the sequence.  We will see that sequences are also interesting mathematical objects to study in their own right.
     </p>
+
+    <worksheet xml:id="PA-seq-basic">
+      <introduction>
+        <p>
+          Let's get a feel for the sequence from the Towers of Hanoi puzzle.  Use <xref ref="interactive-hanoi"/> to answer the following questions.
+        </p>
+      </introduction>
+      <exercise>
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("2 a(n-1) + 1");
+          </pg-code>
+          
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of moves required to transport 2 disks to another pillar?
+              </p>
+
+              <p>
+                <var name="3" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of moves required to transport 3 disks to another pillar?
+              </p>
+              <p>
+                <var name="7" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of moves required to transport 4 disks to another pillar?
+              </p>
+              <p>
+                <var name="15" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                To find the smallest number of moves required to transport 5 disks to another pillar, let's try to relate this task to the task of moving 4 disks.  How many moves do each of the following tasks require?
+                <ol>
+                  <li>
+                    <p>
+                      Move the 4 smallest disks to the second pillar: <var name="15" width="5"/>.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Move the largest disk to the third pillar: <var name="1" width="5"/>.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Move the 4 smallest disks to the third pillar (on top of the largest disk): <var name="15" width="5"/>.
+                    </p>
+                  </li>
+                </ol>
+              </p>
+              <p>
+                Therefore, the smallest number of moves required to move five disks  is: <var name="31" width="5"/>
+              </p>
+            </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  Generalize the last observation.  Let <m>a_n</m> represent the smallest number of moves required to transport <m>n</m> disks from the start pillar to another pillar.  Then <m>a_{n-1}</m> represents the number of moves required to transport <m>n-1</m> disks to another pillar.
+                </p>
+                <p>
+                  Give a formula for <m>a_{n}</m> in terms of <m>a_{n-1}</m>. 
+                </p>
+                <p>
+                  <m>a_n = </m><var name="$an" width="20"/>.
+                  <instructions>
+                    <p>Enter <c>a(n-1)</c> for <m>a_{n-1}</m>.</p>
+                  </instructions>
+                </p>
+              </statement>
+            </task>
+        </webwork>
+      </exercise>
+    </worksheet>
   </subsection>
 
 
@@ -964,7 +1076,7 @@ for i in range(10):
       <m>3, 4, 7, 11, 18, \ldots</m> </premise> <response> <m>a_n = a_{n-1}+a_{n-2}</m> </response> </match> </matches>
     </exercise>
 
-    <exercise label="rq-seq-basic-q" component="runestone">
+    <exercise label="rq-seq-basic-q">
       <statement>
         <p>
           What questions do you have? Write at least one question about the content of this section that you or a classmate might be curious about after reading this section.

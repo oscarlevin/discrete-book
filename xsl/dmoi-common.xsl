@@ -25,11 +25,11 @@
 <!--                                                                          -->
 <!-- Depth to which a document is broken into smaller files/chunks -->
 <!-- Sentinel indicates no choice made                             -->
-<xsl:param name="chunk.level" select="''" />
+<!-- <xsl:param name="chunk.level" select="''" /> -->
 
 <!-- DO NOT USE -->
 <!-- HTML-specific deprecated 2015/06, but still functional -->
-<xsl:param name="html.chunk.level" select="''" />
+<!-- <xsl:param name="html.chunk.level" select="''" /> -->
 <!-- DO NOT USE -->
 
 <!-- An exercise has a statement, and may have hints,      -->
@@ -87,7 +87,7 @@
 <!-- How many levels to table of contents  -->
 <!-- Not peculiar to HTML or LaTeX or etc. -->
 <!-- Sentinel indicates no choice made     -->
-<xsl:param name="toc.level" select="'3'" />
+<!-- <xsl:param name="toc.level" select="'3'" /> -->
 <!-- How many levels in numbering of theorems, etc     -->
 <!-- Followed by a sequential number across that level -->
 <!-- For example "2" implies Theorem 5.3.12 is         -->
@@ -109,12 +109,12 @@
 <!-- Image files, media files and knowls are placed in directories    -->
 <!-- The defaults are relative to wherever principal output goes      -->
 <!-- These can be overridden at the command-line or in customizations -->
-<xsl:param name="directory.images" select="'images'" />
+<!-- <xsl:param name="directory.images" select="'images'" />
 <xsl:param name="directory.media"  select="'media'" />
-<xsl:param name="directory.knowls" select="'knowls'" />
+<xsl:param name="directory.knowls" select="'knowls'" /> -->
 <!-- Pointers to realizations of the actual document -->
-<xsl:param name="address.html" select="''" />
-<xsl:param name="address.pdf" select="''" />
+<!-- <xsl:param name="address.html" select="''" />
+<xsl:param name="address.pdf" select="''" /> -->
 
 <!-- To start chapters at 0 (might change later)-->
 <!-- <xsl:param name="debug.chapter.start" select="'0'" /> -->
@@ -191,10 +191,11 @@
 <!-- A "part" must have chapters, so will always return   -->
 <!-- 'true' and for a 'subsubsection' there are no more   -->
 <!-- subdivisions to employ and so will return empty.     -->
-<xsl:template match="book|article|part|chapter|appendix|section|subsection|subsubsection" mode="is-structured-division">
+<!-- <xsl:template match="book|article|part|chapter|appendix|section|subsection|subsubsection" mode="is-structured-division">
     <xsl:if test="chapter|section|subsection|subsubsection">
-        <xsl:text></xsl:text> <!-- removed "true", so now this should make all exercises think they are part of unstructured divisions -->
-    </xsl:if>
-  </xsl:template>
+        <xsl:text></xsl:text>  -->
+        <!-- removed "true", so now this should make all exercises think they are part of unstructured divisions -->
+    <!-- </xsl:if>
+  </xsl:template> -->
 
 </xsl:stylesheet>
