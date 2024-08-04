@@ -583,6 +583,131 @@
       </p>
     </remark>
   </subsection>
+
+  <subsection xml:id="subsec-beyond-arithmetic-and-geometric-sequences">
+    <title>Beyond Arithmetic and Geometric Sequences</title>
+    <p>
+      Look at the sequence <m>(T_n)_{n\ge 1}</m> which starts <m>1, 3, 6, 10, 15,\ldots</m>.
+      These are called the <term>triangular numbers</term>
+          <idx><h>triangular numbers</h></idx>
+      since they represent the number of dots in an equilateral triangle
+      (think of how you arrange 10 bowling pins:
+      a row of 4 plus a row of 3 plus a row of 2 and a row of 1).
+    </p>
+
+    <sidebyside width="50%">
+
+      <image>
+
+        <latex-image>
+          \begin{tikzpicture}
+        \draw[fill = black] (0,0) \v;
+        \node[below] at (0,-.25) {$T_1 = 1$};
+
+        \draw[fill = black] (0+2,0) \v (.5+2, 0) \v (.25+2,.4) \v;
+        \node[below] at (.25+2,-.25) {$T_2 = 3$};
+
+        \draw[fill = black] (0+4,0) \v (.5+4, 0) \v (.25+4,.4) \v (1+4,0) \v (.75+4,.4) \v (.5+4, .8) \v;
+        \node[below] at (.5+4,-.25) {$T_3 = 6$};
+
+        \draw[fill = black] (0+6,0) \v (.5+6, 0) \v (.25+6,.4) \v (1+6,0) \v (.75+6,.4) \v (.5+6, .8) \v (1.5+6, 0) \v (1.25+6, .4) \v (1+6, .8) \v (.75+6, 1.2) \v;
+        \node[below] at (.75+6,-.25) {$T_4 = 10$};
+        \end{tikzpicture}
+        </latex-image>
+      <description>
+        A sequence of four dot patters, showing the first four triangular numbers: the patterns contain 1, 3, 6, and 10 dots, arranged in triangles with base 1, 2, 3, and 4, respectively.
+      </description>
+      </image>
+
+    </sidebyside>
+
+    <p>
+      Is this sequence arithmetic?
+      No, since <m>3-1 = 2</m> and <m>6-3 = 3 \ne 2</m>,
+      so there is no common difference.
+      Is the sequence geometric?
+      No. <m>3/1 = 3</m> but <m>6/3 = 2</m>,
+      so there is no common ratio.
+      What to do?
+    </p>
+
+    <p>
+      Notice that the <em>differences</em> between terms <em>do</em> form an arithmetic sequence:
+      <m>2, 3, 4, 5, 6,\ldots</m>.  In other words, the rate of change of this sequence is arithmetic: <m>T_n - T_{n-1} = n</m>, which immediately gives us the recurrence relation <m>T_n = T_{n-1} + n</m>. 
+    </p>
+
+    <p>
+      Another way to think of this is that the <m>n</m>th term of the sequence <m>(T_n)</m> is the <em>sum</em>
+      of the first <m>n</m> terms in the sequence <m>1,2,3,4,5,\ldots</m>.
+      Thus <m>(T_n)</m> is the
+      <term>sequence of partial sums</term>
+<idx><h>sequence of partial sums</h><h>for triangular numbers</h></idx>
+      of the sequence <m>1,2,3,\ldots</m>
+      (<em>partial</em> sums because we are not taking the sum of all infinitely many terms).
+    </p>
+
+    <p>
+      This should become clearer if we expand the recurrence relation to write the triangular numbers like this:
+      <md>
+        <mrow>T_1 = 1 \amp = 1</mrow>
+        <mrow>T_2 = 3 \amp = 1+2</mrow>
+        <mrow>T_3 = 6 \amp = 1 + 2 + 3</mrow>
+        <mrow>T_4 = 10 \amp = 1+ 2 + 3+ 4</mrow>
+        <mrow>\vdots \amp \qquad \vdots</mrow>
+        <mrow>T_n \amp = 1 + 2 + 3 + \cdots + n</mrow>
+      </md>.
+      We are really using <em>iteration</em> here.  We could also have seen this by using telescoping, taking <m>T_0 = 0</m>:
+      <md>
+        <mrow>T_1-T_0  = \amp 1</mrow>
+        <mrow>T_2 - T_1 = \amp 2</mrow>
+        <mrow>T_3 - T_2 =  \amp 3</mrow>
+        <mrow>\vdots \amp </mrow>
+        <mrow>T_n - T_{n-1} = \amp n</mrow>
+      </md>.
+      The right hand side becomes <m>1+2+3+\cdots + n</m>; the left hand side cancels to leave just <m>T_n - T_0 = T_n</m>.
+    </p>
+
+    <p>
+      
+    </p>
+    
+
+    <p>
+      If we know how to add up the terms of an arithmetic sequence,
+      we could find a closed formula for a sequence whose differences are the terms of that arithmetic sequence.
+      Consider how we could find the sum of the first 100 positive integers
+      (that is, <m>T_{100}</m>).
+      Instead of adding them in order,
+      we regroup and add <m>1+100 = 101</m>.
+      The next pair to combine is <m>2+99 = 101</m>.
+      Then <m>3+98 = 101</m>.
+      Keep going.
+      This gives 50 pairs which each add up to <m>101</m>,
+      so <m>T_{100} = 101\cdot 50 = 5050</m>.<fn>
+      This insight is usually attributed to Carl Friedrich Gauss,
+      one of the greatest mathematicians of all time,
+      who discovered it as a child when his unpleasant elementary teacher thought he would keep the class busy by requiring them to compute the lengthy sum.
+      </fn></p>
+
+    <p>
+      In general, using this same sort of regrouping,
+      we find that <m>T_n = \frac{n(n+1)}{2}</m>.
+      Incidentally,
+      this is exactly the same as <m>{n+1 \choose 2}</m>,
+      which makes sense if you think of the triangular numbers as counting the number of handshakes that take place at a party with <m>n+1</m> people:
+      the first person shakes <m>n</m> hands,
+      the next shakes an additional <m>n-1</m> hands and so on.
+    </p>
+    
+
+    <p>
+      The point of all of this is that some sequences,
+      while not arithmetic or geometric,
+      can be interpreted as the sequence of partial sums of arithmetic and geometric sequences.
+      Luckily there are methods we can use to compute these sums quickly, which we will explore in the next two sections.
+    </p>
+  </subsection>
+
   <!--
   <subsection>
     <title>Solving recurrence relations</title>
