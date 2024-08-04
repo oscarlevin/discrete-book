@@ -40,14 +40,14 @@
         <sidebyside width="65%">
           <image xml:id="inv_dots-seq1">
             <latex-image>
-            \begin{tikzpicture}
-            \draw[fill = black] (0,0) \v;
-  \node[below] at (0,-.6) {$n = 0$};
-  \draw[fill = black] (0+3,0) \v (.3+3, .3) \v (-.3+3,-.3) \v (-.3+3, .3) \v (.3+3,-.3) \v;
-  \node[below] at (0+3,-.6) {$n = 1$};
-  \draw[fill = black] (0+6,0) \v (.3+6, .3) \v (-.3+6,-.3) \v (-.3+6, .3) \v (.3+6,-.3) \v (.6+6, .6) \v (-.6+6,-.6) \v (-.6+6, .6) \v (.6+6,-.6) \v;
-      \node[below] at (0+6,-.6) {$n = 2$};
-    \end{tikzpicture}
+              \begin{tikzpicture}
+                \draw[fill = black] (0,0) \v;
+                \node[below] at (0,-.6) {$n = 0$};
+                \draw[fill = black] (0+3,0) \v (.3+3, .3) \v (-.3+3,-.3) \v (-.3+3, .3) \v (.3+3,-.3) \v;
+                \node[below] at (0+3,-.6) {$n = 1$};
+                \draw[fill = black] (0+6,0) \v (.3+6, .3) \v (-.3+6,-.3) \v (-.3+6, .3) \v (.3+6,-.3) \v (.6+6, .6) \v (-.6+6,-.6) \v (-.6+6, .6) \v (.6+6,-.6) \v;
+                  \node[below] at (0+6,-.6) {$n = 2$};
+              \end{tikzpicture}
             </latex-image>
 
             <description>
@@ -119,38 +119,26 @@
     </p>
 
     <worksheet xml:id="PA-seq-growth">
+      <title>Preview Activity</title>
+      <!-- This could be improved by putting the images into webwork.  Or make the whole thing in Doenet. -->
       <exercise>
         <webwork>
           <pg-code>
             Context("Numeric")->variables->are(n=>"Real");
             parserFunction(a => "cos(pi^n)+e");
             $an = Formula("a(n-1) + 4");
+            $popup = PopUp(["?", "add", "multiply by"], "add",);
           </pg-code>
 
           <introduction>
             <p>
-              Explore the sequence of dot patterns below.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.
+              Explore the first sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.  The sequence starts <m>1, 5, 9,\ldots</m>
             </p>
-            <image width="80%">
-              <description>
-                A sequence of three dot patterns, starting with a single dot (labeled n = 0), then the same dot with four new dots extending into an X (labeled n = 1) and finally the same pattern but with four new dots extending onto the limbs of the X (labeled n = 2).
-              </description>
-              <latex-image>
-              \begin{tikzpicture}
-                \draw[fill = black] (0,0) \v;
-                \node[below] at (0,-.6) {\(n = 0\)};
-                \draw[fill = black] (0+3,0) \v (.3+3, .3) \v (-.3+3,-.3) \v (-.3+3, .3) \v (.3+3,-.3) \v;
-                \node[below] at (0+3,-.6) {\(n = 1\)};
-                \draw[fill = black] (0+6,0) \v (.3+6, .3) \v (-.3+6,-.3) \v (-.3+6, .3) \v (.3+6,-.3) \v (.6+6, .6) \v (-.6+6,-.6) \v (-.6+6, .6) \v (.6+6,-.6) \v;
-                \node[below] at (0+6,-.6) {\(n = 2\)};
-              \end{tikzpicture}
-              </latex-image>
-            </image>
           </introduction>
           <task>
             <statement>
               <p>
-                Based on the pattern of dots in the images above, how many dots would you expect in the next two figures in the sequence?
+                How many dots would you expect in the next two figures in the sequence?
               </p>
 
 
@@ -166,6 +154,13 @@
           <task>
             <statement>
               <p>
+                How is the sequence growing?  To get the next figure, take the current figure and <var name="$popup" form="popup"/> the constant <var name="4" width="5"/> dots.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
                 Let <m>a_n</m> be the number of dots in figure <m>n</m>.  Write a recursive definition for <m>a_n</m>.
               </p>
 
@@ -173,12 +168,141 @@
                 Use <c>a(n-1)</c> for <m>a_{n-1}</m>.
               </instruction>
               <p>
-                <m>a_n = </m> <var name="$an" />; with <m>a_0 = </m> <var name="1" />.
+                <m>a_n = </m> <var name="$an" width="20"/>; with <m>a_0 = </m> <var name="1" width="5" />.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Guess a closed formula for the number of dots in the <m>n</m>th figure.
+              </p>
+              <p>
+                <m>a_n = </m> <var name="Formula('1+4*n')" width="20" />.
               </p>
             </statement>
           </task>
         </webwork>
       </exercise>
+
+      <exercise>
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("3 a(n-1)");
+            $popup = PopUp(["?", "add", "multiply by"], "multiply by",);
+          </pg-code>
+          <introduction>
+            <p>
+              Now look at the second sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.  The sequence starts <m>2, 6, 18,\ldots</m>
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many dots would you expect in the next two figures in the sequence?
+              </p>
+
+
+              <p>
+                Dots in <m>n = 3</m> figure: <m>a_3 = </m><var name="54" width="5"/>.
+              </p>
+              
+              <p>
+                Dots in <m>n = 4</m> figure: <m>a_4 = </m><var name="162" width="5"/>.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How is the sequence growing?  To get the next figure, take the current figure and <var name="$popup" form="popup"/> the constant <var name="3" width="5"/>.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Let <m>a_n</m> be the number of dots in figure <m>n</m>.  Write a recursive definition for <m>a_n</m>.
+              </p>
+
+              <instruction>
+                Use <c>a(n-1)</c> for <m>a_{n-1}</m>.
+              </instruction>
+              <p>
+                <m>a_n = </m> <var name="$an" width="20"/>; with <m>a_0 = </m> <var name="2" width="5" />.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Guess a closed formula for the number of dots in the <m>n</m>th figure.
+              </p>
+              <p>
+                <m>a_n = </m> <var name="Formula('2*n**4')" width="20" />.
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+
+      <exercise>
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("a(n-1) + n");
+          </pg-code>
+          <introduction>
+            <p>
+              Now look at the third sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.  The sequence starts <m>1, 3, 6, 10,\ldots</m>
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many dots would you expect in the next two figures in the sequence?
+              </p>
+
+
+              <p>
+                Dots in <m>n = 5</m> figure: <m>a_5 = </m><var name="15" width="5"/>.
+              </p>
+              
+              <p>
+                Dots in <m>n = 6</m> figure: <m>a_6 = </m><var name="21" width="5"/>.
+              </p>
+            </statement>
+          </task>
+
+          <task>
+            <statement>
+              <p>
+                Let <m>a_n</m> be the number of dots in figure <m>n</m>.  Write a recursive definition for <m>a_n</m>.
+              </p>
+
+              <instruction>
+                Use <c>a(n-1)</c> for <m>a_{n-1}</m>.
+              </instruction>
+              <p>
+                <m>a_n = </m> <var name="$an" width="20"/>; with <m>a_1 = </m> <var name="1" width="5" />.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Guess a closed formula for the number of dots in the <m>n</m>th figure.
+              </p>
+              <p>
+                <m>a_n = </m> <var name="Formula('(n*(n+1)/2)')" width="20" />.
+              </p>
+            </statement>
+          </task>
+        </webwork>
+        </exercise>
     </worksheet>
   </subsection>
 
@@ -188,13 +312,13 @@
 
     <p>
       Suppose you start a business selling prints of mathematical art.
-      In week zero, you sell one print.
+      In week zero, you sell two prints.
       Each week after that, you sell four more prints than you did the previous week.
       How many prints will you sell in the <m>n</m>th week?
     </p>
 
     <p>
-      We can easily compute the first few terms of the sequence: <m>1, 5, 9, 13,\ldots</m>.
+      We can easily compute the first few terms of the sequence: <m>2, 6, 10, 14,\ldots</m>.
       How do I know this is correct?  From the problem, we see that to get from one term to the next, we must add 4.
       I is clear then that the recurrence relation for the sequence is
       <me>
@@ -209,14 +333,14 @@
 
     <p>
       Now let's find a closed formula for our sequence.
-      The first term is <m>a_0 = 1</m>.
+      The first term is <m>a_0 = 2</m>.
       To get <m>a_1</m>, we add <m>4</m>.
       The next term requires us to add <m>4</m> again, which means we have added <m>4</m> to our initial term twice.
       Then we add <m>4</m> again, for a total of three times for <m>a_3</m>.
       In fact, to get <m>a_n</m>, we will have added <m>4</m> to <m>a_0</m> a total of <m>n</m> times.
       Thus, the closed formula for the sequence is
       <me>
-        a_n = 1 + 4n
+        a_n = 2 + 4n
       </me>.
     </p>
 
@@ -253,25 +377,47 @@
       For the recurrence relation, by the definition of an arithmetic sequence, the difference between successive terms is some constant, say <m>d</m>.
       So <m>a_n - a_{n-1} = d</m>, or in other words,
       <me>
-        a_0 = a \qquad a_n=a_{n-1}+d
+        a_0 = a \qquad a_n = a_{n-1} + d
       </me>.
     </p>
 
     <p>
-      To find a closed formula, first write out the sequence in general:
-      <md>
-        <mrow>a_0 \amp = a</mrow>
-        <mrow>a_1 \amp = a_0 + d = a+d</mrow>
-        <mrow>a_2 \amp = a_1 + d = a+d+d = a+2d</mrow>
-        <mrow>a_3 \amp = a_2 + d = a+2d+d = a+3d</mrow>
-        <mrow>\amp \vdots</mrow>
-      </md>
+      Let's now argue why the closed formula is correct.  One way we could do this is by using a technique sometimes called <term>telescoping</term> (a name which hopefully we become meaningful momentarily).
     </p>
 
     <p>
-      We see that to find the <m>n</m>th term, we need to start with <m>a</m> and then add <m>d</m> a bunch of times.
-      In fact, add it <m>n</m> times.
-      Thus <m>a_n = a+dn</m>.
+      We write the recurrence relation in its <em>difference</em> form, <m>a_n - a_{n-1} = d</m> for all terms starting with <m>a_1</m> and going up to <m>a_n</m>.  This gives the following:
+      <md>
+        <mrow>a_1 - a_0 = \amp d</mrow>
+        <mrow>a_2 - a_1 = \amp d</mrow>
+        <mrow>a_3 - a_2 = \amp d</mrow>
+        <mrow>\vdots  \amp </mrow>
+        <mrow>a_{n-1} - a_{n-2} = \amp d</mrow>
+        <mrow>a_n - a_{n-1} =  \amp d</mrow>
+      </md>.
+      Now we add all <m>n</m> equations together.  
+    </p>
+    
+    <p>
+      On the right hand side, we have added <m>d</m> to itself <m>n</m> times, so the sum is <m>d\cdot n</m>.
+    </p>
+    <p>
+      On the left hand side, we get the sum:
+      <me>
+        (a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \cdots + (a_{n-1} - a_{n-2}) + (a_n - a_{n-1})
+      </me>.
+      But look what happens when we regroup and cancel like terms:
+      <me>
+        \cancel{a_1} - a_0 + \cancel{a_2} - \cancel{a_1} + \cancel{a_3} - \cancel{a_2} + \cdots + \cancel{a_{n-1}} - \cancel{a_{n-2}} + a_n - \cancel{a_{n-1}} = a_n - a_0
+      </me>.
+      The sum <em>telescopes</em> down to be nice and compact for easy storage.  
+    </p>
+    <p>
+      Putting the two sides together gives us <me>a_n - a_0 = d \cdot n</me> which becomes <me>a_n = a_0 + d \cdot n</me> as we claimed.
+    </p>
+      
+    <p>
+      The telescoping we did above is useful in other contexts (see <xref ref="ex-telescoping-sum"/>), but now that we have established a general form of the closed formula, we can apply it to any arithmetic sequence.
     </p>
 
     <example>
@@ -324,22 +470,35 @@
     <title>Geometric Sequences</title>
 
     <p>
-      What about sequences like <m>2, 6, 18, 54, \ldots</m>? This is not arithmetic because the difference between terms is not constant.
-      However, the <em>ratio</em> between successive terms is constant.
+      What about sequences like <m>3, 6, 12, 24, 48, \ldots</m>? This is not arithmetic because the difference between terms is not constant.
+      However, the <em>ratio</em> between successive terms is constant: <m>\frac{6}{3} = \frac{12}{6} = \frac{24}{12} = \cdots = 2</m>
       We call such sequences <term>geometric</term>.
+    </p>
+    
+    <p>
+      Recognizing that the sequence is geometric let's us easily write down a recursive definition.  <m>a_n = 2 a_{n-2}</m>, with <m>a_0 = 3</m>.  
+    </p>
+    
+    <p>
+      A closed formula is also not difficult to reason out.  How do we get the term <m>a_3</m> for example?  We start with <m>3</m>, then multiply by 2 to get <m>a_1</m>, multiply by <m>2</m> again to get <m>a_2</m>, and multiply by <m>2</m> a third time to get <m>a_3</m>.  So we multiplied <m>3</m> by <m>2</m> a total of three times, or <m>a_3 = 3\cdot 2^3</m>.  It looks like <m>a_n = 3\cdot 2^n</m>.
     </p>
 
     <p>
-      The recursive definition for the geometric sequence with initial term <m>a</m> and common ratio <m>r</m> is <m>a_n = a_{n-1}\cdot r; a_0 = a</m>.
+      In general, recursive definition for the geometric sequence with initial term <m>a</m> and common ratio <m>r</m> will be <me>a_n = a_{n-1}\cdot r; a_0 = a</me>.
       To get the next term we multiply the previous term by <m>r</m>.
-      We can find the closed formula like we did for the arithmetic progression.
+    </p>
+    
+    <p>
+      For the general closed formula, we could try something like telescoping again, although we would need to cancel fractions.  Instead, let's illustrate another technique for solving recurrence relations called <term>iteration</term>. The idea here is that we work our way up to <m>a_n</m> and notice the pattern. 
       Write
       <md>
         <mrow>a_0 \amp = a</mrow>
         <mrow>a_1 \amp = a_0\cdot r</mrow>
         <mrow>a_2 \amp = a_1 \cdot r = a_0\cdot r\cdot r = a_0\cdot r^2</mrow>
+        <mrow>a_3 \amp = a_2 \cdot r = a_0 \cdot r^2 \cdot r = a_0 \cdot r^3</mrow>
         <mrow>\amp \vdots</mrow>
-      </md>
+        <mrow>a_n \amp = a_{n-1} \cdot r = a_0 \cdot r^{n-1}\cdot r = a_0 r^n</mrow>
+      </md>.
       We must multiply the first term <m>a</m> by <m>r</m> a number of times, <m>n</m> times to be precise.
       We get <m>a_n = a\cdot r^{n}</m>.
     </p>
@@ -714,7 +873,7 @@
       <response/>
     </exercise>
 
-    <exercise label="rq-seq-arithgeom-q" component="runestone">
+    <exercise label="rq-seq-arithgeom-q" >
       <statement>
         <p>
           What questions do you have? Write at least one question about the content of this section that you or a classmate might be curious about after reading this section.
