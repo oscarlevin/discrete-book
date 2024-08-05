@@ -2,6 +2,30 @@
 
 <section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_trees">
   <title>Trees</title>
+
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+				</p>
+			</li>
+
+			<li>
+				<p>
+				</p>
+			</li> 
+			<li>
+				<p>
+				</p>
+			</li>
+		</ol>
+	</objectives>
+
   <subsection>
     <title>Section Preview</title>
     
@@ -15,7 +39,7 @@
         <image>
           <latex-image>
             \begin{tikzpicture}[scale=0.9]
-              \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+              \draw (-1,0) \v -- (1,0) \v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
               \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
             \end{tikzpicture}
           </latex-image>
@@ -146,11 +170,69 @@
       <title>Preview Activity</title>
       
       <exercise>
-        <statement>
-          <p>
-            Coming soon.  There will be some question where the reader is asked to remove enough edges from some example tree and then count the number of edges.  Similarly for starting with a set number of vertices and adding edges.
-          </p>
-        </statement>
+        <webwork>
+          <pg-code>
+            $tree = RadioButtons([
+            "Yes, since the graph is connected and contains no cycles",
+            "No, the graph contains a cycle",
+            "No, the graph is not connected",
+            "No, the graph is not connected and contains a cycle"
+            ], 0);
+            </pg-code>
+          <introduction>
+            <p>
+              Take out a piece of paper and draw 8 vertices in a circle.
+            </p>
+            <image width="20%">
+              <shortdescription>8 vertices in a circle with no edges</shortdescription>
+              <latex-image>
+                \begin{tikzpicture}[scale=.5]
+                  \foreach \x in {1,...,8}
+                    \draw (360/8*\x:1) \v;
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+            <p>
+              We are going to add edges to this graph to following some requirements.
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                First, add the fewest number of edges possible so that the resulting graph is connected.  That is, there must be a path between any pair of vertices (a path can use more than one edge, of course).
+              </p>
+              <p>
+                How many edges are in the graph you drew?  <var name="7" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Was the resulting graph you found a tree?
+              </p>
+              <p><var name="$tree" form="buttons"/></p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Now start over with an empty graph again.  This time, add the largest number of edges possible so that the resulting graph contains no cycles.
+              </p>
+              <p>
+                How many edges are in the graph you drew?  <var name="7" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Was the resulting graph you found a tree?
+              </p>
+              <p><var name="$tree" form="buttons"/></p>
+            </statement>
+            </task>
+        </webwork>
       </exercise>
     </worksheet>
   </subsection>
@@ -326,10 +408,10 @@
     </p>
     
     <p>
-      First we should consider if this even makes sense.  Given any connected graph <m>G</m>, will there always be a subgraph that is a tree?  Well, that is actually too easy: you could just take a single vertex of <m>G</m>.  If we want to use this subgraph to tell us how to visit all vertices, then we want our subgraph to include all of the vertices.  We call such a tree a <term>spanning tree</term>.  It turns out that every connected graph has one (and usually many).
+      First we should consider if this even makes sense.  Given any connected graph <m>G</m>, will there always be a subgraph that is a tree?  Well, that is actually too easy: you could just take a single vertex of <m>G</m>.  If we want to use this subgraph to tell us how to visit all vertices, then we want our subgraph to include all of the vertices.  We call such a tree a <term>spanning tree</term>.  
     </p>
     
-    <assemblage xml:id="assemblage-spanningtree">
+    <definition xml:id="definition-spanningtree">
     <idx>
       <h>spanning tree</h>
     </idx>
@@ -337,18 +419,28 @@
       <h>tree</h>
       <h>spanning</h>
     </idx>
-      <title>Spanning tree</title>
+      <statement>
       <p>
         Given a connected graph <m>G</m>, a <term>spanning tree</term> of <m>G</m> is a subgraph of <m>G</m> which is a tree and includes all the vertices of <m>G</m>. 
       </p>
-      
-      <p>
-        Every connected graph has a spanning tree.
-      </p>
-    </assemblage>
+      </statement>
+    </definition>
     
     <p>
-      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with a connected graph <m>G</m>.  If there is no cycle, then <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
+      It turns out that every connected graph has one (and usually many).
+    </p>
+
+    <theorem xml:id="thm-spanning-tree">
+      <statement>
+        <p>
+            Every connected graph has a spanning tree.
+        </p>
+      </statement>
+    </theorem>
+    
+
+    <p>
+      How do we know?  We can give an algorithm for <em>finding</em> a spanning tree!  Start with a connected graph <m>G</m>.  If there is no cycle, then <m>G</m> is already a tree and we are done.  If there is a cycle, let <m>e</m> be any edge in that cycle and consider the new graph <m>G_1 = G - e</m> (i.e., the graph you get by deleting <m>e</m>).  This tree is still connected: since <m>e</m> belonged to a cycle, there were at least two paths between its incident vertices.  Now repeat: if <m>G_1</m> has no cycles, we are done, otherwise define <m>G_2</m> to be <m>G_1 - e_1</m>, where <m>e_1</m> is an edge in a cycle in <m>G_1</m>.  Keep going.  This process must eventually stop, since there are only a finite number of edges to remove.  The result will be a tree, and since we never removed any vertex, a <em>spanning</em> tree.
     </p>
     
     <p>
@@ -600,6 +692,34 @@
           </p>
         </statement>
       </webwork>
+    </exercise>
+    <exercise label="rs-rq-gt-trees-edgecount">
+        <statement>
+          <p>
+            If a tree has 20 vertices, how many edges does it have?
+          </p>
+          <p>
+            Number of edges: <var width="5"/>
+          </p>
+        </statement>
+        <setup>
+          <var>
+            <condition number="19">
+              <feedback>
+                <p>
+                  Right.  The number of edges in a tree is always one less than the number of vertices.
+                </p>
+              </feedback>
+            </condition>
+            <condition string=".*">
+            <feedback>
+              <p>
+                Try again. 
+              </p>
+            </feedback>
+          </condition>
+          </var>
+          </setup>
     </exercise>
 
     <exercise label="rq-gt-trees-q">
