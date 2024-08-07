@@ -215,13 +215,141 @@
         <task>
           <statement>
             <p>
-              Now add a new vertex to your graph, and connect it with an edge to one of the existing vertices.  Assuming the resulting graph is still planar, list the number of vertices, edges, and faces it now has.
+              Now add another edge to the graph, this time to a new vertex.  Assuming the resulting graph is still planar, list the number of vertices, edges, and faces it now has.
             </p>
             <p>
               Vertices: <var name="6" width="5"/>; Edges: <var name="7" width="5"/>; Faces: <var name="3" width="5"/>
             </p>
           </statement>
         </task>
+        </webwork>
+      </exercise>
+      <exercise>
+        <webwork>
+          <pg-code>
+            $ans1 = MultiAnswer(6, 6, 2) -> with(
+              singleResult => 1,
+              allowBlankAnswers => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                if ($student->[0] - $student->[1] + $student->[2] == 2) {
+                  $self->setMessage(3, "Yay!");
+                  return 1;
+                } else {
+                  if ($student->[0] - $student->[1] + $student->[2] == 1) {
+                    $self->setMessage(2, "Did you forget to include the 'outside' face?");
+                  }
+                return 0;
+                }
+              }
+            );
+            $ans2 = MultiAnswer(7, 10, 5) -> with(
+              singleResult => 1,
+              allowBlankAnswers => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                return ($student->[0] - $student->[1] + $student->[2] == 2);
+              }
+            );
+            $ans3 = MultiAnswer(6, 10, 6) -> with(
+              singleResult => 1,
+              allowBlankAnswers => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                if ($student->[0] - $student->[1] + $student->[2] == 2) {
+                  $self->setMessage(1, "This appears to be a valid answer.");
+                  return 1;
+                } 
+              }
+            );
+            </pg-code>
+        <statement>
+          <p>
+            Now draw at least three more connected, planar graphs, each with at least six vertices.  Count the number of vertices <m>v</m>, edges <m>e</m>, and faces <m>f</m> for each graph and record your data in the table below.  
+          </p>
+          <tabular halign="center">
+            <col right="minor"/><col right="minor"/><col/>
+            <row bottom="minor" header="yes">
+              <cell><m>v</m></cell><cell><m>e</m></cell><cell><m>f</m></cell>
+            </row>
+            <row>
+              <cell><var name="$ans1" width="5"/></cell><cell><var name="$ans1" width="5"/></cell><cell><var name="$ans1" width="5"/></cell>
+            </row>
+            <row>
+              <cell><var name="$ans2" width="5"/></cell><cell><var name="$ans2" width="5"/></cell><cell><var name="$ans2" width="5"/></cell>
+            </row>
+            <row>
+              <cell><var name="$ans3" width="5"/></cell><cell><var name="$ans3" width="5"/></cell><cell><var name="$ans3" width="5"/></cell>
+            </row>
+          </tabular>
+
+        </statement>
+        </webwork>
+      </exercise>
+      <exercise>
+        <webwork>
+          <pg-code>
+            Context()->variables->are(v => "Real", e => "Real", f => "Real");
+            $expr = Formula("v-e+f")->cmp(
+              checker=>sub {
+                my ($correct, $student, $self) = @_;
+                return ($student == $correct || $student == -1*$correct);
+              }
+            );
+
+          </pg-code>
+        
+          <statement>
+            <p>
+            Do you notice any patterns?  What happens to the numbers if you add an edge between two non-adjacent vertices?  What happens if you add a new vertex and connect it to an existing vertex?
+          </p>
+            <p>
+              Conjecture an expression that involves the number of vertices <m>v</m>, the number of edges <m>e</m>, and number of faces <m>f</m> that remains constant for all connected planar graphs.  What is that constant?
+            </p>
+            <p>
+              Conjectured expression: <var name="$expr" width="20"/>.
+            </p>
+          </statement>
+          
+          <hint>
+            <p>
+              You might conjecture an expression like <m>\frac{v+e}{f}</m>.  But this is not right, because there is a planar graph for which this would be <m>\frac{5+5}{2} = 5</m> and another planar graph for which the expression would be <m>\frac{6+7}{3} \ne 5</m>.
+            </p>
+            <p>
+              What sort of expression will stay constant if <m>v</m> and <m>e</m> both increase by 1?  And also stay constant if <m>e</m> and <m>f</m> both increase by 1?
+            </p>
+          </hint>
+        </webwork>
+      </exercise>
+      <exercise>
+        <webwork>
+          <pg-code>
+            $choices = PopUp(["?","Yes","No"], 1);
+          </pg-code>
+        
+          <introduction>
+            <p>
+               A cube is made of six squares, each of which shares an edge with each of its neighbors.  Vertices of the cube join three of the squares.  
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many vertices, edges, and faces does a cube have?  
+              </p>
+              <p>
+                Vertices: <var name="8" width="5"/>; Edges: <var name="12" width="5"/>; Faces: <var name="6" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Does this match the relationship you conjectured above? <var name="$choices" form="popup"/>
+              </p>
+
+            </statement>
+          </task>
         </webwork>
       </exercise>
     </worksheet>
