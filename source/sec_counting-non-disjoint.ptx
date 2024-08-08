@@ -11,16 +11,18 @@
 		<ol>
 			<li>
 				<p>
-          
+          Use Venn diagrams to count the number of outcomes in the union of non-disjoint sets.
 				</p>
 			</li>
 
 			<li>
 				<p>
+          Apply the Principle of Inclusion/Exclusion for two and three sets.
 				</p>
 			</li> 
 			<li>
 				<p>
+          Explain why the Principle of Inclusion/Exclusion works.
 				</p>
 			</li>
 		</ol>
@@ -29,7 +31,7 @@
     <title>Section Preview</title>
         <investigation>
       <p>
-        A recent buzz marketing campaign for <em>Village Inn</em>
+        A recent buzz marketing campaign for <em>The Pie Hole</em>
         surveyed patrons on their pie preferences.
         People were asked whether they enjoyed (A) Apple, (B) Blueberry or (C) Cherry pie
         (respondents answered yes or no to each type of pie,
@@ -65,24 +67,117 @@
       </sidebyside>
 
       <p>
-        How many of those asked enjoy at least one of the kinds of pie?
+        How many of those surveyed enjoy at least one of the types of pie?
         Also, explain why the answer is not 95.
       </p>
     </investigation>
     
     <p>
-      In <xref ref="sec_counting-combine-outcomes"/> we explored the <xref ref="principle-sum" text="title"/> as a way of combining two sets of <em>disjoint</em> outcomes.  What happens if the outcomes are not disjoint?     
+      In <xref ref="sec_counting-combine-outcomes"/> we explored the <xref ref="principle-sum" text="title"/> as a way of combining two (or more) sets of <em>disjoint</em> outcomes.  What happens if the outcomes are not disjoint?     
+    </p>
+
+    <p>
+      Something different needs to be done.  For example, when counting the number of playing cards that are either face cards or red cards, we cannot apply the sum principle to claim there are <m>12 + 26 = 38</m> cards.  The problem is exactly that there are six cards that are both face cards and red cards.  There are a few different ways we can handle this that we will explore in this section.
     </p>
     <worksheet xml:id="PA-counting-non-disjoint">
       <title>Preview Activity</title>
       <exercise>
+        <webwork>
+          <pg-code>
+            Context()->strings->add(111 => {}, 110 => {}, 101 => {}, 100 => {}, 011 => {});
+            $start1 = List(String(111), String(110), String(101), String(100));
+            $weight2 = List("110", "101", "011");
+            $either = List("111", "110", "101", "100", "011"); 
+          </pg-code>
+        
+          <introduction>
+            <p>
+              Consider the eight bit strings of length 3.  Let's find the number of strings that start with 1 or have weight 2 (i.e., contain exactly two 1s).
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                List all the 3-bit strings that start with 1.
+              </p>
+              <p>
+                <var name="$start1" width="40"/>
+              </p>
+              <instruction>(separate strings with commas)</instruction>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                List all the 3-bit strings that have weight 2.
+              </p>
+              <p>
+              <var name="$weight2" width="30"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Now list all the 3-bit strings that start with 1 or have weight 2.  But be lazy: don't list them from scratch, use your lists from the two tasks above.
+              </p>
+              <p>
+                <var name="$either" width="50"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many strings are there in your lists?
+                <ul>
+                  <li>
+                    <p>
+                      Strings that start with 1: <var name="4" width="5"/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Strings of weight 2: <var name="3" width="5"/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Strings that start with 1 or have weight 2: <var name="5" width="5"/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Strings that both start with a 1 <em>and</em> have weight 2: <var name="2" width="5"/>
+                    </p>
+                  </li>
+                </ul>
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+      <exercise>
         <statement>
           <p>
-            Coming Soon.
+            How did you combine your two lists above?  Explain how you did it.  Then think of another method you could have used and explain how that would be different.
           </p>
+          <response />
         </statement>
       </exercise>
-      
+      <exercise>
+        <webwork>
+       
+          <statement>
+            <p>
+              Xiang and Omari are discussing their favorite mathematicians throughout history.  Xiang has a list of 7 favorites, while Omari has a list of 5.  They discover that they have 3 mathematicians in common.  How many mathematicians are on their combined list?
+            </p>
+            <p>
+              <var name="9" width="5"/>
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
     </worksheet>
   </subsection>
 
@@ -162,7 +257,7 @@
 
 
     <p>
-      This says there are 6 elements in <m>A \cap B</m>, 4 elements in <m>A</m> but not <m>B</m>, (written <m>A \setminus B</m>) and 2 elements in <m>B</m> but not <m>A</m> (<m>\card{B \setminus A} = 2</m>).
+      This says there are 6 elements in <m>A \cap B</m>, 4 elements in <m>A</m> but not <m>B</m> (which we can write as <m>\card{A \setminus B} = 4</m>), and 2 elements in <m>B</m> but not <m>A</m> (written <m>\card{B \setminus A} = 2</m>).
       Now <em>these</em> three sets <em>are</em> disjoint,
       so we can use the sum principle to find the number of elements in <m>A \cup B</m>.
       It is <m>6 + 4 + 2 = 12</m>.
@@ -497,14 +592,14 @@
     <p>
       This process of adding in, then subtracting out, then adding back in,
       and so on is called the <term>Principle of Inclusion/Exclusion</term>,
-      or simply <term><acro>PIE</acro></term>. This principle can be applied to any number of sets, but the formula becomes more and more complicated the more sets you have.  For example, this is what <acro>PIE</acro> looks like for four sets:
+      or simply <term><acro>PIE</acro></term>. This principle can be applied to any number of sets, but the formula becomes more and more complicated the more sets you have.  For example, this is what <acro>PIE</acro> looks like for four sets.  To find <m>\card{A \cup B \cup C \cup D}</m> you compute:
       <md>
-        <mrow>\card{A \cup B \cup C \cup D} = \amp \card{A} + \card{B} + \card{C} + \card{D} </mrow>
-        <mrow> \amp - \card{A \cap B} - \card{A \cap C} - \card {A \cap D} - \card{B \cap C} - \card{B \cap D} - \card{C \cap D}</mrow>
-        <mrow> \amp + \card{A \cap B \cap C} + \card{A \cap B \cap D} + \card{A \cap C \cap D} + \card{B \cap C \cap D}</mrow>
-        <mrow> \amp - \card{A \cap B \cap C \cap D} </mrow>
+        <mrow>\amp \card{A} + \card{B} + \card{C} + \card{D} </mrow>
+        <mrow> - \amp \card{A \cap B} - \card{A \cap C} - \card {A \cap D} - \card{B \cap C} - \card{B \cap D} - \card{C \cap D}</mrow>
+        <mrow> + \amp \card{A \cap B \cap C} + \card{A \cap B \cap D} + \card{A \cap C \cap D} + \card{B \cap C \cap D}</mrow>
+        <mrow> - \amp  \card{A \cap B \cap C \cap D} </mrow>
       </md>.
-      Phew!  And for five sets it is... just kidding.  But even if we don't write it down, hopefully we all see what you <me>would</me> have to write down.  In practice, <acro>PIE</acro> for more than three sets is only used when we can simplify the computation by recognizing that, for example, all the intersections of two sets will have the same size.  Some examples of this are explored in <xref ref="sec_advPIE"/>.
+      Phew!  And for five sets it is... just kidding.  But even if we don't write it down, hopefully we all see what you <em>would</em> have to write down.  In practice, <acro>PIE</acro> for more than three sets is only used when we can simplify the computation by recognizing that, for example, all the intersections of two sets will have the same size.  Some examples of this are explored in <xref ref="sec_advPIE"/>.
     </p>
   </subsection>
 
