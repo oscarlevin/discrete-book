@@ -36,7 +36,7 @@
 		<investigation>
 			<statement>
 				<p>
-					You have decided to decorate your magic wand with strips of different colored tape.  You have 10 different colors to choose from, and you will use five of them to create five different stripes of color.  How many different wand designs are possible?
+					You have decided to decorate your magic wand with bands of different colored tape.  You have 10 different colors to choose from, and you will use five of them to create five different stripes of color.  How many different wand designs are possible?
 				</p>
 			</statement>
 </investigation>
@@ -123,8 +123,8 @@
 </worksheet>
 </subsection>
 
-<subsection xml:id="subsec-counting-arrangements">
-	<title>Counting Arrangements</title>
+<subsection xml:id="subsec-counting-sequences">
+	<title>Counting Sequences</title>
 	
 	<p>
 		<idx>
@@ -134,6 +134,7 @@
 		<me>
 			abc, ~~ acb, ~~ bac, ~~bca, ~~ cab, ~~ cba
 		</me>.
+		In terms of our discrete structures, each permutation is really a <em>sequence</em> or <em>tuple</em> of a fixed length.  
 	</p>
 
 	<p>
@@ -147,15 +148,14 @@
 	<example>
 		<statement>
 			<p>
-				How many permutations are there of the
+				How many sequences (permutations) are there of the
 				letters <em>a, b, c, d, e, f</em>?
 			</p>
 		</statement>
 
 		<solution>
 			<p>
-				We do NOT want to try to list all of
-				these out.
+				We do NOT want to try to list all of the length 6 sequences of these letters.
 				However, if we did, we would need to pick a letter to write down first.
 				There are
 				6 choices for that letter.
@@ -386,10 +386,10 @@
 
 
 <subsection xml:id="subsec-combinations">
-	<title>Ignoring the arrangement</title>
+	<title>Counting Sets</title>
 
 	<p>
-		Let's consider another way to compute a permutation.
+		Let's consider another way to count sequences: first count sets, then arrange them.
 	</p>
 
 	<example>
@@ -415,9 +415,13 @@
 	</example>
 
 	<p>
-		The example above illustrates a second way to compute a <m>k</m>-permutations of <m>n</m> elements: first select which <m>k</m> elements will be in the permutation, then count how many ways there are to arrange them. Once you have selected the <m>k</m> objects, we know there are <m>k!</m> ways to arrange (permute) them. But how do you select <m>k</m> objects from the <m>n</m>? You have <m>n</m> objects, and you need to <em>choose</em> <m>k</m> of them. You can do that in <m>\binom{n}{k}</m> ways.  Using the multiplicative principle, we get another formula for <m>P(n,k)</m>:
+		The example above illustrates a second way to compute the number of <m>k</m>-permutations of <m>n</m> elements: first select which <m>k</m> elements will be in the permutation, then count how many ways there are to arrange them. Once you have selected the set of <m>k</m> objects, we know there are <m>k!</m> ways to arrange (permute) them. But how do you select <m>k</m> objects from the <m>n</m>? You have <m>n</m> objects, and you need to <em>choose</em> <m>k</m> of them. You can do that in <m>\binom{n}{k}</m> ways.  
+	</p>
+	
+	<p>
+		Using the multiplicative principle to combine the two steps, we get another formula for <m>P(n,k)</m>:
 		<me>
-			P(n,k) = {n \choose k}\cdot k!
+			P(n,k) = \binom{n }{ k}\cdot k!
 		</me>.
 	</p>
 
@@ -429,7 +433,7 @@
 		We have a closed formula
 		for <m>P(n,k)</m> already. We can substitute that in:
 		<me>
-			\frac{n!}{(n-k)!} = {n \choose k} \cdot k!
+			\frac{n!}{(n-k)!} = \binom{n}{k} \cdot k!
 		</me>.
 	</p>
 
@@ -448,7 +452,7 @@
 
 		<p>
 			<me>
-				{n \choose k} = \frac{n!}{(n-k)!k!} = \frac{n(n-1)(n-2)\cdots(n-(k-1))}{k(k-1)(k-2)\cdots 1}
+			\binom{n}{k} = \frac{n!}{(n-k)!k!} = \frac{n(n-1)(n-2)\cdots(n-(k-1))}{k(k-1)(k-2)\cdots 1}
 			</me>.
 		</p>
 	</theorem>
@@ -459,22 +463,12 @@
 		<idx><h>permutation</h><h>vs
 		combination</h>
 		</idx> 
-		Another name for the collections of things that <m>\binom{n}{k}</m> counts are <term>combinations</term>.  We say that <m>\binom{n}{k}</m> counts the number of <m>k</m>-element combinations of <m>n</m> elements.  Sometimes we even use the notation <m>C(n,k)</m> instead of <m>{n \choose k}</m>.  
+		Another name for the collections of things that <m>\binom{n}{k}</m> counts are <term>combinations</term>.  We say that <m>\binom{n}{k}</m> counts the number of <m>k</m>-element combinations of <m>n</m> elements.  Sometimes we even use the notation <m>C(n,k)</m> instead of <m>\binom{n}{k}</m>.  
 	</p>
 	
 	<p>
-		Clearly combinations and permutations are very closely related. The formulas for each are very similar; there is just an extra <m>k!</m> in the denominator of <m>\binom{n}{k}</m>.  That extra <m>k!</m> accounts for the fact that <m>\binom{n}{k}</m> does not distinguish between the different orders that the <m>k</m> objects can appear in.  We are just selecting (or choosing) the <m>k</m> objects, not arranging them.  
+		Clearly combinations and permutations are very closely related. The formulas to count each are very similar; there is just an extra <m>k!</m> in the denominator of <m>\binom{n}{k}</m>.  That extra <m>k!</m> accounts for the fact that <m>\binom{n}{k}</m> does not distinguish between the different orders that the <m>k</m> objects can appear in.  We are just selecting (or choosing) the <m>k</m> objects, not arranging them.  
 	</p>
-	
-	
-	<p>
-		Perhaps <q>combination</q> is a misleading label.  We don't mean it like a combination lock (where the order would definitely matter).  Perhaps a better metaphor is a combination of flavors <mdash /> you just need to decide which flavors to combine, not the order in which to combine them.
-	</p>
-
-	<p>
-		So how do you know when to use a combination and when to use a permutation?  
-	</p>
-
 
 	<example>
 		<idx>
@@ -516,7 +510,7 @@
 				<ol>
 					<li>
 						<p>
-							You must simply choose 6 friends from a group of 14. This can be done in <m>{14 \choose 6}</m> ways. We can find this number either by using Pascal's triangle or the closed formula: <m>\frac{14!}{8!\cdot 6!} = 3003</m>.
+							You must simply choose 6 friends from a group of 14. This can be done in <m>\binom{14}{6}</m> ways. We can find this number either by using Pascal's triangle or the closed formula: <m>\frac{14!}{8!\cdot 6!} = 3003</m>.
 						</p>
 					</li>
 
@@ -533,9 +527,8 @@
 			</p>
 
 			<p>
-				How are these numbers related? Notice that <m>P(14,6)</m> is <em>much</em> larger than <m>{14 \choose
-				6}</m>.
-				This makes sense. <m>{14 \choose 6}</m> picks 6 friends, but <m>P(14,6)</m> arranges the 6 friends as well as picks them. In fact, we can say exactly how much larger <m>P(14,6)</m> is. In both counting problems we choose 6 out of 14 friends. For the first one, we stop there, at 3003 ways. But for the second counting problem, each of those 3003 choices of 6 friends can be arranged in exactly <m>6!</m> ways. So now we have <m>3003\cdot 6!</m> choices and that is exactly <m>2162160</m>.
+				How are these numbers related? Notice that <m>P(14,6)</m> is <em>much</em> larger than <m>\biom{14}{6}</m>.
+				This makes sense. <m>\binom{14}{6}</m> picks 6 friends, but <m>P(14,6)</m> arranges the 6 friends as well as picks them. In fact, we can say exactly how much larger <m>P(14,6)</m> is. In both counting problems we choose 6 out of 14 friends. For the first one, we stop there, at 3003 ways. But for the second counting problem, each of those 3003 choices of 6 friends can be arranged in exactly <m>6!</m> ways. So now we have <m>3003\cdot 6!</m> choices and that is exactly <m>2162160</m>.
 			</p>
 
 			<p>
@@ -555,12 +548,116 @@
 			</p>
 		</solution>
 	</example>
+	
+	<p>
+		Perhaps <q>combination</q> is a misleading label.  We don't mean it like a combination lock (where the order would definitely matter).  Perhaps a better metaphor is a combination of flavors <mdash /> you just need to decide which flavors to combine, not the order in which to combine them.
+	</p>
+
+	<p>
+		So how do you know when to use a combination and when to use a permutation?  
+	</p>
+
+<paragraphs>
+	<title>Does order matter?</title>
+	<p>
+		Almost every source you look at about combinations and permutations will make some variation of the following claim.
+	</p>
+
+	<blockquote>
+		<p>
+			Use a permutation when the order matters, and use a combination when the order does not matter.
+		</p>
+	</blockquote>
+
+	<p>
+		What does this even mean? And why is at an absolutely awful way to distinguish between the two counting techniques?  Let's explore with an example.
+	</p>
+
+	<p>
+		Suppose you are proposing a new lottery game.  In the game, five numbered balls will be randomly shot out of the machine which holds balls numbered 1 to 50.  If a player correctly picks the five numbers that come out, they win the jackpot.
+	</p>
+
+	<p>
+		Of course, we want to know the odds of winning this lottery game, which requires us to know how many different outcomes there are.  The balls fly out of the machine randomly, so one result might be to get the balls
+		<me>
+			26, 5, 42, 17, 33
+		</me>.
+		If you were holding the ticket that had numbers <m>5, 17, 26, 33, 47</m>, do you expect to have won?  Most lottery games would say you have, since you have the same numbers, just in a different order.  
+	</p>
+
+	<p>
+		In this sense, the <em>order</em> of the numbers does not matter.  A better way to say this is that <em>any</em> order of the same numbers is considered the same outcome, and is counted only once.  So really, we are counting the <em>sets</em> of five numbers, not the <em>sequences</em> of five numbers.  Each outcome is a combination, so the number of outcomes should be <m>C(52,5) = \binom{52}{5}</m>.
+	</p>
+
+	<p>
+		On the other hand, if we must pick the numbers in the same order they come out of the machine, then we are really matching a sequence of numbers to a sequence of numbers.  The number of sequences is <m>P(52,5)</m>.  In this case, we would say that the order matters.
+	</p>
+
+	<p>
+		Okay, so far so good.  But what about the following example? 
+	</p>
+	
+	<example>
+		<statement>
+			<p>
+				How many three letter <q>words</q> are there in which 
+				<ol>
+					<li>
+						<p>
+							the letters appear in alphabetical order?  
+						</p>
+					</li>
+					<li>
+						<p>
+							the letters in the word can come in any order?
+						</p>
+					</li>
+				</ol>
+				
+			</p>
+		</statement>
+		<solution>
+			<p>
+				Does <q>order matter</q> for the first question?  In some sense, absolutely!  We only want to count words where the letters are in the correct order.  But from the standard combination/permutation sense of order mattering, it does not.  
+			</p>
+
+			<p>
+				Much better would be to ask ourselves whether we should represent each outcome as a set of letters or a sequence of letters.  It is true that words are a sequence of letters, but are we counting all possible sequences?  Nope, just one sequence for each set of letters.  Ah, yes, set of letters.  Each outcome corresponds exactly to one set of three letters.  We are counting sets, so we count combinations.  The number of outcomes is <m>C(26,3) = \binom{26}{3}</m>.
+			</p>
+
+			<p>
+				For the second question, it might look like we want the order to not matter.  Well, it doesn't matter to the machine spitting out the letters, but it would matter if we were trying to match the letters.  No, let's think about it like this: are we counting every possible sequence of letters?  Yes!  So these are permutations, and the number of outcomes is <m>P(26,3)</m>.
+			</p>
+		</solution>
+	</example>
+
+	<p>
+		Another deceptive use of order appears when counting bit strings.  Recall that a <m>n</m>-bit string of weight <m>k</m> is a string of <m>n</m> bits (0s and 1s) in which <m>k</m> of the bits are 1s.  For example, the 4-bit strings of weight 2 are
+		<me>
+			1100, ~~ 1010, ~~ 1001, ~~ 0110, ~~ 0101, ~~ 0011
+		</me>.
+		Does order matter for bit strings? Of course it does!  It is the only thing that matters.  All of the strings above contain exactly the same number of 0s and 1s, they are only distinguished by the order of the bits.  
+	</p>
+
+	<p>
+		And yet, the number of <m>n</m>-bit strings of weight <m>k</m> is <m>\binom{n}{k}</m> and NOT a permutation.  What is going on here?
+	</p>
+
+	<p>
+		Nothing is broken, we are just not thinking about the right objects about which to consider the order.  When we <em>choose</em> <m>k</m> out of <m>n</m> things for a bit string, it is the <em>positions</em> we are choosing (to fill with 1s, say).  It does not matter what order we choose those positions in, just what set of positions we choose.  That is, the bit string 1001 is the result of choosing positions 1 and 4 to put 1s into.  If we chose positions 4 and then 1, we would get the same bit string.	
+	</p>
+
+	<p>
+		To summarize, the question of whether order matters can lead us astray when deciding between a combination and a permutation.  Instead, we should whether the outcomes we are counting are sets or sequences.  If we are counting sets, think combination.  If we are counting sequences, think permutation.
+	</p>
+</paragraphs>
+
 </subsection>
 
 <subsection xml:id="subsec-quotient-principle">
 	<title>The Quotient Principle</title>
 	<p>
-		We have two ways to write the numerical relationship between combinations and permutations.  Using the product principle, we have,
+		We have two ways to write the numerical relationship between the numbers of combinations and permutations.  Using the product principle, we have,
 		<me>
 			P(n,k) = \binom{n}{k} \cdot k!
 		</me>
@@ -613,7 +710,7 @@
 	<example>
 		<statement>
 			<p>
-				You have decided to decorate your magic wand with strips of different colored tape.  You have 10 different colors to choose from, and you will use five of them to create five different stripes of color.  How many different wand designs are possible?
+				You have decided to decorate your magic wand with bands of different colored tape.  You have 10 different colors to choose from, and you will use five of them to create five different stripes of color.  How many different wand designs are possible?
 			</p>
 		</statement>
 		<solution>

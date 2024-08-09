@@ -12,7 +12,7 @@
 		<ol>
 			<li>
 				<p>
-					Apply the general Principle of Inclusion/Exclusion to solve counting problems involving multisets with bounded multiplicity
+					Apply the Principle of Inclusion/Exclusion to solve counting problems involving multisets with bounded multiplicity.
 				</p>
 			</li>
       <li>
@@ -34,54 +34,150 @@
     
     
     <investigation>
-      <p> You have 11 identical mini key-lime pies to give to 4 children. However, you don't want any kid to get more than 3 pies. How many ways can you distribute the pies? <ol>
-          <li>
-            <p> How many ways are there to distribute the pies without any restriction? </p>
-          </li>
-
-          <li>
-            <p> Let's get rid of the ways that one or more kid gets too many pies. How many ways are there to distribute the pies if Al gets too many pies? What if Bruce gets too many? Or Cat? Or Dent? </p>
-          </li>
-
-          <li>
-            <p> What if two kids get too many pies? How many ways can this happen? Does it matter which two kids you pick to overfeed? </p>
-          </li>
-
-          <li>
-            <p> Is it possible that three kids get too many pies? If so, how many ways can this happen? </p>
-          </li>
-
-          <li>
-            <p> How should you combine all the numbers you found above to answer the original question? </p>
-          </li>
-        </ol>
+      <p> 
+        You have 11 identical mini key-lime pies to give to 4 children. However, you don't want any kid to get more than 3 pies. How many ways can you distribute the pies? 
       </p>
-
-      <p> Suppose now you have 13 pies and 7 children. No child can have more than 2 pies. How many ways can you distribute the pies? </p>
     </investigation>
     
-    <p> Sticks and stones allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to <m>x+y+z = 11</m>, for example. A relatively easy modification allows us to put a <em>lower bound</em> restriction on these problems: perhaps each kid must get at least two cookies or <m>x,y,z \ge 2</m>. This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using sticks and stones. </p>
+    <p> Sticks and stones allows us to count the number of ways to distribute 10 cookies to 3 kids and natural number solutions to <m>x+y+z = 10</m>, for example. A relatively easy modification allows us to put a <em>lower bound</em> restriction on these problems: perhaps each kid must get at least two cookies or <m>x,y,z \ge 2</m>. This was done by first assigning each kid (or variable) 2 cookies (or units) and then distributing the rest using sticks and stones. </p>
 
     <p>
       <idx>
         <h>distribution (counting)</h>
         <h>with upper bound restriction</h>
-      </idx> What if we wanted an <em>upper bound</em> restriction? For example, we might insist that no kid gets more than 4 cookies or that <m>x, y, z \le 4</m>. It turns out this is considerably harder, but still possible. The idea is to count all the distributions and then remove those that violate the condition. In other words, we must count the number of ways to distribute 11 cookies to 3 kids in which <em>one or more</em> of the kids gets more than 4 cookies. For any particular kid, this is not a problem; we do this using sticks and stones. But how to combine the number of ways for kid A, or B or C? We must use the PIE. </p>
+      </idx> What if we wanted an <em>upper bound</em> restriction? For example, we might insist that no kid gets more than 4 cookies or that <m>x, y, z \le 4</m>. It turns out this is considerably harder. 
+    </p>
+    
+    <p>
+      Notice that if we consider the complementary event, i.e., distributions of cookies in which kids <em>do</em> get more than 4 cookies, then we are back to a sticks and stones problem with a lower bound. If we could count this, then subtracting from the total number of distributions should give us the desired answer.  However, the problem is that the complement of <q>no kid gets more than 4 cookies</q> is <q>at least one kid gets more than 4 cookies</q>.  We know how to take care of requiring <em>all</em> kids getting at least 4 cookies, but how do we handle the case where <em>one or more</em> kids get at least 4 cookies?  We must use PIE.
+    </p>
 
       <worksheet xml:id="PA-counting-advPIE">
         <title>Preview Activity</title>
         <exercise>
-          <statement>
-            <p>
-              Coming soon.
+          <webwork>
+            <pg-code>
+              Context("IntegerFunctions");
+            </pg-code>
+          
+            <introduction>
+              <p>
+                First, let's review some sticks and stones type questions we learned about in <xref ref="sec_counting-multisets"/>.
+              </p>
+              <p>
+                Suppose we have 10 cookies to give away to three children, Albie, Bertie, and Charlie. 
+              </p>
+            </introduction>
+            <task>
+              <statement>
+                <p>
+                  How many ways can we distribute the cookies with no restrictions?
+                </p>
+                <p>
+                  <var name="Compute(C(12,2))" width="5" />
+                </p>
+                <instruction>(provide a numerical answer or use C(n,k) for a <m>\binom{n}{k}</m>)</instruction>
+              </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  How many ways can we distribute the cookies if each child must get at least two cookies?
+                </p>
+                <p>
+                  <var name="Compute(C(6,2))" width="5" />
+                </p>
+              </statement>
+              <hint>
+                <p>
+                  Give each kid the minimum number of cookies first.  How many ways are there to distribute the remaining cookies?
+                </p>
+              </hint>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  How many ways can you distribute the cookies if Albie gets at least 3 cookies and Bertie gets at least 2 cookies (and Charlie has no restrictions)?
+                </p>
+                <p>
+                  <var name="Compute(C(7,2))" width="5" />
+                </p>
+              </statement>
+            </task>
+          </webwork>
+        </exercise>
+        <exercise>
+          <webwork>
+            <pg-code>
+              Context("IntegerFunctions");
+            </pg-code>
+            <introduction>
+              <p>
+              Let's again consider the 10 cookies we want to distribute to Albie, Bertie, and Charlie.  This time, we will impose some upper bound restrictions.
             </p>
-          </statement>
+            </introduction>
+            <task>
+              <statement>
+                <p>
+                  How many ways can we distribute the cookies if Albie <em>does</em> get more than 3 cookies (so at least 4)?
+                </p>
+                <p><var name="Compute(C(8,2))" width="5"/></p>
+                <instruction>(you can use C(n,k) for <m>\binom{n}{k}</m>)</instruction>
+                <p>
+                  How many ways can we distribute the cookies if Albie <em>does not</em> get more than 3 cookies?
+                </p>
+                <p>
+                  <var name="Compute(C(12,2)-C(8,2))" width="5" />
+                </p>
+              </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  How many ways can we distribute the cookies if Bertie <em>does</em> get more than 3 cookies?
+                </p>
+                <p>
+                  <var name="Compute(C(8,2))" width="5" />
+                </p>
+              </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  How many ways can we distribute the cookies if both Albie and Bertie <em>do</em> get more than 3 cookies?
+                </p>
+                <p>
+                  <var name="Compute(C(4,2))" width="5" />
+                </p>
+              </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  Using the Principle of Inclusion/Exclusion for two sets, how many ways can we distribute the cookies if <em>at least one</em> of Albie or Bertie gets more than 3 cookies?  So either Albie gets more than 3 cookies, Bertie gets more than 3 cookies, or both get more than 3 cookies.
+                </p>
+                <p>
+                  <var name="Compute(C(8,2)+C(8,2)-C(4,2))" width="5" />
+                </p>
+              </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  How many ways can we distribute the cookies if <em>neither</em> Albie nor Bertie gets more than 3 cookies?
+                </p>
+                <p>
+                  <var name="Compute(C(12,2)-(C(8,2)+C(8,2)-C(4,2)))" width="5" />
+                </p>
+              </statement>
+            </task>
+          </webwork>
         </exercise>
         
       </worksheet>
     </subsection> 
 
-     <subsection xml:id="subsec-">
+     <subsection xml:id="subsec-multset-pie">
       <title>PIE for multisets</title>
       
 
