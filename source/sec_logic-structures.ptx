@@ -62,21 +62,7 @@
         </p>
       </introduction>
       <exercise>
-        <webwork>
-          <pg-code>
-            $B1 = Set(1,3,5,7,9);
-            $A1 = Set(1,3,5) -> cmp(
-              checker => sub {
-                my ($correct, $student, $self) = @_;
-                return (Set($student)->is_subset($B1) &amp;&amp; $student->size == 3);
-              }
-            );
-            $A2 = Set(1,2,3,4,5,6,7,8,9,10);
-            $B2 = Set(1,2,3,4,5,6,7,8,9,10);
-            $yes = PopUp(["?", "yes", "no"], 1);
-          </pg-code>
-        
-          <introduction>
+        <introduction>
             <p>
               Remember that a set is just a collection of elements.  Here are two definitions about sets:
               <ol>
@@ -94,6 +80,51 @@
               Let's build some examples.
             </p>
           </introduction>
+        <webwork>
+          <pg-code>
+            $B1 = Set(1,3,5,7,9);
+            $A1 = Set(1,3,5) -> cmp(
+              list_checker => sub {
+                my ($correct, $student, $ansHash, $value) = @_;
+                my $stSet = $ansHash->{student_value};
+                my $size = $stSet->length();
+                my $test = $stSet->isSubsetOf($B1);
+                Value->Error("The set must have 3 elements") if $size != 3;
+                Value->Error("The set must be a subset of B") if !$test;
+                return $size;
+              }
+            );
+            $twosets = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+              singleResult => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                my $stSet1 = Set($student->[0]);
+                my $stSet2 = Set($student->[1]);
+                my $test = $stSet1->isSubsetOf($stSet2);
+                my $stSetUnion = Set($stSet1 + $stSet2);
+                Value->Error("The sets must be different") if $stSet1 == $stSet2;
+                $self->setMessage(2,"The union of \(A\) and \(B\) is $stSetUnion but must be \(B\)") if !test;
+                return $test;
+              }
+            );
+            $twosets2 = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+              singleResult => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                my $stSet1 = Set($student->[0]);
+                my $stSet2 = Set($student->[1]);
+                my $test = $stSet1->isSubsetOf($stSet2);
+                my $stSetUnion = Set($stSet1 + $stSet2);
+                Value->Error("The sets must be different") if $stSet1 == $stSet2;
+                $self->setMessage(2,"The union of \(A\) and \(B\) is $stSetUnion but should not be \(B\)") if $test;
+                return !$test;
+              }
+            );
+            $yes = PopUp(["?", "yes", "no"], "yes");
+            $no = PopUp(["?", "yes", "no"], "no");
+          </pg-code>
+        
+
           <task>
             <statement>
               <p>
@@ -113,10 +144,10 @@
           <task>
             <statement>
               <p>
-                Give an example of two sets <m>A</m> and <m>B</m> such that <m>A \cup B = B</m>.
+                Give an example of two sets distinct sets <m>A</m> and <m>B</m> such that <m>A \cup B = B</m>.
               </p>
               <p>
-                <m>A = </m> <var name="$A2" width="20"/>; <m>B = </m> <var name="$B2" width="20"/>
+                <m>A = </m> <var name="$twosets" width="20"/>; <m>B = </m> <var name="$twosets" width="20"/>
               </p>
               <p>
                 For the example you gave, is <m>A \subseteq B</m>?  <var name="$yes" form="popup" />
@@ -126,17 +157,14 @@
           <task>
             <statement>
               <p>
-                Find examples of sets <m>A</m> and <m>B</m> such that <m>A \cup B \subset B</m>. 
+                Find examples of sets <m>A</m> and <m>B</m> such that <m>A \cup B \ne B</m>. 
               </p>
               <p>
-                <m>A = </m> <var name="$A3" width="20"/>; <m>B = </m> <var name="$B3" width="20"/>.
+                <m>A = </m> <var name="$twosets2" width="20"/>; <m>B = </m> <var name="$twosets2" width="20"/>.
               </p>
-              <instruction>(if there are no such sets, enter DNE for both)</instruction>
+              <instruction>(if there are no such sets, enter DNE in both blanks)</instruction>
               <p>
-                Find examples of sets <m>A</m> and <m>B</m> such that <m>A \cup B \not\subseteq B</m>.
-              </p>
-              <p>
-                <m>A = </m> <var name="$A4" width="20"/>; <m>B = </m> <var name="$B4" width="20"/>.
+                For the example you gave, is <m>A \subseteq B</m>?  <var name="$no" form="popup" />
               </p>
             </statement>
           </task>
@@ -185,20 +213,35 @@
             </choice>
         </choices>
       </exercise>
+
       <exercise>
+        <introduction>
+          <p>
+            For any function <m>f: \N \to \N</m> and any set <m>A \subseteq \N</m>, we can define the <term>image</term> of <m>A</m> under <m>f</m> to be the set of all outputs of <m>f</m> when the input is an element of <m>A</m>.  We write this as <m>f(A) = \{f(x) \st x \in A\}</m>.  
+          </p>
+          <p>
+            For the following tasks, let's explore the function <m>f: \N \to \N</m> defined by <m>f(x) = x^2 - 3x + 8</m>.
+          </p>
+        </introduction>
         <webwork>
           <pg-code>
-            
+            $fA = Set(6,8);
+            $fB = Set(6,12,24);
+            $fAuB = Set($fA + $fB);
+            $AuB = Set(1,2,3,4,6);
+            $twosets = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+              singleResult => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                my $stSet1 = Set($student->[0]);
+                my $stSet2 = Set($student->[1]);
+                my $test = $stSet1->isSubsetOf($stSet2);
+                Value->Error("The sets must be different") if $stSet1 == $stSet2;
+                $self->setMessage(2,"\(A\) is not a subset of \(B\)") if !test;
+                return $test;
+              }
+            );
           </pg-code>
-        
-          <introduction>
-            <p>
-              For any function <m>f: \N \to \N</m> and any set <m>A \subseteq \N</m>, we can define the <term>image</term> of <m>A</m> under <m>f</m> to be the set of all outputs of <m>f</m> when the input is an element of <m>A</m>.  We write this as <m>f(A) = \{f(x) \st x \in A\}</m>.  
-            </p>
-            <p>
-              For the following tasks, let's explore the function <m>f: \N \to \N</m> defined by <m>f(x) = x^2</m>.
-            </p>
-          </introduction>
 
           <task>
             <statement>
@@ -207,9 +250,6 @@
               </p>
               <p>
                 <m>f(A) = </m> <var name="$fA" width="20"/>; <m>f(B) = </m> <var name="$fB" width="20"/>; <m>f(A) \cup F(b) = </m> <var name="$fAuB" width="20"/>.
-              </p>
-              <p>
-                
               </p>
             </statement>
           </task>
@@ -221,6 +261,23 @@
               <p>
                 <m>A \cup B = </m> <var name="$AuB" width="20"/>; <m>f(A \cup B) = </m> <var name="$fAuB" width="20"/>.
               </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Give an example of two distinct sets <m>A</m> and <m>B</m> such that <m>A \subseteq B</m> and <m>f(A) \subseteq f(B)</m>.
+              </p>
+              <p>
+                <m>A = </m><var name="$twosets" width="20"/>; <m>B = </m><var name="$twosets" width="20"/>.
+              </p>
+              <p>
+                Give an example of two distinct sets <m>A</m> and <m>B</m> such that <m>A \subset B</m> but <m>f(A) \not\subseteq f(B)</m>.
+              </p>
+              <p>
+                <m>A = </m><var name="String('DNE')" width="20"/>; <m>B = </m><var name="String('DNE')" width="20"/>.
+              </p>
+              <instruction>(if there are no such sets, enter DNE in both blanks)</instruction>
             </statement>
           </task>
         </webwork>
@@ -288,7 +345,7 @@
       To give an example of how we can apply the definition of subset in a more general setting, let's prove a basic fact about subsets.
     </p>
 
-    <proposition xml:id="prop-subset">
+    <proposition xml:id="prop-subset-transitive">
       <statement>
         <p>
           For any sets <m>A</m>, <m>B</m>, and <m>C</m>, if <m>A \subseteq B</m> and <m>B \subseteq C</m>, then <m>A \subseteq C</m>.
@@ -308,6 +365,36 @@
     <p>
       Let's now prove this fact about numbers: every multiple of 9100 is also a multiple of 13.  We could factor 9100, but here is an easier way.  The set of multiples of 9100 is a subset of the set of multiples of 91.  And the set of multiples of 91 is a subset of the set of multiples of 13.  Now apply the proposition above.
     </p>
+
+    <p>
+      The proof of <xref ref="prop-subset-transitive"/> is what is sometimes called an <term>element chasing</term> proof.  By the definition of subset, <m>A \subset B</m> means every element of <m>A</m> is an element of <m>B</m>, or equivalently, for all <m>x</m>, if <m>x</m> is an element of <m>A</m> then <m>x</m> is an element of <m>B</m>.  One way to prove this is to <q>chase</q> the element <m>x</m> from <m>A</m> to <m>B</m>.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Prove that if <m>A \subseteq B</m>, then <m>A \cup B \subseteq B</m>.
+          Recall that <m>A \cup B</m> is the <term>union</term> of sets <m>A</m> and <m>B</m>, and contains all elements that are in <m>A</m> or <m>B</m> or both.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We will write a direct proof.  So we will assume that <m>A \subseteq B</m> and prove that <m>A \cup B \subseteq B</m>.  Our desired conclusion is a statement about subsets, so let's do an element chasing proof for it.
+        </p>
+
+        <proof>
+          <p>
+            Let <m>A</m> and <m>B</m> be sets and assume <m>A \subseteq B</m>.  Now let <m>x</m> be an element in <m>A \cup B</m>.  This means that <m>x</m> is an element of <m>A</m>, or <m>x</m> is an element of <m>B</m>, or both.<fn>From the definition of <term>union</term>.</fn>
+          </p>
+          <p>
+            Consider the cases.  If <m>x</m> is an element of <m>A</m>, then since <m>A \subseteq B</m>, we know that <m>x</m> is an element of <m>B</m>.  On the other hand, if <m>x</m> is not an element of <m>A</m>, then <m>x</m> must be an element of <m>B</m> (since <m>x</m> is in <m>A \cup B</m>).  In either case, <m>x</m> is an element of <m>B</m>.  Therefore, <m>A \cup B \subseteq B</m>.
+          </p>
+        </proof>
+        <p>
+          We can actually prove a strong statement: <m>A \subset B</m> if and only if <m>A \cup B = B</m>.  You are asked to do this in the exercises.
+        </p>
+      </solution>
+    </example>
 
   </subsection>
   
@@ -429,12 +516,36 @@
       </statement>
       <solution>
         <p>
-          
           No, not necessarily (although for some sets of students it could be). For example, suppose Alice has another class with Bruce, say Introduction to Programming.  Carlos is not in Intro to Programming, but he and Bruce are both in Organic Chemistry.  So then Alice<m>\sim</m>Bruce and Bruce<m>\sim</m>Carlos, but it might not be the case that Alice<m>\sim</m>Carlos (since Alice need not be in Organic Chemistry with Carlos).  
         </p>
       </solution>
     </example>
-    
+    <p>
+      Proving that a relation is <em>not</em> transitive takes nothing more than finding a counterexample, which means finding three elements <m>a</m>, <m>b</m>, and <m>c</m> such that <m>a \sim b</m>, <m>b \sim c</m>, but <m>a \not\sim c</m> (remember, the only way for an implication to be false is for the hypothesis to be true and the conclusion to be false).
+    </p>
+
+    <p>
+      Perhaps slightly more interesting would be proof that an relation is transitive.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Consider the set of all students in your Discrete Mathematic class and define the relation <m>\sim</m> that holds of students <m>a</m> and <m>b</m> (so <m>a \sim b</m> is true) provided <m>a</m> is taller than <m>b</m>.  Prove that this relation is transitive.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The definition of transitive is an implication, so we can try a direct proof.
+        </p>
+
+        <proof>
+          <p>
+            Let <m>a</m>, <m>b</m>, and <m>c</m> be arbitrary students in your Discrete Math course.  Assume, <m>a \sim b</m> and <m>b \sim c</m>.  That means that <m>a</m> is taller than <m>b</m>, and that <m>b</m> is taller than <m>c</m>.  But then surely <m>a</m> must be even taller than <m>c</m> than they are taller than <m>b</m>, so we have that <m>a \sim c</m> is true as well.  Thus <m>\sim</m> is transitive on this set.
+          </p>
+        </proof>
+      </solution>
+    </example>
   </subsection>
 
   
