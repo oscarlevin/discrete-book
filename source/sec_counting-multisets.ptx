@@ -18,13 +18,13 @@
 		<ol>
 			<li>
 				<p>
-          Identify counting problems that can be solved using sticks and stones.
+          Identify counting problems whose outcomes can be represented by multisets.
 				</p>
 			</li>
 
 			<li>
 				<p>
-          Represent outcomes of counting problems using sticks and stones diagrams.
+          Represent outcomes of counting problems using multisets and sticks and stones diagrams.
 				</p>
 			</li> 
 			<li>
@@ -38,84 +38,133 @@
     <title>Section Preview</title>
     
     
-    <investigation>
+    <investigation xml:id="investigate-counting-multisets">
       <p>
-        Suppose you have some number of identical Rubik's cubes to distribute to your friends.
-        Imagine you start with a single row of the cubes.
+        Skittles come in five <q>flavors</q>.  How many different handfuls of 8 skittles are possible?
+      </p>
 
-        <ol>
-          <li>
-            <p>
-              Find the number of different ways you can distribute the cubes provided:
-            </p>
+      <p>
+        Suppose you have baked 8 identical cupcakes to give to your top five favorite discrete math teachers.  How many ways can you distribute the cupcakes?
+      </p>
 
-            <p>
-              <ol>
-                <li>
-                  <p>
-                    You have 3 cubes to give to 2 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 4 cubes to give to 2 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 5 cubes to give to 2 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 3 cubes to give to 3 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 4 cubes to give to 3 people.
-                  </p>
-                </li>
-
-                <li>
-                  <p>
-                    You have 5 cubes to give to 3 people.
-                  </p>
-                </li>
-              </ol>
-            </p>
-          </li>
-
-          <li>
-            <p>
-              Make a conjecture about how many different ways you could distribute 7 cubes to 4 people.
-              Explain.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              What if each person were required to get
-              <em>at least one</em>
-              cube?
-              How would your answers change?
-            </p>
-          </li>
-        </ol>
+      <p>
+        Why are the answers to the two counting questions above the same?
       </p>
     </investigation>
 
+    <p>
+      We know how to solve lots of types of counting problems now.  If each outcome in a set of outcomes we are counting can be represented by a sequence, we count it as a permutation (if the terms in the sequence don't repeat) or use the product principle (if they do).  If we are counting outcomes for which we don't distinguish between different arrangements of the terms (if order doesn't matter) then we think of the outcome as a set and count it as a combination.  However, sets never allow an element to be repeated; each element is either in a set or not.  
+    </p>
+
+    <p>
+      So we have a glaring hole in our counting repertoire.  What if we want to count outcomes that are collections of terms for which we do not distinguish between the order the terms appear in, but can contain terms more than once?  In other words, how can we complete the following table?
+    </p>
+
+    <tabular halign="center" valign="middle">
+      <col right="medium"/><col right="minor"/><col/>
+      <row>
+        <cell></cell><cell colspan="2">Distinguished Arrangements?</cell>
+      </row>
+      <row bottom="medium">
+        <cell></cell><cell>Yes</cell><cell>No</cell>
+      </row>
+      <row bottom="minor">
+        <cell>Repeats OK</cell><cell><line>Sequences</line><line>Prod. Principle</line><line><m>n^k</m></line></cell><cell></cell>
+      </row>
+      <row>
+        <cell>No repeats</cell><cell><line>Sequences</line><line>Permutations</line><line><m>P(n,k)</m></line></cell><cell><line>Sets/</line><line>Combinations</line><line><m>\binom{n}{k}</m></line></cell>
+      </row>
+    </tabular>
+
+    <p>
+      What we want to count are some sort of set-like structure but one that <em>does</em> permit elements in the set to appear more than once.  Such structures are called <term>multiset</term>.
+    </p>
+
+    <definition xml:id="def-multiset">
+      <statement>
+        <p>
+          A <term>multiset</term> is an unordered collection of elements, each of which can appear any number of times.  The number of times an element appears is called its <term>multiplicity</term>.
+        </p>
+        <p>
+          Multisets are written using the same notation as sets as a comma-separated list in braces, such as <m>\{1, 2, 2, 5\}</m>
+        </p>
+      </statement>
+    </definition>
+    <p>
+      In this section we will explore how multisets can be used to represent a wide range of counting problems.  We will then develop a way to translate multisets into a special type of bit-string so that we can use the numbers in Pascal's triangle to count the number of multisets.
+    </p>
     <worksheet xml:id="PA-couting-multisets">
       <title>Preview Activity</title>
       <exercise>
         <statement>
           <p>
-            Coming soon.
-          </p>
+            Suppose you have some number of identical Rubik's cubes to distribute to your friends.
+            Imagine you start with a single row of the cubes.
+    
+            <ol>
+              <li>
+                <p>
+                  Find the number of different ways you can distribute the cubes provided:
+                </p>
+    
+                <p>
+                  <ol>
+                    <li>
+                      <p>
+                        You have 3 cubes to give to 2 people.
+                      </p>
+                    </li>
+    
+                    <li>
+                      <p>
+                        You have 4 cubes to give to 2 people.
+                      </p>
+                    </li>
+    
+                    <li>
+                      <p>
+                        You have 5 cubes to give to 2 people.
+                      </p>
+                    </li>
+    
+                    <li>
+                      <p>
+                        You have 3 cubes to give to 3 people.
+                      </p>
+                    </li>
+    
+                    <li>
+                      <p>
+                        You have 4 cubes to give to 3 people.
+                      </p>
+                    </li>
+    
+                    <li>
+                      <p>
+                        You have 5 cubes to give to 3 people.
+                      </p>
+                    </li>
+                  </ol>
+                </p>
+              </li>
+    
+              <li>
+                <p>
+                  Make a conjecture about how many different ways you could distribute 7 cubes to 4 people.
+                  Explain.
+                </p>
+              </li>
+    
+              <li>
+                <p>
+                  What if each person were required to get
+                  <em>at least one</em>
+                  cube?
+                  How would your answers change?
+                </p>
+              </li>
+            </ol>
+            </p>
         </statement>
       </exercise>
       
