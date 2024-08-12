@@ -151,352 +151,272 @@
 
       </p>
       <worksheet xml:id="PA-gt-intro">
+        <title>Preview Activity</title>
         <introduction>
           <p>
-            Here are a few situations you can represent with graphs:
+            To get a feel for graphs and the types of questions we want to ask about them, let's explore four examples of graphs.
           </p>
-        </introduction>
+          <sbsgroup width="25%">
+            <sidebyside>
+              <p>
+                <m>G_1</m>:
+              </p>
+              <p>
+                <m>G_2</m>:
+              </p>
+            </sidebyside>
+          <sidebyside valign="middle">
+            <image>
+              <shortdescription>Petersen graph: ten vertices each with three edges. Five of the vertices form a 5-pointed star, the other five a pentagon, edges connecting the vertices of the star and the pentagon.</shortdescription>
+              <latex-image label="img-intro-petersen">
+                \begin{tikzpicture}[scale=.5]
+                \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
+                \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+                \foreach \x in {18, 90, 162, 234, 306}
+                \draw  (\x:1) \v -- (\x:2) \v;
+              \end{tikzpicture}
+              </latex-image>
+            </image>
+
+            <image>
+              <latex-image label="img-graph-labeled">
+                \begin{tikzpicture}
+                \coordinate (A) at (-1,0);
+                \coordinate (B) at (-1, 1);
+                \coordinate (C) at (0,1);
+                \coordinate (D) at (0,0);
+                \coordinate (E) at (1,0);
+                \coordinate (F) at (1,1);
+      
+                \draw (A) node[below] {\(v_6\)} -- (B) node[above] {\(v_1\)} (C) node[above] {\(v_2\)}
+                -- (D) node[below] {\(v_5\)} (E) node[below] {\(v_4\)} -- (F) node[above] {\(v_3\)} -- (D) -- (B) (A) -- (C) -- (E);
+                \foreach \x in {(A), (B), (C), (D), (E), (F)}{
+                \fill \x \v;
+                }
+                \end{tikzpicture}
+              </latex-image>
+                <shortdescription>
+                A graph with six vertices arranged in two rows of three. The top vertices are labeled v1,
+                v2, v3 from left to right. The bottom vertices are labeled v6, v5, v4 from left to right.
+                Three edges connect each vertex in the top row to the vertex below it. Four more edges
+                connect vertices on the top row and along the bottom row in two X configurations.
+              </shortdescription>
+            </image>
+          </sidebyside>
+
+          </sbsgroup>
+
+          <sbsgroup width="35%">
+            <sidebyside>
+              <p>
+                <m>G_3</m>:
+              </p>
+              <p>
+                <m>G_4</m>:
+              </p>
+            </sidebyside>
+            <sidebyside>
+          <tabular>
+            <col right="minor" halign="right"/><col/>
+            <row header="yes" bottom="minor">
+              <cell>vertex</cell><cell>adjacent to</cell>
+            </row>
+            <row>
+              <cell><m>a</m></cell><cell><m>b, c</m></cell>
+            </row>
+            <row>
+              <cell><m>b</m></cell><cell><m>a,f</m></cell>
+            </row>
+            <row>
+              <cell><m>c</m></cell><cell><m>a, d, e</m></cell>
+            </row>
+            <row>
+              <cell><m>d</m></cell><cell><m>c,e,f</m></cell>
+            </row>
+            <row>
+              <cell><m>e</m></cell><cell><m>c,d</m></cell>
+            </row>
+            <row>
+              <cell><m>f</m></cell><cell><m>b,d</m></cell>
+            </row>
+          </tabular>
+
+          <p>
+            <me>
+              \begin{pmatrix}
+                0 \amp 0 \amp 1 \amp 0 \amp 1 \amp 0 \\
+                0 \amp 0 \amp 0 \amp 0 \amp 0 \amp 1 \\
+                1 \amp 0 \amp 0 \amp 0 \amp 0 \amp 0 \\
+                0 \amp 0 \amp 0 \amp 0 \amp 1 \amp 1 \\
+                1 \amp 0 \amp 0 \amp 1 \amp 0 \amp 0 \\
+                0 \amp 1 \amp 0 \amp 1 \amp 0 \amp 0
+              \end{pmatrix}
+            </me>
+          </p>
+
+          </sidebyside>
+        </sbsgroup>
         
-            <exercise>
-              <statement>
-                <p>
-                  Al, Bob, Cam, Dan,
-                  and Euler are all members of the social networking website <em>Facebook</em>.
-                  The site allows members to be <q>friends</q> with each other.
-                  It turns out that Al and Cam are friends, as are Bob and Dan.
-                  Euler is friends with everyone.
-                  Represent this situation with a graph.
-                </p>
-              </statement>
-              <solution>
-                <p>
-                  Each person will be represented by a vertex and each friendship will be represented by an edge.
-                  That is, two vertices will be adjacent
-                  (there will be an edge between them)
-                  if and only if the people represented by those vertices are friends.
-                  <!-- We get the following graph: -->
-                </p>
+        <p>
+          The graph <m>G_3</m> is presented as an <term>adjacency list</term> where each vertex gets a list of which other vertices it is adjacent to.  The graph <m>G_4</m> is presented as an <term>adjacency matrix</term> where the rows and columns correspond to the vertices and the entries are 1 if the vertices are adjacent and 0 otherwise.  Before answering the questions below, it might be helpful to draw a more traditional representation of these graphs.
+        </p>
+      </introduction>
+
+      <exercise>
+        <webwork>
+          <pg-code>
+            
+          </pg-code>
         
+          <statement>
+            <p>
+              First, let's just count the number of vertices and edges in each graph.
+            </p>
+            <p>
+              Number of vertices: <m>G_1</m>: <var name="10" width="5"/>; <m>G_2</m>: <var name="6" width="5"/>; <m>G_3</m>: <var name="6" width="5"/>; <m>G_4</m>: <var name="6" width="5"/>.
+            </p>
+            <p>
+              Number of edges: <m>G_1</m>: <var name="15" width="5"/>; <m>G_2</m>: <var name="7" width="5"/>; <m>G_3</m>: <var name="7" width="5"/>; <m>G_4</m>: <var name="5" width="5"/>.
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
+      <exercise>
+        <webwork>
+          <pg-code>
+            
+          </pg-code>
         
+          <statement>
+            <p>
+              We call that the number of edges <term>incident</term> to a particular vertex (i.e., the number of edges <q>coming out of</q> the vertex) the <term>degree</term> of the vertex.  A list the degrees of all the vertices in non-increasing order is called a <term>degree sequence</term> for the graph.  Find the degree sequence for each graph.
+            </p>
+            <p>
+              <m>G_1</m> has degree sequence: <var name="List(3,3,3,3,3,3,3,3,3,3)" width="25"/>. 
+            </p>
+            
+            <p>
+              <m>G_2</m> has degree sequence: <var name="List(3,3,2,2,2,2)" width="25"/>. 
+            </p>
+              
+            <p>
+              <m>G_3</m> has degree sequence: <var name="List(3,3,2,2,2,2)" width="25"/>.
+            </p>
+              
+            <p>
+              <m>G_4</m> has degree sequence: <var name="List(2, 2, 2, 2, 1 ,1)" width="25"/>.
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
+
+      <exercise>
+        <webwork>
+          <pg-code>
+            $cb1234 = CheckboxList([
+              [
+                  "\(G_1\)","\(G_2\)","\(G_3\)","\(G_4\)" 
+              ],
+              "None of the above"
+              ],
+              [0, 1, 2, 3]
+            );
+            $cb123 = CheckboxList([
+              [
+                  "\(G_1\)","\(G_2\)","\(G_3\)","\(G_4\)" 
+              ],
+              "None of the above"
+              ],
+              [0, 1, 2]
+            );
+          </pg-code>
         
-                  <image width="20%" xml:id="gt-facebook">
+          <introduction>
+            <p>
+              We often care about paths between vertices in a graph.  A graph is <term>connected</term> if there is a path between every pair of vertices.  Sometimes there is a path that starts at a vertex and eventually comes back to itself, which is called a <term>cycle</term>.  
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                Which of the graphs are connected?
+                <var name="$cb1234" form="checkboxes"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Which of the graphs contain cycles?
+                <var name="$cb123" form="checkboxes"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Graphs that are connected and contain no cycles are called <term>trees</term>.  For each graph, how many edges must you remove to turn it into a tree? (If it is already a tree, the answer would be 0.)
+              </p>
+              <p>
+                <m>G_1</m>: <var name="6" width="5"/>; <m>G_2</m>: <var name="2" width="5"/>; <m>G_3</m>: <var name="2" width="5"/>; <m>G_4</m>: <var name="0" width="5"/>.
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+      <exercise>
+        <webwork>
+          <pg-code>
+            $cb234 = CheckboxList([
+            [
+                "\(G_1\)","\(G_2\)","\(G_3\)","\(G_4\)" 
+            ],
+            "None of the above"
+            ],
+            [1, 2, 3]
+          );
+          </pg-code>
         
-                    <latex-image>
-                      \begin{tikzpicture}[scale=0.7]
-                        \draw(-1, 0) \vl{C} -- (0,1) \vb{E} -- (-1,2) \vl{A} -- (-1,0)(1,0) \vr{D} -- (0,1)  -- (1,2) \vr{B} -- (1,0);
-                      \end{tikzpicture}
-                    </latex-image>
-                    <description>
-                      A graph with 4 vertices forming a square and fifth vertex centered between them.  Vertices are labeled: A (top left), B (top right), C (bottom right), D (bottom left), and E (center).
-                    </description>
-                  </image>
+          <statement>
+            <p>
+              For which of the graphs is it possible to draw the graph in such a way that no edges cross?
+
+              <var name="$cb234" form="checkboxes"/>
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
+      <exercise>
+        <webwork>
+          <pg-code>
+            
+          </pg-code>
         
-              </solution>
-            </exercise>
-        
-            <exercise>
-              <idx><h>houses and utilities puzzle</h></idx>
-              <idx><h>puzzle</h><h>houses and utilities</h></idx>
-              <statement>
-                <p>
-                  Each of three houses must be connected to each of three utilities.
-                  Is it possible to do this without any of the utility lines crossing?
-                </p>
-              </statement>
-              <solution>
-                <p>
-                  We will answer this question in <xref ref="sec_gt-planar"/>.
-                  For now, notice how we would ask this question in the context of graph theory.
-                  We are really asking whether it is possible to redraw the graph below without any edges crossing.
-                  Think of the top row as the houses,
-                  bottom row as the utilities.
-                </p>
-        
-                <image width="20%" xml:id="gt-k33">
-        
-                  <latex-image>
-                    \begin{tikzpicture}[yscale=.8]
-                      \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
-                    \end{tikzpicture}
-                  </latex-image>
-                  <description>
-                    A graph with six vertices arranged in two rows of three.  There are nine edges, connecting each dot in the top row to each dot in the bottom row.
-                  </description>
-                </image>
-        
-              </solution>
-            </exercise>
-      </worksheet>
+          <statement>
+            <p>
+              Suppose we color each vertex of a graph so that adjacent vertices always have different colors.  The smallest number of colors needed to do this is called the <term>chromatic number</term> of the graph.  Find the chromatic number for each graph.
+            </p>
+            <p>
+              <m>G_1</m>: <var name="3" width="5"/>; <m>G_2</m>: <var name="2" width="5"/>; <m>G_3</m>: <var name="3" width="5"/>; <m>G_4</m>: <var name="2" width="5"/>.
+            </p>
+            <p>
+              Note: If the graphs represented friendships between people, then the chromatic number would tell us the minimum number of groups we would need if we wanted to divide up everyone into groups of people who were not yet friends.
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
+
+    </worksheet>
     </subsection>
+
+
+
+
     <subsection>
       <title>What is a graph?</title>
       
       
-  <investigation>
-    <p>
-      Which (if any) of the graphs below are the same?
-    </p>
 
-    <sidebyside width="18%" margins="auto" valign="bottom">
-
-      <image label="img-graph-k-2-3">
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (0,0);
-          \coordinate (C) at (1,0);
-          \coordinate (D) at (-.5,1);
-          \coordinate (E) at (.5,1);
-
-          \draw (A) -- (D) -- (B) -- (E) -- (C) -- (D) (A) -- (E);
-          \foreach \x in {(A), (B), (C), (D), (E)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          A graph with five vertices arranged in as a row of two on top and three on bottom. Edges
-          connect each vertex in the top row to each vertex in the bottom row.
-        </description>
-      </image>
-
-      <image label="img-graph-c5">
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (90+360/5:1);
-          \coordinate (B) at (90+2*360/5:1);
-          \coordinate (C) at (90+3*360/5:1);
-          \coordinate (D) at (90+4*360/5:1);
-          \coordinate (E) at (90:1);
-
-          \draw (A) -- (B) -- (C) -- (D) -- (E) -- (A);
-          \foreach \x in {(A), (B), (C), (D), (E)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          A graph with five vertices arranged in a pentagon. Each vertex is connected to its two
-          neighbors around the pentagon by edges.
-        </description>
-      </image>
-
-      <image label="img-graph-k-2-3-alt">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (0,1);
-          \coordinate (C) at (0,0);
-          \coordinate (D) at (0,-1);
-          \coordinate (E) at (1,0);
-
-          \draw (A) -- (B) -- (E) -- (C) -- (A) -- (D) -- (E);
-          \foreach \x in {(A), (B), (C), (D), (E)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>A
-          graph with five vertices arranged in a diamond with one vertex in the middle. The top
-          vertex is connected to the two outside vertices below it, which are connected to the
-          bottom vertex. The center vertex is connected to the two vertices to its left and right.</description>
-      </image>
-
-      <image label="img-graph-c5-star">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (90+360/5:1);
-          \coordinate (B) at (90+2*360/5:1);
-          \coordinate (C) at (90+3*360/5:1);
-          \coordinate (D) at (90+4*360/5:1);
-          \coordinate (E) at (90:1);
-
-          \draw (A) -- (C) -- (E) -- (B) -- (D) -- (A);
-          \foreach \x in {(A), (B), (C), (D), (E)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          A graph with five vertices arranged in a pentagon, with edges connecting each vertex to
-          the two vertices farthest away from it (forming a 5-pointed star).
-        </description>
-      </image>
-
-      <image label="img-graph-s4">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (0,1);
-          \coordinate (C) at (0,0);
-          \coordinate (D) at (0,-1);
-          \coordinate (E) at (1,0);
-
-          \draw (A) -- (C) -- (B) (D) -- (C) -- (E);
-          \foreach \x in {(A), (B), (C), (D), (E)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          Five vertices arranged as a diamond with one vertex in the center. The center vertex has
-          edges between it and each of the other vertices.
-        </description>
-      </image>
-
-    </sidebyside>
-
-    <p>
-      The graphs above are unlabeled.
-      Usually we think of a graph as having a specific set of vertices.
-      Which (if any) of the graphs below are the same?
-    </p>
-
-    <sidebyside width="18%" margins="auto" valign="bottom">
-
-      <image label="img-graph-labeled1">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (-1, 1);
-          \coordinate (C) at (0,0);
-          \coordinate (D) at (0,1);
-          \coordinate (E) at (1,0);
-          \coordinate (F) at (1,1);
-
-          \draw (A) node[below] {\(a\)} -- (B) node[above] {\(b\)} -- (C) node[below] {\(c\)} -- (D)
-          node[above] {\(d\)} -- (E) node[below] {\(e\)} -- (F) node[above] {\(f\)} -- (C) (A) --
-          (D);
-          \foreach \x in {(A), (B), (C), (D), (E), (F)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          A graph with six vertices arranged in two rows of three. The top vertices are labeled b,
-          d, f from left to right. The bottom vertices are labeled a, c, e from left to right. Three
-          edges connect each vertex in the top row to the vertex below it. Four more edges cross
-          from a top vertex to a bottom vertex just to the left or right (forming two X's).
-        </description>
-      </image>
-
-      <image label="img-graph-labeled2">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (-1, 1);
-          \coordinate (C) at (0,1);
-          \coordinate (D) at (0,0);
-          \coordinate (E) at (1,0);
-          \coordinate (F) at (1,1);
-
-          \draw (A) node[below] {\(a\)} -- (B) node[above] {\(b\)} -- (C) node[above] {\(c\)} -- (D)
-          node[below] {\(d\)} -- (E) node[below] {\(e\)} -- (F) node[above] {\(f\)} -- (C) (A) --
-          (D);
-          \foreach \x in {(A), (B), (C), (D), (E), (F)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          A graph with six vertices arranged in two rows of three. The top vertices are labeled b,
-          c, f from left to right. The bottom vertices are labeled a, d, e from left to right. Three
-          edges connect each vertex in the top row to the vertex below it. Four more edges connect
-          vertices along the top row and along the bottom row. Together this looks like two adjacent
-          squares.
-        </description>
-      </image>
-
-      <image label="img-graph-labeled3">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (-1, 1);
-          \coordinate (C) at (0,0);
-          \coordinate (D) at (0,1);
-          \coordinate (E) at (1,0);
-          \coordinate (F) at (1,1);
-
-          \draw (A) node[below] {\(a\)} -- (B) node[above] {\(c\)} -- (C) node[below] {\(e\)} -- (D)
-          node[above] {\(b\)} -- (E) node[below] {\(d\)} -- (F) node[above] {\(f\)} -- (C) (A) --
-          (D);
-          \foreach \x in {(A), (B), (C), (D), (E), (F)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-        <description>
-          A graph with six vertices arranged in two rows of three. The top vertices are labeled c,
-          b, f from left to right. The bottom vertices are labeled a, e, d from left to right. Three
-          edges connect each vertex in the top row to the vertex below it. Four more edges cross
-          from a top vertex to a bottom vertex just to the left or right (forming two X's).
-        </description>
-      </image>
-
-      <image label="img-graph-labeled4">
-
-				<latex-image>
-          \begin{tikzpicture}
-          \coordinate (A) at (-1,0);
-          \coordinate (B) at (-1, 1);
-          \coordinate (C) at (0,1);
-          \coordinate (D) at (0,0);
-          \coordinate (E) at (1,0);
-          \coordinate (F) at (1,1);
-
-          \draw (A) node[below] {\(v_6\)} -- (B) node[above] {\(v_1\)} -- (C) node[above] {\(v_2\)}
-          -- (D) node[below] {\(v_5\)} -- (E) node[below] {\(v_4\)} -- (F) node[above] {\(v_3\)} --
-          (C) (A) -- (D);
-          \foreach \x in {(A), (B), (C), (D), (E), (F)}{
-          \fill \x \v;
-          }
-          \end{tikzpicture}
-        </latex-image>
-          <description>
-          A graph with six vertices arranged in two rows of three. The top vertices are labeled v1,
-          v2, v3 from left to right. The bottom vertices are labeled b6, v5, v4 from left to right.
-          Three edges connect each vertex in the top row to the vertex below it. Four more edges
-          connect vertices along the top row and along the bottom row. Together this looks like two
-          adjacent squares.
-        </description>
-      </image>
-
-    </sidebyside>
-
-    <p>
-      Actually, all the graphs we have seen above are just <em>drawings</em> of graphs. A graph is
-      really an abstract mathematical object consisting of two sets <m>V</m> and <m>E</m> where <m>E</m> is a
-      set of 2-element subsets of <m>V</m>. Are the graphs below the same or different? <dl width="narrow">
-        <li>
-          <title>Graph 1:</title>
-          <p>
-            <m>V
-      = \{a, b, c, d, e\}</m>, </p>
-
-          <p>
-            <m>E = \{\{a,b\}, \{a, c\}, \{a,d\}, \{a,e\}, \{b,c\}, \{d,e\}\}</m>
-      .
-          </p>
-        </li>
-
-        <li>
-          <title>Graph 2:</title>
-          <p>
-            <m>V = \{v_1, v_2, v_3, v_4, v_5\}</m>, </p>
-
-          <p>
-            <m>E =
-      \{\{v_1, v_3\}, \{v_1, v_5\}, \{v_2, v_4\}, \{v_2, v_5\}, \{v_3, v_5\}, \{v_4, v_5\}\}</m>. </p>
-        </li>
-      </dl>
-    </p>
-  </investigation>
   <p>
     Before we start studying graphs,
     we need to agree upon what a graph is. While we almost always think of graphs as pictures
@@ -1720,6 +1640,77 @@
       </dl>
     </p>
   </paragraphs>
+
+
+  <example>
+    <statement>
+      <p>
+        Al, Bob, Cam, Dan,
+        and Euler are all members of the social networking website <em>Facebook</em>.
+        The site allows members to be <q>friends</q> with each other.
+        It turns out that Al and Cam are friends, as are Bob and Dan.
+        Euler is friends with everyone.
+        Represent this situation with a graph.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        Each person will be represented by a vertex and each friendship will be represented by an edge.
+        That is, two vertices will be adjacent
+        (there will be an edge between them)
+        if and only if the people represented by those vertices are friends.
+        We get the following graph:
+      </p>
+
+
+
+        <image width="20%" xml:id="gt-facebook">
+
+          <latex-image>
+            \begin{tikzpicture}[scale=0.7]
+              \draw(-1, 0) \vl{C} -- (0,1) \vb{E} -- (-1,2) \vl{A} -- (-1,0)(1,0) \vr{D} -- (0,1)  -- (1,2) \vr{B} -- (1,0);
+            \end{tikzpicture}
+          </latex-image>
+          <shortdescription>
+            A graph with 4 vertices forming a square and fifth vertex centered between them.  Vertices are labeled: A (top left), B (top right), C (bottom right), D (bottom left), and E (center).
+          </shortdescription>
+        </image>
+
+    </solution>
+  </example>
+
+  <example>
+    <idx><h>houses and utilities puzzle</h></idx>
+    <idx><h>puzzle</h><h>houses and utilities</h></idx>
+    <statement>
+      <p>
+        Each of three houses must be connected to each of three utilities.
+        Is it possible to do this without any of the utility lines crossing?
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We will answer this question in <xref ref="sec_gt-planar"/>.
+        For now, notice how we would ask this question in the context of graph theory.
+        We are really asking whether it is possible to redraw the graph below without any edges crossing.
+        Think of the top row as the houses,
+        bottom row as the utilities.
+      </p>
+
+      <image width="20%" xml:id="gt-k33">
+
+        <latex-image>
+          \begin{tikzpicture}[yscale=.8]
+            \draw (-1,1) \v -- (-1,0)\v  -- (0,1) \v -- (0,0) \v -- (1,1) \v -- (1,0) \v -- (0,1) -- (-1,0) -- (1,1) (1,0) -- (-1,1) -- (0,0);
+          \end{tikzpicture}
+        </latex-image>
+        <shortdescription>
+          A graph with six vertices arranged in two rows of three.  There are nine edges, connecting each dot in the top row to each dot in the bottom row.
+        </shortdescription>
+      </image>
+
+    </solution>
+  </example>
 </subsection>
 
 
