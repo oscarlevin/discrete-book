@@ -28,41 +28,68 @@
     <title>Section Preview</title>
     
     
-    <!-- <investigation>
-      <idx>domino</idx>
-      <p>
-        You have a large collection of <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
-        You want to arrange these to make a <m>1 \times 15</m> strip.
-        How many ways can you do this?
-        <ol>
-          <li>
-            <p>
-              Start by collecting data.
-              How many length <m>1</m> strips can you make? How many length <m>2</m> strips? How many length <m>3</m> strips? And so on.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              How are the <m>1\times 3</m> and <m>1 \times 4</m> strips related to the <m>1\times 5</m> strips?  Write down the recurrence relation.
-            </p>
-          </li>
-
-          <li>
-            <p>
-              How many <m>1\times 15</m> strips can you make?
-            </p>
-          </li>
-
-          <li>
-            <p>
-              What if I asked you to find the number of <m>1\times 1000</m> strips? Would the method you used to calculate the number of <m>1 \times 15</m> strips be helpful?
-            </p>
-          </li>
-        </ol>
-      </p>
-    </investigation> -->
     <investigation>
+      <idx>domino</idx>
+      <statement>
+        <p>
+          You have a large collection of <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
+          You want to arrange these to make a <m>1 \times 15</m> strip.
+          How many ways can you do this?
+         
+        </p>
+          
+        <p>
+          What if the squares come in three different colors and the dominos come in four different colors?  And why is this second question easier than the first?
+        </p>
+      </statement>
+      <hint>
+        <p>
+          Start by creating a recurrence relation.  How are the different <m>1\times 3</m> strips and <m>1 \times 4</m> strips related to the <m>1 \times 5</m> strips?
+        </p>
+      </hint>
+    </investigation>
+
+    <p>
+      In <xref ref="sec_seq-polynomial"/> we saw that if a sequence has some sequence of differences that is constant, then the sequence has a polynomial closed formula.  Are there sequences that never have constant differences?  And what would their closed formulas look like?
+    </p>
+
+    <p>
+      Consider the Fibonacci sequence:
+      <me>
+        0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots
+      </me>.
+      If we look at the first differences, we get this sequence:
+      <me>
+        1, 1, 2, 3, 5, 8, 13, 21, 34, \ldots
+      </me>,
+      which is the Fibonacci sequence itself.  This is not surprising, since the Fibonacci sequence is defined by the recurrence relation <m>F_n = F_{n-1} + F_{n-2}</m>.  That is saying precisely that to get the next turn of the sequence, you add to the current term... a term (the one before the previous term) in the sequence!  
+    </p>
+
+    <p>
+      Of course, if you take another difference, you will get the same sequence back, and again and again, so no <m>n</m>th differences will be constant.
+    </p>
+
+    <p>
+      Another sequence that has this behavior is the powers of 2:
+      <me>
+        1, 2, 4, 8, 16, 32, 64, 128, 256, 512, \ldots
+      </me>
+      which has differences
+      <me>
+        1, 2, 4, 8, 16, 32, 64, 128, 256, \ldots
+      </me>.
+      We can also see this from the recurrence relation, since <me>a_n = 2a_{n-1} = a_{n-1} + a_{n-1}</me>.  The rate of growth for this, and in fact any geometric sequence, is the sequence itself.
+    </p>
+
+    <p>
+      If you have studied Calculus, you may recall that the functions that have themselves (or close) as their rate of change (derivative, in the calculus context) are exactly the exponential functions.  Here too, geometric sequences, which have exponential closed formulas, have themselves as their rate of change.
+    </p>
+
+    <p>
+      In this section we will explore sequences that are changing at a rate proportional to the sequence itself, and see how these all have an exponential closed formula, or some variation of that.
+    </p>
+
+    <worksheet xml:id="PA-seq-exponential">
       <p>
         Consider the recurrence relation
         <me>
@@ -93,15 +120,98 @@
           </li>
         </ol>
       </p>
-    </investigation>
-
-    <worksheet xml:id="PA-seq-exponential">
       <exercise>
-        <statement>
+        <introduction>
           <p>
-            Coming soon.
+            Consider the recurrence relation
+            <me>
+              a_n = 5a_{n-1} - 6a_{n-2}
+            </me>.
+            Since the <m>n</m>th term is given as a combination of the two previous terms, we will need two initial terms to determine the sequence.  Different initial terms will give different sequences.
           </p>
-        </statement>
+        </introduction>
+        <webwork>
+          <pg-code>
+            Context()->variables->add(n => "Real");
+            $list1 = List(1, 2, 4, 8, 16)->cmp(
+              ordered=>1, showLengthHint=>1
+            );
+            $formula1 = Compute("2^n");
+            $list2 = List(1,3,9,27,81)->cmp(
+              ordered=>1, showLengthHint=>1
+            );
+            $formula2 = Compute("3^n");
+            $list3 = List(2, 5, 13, 35, 97)->cmp(
+              ordered=>1, showLengthHint=>1
+            );
+            $formula3 = Compute("2^n+3^n");
+          </pg-code>
+        <task>
+          <statement>
+            <p>
+              What sequence do you get if the initial conditions are <m>a_0 = 1</m>, <m>a_1 = 2</m>?  Give the first five terms (including 1 and 2).
+            </p>
+            <p>
+              <var name="$list1" width="25"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              Based on the first few terms, what is a closed formula for this sequence?
+            </p>
+            <p>
+              <m>a_n = </m><var name="$formula1" width="15"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              What sequence do you get if the initial conditions are <m>a_0 = 1</m>, <m>a_1 = 3</m>?  Give the first five terms.
+            </p>
+            <p>
+              <var name="$list2" width="25"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              Based on the first few terms, what is a closed formula for this sequence?
+            </p>
+            <p>
+              <m>a_n = </m><var name="$formula2" width="15"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              What sequence do you get if the initial conditions are <m>a_0 = 2</m>, <m>a_1 = 5</m>?  Give the first five terms.
+            </p>
+            <p>
+              <var name="$list3" width="25"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              Based on the first few terms, what is a closed formula for this sequence?
+            </p>
+            <p>
+              <m>a_n = </m><var name="$formula3" width="15"/>
+            </p>
+          </statement>
+          <hint>
+            <p>
+              How do the terms in this sequence relate to the terms in the previous two sequences?
+            </p>
+          </hint>
+          </task>
+        </webwork>
       </exercise>
     </worksheet>
   </subsection>
@@ -110,9 +220,25 @@
       <title>Summing Geometric Sequences: Multiply, Shift and
       Subtract</title>
       <idx><h>geometric sequence</h><h>summing</h></idx>
+
       <p>
-        To find the sum of a geometric sequence,
-        we cannot just reverse and add.
+        Suppose a candy machine dispenses candy in a geometric sequence by first giving 1 candy, then 2 candies, then 4, then 8, and so on.  How many candies will you have received total after 10 turns of the machine?
+      </p>
+
+      <p>
+        We can create the sequence of partials sum as <m>1, 1+2, 1+2+4, 1+2+4+8, \ldots</m> which gives
+        <me>
+           1, 3, 7, 15, 31, 63, \ldots
+        </me>
+        This is not a geometric sequence, but is almost.  In fact, if we add 1 to each term, we get what sure looks like the geometric sequence <m>2, 4, 8, 16, 32, 64,\ldots</m>, so we might guess that the closed for the sequence of sums is <m>2^{n+1} - 1</m>.  If this is correct, then the answer to the candy question would be <m>2^{11} - 1 = 2047</m>.
+      </p>
+
+      <p>
+        More intriguing though is the observation that the sequence of partial sums of a geometric sequence is again geometric-ish.  Let's consider how to find the sum of a geometric sequence in general. 
+      </p>
+
+      <p>
+        We cannot just reverse and add as we did for the sum of an arithmetic sequence.
         Do you see why?
         The reason we got the same term added to itself many times is because there was a constant difference.
         So as we added that difference in one direction,
@@ -285,9 +411,13 @@
       such as <m>a_n = a_{n-1} + 6a_{n-2}</m>.
       In other words,
       we want to find a function of <m>n</m> which satisfies <m>a_n - a_{n-1} - 6a_{n-2} = 0</m>.
-      Now iteration is too complicated,
-      but think just for a second what would happen if we <em>did</em> iterate.
-      In each step, we would, among other things,
+      Think about how we build up this sequence iteratively.
+      <md>
+        <mrow> a_2 \amp = a_1 + 6a_0 </mrow>
+        <mrow>a_3 \amp = a_2 + 6a_1 = a_1 + 6a_0 + 6a_1</mrow>
+        <mrow>a_4 \amp = a_3 + 6a_2 = a_1 + 6a_0 + 6a_1 + 6^2a_0 +6^2a_1</mrow>
+      </md>
+      Let's stop there and agree this is getting very complicated.  However, we do notice that in each step, we would, among other things,
       multiply a previous iteration by 6.
       So our closed formula would include <m>6</m> multiplied some number of times.
       Thus it is reasonable to guess the solution will contain parts that look geometric.
