@@ -61,7 +61,8 @@
 				<exercise>
 					<webwork>
 						<pg-code>
-							
+							Context()->variables->add('n');
+							$nthodd = Compute("2*n-1");
 						</pg-code>
 									<introduction>
 					<p>
@@ -88,12 +89,76 @@
 						<task>
 							<statement>
 								<p>
-									We can also compute the total number of dots by summing each region, from smallest to largest:
+									We can also compute the total number of dots by summing each <q>hook</q> region, from smallest to largest:
 								</p>
 								<p>
 									<var name="1" width="3"/> + <var name="3" width="3"/> + <var name="5" width="3"/> + <var name="7" width="3"/> + <var name="9" width="3"/> + <var name="11" width="4"/>. 
 								</p>
 							</statement>
+						</task>
+						<task>
+							<statement>
+								<p>
+									Yet another way to calculate the total number of dots is to group the terms of this sum.  
+								</p>
+								<p>
+									<m>1+11 = </m> <var name="12" width="3"/>; <m
+									>3+9 = </m> <var name="12" width="3"/>; <m>5+7 = </m> <var name="12" width="3"/>.
+								</p>
+								<p>
+									Since there are three pairs of sums, the total is <m>3 \cdot </m><var name="12" width="3"/> = <var name="36" width="5"/>.
+								</p>
+							</statement>
+						</task>
+						<task>
+							<statement>
+								<p>
+									If we generalize the diagram so it has <m>n</m> hooks, how many dots will be in the largest hook?
+								</p>
+								<p>
+									<var name="$nthodd" width="10"/>
+								</p>
+								<p>
+									How many dots will be in the second largest hook?
+								</p>
+								<p>
+									<var name="Compute($nthodd-2)" width="10"/>
+								</p>
+							</statement>
+						</task>
+						<task>
+							<statement>
+								<p>
+									What will the sum of the smallest and largest hooks be?
+								</p>
+								<p>
+									<var name="Compute('2n')" width="5"/>
+								</p>
+								<p>
+									What will the sum of the second smallest and second largest hooks be?
+								</p>
+								<p>
+									<var name="Compute('2n')" width="5"/>
+								</p>
+							</statement>
+						</task>
+						<task>
+							<statement>
+								<p>
+									If we continue adding pairs of hooks (next smallest plus next largest), how many pairs will we have?
+								</p>
+								<p>
+									<var name="Compute('n/2')" width="5"/>
+								</p>
+								<p>
+									Multiplying then, the total number of dots will be: <var name="Compute('n/2*2n')" width="10"/>.
+								</p>
+							</statement>
+							<hint>
+								<p>
+									Let's assume that <m>n</m> is even.  If it wasn't, then there would be a single <q>middle</q> hook that isn't added to anything, but this is counteracted by the fact that <m>n/2</m> would count a half hook sum.
+								</p>
+							</hint>
 						</task>
 					</webwork>
 				</exercise>
@@ -103,8 +168,33 @@
     <subsection>
       <title>Summing Arithmetic Sequences: Reverse and Add</title>
       <idx><h>arithmetic sequence</h><h>summing</h></idx>
+
+			<p>
+				Let's find the sum of the first <m>n</m> positive integers carefully.  Call that sum <m>T_n</m> and write it down twice, once in the usual order and once in reverse order.
+			</p>
+
+			<me>
+				\begin{array}{}
+				&amp;	T_n &amp; = &amp; 1 &amp; + &amp; 2   &amp;+ &amp; 3    &amp; + &amp; \cdots &amp; + &amp; n \\
+				+ &amp;	T_n &amp; =&amp; n &amp; + &amp;(n-1)&amp; + &amp; (n-2)&amp;  + &amp; \cdots &amp; + &amp;1 \\\hline
+					&amp; 2T_n &amp; =&amp; n+1 &amp; + &amp; n+1 &amp; + &amp; n+1 &amp;+&amp; \cdots &amp;+ &amp; n+1
+				\end{array}
+			</me>
+
+			<p>
+				We then added the two equations together.  The left-hand side is <m>2T_n</m>.  On the right-hand side, something great happens: all the terms of the sum are the same!  So instead of adding up a bunch of different numbers, we now just add a bunch of the same number.  That's a task that multiplication lives for!  There are <m>n</m> terms in the sum, so we get, 
+				<me>
+					2T_n = n(n+1)
+				</me>.
+				Solving for <m>T_n</m> gives us,
+				<me>
+					T_n = \frac{n(n+1)}{2}
+				</me>,
+				as expected.
+			</p>
+
       <p>
-        Here is a technique that allows us to quickly find the sum of an arithmetic sequence.
+        This technique will work for any arithmetic sum.
       </p>
 
       <example>
@@ -407,10 +497,7 @@
 
 	<subsection xml:id="subsec-seq-higher-poly">
 		<title>Higher Degree Polynomials</title>
-		
-		
-
-
+	
 		<p>
 			Since we know how to compute the sum of the first <m>n</m> terms of arithmetic sequences, we can compute the closed formulas for sequences which have an arithmetic sequence of differences between terms. But what if we consider a sequence which is the sum of the first <m>n</m> terms of a sequence which is itself the sum of an arithmetic sequence?
 		</p>
