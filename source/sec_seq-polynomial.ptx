@@ -31,65 +31,71 @@
 	
   <subsection>
     <title>Section Preview</title>
-      <investigation xml:id="investigation-seqcandy">
-        <p>
-          Your neighborhood grocery store has a candy machine full of Skittles.
-
-          <ol>
-            <li>
-              <p>
-                Suppose that the candy machine currently holds exactly 650 Skittles,
-                and every time someone inserts a quarter,
-                exactly 7 Skittles come out of the machine.
-
-                <ol>
-                  <li>
-                    <p>
-                      How many Skittles will be left in the machine after 20 quarters have been inserted?
-                    </p>
-                  </li>
-
-                  <li>
-                    <p>
-                      Will there ever be exactly zero Skittles left in the machine?
-                      Explain.
-                    </p>
-                  </li>
-                </ol>
-              </p>
-            </li>
-
-            <li>
-              <p>
-                What if the candy machine gives 7 Skittles to the first customer who put in a quarter, 10 to the second, 13 to the third, 16 to the fourth, etc.
-                How many Skittles has the machine given out after 20 quarters are put into the machine?
-              </p>
-            </li>
-
-            <li>
-              <p>
-                Now, what if the machine gives 4 Skittles to the first customer, 7 to the second, 12 to the third, 19 to the fourth, etc.
-                How many Skittles has the machine given out after 20 quarters are put into the machine?
-              </p>
-            </li>
-          </ol>
-        </p>
-      </investigation>
+		<investigation>
+			<p>
+				A standard <m>8 \times 8</m> chessboard contains 64 squares.
+				Actually, this is just the number of unit squares.
+				How many squares of all sizes are there on a chessboard?
+				Start with smaller boards:
+				<m>1\times 1</m>, <m>2 \times 2</m>, <m>3\times 3</m>, etc.
+				Find a formula for the total number of squares in an <m>n\times n</m> board.
+			</p>
+			</investigation>
 
 			<p>
 				We have seen that arithmetic sequences grow at a constant rate, and so their closed formulas are linear functions.  What about sequences that grow faster?  What if their rate of change (really the differences between terms) is itself growing at a constant rate?  
 			</p>
+
+			<p>
+				In <xref ref="sec_seq-growth"/> we claimed that the triangular numbers, the sum of the first <m>n</m> positive integers, have closed formula <me>T_n = \frac{n(n+1)}{2} = \frac{n^2}{2} + \frac{n}{2}</me>.  So this sequence, whose sequence of differences is arithmetic, is a degree 2 polynomial (a quadratic function). 
+			</p>
+
+			<p>
+				Our goal in this section is to explore this phenomenon.  We will verify that this really is the closed formula for the triangular numbers, extend it to other sequences with arithmetic differences, and then explore sequences that grow at even faster rates.
+			</p>
   
 			<worksheet xml:id="PA-seq-polynomial">
 				<title>Preview Activity</title>
-				
+
 				
 				<exercise>
-					<statement>
-						<p>
-							Coming soon.
-						</p>
-					</statement>
+					<webwork>
+						<pg-code>
+							
+						</pg-code>
+									<introduction>
+					<p>
+						While wondering the halls of the math department, you find yourself staring at the captivating artwork shown below.
+					</p>
+
+					<image width="40%">
+						<shortdescription>A square array of dots with L-shaped lines separating collections of odd numbers of dots.</shortdescription>
+						<latex-image label="img-sum-of-odds">
+							<xi:include href="assets/sum-of-odds.tex" parse="text" />
+						</latex-image>
+					</image>
+				</introduction>
+						<task>
+							<statement>
+								<p>
+									How many dots are in the figure?
+								</p>
+								<p>
+									The dots form a <var name="6" width="5"/> by <var name="6" width="5"/> square, for a total of <var name="36" width="5"/> dots.
+								</p>
+							</statement>
+						</task>
+						<task>
+							<statement>
+								<p>
+									We can also compute the total number of dots by summing each region, from smallest to largest:
+								</p>
+								<p>
+									<var name="1" width="3"/> + <var name="3" width="3"/> + <var name="5" width="3"/> + <var name="7" width="3"/> + <var name="9" width="3"/> + <var name="11" width="4"/>. 
+								</p>
+							</statement>
+						</task>
+					</webwork>
 				</exercise>
 			</worksheet>
     </subsection>
@@ -388,6 +394,9 @@
         </solution>
       </example>
 
+
+			
+
       <p>
         Notice that the closed formula for a sequence that has a arithmetic (i.e., linear) rate of change is a quadratic function.  Interesting....
       </p>
@@ -400,25 +409,15 @@
 		<title>Higher Degree Polynomials</title>
 		
 		
-		<investigation>
-		<p>
-			A standard <m>8 \times 8</m> chessboard contains 64 squares.
-			Actually, this is just the number of unit squares.
-			How many squares of all sizes are there on a chessboard?
-			Start with smaller boards:
-			<m>1\times 1</m>, <m>2 \times 2</m>, <m>3\times 3</m>, etc.
-			Find a formula for the total number of squares in an <m>n\times n</m> board.
-		</p>
-		</investigation>
+
 
 		<p>
-			So far we have seen methods for finding the closed formulas for arithmetic and geometric sequences. Since we know how to compute the sum of the first <m>n</m> terms of arithmetic sequences, we can compute the closed formulas for sequences which have an arithmetic sequence of differences between terms. But what if we consider a sequence which is the sum of the first <m>n</m> terms of a sequence which is itself the sum of an arithmetic sequence?
+			Since we know how to compute the sum of the first <m>n</m> terms of arithmetic sequences, we can compute the closed formulas for sequences which have an arithmetic sequence of differences between terms. But what if we consider a sequence which is the sum of the first <m>n</m> terms of a sequence which is itself the sum of an arithmetic sequence?
 		</p>
 
 		<p>
 			<idx><h>chessboard</h><h>counting squares on</h></idx>
-			Before we get too carried away,
-			let's consider an example: How many squares
+			How many squares
 			(of all sizes)
 			are there on a chessboard?
 			A chessboard consists of <m>64</m> squares,
@@ -850,7 +849,13 @@
     <sage> 
       <input>
         var('a b c')
-        solve([a+b+c==1, 8*a+4*b+2*c==5, 27*a+9*b+3*c==14],a,b,c)
+        solve(
+					[
+						a+b+c==1, 
+						8*a+4*b+2*c==5, 
+						27*a+9*b+3*c==14
+					],
+					a,b,c)
       </input>
       <output>
         [[a == (1/3), b == (1/2), c == (1/6)]]
