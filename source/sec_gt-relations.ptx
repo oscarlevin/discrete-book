@@ -60,10 +60,121 @@
         </p>
       </introduction>
       <exercise>
+        <webwork>
+          <pg-code>
+            $relationChkBx = CheckboxList(
+              [
+              "\(4\sim 14\)",
+              "\(7\sim 14\)",
+              "\(10 \sim 17\)",
+              "\(17\sim 24\)",
+              "\(10\sim 24\)",
+              "\(20 \sim 10\)",
+              "\(31 \sim 3\)",
+              "\(25 \sim 25\)"
+              ],
+              [1, 2, 3, 4, 6, 7]
+              );
+              $relationProps = CheckboxList(
+                [
+                "\(a \sim a\) for every number \(a\)",
+                "\(a \not\sim a\) for any number \(a\)",
+                "For any numbers \(a\) and \(b\), if \(a \sim b\), then \(b \sim a\)",
+                "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim a\), then \(a = b\)"
+                "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim c\), then \(a \sim c\)",
+                ],
+                [0, 2, 4]
+                );
+                $no = PopUp(["?","Yes", "No"], "No");
+            </pg-code>
+            <introduction>
+              <p>
+                We will say that two numbers between 1 and 31 are <term>related</term>, written <m>a \sim b</m> if their difference is a multiple of 7.  So for example, <m>3 \sim 24</m>, since <m>24-3 = 3\cdot 7</m>, but <m>3 \not\sim 15</m> since <m>15-3 = 12</m> which is not a multiple of 7.  
+              </p>
+            </introduction>
+            
+            <task>
+              <statement>
+                <p>
+                  Which of the following are true?  That is, which of the following pairs of numbers are related as we have defined above.
+                </p>
+                <p>
+                  <var name="$relationChkBx" form="checkboxes" />
+                </p>
+              </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Which of the following statements are true about the <m>\sim</m> relation in this case?
+              </p>
+              <p>
+                <var name="$relationProps" form="checkboxes" />
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                We will write <m>[a]</m> for the set of all numbers related to <m>a</m>.  For example, <m>[7] = \{7, 14, 21, 28\}</m>.  Find each of the following:
+              </p>
+              <p>
+                <ul>
+                  <li>
+                    <p>
+                      <m>[1] = </m> <var name="List(1, 8, 15, 22, 29)" />;      
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[2] = </m> <var name="List(2, 9, 16, 23, 30)" />; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[3] = </m> <var name="List(3, 10, 17, 24, 31)" />; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[4] = </m> <var name="List(4, 11, 18, 25)" />; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[5] = </m> <var name="List(5, 12, 19, 26)" />; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[6] = </m> <var name="List(6, 13, 20, 27)" />.
+                    </p>
+                  </li>
+                </ul>
+                
+              </p>
+              
+              <p>
+                Are there any numbers that are in more than one of the sets <m>[a]</m> above? <var name="$no" form="popup"/>
+
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+      
+      <exercise>
         <introduction>
+
           <p>
-            We will say that two numbers between 1 and 31 are <term>related</term>, written <m>a \sim b</m> if their difference is a multiple of 7.  So for example, <m>3 \sim 24</m>, since <m>24-3 = 3\cdot 7</m>, but <m>3 \not\sim 15</m> since <m>15-3 = 12</m> which is not a multiple of 7.  
+            When you divide a multiple of 7 by 7, you get a whole number.  If you divide another number by 7, you can either write the result as a decimal or as a quotient and a remainder.  For example, <m>19 \div 7</m> is <m>2</m> with a remainder of 5, since we can write <m>19 = 2\cdot 7 + 5</m>.  The remainder is also called the <term>modulus</term>.  When programming in python (and many other languages), the modulus operator is written as <c>%</c>.  For example, <c>19 % 7</c> is <c>5</c>.  Try this out for a few numbers.
           </p>
+          <program interactive="activecode" language="python" label="mod7">
+            <input>
+              a = 19
+              print(a % 7)
+            </input>
+          </program>
         </introduction>
         <webwork>
           <pg-code>
@@ -81,18 +192,70 @@
               [1, 2, 3, 4, 6, 7]
               );
           </pg-code>
-        
+          <task>
           <statement>
             <p>
-              Which of the following are true?  That is, which of the following pairs of numbers are related as we have defined above.
+              Find all the numbers <m>a</m> between 1 and 31 that are <m>5 \mod 7</m>.  That is, find all <m>a</m> such that <c>a % 7 = 5</c>.
             </p>
-            <p>
-              <var name="$relationChkBx" form="checkboxes" />
-            </p>
+            <var name="List(5,12,19,26)" width="15"/>
           </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Since the modulus is a function, each number has exactly one modulus when divided by 7.  This means that the moduli <term>partition</term> the numbers from 1 to 31: every number belongs to exactly one of the sets of numbers with a particular modulus.  We have already found the set for modulus 5.  Find the other sets.
+              </p>
+              <p>
+                <ul>
+                  <li>
+                    <p>
+                      <c>a % 7 = 0</c>: <var name="List(7,14,21,28)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 1</c>: <var name="List(1,8,15,22,29)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 2</c>: <var name="List(2,9,16,23,30)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 3</c>: <var name="List(3,10,17,24,31)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 4</c>: <var name="List(4,11,18,25)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 6</c>: <var name="List(6,13,20,27)" width="15"/>.
+                    </p>
+                  </li>
+                </ul>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                We can use the moduli to define a relation on the numbers from 1 to 31.  We will say that <m>a \sim b</m> if <c>a % 7 = b % 7</c>.  In other words, two numbers are related if they belong to the same set of the partition we found above.
+              </p>
+              <p>
+                Which of the following are true?  That is, which of the following pairs of numbers are related by this modulus relation.
+              </p>
+              <p>
+                <var name="$relationChkBx" form="checkboxes" />
+              </p>
+            </statement>
+          </task>
         </webwork>
       </exercise>
-      
     </worksheet>
   </subsection>
 	<subsection xml:id="subsec-relations-generally">
