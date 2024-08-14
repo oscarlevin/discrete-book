@@ -84,58 +84,114 @@
 			<exercise label="pa-counting-pascal-1">
 				<webwork>
 					<pg-code>
-						Context()->strings->add(drdr => {}, drrd => {}, rddr => {}, rrdd => {}, rdrd => {});
-						$paths = List("DRDR", "DRRD", "RDDR", "RRDD", "RDRD");
+						loadMacros("parserAutoStrings.pl");
+						AutoStrings();
+						$paths1 = List(String(DRDR), String(DRRD), String(RDDR), String(RRDD), String(RDRD), String(DDRR));
+
 					</pg-code>
 							
 					<statement>
 						<p>
 							The 6 in the square in the 3rd row and column represents that there are 6 different paths to that square, even though there are only four squares the rook must move through to get there.
 							One path is DDRR (down down right right).
-							Find the other 5.
+							List all 6 paths.
 						</p>
 						<p>
-							<var name="$paths" width="20" />
+							<var name="$paths1" width="20" />
 						</p>
 						<instruction>(separate paths with commas)</instruction>
+	
+						<p>
+							<var name="$paths2" width="20" />
+						</p>
+	
 					</statement>
 				</webwork>
 			</exercise>
 	
 	
 			<exercise label="pa-counting-pascal-2">
-				<statement>
+				<webwork>
+					<pg-code>
+						loadMacros("parserAutoStrings.pl");
+						AutoStrings();
+						$paths2 = List(String("DDDR"), String("DDRD"), String("DRDD"), String("RDDD"));
+
+						</pg-code>
+					<statement>
 					<p>
-						How many paths are there to the square in row 4, column 2 (diagonally down and to the left of the 6)?  List out all the paths with D/R strings.
+						How many paths are there to the square in row 4, column 2 (diagonally down and to the left of the 6)?  
+						List out all the paths as D/R strings.
+					</p>
+					<p>
+						<var name="$paths2" width="20" />
+					</p>
+					<p>
+						How many paths is this?  That is, what number goes in that square of the chessboard?
+					</p>
+					<p>
+						<var name="4" width="5"/>
 					</p>
 				</statement>
+				</webwork>
 			</exercise>
 	
 	
 			<exercise label="pa-counting-pascal-3">
-				<statement>
-					<p>
-						How many paths are there to the square in row 4, column 3 (directly below the 6)?  List out all the paths with D/R strings.
-					</p>
-				</statement>
+				<webwork>
+					<pg-code>
+						loadMacros("parserAutoStrings.pl");
+						AutoStrings();
+
+						$paths1 = List(String(DRDRD), String(DRRDD), String(RDDRD), String(RRDDD), String(RDRDD), String(DDRRD));
+						$paths2 = List(String("DDDRR"), String("DDRDR"), String("DRDDR"), String("RDDDR"));
+					</pg-code>
+				
+
+					<statement>
+						<p>
+							Now let's find the paths to the square in row 4, column 3 (directly below the 6)?  
+						</p>
+						<p>
+							First, list all the paths that end with a R.
+						</p>
+						<p>
+							<var name="$paths2" width="30"/>
+						</p>
+						<p>
+							Next, list all the paths that end with a D.
+						</p>
+						<p>
+							<var name="$paths1" width="30"/>
+						</p>
+						<p>
+							Are there any other paths?  In total, how many paths are there to this square?
+						</p>
+						<p>
+							<var name="10" width="5"/>
+						</p>
+					</statement>
+				</webwork>
 			</exercise>
-	
+
 	
 			<exercise label="pa-counting-pascal-4">
-				<statement>
-					<p>
-						How do the numbers you have filled in so far relate to each other?  Why does this make sense?
-					</p>
-				</statement>
-			</exercise>
-	
-	
-			<exercise label="pa-counting-pascal-5">
-				<statement>
-					<p>
-						Continue filling in the chessboard, either counting D/R strings directly or using your observation from the previous step.
-					</p>
-				</statement>
+				<webwork>
+					<pg-code>
+						Context("LimitedNumeric");
+					</pg-code>
+				
+					<statement>
+						<p>
+							Continue filling in the chessboard, either counting D/R strings directly or using your observation from the previous task.  What is the number in the lower right corner of the chessboard?
+						</p>
+						<p>
+							<var name="3432" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			
+
 			</exercise>
 			
 		</worksheet>
