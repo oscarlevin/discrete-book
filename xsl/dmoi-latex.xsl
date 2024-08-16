@@ -33,29 +33,24 @@
 <!-- Parameters to pass via xsltproc "stringparam" on command-line            -->
 <!-- Or make a thin customization layer and use 'select' to provide overrides -->
 <!--  -->
-<!-- LaTeX executable, "engine"                       -->
-<!-- pdflatex is default, xelatex or lualatex for Unicode support -->
-<!-- N.B. This has no effect, and may never.  xelatex and lualatex support is automatic -->
-<xsl:param name="latex.engine" select="'xelatex'" />
+
 <!--  -->
 <!-- Standard fontsizes: 10pt, 11pt, or 12pt       -->
 <!-- extsizes package: 8pt, 9pt, 14pt, 17pt, 20pt  -->
 <!-- memoir class offers more, but maybe other changes? -->
-<xsl:param name="latex.font.size" select="'11pt'" />
+<!-- <xsl:param name="latex.font.size" select="'11pt'" /> -->
 <!--  -->
+
+<!-- Old version of "geometry" -->
 <!-- Geometry: page shape, margins, etc            -->
 <!-- Pass a string with any of geometry's options  -->
 <!-- Default is empty and thus ineffective         -->
 <!-- Otherwise, happens early in preamble template -->
-<xsl:param name="latex.geometry" select="'papersize={7in,10in}, width=4.85in, inner=1in, height=8.5in, top=0.75in, twoside, ignoreheadfoot'"/>
+<!-- <xsl:param name="latex.geometry" select="'papersize={7in,10in}, width=4.85in, inner=1in, height=8.5in, top=0.75in, twoside, ignoreheadfoot'"/> -->
 <!-- papersize={7in,10in},  width=5in, inner=.75in, height=8.25in, top=0.75in, twoside, ignoreheadfoot, hmargin={0.85in, 0.5in}, -->
-<!--  -->
-<!-- PDF Watermarking                    -->
-<!-- Non-empty string makes it happen    -->
-<!-- Scale works well for "CONFIDENTIAL" -->
-<!-- or  for "DRAFT YYYY/MM/DD"          -->
-<xsl:param name="watermark.text" select="''"/>
-<xsl:param name="watermark.scale" select="2.0"/>
+
+
+
 <!--  -->
 <!-- Author's Tools                                            -->
 <!-- Set the author-tools parameter to 'yes'                   -->
@@ -70,9 +65,9 @@
 <!-- Print Option                                         -->
 <!-- For a non-electronic copy, inactive links in black   -->
 <!-- Any color options go to black and white, as possible -->
-<xsl:param name="latex.print" select="'no'"/>
+<!-- <xsl:param name="latex.print" select="'no'"/> -->
 <!-- Sidedness -->
-<xsl:param name="latex.sides" select="'two'"/>
+<!-- <xsl:param name="latex.sides" select="'two'"/> -->
 <!--  -->
 <!-- Preamble insertions                    -->
 <!-- Insert packages, options into preamble -->
@@ -104,7 +99,7 @@
 
 
 <!-- List Chapters and Sections in Table of Contents -->
-<xsl:param name="toc.level" select="'3'" />
+<!-- <xsl:param name="toc.level" select="'3'" /> -->
 
 
 <!-- Exercises have "solution"s which should be put in the back. -->
