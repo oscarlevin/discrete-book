@@ -2,14 +2,71 @@
 <exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="practice_counting-repeats">
   <title>Practice Problems</title>
   
-  <!-- TODO: re-author to avoid \newcommand -->
   <exercise label="ww-addmult-pie-possible">
-    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_5.pg" />
+    <webwork>
+      <pg-code>
+        #set sizes of A and B
+        $a = random(8, 15);
+        do {$b = random(16,25);} until ($b &gt; $a + 3); #ensure that |B| is in fact &gt; |A|
+        $ans3 = $b+$a;
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Suppose you have sets <m>A</m> and <m>B</m> with <m>\card{A} = <var name="$a"/></m> and <m>\card{B} = <var name="$b"/></m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            What is the largest possible value for <m>\card{A \cap B}</m>?
+          </p>
+          <p>
+            <var name="$a" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the smallest possible value for <m>\card{A \cap B}</m>?
+          </p>
+
+          <p>
+            <var name="0" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What are the possible values for <m>\card{A \cup B}</m>?
+          </p>
+          <p>
+            <var name="$b" width="10"/> &le; <m>\card{A \cup B} &le;</m> <var name="$ans3" width="10"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
   </exercise>
 
-  <!-- TODO: re-author to avoid \newcommand -->
   <exercise label="ww-addmult-union-plus-int">
-    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_6.pg" />
+    <webwork>
+      <pg-code>
+        $a = random(2, 11);
+        do {$b = random(2, 11);} until ($b !=$a);
+        $ans = Compute("$a + $b");
+      </pg-code>
+    
+      <statement>
+        <p>
+          If <m>\card{A} = <var name="$a"/></m> and <m>\card{B} = <var name="$b"/></m>, what is <m>\card{A \cup B} + \card{A \cap B}</m>?
+        </p>
+        <p>
+          <var name="$ans" width="10"/>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
   <exercise label="ww-addmult-pie-tv">

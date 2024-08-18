@@ -24,9 +24,74 @@
     <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_2.pg" />
   </exercise>
 
-  <!-- TODO: Need to re-author to avoid \newcommand  -->
   <exercise label="ww-binom-subsets-vs">
-    <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_3.pg" />
+    <webwork>
+      <pg-code>
+        Context("IntegerFunctions");
+        $n = random(4,9); #define number of possible elements in set A
+        $A = Set(1..$n);
+        do {$s = random(3,6);} until ($s &lt; $n);
+        $half = int($n/2);
+
+        $go = 0;
+        for ($j = 0; $j &lt;= $half; $j++)
+        {
+        $go = Compute("$go + C($n, $j*2)");
+        }
+
+
+        $ans1 = Compute("2^($n)");
+        $ans2 = Compute("C($n,$s)");
+        $ans3 = Compute("2^$half");
+        $ans4 = $go;
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Let <m>A = <var name="$A"/></m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> are there? 
+          </p>
+          <p>
+            <var name="$ans1" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> contain exactly <m><var name="$s"/></m> elements?
+          </p>
+          <p>
+            <var name="$ans2" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> contain only even numbers?
+          </p>
+          <p>
+            <var name="$ans3" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> contain an even number of elements?
+          </p>
+          <p>
+            <var name="$ans4" width="10"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
   </exercise>
   <!-- Add exercise investigating while the subsets with even cardinality is the same as all subsets of a one-smaller set -->
 
