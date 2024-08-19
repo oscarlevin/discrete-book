@@ -110,16 +110,13 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text>%%&#xa;</xsl:text>
     <xsl:text>%% Plain pages should have the same font for page numbers&#xa;</xsl:text>
     <xsl:text>\renewpagestyle{plain}{%&#xa;</xsl:text>
-    <xsl:text>\setfoot{}{\pagefont\textsl{\thepage}}{}%&#xa;</xsl:text>
+    <xsl:text>\setfoot{}{\pagefont\thepage}{}%&#xa;</xsl:text>
     <xsl:text>}%&#xa;</xsl:text>
-    <xsl:text>
-      \renewpagestyle{headings}{%
-        \sethead[{\footnotesize \textsl{\thepage}}~~~ \textsc{\scriptsize{\ifthechapter{\thechapter.~}{}\chaptertitle}}][][]
-        {}{}{\textsc{\scriptsize{\ifthesection{\thesection.~\sectiontitle}{\chaptertitle}}} ~~~ {\footnotesize \textsl{\thepage}} }
-      }
-    </xsl:text>
+    <xsl:text>\renewpagestyle{headings}{\sethead[\pagefont\thepage][][\itshape\chaptertitle]{\itshape\sectiontitle}{}{\pagefont\thepage}}</xsl:text>
     <xsl:text>\pagestyle{headings}&#xa;</xsl:text>
 </xsl:template>
+
+
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- End Header/Footer Stiles -->
