@@ -152,11 +152,89 @@
   </exercise>
 
   <exercise label="ww-functions-rec-quick">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_4-Functions/0_4_9.pg" />
+    <webwork>
+      <pg-code>
+        #could also randomize the initial value for f(0)
+        #$i = random(2,5); 
+
+        $a = random(2,5);
+        $b = random(11,20); 
+
+        $ans = $a**$b;
+
+        #define some variables to make solution explanation clearer 
+        $b1 = $b-1;
+        $b2= $b-2;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Consider the function <m>f:\N \to \N</m> given <em>recursively</em> by <me>
+            f(0) = 1 \text{ and } f(n+1) = <var name="$a" /> \cdot f(n)
+          </me>. Find <me>f(<var name="$b" />)</me>.
+        </p>
+        <p>
+          <var name="$ans" width="25"/>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
   <exercise label="ww-functions-rec-ic">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_4-Functions/0_4_10.pg" />
+    <webwork>
+      <pg-code>
+        $i = random(4,9);
+        $b = random(4,8);
+        $a = random(2,9);
+        $c = random(10,20);
+        $d = random(137,256);
+        $ans1 = 1 + $b*$i;
+        $ans2 = $a + $b*$i;
+        $ans3 = $c + $b*$i;
+        $ans4 = $d + $b*$i;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Suppose <m>f:\N \to \N</m> satisfies the recurrence <me>
+            f(n+1) = f(n) + <var name="$i" /></me>. Note that this is not enough information to define the function, since we don't have an initial condition. For each of the initial conditions below, find the value of <m>f(<var name="$b" />)</m>. 
+          <ol>
+            <li>
+              <p>
+                If <m>f(0) = 1</m>.
+              </p>
+              <p>
+                <var name="$ans1" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>f(0) = <var name="$a"/></m>.
+              </p>
+              <p>
+                <var name="$ans2" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>f(0) = <var name="$c"/></m>.
+              </p>
+              <p>
+                <var name="$ans3" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>f(0) = <var name="$d"/></m>.
+              </p>
+              <p>
+                <var name="$ans4" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
   <exercise>
@@ -268,8 +346,7 @@
           </li>
 
           <li>
-            <p> Find <m>f\inv(0)</m>
-        . </p>
+            <p> Find <m>f\inv(0)</m>.</p>
           </li>
 
           <li>
@@ -320,7 +397,61 @@
   </exercise>
 
   <exercise label="ww-functions-sum-of-digits">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_4-Functions/0_4_14.pg" />
+    <webwork>
+      <pg-code>
+        Context("Interval");
+
+        $start = random(304,309);
+        $stop = $start+17;
+        $large = random(29,300);
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Let <m>X = \{n \in \N \st 0 \le n \le 999\}</m> be the set of all numbers with three or fewer digits. Define the function <m>f:X \to \N</m> by <m>f(abc) = a+b+c</m>, where <m>a</m>, <m>b</m>, and <m>c</m> are the digits of the number in <m>X</m> (write numbers less than 100 with leading 0's to make them three digits). In other words, <m>f</m> returns the sum of the digits of its input. For example, <m>f(253) = 2 + 5 + 3 =  10</m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            Let <m>A = \{n \in X \st <var name="$start"/> \le x \le <var name="$stop"/>\}</m>.  Find <m>f(A)</m>.
+          </p>
+          <p>
+            <var name="Set(4,5,6,7,8,9,10,11,12,13)" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find <m>f\inv(\{1,3\})</m>.
+          </p>
+          <p>
+            <var name="Set(1, 3, 10, 30, 100, 12, 21, 102, 111, 120, 201, 210, 300)" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find <m>f\inv(2)</m>.
+          </p>
+          <p>
+            <var name="Set(2, 20, 200, 11, 101, 110)" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find <m>f\inv(<var name="$large"/>)</m>.
+          </p>
+          <p>
+            <var name="Set()" width="25"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
   </exercise>
 
   <exercise>

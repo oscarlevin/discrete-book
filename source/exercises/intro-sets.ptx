@@ -6,11 +6,181 @@
   </exercise>
 
   <exercise label="ww-sets-least">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_2.pg" />
+    <webwork>
+      <pg-code>
+        Context('Interval');
+        #define variables for problem parts a and b
+        $a=random(1,5,1);
+        $b= random(1,5,1);
+        $aplusb = $a+$b;
+
+        $sr = Compute(sqrt($a+$b));
+        $ans1high = ceil($sr);
+        #define variables to be used in printing the solutions
+        $ans1plus1 = $ans1high+1;
+        $ans1plus2 = $ans1high+2;
+        $ans1hs = $ans1high*$ans1high - $a;
+        $ans1low = ceil($sr-1);
+        $ans1ls = $ans1low*$ans1low-$a;
+
+        #define variables for problem parts c and d
+        $c= random(1,5,1);
+        $cplus1 = $c +1 ;
+        $cplus4 = $c +4 ;
+        $cplus9 = $c +9;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Find the least element of the following sets, if there is one.
+          <ol>
+            <li>
+              <p>
+                <m>\{n \in \N \st n^2 - <var name="$a"/> \ge <var name="$b" />\}</m>
+              </p>
+              <p>
+                <var name="$ans1high" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{n \in \N \st n^2 - <var name="$aplusb" /> \in \N\}</m>
+              </p>
+              <p>
+                <var name="$ans1high" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{n^2+<var name="$c" /> \st n \in \N\}</m>
+              </p>
+              <p>
+                <var name="$c" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{n \in \N \st n = k^2 + <var name="$c" /> \text{ for some } k \in \N\}</m>
+              </p>
+              <p>
+                <var name="$c" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+        <instruction>(if there is no least element, enter 'none')</instruction>
+      </statement>
+      <solution>
+        <p>
+          <ol>
+            <li>
+              <p>
+                This is the set <m>\{<var name="$ans1high"/>, <var name="$ans1plus1"/>, <var name="$ans1plus2"/>, \ldots\}</m> since we need each element to be a natural number whose square is at least <var name="$a"/> more than <var name="$b"/>. Since <m><var name="$ans1high"/>^2 - <var name="$a"/> = <var name="$ans1hs"/></m> but <m><var name="$ans1low"/>^2 - <var name="$a"/> = <var name="$ans1ls"/></m> we see that the first such natural number is <var name="$ans1high"/>.
+              </p>
+            </li>
+            <li>
+              <p>
+                We get the same set as the previous part, and the smallest non-negative number for which <m>n^2 - <var name="$aplusb"/></m> is a natural number is <var name="$ans1high"/>.
+              </p>
+              <p>
+                Note that if we didn't specify <m>n \ge 0</m> by saying that <m>n \in \mathbb N</m> then any integer less than <m>-<var name="$ans1high"/></m> would also be in the set, so there would not be a least element.
+              </p>
+            </li>
+            <li>
+              <p>
+                This is the set <m>\{<var name="$c"/>, <var name="$cplus1"/>, <var name="$cplus4"/>, <var name="$cplus9"/>, \ldots\}</m>, namely the set of numbers that are the <em>result</em> of squaring and adding <var name="$c"/> to a natural number. (<m>0^2 + <var name="$c"/> = <var name="$c"/></m>, <m>1^2 + <var name="$c"/> = <var name="$cplus1"/></m>, <m>2^2 + <var name="$c"/> = <var name="$cplus4"/></m> and so on.) Thus the least element of the set is <var name="$c"/>.  
+              </p>
+            </li>
+            <li>
+              <p>
+                Now we are looking for natural numbers that are equal to taking some natural number, squaring it and adding <var name="$c"/>. That is, <m>\{<var name="$c"/>, <var name="$cplus1"/>, <var name="$cplus4"/>, <var name="$cplus9"/>, \ldots\}</m>, the same set as the previous part. So again, the least element is <var name="$c"/>.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </webwork>
   </exercise>
 
   <exercise label="ww-sets-cards">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_3.pg" />
+    <webwork>
+      <pg-code>
+        # part a
+$a1 = random(2,6); 
+do {$an = random(29,43);} until ($an !=37);
+$a11 = $a1+1;
+$a12 = $a1+2;
+$a13 = $a1+3;
+$ans1 = $an-$a1 + 1;
+
+#part b
+$b1 = random(-7,-1);
+do {$bn = random(90,100); } until ($bn !=100);
+$ans2 = $bn-$b1 + 1; 
+
+#part c
+
+$B =
+Set(2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97);
+do {$b = random(20,40);} until ($b !=20);
+
+$A = Set(1..$b);
+$int= $A->intersect($B);
+
+if (20 &lt;= $b &amp;&amp; $b &lt;= 22)
+{
+$ans3 = 8;
+}
+elsif (23 &lt;=$b &amp;&amp; $b &lt;=28)
+{
+$ans3 = 9;
+}
+elsif (29 &lt;=$b &amp;&amp; $b &lt;=30)
+{
+$ans3 = 10;
+}
+elsif (31 &lt;=$b &amp;&amp; $b &lt;=36)
+{
+$ans3 = 11;
+}
+elsif (37 &lt;=$b &amp;&amp; $b &lt;=40)
+{
+$ans3 = 12;
+}
+      </pg-code>
+    
+      <statement>
+        <p>
+          Find the following cardinalities.
+          <ol>
+            <li>
+              <p>
+                <m>\card{A}</m> when <m>A = \{<var name="$a1"/>, <var name="$a11"/>, <var name="$a12"/>, <var name="$a13"/>,\ldots, <var name="$an"/>\}</m>.
+              </p>
+              <p>
+                <var name="$ans1" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\card{A}</m> when <m>A = \{x \in \Z \st <var name="$b1"/> \le x \le <var name="$bn"/>"\}</m>.
+              </p>
+              <p>
+                <var name="$ans2" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\card{A \cap B}</m> when <m>A = \{x \in \N \st x \le <var name="$b"/>\}</m> and <m>B = \{x \in \N \st x \text{ is prime }\}</m>.
+              </p>
+              <p>
+                <var name="$ans3" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
   <exercise label="ww-sets-large-common-subset">
@@ -22,7 +192,24 @@
   </exercise>
 
   <exercise label="ww-sets-subset-card">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_6.pg" />
+    <webwork>
+      <pg-code>
+        $amin = random(20,40);
+        $amax = random(50,70);
+        do {$bmin = random(10,30); } until ($bmin &lt; $amin);
+        $bmax = random($amin+1, $amax - 1);
+        $size = $bmax - $amin + 1;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Let <m>A = \{n \in \N \st <var name="$amin"/> \le n \lt <var name="$amax"/>\}</m> and <m>B = \{n \in \N \st <var name="$bmin"/> \lt n \le <var name="$bmax"/>\}</m>.  Suppose <m>C</m> is a set such that <m>C \subseteq A</m> and <m>C \subseteq B</m>.  What is the largest possible cardinality of <m>C</m>?
+        </p>
+        <p>
+          <var name="$size" width="10"/>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
   <exercise label="ww-sets-number-of-between">
@@ -34,7 +221,46 @@
   </exercise>
 
   <exercise label="ww-sets-ops-builder">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_9.pg" />
+    <webwork>
+      <pg-code>
+        Context("Interval");
+        #$A = Set(4,5,6,7,8,9,10,11);
+        #$ans1 = Set(4,6,8,10);
+        #$ans2 = Set(5,7,9,11);
+
+        $amin = random(1,5,1);
+        $amax = random(12,20,1);
+        $A = Set($amin .. $amax-1);
+
+        $B = Set(2,4,6,8,10,12,14,16,18,20);   #B is the set of all evens, but for this problem we only care about those less than 20, since the max value of A is less than 20
+        $Int = $A->intersect($B);
+        $C = $A -$Int;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Let <m>A = \{x \in \N \st <var name="$amin"/> \le x \lt <var name="$amax"/>\}</m> and <m>B = \{x \in \N \st x \text{ is even}\}</m>.
+          <ol>
+            <li>
+              <p>
+                Find <m>A \cap B</m>.
+              </p>
+              <p>
+                <var name="$Int" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                Find <m>A \setminus B</m>.
+              </p>
+              <p>
+                <var name="$C" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
   <exercise>
