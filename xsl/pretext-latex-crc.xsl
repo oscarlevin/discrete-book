@@ -42,19 +42,21 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <xsl:template name="titlesec-chapter-style">
     <xsl:text>\titleformat{\chapter}[display]
-    	{\Large\filcenter\scshape\bfseries}
-    	{\rule[4pt]{.3\textwidth}{2pt} \hspace{2ex} \large\textsc{\chaptertitlename} \thechapter \hspace{3ex} \rule[4pt]{0.3\textwidth}{2pt} }
-    	{0.0em}
-    	{\titlerule\vspace{1ex}\huge\textsc #1}
-    	[\vspace{.75ex}\titlerule]
+    {\Huge}
+    {\bfseries\thechapter} 
+    {0.0em}
+    {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.5pt}}
+     \vspace{1ex}\slshape #1}
+    [\vspace{-1ex}\noindent\hbox{\vrule height.5pt width84pt}]
     \titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
-    <!-- <xsl:text>\titleformat{name=\chapter,numberless}
-      {\Large\filcenter\scshape\bfseries}
-    	{\rule[4pt]{.3\textwidth}{2pt} \hspace{2ex} \large\textsc{\chaptertitlename} \thechapter \hspace{3ex} \rule[4pt]{0.3\textwidth}{2pt} }
-    	{0.0em}
-    	{\titlerule\vspace{1ex}\huge\textsc #1}
-    	[\vspace{.75ex}\titlerule]
-    \titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text> -->
+    <xsl:text>\titleformat{name=\chapter,numberless}[display]
+      {\Huge\scshape}
+      {} 
+      {1ex}
+      {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.0pt}}\slshape #1}
+      [\vspace{-2ex}\noindent\hbox{\vrule height.5pt width84pt}]
+      \titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
+    <xsl:text>\titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
     <xsl:text>\titleformat{\subparagraph}[block]
       {\normalfont\filcenter\scshape\bfseries}
       {\theparagraph}
@@ -65,10 +67,11 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <xsl:template name="titlesec-section-style">
     <xsl:text>\titleformat{\section}
-    {\Large\filcenter\scshape\bfseries}
-    {\thesection}
-    {1em}
-    {#1}
+    {\Large}
+    {}
+    {0em}
+    {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.5pt}}
+    \vspace{2ex}\thesection~ #1}
     [\large\authorsptx]&#xa;</xsl:text>
     <xsl:text>\titleformat{name=\section,numberless}
     {\filcenter\scshape\bfseries}
