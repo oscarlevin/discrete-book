@@ -165,22 +165,28 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- "assemblage" -->
 <!-- Boxed title, borrowed from the AIM style -->
-<!-- <xsl:template match="assemblage" mode="tcb-style">
+<xsl:template match="assemblage" mode="tcb-style">
     <xsl:text>
       enhanced, 
       frame hidden,
-      borderline={1pt}{1pt}{SkyBlue!60},
+      borderline={1pt}{1pt}{black},
       sharp corners, 
-      colback=SkyBlue!25, 
-      colbacktitle=SkyBlue!60, 
+      colback=white, 
       coltitle=black, 
-      boxed title style={sharp corners, frame hidden},
+      halign title=center,
       fonttitle=\bfseries, 
-      attach boxed title to top left={xshift=4mm,yshift=-4mm,yshifttext=-2mm},
       top=3mm,
-      after skip=1em,
+      after skip=12pt,
+      toptitle=6pt,
     </xsl:text>
-</xsl:template> -->
+</xsl:template>
+
+<xsl:template match="&EXAMPLE-LIKE;" mode="tcb-style">
+    <xsl:text>bwminimalstyle, runintitlestyle, blockspacingstyle, after title={\space}, before upper app={\setparstyle}, after upper={\space\space\hspace*{\stretch{1}}\(\square\)}, 
+      before skip={1em},
+      after skip={1em},
+    </xsl:text>
+</xsl:template>
 
 <!-- <xsl:template match="&THEOREM-LIKE;" mode="tcb-style">
     <xsl:text>
@@ -251,6 +257,24 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:text>
 </xsl:template> -->
 
+<xsl:template match="&PROJECT-LIKE;" mode="tcb-style">
+  <xsl:text>
+    enhanced,
+    breakable,
+    parbox=false,
+    frame hidden,
+    fonttitle=\bfseries\itshape\large,
+    halign title=center,
+    title=Investigate!,
+    borderline horizontal={3pt}{0mm}{black},
+    colback=white,
+    coltitle=black,
+    colbacktitle=white,
+    before skip={1em},
+    after skip={2em},
+    toptitle=2ex,
+  </xsl:text>
+</xsl:template>
 
 <!-- <xsl:template match="&PROJECT-LIKE;" mode="tcb-style">
   <xsl:text>
