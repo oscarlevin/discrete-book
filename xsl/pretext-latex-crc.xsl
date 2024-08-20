@@ -69,9 +69,9 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text>\titleformat{\section}[display]
     {\Large\bfseries}
     {}
-    {0em}
+    {-2em}
     {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.5pt}}
-    \vspace{2ex}\thesection~ #1}
+    \vspace{1ex}\thesection~ #1}
     [\large\authorsptx]&#xa;</xsl:text>
     <xsl:text>\titleformat{name=\section,numberless}
     {\filcenter\scshape\bfseries}
@@ -138,13 +138,13 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- "commentary" -->
 <!-- Green and ugly -->
-<xsl:template match="commentary" mode="tcb-style">
+<!-- <xsl:template match="commentary" mode="tcb-style">
     <xsl:text>enhanced, breakable, parbox=false, size=minimal, attach title to upper, after title={\space}, fonttitle=\bfseries, coltitle=black, colback=green</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- "objectives", "outcomes" -->
 <!-- Default tcb, identically -->
-<xsl:template match="objectives|outcomes" mode="tcb-style">
+<!-- <xsl:template match="objectives|outcomes" mode="tcb-style">
   <xsl:text>
     enhanced,
     parbox=false,
@@ -161,11 +161,11 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     center,
     after skip=2em,
   </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- "assemblage" -->
 <!-- Boxed title, borrowed from the AIM style -->
-<xsl:template match="assemblage" mode="tcb-style">
+<!-- <xsl:template match="assemblage" mode="tcb-style">
     <xsl:text>
       enhanced, 
       frame hidden,
@@ -180,9 +180,9 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       top=3mm,
       after skip=1em,
     </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
-<xsl:template match="&THEOREM-LIKE;" mode="tcb-style">
+<!-- <xsl:template match="&THEOREM-LIKE;" mode="tcb-style">
     <xsl:text>
       enhanced, 
       frame hidden,
@@ -197,13 +197,13 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       top=3mm,
       after skip=1em,
     </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
-<xsl:template match="proof" mode="tcb-style">
+<!-- <xsl:template match="proof" mode="tcb-style">
     <xsl:text>bwminimalstyle, fonttitle=\normalfont\bfseries, attach title to upper, after title={\qquad}&#xa;</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
-<xsl:template match="definition" mode="tcb-style">
+<!-- <xsl:template match="definition" mode="tcb-style">
     <xsl:text>
       enhanced, 
       frame hidden,
@@ -218,7 +218,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       top=3mm,
       after skip=1em,
     </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 
 
@@ -230,7 +230,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <!-- Each just slightly different                   -->
 
 <!-- Example styling from CLP -->
-<xsl:template match="&EXAMPLE-LIKE;|exercise[boolean(&INLINE-EXERCISE-FILTER;)]" mode="tcb-style">
+<!-- <xsl:template match="&EXAMPLE-LIKE;|exercise[boolean(&INLINE-EXERCISE-FILTER;)]" mode="tcb-style">
     <xsl:text>
       enhanced,
       breakable,
@@ -238,7 +238,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       frame hidden,
       borderline west={1pt}{0mm}{MidnightBlue},
       overlay unbroken and last={
-        \draw[MidnightBlue, path fading=east, line width=.5pt] (frame.south west) -- (frame.south east);
+        \draw[MidnightBlue, path fading=east, line width=.5pt] (frame.south west) &mdash;&mdash; (frame.south east);
       },
       colback=white,
       coltitle=white,
@@ -249,9 +249,10 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       after skip=1em,
       before skip=1em,
     </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
-<xsl:template match="&PROJECT-LIKE;" mode="tcb-style">
+
+<!-- <xsl:template match="&PROJECT-LIKE;" mode="tcb-style">
   <xsl:text>
     enhanced,
     breakable,
@@ -269,7 +270,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     bottom=5mm,
     after skip=2em,
   </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- The following are blocks not yet styled (thus commented) -->
 <!-- but could be some day                                    -->
@@ -298,7 +299,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <!-- COMPUTATION-LIKE: "computation", "technology"  -->
  <!--White title text, but title backgounds vary    -->
  <!--by category, and remarks have sharp corners    -->
-<xsl:template match="&REMARK-LIKE;" mode="tcb-style">
+<!-- <xsl:template match="&REMARK-LIKE;" mode="tcb-style">
   <xsl:text>
     enhanced, 
     frame hidden,
@@ -312,7 +313,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     top=1mm,
     titlerule=0pt,
   </xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 
 

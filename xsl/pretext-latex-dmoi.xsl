@@ -138,9 +138,9 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- "commentary" -->
 <!-- Green and ugly -->
-<xsl:template match="commentary" mode="tcb-style">
+<!-- <xsl:template match="commentary" mode="tcb-style">
     <xsl:text>enhanced, breakable, parbox=false, size=minimal, attach title to upper, after title={\space}, fonttitle=\bfseries, coltitle=black, colback=green</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- "objectives", "outcomes" -->
 <!-- Default tcb, identically -->
