@@ -44,16 +44,16 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text>\titleformat{\chapter}[display]
     {\Huge}
     {\bfseries\thechapter} 
-    {0.0em}
+    {-12pt}
     {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.5pt}}
-     \vspace{1ex}\slshape #1}
-    [\vspace{-1ex}\noindent\hbox{\vrule height.5pt width84pt}]
-    \titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
+     \vspace{0ex}\slshape #1}
+    [\vspace{-2ex}\noindent\hbox{\vrule height.5pt width84pt}]
+    \titlespacing*{\chapter}{0pt}{-2em}{5em}&#xa;</xsl:text>
     <xsl:text>\titleformat{name=\chapter,numberless}[display]
-      {\Huge\scshape}
+      {\huge}
       {} 
-      {1ex}
-      {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.0pt}}\slshape #1}
+      {-12pt}
+      {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.0pt}}\vspace{0ex}\slshape #1}
       [\vspace{-2ex}\noindent\hbox{\vrule height.5pt width84pt}]
       \titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
     <xsl:text>\titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
@@ -66,8 +66,8 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template name="titlesec-section-style">
-    <xsl:text>\titleformat{\section}
-    {\Large}
+    <xsl:text>\titleformat{\section}[display]
+    {\Large\bfseries}
     {}
     {0em}
     {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.5pt}}
@@ -82,7 +82,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <xsl:template name="titlesec-subsection-style">
     <xsl:text>\titleformat{\subsection}
-    {\large\filcenter\scshape\bfseries}
+    {\large\bfseries}
     {\thesubsection}
     {1em}
     {#1}
@@ -91,7 +91,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <xsl:template name="titlesec-subsubsection-style">
     <xsl:text>\titleformat{\subsubsection}
-      {\filcenter\scshape\bfseries}
+      {\bfseries}
       {\thesubsubsection}
       {1em}
       {#1}
@@ -113,7 +113,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text>%%&#xa;</xsl:text>
     <xsl:text>%% Plain pages should have the same font for page numbers&#xa;</xsl:text>
     <xsl:text>\renewpagestyle{plain}{%&#xa;</xsl:text>
-    <xsl:text>\setfoot{}{\pagefont\thepage}{}%&#xa;</xsl:text>
+    <xsl:text>\setfoot[\pagefont\thepage][][]{}{}{\pagefont\thepage}%&#xa;</xsl:text>
     <xsl:text>}%&#xa;</xsl:text>
     <xsl:text>\renewpagestyle{headings}{\sethead[\pagefont\thepage][][\itshape\chaptertitle]{\itshape\sectiontitle}{}{\pagefont\thepage}}</xsl:text>
     <xsl:text>\pagestyle{headings}&#xa;</xsl:text>
@@ -199,6 +199,10 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:text>
 </xsl:template>
 
+<xsl:template match="proof" mode="tcb-style">
+    <xsl:text>bwminimalstyle, fonttitle=\normalfont\bfseries, attach title to upper, after title={\qquad}&#xa;</xsl:text>
+</xsl:template>
+
 <xsl:template match="definition" mode="tcb-style">
     <xsl:text>
       enhanced, 
@@ -250,20 +254,19 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <xsl:template match="&PROJECT-LIKE;" mode="tcb-style">
   <xsl:text>
     enhanced,
+    breakable,
     parbox=false,
+    frame hidden,
     fonttitle=\bfseries\itshape\large,
     coltitle=black,
     attach boxed title to top left={xshift=5mm,yshift=-\tcboxedtitleheight/2-1mm,yshifttext=-2mm},
     title=Investigate!,
     boxed title style={frame hidden, colback=white, sharp corners},
     boxed title size=title,
-    frame hidden,
     borderline={2pt}{0mm}{teal!45!black},
     arc=4mm,
     colback=white,
-    width=0.98\linewidth,
     bottom=5mm,
-    center,
     after skip=2em,
   </xsl:text>
 </xsl:template>
@@ -300,13 +303,13 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     enhanced, 
     frame hidden,
     borderline={3pt}{0mm}{Thistle!20},
-    borderline west={3pt}{0mm}{Thistle!50},
+    borderline west={3pt}{0mm}{Thistle!75},
     sharp corners, 
     colback=Thistle!20, 
     colbacktitle=Thistle!20, 
     coltitle=black, 
     fonttitle=\bfseries, 
-    top=3mm,
+    top=1mm,
     titlerule=0pt,
   </xsl:text>
 </xsl:template>
