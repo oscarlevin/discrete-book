@@ -47,14 +47,14 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     {-12pt}
     {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.5pt}}
      \vspace{0ex}\slshape #1}
-    [\vspace{-2ex}\noindent\hbox{\vrule height.5pt width84pt}]
+    [\vspace{-1ex}\noindent\hbox{\vrule height.5pt width84pt}]
     \titlespacing*{\chapter}{0pt}{-2em}{5em}&#xa;</xsl:text>
     <xsl:text>\titleformat{name=\chapter,numberless}[display]
       {\huge}
       {} 
       {-12pt}
       {\hbox to\textwidth{\rlap{\rule[-3.5pt]{84pt}{4pt}}\rule{\textwidth}{.0pt}}\vspace{0ex}\slshape #1}
-      [\vspace{-2ex}\noindent\hbox{\vrule height.5pt width84pt}]
+      [\vspace{-1ex}\noindent\hbox{\vrule height.5pt width84pt}]
       \titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
     <xsl:text>\titlespacing*{\chapter}{0pt}{-2em}{2em}&#xa;</xsl:text>
     <xsl:text>\titleformat{\subparagraph}[block]
@@ -91,7 +91,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <xsl:template name="titlesec-subsubsection-style">
     <xsl:text>\titleformat{\subsubsection}
-      {\bfseries}
+      {\large\bfseries}
       {\thesubsubsection}
       {1em}
       {#1}
@@ -182,28 +182,28 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template match="&EXAMPLE-LIKE;" mode="tcb-style">
-    <xsl:text>bwminimalstyle, runintitlestyle, blockspacingstyle, after title={\space}, before upper app={\setparstyle}, after upper={\space\space\hspace*{\stretch{1}}\(\square\)}, 
+    <xsl:text>bwminimalstyle, runintitlestyle, blockspacingstyle, after title={\space\space}, before upper app={\setparstyle}, after upper={\space\space\hspace*{\stretch{1}}\(\square\)}, 
       before skip={1em},
-      after skip={1em},
+      after skip={1.5em},
     </xsl:text>
 </xsl:template>
 
-<!-- <xsl:template match="&THEOREM-LIKE;" mode="tcb-style">
+<xsl:template match="&THEOREM-LIKE;|&REMARK-LIKE;|exercise[boolean(&INLINE-EXERCISE-FILTER;)]" mode="tcb-style">
     <xsl:text>
-      enhanced, 
-      frame hidden,
-      borderline={1pt}{0mm}{Periwinkle!40},
-      sharp corners, 
-      colback=Periwinkle!5, 
-      colbacktitle=Periwinkle!40, 
-      coltitle=black, 
-      boxed title style={sharp corners, frame hidden},
-      fonttitle=\bfseries, 
-      attach boxed title to top left={xshift=4mm,yshift=-4mm,yshifttext=-2mm},
-      top=3mm,
-      after skip=1em,
+      bwminimalstyle, runintitlestyle, blockspacingstyle, after title={\space\space}, before upper app={\setparstyle},
+      before skip={1em},
+      after skip={1.5em},
     </xsl:text>
-</xsl:template> -->
+</xsl:template>
+
+<xsl:template match="&DEFINITION-LIKE;" mode="tcb-style">
+    <xsl:text>
+      bwminimalstyle, runintitlestyle, blockspacingstyle, after title={\space\space}, before upper app={\setparstyle}, after upper={\space\space\hspace*{\stretch{1}}\(\lozenge\)},
+      before skip={1em},
+      after skip={1.5em},
+      colback=black!20,
+    </xsl:text>
+</xsl:template>
 
 <!-- <xsl:template match="proof" mode="tcb-style">
     <xsl:text>bwminimalstyle, fonttitle=\normalfont\bfseries, attach title to upper, after title={\qquad}&#xa;</xsl:text>
