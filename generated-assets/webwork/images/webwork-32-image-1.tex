@@ -1383,8 +1383,18 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
 }
 
 \begin{document}
-\begin{tikzpicture}
-  \draw (0,0) \vb{\(a\)} -- (1,1) \vb{\(b\)} -- (2,0) \vb{\(c\)} -- (3,1) \vb{\(d\)};
+		\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+\begin{tikzpicture}[scale=2]
+\foreach \x in {0,...,5}{
+	\coordinate (a\x) at (\x*60:1);
+}
+\foreach \x in {0,...,4}{
+	\foreach \y in {\x,...,5}{
+		\draw[thick] (a\x) -- (a\y);
+	}
+	\draw (a\x) \vo;
+}
+\draw (a5) \vo;
 \end{tikzpicture}
 
 

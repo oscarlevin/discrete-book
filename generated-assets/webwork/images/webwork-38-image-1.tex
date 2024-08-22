@@ -1383,18 +1383,20 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
 }
 
 \begin{document}
-								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
-\begin{tikzpicture}[xscale=2]
-								\foreach \x in {0,...,4}{
-									\coordinate (l\x) at (0,\x);
-									\coordinate (r\x) at (2,\x);
-								}
-								\foreach \x in {0,...,4}{
-									\draw[very thick] (l\x) -- (r0) (l\x) -- (r2) (l\x) -- (r4);
-									\draw (l\x) \vo;
-								}
-								\draw (r0) \vo (r2) \vo (r4) \vo;
-								\end{tikzpicture}
+			\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+
+\begin{tikzpicture}
+\foreach \x in {0,...,7}{
+\coordinate (a\x) at (\x*360/8:2);
+}
+\draw[thick] (a7) -- (a0);
+\foreach \x in {0,...,6}{
+	\pgfmathtruncatemacro{\next}{\x + 1}
+	\draw[very thick] (a\x) -- (a\next);
+	\draw (a\x) \vo;
+}
+\draw (a7) \vo;
+\end{tikzpicture}
 
 
 \end{document}

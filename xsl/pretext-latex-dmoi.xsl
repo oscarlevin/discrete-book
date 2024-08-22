@@ -186,6 +186,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text>
       enhanced, 
       frame hidden,
+      parbox=false,
       borderline={1pt}{0mm}{Periwinkle!40},
       sharp corners, 
       colback=Periwinkle!5, 
@@ -300,6 +301,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     runintitlestyle,
     enhanced, 
     frame hidden,
+    parbox=false,
     borderline={3pt}{0mm}{Thistle!20},
     borderline west={3pt}{0mm}{Thistle!50},
     sharp corners, 
@@ -307,7 +309,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     colbacktitle=Thistle!20, 
     coltitle=black, 
     top=3mm,
-    titlerule=0pt,
+    after title={\space\space},
   </xsl:text>
 </xsl:template>
 

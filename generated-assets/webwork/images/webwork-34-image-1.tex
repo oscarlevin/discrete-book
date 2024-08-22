@@ -1383,9 +1383,19 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
 }
 
 \begin{document}
-\begin{tikzpicture}[scale=.5]
-  \foreach \x in {1,...,8}
-    \draw (360/8*\x:1) \v;
+			\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+
+\begin{tikzpicture}
+\foreach \x in {0,...,7}{
+\coordinate (a\x) at (\x*360/8:2);
+}
+\draw[thick] (a7) -- (a0);
+\foreach \x in {0,...,6}{
+	\pgfmathtruncatemacro{\next}{\x + 1}
+	\draw[very thick] (a\x) -- (a\next);
+	\draw (a\x) \vo;
+}
+\draw (a7) \vo;
 \end{tikzpicture}
 
 
