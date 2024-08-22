@@ -129,8 +129,130 @@
 
     <worksheet xml:id="PA-gt-paths">
       <title>Preview Activity</title>
+      <introduction>
+        <p>
+          Which of the graphs below have Euler trail?
+          Which have Euler circuits?
+        </p>
 
-      <exercise workspace=".25in" label="pa-gt-paths-1">
+        <sbsgroup widths="30% 30% 30%" valign="bottom">
+          <sidebyside>
+            <image>
+              <shortdescription>A graph</shortdescription>
+              <latex-image>
+                \begin{tikzpicture}
+                  \draw (0,0) \v -- (-1,1) \v -- (-1.5,2) \v (-1,1) -- (-.5,2) \v (0,0) -- (1,1) \v -- (.5,2) \v (1,1) -- (1.5,2) \v;
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+
+
+            <image>
+              <shortdescription></shortdescription>
+              <latex-image>
+                \usetikzlibrary{calc}                  
+                \begin{tikzpicture}
+
+                \coordinate (A) at (-30:2);
+                \coordinate (B) at (90:2);
+                \coordinate (C) at (210:2);
+                \coordinate (a) at ($(B)!.5!(C) $);
+                \coordinate (b) at ($ (A)!.5!(C) $);
+                \coordinate (c) at ($ (A)!.5!(B) $);
+                
+                \draw (A) \v -- (B) \v -- (C) \v -- (A);
+                \draw (b) \v -- (B);
+                \draw (a) \v -- (b) \v -- (c) \v -- (a);
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+
+            <image>
+              <shortdescription></shortdescription>
+              <latex-image>
+                \begin{tikzpicture}
+                \draw (0,0) \v -- (60:2) \v -- (120:2) \v -- (0,0) -- (0:2) \v -- (-60:2) \v -- (0,0) -- (180:2) \v -- (240:2) \v -- (0,0);
+            \end{tikzpicture}
+              </latex-image>
+            </image>
+          </sidebyside>
+
+        
+
+          <sidebyside>
+            <p>
+              <me>G_1</me>
+            </p>
+
+            <p>
+              <me>G_2</me>
+            </p>
+
+            <p>
+              <me>G_3</me>
+            </p>
+          </sidebyside>
+        </sbsgroup>
+
+        <sbsgroup widths="20% 40% 30%" margins="auto" valign="bottom">
+
+  
+        <sidebyside >
+
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,2) -- (0,3) \v -- (1,2);
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with six vertices.  Four vertices form a square, with another vertex centered inside the square, and the last vertex centered above the square.  Edges connect the corners of the square, and connect each corner to the center vertex.  The top two vertices of the square is adjacent to the vertex above the square.
+            </description>
+          </image>
+
+
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with seven vertices.  Four vertices form the corners of a square, the remaining three are in a middle row, with one to the left, one in the center, and one to the right of the square.  Edges form the sides of the square.  Each vertex in the square is adjacent to the two middle-row vertices closest to it.
+            </description>
+          </image>
+
+          <image>
+            <description>A drawing of a cube</description>
+            <latex-image label="planar-cube">
+              \begin{tikzpicture}
+                \draw (0,0) \v -- (1,0) \v -- (1,1) \v -- (0,1) \v -- (0,0);
+                \draw (-.5,-.5) \v -- (-.5,1.5) \v -- (1.5,1.5) \v -- (1.5,-.5) \v -- (-.5,-.5);
+                \draw (0,0) -- (-.5,-.5) (1,0) -- (1.5,-.5) (1,1) -- (1.5,1.5) (0,1) -- (-.5,1.5);
+              \end{tikzpicture}
+            </latex-image>
+            </image>
+        </sidebyside>
+        
+        <sidebyside>
+          <p>
+            <me>G_4</me>
+          </p>
+
+          <p>
+            <me>G_5</me>
+          </p>
+
+          <p>
+            <me>G_6</me>
+          </p>
+        </sidebyside>
+      </sbsgroup>
+
+      </introduction>
+      <exercise workspace=".25in" label="pa-gt-paths-1" component="interactive">
 
         <webwork>
           <pg-code>
@@ -138,132 +260,10 @@
             $eTrail = PopUp(["?", "an Euler trail", "an Euler circuit and trail", "Neither"],1);
             $Neither = PopUp(["?", "an Euler trail", "an Euler circuit and trail", "Neither"],3);
           </pg-code>
-        <introduction>
-          <p>
-            Which of the graphs below have Euler trail?
-            Which have Euler circuits?
-          </p>
 
-          <sbsgroup widths="30% 30% 30%" valign="bottom">
-            <sidebyside>
-              <image>
-                <shortdescription>A graph</shortdescription>
-                <latex-image>
-                  \begin{tikzpicture}
-                    \draw (0,0) \v -- (-1,1) \v -- (-1.5,2) \v (-1,1) -- (-.5,2) \v (0,0) -- (1,1) \v -- (.5,2) \v (1,1) -- (1.5,2) \v;
-                  \end{tikzpicture}
-                </latex-image>
-              </image>
-
-
-              <image>
-                <shortdescription></shortdescription>
-                <latex-image>
-                  \usetikzlibrary{calc}                  
-                  \begin{tikzpicture}
-
-                  \coordinate (A) at (-30:2);
-                  \coordinate (B) at (90:2);
-                  \coordinate (C) at (210:2);
-                  \coordinate (a) at ($(B)!.5!(C) $);
-                  \coordinate (b) at ($ (A)!.5!(C) $);
-                  \coordinate (c) at ($ (A)!.5!(B) $);
-                  
-                  \draw (A) \v -- (B) \v -- (C) \v -- (A);
-                  \draw (b) \v -- (B);
-                  \draw (a) \v -- (b) \v -- (c) \v -- (a);
-                  \end{tikzpicture}
-                </latex-image>
-              </image>
-
-              <image>
-                <shortdescription></shortdescription>
-                <latex-image>
-                  \begin{tikzpicture}
-                  \draw (0,0) \v -- (60:2) \v -- (120:2) \v -- (0,0) -- (0:2) \v -- (-60:2) \v -- (0,0) -- (180:2) \v -- (240:2) \v -- (0,0);
-              \end{tikzpicture}
-                </latex-image>
-              </image>
-            </sidebyside>
-
-          
-
-            <sidebyside>
-              <p>
-                <me>G_1</me>
-              </p>
-
-              <p>
-                <me>G_2</me>
-              </p>
-
-              <p>
-                <me>G_3</me>
-              </p>
-            </sidebyside>
-          </sbsgroup>
-
-          <sbsgroup widths="20% 40% 30%" margins="auto" valign="bottom">
-
-    
-          <sidebyside >
-
-            <image>
-              <latex-image>
-                \begin{tikzpicture}[scale=0.9]
-                  \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                  \draw (-1,2) -- (0,3) \v -- (1,2);
-                \end{tikzpicture}
-              </latex-image>
-              <description>
-                A graph with six vertices.  Four vertices form a square, with another vertex centered inside the square, and the last vertex centered above the square.  Edges connect the corners of the square, and connect each corner to the center vertex.  The top two vertices of the square is adjacent to the vertex above the square.
-              </description>
-            </image>
-
-
-            <image>
-              <latex-image>
-                \begin{tikzpicture}[scale=0.9]
-                  \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                  \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
-                \end{tikzpicture}
-              </latex-image>
-              <description>
-                A graph with seven vertices.  Four vertices form the corners of a square, the remaining three are in a middle row, with one to the left, one in the center, and one to the right of the square.  Edges form the sides of the square.  Each vertex in the square is adjacent to the two middle-row vertices closest to it.
-              </description>
-            </image>
-
-            <image>
-              <description>A drawing of a cube</description>
-              <latex-image label="planar-cube">
-                \begin{tikzpicture}
-                  \draw (0,0) \v -- (1,0) \v -- (1,1) \v -- (0,1) \v -- (0,0);
-                  \draw (-.5,-.5) \v -- (-.5,1.5) \v -- (1.5,1.5) \v -- (1.5,-.5) \v -- (-.5,-.5);
-                  \draw (0,0) -- (-.5,-.5) (1,0) -- (1.5,-.5) (1,1) -- (1.5,1.5) (0,1) -- (-.5,1.5);
-                \end{tikzpicture}
-              </latex-image>
-              </image>
-          </sidebyside>
-          
-          <sidebyside>
-            <p>
-              <me>G_4</me>
-            </p>
-
-            <p>
-              <me>G_5</me>
-            </p>
-
-            <p>
-              <me>G_6</me>
-            </p>
-          </sidebyside>
-        </sbsgroup>
-
-        </introduction>
           <statement>
             <p>
-              <m>G_1</m> has <var name="$Neither" form="popup"/>.  <m>G_2</m> has <var name="$eTrial" form="popup"/>.  <m>G_3</m> has <var name="$eCirc" form="popup"/>
+              <m>G_1</m> has <var name="$Neither" form="popup"/>.  <m>G_2</m> has <var name="$eTrail" form="popup"/>.  <m>G_3</m> has <var name="$eCirc" form="popup"/>
             </p>
             <p>
               <m>G_4</m> has <var name="$eTrail" form="popup"/>.  <m>G_5</m> has <var name="$eCirc" form="popup"/>.  <m>G_6</m> has <var name="$Neither" form="popup"/>
@@ -277,24 +277,23 @@
         <statement>
           <p>
               Write down the degree sequence of the graphs above.
-              
           </p>
-          <p>
+          <p component="interactive">
             <m>G_1</m>: <var name="List(3,3,2,1,1,1,1)" width="15"/>
           </p>
-          <p>
+          <p component="interactive">
             <m>G_2</m>: <var name="List(5,4,4,3,2,2)" width="15"/>
           </p>
-          <p>
+          <p component="interactive">
             <m>G_3</m>: <var name="List(6,2,2,2,2,2,2)" width="15"/>
           </p>
-          <p>
+          <p component="interactive">
             <m>G_4</m>: <var name="List(4,4,4,3,3,2)" width="15"/>
           </p>
-          <p>
+          <p component="interactive">
             <m>G_5</m>: <var name="List(4,4,4,4,4,2,2)" width="15"/>
           </p>
-          <p>
+          <p component="interactive">
             <m>G_6</m>: <var name="List(3,3,3,3,3,3,3,3)" width="15"/>
           </p>
           <p>
@@ -345,14 +344,15 @@
                 <shortdescription></shortdescription>
                 <latex-image>
                   \begin{tikzpicture}
-                    \draw (0,0) \vb{$a$} -- (1,0) \vb{$b$} -- (2,1) \vb{$c$} -- (3,0) \vb{$e$} -- (2,-1) \vb{$d$} -- (1,0) -- (3,0) -- (4,0)\vb{$f$};
+
+                    \draw (0,0) \vb{\(a\)} -- (1,0) \vb{\(b\)} -- (2,1) \vb{\(c\)} -- (3,0) \vb{\(e\)} -- (2,-1) \vb{\(d\)} -- (1,0) -- (3,0) -- (4,0)\vb{\(f\)};
                   \end{tikzpicture}
                 </latex-image>
               </image>
               <p>
                 For each vertex, write down its degree and the number of times it appears in your list of edges.
               </p>
-              <tabular>
+              <tabular component="interactive">
                 <row header="yes">
                   <cell>vertex </cell><cell>degree</cell><cell>times listed</cell>
                 </row>
@@ -392,7 +392,7 @@
               <p>
                 Suppose you have a graph with an Euler trail written as a list of edges.  What can you conclude about a vertex that appears exactly 3 times in the list?  Select all the choices that could be true.
               </p>
-              <p>
+              <p component="interactive">
                 <var name="$oddChoices" form="checkboxes"/>
               </p>
             </statement>
