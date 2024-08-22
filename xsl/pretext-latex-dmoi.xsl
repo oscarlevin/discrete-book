@@ -182,7 +182,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:text>
 </xsl:template>
 
-<xsl:template match="&THEOREM-LIKE;" mode="tcb-style">
+<xsl:template match="&THEOREM-LIKE;|&AXIOM-LIKE;" mode="tcb-style">
     <xsl:text>
       enhanced, 
       frame hidden,
