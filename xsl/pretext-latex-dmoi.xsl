@@ -200,10 +200,15 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:text>
 </xsl:template>
 
+<xsl:template match="proof" mode="tcb-style">
+    <xsl:text>bwminimalstyle, parbox=false, fonttitle=\normalfont\bfseries, attach title to upper, after title={\space\space}, width=.98\linewidth&#xa;</xsl:text>
+</xsl:template>
+
 <xsl:template match="definition" mode="tcb-style">
     <xsl:text>
       enhanced, 
       frame hidden,
+      parbox=false,
       borderline={1pt}{1pt}{PineGreen!40},
       sharp corners, 
       colback=PineGreen!5, 
