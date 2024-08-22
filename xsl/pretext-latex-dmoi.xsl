@@ -297,6 +297,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
  <!--by category, and remarks have sharp corners    -->
 <xsl:template match="&REMARK-LIKE;" mode="tcb-style">
   <xsl:text>
+    runintitlestyle,
     enhanced, 
     frame hidden,
     borderline={3pt}{0mm}{Thistle!20},
@@ -305,7 +306,6 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     colback=Thistle!20, 
     colbacktitle=Thistle!20, 
     coltitle=black, 
-    fonttitle=\bfseries, 
     top=3mm,
     titlerule=0pt,
   </xsl:text>
