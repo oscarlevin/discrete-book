@@ -199,9 +199,9 @@
 <!-- least two spaces gap to remain on the same      -->
 <!-- line. Presumably the line will stretch when the -->
 <!-- tombstone moves onto its own line.              -->
-<xsl:template match="proof" mode="tcb-style">
+<!-- <xsl:template match="proof" mode="tcb-style">
     <xsl:text>bwminimalstyle, fonttitle=\normalfont\itshape, attach title to upper, after title={\space}, after upper={\space\space\hspace*{\stretch{1}}\(\textsc{qed}\)}&#xa;</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 
 

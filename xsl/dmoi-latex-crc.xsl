@@ -98,7 +98,25 @@
 
 
 
-
+<!-- Hack 2024-08-21 to improve layout of matching exercises -->
+<xsl:template match="exercise/matches/match" mode="matching-statement">
+    <xsl:variable name="premise-number" select="count(preceding-sibling::match) + 1"/>
+    <xsl:variable name="all-matches" select="parent::matches/match"/>    
+    <row>
+        <xsl:if test="following-sibling::match">
+            <xsl:attribute name="bottom">
+                <xsl:text>minor</xsl:text>
+            </xsl:attribute>
+        </xsl:if>
+        <cell>
+            <xsl:copy-of select="premise/node()"/>
+        </cell>
+        <cell bottom="none"><nbsp/><nbsp/></cell>
+        <cell>
+            <xsl:copy-of select="$all-matches[@order = $premise-number]/response/node()"/>
+        </cell>
+    </row>
+</xsl:template>
 
 
 <!-- Restyle paragraphs: -->
