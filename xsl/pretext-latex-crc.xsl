@@ -200,7 +200,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       parbox=false,
       borderline={2pt}{0pt}{black!15},
       sharp corners, 
-      colback=black!10, 
+      colback=black!7, 
       colbacktitle=black!15, 
       coltitle=black, 
       boxed title style={sharp corners, frame hidden},
@@ -263,11 +263,11 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     enhanced, 
     frame hidden,
     borderline={3pt}{0mm}{black!10},
-    borderline west={3pt}{0mm}{black!40},
+    borderline west={3pt}{0mm}{black!30},
     sharp corners, 
     colback=black!10, 
     coltitle=black, 
-    top=3mm,
+    top=0mm,
     after title={\space\space},
   </xsl:text>
 </xsl:template>
