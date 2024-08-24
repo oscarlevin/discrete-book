@@ -158,10 +158,10 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     <xsl:text>
       enhanced, 
       frame hidden,
-      borderline={2pt}{0pt}{black!30},
+      borderline={2pt}{0pt}{black!25},
       sharp corners, 
       colback=black!10, 
-      colbacktitle=black!30, 
+      colbacktitle=black!25, 
       coltitle=black, 
       boxed title style={sharp corners, frame hidden},
       fonttitle=\bfseries, 
