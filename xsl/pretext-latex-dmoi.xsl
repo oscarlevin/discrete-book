@@ -313,7 +313,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     colback=Thistle!20, 
     colbacktitle=Thistle!20, 
     coltitle=black, 
-    top=3mm,
+    top=2mm,
     after title={\space\space},
   </xsl:text>
 </xsl:template>

@@ -97,6 +97,10 @@
 </xsl:template>
 
 
+<!-- Add newpage -->
+<xsl:template match="clearpage">
+    <xsl:text>\clearpage&#xa;</xsl:text>
+</xsl:template>
 
 <!-- Hack 2024-08-21 to improve layout of matching exercises -->
 <xsl:template match="exercise/matches/match" mode="matching-statement">

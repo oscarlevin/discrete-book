@@ -261,13 +261,14 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
   <xsl:text>
     runintitlestyle,
     enhanced, 
+    parbox=false,
     frame hidden,
     borderline={3pt}{0mm}{black!10},
     borderline west={3pt}{0mm}{black!30},
     sharp corners, 
     colback=black!10, 
     coltitle=black, 
-    top=0mm,
+    top=2mm,
     after title={\space\space},
   </xsl:text>
 </xsl:template>
