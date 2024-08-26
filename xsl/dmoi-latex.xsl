@@ -59,7 +59,10 @@
 <!-- papersize={7in,10in},  width=5in, inner=.75in, height=8.25in, top=0.75in, twoside, ignoreheadfoot, hmargin={0.85in, 0.5in}, -->
 
 
-
+<!-- Add newpage -->
+<xsl:template match="clearpage">
+    <xsl:text>\clearpage&#xa;</xsl:text>
+</xsl:template>
 
 
 <!-- Include a style file at the end of the preamble: -->
