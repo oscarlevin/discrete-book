@@ -171,6 +171,23 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     </xsl:text>
 </xsl:template>
 
+<xsl:template match="&ASIDE-LIKE;" mode="tcb-style">
+    <xsl:text>bwminimalstyle, 
+      runintitlestyle,     
+      frame hidden,
+      borderline={3pt}{0mm}{black!10},
+      borderline west={3pt}{0mm}{black!30},
+      sharp corners, 
+      colback=black!10, 
+      coltitle=black, 
+      top=2mm, 
+      title={By the way...},
+      blockspacingstyle, 
+      after title={\space}, 
+      before upper app={\setparstyle}, 
+      after skip=1em</xsl:text>
+</xsl:template>
+
 <xsl:template match="&THEOREM-LIKE;|&AXIOM-LIKE;" mode="tcb-style">
     <xsl:text>
       enhanced, 
@@ -190,7 +207,23 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template match="proof" mode="tcb-style">
-    <xsl:text>bwminimalstyle, parbox=false, fonttitle=\normalfont\bfseries, attach title to upper, after title={\space\space}, center, width=.90\linewidth&#xa;</xsl:text>
+    <xsl:text>bwminimalstyle, parbox=false, fonttitle=\normalfont\bfseries, attach title to upper, after title={\space\space}, after upper={\space\space\hspace*{\stretch{1}}\scshape qed}, center, width=.92\linewidth, after skip=1ex&#xa;</xsl:text>
+</xsl:template>
+
+
+<!-- PROOF-LIKE (solutions, minor) -->
+<!-- NOT a tcolorbox since embedded in others,      -->
+<!-- hence an inner box and thus always unbreakable -->
+<!-- Body:  \begin{solutionproof}                   -->
+<!-- Really simple.  No label, so not a target of a -->
+<!-- cross-reference.  Not stylable, though we      -->
+<!-- could use a macro for the tombstone/Halmos/QED -->
+<!-- so that could be set.                          -->
+<xsl:template match="*[&PROOF-FILTER;][&SOLUTION-PROOF-FILTER;]" mode="environment">
+    <xsl:text>\NewDocumentEnvironment{solution</xsl:text>
+    <xsl:value-of select="local-name(.)"/>
+    <xsl:text>}{m}&#xa;</xsl:text>
+    <xsl:text>{\par\smallskip\noindent\textit{#1}.\space\space}{\space\space\hspace*{\stretch{1}}\scshape qed\par\smallskip}&#xa;</xsl:text>
 </xsl:template>
 
 <xsl:template match="definition" mode="tcb-style">

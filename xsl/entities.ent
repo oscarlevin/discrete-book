@@ -31,10 +31,18 @@
 <!ENTITY SIMPLECHAR "concat(&DIGIT;,&ALPHABET;)">
 
 <!-- for match/select -->
-<!ENTITY STRUCTURAL "book|article|slideshow|letter|memo|frontmatter|part|chapter|appendix|index[index-list]|index-part|preface|acknowledgement|biography|foreword|dedication|colophon|section|subsection|subsubsection|slide|exercises|worksheet|reading-questions|solutions|references|glossary|backmatter">
+<!ENTITY STRUCTURAL "book|article|slideshow|letter|memo|frontmatter|part|chapter|appendix|index|preface|acknowledgement|biography|foreword|dedication|colophon|section|subsection|subsubsection|slide|exercises|worksheet|reading-questions|solutions|references|glossary|backmatter">
+
+<!ENTITY TRADITIONAL-DIVISION "book|article|part|chapter|section|subsection|subsubsection|appendix">
+
+<!ENTITY SPECIALIZED-DIVISION "exercises|worksheet|reading-questions|references|glossary|solutions">
 
 <!-- for filtering nodes, eg *[&STRUCTURAL-FILTER;], *[not(&STRUCTURAL-FILTER;)] -->
-<!ENTITY STRUCTURAL-FILTER "self::book or self::article or self::slideshow or self::letter or self::memo or self::frontmatter or self::part or self::chapter or self::appendix or self::index[index-list] or self::index-part or self::preface or self::acknowledgement or self::biography or self::foreword or self::dedication or self::colophon or self::section or self::subsection or self::subsubsection or self::slide or self::exercises or self::worksheet or self::reading-questions or self::solutions or self::references or self::glossary or self::backmatter">
+<!ENTITY STRUCTURAL-FILTER "self::book or self::article or self::slideshow or self::letter or self::memo or self::frontmatter or self::part or self::chapter or self::appendix or self::index or self::preface or self::acknowledgement or self::biography or self::foreword or self::dedication or self::colophon or self::section or self::subsection or self::subsubsection or self::slide or self::exercises or self::worksheet or self::reading-questions or self::solutions or self::references or self::glossary or self::backmatter">
+
+<!ENTITY TRADITIONAL-DIVISION-FILTER "self::book or self::article or self::part or self::chapter or self::section or self::subsection or self::subsubsection or self::appendix">
+
+<!ENTITY SPECIALIZED-DIVISION-FILTER "self::exercises or self::worksheet or self::reading-questions or self::references or self::glossary or self::solutions">
 
 <!-- NB: (2019-06-12)  Only the two metadata "filters" seem to          -->
 <!-- be in use, so only those are being maintained.  grep'ing on        -->
@@ -42,7 +50,7 @@
 <!-- (Include this comment in count!)                                   -->
 
 <!-- typical items in blocks that get special treatment -->
-<!ENTITY METADATA "title|subtitle|caption|index">
+<!ENTITY METADATA "title|subtitle|caption|idx|index">
 <!ENTITY METADATA-FILTER "self::title or self::subtitle or self::caption or self::idx or self::index[not(index-list)]">
 
 <!-- Subdivisions and runs of paragraphs (like in a proof)  -->
@@ -72,6 +80,18 @@
 <!ENTITY THEOREM-LIKE "theorem|corollary|lemma|algorithm|proposition|claim|fact|identity">
 <!ENTITY THEOREM-FILTER "self::theorem or self::corollary or self::lemma or self::algorithm or self::proposition or self::claim or self::fact or self::identity">
 
+<!-- varieties of proofs -->
+<!ENTITY PROOF-LIKE "proof|argument|justification|reasoning|explanation">
+<!ENTITY PROOF-FILTER "self::proof or self::argument or self::justification or self::reasoning or self::explanation">
+
+<!-- three types of PROOF-LIKE -->
+<!-- in THEOREM-LIKE, detached/standalone, in solutions                                  -->
+<!-- INNER-PROOF-FILTER only used where heading levels are controlled                    -->
+<!-- SOLUTION-PROOF-FILTER used extensively to control LaTeX environments/macros/styling -->
+<!-- standalone/detached is just everything else (in division, or paragraphs, or...)     -->
+<!ENTITY INNER-PROOF-FILTER "(&PROOF-FILTER;) and (parent::theorem or parent::corollary or parent::lemma or parent::algorithm or parent::proposition or parent::claim or parent::fact or parent::identity)">
+<!ENTITY SOLUTION-PROOF-FILTER "(&PROOF-FILTER;) and (ancestor::hint or ancestor::answer or ancestor::solution)">
+
 <!-- a mathematical statement, but never with a proof -->
 <!ENTITY AXIOM-LIKE "axiom|conjecture|principle|heuristic|hypothesis|assumption">
 <!ENTITY AXIOM-FILTER "self::axiom or self::conjecture or self::principle or self::heuristic or self::hypothesis or self::assumption">
@@ -81,8 +101,8 @@
 <!ENTITY REMARK-FILTER "self::remark or self::convention or self::note or self::observation or self::warning or self::insight">
 
 <!-- about computations or technology -->
-<!ENTITY COMPUTATION-LIKE "computation|technology">
-<!ENTITY COMPUTATION-FILTER "self::computation or self::technology">
+<!ENTITY COMPUTATION-LIKE "computation|technology|data">
+<!ENTITY COMPUTATION-FILTER "self::computation or self::technology or self::data">
 
 <!-- incidental, skippable, lightweight -->
 <!ENTITY ASIDE-LIKE "aside|biographical|historical">
@@ -104,6 +124,10 @@
 <!ENTITY GOAL-LIKE "objectives|outcomes">
 <!ENTITY GOAL-FILTER "self::objectives or self::outcomes">
 
+<!-- Open = research question/problem/conjecture -->
+<!ENTITY OPENPROBLEM-LIKE "openproblem|openquestion|openconjecture">
+<!ENTITY OPENPROBLEM-FILTER "self::openproblem or self::openquestion or self::openconjecture">
+
 <!-- displays with captions -->
 <!ENTITY FIGURE-LIKE "figure|table|listing|list">
 <!ENTITY FIGURE-FILTER "self::figure or self::table or self::listing or self::list">
@@ -111,6 +135,10 @@
 <!-- appendages of examples, exercises, tasks -->
 <!ENTITY SOLUTION-LIKE "hint|answer|solution">
 <!ENTITY SOLUTION-FILTER "self::hint or self::answer or self::solution">
+
+<!-- appendages of OPENPROBLEM-LIKE -->
+<!ENTITY DISCUSSION-LIKE "context|discussion|opinion|status|suggestion">
+<!ENTITY DISCUSSION-FILTER "self::context or self::discussion or self::opinion or self::status or self::suggestion">
 
 <!-- When context is an inline "exercise", then this condition is      -->
 <!-- true. We are positive, so as new locations of "exercise"          -->
