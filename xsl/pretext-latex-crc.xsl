@@ -172,20 +172,22 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template match="&ASIDE-LIKE;" mode="tcb-style">
-    <xsl:text>bwminimalstyle, 
-      runintitlestyle,     
+    <xsl:text>
+      runintitlestyle,
+      enhanced, 
       frame hidden,
-      borderline={3pt}{0mm}{black!10},
-      borderline west={3pt}{0mm}{black!30},
+      parbox=false,
+      borderline={1pt}{0mm}{black!10},
+      borderline west={1pt}{0mm}{black!30},
       sharp corners, 
       colback=black!10, 
+      colbacktitle=black!10, 
       coltitle=black, 
-      top=2mm, 
+      top=2mm,
       title={By the way...},
-      blockspacingstyle, 
       after title={\space}, 
-      before upper app={\setparstyle}, 
-      after skip=1em</xsl:text>
+      after skip=1em
+    </xsl:text>
 </xsl:template>
 
 <xsl:template match="&THEOREM-LIKE;|&AXIOM-LIKE;" mode="tcb-style">

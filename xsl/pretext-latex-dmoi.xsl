@@ -318,7 +318,24 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
   </xsl:text>
 </xsl:template>
 
-
+<xsl:template match="&ASIDE-LIKE;" mode="tcb-style">
+    <xsl:text>
+      runintitlestyle,
+      enhanced, 
+      frame hidden,
+      parbox=false,
+      borderline={1pt}{0mm}{Thistle!20},
+      borderline west={1pt}{0mm}{Thistle!50},
+      sharp corners, 
+      colback=Thistle!20, 
+      colbacktitle=Thistle!20, 
+      coltitle=black, 
+      top=2mm,
+      title={By the way...},
+      after title={\space}, 
+      after skip=1em
+    </xsl:text>
+</xsl:template>
 
 <!-- %%%%%%%%%%%%%%%% -->
 <!-- End Block Stiles -->
