@@ -181,7 +181,6 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
       borderline west={1pt}{0mm}{black!30},
       sharp corners, 
       colback=black!10, 
-      colbacktitle=black!10, 
       coltitle=black, 
       top=2mm,
       title={By the way...},
@@ -209,7 +208,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 </xsl:template>
 
 <xsl:template match="proof" mode="tcb-style">
-    <xsl:text>bwminimalstyle, parbox=false, fonttitle=\normalfont\bfseries, attach title to upper, after title={\space\space}, after upper={\space\space\hspace*{\stretch{1}}\scshape qed}, center, width=.92\linewidth, after skip=1ex&#xa;</xsl:text>
+    <xsl:text>bwminimalstyle, parbox=false, fonttitle=\normalfont\bfseries, attach title to upper, after title={\space\space}, after upper={\space\space\hspace*{\stretch{1}}\scshape qed}, center, width=.95\linewidth, after skip=1em&#xa;</xsl:text>
 </xsl:template>
 
 
