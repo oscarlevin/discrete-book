@@ -24,8 +24,21 @@ jobs:
             - name: install deps
               run: pip install -r requirements.txt
 
+            - name: install local ptx files
+              run: pretext --version
+
             - name: build deploy targets
-              run: pretext build --deploys
+              run: |
+                version="$(pretext --version)"
+                major="$(echo $version | cut -d '.' -f 1)"
+                minor="$(echo $version | cut -d '.' -f 2)"
+                if [ "$major" -ge 2 -a "$minor" -ge 5 ]; then
+                    echo "PreTeXt version is 2.5 or greater; using new build command"
+                    pretext build --deploys
+                else
+                    echo "PreTeXt version is less than 2.5, using old build command"
+                    pretext build
+                fi
             - name: stage deployment
               run: pretext deploy --stage-only
 
