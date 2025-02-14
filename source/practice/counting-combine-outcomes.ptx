@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="practice_counting-combine-outcomes">
+  <title>Practice Problems</title>
+  
+  
+
+  <exercise label="ww-addmult-outfits" component="interactive">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_1.pg" />
+  </exercise>
+  <exercise component="static">
+    <statement>
+      <p>
+        Your wardrobe consists of 6 shirts, 3 pairs of pants, and 15 bow ties.  How many different outfits can you make?
+      </p>
+    </statement>
+    <solution>
+      <p>
+        By the product principle, there are <m>6 \times 3 \times 15 = 270</m> different outfits.
+      </p>
+    </solution>
+  </exercise>
+
+  <exercise label="ww-addmult-ties">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_2.pg" />
+  </exercise>
+
+  <exercise label="ww-addmult-hex">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_4.pg" />
+  </exercise>
+
+  <exercise label="ww-binom-subsets-all">
+    <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_1.pg" />
+  </exercise>
+
+  <exercise label="ww-binom-subsets-card">
+    <webwork>
+      <pg-code>
+        Context("IntegerFunctions");
+        $n = random(5,10); #define number of possible elements in set S
+        $S = Set(1..$n);
+        $c = ceil($n/2)+1; #cardinality is equal to 1 more than number of odd numbers in the set.
+        # do {$c = random(4,7);} until ($c &lt; $n) and ($n/2 &lt; $c); #pick a value for subset cardinality
+        $n3 = $n-3; #remaining elements other than {2,3,5} for part b 
+        $c3 = $c-3; #remaining elements to be chosen for subset in part b
+        $ans1 = C($n,$c);
+        $ans2 = C($n3,$c3);
+        $ev = int($n/2);
+        $ans3 = C($ev,1);
+      </pg-code>
+    
+      <statement>
+        <p>
+          Let <m>S = <var name="$S"/></m>.
+          <ol>
+            <li>
+              <p>
+                How many subsets are there of cardinality <m><var name="$c"/></m>?
+              </p>
+              <p>
+                <var name="$ans1" width="10"/>
+              </p>
+              <instruction>You can enter C(n,k) for \(\binom{n}{k}\)</instruction>
+            </li>
+            <li>
+              <p>
+                How many subsets of cardinality <m><var name="$c"/></m> have <m>>\{2,3,5\}</m> as a subset?
+              </p>
+              <p>
+                <var name="$ans2" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                How many subsets of cardinality <m><var name="$c"/></m> contain at least one odd number?
+              </p>
+              <p>
+                <var name="$ans1" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                How many subsets of cardinality <m><var name="$c"/></m> contain exactly one even number?
+              </p>
+              <p>
+                <var name="$ans3" width="10"/>
+              </p>
+            </li>
+          </ol> 
+        </p>
+      </statement>
+      <solution>
+        <p>
+          <ol>
+            <li>
+              <p>
+                <m>\binom{<var name="$n"/>}{<var name="$c"/>} = <var name="$ans1"/></m> subsets
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\binom{<var name="$n3"/>}{<var name="$c3"/>} = <var name="$ans2"/></m> subsets.  We need to select <var name="$c3"/> of the <var name="$n3"/> remaining elements of <m>S</m> to be in the subset.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\binom{<var name="$n"/>}{<var name="$c"/>} = <var name="$ans1"/></m> subsets.  All subsets of cardinality <m><var name="$c"/></m> must contain at least one odd number.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\binom{<var name="$ev"/>}{1} = <var name="$ev"/></m> subsets.  Select 1 of the <var name="$ev"/> even numbers.  The remaining <var name="$c-1"/> odd numbers of <m>S</m> must all be in the set.
+              </p>
+            </li>
+          </ol>
+        </p> 
+      </solution>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-binom-subsets-vs">
+    <webwork>
+      <pg-code>
+        Context("IntegerFunctions");
+        $n = random(4,9); #define number of possible elements in set A
+        $A = Set(1..$n);
+        do {$s = random(3,6);} until ($s &lt; $n);
+        $half = int($n/2);
+
+        $go = 0;
+        for ($j = 0; $j &lt;= $half; $j++)
+        {
+        $go = Compute("$go + C($n, $j*2)");
+        }
+
+
+        $ans1 = Compute("2^($n)");
+        $ans2 = Compute("C($n,$s)");
+        $ans3 = Compute("2^$half");
+        $ans4 = $go;
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Let <m>A = <var name="$A"/></m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> are there? 
+          </p>
+          <p>
+            <var name="$ans1" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> contain exactly <m><var name="$s"/></m> elements?
+          </p>
+          <p>
+            <var name="$ans2" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> contain only even numbers?
+          </p>
+          <p>
+            <var name="$ans3" width="10"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            How many subsets of <m>A</m> contain an even number of elements?
+          </p>
+          <p>
+            <var name="$ans4" width="10"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+  <!-- Add exercise investigating while the subsets with even cardinality is the same as all subsets of a one-smaller set -->
+
+
+  <exercise label="ww-binom-coin-rows">
+    <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_5.pg" />
+  </exercise>
+
+  <exercise label="ww-binom-bitstrings-ormore">
+    <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_6.pg" />
+  </exercise>
+
+  <exercise label="ww-binom-subsets-ormore">
+    <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_7.pg" />
+  </exercise>
+
+  <exercise label="ww-binom-lattice-paths">
+    <webwork source="Contrib/DMOI/1-Counting/1_2-Binomial_Coefficients/1_2_10.pg" />
+  </exercise>
+
+
+
+  <!-- <exercise label="ww-addmult-pie-possible">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_5.pg" />
+  </exercise> -->
+
+  <!-- <exercise label="ww-addmult-union-plus-int">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_6.pg" />
+  </exercise> -->
+
+  <!-- <exercise label="ww-addmult-pie-tv">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_7.pg" />
+  </exercise> -->
+
+  <!-- <exercise label="ww-addmult-pie-potato">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_8.pg" />
+  </exercise> -->
+
+  <!-- <exercise label="ww-addmult-pie-multiples1">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_9.pg" />
+  </exercise> -->
+
+  <!-- <exercise label="ww-addmult-pie-multiples2">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_10.pg" />
+  </exercise> -->
+
+
+
+  <!-- <exercise label="ww-addmult-words">
+    <webwork source="Contrib/DMOI/1-Counting/1_1-Additive_and_Multiplicative_Principles/1_1_12.pg" />
+  </exercise> -->
+
+
+
+</exercises>

@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq-strong-induction">
+  <title>Strong Induction</title>
+  <idx>
+    <h>proof</h>
+    <h>by strong indcution</h>
+  </idx>
+  <idx>
+    <h>strong induction</h>
+  </idx>
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+					Explain the difference between proof by induction and proof by strong induction.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Use strong induction to prove statements.
+				</p>
+			</li> 
+		</ol>
+	</objectives>
+	
+  <subsection xml:id="subsec-going-farther-back">
+    <title>Section Preview</title>
+    
+    <investigation>
+    <p>
+        Start with a square piece of paper.
+        You want to cut this square into smaller squares, leaving no waste
+        (every piece of paper you end up with must be a square).
+        Obviously it is possible to cut the square into 4 squares.
+        You can also cut it into 9 squares.
+        It turns out you can cut the square into 7 squares
+        (although not all the same size).
+        What other numbers of squares could you end up with?
+      </p>
+    </investigation>
+    <p>
+      Sometimes, to prove that <m>P(k+1)</m> is true,
+      it would be helpful to know that <m>P(k)</m>
+      <em>and</em> <m>P(k-1)</m> <em>and</em>
+      <m>P(k-2)</m> are all true.  This is certainly the case when proving something about a recurrence relation that is given as a combination of two previous terms.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Prove that <m>2^n</m> is a solution to the recurrence relation <m>a_n = 5a_{n-1} - 6a_{n-2}</m> with initial conditions <m>a_0 = 1</m> and <m>a_1 = 2</m>.
+        </p>
+      </statement>
+      <solution>
+        <proof>
+          <p>
+            Let <m>P(n)</m> be the statement,
+            <q><m>a_n = 2^n</m>.</q>  We will show this is true for all <m>n \ge 0</m>.
+          </p>
+
+          <p>
+            Base cases: <m>a_0 = 2^0 = 1</m> and <m>a_1 = 2^1 = 2</m> both agree with the initial conditions.
+          </p>
+
+          <p>
+            Inductive case:  Let <m>k \ge 2</m> be arbitrary.  Assume <m>P(k)</m> and <m>P(k-1)</m> are both true.  That is, assume <m>a_k = 2^k</m> and <m>a_{k-1} = 2^{k-1}</m>.  We will show that <m>P(k+1)</m> is true.  Consider <m>a_{k+1}</m>.  We have
+            <md>
+              <mrow>a_{k+1} = \amp 5a_k - 6a_{k-1}</mrow>
+              <mrow>= \amp 5\cdot 2^k - 6\cdot 2^{k-1}</mrow>
+              <mrow>= \amp 10 \cdot 2^{k-1} - 6 \cdot 2^{k-1}</mrow>
+              <mrow>= \amp 4\cdot 2^{k-1}</mrow>
+              <mrow>= \amp 2^{k+1}</mrow>
+            </md>.
+            Therefore, by the principle of mathematical induction, <m>P(n)</m> is true for all <m>n \ge 0</m>.
+          </p>
+          </proof>
+        <p>
+          Well, almost the principle of mathematical induction.  Is what we did okay?  
+        </p>
+      </solution>
+    </example>
+
+<p>
+  There are also times when we might want to go even farther back to use an assumption that <m>P(j)</m> is true for <m>j</m> much smaller than <m>k+1</m>.  This is the idea behind <term>strong induction</term> and the topic of this short section.
+</p>
+  
+<worksheet xml:id="PA-strong-indcution">
+  <title>Preview Activity</title>
+  
+  
+  <exercise label="pa-strong-indcution-1">
+    <idx><h>puzzle</h><h>chocolate bar</h></idx>
+  <webwork>
+    <pg-code>
+      Context()->variables->add(n => "Real", a => "Real", b => "Real");
+    </pg-code>
+
+    <introduction>
+    <p>
+      Consider the following puzzle:
+    </p>
+    
+    <blockquote>
+    <p>
+      You have a rectangular chocolate bar,
+      made up of <m>n</m> identical squares of chocolate.
+      You can take such a bar and break it along any row or column.
+      How many times will you have to break the bar to reduce it to <m>n</m> single chocolate squares?
+    </p>
+  </blockquote>    
+  <p>
+    At first, this question might seem impossible.
+      Perhaps we meant to ask for the <em>smallest</em> number of breaks needed.
+      Let's investigate.
+  </p>
+</introduction>
+  <task>
+    <statement>
+      <p>
+        Suppose you started with a <m>1\times 3</m> bar.  How many breaks would you need to reduce it to single squares?
+      </p>
+      <p>
+        <var name="2" width="5"/>
+      </p>
+    </statement>
+    </task>
+    <task>
+      <statement>
+        <p>
+          If you had a <m>1\times 4</m> bar, how many breaks are required?
+        </p>
+        <p>
+          <var name="3" width="5" />
+        </p>
+        <p>
+          If you had 4 squares arranged in a <m>2\times 2</m> square, your first break would require you to break the chocolate into two <m>1 \times 2</m> bars.  Then each of these would require <var name="1" width="5"/> more break(s), for a total of <var name="3" width="5"/> breaks to go from the <m>2\times 2</m> to single squares.
+        </p>
+      </statement>
+    </task>
+    <task>
+      <statement>
+        <p>
+          A <m>6</m>-square bar could either be a <m>1 \times 6</m> bar, requiring <var name="5" width="5" /> breaks, or a <m>2 \times 3</m> bar. 
+        </p>
+        
+        <p>
+          There are two ways to proceed now.
+          <ol>
+            <li>
+              <p>
+                Break the bar into two <m>1 \times 3</m> bars, each requiring <var name="2" width="5" /> more breaks, for a total of <var name="5" width="5"/> breaks.
+              </p>
+            </li>
+            <li>
+              <p>
+                Break the bar into a <m>1\times 2</m> bar and a <m>2 \times 2</m> bar.  The <m>1 \times 2</m> bar takes <var name="1" width="5" /> more break(s) and the <m>2 \times 2</m> bar takes <var name="3" width="5" /> more break(s), for a total of <var name="5" width="5" /> breaks.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </task>
+    <task>
+      <statement>
+        <p>
+          Based on the above data, what should our conjecture be for the number of breaks to reduce an <m>n</m>-square bar to single squares, in terms of <m>n</m>?
+        </p>
+        <p>
+          It will take <var name="Compute('n-1')" width="10" /> breaks to reduce an <m>n</m>-square bar to single squares.
+        </p>
+      </statement>
+    </task>
+    <task>
+      <statement>
+        <p>
+          Do we believe this?  Suppose you used one break to reduce the bar into two smaller bars, with <m>a</m> and <m>b</m> squares respectively.  If the conjecture is correct, how many more breaks will it take to reduce the size <m>a</m> bar?
+
+        </p>
+        <p>
+          <var name="Compute('a-1')" width="10" />
+        </p>
+        <p>
+          How many more breaks will it take to reduce the size <m>b</m> bar?
+        </p>
+        <p>
+          <var name="Compute('b-1')" width="10" />
+        </p>
+        <p>
+          How many breaks is this all together, in terms of <m>a</m> and <m>b</m>, including the initial break?
+        </p>
+        <p>
+          <var name="Compute('1+a-1+b-1')" width="10" />
+        </p>
+        <p>
+          But what is <m>a+b</m>?  We got <m>a</m> and <m>b</m> by breaking the <m>n</m> squares in two pieces, so <m>a+b = </m><var name="Compute('n')" width="5"/>.  This gives us a total number of breaks as <var name="Compute('n-1')" width="10" />.
+        </p>
+      </statement>
+    </task>
+  </webwork>
+</exercise>
+</worksheet>
+
+    </subsection>
+
+    <subsection>
+      <title>Divide and Conquer</title>
+      
+      <p>
+        Think of recursive definitions as instructions for building a ladder.  You can build the ladder as tall as you like because you have instructions for building the next rung, as long as you are standing on the rung before it.
+
+      </p>
+
+      <p>
+        Induction is the corresponding proof technique.  To prove that you can climb the ladder as high as you like, you prove that you can step onto the ladder (the base case) and then prove that, from any rung, you can get to the next rung (the inductive step).
+      </p>
+
+      <p>
+        More specifically, suppose you were trying to prove that you can get to rung 4 on the ladder.  You have successfully proved that you can get to rung 1, and that from any rung, you can get to the next.  So you can get to rung 1, and from 1 you can get to 2.  From 2 you can get to 3, and from 3 you can get to 4.  Therefore, you can get to 4.
+      </p>
+
+      <p>
+        But notice that along the way, you know you have visited rungs 1 through 3.  We might as well assume that we have visited all the rungs below the next one we are trying to reach.  This is the idea behind <term>strong induction</term>.
+      </p>
+
+      <p>
+        A better ladder metaphor for strong induction is to think of ladders as things we can stack on top of each other.  We want to argue that it is possible to climb 20 rungs of a ladder.  Let's divide that into two smaller ladders, say a 12-rung ladder and an 8-rung ladder.  We can assume that we can climb both of these since 20 is the least size we are not yet convinced of.  Well, put those two ladders together, and you get <m>12+8 = 20</m> rungs.
+      </p>
+
+      <p>
+        We better climb down from our shaky metaphor before we hurt ourselves.  Let's look at a formal definition of strong induction.
+      </p>
+
+      <assemblage>
+        <title>Strong Induction Proof Structure</title>
+        <idx><h>induction</h><h>strong</h></idx>
+  
+        <p>
+          Start by saying what we want to prove:
+          <q>Let <m>P(n)</m> be the statement<ellipsis/>.</q>
+          Then establish two facts:
+  
+          <ol>
+            <li>
+              <p>
+                Base case: Prove that <m>P(0)</m> is true.  (Perhaps also prove other needed base cases.)
+          <idx><h>base case</h></idx>
+          <idx><h>induction</h><h>base case</h><h>for strong induction</h></idx>
+              </p>
+            </li>
+  
+            <li>
+              <p>
+                Inductive case: Assume <m>P(j)</m> is true for all <m>j \le k</m>.
+                Prove that <m>P(k+1)</m> is true.
+          <idx><h>inductive case</h></idx>
+          <idx><h>induction</h><h>inductive case</h><h>for strong induction</h></idx>
+  
+              </p>
+            </li>
+          </ol>
+  
+          Conclude, <q>Therefore, by strong induction,
+          <m>P(n)</m> is true for all <m>n \gt 0</m>.</q>
+        </p>
+      </assemblage>
+
+    <p>
+      Of course, it is acceptable to replace 0 with a larger base case if needed.<fn>
+      Technically,
+      strong induction does not require you to prove a separate base case.
+      This is because when proving the inductive case,
+      you must show that <m>P(0)</m> is true,
+      assuming <m>P(k)</m> is true for all <m>k \lt 0</m>.
+      But this is not any help so you end up proving <m>P(0)</m> anyway.
+      To be on the safe side, we will always include the base case separately.
+      </fn></p>
+
+      <p>
+        To illustrate strong induction, let's return to the chocolate bar problem.  
+      </p>
+
+      <proposition xml:id="prop-chocolate">
+        <statement>
+
+              <p>
+                Given an <m>n</m>-square rectangular chocolate bar,
+                it always takes <m>n-1</m> breaks to reduce the bar to single squares.
+              </p>
+            </statement>
+      </proposition>
+
+    <proof>
+      <p>
+        Let <m>P(n)</m> be the statement,
+        <q>It takes <m>n-1</m> breaks to reduce a <m>n</m>-square chocolate bar to single squares.</q>
+      </p>
+
+      <p>
+        Base case: Consider <m>P(2)</m>.
+        The squares must be arranged into a <m>1\times 2</m> rectangle,
+        and we require <m>2-1 = 1</m> breaks to reduce this to single squares.
+      </p>
+
+      <p>
+        Inductive case:
+        Fix an arbitrary <m>k\ge 2</m> and assume <m>P(j)</m> is true for all <m>j \le k</m>.
+        Consider a <m>(k+1)</m>-square rectangular chocolate bar.
+        Break the bar once along any row or column.
+        This results in two chocolate bars,
+        say of sizes <m>a</m> and <m>b</m> .
+        That is, we have an <m>a</m>-square rectangular chocolate bar,
+        a <m>b</m>-square rectangular chocolate bar, and <m>a+b = k+1</m>.
+      </p>
+
+      <p>
+        We also know that <m>a \le k</m> and <m>b \le k</m>,
+        so by our inductive hypothesis,
+        <m>P(a)</m> and <m>P(b)</m> are true.
+        To reduce the <m>a</m>-square bar to single squares takes <m>a-1</m> breaks;
+        to reduce the <m>b</m>-square bar to single squares takes <m>b-1</m> breaks.
+        Doing this results in our original bar being reduced to single squares.
+        All together it took the initial break,
+        plus the <m>a-1</m> and <m>b-1</m> breaks,
+        for a total of <me>1+a-1+b-1 = a+b-1 = k+1 - 1 = k</me> breaks.
+        Thus <m>P(k+1)</m> is true.
+      </p>
+
+      <p>
+        Therefore, by strong induction,
+        <m>P(n)</m> is true for all <m>n \ge 2</m>.
+      </p>
+    </proof>
+
+    <p>
+      Here is a more mathematically relevant example:
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Prove that any natural number greater than 1 is either prime
+              <idx><h>prime numbers</h></idx>
+          or can be written as the product of primes.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First, the idea:
+          If we take some number <m>n</m>, maybe it is prime.
+          If so, we are done.
+          If not, then it is composite,
+          so it is the product of two smaller numbers.
+          Each of these factors is smaller than <m>n</m>
+          (but at least 2),
+          so we can repeat the argument with these numbers.
+          We have reduced to a smaller case.
+        </p>
+
+        <p>
+          Now the formal proof:
+        </p>
+
+        <proof>
+          <p>
+            Let <m>P(n)</m> be the statement,
+            <q><m>n</m> is either prime or can be written as the product of primes.</q>
+            We will prove <m>P(n)</m> is true for all <m>n \ge 2</m>.
+          </p>
+
+          <p>
+            Base case: <m>P(2)</m> is true because <m>2</m> is indeed prime.
+          </p>
+
+          <p>
+            Inductive case: assume <m>P(j)</m> is true for all <m>j \le k</m>.
+            We want to show that <m>P(k+1)</m> is true.
+            That is, we want to show that <m>k+1</m> is either prime or is the product of primes.
+            If <m>k+1</m> is prime, we are done.
+            If not, then <m>k+1</m> has more than 2 divisors,
+            so we can write <m>k+1 = m_1 \cdot m_2</m>,
+            with <m>m_1</m> and <m>m_2</m> less than <m>k+1</m>
+            (and greater than 1).
+            By the inductive hypothesis,
+            <m>m_1</m> and <m>m_2</m> are each either prime or can be written as the product of primes.
+            In either case,
+            we have that <m>m_1\cdot m_2 = k+1</m> can be written as the product of primes.
+          </p>
+
+          <p>
+            Thus by strong induction,
+            <m>P(n)</m> is true for all <m>n \ge 2</m>.
+          </p>
+        </proof>
+
+      </solution>
+    </example>
+
+    <p>
+      Whether you use regular induction or strong induction depends on the statement you want to prove.
+      If you wanted to be safe, you could always use strong induction.
+      It really is <em>stronger</em>,
+      so can accomplish everything <q>weak</q> induction can.
+      <idx><h>induction</h><h>contrasting regular and strong</h></idx>
+      That said, using regular induction is often easier since there is only one place you can use the induction hypothesis.
+      There is also something to be said for
+      <em>elegance</em> in proofs.
+      If you can prove a statement using simpler tools, it is nice to do so.
+    </p>
+
+    <!-- <p>
+      <idx><h>induction</h><h>contrasting regular and strong</h></idx>
+      As a final contrast between the two forms of induction,
+      consider once more the stamp problem.
+      Regular induction worked by showing how to increase postage by one cent
+      (either replacing three 5-cent stamps with two 8-cent stamps,
+      or three 8-cent stamps with five 5-cent stamps).
+      We could give a slightly different proof using strong induction.
+      First, we could show <em>five</em> base cases:
+      it is possible to make 28, 29, 30, 31, and 32 cents
+      (we would actually say how each of these is made).
+      Now assume that it is possible to make <m>k</m> cents of postage for all <m>k \lt n</m> as long as <m>k \ge 28</m>.
+      As long as <m>n &gt; 32</m>,
+      this means in particular we can make <m>k = n-5</m> cents.
+      Now add a 5-cent stamp to get make <m>n</m> cents.
+    </p> -->
+  </subsection>
+ <reading-questions xml:id="rqs-seq-strong-induction">
+  
+    <exercise label="rq-seq-strong-induction-tf">
+      <statement correct="no">
+        <p>
+          True or false: To prove the inductive case of a proof by strong induction, you should assume <m>P(k+1)</m> is true and prove that <m>P(j)</m> is true for all <m>j \le k</m>.
+        </p>
+      </statement>
+      <feedback>
+        <p>
+          This is backwards.  You still prove the next case, you just get to assume all previous cases (not just the one previous case).
+        </p>
+      </feedback>
+    </exercise>
+
+    <exercise label="rq-seq-strong-induction-compare">
+      <statement>
+        <p>
+          Which of the following claims about the relationship between proof by induction and proof by strong induction are true?
+        </p>
+      </statement>
+      <choices randomize="yes" multiple-correct="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              Any proof by induction can be written as a proof by strong induction.
+            </p>
+          </statement>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              Any proof by strong induction can be written as a proof by induction.
+            </p>
+          </statement>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              Strong induction is <q>stronger</q> because the base case is stronger.
+            </p>
+          </statement>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>
+              Strong induction is <q>stronger</q> because the inductive hypothesis is stronger.
+            </p>
+          </statement>
+        </choice>
+      </choices>
+    </exercise>
+
+
+
+    <exercise label="rq-seq-strong-induction-q">
+      <statement>
+        <p> What questions do you have? Write at
+          least one question about the content of this section that you or a classmate might be curious about after reading this section.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+  <xi:include href="practice/seq-strong-induction.ptx"/>
+  <xi:include href="exercises/seq-strong-induction.ptx"/>
+</section>

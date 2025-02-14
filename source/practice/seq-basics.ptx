@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="practice_seq_basics">
+  <title>Practice Problems</title>
+  
+  
+<!-- Add webwork exercises: -->
+<!-- Find a_5 for some closed formulas and for some recursive formulas -->
+<!-- Say whether a formula is a closed formula or a recurrence relation -->
+<!-- Which recurrence relations agree with the sequence? -->
+<!-- Are there two different sequences that have the same closed formula, recurrence relation, or recursive definition? -->
+<!-- Something about the difference between the value and index -->
+  <exercise label="ww-seq-closed-find-term">
+    <webwork>
+      <pg-code>
+        Context()->variables->are(n => "Real");
+        $b = random(2,6);
+        $c = random(1,5);
+        $closed = Formula("n^2 + $b*n + $c");
+        $n = random(5,8);
+        $ans = $closed->eval(n => $n);
+      </pg-code>
+    
+      <statement>
+        <p>
+          For the sequence with closed formula <m>a_n = <var name="$closed"/></m>, find the term <m>a_<var name="$n"/></m>.
+        </p>
+        <p component="interactive">
+          <m>a_<var name="$n"/> = </m> <var name="$ans" width="5"/>.
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-rec-arith-find-term">
+    <webwork>
+      <pg-code>
+        $d = random(2,7);
+        $b = random(1,9);
+        $n = random(4,7);
+        $ans = Compute("$n*$d + $b");
+      </pg-code>
+    
+      <statement>
+        <p>
+          Consider the sequence with recurrence relation <m>a_n = a_{n-1} + <var name="$d"/></m> with initial term <m>a_0 = <var name="$b"/></m>.  Find the term <m>a_<var name="$n"/></m>.
+        </p>
+
+        <p component="interactive">
+          <m>a_<var name="$n"/> = </m> <var name="$ans" width="5"/>.
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-rec-geom-find-term">
+    <webwork>
+      <pg-code>
+        $d = random(2,7);
+        $b = random(1,9);
+        $n = random(4,7);
+        $ans = Compute("$b*$d**$n");
+      </pg-code>
+    
+      <statement>
+        <p>
+          Consider the sequence with recurrence relation <m>a_n = <var name="$d" />\cdot a_{n-1}</m> with initial term <m>a_0 = <var name="$b"/></m>.  Find the term <m>a_<var name="$n"/></m>.
+        </p>
+
+        <p component="interactive">
+          <m>a_<var name="$n"/> = </m> <var name="$ans" width="5"/>.
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-seq-intro-related">
+    <webwork source="Contrib/DMOI/2-Sequences/2_1-Describing_Sequences/2_1_1.pg" />
+  </exercise>
+
+  <exercise label="ww-seq-intro-related2">
+    <webwork source="Contrib/DMOI/2-Sequences/2_1-Describing_Sequences/2_1_2.pg"/>
+  </exercise>
+  
+ 
+
+
+</exercises>

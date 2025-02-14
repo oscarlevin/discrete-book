@@ -105,61 +105,20 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <!--  Header/Footer Stiles    -->
 <!-- %%%%%%%%%%%%%%%%%%%%%%%% -->
 
-<!-- LaTeX uses four page styles, and we use the "titleps" package  -->
-<!-- to redefine the "empty", "plain", and "headings" styles.  The  -->
-<!-- actual management of which style is used, and when, is         -->
-<!-- controlled by LaTeX with help from PreTeXt.  You can use the   -->
-<!-- "titleps-global-style" template to change which style is the   -->
-<!-- global default, optionally in concert with redefinitions of    -->
-<!-- the style.                                                     -->
-<!--                                                                -->
-<!-- We do limited demonstration with the head, and use the         -->
-<!-- left-side of the foot to display information on which          -->
-<!-- pagestyle is in effect, so you could experiment here before    -->
-<!-- making your own style.                                         -->
-<!--                                                                -->
-<!-- Note: the templates will be placed after a "\renewpagestyle{}" -->
-<!-- command, so should be an optional argument, followed by a      -->
-<!-- mandatory argument with commands like \setfoot, \sethead,      -->
-<!-- \headrule, and \footrule.                                      -->
-<!-- See titleps.pdf in the "titlesec" package for more             -->
-<xsl:template match="book|article|letter|memo" mode="titleps-empty">
-</xsl:template>
-
-<xsl:template match="book|article|letter|memo" mode="titleps-plain">
-    <xsl:text>{
-    \setfoot[][\thepage][]
-    {}{\thepage}{}
-    }</xsl:text>
-</xsl:template>
-
-
-<!-- general headings -->
-<xsl:template match="book" mode="titleps-headings">
-    <xsl:text>{
-    \sethead[{\footnotesize \textbf{\thepage}}~~~ \textsc{\scriptsize{\ifthechapter{\thechapter.~}{}\chaptertitle}}][][]
-    {}{}{\textsc{\scriptsize{\ifthesection{\thesection.~\sectiontitle}{\chaptertitle}}} ~~~ {\footnotesize \textbf{\thepage}} }
-    \setfoot[][][]
-    {}{}{}
-    }</xsl:text>
-</xsl:template>
-
-<xsl:template match="article|letter|memo" mode="titleps-headings">
-    <xsl:text>[\small\sffamily]{
-    \sethead[\thepage][\sectiontitle][]
-    {}{\sectiontitle}{\thepage}
-    \setfoot[foot/even/headings/article][][]
-    {foot/odd or one-sided/headings/article}{}{}
-    }</xsl:text>
-</xsl:template>
-
-<!-- Experiment with "empty", "plain", and "headings" to      -->
-<!-- see the effect of the above definitions (for "article")  -->
-<!-- employed in the sample article                           -->
-<!-- DO NOT set this to return empty text, errors will result -->
-<!-- You can comment it out, and let base definition execute  -->
-<xsl:template match="article" mode="titleps-global-style">
-    <xsl:text>plain</xsl:text>
+<xsl:template match="book" mode="titleps-style">
+    <xsl:text>%% Page style configuration&#xa;</xsl:text>
+    <xsl:text>%%&#xa;</xsl:text>
+    <xsl:text>%% Plain pages should have the same font for page numbers&#xa;</xsl:text>
+    <xsl:text>\renewpagestyle{plain}{%&#xa;</xsl:text>
+    <xsl:text>\setfoot{}{\pagefont\textsl{\thepage}}{}%&#xa;</xsl:text>
+    <xsl:text>}%&#xa;</xsl:text>
+    <xsl:text>
+      \renewpagestyle{headings}{%
+        \sethead[{\footnotesize \textsl{\thepage}}~~~ \textsc{\scriptsize{\ifthechapter{\thechapter.~}{}\chaptertitle}}][][]
+        {}{}{\textsc{\scriptsize{\ifthesection{\thesection.~\sectiontitle}{\chaptertitle}}} ~~~ {\footnotesize \textsl{\thepage}} }
+      }
+    </xsl:text>
+    <xsl:text>\pagestyle{headings}&#xa;</xsl:text>
 </xsl:template>
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -179,22 +138,88 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 
 <!-- "commentary" -->
 <!-- Green and ugly -->
-<xsl:template match="commentary" mode="tcb-style">
+<!-- <xsl:template match="commentary" mode="tcb-style">
     <xsl:text>enhanced, breakable, parbox=false, size=minimal, attach title to upper, after title={\space}, fonttitle=\bfseries, coltitle=black, colback=green</xsl:text>
-</xsl:template>
+</xsl:template> -->
 
 <!-- "objectives", "outcomes" -->
 <!-- Default tcb, identically -->
 <xsl:template match="objectives|outcomes" mode="tcb-style">
-    <xsl:text/>
+  <xsl:text>
+    enhanced,
+    parbox=false,
+    fonttitle=\bfseries\itshape\large,
+    coltitle=black,
+    attach boxed title to top left={xshift=5mm,yshift=-\tcboxedtitleheight/2-1mm,yshifttext=-2mm},
+    boxed title style={frame hidden, colback=white, sharp corners},
+    boxed title size=title,
+    frame hidden,
+    borderline horizontal={2pt}{0mm}{RoyalPurple!65!black},
+    colback=white,
+    width=0.98\linewidth,
+    bottom=5mm,
+    center,
+    after skip=2em,
+  </xsl:text>
 </xsl:template>
 
 <!-- "assemblage" -->
 <!-- Boxed title, borrowed from the AIM style -->
 <xsl:template match="assemblage" mode="tcb-style">
-    <xsl:text>enhanced, boxrule=0.5pt, sharp corners, colback=MidnightBlue!5, colframe=MidnightBlue!20,&#xa;</xsl:text>
-    <xsl:text>colbacktitle=MidnightBlue!25, coltitle=black, boxed title style={sharp corners, frame hidden},&#xa;</xsl:text>
-    <xsl:text>fonttitle=\bfseries, attach boxed title to top left={xshift=4mm,yshift=-4mm,yshifttext=-2mm}, top=3mm,&#xa;</xsl:text>
+    <xsl:text>
+      enhanced, 
+      frame hidden,
+      borderline={1pt}{1pt}{SkyBlue!60},
+      sharp corners, 
+      colback=SkyBlue!25, 
+      colbacktitle=SkyBlue!60, 
+      coltitle=black, 
+      boxed title style={sharp corners, frame hidden},
+      fonttitle=\bfseries, 
+      attach boxed title to top left={xshift=4mm,yshift=-4mm,yshifttext=-2mm},
+      top=3mm,
+      after skip=1em,
+    </xsl:text>
+</xsl:template>
+
+<xsl:template match="&THEOREM-LIKE;|&AXIOM-LIKE;" mode="tcb-style">
+    <xsl:text>
+      enhanced, 
+      frame hidden,
+      parbox=false,
+      borderline={1pt}{0mm}{Periwinkle!40},
+      sharp corners, 
+      colback=Periwinkle!5, 
+      colbacktitle=Periwinkle!40, 
+      coltitle=black, 
+      boxed title style={sharp corners, frame hidden},
+      fonttitle=\bfseries, 
+      attach boxed title to top left={xshift=4mm,yshift=-4mm,yshifttext=-2mm},
+      top=3mm,
+      after skip=1em,
+    </xsl:text>
+</xsl:template>
+
+<xsl:template match="proof" mode="tcb-style">
+    <xsl:text>bwminimalstyle, parbox=false, fonttitle=\normalfont\bfseries, attach title to upper, after title={\space\space}, width=.98\linewidth&#xa;</xsl:text>
+</xsl:template>
+
+<xsl:template match="definition" mode="tcb-style">
+    <xsl:text>
+      enhanced, 
+      frame hidden,
+      parbox=false,
+      borderline={1pt}{1pt}{PineGreen!40},
+      sharp corners, 
+      colback=PineGreen!5, 
+      colbacktitle=PineGreen!40, 
+      coltitle=black, 
+      boxed title style={sharp corners, frame hidden},
+      fonttitle=\bfseries, 
+      attach boxed title to top left={xshift=4mm,yshift=-4mm,yshifttext=-2mm},
+      top=3mm,
+      after skip=1em,
+    </xsl:text>
 </xsl:template>
 
 
@@ -207,7 +232,7 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <!-- Each just slightly different                   -->
 
 <!-- Example styling from CLP -->
-<xsl:template match="&EXAMPLE-LIKE;" mode="tcb-style">
+<xsl:template match="&EXAMPLE-LIKE;|exercise[boolean(&INLINE-EXERCISE-FILTER;)]" mode="tcb-style">
     <xsl:text>
       enhanced,
       breakable,
@@ -239,17 +264,11 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
     boxed title style={frame hidden, colback=white, sharp corners},
     boxed title size=title,
     frame hidden,
-    borderline={1pt}{0mm}{green!50!black},
+    borderline={2pt}{0mm}{teal!45!black},
     arc=4mm,
     colback=white,
     width=0.98\linewidth,
     bottom=5mm,
-    overlay unbroken and last={
-      \draw[color=white, line width=3pt] ([xshift=.05\textwidth]frame.south west) -- ([xshift=-.05\textwidth]frame.south east);
-      \draw ([xshift=.1\textwidth]frame.south west) node{\LARGE \color{red} \Stopsign};
-      \draw (frame.south) node{\textbf{Attempt the above activity before proceeding}};
-      \draw ([xshift=-.1\textwidth]frame.south east) node{\LARGE \color{red} \Stopsign};
-    },
     center,
     after skip=2em,
   </xsl:text>
@@ -282,11 +301,41 @@ along with PreTeXt.  If not, see <http://www.gnu.org/licenses/>.
 <!-- COMPUTATION-LIKE: "computation", "technology"  -->
  <!--White title text, but title backgounds vary    -->
  <!--by category, and remarks have sharp corners    -->
-<!-- <xsl:template match="&REMARK-LIKE;" mode="tcb-style">
-    <xsl:text/>
-</xsl:template> -->
+<xsl:template match="&REMARK-LIKE;" mode="tcb-style">
+  <xsl:text>
+    runintitlestyle,
+    enhanced, 
+    frame hidden,
+    parbox=false,
+    borderline={3pt}{0mm}{Thistle!20},
+    borderline west={3pt}{0mm}{Thistle!50},
+    sharp corners, 
+    colback=Thistle!20, 
+    colbacktitle=Thistle!20, 
+    coltitle=black, 
+    top=2mm,
+    after title={\space\space},
+  </xsl:text>
+</xsl:template>
 
-
+<xsl:template match="&ASIDE-LIKE;" mode="tcb-style">
+    <xsl:text>
+      runintitlestyle,
+      enhanced, 
+      frame hidden,
+      parbox=false,
+      borderline={1pt}{0mm}{Thistle!20},
+      borderline west={1pt}{0mm}{Thistle!50},
+      sharp corners, 
+      colback=Thistle!20, 
+      colbacktitle=Thistle!20, 
+      coltitle=black, 
+      top=2mm,
+      title={By the way...},
+      after title={\space}, 
+      after skip=1em
+    </xsl:text>
+</xsl:template>
 
 <!-- %%%%%%%%%%%%%%%% -->
 <!-- End Block Stiles -->

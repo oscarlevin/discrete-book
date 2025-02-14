@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="practice_seq-growth">
+  <title>Practice Problems</title>
+  
+  
+<!-- Some more problem ideas: -->
+<!-- Classify each of the following as arithmetic, geometric, or neither -->
+<!-- Find the closed formulas for arithmetic/geometric sequences -->
+
+
+  <exercise label="ww-arithgeom-solve-recurrence-arith">
+    <webwork>
+      <pg-code>
+        Context()->variables->add(n=>"Real");
+        $d = random(2,10);
+        $a = random(1,20);
+        do {$b = random(1,20);} until ($b != $a);
+        $seq1 = List($a, $a+$d, $a+2*$d, $a+3*$d, $a+4*$d);
+        $seq2 = List($b, $b+$d, $b+2*$d, $b+3*$d, $b+4*$d);
+        $formula1 = Formula("$a + $d*n");
+        $formula2 = Formula("$b + $d*n");
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Consider the recurrence relation <m>a_n = a_{n-1} + <var name="$d"/></m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            Find the first five terms of the sequence defined by the recurrence relation and initial condition <m>a_0 = <var name="$a"/></m>.
+          </p>
+          <p>
+            <var name="$seq1" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the closed formula for the sequence defined by the recurrence relation and initial condition <m>a_0 = <var name="$a"/></m>.
+          </p>
+          <p component="interactive">
+            <m>a_n = </m><var name="$formula1" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the first five terms of another sequence, also defined by the same recurrence relation but this time with initial condition <m>a_0 = <var name="$b"/></m>.
+          </p>
+          <p>
+            <var name="$seq2" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the closed formula for this second sequence.
+          </p>
+          <p component="interactive">
+            <m>a_n = </m><var name="$formula2" width="25"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-solve-recurrence-geom">
+    <webwork>
+      <pg-code>
+        Context()->variables->add(n=>"Real");
+        $d = random(2,9);
+        $a = random(1,20);
+        do {$b = random(1,20);} until ($b != $a);
+        $seq1 = List($a, $a*$d, $a*$d**2, $a*$d**3, $a*$d**4);
+        $seq2 = List($b, $b*$d, $b*$d**2, $b*$d**3, $b*$d**4);
+        $formula1 = Formula("$a*$d**n");
+        $formula2 = Formula("$b*$d**n");
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Consider the recurrence relation <m>a_n = <var name="$d"/>a_{n-1}</m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            Find the first five terms of the sequence defined by the recurrence relation and initial condition <m>a_0 = <var name="$a"/></m>.
+          </p>
+          <p>
+            <var name="$seq1" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the closed formula for the sequence defined by the recurrence relation and initial condition <m>a_0 = <var name="$a"/></m>.
+          </p>
+          <p component="interactive">
+            <m>a_n = </m><var name="$formula1" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the first five terms of another sequence, also defined by the same recurrence relation but this time with initial condition <m>a_0 = <var name="$b"/></m>.
+          </p>
+          <p>
+            <var name="$seq2" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the closed formula for this second sequence.
+          </p>
+          <p component="interactive">
+            <m>a_n = </m><var name="$formula2" width="25"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-seq-to-formula-1">
+    <webwork>
+      <pg-code>
+        Context()->variables->add(n=>"Real");
+        $d = random(2,10);
+        $a = random(1,20);
+        $a1 = Compute($a*$d);
+        $a2 = Compute($a*$d**2);
+        $a3 = Compute($a*$d**3);
+        $a4 = Compute($a*$d**4);
+        $formula = Formula("$a*$d**n");
+      </pg-code>
+    
+      <statement>
+        <p>
+          Find a closed formula for the sequence that starts <m><var name="$a"/>, <var name="$a1"/>, <var name="$a2"/>, <var name="$a3"/>, <var name="$a4"/>,\ldots</m>.  Assume <m>a_0 = <var name="$a"/></m>.
+        </p>
+        <p component="interactive">
+          <m>a_n = </m><var name="$formula" width="25"/>
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-seq-to-formula-2">
+    <webwork>
+      <pg-code>
+        Context()->variables->add(n=>"Real");
+        $d = random(2,10);
+        $a = random(1,20);
+        $a1 = Compute($a+$d);
+        $a2 = Compute($a+2*$d);
+        $a3 = Compute($a+3*$d);
+        $a4 = Compute($a+4*$d);
+        $formula = Formula("$a + $d*n");
+      </pg-code>
+    
+      <statement>
+        <p>
+          Find a closed formula for the sequence that starts <m><var name="$a"/>, <var name="$a1"/>, <var name="$a2"/>, <var name="$a3"/>, <var name="$a4"/>,\ldots</m>.  Assume <m>a_0 = <var name="$a"/></m>.
+        </p>
+        <p component="interactive">
+          <m>a_n = </m><var name="$formula" width="25"/>
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-seq-info">
+    <webwork>
+      <pg-code>
+        Context()->variables->are(n => "Real");
+        #define sequence
+        $a0 = random(1,10);  #choose a first term
+        $rate = random(3,9); #choose the rate of change
+        $a1 = $a0 + $rate;
+        $a2 = $a0 + 2*$rate;
+        $a3 = $a0 + 3*$rate;
+        $a4 = $a0 + 4*$rate;
+        $closed = Formula("$a0 + n*$rate");
+        $n = random(130,150);
+        $last = $closed->eval(n=>$n);
+        $n = Real("$n");
+
+        $n2 = random(501,519);
+        $n3 = $n2-1;
+        $large = $closed->eval(n=>$n2);
+        $rh1 = $large-2;
+        $rh2 = $rh1 + $rate;
+
+        #Recursive question setup:
+        $recChkBx = CheckboxList(
+          [["\(a_n = a_{n-1} + $rate\); \(a_0 = $a0\)",
+          "\(a_n = a_{n-1} + a_{n-2}\); \(a_0 = $a0\)",
+            "\(a_n = $rate \cdot a_{n-1}\); \(a_0 = $a0\)",
+            "\(a_n = $a0 \cdot $rate^n\)",
+          ],"None of the above"],[0]
+        );
+
+
+        #mc for third part:
+        $elementChkBx = CheckboxList(
+          [[
+          "Yes, it is \(a_{$n3}\)", 
+          "Yes, it is \(a_{$large}\)", 
+          "Yes, it is \(a_{$n2}\)",
+          "No, it is between $rh1 and $rh2", 
+          "No, it is larger than $last",
+          ],"None of the above"],[2]
+        );
+
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Consider the sequence that starts <m><var name="$a0"/>, <var name="$a1"/>, <var name="$a2"/>, <var name="$a3"/>, <var name="$a4"/>,\ldots</m> where <m>a_0 = <var name="$a0"/></m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            Which of the following could be a recursive definition for the sequence?
+          </p>
+          <p>
+            <var name="$recChkBx" form="checkboxes"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Find the closed formula for the sequence.
+          </p>
+          <p>
+            <var name="$closed" width="25"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Is <var name="$large"/> a term of the sequence?
+          </p>
+          <p component="interactive">
+            <var name="$elementChkBx" form="checkboxes"/>
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-arith-application">
+    <webwork>
+      <pg-code>
+        
+      </pg-code>
+    
+      <statement>
+        <p>
+          Your summer job pays you $1000 per week, with a raise of $50 per week as a bonus for not being a quitter.  How much will you make in the 10th week?
+        </p>
+        <p>
+          <var name="1000 + 50*9" width="10" />
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-geom-application">
+    <webwork>
+      <pg-code>
+        
+      </pg-code>
+    
+      <statement>
+        <p>
+          Your sister's summer job pays her $1000 per week, with a raise of 5% per week as a bonus for not being a quitter.  How much will she make in the 10th week?
+        </p>
+        <p>
+          <var name="'1000*1.05**9'" width="10" />
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-arithgeom-middle-terms1">
+    <webwork source="Contrib/DMOI/2-Sequences/2_2-Arithmetic_and_Geometric_Sequences/2_2_8.pg" />
+  </exercise>
+
+  <exercise label="ww-arithgoem-middle-terms2">
+    <webwork source="Contrib/DMOI/2-Sequences/2_2-Arithmetic_and_Geometric_Sequences/2_2_9.pg" />
+  </exercise>
+
+
+</exercises>

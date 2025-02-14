@@ -16,7 +16,7 @@
 \usepackage{newpxtext}
 \usepackage[vvarbb,cmintegrals,cmbraces,bigdelims]{newpxmath}
 \usepackage[scr=rsfso]{mathalfa}% \mathscr is fancier than \mathcal
-\linespread{1.04}         % adds more leading (space between lines)
+% \linespread{1.04}         % adds more leading (space between lines)
 % quantifiers look strange, so change those back to normal:
 	\DeclareSymbolFont{mysymbols}{OMS}{cmsy}{b}{n} %note we make the figures bold to better match newpx.  Replace the ``b'' with an ``m'' to undo this.
 	%\SetSymbolFont{mysymbols}  {bold}{OMS}{cmsy}{b}{n}
@@ -29,7 +29,9 @@
 	%\DeclareMathSymbol{-}{\mathbin}{mysymbols}{"00}
 	%\DeclareMathSymbol{=}{\mathrel}{myoperators}{"3D}
 
-
+	% Attempt to add missing unicode character:
+	% \usepackage{newunicodechar}
+	% \newunicodechar{○}{\circ}
 
 %\usepackage[T1]{fontenc}
 %\usepackage{newtxtext,newtxmath}
@@ -65,11 +67,14 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
 % Tweak exercises styling
-\renewtcolorbox{divisionexercise}[4]{bwminimalstyle, runintitlestyle, exercisespacingstyle, left=4ex, breakable, parbox=false, before title={\hspace{-4ex}\makebox[4ex][l]{#1.}}, title={\notblank{#2}{#2\space}{}}, phantom={\hypertarget{#4}{}},  after={\notblank{#3}{\newline\rule{\workspacestrutwidth}{#3\textheight}\newline}{\vskip 1em}}}
 
-\setlist{itemsep=2pt plus 1pt minus 1pt}
+% This seems to break cropmarks!
 
-\reversemarginpar
+% \renewtcolorbox{divisionexercise}[4]{bwminimalstyle, runintitlestyle, exercisespacingstyle, left=4ex, breakable, parbox=false, before title={\hspace{-4ex}\makebox[4ex][l]{#1.}}, title={\notblank{#2}{#2\space}{}}, phantom={\hypertarget{#4}{}},  after={\notblank{#3}{\newline\rule{\workspacestrutwidth}{#3\textheight}\newline}{\vskip 1em}}}
+
+% \setlist{itemsep=2pt plus 1pt minus 1pt}
+
+% \reversemarginpar
 
 
 % These are now all part of pretext-latex-dmoi or custom-latex.
@@ -159,7 +164,7 @@
 % %%%%%%%%%%%%%%%%%  End environments %%%%%%%%%%%%%%%%%%%%%%%%%%
 % 
 % Start sections on a new page.  Add \clearpage to the second command to start subsections on their own page.
-\newcommand{\sectionbreak}{\ifnum\value{section}>1\clearpage\fi\phantomsection}
+\newcommand{\sectionbreak}{\ifnum\value{section}>1\clearpage\thispagestyle{plain}\fi\phantomsection}
 \newcommand{\subsectionbreak}{\phantomsection}
 % 
 % % use QED to end proofs:
@@ -168,7 +173,7 @@
 % 
 % 
 % %%%%%%%% Set description list spacing the way I want %%%%%%%%%%%%%%%
-\setlist[description]{style=nextline, leftmargin=3em}
+% \setlist[description]{style=nextline, leftmargin=3em}
 % 
 % 
 % %%%%%%% Set chapters to start at 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,9 +181,9 @@
 % 
 % 
 % %Fix widows and orphans (single lines at top/bottom of page):
-\clubpenalty=10000
-\widowpenalty=10000
-\raggedbottom
+% \clubpenalty=10000
+% \widowpenalty=10000
+% \raggedbottom
 % 
 % 
 % 
@@ -189,7 +194,7 @@
 % \usepackage{fancyhdr}
 % \pagestyle{fancy}
 % \renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}} %Removes word "chapter" from the \leftmark.
-% 
+
 % \fancyhead{} % clear header fields
 % \fancyhead[LE]{{\footnotesize \textsl{\thepage}}~~ \textsc{\scriptsize \nouppercase{\leftmark}}}
 % \fancyhead[RO]{\textsc{\scriptsize \nouppercase{\rightmark}} ~~ {\footnotesize \textsl{\thepage}}  }

@@ -1,0 +1,1389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_logic-statements">
+	<title>Mathematical Statements</title>
+	<objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+
+		<ol>
+			<li>
+				<p>
+					Identify the logical structure of statements to determine their truth value in terms of the truth values of their parts.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Identify the use of quantifiers in a statement, and determine the truth value of the statement based on those quantifiers.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Translate between statements in natural language and logical symbols.
+				</p>
+			</li>
+
+
+		</ol>
+	</objectives>
+	<subsection>
+		<title>Section Preview</title>
+		<!-- Should this be swapped out for something else? -->
+		<investigation>
+		<idx><h>knights and knaves</h></idx>
+		<idx><h>puzzle</h><h>knights and knaves</h></idx>
+		<p>
+			While walking through a fictional forest,
+			you encounter three trolls guarding a bridge.
+			Each is either a <em>knight</em>,
+			who always tells the truth, or a
+			<em>knave</em>, who always lies.
+			The trolls will not let you pass until you correctly identify each as either a knight or a knave.
+			Each troll makes a single statement:
+		</p>
+
+		<blockquote>
+			<p>
+				Troll 1: If I am a knave, then there are exactly two knights here.
+			</p>
+
+			<p>
+				Troll 2: Troll 1 is lying.
+			</p>
+
+			<p>
+				Troll 3: Either we are all knaves, or at least one of us is a knight.
+			</p>
+		</blockquote>
+
+		<p>
+			Which troll is which?
+			<idx><h>self reference</h><see>reference, self</see></idx>
+			<idx><h>reference, self</h><see>self reference</see></idx>
+		</p>
+		</investigation>
+
+    <exercise label="ip_sec_logic-statements">
+      <statement>
+        <p>
+          Spend a few minutes thinking about the Investigate problem above.  What could you conclude if you knew Troll 1 really was a knave (i.e., their statement was false)?  Share your initial thoughts on this.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+
+		<p>
+			In order to <em>do</em> mathematics,
+			we must be able to <em>talk</em> and
+			<em>write</em> about mathematics.
+			Perhaps your experience with mathematics so far has mostly involved finding numerical answers to problems.
+			As we embark towards more advanced and abstract mathematics,
+			writing will play a more prominent role in the mathematical process.
+		</p>
+
+		<p>
+			In fact, the primary goal of mathematics, as an academic discipline in its own right, is to establish general mathematical truths.
+			How can we know whether these facts, perhaps called <em>theorems</em> or <em>propositions</em>, are true?  We construct valid arguments, called <em>proofs</em>, which establish the truth of the statements.
+			Here, an argument is not the sort of thing you have with your Mom when you disagree about what to have for dinner.
+			Rather, we have a technical definition of the term.
+		</p>
+
+		<definition xml:id="def-argument">
+			<title>Argument</title>
+			<idx><h>argument</h></idx>
+			<idx><h>premise</h></idx>
+			<idx><h>conclusion</h></idx>
+			<idx><h>valid</h></idx>
+			<idx><h>sound</h></idx>
+			<idx><h>proof</h></idx>
+			<statement>
+				<p>
+					An <term>argument</term> <idx><h>argument</h></idx> is a sequence of statements, the last of which is called the <term>conclusion</term> <idx><h>conclusion</h></idx> and the rest of which are called <term>premises</term>.
+					<idx><h>premises</h></idx>
+				</p>
+
+				<p>
+					An argument is said to be <term>valid</term> <idx><h>valid</h></idx> provided the conclusion must be true whenever the premises are all true.
+					An argument is <term>invalid</term> if it is not valid; that is, all the premises can be true, and the conclusion could still be false.
+				</p>
+
+				<p>
+					An argument is <term>sound</term> provided it is valid and all the premises are true.
+					A <term>proof</term> of a statement is a sound argument whose conclusion is the statement.
+				</p>
+			</statement>
+		</definition>
+		<aside>
+		<p>
+			Our definitions of <term>argument</term>, <term>valid argument</term>, and <term>sound argument</term> are the same ones used in philosophy, the other primary academic discipline concerned with logic and reasoning.
+		</p>
+		</aside>
+
+		<p>
+			To determine whether we have a proof of a statement, we must decide both whether every premise is true, and whether the argument is valid: whether the conclusion <em>follows from</em> the premises.
+			How can we do this?
+		</p>
+
+		<example>
+			<idx><h>cookie</h></idx>
+			<statement>
+				<p>
+					Consider the following two arguments:
+				</p>
+
+				<tabular>
+					<row>
+					<cell/>
+					<cell>If Edith eats her vegetables, then she can have a cookie.</cell>
+					</row>
+					<row bottom="minor">
+					<cell/>
+					<cell>Edith eats her vegetables.</cell>
+					</row>
+					<row>
+					<cell><m>\therefore</m></cell>
+					<cell>Edith gets a cookie.</cell>
+					</row>
+				</tabular>
+
+				<tabular>
+					<row>
+					<cell/>
+					<cell>Florence must eat her vegetables to get a cookie.</cell>
+					</row>
+					<row bottom="minor">
+					<cell/>
+					<cell>Florence eats her vegetables.</cell>
+					</row>
+					<row>
+					<cell><m>\therefore</m></cell>
+					<cell>Florence gets a cookie.</cell>
+					</row>
+				</tabular>
+
+				<p>
+					(The symbol <q><m>\therefore</m></q>
+					<notation>
+					<usage><m>\therefore</m></usage>
+					<description><q>therefore</q></description>
+					</notation>
+					means <q>therefore</q>)
+				</p>
+
+				<p>
+					Are these arguments valid?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					Do you agree that the first argument is valid but the second argument is not?
+					We will soon develop a better understanding of the logic involved in this analysis, but if your intuition agrees with this assessment, then you are in good shape.
+				</p>
+
+				<p>
+					Notice the two arguments look almost identical.
+					Edith and Florence both eat their vegetables.
+					In both cases, there is a connection between the eating of vegetables and cookies.
+					Yet we claim that it is valid to conclude that Edith gets a cookie, but not that Florence does.
+					The difference must be in the connection between eating vegetables and getting cookies.
+					We need to be skilled at reading and comprehending these sentences.
+					Do the two sentences mean the same thing?
+				</p>
+
+				<p>
+					Unfortunately, in everyday language we are often sloppy, and you might be tempted to say they are equivalent.
+					But notice that just because Florence <em>must</em> eat her vegetables, we have not claimed that doing so would be <em>enough</em> (she might also need to clean her room, for example).
+					In everyday (non-mathematical) practice, you might be tempted to say this <q>other direction</q> is implied.
+					In mathematics, we never get that luxury.
+				</p>
+			</solution>
+		</example>
+
+		<remark>
+			<p>
+				The arguments in the example above illustrate another important point: Even if you don't care about the advancement of human knowledge in the field of mathematics, becoming skilled at analyzing arguments is useful.
+				And even if you don't want to give your grandmother a cookie.
+				If you are <em>using</em> mathematics to solve problems in some other discipline, it is still necessary to demonstrate that your solution is correct.
+				You better have a good argument that it is!
+			</p>
+		</remark>
+
+		<p>
+			Since arguments are built up of statements, we must agree on what counts as a statement.
+		</p>
+
+		<definition xml:id="def-statement">
+			<idx><h>statement</h></idx>
+			<statement>
+				<p>
+					A <term>statement</term> is a declarative sentence that is either true or false.
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			If the sentences in an argument could not be true or false, there would be no way to determine whether the argument was valid, since validity describes a relationship between the truth values of the premises and conclusions.
+		</p>
+
+		<p>
+			The goal of this section is to explore the different <q>shapes</q> a statement can take.
+			We will see that more complicated statements can be built up from simpler ones, in ways that entirely determine their truth value based on the truth values of their parts.
+		</p>
+
+
+
+		<worksheet xml:id="PA-logic-statements">
+		<title>Preview Activity</title>
+		<introduction>
+			<p>
+				Before reading on to the main content of the section, complete this preview activity to start thinking about the types of questions this section will address.
+			</p>
+		</introduction>
+
+		<exercise label="pa-logic-statements-vs-sentences">
+			<statement>
+				<p>
+					Which of the following sentences should count as statements?  That is, for which of the sentences below could you <em>potentially</em> claim the sentence was either true or false?  Select all that apply.
+				</p>
+			</statement>
+			<choices randomize="yes">
+			<choice>
+			<statement>
+				<p>
+					The sum of the first 100 positive integers.
+				</p>
+			</statement>
+
+			<feedback>
+				<p>
+					This is not a statement.
+					It is not even a complete sentence (there is no verb).
+				</p>
+			</feedback>
+			</choice>
+			<choice>
+			<statement>
+				<p>
+					What is the sum of the first 100 positive integers?
+				</p>
+			</statement>
+
+			<feedback>
+				<p>
+					This is a question.
+					It is not a statement.
+				</p>
+			</feedback>
+			</choice>
+			<choice correct="yes">
+			<statement>
+				<p>
+					The sum of the first 100 positive integers is 5050.
+				</p>
+			</statement>
+
+			<feedback>
+				<p>
+					This is a statement.
+					It is either true or false (it happens to be true).
+				</p>
+			</feedback>
+			</choice>
+			<choice>
+			<statement>
+				<p>
+					Is the sum of the first 100 positive integers 5050?
+				</p>
+			</statement>
+
+			<feedback>
+				<p>
+					This is a question.
+					The answer happens to be <q>yes</q>, but that is not the same as saying <q>true</q>.
+					Questions are never statements.
+				</p>
+			</feedback>
+			</choice>
+			<choice correct="yes">
+			<statement>
+				<p>
+					The sum of the first 100 positive integers is 17.
+				</p>
+			</statement>
+
+			<feedback>
+				<p>
+					This is clearly false.
+					But since it is false, it is a statement!
+				</p>
+			</feedback>
+			</choice>
+			</choices>
+		</exercise>
+
+		<exercise label="pa-logic-statements-tf-and">
+			<statement>
+				<p>
+					You and your roommate are arguing, and they make the audacious claim that pineapple is good both on pizza and in smoothies.  Which of the following are reasonable responses to this claim, from a logical point of view?
+				</p>
+			</statement>
+			<choices randomize="yes" multiple-correct="yes">
+				<choice correct="yes">
+					<statement>
+						<p>
+							The statement is false because even though pineapple is good in smoothies, it is NOT good on pizza.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							If you really think that pineapple is not good on pizza, then you would have to say the statement is false.  The statement is claiming both are true.
+						</p>
+					</feedback>
+				</choice>
+				<choice correct="no">
+					<statement>
+						<p>
+							The statement is false because while pineapple is good on pizza and pineapple is good in smoothies, a pizza smoothie is never good.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							The claim that pineapple is good both on pizza and in smoothies is not claiming that it is only good at the same time.  It is precisely claiming these two separate facts are both true.
+						</p>
+					</feedback>
+				</choice>
+				<choice>
+					<statement>
+						<p>
+							The statement is half true because regardless of what you think about pineapple on pizza, we can all agree at least that pineapple is good in smoothies.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							Statements are either true or false.  There is no <q>half true.</q>.
+						</p>
+					</feedback>
+				</choice>
+				<choice correct="yes">
+					<statement>
+						<p>
+							The statement is false because everyone who likes pineapple on pizza does NOT like pineapple in smoothies.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							If it were the case that everyone who liked pineapple on pizza didn't like pineapple in smoothies, then the statement would indeed be false.
+						</p>
+					</feedback>
+				</choice>
+			</choices>
+		</exercise>
+
+		<exercise label="pa-logic-statements-tf-if-then">
+			<statement>
+				<p>
+					Your roommate now makes an even more outrageous claim: If a superhero movie is part of the Marvel Cinematic Universe, then it is good.  Which of the following are reasonable responses to this claim, from a logical point of view?
+				</p>
+			</statement>
+			<choices randomize="yes" multiple-correct="yes">
+				<choice>
+					<statement>
+						<p>
+							This is false because there are good superhero movies, like Wonder Woman and Dark Knight, that are based on DC Comics, and so not part of the Marvel Cinematic Universe.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							The claim was that <em>if</em> a movie was Marvel, then it was good.  It is not claiming that if a movie is good, then it is Marvel.
+						</p>
+					</feedback>
+				</choice>
+				<choice correct="yes">
+					<statement>
+						<p>
+							The statement is false because there is at least one superhero movie that is part of the Marvel Cinematic Universe that is also not good.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							Exactly.  This is what it means for an if-then statement to be false.
+						</p>
+					</feedback>
+				</choice>
+				<choice>
+					<statement>
+						<p>
+							The statement is false because, for example, Green Lantern is neither Marvel nor good.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							Actually, I've never seen that movie, but even if it were bad, that doesn't say anything about the original statement, since it is not a Marvel movie.
+						</p>
+					</feedback>
+				</choice>
+				<choice correct="no">
+					<statement>
+						<p>
+							The statement is true because more than half of the Marvel movies are good.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							The claim was that this statement held for <em>every</em> superhero movie, not just most of them.
+						</p>
+					</feedback>
+				</choice>
+			</choices>
+		</exercise>
+
+		<exercise label="pa-logic-statement-tf-or-all">
+			<statement>
+				<p>
+					Your roommate just won't let up with their outrageous claims.  Now they claim that either every troll is a knave, or there is at least one troll that is a knight.  What can you say to this?
+				</p>
+			</statement>
+			<choices randomize="yes" multiple-correct="yes">
+				<choice correct="yes">
+					<statement>
+						<p>
+							Yes, this is true because every troll is either a knight or a knave.  If it is not the case that <em>all</em> trolls are knaves, then there must be <em>some</em> troll that is a knight.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							Exactly!
+						</p>
+					</feedback>
+				</choice>
+				<choice>
+					<statement>
+						<p>
+							This is false because some trolls are knights and some other trolls are knaves.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							If that were the case, there would be at least one knight.
+						</p>
+					</feedback>
+				</choice>
+				<choice>
+					<statement>
+						<p>
+							The statement is false because there is no way to verify which of the two options is the case.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							Whether it is possible to verify which part of an <q>or</q> statement is true does not change whether the statement is true.
+						</p>
+					</feedback>
+				</choice>
+				<choice>
+					<statement>
+						<p>
+							The statement is false because no troll could say that all trolls are knaves, since knaves always lie.
+						</p>
+					</statement>
+					<feedback>
+						<p>
+							It's true that if a troll said that all trolls are knaves they would have to be a knave and then it would be false that all trolls were knaves.  But luckily there is another option.
+						</p>
+					</feedback>
+				</choice>
+			</choices>
+		</exercise>
+		</worksheet>
+	</subsection>
+
+	<subsection xml:id="atomic-molecular-statements">
+		<title>Atomic and Molecular Statements</title>
+		<p>
+			<idx><h>statement</h></idx>
+			<idx><h>atomic statement</h></idx>
+			<idx><h>molecular statement</h></idx>
+			A <term>statement</term> is any declarative sentence which is either true or false. A statement is <term>atomic</term> if it cannot be divided into smaller statements, otherwise it is called <term>molecular</term>.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					These are statements (in fact,
+					<em>atomic</em> statements):
+					<ul>
+						<li>
+							<p>
+								Telephone numbers in the USA have 10 digits.
+							</p>
+						</li>
+
+						<li>
+							<p>
+								The moon is made of cheese.
+							</p>
+						</li>
+
+						<li>
+							<p>
+								42 is a perfect square.
+							</p>
+						</li>
+
+						<li>
+							<p>
+								Every even number greater than 2 can be expressed as the sum of two primes.
+							</p>
+						</li>
+
+						<li>
+							<p>
+								<m>3+7 = 12</m>
+							</p>
+						</li>
+					</ul>
+					And these are not statements:
+					<ul>
+						<li>
+							<p>
+								Would you like some cake?
+							</p>
+						</li>
+
+						<li>
+							<p>
+								The sum of two squares.
+							</p>
+						</li>
+
+						<li>
+							<m>1+3+5+7+\cdots+2n+1</m>.
+						</li>
+
+						<li>
+							<p>
+								Go to your room!
+							</p>
+						</li>
+
+						<li>
+							<p>
+								<m>3+x = 12</m>
+							</p>
+						</li>
+					</ul>
+				</p>
+			</statement>
+		</example>
+
+		<p>
+			<idx><h>sentence (compared to statement)</h></idx>
+			The reason the sentence <q><m>3 + x = 12</m></q> is not a statement is that it contains a variable. Depending on what <m>x</m> is, the sentence is either true or false, but right now it is neither. One way to make the <em>sentence</em> into a <em>statement</em> is to specify the value of the variable in some way. This could be done by setting a specific substitution, for example, <q><m>3+x = 12</m> where <m>x = 9</m>,</q> which is a true statement. Or you could <em>capture</em> the free variable by <em>quantifying</em> over it, as in, <q>For all values of <m>x</m>, <m>3+x = 12</m>,</q> which is false. We will discuss quantifiers in more detail in the subsection <xref ref="subsec_logic-statements-quant" text="title"/> below.
+		</p>
+
+		<p>
+			<idx><h>connectives</h></idx>
+			<idx><h>logical connectives</h></idx>
+			You can build more complicated (molecular) statements out of simpler (atomic or molecular) ones using <term>logical connectives</term>. For example, this is a molecular statement:
+		</p>
+
+		<blockquote>
+			<p>
+				Telephone numbers in the USA have 10 digits, and 42 is a perfect square.
+			</p>
+		</blockquote>
+
+		<p>
+			<idx><h>binary connective</h></idx>
+			<idx><h>unary connective</h></idx>
+			Note that we can break this down into two smaller statements. The two shorter statements are <em>connected</em> by an <q>and.</q> We will consider 5 connectives: <q>and</q> (Sam is a man, and Chris is a woman), <q>or</q> (Sam is a man, or Chris is a woman), <q>if<ellipsis/>, then<ellipsis/></q> (if Sam is a man, then Chris is a woman), <q>if and only if</q> (Sam is a man if and only if Chris is a woman), and <q>not</q> (Sam is not a man). The first four are called <term>binary connectives</term> (because they connect two statements) while <q>not</q> is an example of a <term>unary connective</term> (since it applies to a single statement).
+		</p>
+
+		<p>
+			<idx><h>truth value</h></idx>
+			<idx><h>propositional variable</h></idx>
+			<idx><h>variable, propositional</h></idx>
+			<idx><h>sentential variable</h><see>propositional variable</see></idx>
+			<idx><h>Boolean variable</h><see>propositional variable</see></idx>
+			These molecular statements are, of course, still statements, so they must be either true or false. The crucial observation here is that which <term>truth value</term> the molecular statement achieves is completely determined by the type of connective and the truth values of the parts. We do not need to know what the parts actually say or whether they have some material connection to each other, only whether those parts are true or false. 
+		</p>
+			
+		
+		<p>
+			<idx><h>propositional variable</h></idx>
+			To analyze logical connectives, it is enough to consider <term>propositional variables</term> (sometimes called <em>sentential</em> variables), usually capital letters in the middle of the alphabet: <m>P, Q, R, S, \ldots</m>. We think of these as standing in for (usually atomic) statements, but there are only two <em>values</em> the variables can achieve: true or false.<fn> In computer programming, we should call such variables
+			<term>Boolean variables</term>.
+			</fn><notation>
+			<usage><m>P, Q, R, S, \ldots</m></usage>
+			<description>propositional (sentential) variables</description>
+			</notation>
+			We also have symbols for the logical connectives: <m>\wedge</m>, <m>\vee</m>, <m>\imp</m>, <m>\iff</m>, <m>\neg</m>.
+		</p>
+
+		<definition>
+			<title>Logical Connectives</title>
+			<idx><h>logical connectives</h></idx>
+			<idx><h>connectives</h></idx>
+			<statement>
+				<p>
+					We define the following <term>logical connectives</term>.
+					<ul>
+						<li>
+							<m>P \wedge Q</m> is read <q><m>P</m> and <m>Q</m>,</q>
+							and is called a <term>conjunction</term>.
+							<idx><h>conjunction</h></idx>
+							<idx><h>and (logical connective)</h></idx>
+							<notation>
+							<usage><m>\wedge</m></usage>
+							<description>logical <q>and</q> (conjunction)</description>
+							</notation>
+						</li>
+
+						<li>
+							<idx><h>disjunction</h></idx>
+							<idx><h>or (logical connective)</h></idx>
+							<m>P \vee Q</m> is read <q><m>P</m> or <m>Q</m>,</q>
+							and is called a <term>disjunction</term>.
+							<notation>
+							<usage><m>\vee</m></usage>
+							<description>logical <q>or</q> (disjunction)</description>
+							</notation>
+						</li>
+
+						<li>
+							<m>P \imp Q</m> is read <q>if <m>P</m> then <m>Q</m>,</q>
+							and is called an <term>implication</term>
+							or <term>conditional</term>.
+							<idx><h>implication</h></idx>
+							<idx><h>conditional</h></idx>
+							<idx><h>implies (logical connective)</h></idx>
+							<idx><h>if<ellipsis/>, then<ellipsis/> (logical connective)</h></idx>
+						</li>
+
+						<li>
+							<m>P \iff Q</m> is read <q><m>P</m> if and only if <m>Q</m>,</q>
+							and is called a <term>biconditional</term>.
+							<idx><h>biconditional</h></idx>
+							<idx><h>if and only if (logical connective)</h></idx>
+							<idx><h>iff</h><see>if and only if</see></idx>
+						</li>
+
+						<li>
+							<m>\neg P</m> is read <q>not <m>P</m>,</q>
+							and is called a <term>negation</term>.
+							<idx><h>negation</h></idx>
+							<idx><h>not (logical connective)</h></idx>
+							<notation>
+							<usage><m>\neg</m></usage>
+							<description>logical negation</description>
+							</notation>
+						</li>
+					</ul>
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			<idx><h>truth value</h></idx>
+			The
+			<term>truth value</term> of a statement is determined by the truth value(s) of its part(s),
+			depending on the connectives:
+		</p>
+
+		<definition xml:id="def-connectives-truth">
+			<title>Truth Conditions for Connectives</title>
+			<idx><h>truth condition</h></idx>
+			<statement>
+				<p>
+					The <term>truth conditions</term> for the logical connectives are defined as follows.
+					<ul>
+						<li>
+							<m>P \wedge Q</m> is true when both <m>P</m> and <m>Q</m> are true.
+							<idx>
+							<h>and (logical connective)</h>
+							<h>truth condition for</h>
+							</idx>
+							<idx><h>truth condition</h><h>for and</h></idx>
+						</li>
+
+						<li>
+							<m>P \vee Q</m> is true when <m>P</m> or <m>Q</m> or both are true.
+							<idx>
+							<h>or (logical connective)</h>
+							<h>truth condition for</h>
+							</idx>
+							<idx><h>truth condition</h><h>for or</h></idx>
+						</li>
+
+						<li>
+							<m>P \imp Q</m> is true when <m>P</m> is false or <m>Q</m> is true (or both).
+							<idx>
+							<h>implies (logical connective)</h>
+							<h>truth condition for</h>
+							</idx>
+							<idx>
+							<h>if<ellipsis/>, then<ellipsis/> (logical connective)</h>
+							<h>truth condition for</h>
+							</idx>
+							<idx><h>truth condition</h><h>for if<ellipsis/>, then<ellipsis/></h></idx>
+						</li>
+
+						<li>
+							<m>P \iff Q</m> is true when <m>P</m> and <m>Q</m> are both true,
+							or both false.
+							<idx>
+							<h>if and only if (logical connective)</h>
+							<h>truth condition for</h>
+							</idx>
+							<idx><h>truth condition</h><h>for if and only if</h></idx>
+						</li>
+
+						<li>
+							<m>\neg P</m> is true when <m>P</m> is false.
+							<idx><h>not (logical connective)</h><h>truth condition for</h></idx>
+							<idx><h>truth condition</h><h>for not</h></idx>
+						</li>
+					</ul>
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			<idx><h>truth table</h></idx>
+			Each of the above definitions can be represented in a table, called a <term>truth table</term>.  We simply list what the truth value of the statement is for each possible combination of truth values of the parts.
+		</p>
+		<figure xml:id="fig-truth-tables">
+			<caption>Truth tables for logical connectives.</caption>
+			<sidebyside width="20%" margins="auto"> <tabular halign="center"> <col right="minor" /> <col right="medium" /> <col /> <row bottom="minor"> <cell><m>P</m> </cell> <cell><m>Q</m> </cell> <cell><m>P\wedge Q</m> </cell> </row> <row> <cell> T</cell> <cell>T</cell> <cell>T</cell> </row> <row> <cell>T</cell> <cell>F</cell> <cell>F</cell> </row> <row> <cell>F</cell> <cell>T</cell> <cell> F</cell> </row> <row> <cell>F</cell> <cell>F</cell> <cell>F</cell> </row>
+			</tabular>
+			
+			<tabular halign="center"> <col right="minor" /> <col right="medium" /> <col /> <row bottom="minor"> <cell><m>P</m> </cell> <cell><m>Q</m> </cell> <cell><m>P\vee Q</m> </cell> </row> <row> <cell> T</cell> <cell>T</cell> <cell>T</cell> </row> <row> <cell>T</cell> <cell>F</cell> <cell>T</cell> </row> <row> <cell>F</cell> <cell>T</cell> <cell> T</cell> </row> <row> <cell>F</cell> <cell>F</cell> <cell>F</cell> </row>
+		</tabular>
+
+		<tabular halign="center"> <col right="minor" /> <col right="medium" /> <col /> <row bottom="minor"> <cell><m>P</m> </cell> <cell><m>Q</m> </cell> <cell><m>P\imp Q</m> </cell> </row> <row> <cell> T</cell> <cell>T</cell> <cell>T</cell> </row> <row> <cell>T</cell> <cell>F</cell> <cell>F</cell> </row> <row> <cell>F</cell> <cell>T</cell> <cell> T</cell> </row> <row> <cell>F</cell> <cell>F</cell> <cell>T</cell> </row>
+		</tabular>
+
+		<tabular halign="center"> <col right="minor" /> <col right="medium" /> <col /> <row bottom="minor"> <cell><m>P</m> </cell> <cell><m>Q</m> </cell> <cell><m>P\iff Q</m> </cell> </row> <row> <cell> T</cell> <cell>T</cell> <cell>T</cell> </row> <row> <cell>T</cell> <cell>F</cell> <cell>F</cell> </row> <row> <cell>F</cell> <cell>T</cell> <cell> F</cell> </row> <row> <cell>F</cell> <cell>F</cell> <cell>T</cell> </row>
+		</tabular>
+	</sidebyside>
+
+
+		<tabular halign="center"> <col right="medium" /> <col /> <row bottom="minor"> <cell><m>P</m> </cell> <cell><m>\neg P</m> </cell> </row> <row> <cell>T</cell> <cell>F</cell> </row> <row> <cell> F</cell> <cell>T</cell> </row> <row> <cell /> </row>
+		</tabular>
+</figure>
+	
+	<p>
+		For example, we can use the truth table for <m>P \imp Q</m> to decide whether the statement, <q>If 5 is even, then 6 is even,</q> is true or false.  Here <m>P</m> is the statement <q>5 is even,</q> and <m>Q</m> is the statement <q>6 is even.</q>  Since 5 is not even, the statement <m>P</m> is false.  Since 6 is even, the statement <m>Q</m> is true.  The truth table tells us that the statement <m>P \imp Q</m> is true when <m>P</m> is false and <m>Q</m> is true (the 3rd row).  So the statement, <q>If 5 is even, then 6 is even,</q> is true.  (If you don't like that the statement is true, hold on to that thought, and we will hopefully resolve it soon.)
+	</p>
+
+		<p>
+			<idx><h>or (logical connective)</h><h>inclusive vs. exclusive</h></idx>
+			<idx><h>inclusive or</h></idx>
+			<idx><h>exclusive or</h></idx>
+			Note that for us, <em>or</em> is the
+			<term>inclusive or</term>
+			(and not the sometimes used <em>exclusive or</em>) meaning that
+			<m>P \vee Q</m> is in fact true when both <m>P</m> and <m>Q</m> are true.
+			As for the other connectives,
+			<q>and</q> behaves as you would expect, as does negation.
+			The biconditional
+			(if and only if)
+			might seem a little strange,
+			but you should think of this as saying the two parts of the statements are <em>equivalent</em>
+			in that they have the same truth value.
+		</p>
+		
+		<p>
+			This leaves only the implication
+			<m>P \imp Q</m> which has a slightly different meaning in mathematics than in ordinary usage.
+			However, implications are so common and useful in mathematics that
+			we must develop a level of fluency with their use which warrants a whole section  (<xref ref="sec_logic-implications"/>).
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Using the truth conditions for the logical connectives, determine which statements below are true and which are false.
+					<ol>
+						<li>
+							<p>
+								17 is prime, and 17 is odd.
+							</p>
+						</li>
+						<li>
+							<p>
+								17 is prime, and 18 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								17 is prime, or 18 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								17 is prime, or 19 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								If 17 is prime, then 19 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								If 18 is prime, then my favorite number is 17.
+							</p>
+						</li>
+					<li>
+							<p>
+								17 is prime if and only if 19 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								17 is not prime if and only if 19 is not prime.
+							</p>
+						</li>
+					</ol>
+				</p>
+			</statement>
+			<solution>
+				<p>
+					First, let's agree on some facts: 17 really is prime and odd, 18 is not either, and 19 is prime.  
+					<ol>
+						<li>
+							<p>
+								True.  Both parts of the conjunction are true, so the entire statement is true.
+							</p>
+						</li>
+						<li>
+							<p>
+								False.  The first part is true, but the second part is false, so the entire statement is false.
+							</p>
+						</li>
+						<li>
+							<p>
+								True.	The first part is true, so the entire statement is true.  As soon as we see one true statement in a disjunction, we can stop checking and declare the entire statement true.
+							</p>
+						</li>
+						<li>
+							<p>
+								True.  Since we use the inclusive or, the statement is true when both parts are true.
+							</p>
+						</li>
+						<li>
+							<p>
+								True.  Don't be worried that there isn't a good reason that 17 being prime <em>causes</em> 19 to be prime.  That is not what we mean by a conditional statement.  Since the <q>then</q> part is true, we know that the statement overall is true.
+							</p>
+						</li>
+						<li>
+							<p>
+								True.  The <q>if</q> part of the statement is false.  That's all we need.  I bet you don't even know what my favorite number is, and you don't need to.	The statement is true.
+							</p>
+						</li>
+						<li>
+							<p>
+								True.  Do both parts have the same truth value?  Yes, since they are both true.  So the entire statement is true.
+							</p>
+						</li>
+						<li>
+							<p>
+								True as well.  Now both parts are false (since both are the negation of a true statement), so the entire statement is true.
+							</p>
+						</li>
+					</ol>
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			The way we define logical connectives and their truth value is very precise and technical.  Often, language is not.  Part of learning how to communicate mathematics is learning the cultural norms of mathematical language and how to translate statements in ordinary language into these technical statements.  This will get easier with practice, so make sure you are talking to lots of people about the math you are studying.
+		</p>
+
+		<p>
+			Here are a few examples of how ordinary language might be difficult to translate.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Identify the logical structure of each of the following statements.
+					<ol>
+						<li>
+							<p>
+								4 and 5 are both prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								Only one of 4 or 5 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								You must attend every day and do the homework to pass this class.
+							</p>
+						</li>
+						<li>
+							<p>
+								Every number is even or odd.
+							</p>
+						</li>
+					</ol>
+				</p>
+			</statement>
+			<solution>
+				<p>
+					<ol>
+						<li>
+							<p>
+								Do you agree this is the same statement as <q>4 is prime, <em>and</em> 5 is prime</q>?  Notice that it would not make sense to write this as <m>P \wedge Q</m> where <m>P</m> is <q>4</q> and <m>Q</m> is <q>5 is prime</q>.  But if we let <m>P</m> be the statement, <q>4 is prime,</q> then both parts of the conjunction are statements.
+							</p>
+						</li>
+						<li>
+							<p>
+								Again, we can't just put what is on one side of the <q>or</q> as a statement.  But if we let <m>P</m> be <q>4 is prime</q> and <m>Q</m> be <q>5 is prime,</q>, then we can write this as <m>(P \vee Q) \wedge \neg (P \wedge Q)</m>.  That is, either 4 is prime or 5 is prime, and it is not the case that both 4 is prime and 5 is prime.
+							</p>
+						</li>
+						<li>
+							<p>
+								Here is another way you could phrase the same statement: If you pass the class, then it must be the case that you attended every day and that you did the homework.  If we agree that this is just a clearer way to state the original statement, then we could illustrate its structure as <m>P \imp (Q \wedge R)</m>.
+							</p>
+						</li>
+						<li>
+							<p>
+								Notice that this is not the same as saying, <q>Every number is even, or every number is odd.</q>  Of course, saying, <q>3 is even or odd,</q> <em>is</em> the same as saying, <q>3 is even, or 3 is odd.</q>  Language is confusing!  
+							</p>
+							<p>
+								We don't yet have the logical technology to translate this statement as anything more than <m>P</m>, where <m>P</m> is the statement, <q>Every number is even or odd.</q>  Luckily, that technology is available, starting... now!
+							</p>
+						</li>
+					</ol>
+				</p>
+			</solution>
+		</example>
+
+		</subsection>
+		<subsection xml:id="subsec_logic-statements-quant">
+
+		<title>Quantifiers and Predicates</title>
+
+		<p>
+			Did you know that all mammals have hair?  That every integer is even or odd?  That some odd numbers are not prime?  
+		</p>
+
+		<p>
+			Our goal is to explore how to write statements such as these in mathematical notation to highlight the logical structure of the statements.  
+		</p>
+		
+		<p>
+			<idx><h>predicate</h></idx>
+			<idx><h>free variable</h></idx>
+			This will require considering a new sort of basic sentence called a <term>predicate</term>, which is like a statement, but contains a <term>free variable</term>.  When you replace that variable with a constant of some sort, then the sentence becomes a statement proper. Think of a predicate as making a claim about the values that are substituted for the <q>placeholder</q> variable(s).
+		</p>
+
+		<p>
+			A predicate can be made into a (true or false) statement by evaluating it at some constant(s), or we can claim that some or all possible constants would make the resulting statement true or false.  This is done using <term>quantifiers</term>. 
+		</p>
+
+		<definition xml:id="def-quantifiers">
+			<title>Quantifiers</title>
+			<idx><h>quantifier</h></idx>
+			<idx><h>universal quantifier</h></idx>
+			<idx><h>existential quantifier</h></idx>
+			<idx><h>for all</h></idx>
+			<idx><h>exists</h></idx>
+			<statement>
+				<p>
+					The <term>universal quantifier</term> is written <m>\forall</m> and is read, <q>for all.</q>
+					The <term>existential quantifier</term> is written <m>\exists</m> and is read, <q>there exists</q> or <q>for some.</q>
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			We usually write predicates similar to how you write a function, although with capital letters.  For example, we might use the predicate <m>P(x)</m> to represent <q><m>x</m> is prime</q>.  We can then say that <m>P(7)</m> is true (since 7 is prime) and that <m>P(8)</m> is false.  Or using quantifiers, we can (falsely) claim that all numbers are prime by writing <m>\forall x P(x)</m> or (truthfully) claim that there is at least one prime number, by writing <m>\exists x P(x)</m>.
+		</p>
+
+		<example>
+			<idx><h>scope of a quantifier</h></idx>
+			<idx><h>quantifier</h><h>scope</h></idx>
+			<statement>
+				<p>
+					Translate the statement, <q>Every number is even or odd,</q> into symbols.
+				</p>
+			</statement>
+			<solution>
+				<p>
+					Before we even start using symbols, it is helpful to rephrase this in a way that captures the logical structure of the statement.  What is the claim saying?  Given any number, it will either be the case that the number is even, or that the number is odd.  In particular, we are not claiming that either all numbers are even or all numbers are odd. 
+				</p>
+				<p>
+					<idx><h>scope (of quantifier)</h></idx>
+					Let's use <m>E(x)</m> to say that <m>x</m> is even, and <m>O(x)</m> to say that <m>x</m> is odd.  Then we can write,
+					<me>
+						E(x) \vee O(x)
+					</me>
+					to say that <m>x</m> is even or <m>x</m> is odd.  Which <m>x</m> is that true for (according to the claim)?  <em>All</em> of them.  So we write the statement as,
+					<me>
+						\forall x (O(x) \vee E(x))
+					</me>.
+					We added some parentheses to emphasize that the <term>scope</term> of the universal quantifier includes both predicates.  
+				</p>
+
+				<p>
+					Note that if we incorrectly interpreted the statement as claiming that either all numbers are even or all numbers are odd, we could write that as <m>\forall x O(x) \vee \forall x E(x)</m>.  This is not the same!
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			Just like we did for propositional logic and the logical connectives, we should decide what it means for a quantified predicate to be true or false.	We say <m>\forall x P(x)</m> is true if <m>P(a)</m> is true no matter what constant <m>a</m> we substitute for <m>x</m>.  And similarly, <m>\exists x P(x)</m> is true if there is at least one value <m>a</m> for which <m>P(a)</m> is true.
+		</p>
+			
+		
+		
+		<p>
+			However, we must be careful here.  Consider the statement
+				<me>
+					\forall x \exists y (y \lt x)
+				</me>.
+				You would read this,
+				<q>For every <m>x</m> there is some <m>y</m> such that <m>y</m> is less than <m>x</m>.</q> Note that <m>\lt</m> is a predicate with two free variables; we have chosen to write it with the symbol between the variables instead of the funky-looking <m>L(y,x)</m> or <m>\lt\!(y,x)</m>.
+			</p>
+			
+			<p>
+				<idx><h>domain of discourse</h></idx>
+				Is this statement true?
+				The answer depends on our <term>domain of discourse</term>.
+				When we say <q>for all</q> <m>x</m>,
+				do we mean all positive integers or all real numbers or all elephants or...?
+				Usually, this information is implied by the context of the statement.
+				In discrete mathematics,
+				we almost always quantify over the
+				<em>natural numbers</em>, <m>0, 1, 2,\ldots </m>, so let's take that for our domain of discourse here.
+			</p>
+	
+			<p>
+				For the statement to be true,
+				we need, no matter what natural number we select, for
+				there to be some natural number that is strictly smaller.
+				Perhaps we could let
+				<m>y</m> be
+				<m>x-1</m>?
+				But here is the problem: what if
+				<m>x = 0</m>?
+				Then
+				<m>y = -1</m>, and that is
+				<em>not a number!</em>
+				(in our domain of discourse).
+				Thus we see that the statement is false because there is a number less than or equal to all other numbers.
+				In symbols,
+				<me>
+					\exists x \forall y (y \ge x)
+				</me>.
+		</p>
+
+		<p>
+			We will explore some rules for working with quantifiers and other connectives in <xref ref="sec_logic-rules"/>.  For now, we will focus on  translating between informal statements in ordinary language and the more precise language of logic.  There is no perfect algorithm for doing this translation, but here are a few useful rules of thumb.
+		</p>
+
+		<assemblage xml:id="assemblage-universal-rot">
+			<title>Every blank is blank</title>
+			<p>
+				Any statement of the form, <q>Every <m>P</m>-thing is a <m>Q</m>-thing</q> can be written as <me>\forall x(P(x) \imp Q(x))</me>.
+			</p>
+			<p>
+				Example: all mammals have hair, becomes <m>\forall x (M(x) \imp H(x))</m>, where <m>M(x)</m> means <m>x</m> is a mammal, and <m>H(x)</m> means <m>x</m> has hair.
+			</p>
+		</assemblage>
+
+		<p>
+			To make sense of this, think about what we mean by statements like these in terms of sets.  We claim that the set of mammals is contained in, or is a subset of, the set of hairy things.  What we mean by <q><m>A</m> is a subset of <m>B</m></q> is precisely that every element of <m>x</m> is an element of <m>y</m>.  This can also be expressed by saying that <q>if <m>x</m> is an element of <m>A</m>, then <m>x</m> is also an element of <m>B</m>.</q>   
+		</p>
+
+		<assemblage xml:id="assemblage-existential-rot">
+			<title>Some blanks are blank</title>
+			<p>
+				Any statement of the form, <q>Some <m>P</m>-things are <m>Q</m>-things,</q> can be written as 
+				<me>
+					\exists x (P(x) \wedge Q(x))
+				</me>.
+			</p>
+			<p>
+				Example: Some cats can swim, becomes <m>\exists x (C(x) \wedge S(x))</m>, where <m>C(x)</m> means <m>x</m> is a cat, and <m>S(x)</m> means <m>x</m> can swim.
+			</p>
+		</assemblage>
+
+		<p>
+			Again, it is helpful to think of how to express such statements in terms of sets.  To say that some cats can swim is to say that there are things that belong both to the set of cats and to the set of swimming things.  Such animals belong to the <em>intersection</em> of these two sets, which you can describe as belonging to the first set <em>and</em> the second set.  Existential statements of this form claim that the intersection of the two sets is not empty.
+		</p>
+
+		<paragraphs xml:id="pars-implicituantifiers">
+			<title>Implicit Quantifiers</title>
+			<idx><h>implicit quantifier</h></idx>
+			<idx><h>quantifier</h><h>implicit</h></idx>
+			<idx><h>universal generalization</h></idx>
+			<p>
+				It is always a good idea to be precise in mathematics.
+				Sometimes though, we can relax a bit, as long as we all agree on a convention.
+				An example of such a convention is to assume that sentences containing predicates with free variables are intended as statements, where the variables are universally quantified.  
+			</p>
+
+			<p>
+				For example, do you believe that if a shape is a square, then it is a rectangle?  But how can that be true if it is not a statement?  To be a little more precise, we have two predicates: <m>S(x)</m> for <q><m>x</m> is a square</q> and <m>R(x)</m> for <q><m>x</m> is a rectangle</q>.
+				The <em>sentence</em> we are looking at is
+				<me>
+					S(x) \imp R(x)
+				</me>.
+				This is neither true nor false, as it is not a statement.
+				But come on!  We all know that we meant to consider the statement,
+				<me>
+					\forall x (S(x) \imp R(x))
+				</me>,
+				and this is what our convention tells us to consider. We call the resulting statement the <term>universal generalization</term> of the original sentence.  
+			</p>
+
+			<definition xml:id="def-univerals-generalization">
+				<idx><h>universal generalization</h></idx>
+				<statement>
+					<p>
+						Given a sentence with free variables, the <term>universal generalization</term> of that sentence is the statement obtained by adding enough universal quantifiers to the beginning of the sentence so that all free variables become bound.
+					</p>
+				</statement>
+			</definition>
+
+			<p>
+				Similarly, we will often be a bit sloppy about the distinction between a predicate and a statement.
+				For example, we might write, <em>let <m>P(n)</m> be the <em>statement</em>, <q><m>n</m> is prime,</q></em> which is technically incorrect.
+				It is implicit that we mean that we are defining <m>P(n)</m> to be a predicate, which for each <m>n</m> becomes the statement, <m>n</m> is prime.
+			</p>
+		</paragraphs>
+	</subsection>
+	
+
+	<reading-questions xml:id="rqs-logic-statements">
+
+		<exercise label="rq-logic-statements-connective-type">
+			<statement>
+				<p>
+					Match each statement in symbols with its type of statement.
+				</p>
+			</statement>
+			<matches>
+				<match order="3">
+					<premise>
+						<m>P \wedge Q</m>
+					</premise>
+					<response>
+						<m>P</m> and <m>Q</m> (conjunction)
+					</response>
+				</match>
+				<match order="1">
+					<premise>
+						<m>P \imp Q</m>
+					</premise>
+					<response>If <m>P</m>, then <m>Q</m>, (implication)</response>
+				</match>
+				<match order="2">
+					<premise>
+						<m>P \vee Q</m>
+					</premise>
+					<response>
+						<m>P</m> or <m>Q</m> (disjunction)
+					</response>
+				</match>
+				<match order="4">
+					<premise><m>\neg P</m></premise>
+					<response>Not <m>P</m> (negation)</response>
+				</match>
+			</matches>
+		</exercise>
+
+	<exercise label="rq-logic-statements-free-vars">
+		<statement>
+			<p>
+				Consider the sentence, <q>If <m>x \gt 3</m>, then <m>x</m> is even.</q>
+			</p>
+			<p>
+				Which of the following statements are true about the sentence?  Select all that apply.
+			</p>
+		</statement>
+		<choices>
+			<choice correct="no">
+				<statement>
+					<p>
+						The sentence is a false statement since it has a free variable.
+					</p>
+				</statement>
+				<feedback>
+					<p>
+						For what values of the free variable <m>x</m>? 
+					</p>
+				</feedback>
+			</choice>
+			<choice correct="yes">
+				<statement>
+					<p>
+						The universal generalization of the sentence is a statement.
+					</p>
+				</statement>
+				<feedback>
+					<p>
+						The only thing holding the sentence back from being a statement is the free variable <m>x</m>.  The universal generalization quantifies this free variable.
+					</p>
+				</feedback>
+			</choice>
+			<choice correct="yes">
+				<statement>
+					<p>
+						If you substitute <m>10</m> for <m>x</m>, the resulting statement is true.
+					</p>
+				</statement>
+				<feedback>
+					<p>
+						With this substitution, both the <q>if</q> and <q>then</q> parts are true.
+					</p>
+				</feedback>
+			</choice>
+			<choice>
+				<statement>
+					<p>
+						The sentence becomes a true statement no matter what natural number you substitute for <m>x</m>.
+					</p>
+				</statement>
+				<feedback>
+					<p>
+						If you replace <m>x</m> with <m>5</m>, then the <q>if</q> part is true and the <q>then</q> part is false.
+					</p>
+				</feedback>
+			</choice>
+		
+		</choices>
+	</exercise>	
+
+	<exercise label="rq-logic-statements-q">
+		<statement>
+			<p>
+				What questions do you have after reading this section? Write at least one question about the
+				content of this section that you are curious about.
+			</p>
+		</statement>
+		<response />
+	</exercise>
+	</reading-questions>
+	<!-- <xi:include href="practice/intro-statements.ptx"/> -->
+	<xi:include href="practice/logic-statements.ptx"/>
+	<xi:include href="exercises/logic-statements.ptx"/>
+	<!--
+	<conclusion>
+		<title>Projects</title>
+		<project>
+			<statement>
+				<p>
+					This is a first test project.
+				</p>
+			</statement>
+		</project>
+
+
+		<project>
+			<introduction>
+				<p>
+					Consider the statement, <q>For all natural numbers <m>n</m>, if <m>n</m> is prime, then <m>n</m> is solitary.</q>  You do not need to know what <em>solitary</em> means for this problem, just that it is a property that some numbers have and others do not.
+				</p>
+			</introduction>
+
+
+			<task>
+				<statement>
+					<p>
+						Write the converse and the contrapositive of the statement, saying which is which.
+						Note: the original statement claims that an implication is true for all <m>n</m>, and it is that implication that we are taking the converse and contrapositive of.
+					</p>
+				</statement>
+
+				<solution>
+					<p>
+						The converse: For all numbers <m>n</m>, if <m>n</m> is solitary, then <m>n</m> is prime.
+						The contrapositive: For all numbers <m>n</m>, if <m>n</m> is not solitary, then <m>n</m> is not prime.
+					</p>
+				</solution>
+			</task>
+
+
+			<task>
+				<statement>
+					<p>
+						Write the negation of the original statement.
+						What would you need to show to prove that the statement is false?
+					</p>
+				</statement>
+
+				<solution>
+					<p>
+						The negation: There is a natural number <m>n</m> which is prime <em>and</em> not solitary.
+						So to prove the original statement false, we need to find one example of a number which is prime but not solitary.
+					</p>
+				</solution>
+			</task>
+
+
+			<task>
+				<statement>
+					<p>
+						Even though you don't know whether 10 is solitary (in fact, nobody knows this), is the statement <q>if 10 is prime, then 10 is solitary</q> true or false?  Explain.
+					</p>
+				</statement>
+
+				<solution>
+					<p>
+						This statement is true.
+						The hypothesis of the statement is false (10 is not prime), so the implication is automatically true.
+					</p>
+				</solution>
+			</task>
+
+
+			<task>
+				<statement>
+					<p>
+						It turns out that 8 is solitary.
+						Does this tell you anything about the truth or falsity of the original statement, its converse or its contrapositive?  Explain.
+					</p>
+				</statement>
+
+				<solution>
+					<p>
+						This does not tell you anything about the original implication or its contrapositive (since the contrapositive is equivalent to the original statement).
+						All we can say is that there is a number which is not prime and not solitary.
+						However, the converse is proved false by this example since there is a number (8) which is both solitary and not prime.
+					</p>
+				</solution>
+			</task>
+
+
+			<task>
+				<statement>
+					<p>
+						Assuming that the original statement is true, what can you say about the relationship between the <em>set</em> <m>P</m> of prime numbers and the <em>set</em> <m>S</m> of solitary numbers.
+						Explain.
+					</p>
+				</statement>
+
+				<solution>
+					<p>
+						We can say that <m>P \subseteq S</m>, since this claims that every element of the set of primes is also an element of the set of solitary numbers.
+						Thanks to the information that 8 is not solitary, we know that <m>P \ne S</m> so in fact <m>P \subset S</m> is also true.
+					</p>
+				</solution>
+			</task>
+		</project>
+	</conclusion>
+	-->
+</section>

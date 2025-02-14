@@ -1,0 +1,1016 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq-growth">
+  <title>Rate of Growth</title>
+
+  <objectives>
+    <introduction>
+      <p>
+        After completing this section, you should be able to do the following.
+      </p>
+    </introduction>
+
+    <ol>
+      <li>
+        <p>
+          Identify a sequence as arithmetic or geometric based on its rate of growth.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          Give recursive definitions and closed formulas for arithmetic and geometric sequences.
+        </p>
+      </li>
+    </ol>
+  </objectives>
+
+
+  <subsection>
+    <title>Section Preview</title>
+
+    <investigation xml:id="investigation-seqdots">
+      <statement>
+        <p>
+          For each of the patterns of dots below, draw the next pattern in the sequence.
+          Describe the rate of growth of the number of dots in the patterns.
+          Then guess a recursive definition and a closed formula for the number of dots in the <m>n</m>th pattern.
+        </p>
+
+        <sidebyside width="65%">
+          <image xml:id="inv_dots-seq1">
+            <latex-image>
+              \begin{tikzpicture}
+                \draw[fill = black] (0,0) \v;
+                \node[below] at (0,-.6) {$n = 0$};
+                \draw[fill = black] (0+3,0) \v (.3+3, .3) \v (-.3+3,-.3) \v (-.3+3, .3) \v (.3+3,-.3) \v;
+                \node[below] at (0+3,-.6) {$n = 1$};
+                \draw[fill = black] (0+6,0) \v (.3+6, .3) \v (-.3+6,-.3) \v (-.3+6, .3) \v (.3+6,-.3) \v (.6+6, .6) \v (-.6+6,-.6) \v (-.6+6, .6) \v (.6+6,-.6) \v;
+                  \node[below] at (0+6,-.6) {$n = 2$};
+              \end{tikzpicture}
+            </latex-image>
+
+            <description>
+              A sequence of three dot patterns, starting with a single dot (labeled n = 0), then the same dot with four new dots extending into an X (labeled n = 1) and finally the same pattern but with four new dots extending onto the limbs of the X (labeled n = 2).
+            </description>
+          </image>
+        </sidebyside>
+
+        <sidebyside width="65%">
+          <image xml:id="inv_dots-seq2">
+            <latex-image>
+          \begin{tikzpicture}
+          \draw[fill = black] (0,.25) \v (0,-.25) \v;
+          \node[below] at (0,-1.5) {$n = 0$};
+          \draw[fill = black] (-.5+3,.25) \v (.5+3, .25) \v (0+3, .95) \v (-.5+3,-.25) \v (.5+3, -.25) \v (0+3,-.95) \v;
+          \node[below] at (0+3,-1.5) {$n = 1$};
+          \draw[fill = black] (-.7+6,.25) \v (-.3+6,.25) \v (-.5+6,.6) \v
+          (.3+6, .25) \v (.7+6,.25) \v (.5+6, .6) \v
+          (-.2+6, .95) \v (.2+6, .95) \v (0+6, 1.3) \v
+          (-.7+6,-.25) \v (-.3+6,-.25) \v (-.5+6,-.6) \v
+          (.3+6, -.25) \v (.7+6,-.25) \v (.5+6, -.6) \v
+          (-.2+6, -.95) \v (.2+6, -.95) \v (0+6, -1.3) \v;
+          \node[below] at (0+6,-1.5) {$n = 2$};
+          \end{tikzpicture}
+            </latex-image>
+
+            <description>
+              A sequence of three dot patterns, labeled n = 0, n = 1, and n = 2, from left to right.
+              The first pattern contains two dots, on above the other.
+              The second pattern can be viewed as each of the dots from the first pattern splitting into 3, forming two triangles (so six dots total).
+              The third patter again takes each dot from the second pattern and splits them into three, arranged as triangles (so 18 dots in total).
+            </description>
+          </image>
+        </sidebyside>
+
+        <sidebyside width="70%">
+          <image xml:id="inv_dots-seq3">
+            <latex-image>
+          \begin{tikzpicture}
+          \draw[fill = black] (0,0) \v;
+          \node[below] at (0,-.25) {$n = 1$};
+          \draw[fill = black] (0+2,0) \v (.5+2, 0) \v (.25+2,.4) \v;
+          \node[below] at (.25+2,-.25) {$n = 2$};
+          \draw[fill = black] (0+4,0) \v (.5+4, 0) \v (.25+4,.4) \v (1+4,0) \v (.75+4,.4) \v (.5+4, .8) \v;
+          \node[below] at (.5+4,-.25) {$n = 3$};
+          \draw[fill = black] (0+6,0) \v (.5+6, 0) \v (.25+6,.4) \v (1+6,0) \v (.75+6,.4) \v (.5+6, .8) \v (1.5+6, 0) \v (1.25+6, .4) \v (1+6, .8) \v (.75+6, 1.2) \v;
+          \node[below] at (.75+6,-.25) {$n = 4$};
+          \end{tikzpicture}
+            </latex-image>
+
+            <description>
+              A sequence of four dot patters, labeled n = 1 through n = 4.
+              The first pattern is a single dot.
+              The second adds a row of two dots below the single dot (so three dots in a triangle).
+              The third pattern adds a row of three dots, creating six dots arranged in a triangle.
+              Finally we add four dots below the previous six, still forming a triangle, this time of 10 dots.
+            </description>
+          </image>
+        </sidebyside>
+      </statement>
+    </investigation>
+
+    <p>
+      Our goal is to find closed formulas for sequences.
+      Our primary strategy will be to first determine how the sequence is changing from term to term.
+      This will lead to a recurrence relation for the sequence, and from that recurrence relation, we will find a closed formula.
+      We start with two types of sequences that are particularly common and useful: arithmetic and geometric sequences.
+      Along the way, we will explore some techniques for solving recurrence relations.
+    </p>
+
+    <worksheet xml:id="PA-seq-growth">
+      <title>Preview Activity</title>
+      <!-- This could be improved by putting the images into webwork.  Or make the whole thing in Doenet. -->
+      <exercise label="pa-sec-growth-1">
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("a(n-1) + 4");
+            $popup = PopUp(["?", "add", "multiply by"], "add",);
+          </pg-code>
+
+          <introduction>
+            <p>
+              Explore the first sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.  The sequence starts <m>1, 5, 9,\ldots</m>
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many dots would you expect in the next two figures in the sequence?
+              </p>
+
+
+              <p component="interactive">
+                Dots in <m>n = 3</m> figure: <m>a_3 = </m><var name="13" width="5"/>.
+              </p>
+              
+              <p component="interactive">
+                Dots in <m>n = 4</m> figure: <m>a_4 = </m><var name="17" width="5"/>.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p component="interactive">
+                How is the sequence growing?  To get the next figure, take the current figure and <var name="$popup" form="popup"/> the constant <var name="4" width="5"/> dots.
+              </p>
+              <p component="static">
+                How is the sequence growing?  How many dots do you add to or multiply by to get the next figure?
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Let <m>a_n</m> be the number of dots in figure <m>n</m>.  Write a recursive definition for <m>a_n</m>.
+              </p>
+
+              <instruction>
+                Use <c>a(n-1)</c> for <m>a_{n-1}</m>.
+              </instruction>
+              <p component="interactive">
+                <m>a_n = </m> <var name="$an" width="20"/>; with <m>a_0 = </m> <var name="1" width="5" />.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Guess a closed formula for the number of dots in the <m>n</m>th figure.
+              </p>
+              <p component="interactive">
+                <m>a_n = </m> <var name="Formula('1+4*n')" width="20" />.
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+
+      <exercise label="pa-sec-growth-2">
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("3 a(n-1)");
+            $popup = PopUp(["?", "add", "multiply by"], "multiply by",);
+          </pg-code>
+          <introduction>
+            <p>
+              Now look at the second sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.  The sequence starts <m>2, 6, 18,\ldots</m>
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many dots would you expect in the next two figures in the sequence?
+              </p>
+
+
+              <p component="interactive">
+                Dots in <m>n = 3</m> figure: <m>a_3 = </m><var name="54" width="5"/>.
+              </p>
+              
+              <p component="interactive">
+                Dots in <m>n = 4</m> figure: <m>a_4 = </m><var name="162" width="5"/>.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p component="interactive">
+                How is the sequence growing?  To get the next figure, take the current figure and <var name="$popup" form="popup"/> the constant <var name="3" width="5"/>.
+              </p>
+              <p component="static">
+                How is the sequence growing?  How many dots do you add to or multiply by to get the next figure?
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Let <m>a_n</m> be the number of dots in figure <m>n</m>.  Write a recursive definition for <m>a_n</m>.
+              </p>
+
+              <instruction>
+                Use <c>a(n-1)</c> for <m>a_{n-1}</m>.
+              </instruction>
+              <p component="interactive">
+                <m>a_n = </m> <var name="$an" width="20"/>; with <m>a_0 = </m> <var name="2" width="5" />.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Guess a closed formula for the number of dots in the <m>n</m>th figure.
+              </p>
+              <p component="interactive">
+                <m>a_n = </m> <var name="Formula('2*n**4')" width="20" />.
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+
+      <exercise label="pa-sec-growth-3">
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("a(n-1) + n");
+          </pg-code>
+          <introduction>
+            <p>
+              Now look at the third sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n</m>.  The sequence starts <m>1, 3, 6, 10,\ldots</m>
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many dots would you expect in the next two figures in the sequence?
+              </p>
+
+
+              <p component="interactive">
+                Dots in <m>n = 5</m> figure: <m>a_5 = </m><var name="15" width="5"/>.
+              </p>
+              
+              <p component="interactive">
+                Dots in <m>n = 6</m> figure: <m>a_6 = </m><var name="21" width="5"/>.
+              </p>
+            </statement>
+          </task>
+
+          <task>
+            <statement>
+              <p>
+                Let <m>a_n</m> be the number of dots in figure <m>n</m>.  Write a recursive definition for <m>a_n</m>.
+              </p>
+
+              <instruction>
+                Use <c>a(n-1)</c> for <m>a_{n-1}</m>.
+              </instruction>
+              <p component="interactive">
+                <m>a_n = </m> <var name="$an" width="20"/>; with <m>a_1 = </m> <var name="1" width="5" />.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Guess a closed formula for the number of dots in the <m>n</m>th figure.
+              </p>
+              <p component="interactive">
+                <m>a_n = </m> <var name="Formula('(n*(n+1)/2)')" width="20" />.
+              </p>
+            </statement>
+          </task>
+        </webwork>
+        </exercise>
+    </worksheet>
+  </subsection>
+
+
+  <subsection xml:id="subsec-arithmetic">
+    <title>Arithmetic Sequences</title>
+
+    <p>
+      Suppose you start a business selling prints of mathematical art.
+      In week zero, you sell two prints.
+      Each week after that, you sell four more prints than you did the previous week.
+      How many prints will you sell in the <m>n</m>th week?
+    </p>
+
+    <p>
+      We can easily compute the first few terms of the sequence: <m>2, 6, 10, 14,\ldots</m>.
+      How do I know this is correct?  From the problem, we see that to get from one term to the next, we must add 4.
+      It is clear then that the recurrence relation for the sequence is
+      <me>
+        a_n = a_{n-1} + 4
+      </me>.
+      The <em>rate of growth</em> for the sequence is the constant <m>4</m> since the <em>difference</em> between any two terms is 4 (note, we could write the recurrence relation as <m>a_n - a_{n-1} = 4</m>).
+    </p>
+
+    <p>
+      We call sequences with a <em>constant rate of change</em> <term>arithmetic sequences</term>.
+    </p>
+
+    <p>
+      Now let's find a closed formula for our sequence.
+      The first term is <m>a_0 = 2</m>.
+      To get <m>a_1</m>, we add <m>4</m>.
+      The next term requires us to add <m>4</m> again, which means we have added <m>4</m> to our initial term twice.
+      Then we add <m>4</m> again, for a total of three times for <m>a_3</m>.
+      In fact, to get <m>a_n</m>, we will have added <m>4</m> to <m>a_0</m> a total of <m>n</m> times.
+      Thus, the closed formula for the sequence is
+      <me>
+        a_n = 2 + 4n
+      </me>.
+    </p>
+
+    <p>
+      This works for any arithmetic sequence.
+      That is, any sequence with a constant difference will have a <em>linear</em> closed formula, where the <q>slope</q> of the linear function is the common difference.
+    </p>
+
+    <assemblage>
+      <title>Arithmetic Sequences</title>
+
+      <idx><h>arithmetic sequence</h></idx>
+      <idx><h>recursive definition</h><h>for arithmetic sequence</h></idx>
+      <idx><h>common difference</h></idx>
+      <idx><h>closed formula</h><h>for arithmetic sequence</h></idx>
+      <p>
+        If the terms of a sequence differ by a constant, we say the sequence is <term>arithmetic</term>.
+        If the initial term (<m>a_0</m>) of the sequence is <m>a</m> and the <term>common difference</term> is <m>d</m>, then we have,
+      </p>
+
+      <p>
+        Recursive definition: <m>a_n = a_{n-1} + d</m> with <m>a_0 = a</m>.
+      </p>
+
+      <p>
+        Closed formula: <m>a_n = a + dn</m>.
+      </p>
+    </assemblage>
+
+    <p>
+      As we did for our example above, for the recursive definition, we need to specify <m>a_0</m>.
+      Then we need to express <m>a_n</m> in terms of <m>a_{n-1}</m>.
+      If we call the first term <m>a</m>, then <m>a_0 = a</m>.
+      For the recurrence relation, by the definition of an arithmetic sequence, the difference between successive terms is some constant, say <m>d</m>.
+      So <m>a_n - a_{n-1} = d</m>, or in other words,
+      <me>
+        a_0 = a \qquad a_n = a_{n-1} + d
+      </me>.
+    </p>
+
+    <p>
+      Let's now argue why the closed formula is correct.  One way we could do this is by using a technique sometimes called <term>telescoping</term> (a name which hopefully we become meaningful momentarily).
+    </p>
+
+    <p>
+      We write the recurrence relation in its <em>difference</em> form, <m>a_n - a_{n-1} = d</m> for all terms starting with <m>a_1</m> and going up to <m>a_n</m>.  This gives the following:
+      <md>
+        <mrow>a_1 - a_0 = \amp d</mrow>
+        <mrow>a_2 - a_1 = \amp d</mrow>
+        <mrow>a_3 - a_2 = \amp d</mrow>
+        <mrow>\vdots  \amp </mrow>
+        <mrow>a_{n-1} - a_{n-2} = \amp d</mrow>
+        <mrow>a_n - a_{n-1} =  \amp d</mrow>
+      </md>.
+      Now we add all <m>n</m> equations together.  
+    </p>
+    
+    <p>
+      On the right-hand side, we have added <m>d</m> to itself <m>n</m> times, so the sum is <m>d\cdot n</m>.
+    </p>
+    <p>
+      On the left-hand side, we get the sum:
+      <me>
+        (a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \cdots + (a_{n-1} - a_{n-2}) + (a_n - a_{n-1})
+      </me>.
+      But look what happens when we regroup and cancel like terms:
+      <me>
+        \cancel{a_1} - a_0 + \cancel{a_2} - \cancel{a_1} + \cancel{a_3} - \cancel{a_2} + \cdots + \cancel{a_{n-1}} - \cancel{a_{n-2}} + a_n - \cancel{a_{n-1}} = a_n - a_0
+      </me>.
+      The sum <em>telescopes</em> down to be nice and compact for easy storage.  
+    </p>
+    <p>
+      Putting the two sides together gives us <me>a_n - a_0 = d \cdot n</me> which becomes <me>a_n = a_0 + d \cdot n</me> as we claimed.
+    </p>
+      
+    <p>
+      The telescoping we did above is useful in other contexts (see <xref ref="ex-telescoping-sum"/>), but now that we have established a general form of the closed formula, we can apply it to any arithmetic sequence.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Find recursive definitions and closed formulas for the arithmetic sequences below.
+          Assume the first term listed is <m>a_0</m>.
+        </p>
+
+        <p>
+          <ol>
+            <li>
+              <m>2, 5, 8, 11, 14, \ldots</m>.
+            </li>
+
+            <li>
+              <m>50, 43, 36, 29, \ldots</m>.
+            </li>
+          </ol>
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          First we should check that these sequences really are arithmetic by taking differences of successive terms.
+          Doing so will reveal the common difference <m>d</m>.
+        </p>
+
+        <p>
+          <ol>
+            <li>
+              <m>5-2 = 3</m>, <m>8-5 = 3</m>, etc. To get from each term to the next, we add three, so <m>d = 3</m>. The recursive definition is therefore <m>a_n = a_{n-1} + 3</m> with <m>a_0 = 2</m>. The closed formula is <m>a_n = 2 + 3n</m>.
+            </li>
+
+            <li>
+              <p>
+                Here the common difference is <m>-7</m>, since we add <m>-7</m> to 50 to get 43, and so on.
+                Thus we have a recursive definition of <m>a_n = a_{n-1} - 7</m> with <m>a_0 = 50</m>.
+                The closed formula is <m>a_n = 50 - 7n</m>.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </example>
+  </subsection>
+
+
+  <subsection xml:id="subsec-geometric-sequences">
+    <title>Geometric Sequences</title>
+
+    <p>
+      What about sequences like <m>3, 6, 12, 24, 48, \ldots</m>? This is not arithmetic because the difference between terms is not constant.
+      However, the <em>ratio</em> between successive terms is constant: <m>\frac{6}{3} = \frac{12}{6} = \frac{24}{12} = \cdots = 2</m>
+      We call such sequences <term>geometric</term>.
+    </p>
+    
+    <p>
+      Recognizing that the sequence is geometric lets us easily write down a recursive definition.  <m>a_n = 2 a_{n-2}</m>, with <m>a_0 = 3</m>.  
+    </p>
+    
+    <p>
+      A closed formula is also not difficult to reason out.  How do we get the term <m>a_3</m> for example?  We start with <m>3</m>, then multiply by 2 to get <m>a_1</m>, multiply by <m>2</m> again to get <m>a_2</m>, and multiply by <m>2</m> a third time to get <m>a_3</m>.  So we multiplied <m>3</m> by <m>2</m> a total of three times, or <m>a_3 = 3\cdot 2^3</m>.  It looks like <m>a_n = 3\cdot 2^n</m>.
+    </p>
+
+    <p>
+      In general, the recursive definition for the geometric sequence with initial term <m>a</m> and common ratio <m>r</m> will be <me>a_n = a_{n-1}\cdot r; a_0 = a</me>.
+      To get the next term we multiply the previous term by <m>r</m>.
+    </p>
+    
+    <p>
+      For the general closed formula, we could try something like telescoping again, although we would need to cancel fractions.  Instead, let's illustrate another technique for solving recurrence relations called <term>iteration</term>. The idea here is that we work our way up to <m>a_n</m> and notice the pattern. 
+      Write
+      <md>
+        <mrow>a_0 \amp = a</mrow>
+        <mrow>a_1 \amp = a_0\cdot r</mrow>
+        <mrow>a_2 \amp = a_1 \cdot r = a_0\cdot r\cdot r = a_0\cdot r^2</mrow>
+        <mrow>a_3 \amp = a_2 \cdot r = a_0 \cdot r^2 \cdot r = a_0 \cdot r^3</mrow>
+        <mrow>\amp \vdots</mrow>
+        <mrow>a_n \amp = a_{n-1} \cdot r = a_0 \cdot r^{n-1}\cdot r = a_0 r^n</mrow>
+      </md>.
+      We must multiply the first term <m>a</m> by <m>r</m> a number of times, <m>n</m> times to be precise.
+      We get <m>a_n = a\cdot r^{n}</m>.
+    </p>
+
+    <assemblage>
+      <title>Geometric Sequences</title>
+
+      <idx><h>geometric sequence</h></idx>
+      <idx><h>common ratio</h></idx>
+      <idx><h>recursive definition</h><h>for geometric sequence</h></idx>
+      <idx><h>closed formula</h><h>for geometric sequence</h></idx>
+      <p>
+        A sequence is called <term>geometric</term> if the ratio between successive terms is constant.
+        Suppose the initial term <m>a_0</m> is <m>a</m> and the <term>common ratio</term> is <m>r</m>.
+        Then we have,
+      </p>
+
+      <p>
+        Recursive definition: <m>a_n = ra_{n-1}</m> with <m>a_0 = a</m>.
+      </p>
+
+      <p>
+        Closed formula: <m>a_n = a\cdot r^{n}</m>.
+      </p>
+    </assemblage>
+
+    <example>
+      <statement>
+        <p>
+          Find the recursive and closed formula for the geometric sequences below.
+          Again, the first term listed is <m>a_0</m>.
+          <ol>
+            <li>
+              <m>3, 6, 12, 24, 48, \ldots</m>
+            </li>
+
+            <li>
+              <m>27, 9, 3, 1, 1/3, \ldots</m>
+            </li>
+          </ol>
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          Start by checking that these sequences really are geometric by dividing each term by its previous term.
+          If this ratio really is constant, we will have found <m>r</m>.
+          <ol>
+            <li>
+              <m>6/3 = 2</m>, <m>12/6 = 2</m>, <m>24/12 = 2</m>, etc. Yes, to get from any term to the next, we multiply by <m>r = 2</m>. So the recursive definition is <m>a_n = 2a_{n-1}</m> with <m>a_0 = 3</m>. The closed formula is <m>a_n = 3\cdot 2^{n}</m>.
+            </li>
+
+            <li>
+              <p>
+                The common ratio is <m>r = 1/3</m>.
+                So the sequence has recursive definition <m>a_n = \frac{1}{3}a_{n-1}</m> with <m>a_0 = 27</m> and closed formula <m>a_n = 27\cdot \frac{1}{3}^{n}</m>.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Geometric sequences are those which have a growth rate that is <em>proportional</em> to the sequence itself.
+      Just like you might have seen in calculus, it is exactly the exponential functions that have this property.
+    </p>
+
+    <p>
+      In the examples and formulas above, we assumed that the <em>initial</em> term was <m>a_0</m>.
+      If your sequence starts with <m>a_1</m>, you can easily find the term that would have been <m>a_0</m> and use that in the formula.
+      For example, if we want a formula for the sequence <m>2, 5, 8,\ldots</m> and insist that <m>2= a_1</m>, then we can find <m>a_0 = -1</m> (since the sequence is arithmetic with common difference 3, we have <m>a_0 + 3 = a_1</m>).
+      Then the closed formula will be <m>a_n = -1 + 3n</m>.
+    </p>
+
+    <remark>
+      <p>
+        If you look at other sources, you might find that their closed formulas for arithmetic and geometric sequences differ from ours.
+        Specifically, you might find the formulas <m>a_n = a +(n-1)d</m> (arithmetic) and <m>a_n = a\cdot r^{n-1}</m> (geometric).
+        Which is correct? Both! In our case, we take <m>a</m> to be <m>a_0</m>.
+        If instead we had <m>a_1</m> as our initial term, we would get the (slightly more complicated) formulas you find elsewhere.
+      </p>
+    </remark>
+  </subsection>
+
+  <subsection xml:id="subsec-beyond-arithmetic-and-geometric-sequences">
+    <title>Beyond Arithmetic and Geometric Sequences</title>
+    <p>
+      Look at the sequence <m>(T_n)_{n\ge 1}</m> which starts <m>1, 3, 6, 10, 15,\ldots</m>.
+      These are called the <term>triangular numbers</term>
+          <idx><h>triangular numbers</h></idx>
+      since they represent the number of dots in an equilateral triangle
+      (think of how you arrange 10 bowling pins:
+      a row of 4 plus a row of 3 plus a row of 2 and a row of 1).
+    </p>
+
+    <sidebyside width="50%">
+
+      <image>
+
+        <latex-image>
+          \begin{tikzpicture}
+        \draw[fill = black] (0,0) \v;
+        \node[below] at (0,-.25) {$T_1 = 1$};
+
+        \draw[fill = black] (0+2,0) \v (.5+2, 0) \v (.25+2,.4) \v;
+        \node[below] at (.25+2,-.25) {$T_2 = 3$};
+
+        \draw[fill = black] (0+4,0) \v (.5+4, 0) \v (.25+4,.4) \v (1+4,0) \v (.75+4,.4) \v (.5+4, .8) \v;
+        \node[below] at (.5+4,-.25) {$T_3 = 6$};
+
+        \draw[fill = black] (0+6,0) \v (.5+6, 0) \v (.25+6,.4) \v (1+6,0) \v (.75+6,.4) \v (.5+6, .8) \v (1.5+6, 0) \v (1.25+6, .4) \v (1+6, .8) \v (.75+6, 1.2) \v;
+        \node[below] at (.75+6,-.25) {$T_4 = 10$};
+        \end{tikzpicture}
+        </latex-image>
+      <description>
+        A sequence of four dot patters, showing the first four triangular numbers: the patterns contain 1, 3, 6, and 10 dots, arranged in triangles with base 1, 2, 3, and 4, respectively.
+      </description>
+      </image>
+
+    </sidebyside>
+
+    <p>
+      Is this sequence arithmetic?
+      No, since <m>3-1 = 2</m> and <m>6-3 = 3 \ne 2</m>,
+      so there is no common difference.
+      Is the sequence geometric?
+      No. <m>3/1 = 3</m> but <m>6/3 = 2</m>,
+      so there is no common ratio.
+      What to do?
+    </p>
+
+    <p>
+      Notice that the <em>differences</em> between terms <em>do</em> form an arithmetic sequence:
+      <m>2, 3, 4, 5, 6,\ldots</m>.  In other words, the rate of change of this sequence is arithmetic: <m>T_n - T_{n-1} = n</m>, which immediately gives us the recurrence relation <m>T_n = T_{n-1} + n</m>. 
+    </p>
+
+    <p>
+      Another way to think of this is that the <m>n</m>th term of the sequence <m>(T_n)</m> is the <em>sum</em>
+      of the first <m>n</m> terms in the sequence <m>1,2,3,4,5,\ldots</m>.
+      Thus <m>(T_n)</m> is the
+      <term>sequence of partial sums</term>
+<idx><h>sequence of partial sums</h><h>for triangular numbers</h></idx>
+      of the sequence <m>1,2,3,\ldots</m>
+      (<em>partial</em> sums because we are not taking the sum of all infinitely many terms).
+    </p>
+
+    <p>
+      This should become clearer if we expand the recurrence relation to write the triangular numbers like this:
+      <md>
+        <mrow>T_1 = 1 \amp = 1</mrow>
+        <mrow>T_2 = 3 \amp = 1+2</mrow>
+        <mrow>T_3 = 6 \amp = 1 + 2 + 3</mrow>
+        <mrow>T_4 = 10 \amp = 1+ 2 + 3+ 4</mrow>
+        <mrow>\vdots \amp \qquad \vdots</mrow>
+        <mrow>T_n \amp = 1 + 2 + 3 + \cdots + n</mrow>
+      </md>.
+      We are really using <em>iteration</em> here.  We could also have seen this by using telescoping, taking <m>T_0 = 0</m>:
+      <md>
+        <mrow>T_1-T_0  = \amp 1</mrow>
+        <mrow>T_2 - T_1 = \amp 2</mrow>
+        <mrow>T_3 - T_2 =  \amp 3</mrow>
+        <mrow>\vdots \amp </mrow>
+        <mrow>T_n - T_{n-1} = \amp n</mrow>
+      </md>.
+      Summing these equations, the right-hand side becomes <m>1+2+3+\cdots + n</m>; the left-hand side cancels to leave just <m>T_n - T_0 = T_n</m>.
+    </p>
+
+    
+
+    <p>
+      If we know how to add up the terms of an arithmetic sequence,
+      we can find a closed formula for a sequence whose differences are the terms of that arithmetic sequence.
+      Consider how we could find the sum of the first 100 positive integers
+      (that is, <m>T_{100}</m>).
+      Instead of adding them in order,
+      we regroup and add <m>1+100 = 101</m>.
+      The next pair to combine is <m>2+99 = 101</m>.
+      Then <m>3+98 = 101</m>.
+      Keep going.
+      This gives 50 pairs which each add up to <m>101</m>,
+      so <m>T_{100} = 101\cdot 50 = 5050</m>.<fn>
+      This insight is usually attributed to Carl Friedrich Gauss,
+      one of the greatest mathematicians of all time,
+      who discovered it as a child when his unpleasant elementary teacher thought he would keep the class busy by requiring them to compute the lengthy sum.
+      </fn></p>
+
+    <p>
+      In general, using this same sort of regrouping,
+      we find that <m>T_n = \frac{n(n+1)}{2}</m>.
+      Incidentally,
+      this is exactly the same as <m>{n+1 \choose 2}</m>,
+      which makes sense if you think of the triangular numbers as counting the number of handshakes that take place at a party with <m>n+1</m> people:
+      the first person shakes <m>n</m> hands,
+      the next shakes an additional <m>n-1</m> hands and so on.
+    </p>
+    
+
+    <p>
+      The point of all of this is that some sequences,
+      while not arithmetic or geometric,
+      can be interpreted as the sequence of partial sums of arithmetic and geometric sequences.
+      Luckily there are methods we can use to compute these sums quickly, which we will explore in the next two sections.
+    </p>
+  </subsection>
+
+  <!--
+  <subsection>
+    <title>Solving recurrence relations</title>
+
+    <p>
+      We have seen that it is often easier to find recursive definitions than closed formulas.
+      Lucky for us, there are a few techniques for converting recursive definitions to closed formulas.
+      Doing so is called <term>solving a recurrence relation</term>.
+      Recall that the recurrence relation is a recursive definition without the initial conditions.
+      For example, the recurrence relation for the Fibonacci sequence
+      <idx><h>Fibonacci sequence</h><h>recurrence relation</h></idx>
+      is <m>F_n = F_{n-1} + F_{n-2}</m>.
+      (This, together with the initial conditions <m>F_0 = 0</m> and <m>F_1 = 1</m> give the entire recursive <em>definition</em> for the sequence.)
+    </p>
+
+    <p>
+      We are going to try to <em>solve</em> these recurrence relations.
+      By this we mean something very similar to solving differential equations: we want to find a function of <m>n</m> (a closed formula) which satisfies the recurrence relation, as well as the initial condition.<fn> Recurrence relations are sometimes called difference equations since they can describe the difference between terms and this highlights the relation to differential equations further.
+      </fn> Just like for differential equations, finding a solution might be tricky, but checking that the solution is correct is easy.
+      <idx><h>difference equation</h><see>recurrence relation</see></idx>
+    </p>
+
+    <example>
+      <idx><h>recurrence relation</h><h>verifying solution to</h></idx>
+      <statement>
+        <p>
+          Check that <m>a_n = 2^n + 1</m> is a solution to the recurrence relation <m>a_n = 2a_{n-1} - 1</m> with <m>a_1 = 3</m>.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          First, it is easy to check the initial condition: <m>a_1</m> should be <m>2^1 + 1</m> according to our closed formula.
+          Indeed, <m>2^1 + 1 = 3</m>, which is what we want.
+          To check that our proposed solution satisfies the recurrence relation, try plugging it in.
+          <md>
+            <mrow>2a_{n-1} - 1 \amp = 2(2^{n-1} + 1) - 1</mrow>
+            <mrow>\amp = 2^n + 2 - 1</mrow>
+            <mrow>\amp = 2^n +1</mrow>
+            <mrow>\amp = a_n</mrow>
+          </md>.
+        </p>
+
+        <p>
+          That's what our recurrence relation says! We have a solution.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Sometimes we can be clever and solve a recurrence relation by inspection.
+      We generate the sequence using the recurrence relation and keep track of what we are doing so that we can see how to jump to finding just the <m>a_n</m> term.
+      Here are two examples of how you might do that.
+    </p>
+
+    <p>
+      <term>Telescoping</term>
+      <idx><h>telescoping</h></idx>
+      refers to the phenomenon when many terms in a large sum cancel out<mdash/>so the sum <q>telescopes.</q> For example:
+      <me>
+        (2 - 1) + (3 - 2) + (4 - 3) + \cdots + (100 - 99) + (101 - 100) = -1 + 101
+      </me>
+      because every third term looks like: <m>2 + -2 = 0</m>, and then <m>3 + -3 = 0</m> and so on.
+    </p>
+
+    <p>
+      We can use this behavior to solve recurrence relations.
+      Here is an example.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Solve the recurrence relation <m>a_n = a_{n-1} + n</m> with initial term <m>a_0 = 4</m>.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          To get a feel for the recurrence relation, write out the first few terms of the sequence: <m>4, 5, 7, 10, 14, 19, \ldots</m>.
+          Look at the difference between terms.
+          <m>a_1 - a_0 = 1</m> and <m>a_2 - a_1 = 2</m> and so on.
+          The key thing here is that the difference between terms is <m>n</m>.
+          We can write this explicitly: <m>a_n - a_{n-1} = n</m>.
+          Of course, we could have arrived at this conclusion directly from the recurrence relation by subtracting <m>a_{n-1}</m> from both sides.
+        </p>
+
+        <p>
+          Now use this equation over and over again, changing <m>n</m> each time:
+          <md>
+            <mrow>a_1 - a_0 \amp = 1</mrow>
+            <mrow>a_2 - a_1 \amp = 2</mrow>
+            <mrow>a_3 - a_2 \amp = 3</mrow>
+            <mrow>\vdots \quad \amp \quad \vdots</mrow>
+            <mrow>a_n - a_{n-1} \amp = n</mrow>
+          </md>.
+        </p>
+
+        <p>
+          Add all these equations together.
+          On the right-hand side, we get the sum <m>1 + 2 + 3 + \cdots + n</m>.
+          We already know this can be simplified to <m>\frac{n(n+1)}{2}</m>.
+          What happens on the left-hand side? We get
+          <me>
+            (a_1 - a_0) + (a_2 - a_1) + (a_3 - a_2) + \cdots (a_{n-1} - a_{n-2})+ (a_n - a_{n-1})
+          </me>.
+        </p>
+
+        <p>
+          This sum telescopes.
+          We are left with only the <m>-a_0</m> from the first equation and the <m>a_n</m> from the last equation.
+          Putting this all together we have <m>-a_0 + a_n = \frac{n(n+1)}{2}</m> or <m>a_n = \frac{n(n+1)}{2} + a_0</m>.
+          But we know that <m>a_0 = 4</m>.
+          So the solution to the recurrence relation, subject to the initial condition is
+          <me>
+            a_n = \frac{n(n+1)}{2} + 4
+          </me>.
+        </p>
+
+        <p>
+          (Now that we know that, we should notice that the sequence is the result of adding 4 to each of the triangular numbers.)
+          <idx><h>triangular numbers</h></idx>
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      The above example shows a way to solve recurrence relations of the form <m>a_n = a_{n-1} + f(n)</m> where <m>\sum_{k = 1}^n f(k)</m> has a known closed formula.
+      If you rewrite the recurrence relation as <m>a_n - a_{n-1} = f(n)</m>, and then add up all the different equations with <m>n</m> ranging between 1 and <m>n</m>, the left-hand side will always give you <m>a_n - a_0</m>.
+      The right-hand side will be <m>\sum_{k = 1}^n f(k)</m>, which is why we need to know the closed formula for that sum.
+    </p>
+
+    <p>
+      However, telescoping will not help us with a recursion such as <m>a_n = 3a_{n-1} + 2</m> since the left-hand side will not telescope.
+      You will have <m>-3a_{n-1}</m>'s but only one <m>a_{n-1}</m>.
+      However, we can still be clever if we use <term>iteration</term>.
+    </p>
+
+    <p>
+      We have already seen an example of iteration when we found the closed formula for arithmetic and geometric sequences.
+      The idea is, we <em>iterate</em>
+      <idx><h>iteration</h></idx>
+      the process of finding the next term, starting with the known initial condition, up until we have <m>a_n</m>.
+      Then we simplify.
+      In the arithmetic sequence example, we simplified by multiplying <m>d</m> by the number of times we add it to <m>a</m> when we get to <m>a_n</m>, to get from <m>a_n = a + d + d + d + \cdots + d</m> to <m>a_n = a + dn</m>.
+    </p>
+
+    <p>
+      To see how this works, let's go through the same example we used for telescoping, but this time use iteration.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Use iteration to solve the recurrence relation <m>a_n = a_{n-1} + n</m> with <m>a_0 = 4</m>.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          Again, start by writing down the recurrence relation when <m>n = 1</m>.
+          This time, don't subtract the <m>a_{n-1}</m> terms to the other side:
+          <me>
+            a_1 = a_0 + 1
+          </me>.
+        </p>
+
+        <p>
+          Now <m>a_2 = a_1 + 2</m>, but we know what <m>a_1</m> is.
+          By substitution, we get
+          <me>
+            a_2 = (a_0 + 1) + 2
+          </me>.
+        </p>
+
+        <p>
+          Now go to <m>a_3 = a_2 + 3</m>, using our known value of <m>a_2</m>:
+          <me>
+            a_3 = ((a_0 + 1) + 2) + 3
+          </me>.
+        </p>
+
+        <p>
+          We notice a pattern.
+          Each time, we take the previous term and add the current index.
+          So
+          <me>
+            a_n = ((((a_0 + 1) +2)+3)+\cdots + n-1) + n
+          </me>.
+        </p>
+
+        <p>
+          Regrouping terms, we notice that <m>a_n</m> is just <m>a_0</m> plus the sum of the integers from <m>1</m> to <m>n</m>.
+          So, since <m>a_0 = 4</m>,
+          <me>
+            a_n = 4 + \frac{n(n+1)}{2}
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Of course in this case we still needed to know formula for the sum of <m>1,\ldots,n</m>.
+      Let's try iteration with a sequence for which telescoping doesn't work.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Solve the recurrence relation <m>a_n = 3a_{n-1} + 2</m> subject to <m>a_0 = 1</m>.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          Again, we iterate the recurrence relation, building up to the index <m>n</m>.
+          <md>
+            <mrow>a_1 \amp = 3a_0 + 2</mrow>
+            <mrow>a_2 \amp = 3(a_1) + 2 = 3(3a_0 + 2) + 2</mrow>
+            <mrow>a_3 \amp = 3[a_2] + 2 = 3[3(3a_0 + 2) + 2] + 2</mrow>
+            <mrow>\vdots \amp \qquad \vdots \qquad \qquad \vdots</mrow>
+            <mrow>a_n \amp = 3(a_{n-1}) + 2 = 3(3(3(3\cdots(3a_0 + 2) + 2) + 2)\cdots + 2)+ 2</mrow>
+          </md>.
+        </p>
+
+        <p>
+          It is difficult to see what is happening here because we have to distribute all those 3's.
+          Let's try again, this time simplifying a bit as we go.
+          <md>
+            <mrow>a_1 \amp = 3a_0 + 2</mrow>
+            <mrow>a_2 \amp = 3(a_1) + 2 = 3(3a_0 + 2) + 2 = 3^2a_0 + 2\cdot 3 + 2</mrow>
+            <mrow>a_3 \amp = 3[a_2] + 2 = 3[3^2a_0 + 2\cdot 3 + 2] + 2 = 3^3 a_0 + 2 \cdot 3^2 + 2 \cdot 3 + 2</mrow>
+            <mrow>\vdots \amp \qquad\quad \vdots \hspace{2in} \vdots</mrow>
+            <mrow>a_n \amp = 3(a_{n-1}) + 2 = 3(3^{n-1}a_0 + 2 \cdot 3^{n-2} + \cdots +2)+ 2</mrow>
+            <mrow>\amp \qquad \qquad = 3^n a_0 + 2\cdot 3^{n-1} + 2 \cdot 3^{n-2} + \cdots + 2\cdot 3 + 2</mrow>
+          </md>.
+        </p>
+
+        <p>
+          Now we simplify.
+          <m>a_0 = 1</m>, so we have <m>3^n + \langle\text{stuff}\rangle</m>.
+          Note that all the other terms have a 2 in them.
+          In fact, we have a geometric sum with first term <m>2</m> and common ratio <m>3</m>.
+          We have seen how to simplify <m>2 + 2\cdot 3 + 2 \cdot 3^2 + \cdots + 2\cdot 3^{n-1}</m>.
+          We get <m>\frac{2-2\cdot 3^n}{-2}</m> which simplifies to <m>3^n - 1</m>.
+          Putting this together with the first <m>3^n</m> term gives our closed formula:
+          <me>
+            a_n = 2\cdot 3^n - 1
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      <idx><h>iteration</h></idx>
+      Iteration can be messy, but when the recurrence relation only refers to one previous term (and maybe some function of <m>n</m>) it can work well.
+      However, trying to iterate a recurrence relation such as <m>a_n = 2 a_{n-1} + 3 a_{n-2}</m> will be way too complicated.
+      We would need to keep track of two sets of previous terms, each of which were expressed by two previous terms, and so on.
+      The length of the formula would grow exponentially (double each time, in fact).
+      Luckily there happens to be a method for solving recurrence relations which works very well on relations like this.
+    </p>
+  </subsection>
+  -->
+  <reading-questions xml:id="rqs-seq-arithgeom">
+    <exercise label="rq-seq-arithgeom-match">
+      <statement>
+        <p>
+          Match each formula on the left with the type of formula described on the right.
+        </p>
+      </statement>
+      <matches> <match order="4">
+      <premise>
+      <m>a_n = 2n+3</m></premise> <response>Arithmetic; closed</response> </match> <match order="3">
+      <premise>
+      <m>a_n = a_{n-1} + 3</m></premise> <response>Arithmetic; recursive</response> </match> <match order="1">
+      <premise>
+      <m>a_n = 3\cdot 2^n</m></premise> <response>Geometric; closed</response> </match> <match order="2">
+      <premise>
+      <m>a_n = 3a_{n-1}</m></premise> <response>Geometric; recursive</response> </match> </matches>
+    </exercise>
+
+    <exercise label="rq-seq-arithgeom-fr-difference">
+      <statement>
+        <p>
+          How can you decide whether a sequence is the sequence of partial sums of an arithmetic or geometric sequence?  Describe what you would do to check, using an example.
+        </p>
+      </statement>
+      <response/>
+    </exercise>
+
+    <exercise label="rq-seq-arithgeom-q" >
+      <statement>
+        <p>
+          What questions do you have? Write at least one question about the content of this section that you or a classmate might be curious about after reading this section.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+
+  <xi:include href="practice/seq-growth.ptx"/>
+  <xi:include href="exercises/seq-growth.ptx"/>
+</section>

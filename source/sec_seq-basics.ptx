@@ -1,328 +1,555 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq_intro" permid="tgm">
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq_intro">
   <title>Describing Sequences</title>
-  <investigation permid="iHh">
-    <idx>domino</idx>
-      <p permid="PMF">
-        You have a large collection of
-        <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
-        You want to arrange these to make a <m>1 \times 15</m> strip.
-        How many ways can you do this?
 
-        <ol permid="QDD">
-          <li permid="NIX">
-            <p permid="IDF">
-              Start by collecting data.
-              How many length <m>1\times 1</m> strips can you make?
-              How many <m>1\times 2</m> strips?
-              How many <m>1\times 3</m> strips?
-              And so on.
-            </p>
-          </li>
+	<objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+					Use proper notation to represent a sequence.
+				</p>
+			</li>
 
-          <li permid="tQg">
-            <p permid="oKO">
-              How are the <m>1\times 3</m> and
-              <m>1 \times 4</m> strips related to the <m>1\times 5</m> strips?
-            </p>
-          </li>
+			<li>
+				<p>
+					Explain the difference between a closed formula and a recursive definition for a sequence.
+				</p>
+			</li> 
+			<li>
+				<p>
+					Find a recursive definition for a sequence based on its description.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+	
 
-          <li permid="ZXp">
-            <p permid="URX">
-              How many <m>1\times 15</m> strips can you make?
-            </p>
-          </li>
+  <subsection xml:id="subsec-preview">
+    <title>Section Preview</title>
 
-          <li permid="Gey">
-            <p permid="AZg">
-              What if I asked you to find the number of <m>1\times 1000</m> strips?
-              Would the method you used to calculate the number fo <m>1 \times 15</m> strips be helpful?
-            </p>
-          </li>
-        </ol>
+    <investigation>
+      <idx><h>Hanoi</h></idx>
+      <idx><h>Tower of Hanoi</h></idx>
+      <idx><h>puzzle</h><h>Tower of Hanoi</h></idx>
+      <p>
+        There is a monastery in Hanoi, as the legend goes, with a great hall containing three tall pillars.
+        Resting on the first pillar were 64 giant disks (or washers), all different sizes, stacked from largest to smallest.
+        The monks of the monastery have been moving the disks for generations, attempting to move the entire stack of disks to the third pillar.
+        However, due to the size of the disks, the monks cannot move more than one at a time.
+        Each disk must be placed on one of the pillars before the next disk is moved.
+        And because the disks are so heavy and fragile, the monks may never place a larger disk on top of a smaller disk.
+        When the monks finally complete their task, the world shall come to an end.
+      </p>
+
+      
+      <p>
+        Your task: Figure out how long it will be before we need to start worrying about the end of the world.
       </p>
     </investigation>
-    <p permid="MRZ">
+
+    <p>
+      This puzzle is called the <em>Tower of Hanoi</em>.
+      <idx><h>Tower of Hanoi</h></idx>
+      You are tasked with finding the minimum number of moves to complete the puzzle.
+      This certainly sounds like a counting problem.
+      Perhaps you have an answer? If not, what else could we try?
+    </p>
+
+    <p>
+      The answer to the puzzle depends on the number of disks you need to move.
+      In fact, we could answer the puzzle first for 1 disk, then 2, then 3, and so on.
+      If we list all of the answers for each number of disks, we will get a <term>sequence</term> of numbers.
+      The <m>n</m>th term in the sequence is the answer to the question, <q>What is the smallest number of moves required to complete the Tower of Hanoi puzzle with <m>n</m> disks?</q> 
+    </p>
+
+    <p>
+      Give it a try.  Find the smallest number of moves needed to transport the stack of <m>n</m> disks to another pillar, for different values of <m>n</m>.
+    </p>
+
+    <figure xml:id="interactive-hanoi">
+      <caption>The Towers of Hanoi puzzle.</caption>
+      <interactive geogebra="rT5MXG9Q" aspect="3:2" component="interactive"/>
+      <image width="50%" component="static">
+        <shortdescription>The towers of Hanoi puzzle</shortdescription>
+        <latex-image>
+        
+          \begin{tikzpicture}
+    % Define the positions of the three pillars
+    \coordinate (A) at (1,0);
+    \coordinate (B) at (3,0);
+    \coordinate (C) at (5,0);
+
+    % Draw the pillars
+    \draw[thick, fill=brown] (A) ++(-.1,0) rectangle ++(.2,2);
+    \draw[thick, fill=brown] (B) ++(-.1,0) rectangle ++(.2,2);
+    \draw[thick, fill=brown] (C) ++(-.1,0) rectangle ++(.2,2);
+
+    % Draw the base
+    \draw[thick, fill=brown] (-.5,-0.25) rectangle (6.5,0);
+
+    % Draw the disks on the left pillar
+    \foreach \y/\width in {0/2, .5/1.5, 1/1} {
+        \draw[fill=blue!50] (A) ++(-\width/2,\y) rectangle ++(\width,0.5);
+    }
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+      
+    <p>
+      You might wonder why we would create such a sequence instead of just answering the question.
+      By looking at how the sequence of numbers grows, we gain insight into the problem.
+      It is easy to count the number of moves required for a small number of disks.
+      We can then look for a pattern among the first few terms of the sequence.
+      Hopefully this will suggest a method for finding the <m>n</m>th term of the sequence, which is the answer to our question.
+      Of course we will also need to verify that our suspected pattern is correct, and that this correct pattern really does give us the <m>n</m>th term that we think it does, but it is impossible to prove that your formula is correct without having a formula to start with.
+    </p>
+
+    <p>
+      In this section, we will explore how to represent sequences of numbers in various ways, and two sorts of formulas that can be used to describe the sequence.  We will see that sequences are also interesting mathematical objects to study in their own right.
+    </p>
+
+    <worksheet xml:id="PA-seq-basic">
+      <title>Preview Activity</title>
+      
+      
+      <introduction>
+        <p>
+          Let's get a feel for the sequence from the Towers of Hanoi puzzle.  <span component="interactive">Use <xref ref="interactive-hanoi"/> to answer the following questions.</span>
+        </p>
+      </introduction>
+      <exercise label="pa-seq-basics">
+        <webwork>
+          <pg-code>
+            Context("Numeric")->variables->are(n=>"Real");
+            parserFunction(a => "cos(pi^n)+e");
+            $an = Formula("2 a(n-1) + 1");
+          </pg-code>
+          
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of moves required to transport 2 disks to another pillar?
+              </p>
+
+              <p>
+                <var name="3" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of moves required to transport 3 disks to another pillar?
+              </p>
+              <p>
+                <var name="7" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of moves required to transport 4 disks to another pillar?
+              </p>
+              <p>
+                <var name="15" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                To find the smallest number of moves required to transport 5 disks to another pillar, let's try to relate this task to the task of moving 4 disks.  How many moves do each of the following tasks require?
+                <ol>
+                  <li>
+                    <p>
+                      Move the 4 smallest disks to the second pillar: <var name="15" width="5"/> moves.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Move the largest disk to the third pillar: <var name="1" width="5"/> moves.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Move the 4 smallest disks to the third pillar (on top of the largest disk): <var name="15" width="5"/> moves.
+                    </p>
+                  </li>
+                </ol>
+              </p>
+              <p>
+                Therefore, the smallest number of moves required to move five disks  is: <var name="31" width="5"/>
+              </p>
+            </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  Generalize the last observation.  Let <m>a_n</m> represent the smallest number of moves required to transport <m>n</m> disks from the start pillar to another pillar.  Then <m>a_{n-1}</m> represents the number of moves required to transport <m>n-1</m> disks to another pillar.
+                </p>
+                <p>
+                  Give a formula for <m>a_{n}</m> in terms of <m>a_{n-1}</m>. 
+                </p>
+                <p component="interactive">
+                  <m>a_n = </m><var name="$an" width="20"/>.
+                </p>
+                <instruction>
+                  Enter <c>a(n-1)</c> for <m>a_{n-1}</m>.
+                </instruction>
+              </statement>
+            </task>
+        </webwork>
+      </exercise>
+    </worksheet>
+  </subsection>
+
+
+  <subsection xml:id="subsec-formulas-for-sequences">
+    <title>Sequences and Formulas</title>
+
+
+    <p>
       A <term>sequence</term>
-          <idx><h>sequence</h></idx>
+      <idx> <h>sequence</h> </idx>
       is simply an ordered list of numbers.
-      For example, here is a sequence: 0, 1, 2, 3, 4, 5, <ellipsis/>.
-      This is different from the set <m>\N</m> because,
-      while the sequence is a complete list of every element in the set of natural numbers,
-      in the sequence we very much care what order the numbers come in.
-      For this reason,
-      when we use variables to represent terms in a sequence they will look like this:
-      <me permid="WlL">
+      Unlike a <em>set</em> of numbers, the order of the numbers in a sequence is an essential characteristic of the sequence.
+      For this reason, when we use variables to represent terms in a sequence they will look like this:
+      <me>
         a_0, a_1, a_2, a_3, \ldots
       </me>.
-      To refer to the <em>entire</em> sequence at once,
-      we will write <m>(a_n)_{n\in\N}</m> or <m>(a_n)_{n\ge 0}</m>,
-      or sometimes if we are being sloppy, just <m>(a_n)</m>
-      (in which case we assume we start the sequence with <m>a_0</m>).
-      <idx><h>sequence</h><h>notation for</h></idx>
+      To refer to the <em>entire</em> sequence at once, we will write <m>(a_n)_{n\in\N}</m> or <m>(a_n)_{n\ge 0}</m>, or sometimes if we are being sloppy, just <m>(a_n)</m> (in which case we assume we start the sequence with <m>a_0</m>).
+      <idx> <h>sequence</h> <h>notation for</h> </idx>
       <notation>
-        <usage><m>(a_n)_{n \in \N}</m></usage>
-        <description>the sequence <m>a_0, a_1, a_2, \ldots</m></description>
+        <usage> <m>(a_n)_{n \in \N}</m> </usage>
+        <description>
+          the sequence <m>a_0, a_1, a_2, \ldots</m>
+        </description>
       </notation>
-
     </p>
 
-    <p permid="sZi">
-      We might replace the <m>a</m> with another letter,
-      and sometimes we omit <m>a_0</m>, starting with <m>a_1</m>,
-      in which case we would use
-      <m>(a_n)_{n \ge 1}</m> to refer to the sequence as a whole.
-      The numbers in the subscripts are called <term>indices</term>
-      (the plural of <term>index</term>).
+    <p>
+      We might replace the <m>a</m> with another letter, and sometimes we omit <m>a_0</m>, starting with <m>a_1</m>, in which case we would use <m>(a_n)_{n \ge 1}</m> to refer to the sequence as a whole.
+      The numbers in the subscripts are called <term>indices</term> (the plural of <term>index</term>).
     </p>
 
-    <p permid="Zgr">
-      <idx><h>sequence</h><h>as function</h></idx>
-      While we often just think of a sequence as an ordered list of numbers,
-      it is really a type of function.
-      Specifically, the sequence
-      <m>(a_n)_{n\ge 0}</m> is a function with domain <m>\N</m> where <m>a_n</m> is the image of the natural number <m>n</m>.
+    <p>
+      <idx> <h>sequence</h> <h>as function</h> </idx>
+      While we often just think of a sequence as an ordered list of numbers, it is really a type of function.
+      Specifically, the sequence <m>(a_n)_{n\ge 0}</m> is a function with domain <m>\N</m> where <m>a_n</m> is the image of the natural number <m>n</m>.
       Later we will manipulate sequences in much the same way you have manipulated functions in algebra or calculus.
-      We can shift a sequence up or down,
-      add two sequences, or ask for the rate of change of a sequence.
+      We can shift a sequence up or down, add two sequences, or ask for the rate of change of a sequence.
       These are done exactly as you would for functions.
     </p>
 
-    <p permid="FnA">
-      That said, while keeping the rigorous mathematical definition in mind is helpful,
-      we often describe sequences by writing out the first few terms.
+    <p>
+      That said, while keeping the rigorous mathematical definition in mind is helpful, we often describe sequences by writing out the first few terms.
     </p>
 
-    <example permid="Kex">
+    <example>
       <statement>
-        <p permid="alK">
+        <p>
           Can you find the next term in the following sequences?
         </p>
 
-        <p permid="GsT">
-          <ol permid="LTK">
-            <li permid="mlH"><m>7,7,7,7,7, \ldots</m></li>
+        <p>
+          <ol cols="2">
+            <li>
+              <m>7,7,7,7,7, \ldots</m>
+            </li>
 
-            <li permid="SsQ"><m>3, -3, 3, -3, 3, \ldots</m></li>
+            <li>
+              <m>3, -3, 3, -3, 3, \ldots</m>
+            </li>
 
-            <li permid="yzZ"><m>1, 5, 2, 10, 3, 15, \ldots</m></li>
+            <li>
+              <m>1, 5, 2, 10, 3, 15, \ldots</m>
+            </li>
 
-            <li permid="eHi"><m>1, 2, 4, 8, 16, 32, \ldots</m></li>
+            <li>
+              <m>1, 2, 4, 8, 16, 32, \ldots</m>
+            </li>
 
-            <li permid="KOr"><m>1, 4, 9, 16, 25, 36, \ldots</m></li>
+            <li>
+              <m>1, 4, 9, 16, 25, 36, \ldots</m>
+            </li>
 
-            <li permid="qVA"><m>1, 2, 3, 5, 8, 13, 21, \ldots</m></li>
+            <li>
+              <m>1, 2, 3, 5, 8, 13, 21, \ldots</m>
+            </li>
 
-            <li permid="XcJ"><m>1, 3, 6, 10, 15, 21, \ldots</m></li>
+            <li>
+              <m>1, 3, 6, 10, 15, 21, \ldots</m>
+            </li>
 
-            <li permid="DjS"><m>2, 3, 5, 7, 11, 13, \ldots</m></li>
+            <li>
+              <m>2, 3, 5, 7, 11, 13, \ldots</m>
+            </li>
 
-            <li permid="jrb"><m>3, 2, 1, 0, -1, \ldots</m></li>
+            <li>
+              <m>3, 2, 1, 0, -1, \ldots</m>
+            </li>
 
-            <li permid="Pyk"><m>1, 1, 2, 6, \ldots</m></li>
+            <li>
+              <m>1, 1, 2, 6, \ldots</m>
+            </li>
           </ol>
         </p>
       </statement>
-      <solution permid="OOq">
-        <p permid="EDG">
-          No you cannot.
-          You might guess that the next terms are:
+
+      <solution>
+        <p>
+          No, you cannot.
         </p>
+        
+        <p>
+          You might guess that the next terms are:
+          <ol cols="5">
+            <li>
+              <m>7</m>
+            </li>
 
-        <p permid="kKP">
-          <ol cols="4" permid="Tyj">
-            <li permid="vFt"><m>7</m></li>
+            <li>
+              <m>-3</m>
+            </li>
 
-            <li permid="bMC"><m>-3</m></li>
+            <li>
+              <m>4</m>
+            </li>
 
-            <li permid="HTL"><m>4</m></li>
-
-            <li permid="oaU">
-              <p permid="hgp">
+            <li>
+              <p>
                 64
               </p>
             </li>
 
-            <li permid="Uid">
-              <p permid="Nny">
+            <li>
+              <p>
                 49
               </p>
             </li>
 
-            <li permid="Apm">
-              <p permid="tuH">
+            <li>
+              <p>
                 34
               </p>
             </li>
 
-            <li permid="gwv">
-              <p permid="ZBQ">
+            <li>
+              <p>
                 28
               </p>
             </li>
 
-            <li permid="MDE">
-              <p permid="FIZ">
+            <li>
+              <p>
                 17
               </p>
             </li>
 
-            <li permid="sKN"><m>-2</m></li>
+            <li>
+              <m>-2</m>
+            </li>
 
-            <li permid="YRW"><m>24</m></li>
+            <li>
+              <m>24</m>
+            </li>
           </ol>
         </p>
 
-        <p permid="QRY">
-          In fact, those are the next terms of the sequences I had in mind when I made up the example,
-          but there is no way to be sure they are correct.
+        <p>
+          In fact, those are the next terms of the sequences I had in mind when I made up the example, but there is no way to be sure they are correct.
         </p>
 
-        <p permid="wZh">
+        <p>
           Still, we will often do this.
-          Given the first few terms of a sequence,
-          we can ask what the pattern in the sequence suggests the next terms are.
+          Given the first few terms of a sequence, we can ask what the pattern in the sequence suggests the next terms are.
         </p>
       </solution>
     </example>
 
-    <p permid="luJ">
-      Given that no number of initial terms in a sequence is enough to say for certain which sequence we are dealing with,
-      we need to find another way to specify a sequence.
-      We consider two ways to do this:
+    <p>
+      Given that no number of initial terms in a sequence is enough to say for certain which sequence we are dealing with, we need to find another way to specify a sequence.
+      We consider two main ways to do this:
     </p>
 
-    <assemblage permid="FuE">
+    <definition>
       <title>Closed formula</title>
-      <p permid="Uwy">
+      <statement>
+      <p>
         A <term>closed formula</term>
-        <idx><h>closed formula</h></idx>
-	<idx><h>sequence</h><h>closed formula for</h></idx>
+        <idx> <h>closed formula</h> </idx>
+        <idx> <h>sequence</h> <h>closed formula for</h> </idx>
         for a sequence <m>(a_n)_{n\in\N}</m> is a formula for <m>a_n</m> using a fixed finite number of operations on <m>n</m>.
-        This is what you normally think of as a formula in <m>n</m>,
-        just as if you were defining a function in terms of <m>n</m>
-        (because that is exactly what you are doing).
+        This is what you normally think of as a formula in <m>n</m>, just as if you were defining a function in terms of <m>n</m> (because that is exactly what you are doing).
       </p>
-    </assemblage>
+    </statement>
+    </definition>
 
-    <assemblage permid="lBN">
+    <definition>
       <title>Recursive definition</title>
-      <p permid="ADH">
+      <statement>
+      <p>
         A <term>recursive definition</term>
-        <idx><h>recursive definition</h></idx>
-	<idx><h>sequence</h><h>recursive definition for</h></idx>
-	<idx><h>sequence</h><h>inductive definition for</h></idx>
-        (sometimes called an <term>inductive definition</term>) for a sequence <m>(a_n)_{n\in\N}</m> consists of a
-        <term>recurrence relation</term>
-            <idx><h>recurrence relation</h></idx>
-        : an equation relating a term of the sequence to previous terms
-        (terms with smaller index)
-        and an <term>initial condition</term>:
-	<idx><h>initial condition</h></idx>
-        a list of a few terms of the sequence
-        (one less than the number of terms in the recurrence relation).
+        <idx> <h>recursive definition</h> </idx>
+        <idx> <h>sequence</h> <h>recursive definition for</h> </idx>
+        <idx> <h>sequence</h> <h>inductive definition for</h> </idx>
+        (sometimes called an <term>inductive definition</term>) for a sequence <m>(a_n)_{n\in\N}</m> consists of a <term>recurrence relation</term>
+        <idx> <h>recurrence relation</h> </idx>
+        : an equation relating a term of the sequence to previous terms (terms with smaller index), and an <term>initial condition</term>:
+        <idx> <h>initial condition</h> </idx>
+        a list of a few terms of the sequence (one less than the number of terms in the recurrence relation).
       </p>
-    </assemblage>
+    </statement>
+    </definition>
 
-    <p permid="RBS">
+    <p>
       It is easier to understand what is going on here with an example:
     </p>
 
-    <example permid="qlG">
+    <example>
       <statement>
-        <p permid="mAc">
+        <p>
           Here are a few closed formulas for sequences:
-	  <idx><h>sequence</h><h>closed formula for</h></idx>
-          <ul permid="saT">
-            <li permid="cRV"><m>a_n = n^2</m>.</li>
+          <idx> <h>sequence</h> <h>closed formula for</h> </idx>
+          <ul>
+            <li>
+              <m>a_n = n^2</m>.
+            </li>
 
-            <li permid="IZe"><m>\d a_n = \frac{n(n+1)}{2}</m>.</li>
+            <li>
+              <m>\d a_n = \frac{n(n+1)}{2}</m>.
+            </li>
 
-            <li permid="pgn">
+            <li>
               <m>\d a_n = \frac{\left(\frac{1 + \sqrt 5}{2}\right)^n - \left(\frac{1 - \sqrt 5}{2}\right)^{-n}}{\sqrt{5}}</m>.
             </li>
           </ul>
         </p>
 
-        <p permid="SHl">
-          Note in each formula, if you are given <m>n</m>,
-          you can calculate <m>a_n</m> directly:
-          just plug in <m>n</m>.
-          For example, to find <m>a_3</m> in the second sequence,
-          just compute <m>a_3 = \frac{3(3+1)}{2} = 6</m>.
+        <p>
+          Note in each formula, if you are given <m>n</m>, you can calculate <m>a_n</m> directly: Just plug in <m>n</m>.
+          For example, to find <m>a_3</m> in the second sequence, just compute <m>a_3 = \frac{3(3+1)}{2} = 6</m>.
         </p>
 
-        <p permid="yOu">
+        <p>
           Here are a few recursive definitions for sequences:
-	  <idx><h>sequence</h><h>recursive definition for</h></idx>
-          <ul permid="Yic">
-            <li permid="Vnw"><m>a_n = 2a_{n-1}</m> with <m>a_0 = 1</m>.</li>
+          <idx> <h>sequence</h> <h>recursive definition for</h> </idx>
+          <ul>
+            <li>
+              <m>a_n = 2a_{n-1}</m> with <m>a_0 = 1</m>.
+            </li>
 
-            <li permid="BuF"><m>a_n = 2a_{n-1}</m> with <m>a_0 = 27</m>.</li>
+            <li>
+              <m>a_n = 2a_{n-1}</m> with <m>a_0 = 27</m>.
+            </li>
 
-            <li permid="hBO">
+            <li>
               <m>a_n = a_{n-1} + a_{n-2}</m> with <m>a_0 = 0</m> and <m>a_1 = 1</m>.
             </li>
           </ul>
         </p>
 
-        <p permid="eVD">
-          In these formulas, if you are given <m>n</m>,
-          you cannot calculate <m>a_n</m> directly,
-          you first need to find <m>a_{n-1}</m>
-          (or <m>a_{n-1}</m> and <m>a_{n-2}</m>).
-          In the second sequence, to find <m>a_3</m> you would take <m>2a_2</m>,
-          but to find <m>a_2 = 2a_1</m> we would need to know <m>a_1 = 2a_0</m>.
-          We do know this,
-          so we could trace back through these equations to find <m>a_1 = 54</m>,
-          <m>a_2 = 108</m> and finally <m>a_3 = 216</m>.
-              <idx><h>Fibonacci sequence</h></idx>
+        <p>
+          In these formulas, if you are given <m>n</m>, you cannot calculate <m>a_n</m> directly; you first need to find <m>a_{n-1}</m> (or <m>a_{n-1}</m> and <m>a_{n-2}</m>).
+          In the second sequence, to find <m>a_3</m> you would take <m>2a_2</m>, but to find <m>a_2 = 2a_1</m> we would need to know <m>a_1 = 2a_0</m>.
+          We do know this, so we could trace back through these equations to find <m>a_1 = 54</m>, <m>a_2 = 108</m> and finally <m>a_3 = 216</m>.
+          <idx> <h>Fibonacci sequence</h> </idx>
         </p>
       </statement>
     </example>
 
-
-    <p permid="xJb">
+    <p>
       You might wonder why we would bother with recursive definitions for sequences.
       After all, it is harder to find <m>a_n</m> with a recursive definition than with a closed formula.
-      This is true,
-      but it is also harder to find a closed formula for a sequence than it is to find a recursive definition.
-      So to find a useful closed formula,
-      we might first find the recursive definition,
-      then use that to find the closed formula.
+      This is true, but it is also harder to find a closed formula for a sequence than it is to find a recursive definition.
+      So to find a useful closed formula, we might first find the recursive definition, and then use that to find the closed formula.
     </p>
 
-    <p permid="dQk">
-      This is not to say that recursive definitions aren't useful in finding <m>a_n</m>.
-      You can always calculate <m>a_n</m> given a recursive definition,
-      it might just take a while.
-    </p>
-
-    <example permid="WsP">
+    <example xml:id="eg-rice">
       <statement>
-        <p permid="LcM">
-          Find <m>a_6</m> in the sequence defined by
-          <m>a_n = 2a_{n-1} - a_{n-2}</m> with <m>a_0 = 3</m> and <m>a_1 = 4</m>.
+        <p>
+          For defeating the evil dragon, the king promises you a reward of one grain of rice on the first day, and then twice as many grains the next day as the previous day, for the rest of the month.  
+        </p>
+
+        <p>
+          Not to be swindled, you barter and get him to agree to add one additional grain of rice each day as well.
+        </p>
+
+        <p>
+          How many grains of rice will you receive on the 30th day?
         </p>
       </statement>
-      <solution permid="uVz">
-        <p permid="dgq">
+      <solution>
+        <p>
+          We can write down the first few terms of the sequence <m>(a_n)_{n \ge 1}</m> that gives the number of grains of rice you receive on day <m>n</m>.  We get
+          <me>
+            1, 3, 7, 15, \ldots
+          </me>,
+          since, for example, on day 4, you take the number of grains of rice you had on day 3 (all seven of them), double that and add 1, to get 15.  The next day you would get <m>2 \cdot 15 + 1 = 31</m>.
+        </p>
+
+        <p>
+          By actually computing these values, we see right away what the recurrence relation is:
+          <me>
+            a_n = 2a_{n-1} + 1
+          </me>.
+          This is justified because the problem the sequence is modeling says that we double the number of grains each day, and then add 1.  We can read the recurrence relation right off the problem.
+        </p>
+
+        <p>
+          The original question asked about <m>a_{30}</m>.  We could find this using the recurrence relation, but we would first need to find <m>a_{29}</m>, and to find that we would need <m>a_{28}</m>, which requires <m>a_{27}</m> first, and so on.  While I'm sure we could work all the way back to <m>a_4</m>, which we already found, this sounds like a lot of work.
+        </p>
+
+        <p>
+          It would be so much nicer to have a closed formula.  If we could <em>solve the recurrence relation</em> and find that closed formula, we could just substitute <m>30</m> for <m>n</m>.
+        </p>
+
+        <p>
+          Let's guess.  It looks like the sequence is close to <m>2, 4, 8, 16,\ldots</m> which has closed formula <m>2^n</m>.  That sequence has terms one greater than the terms in our sequence, so we might guess that <me>a_n = 2^n - 1</me>. To be clear, we have no good reason to believe this guess is correct, but maybe later in this chapter we will.  However, if it <em>is</em> correct, then we are golden (and incredibly sick of rice):
+          <me>
+            a_{30} = 2^{30} - 1 = 1,073,741,823
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      This is not to say that recursive definitions aren't useful in finding <m>a_n</m>.
+      You can always calculate <m>a_n</m> given a recursive definition; it might just take a while.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Find <m>a_6</m> in the sequence defined by <m>a_n = 2a_{n-1} - a_{n-2}</m> with <m>a_0 = 3</m> and <m>a_1 = 4</m>.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
           We know that <m>a_6 = 2a_5 - a_4</m>.
           So to find <m>a_6</m> we need to find <m>a_5</m> and <m>a_4</m>.
           Well
-          <me permid="CsU">
+          <me>
             a_5 = 2a_4 - a_3 \qquad \text{and} \qquad a_4 = 2a_3 - a_2
           </me>,
-          so if we can only find <m>a_3</m> and <m>a_2</m> we would be set.
+          so if we can only find <m>a_3</m> and <m>a_2</m>, we would be set.
           Of course
-          <me permid="iAd">
+          <me>
             a_3 = 2a_2 - a_1 \qquad \text{and} \qquad a_2 = 2a_1 - a_0
           </me>,
           so we only need to find <m>a_1</m> and <m>a_0</m>.
           But we are given these.
           Thus
-          <md permid="LMG">
+          <md>
             <mrow>a_0 \amp = 3</mrow>
             <mrow>a_1 \amp = 4</mrow>
             <mrow>a_2 \amp = 2\cdot 4 - 3 = 5</mrow>
@@ -333,12 +560,10 @@
           </md>.
         </p>
 
-        <p permid="Jnz">
-          Note that now we can guess a closed formula for the <m>n</m>th term of the sequence:
-          <m>a_n = n+3</m>.
-          To be sure this will always work,
-          we could plug in this formula into the recurrence relation:
-          <md permid="rTP">
+        <p>
+          Note that now we can guess a closed formula for the <m>n</m>th term of the sequence: <m>a_n = n+3</m>.
+          To be sure this will always work, we could plug in this formula into the recurrence relation:
+          <md>
             <mrow>2a_{n-1} - a_{n-2} \amp = 2((n-1) + 3) - ((n-2) + 3)</mrow>
             <mrow>\amp = 2n + 4 - n - 1</mrow>
             <mrow>\amp = n + 3</mrow>
@@ -346,353 +571,552 @@
           </md>.
         </p>
 
-        <p permid="puI">
-          That is not quite enough though,
-          since there can be multiple closed formulas that satisfy the same recurrence relation;
-          we must also check that our closed formula agrees on the initial terms of the sequence.
-          Since <m>a_0 = 0 + 3 = 3</m> and
-          <m>a_1 = 1+3 = 4</m> are the correct initial conditions,
-          we can now conclude we have the correct closed formula.
+        <p>
+          That is not quite enough though, since there can be multiple closed formulas that satisfy the same recurrence relation; we must also check that our closed formula agrees on the initial terms of the sequence.
+          Since <m>a_0 = 0 + 3 = 3</m> and <m>a_1 = 1+3 = 4</m> are the correct initial conditions, we can now conclude that we have the correct closed formula.
         </p>
       </solution>
     </example>
 
-    <p permid="JXt">
-      Finding closed formulas,
-      or even recursive definitions,
-      for sequences is not trivial.
+    <p>
+      Finding closed formulas, or even recursive definitions, for sequences is not trivial.
       There is no one method for doing this.
-      Just as in evaluating integrals or solving differential equations,
-      it is useful to have a bag of tricks you can apply,
-      but sometimes there is no easy answer.
+      Just as in evaluating integrals or solving differential equations, it is useful to have a bag of tricks you can apply, but sometimes there is no easy answer.
     </p>
 
-    <p permid="qeC">
-      One useful method is to relate a given sequence to another sequence for which we already know the closed formula.  To do this, we need a few <q>known sequences</q> to compare mystery sequences to.  Here are a few that are good to know.  We will verify the formulas for these in the coming sections.
+    <p>
+      One useful method is to relate a given sequence to another sequence for which we already know the closed formula.
+      To do this, we need a few <q>known sequences</q> to compare mystery sequences to.
+      Here are a few that are good to know.
+      We will verify the formulas for these in the coming sections.
     </p>
-    
-    <assemblage xml:id="assemblage-commonsequences" permid="RIW">
+
+    <assemblage xml:id="assemblage-commonsequences">
       <title>Common Sequences</title>
-      <idx><h>triangular numbers</h></idx>
-      <idx><h>square numbers</h></idx>
-      <idx><h>powers of 2</h></idx>
-      <idx><h>Fibonacci sequence</h></idx>
-        <p permid="gKQ">
-          <dl width="medium" permid="wKM">
-          <li permid="kaV">
-            <title><m>1, 4, 9, 16, 25, \ldots</m></title>
-            <p permid="lQi">The <term>square numbers</term>.  The sequence <m>(s_n)_{n \ge 1}</m> has closed formula <m>s_n = n^2</m></p>
-          </li>
-          <li permid="Qie">
-            <title><m>1, 3, 6, 10, 15, 21, \ldots</m></title>
-            <p permid="RXr">
-              The <term>triangular numbers</term>.  The sequence <m>(T_n)_{n \ge 1}</m> has closed formula <m>T_n = \frac{n(n+1)}{2}</m>.
-            </p>
+
+      <idx> <h>triangular numbers</h> </idx>
+      <idx> <h>square numbers</h> </idx>
+      <idx> <h>powers of 2</h> </idx>
+      <idx> <h>Fibonacci sequence</h> </idx>
+      <p>
+        <dl width="medium">
+        <li>
+          <title> <m>1, 4, 9, 16, 25, \ldots</m> </title>
+
+          <p>
+            The <term>square numbers</term>.
+            The sequence <m>(s_n)_{n \ge 1}</m> has closed formula <m>s_n = n^2</m>
+          </p>
+        </li>
+
+        <li>
+          <title> <m>1, 3, 6, 10, 15, 21, \ldots</m> </title>
+
+          <p>
+            The <term>triangular numbers</term>.
+            The sequence <m>(T_n)_{n \ge 1}</m> has closed formula <m>T_n = \frac{n(n+1)}{2}</m>.
+            
             <notation>
-              <usage><m>T_n</m></usage>
-              <description>the <m>n</m>th triangular number</description>
+              <usage> <m>T_n</m> </usage>
+              <description>
+                the <m>n</m>th triangular number
+              </description>
             </notation>
+          </p>
           </li>
-          <li permid="wpn">
-            <title><m>1, 2, 4, 8, 16, 32,\ldots</m></title>
-            <p permid="yeA">
-              The <term>powers of 2</term>.  The sequence <m>(a_n)_{n \ge 0}</m> with closed formula <m>a_n = 2^n</m>.
-            </p>
-          </li>
-          <li permid="cww">
-            <title><m>1, 1, 2, 3, 5, 8, 13, \ldots</m></title>
-            <p permid="elJ">
-              The <term>Fibonacci numbers</term> (or Fibonacci sequence), defined recursively by <m>F_n = F_{n-1} + F_{n-2}</m> with <m>F_1 = F_2 = 1</m>.
-            </p>
-          </li>
+
+        <li>
+          <title> <m>1, 2, 4, 8, 16, 32,\ldots</m> </title>
+
+          <p>
+            The <term>powers of 2</term>.
+            The sequence <m>(a_n)_{n \ge 0}</m> with closed formula <m>a_n = 2^n</m>.
+          </p>
+        </li>
+
+        <li>
+          <title> <m>1, 1, 2, 3, 5, 8, 13, \ldots</m> </title>
+
+          <p>
+            The <term>Fibonacci numbers</term> (or Fibonacci sequence), defined recursively by <m>F_n = F_{n-1} + F_{n-2}</m> with <m>F_1 = F_2 = 1</m>.
+          </p>
+        </li>
         </dl>
       </p>
     </assemblage>
 
-    <example permid="CzY">
+    <example>
       <statement>
-        <p permid="rjV">
-          Use the formulas <m>T_n = \frac{n(n+1)}{2}</m> and
-          <m>a_n = 2^n</m> to find closed formulas that agree with the following sequences.  Assume each first term corresponds to <m>n=0</m>.
-
-          <ol permid="Epl">
-            <li permid="EZf">
-              <p permid="KsS">
+        <p>
+          Use the formulas <m>T_n = \frac{n(n+1)}{2}</m> and <m>a_n = 2^n</m> to find closed formulas that agree with the following sequences.
+          Assume each first term corresponds to <m>n=0</m>.
+          <ol>
+            <li>
+              <p>
                 <m>(b_n)</m>: <m>1, 2, 4, 7, 11, 16, 22, \ldots </m>.
               </p>
             </li>
 
-            <li permid="lgo">
-              <p permid="qAb">
+            <li>
+              <p>
                 <m>(c_n)</m>: <m>3, 5, 9, 17, 33,\ldots </m>.
               </p>
             </li>
 
-            <li permid="Rnx">
-              <p permid="WHk">
+            <li>
+              <p>
                 <m>(d_n)</m>: <m>0, 2, 6, 12, 20, 30, 42,\ldots </m>.
               </p>
             </li>
 
-            <li permid="xuG">
-              <p permid="COt">
+            <li>
+              <p>
                 <m>(e_n)</m>: <m>3, 6, 10, 15, 21, 28, \ldots</m>.
               </p>
             </li>
 
-            <li permid="dBP">
-              <p permid="iVC">
+            <li>
+              <p>
                 <m>(f_n)</m>: <m>0, 1, 3, 7, 15, 31, \ldots </m>.
               </p>
             </li>
 
-            <li permid="JIY">
-              <p permid="PcL">
+            <li>
+              <p>
                 <m>(g_n)</m> <m>3, 6, 12, 24, 48, \ldots </m>.
               </p>
             </li>
 
-            <li permid="pQh">
-              <p permid="vjU">
+            <li>
+              <p>
                 <m>(h_n)</m>: <m>6, 10, 18, 34, 66, \ldots </m>.
               </p>
             </li>
 
-            <li permid="VXq">
-              <p permid="brd">
+            <li>
+              <p>
                 <m>(j_n)</m>: <m>15, 33, 57, 87, 123, \ldots</m>.
               </p>
             </li>
           </ol>
         </p>
       </statement>
-      <solution permid="bcI">
 
-        <p permid="VBR">
-	  <idx><h>triangular numbers</h></idx>
-	  <idx><h>powers of 2</h></idx>
+      <solution>
+        <p>
+          <idx> <h>triangular numbers</h> </idx>
+          <idx> <h>powers of 2</h> </idx>
           We wish to compare these sequences to the triangular numbers <m>(0, 1, 3, 6, 10, 15, 21,\ldots)</m>, when we start with <m>n=0</m>, and the powers of 2: <m>(1, 2, 4, 8, 16, \ldots)</m>.
-
-          <ol permid="zFs">
-            <li permid="Cez">
-              <p permid="Hym">
-                <m>(1, 2, 4, 7, 11, 16, 22, \ldots)</m>.
-                Note that if subtract 1 from each term,
-                we get the sequence <m>(T_n)</m>.
-                So we have <m>b_n = T_n + 1</m>.
-                Therefore a closed formula is <m>b_n = \frac{n(n+1)}{2} + 1</m>.
-                A quick check of the first few <m>n</m> confirms we have it right.
+          <ol>
+            <li>
+              <p>
+                <m>(1, 2, 4, 7, 11, 16, 22, \ldots)</m>. Note that if we subtract 1 from each term, we get the sequence <m>(T_n)</m>. So we have <m>b_n = T_n + 1</m>. Therefore a closed formula is <m>b_n = \frac{n(n+1)}{2} + 1</m>. A quick check of the first few <m>n</m> confirms we have it right.
               </p>
             </li>
 
-            <li permid="ilI">
-              <p permid="nFv">
-                <m>(3, 5, 9, 17, 33, \ldots )</m>.
-                Each term in this sequence is one more than a power of 2, so we might guess the closed formula is <m>c_n = a_n+1 = 2^n + 1</m>.
-                If we try this though, we get
-                <m>c_0 = 2^0 + 1 = 2</m> and <m>c_1 = 2^1 + 1 = 3</m>.
-                We are off because the indices are shifted.
-                What we really want is <m>c_n = a_{n+1}+1</m> giving <m>c_n = 2^{n+1} + 1</m>.
+            <li>
+              <p>
+                <m>(3, 5, 9, 17, 33, \ldots )</m>. Each term in this sequence is one more than a power of 2, so we might guess the closed formula is <m>c_n = a_n+1 = 2^n + 1</m>. If we try this though, we get <m>c_0 = 2^0 + 1 = 2</m> and <m>c_1 = 2^1 + 1 = 3</m>. We are off because the indices are shifted. What we really want is <m>c_n = a_{n+1}+1</m> giving <m>c_n = 2^{n+1} + 1</m>.
               </p>
             </li>
 
-            <li permid="OsR">
-              <p permid="TME">
+            <li>
+              <p>
                 (<m>0, 2, 6, 12, 20, 30, 42,\ldots </m>).
                 Notice that all these terms are even.
-                What happens if we factor out a 2?
-                We get <m>(T_n)</m>!
-                More precisely, we find that <m>d_n/2 = T_n</m>,
-                so this sequence has closed formula <m>d_n = n(n+1)</m>.
+                What happens if we factor out a 2? We get <m>(T_n)</m>! More precisely, we find that <m>d_n/2 = T_n</m>, so this sequence has closed formula <m>d_n = n(n+1)</m>.
               </p>
             </li>
 
-            <li permid="uAa">
-              <p permid="zTN">
-                <m>(3, 6, 10, 15, 21, 28, \ldots)</m>.
-                These are all triangular numbers.
-                However, we are starting with 3 as our initial term instead of as our third term.
-                So if we could plug in 2 instead of 0 into the formula for <m>T_n</m>,
-                we would be set.
-                Therefore the closed formula is
-                <m>e_n = \frac{(n+2)(n+3)}{2}</m> (where <m>n+3</m> came from <m>(n+2)+1</m>).
-                Thinking about sequences as functions,
-                we are doing a horizontal shift by 2:
-                <m>e_n = T_{n+2}</m> which would cause the graph to shift 2 units to the left.
+            <li>
+              <p>
+                <m>(3, 6, 10, 15, 21, 28, \ldots)</m>. These are all triangular numbers. However, we are starting with 3 as our initial term instead of as our third term. So if we could plug in 2 instead of 0 into the formula for <m>T_n</m>, we would be set. Therefore the closed formula is <m>e_n = \frac{(n+2)(n+3)}{2}</m> (where <m>n+3</m> came from <m>(n+2)+1</m>). Thinking about sequences as functions, we are doing a horizontal shift by 2: <m>e_n = T_{n+2}</m> which would cause the graph to shift 2 units to the left.
               </p>
             </li>
 
-            <li permid="aHj">
-              <p permid="gaW">
-                <m>(0, 1, 3, 7, 15, 31, \ldots )</m>.
-                Try adding 1 to each term and we get powers of 2.
-                You might guess this because each term is a little more than twice the previous term
-                (the powers of 2 are <em>exactly</em>
-                twice the previous term).
-                Closed formula: <m>f_n = 2^{n} - 1</m>.
+            <li>
+              <p>
+                <m>(0, 1, 3, 7, 15, 31, \ldots )</m>. Try adding 1 to each term, and we get powers of 2. You might guess this because each term is a little more than twice the previous term (the powers of 2 are <em>exactly</em> twice the previous term). Closed formula: <m>f_n = 2^{n} - 1</m>.
               </p>
             </li>
 
-            <li permid="GOs">
-              <p permid="Mif">
-                <m>(3, 6, 12, 24, 48, \ldots )</m>.
-                These numbers are also doubling each time,
-                but are also all multiples of 3.
-                Dividing each by 3 gives 1, 2, 4, 8, <ellipsis/>.
-                Aha.
-                We get the closed formula <m>g_n = 3\cdot 2^{n}</m>.
+            <li>
+              <p>
+                <m>(3, 6, 12, 24, 48, \ldots )</m>. These numbers are also doubling each time, but are also all multiples of 3. Dividing each by 3 gives 1, 2, 4, 8, <ellipsis />. Aha. We get the closed formula <m>g_n = 3\cdot 2^{n}</m>.
               </p>
             </li>
 
-            <li permid="mVB">
-              <p permid="spo">
-                <m>(6, 10, 18, 34, 66, \ldots )</m>.
-                To get from one term to the next,
-                we almost double each term.
-                So maybe we can relate this back to <m>2^n</m>.
-                Yes, each term is 2 more than a power of 2.
-                So we get <m>h_n = 2^{n+2} + 2</m>
-                (the <m>n+2</m> is because the first term is 2 more than <m>2^2</m>,
-                not <m>2^0</m>).
-                Alternatively,
-                we could have related this sequence to the second sequence in this example:
-                starting with 3, 5, 9, 17,
-                <ellipsis/> we see that this sequence is twice the terms from that sequence.
-                That sequence had closed formula <m>c_n = 2^{n+1} + 1</m>.
-                Our sequence here would be twice this,
-                so <m>h_n = 2(2^n + 1)</m>, which is the same as we got before.
+            <li>
+              <p>
+                <m>(6, 10, 18, 34, 66, \ldots )</m>. To get from one term to the next, we almost double each term. So maybe we can relate this back to <m>2^n</m>. Yes, each term is 2 more than a power of 2. So we get <m>h_n = 2^{n+2} + 2</m> (the <m>n+2</m> is because the first term is 2 more than <m>2^2</m>, not <m>2^0</m>). Alternatively, we could have related this sequence to the second sequence in this example: Starting with 3, 5, 9, 17, <ellipsis /> we see that this sequence is twice the terms from that sequence. That sequence had closed formula <m>c_n = 2^{n+1} + 1</m>. Our sequence here would be twice this, so <m>h_n = 2(2^n + 1)</m>, which is the same as what we got before.
               </p>
             </li>
 
-            <li permid="TcK">
-              <p permid="Ywx">
-                <m>(15, 33, 57, 87, 123, \ldots)</m>.
-                Try dividing each term by 3.
-                That gives the sequence <m>5, 11, 19, 29, 41,\ldots</m>.
-                Now add 1 to each term: <m>6, 12, 20, 30, 42, \ldots</m>,
-                which is <m>(d_n)</m> in this example,
-                except starting with 6 instead of 0.
-                So let's start with the formula <m>d_n= n(n+1)</m>.
-                To start with the 6, we shift: <m>(n+2)(n+3)</m>.
-                But this is one too many, so subtract 1:
-                <m>(n+2)(n+3) - 1</m>.
-                That gives us our sequence, but divided by 3.
-                So we want <m>j_n = 3((n+2)(n+3) - 1)</m>.
+            <li>
+              <p>
+                <m>(15, 33, 57, 87, 123, \ldots)</m>. Try dividing each term by 3. That gives the sequence <m>5, 11, 19, 29, 41,\ldots</m>. Now add 1 to each term: <m>6, 12, 20, 30, 42, \ldots</m>, which is <m>(d_n)</m> in this example, except starting with 6 instead of 0. So let's start with the formula <m>d_n= n(n+1)</m>. To start with the 6, we shift: <m>(n+2)(n+3)</m>. But this is one too many, so subtract 1: <m>(n+2)(n+3) - 1</m>. That gives us our sequence, but divided by 3. So we want <m>j_n = 3((n+2)(n+3) - 1)</m>.
               </p>
             </li>
           </ol>
         </p>
       </solution>
     </example>
+  </subsection>
 
 
-  <paragraphs permid="Znv">
-    <title>Partial sums</title>
-    <p permid="vTO">
-      Some sequences naturally arise as the sum of terms of another sequence. 
+  <subsection xml:id="subsec-partial-sums">
+    <title>Partial Sums and Differences</title>
+
+    <p>
+      Some sequences naturally arise as the sum of terms of another sequence.
     </p>
-    
-    <example xml:id="ex-first-partial-sums" permid="xQf">
+
+    <example xml:id="ex-first-partial-sums">
       <statement>
-        <p permid="Xre">
-          Sam keeps track of how many push-ups she does each day of her <q>do lots of push-ups challenge.</q>  Let <m>(a_n)_{n \ge 1}</m> be the sequence that describes the number of push-ups done on the <m>n</m>th day of the challenge.  The sequence starts
-          <me permid="OHm">
+        <p>
+          Sam keeps track of how many push-ups she does each day of her <q>do lots of push-ups challenge.</q> Let <m>(a_n)_{n \ge 1}</m> be the sequence that describes the number of push-ups done on the <m>n</m>th day of the challenge.
+          The sequence starts
+          <me>
             3, 5, 6, 10, 9, 0, 12, \ldots
           </me>.
-          Describe a sequence <m>(b_n)_{n \ge 1}</m> that describes the total number of push-ups done by Sam after the <m>n</m>th day.
+          Describe a sequence <m>(b_n)_{n \ge 1}</m> that gives the <em>total number</em> of push-ups done by Sam after the <m>n</m>th day.
         </p>
       </statement>
-      <solution permid="HjR">
-        <p permid="BJa">
-          We can find the terms of this sequence easily enough.  <me permid="uOv">
+
+      <solution>
+        <p>
+          We can find the terms of this sequence easily enough.
+          <me>
             3, 8, 14, 24, 33, 33, 45,\ldots
           </me>.
-          Here <m>b_1</m> is just <m>a_1</m>, but then <me permid="aVE">b_2 = 3+5 = a_1 + a_2</me>, <me permid="HcN">b_3 = 3+5+6 = a_1 + a_2 + a_3</me>,
-          and so on.  
+          Here <m>b_1</m> is just <m>a_1</m>, but then
+          <me>
+            b_2 = 3+5 = a_1 + a_2
+          </me>,
+          <me>
+            b_3 = 3+5+6 = a_1 + a_2 + a_3
+          </me>,
+          and so on.
         </p>
-        
-        <p permid="hQj">
-          There are a few ways we might describe <m>b_n</m> in general.  We could do so recursively as,
-          <me permid="njW">
+
+        <p>
+          There are a few ways we might describe <m>b_n</m> in general.
+          We could do so recursively as,
+          <me>
             b_n = b_{n-1} + a_n
           </me>,
           since the total number of push-ups done after <m>n</m> days will be the number done after <m>n-1</m> days, plus the number done on day <m>n</m>.
         </p>
-        
-        <p permid="NXs">
-          For something closer to a closed formula, we could write 
-          <me permid="Trf">
+
+        <p>
+          For something closer to a closed formula, we could write
+          <me>
             b_n = a_1 + a_2 + a_3 + \cdots + a_n
           </me>,
-          or the same thing using <em>summation notation</em>: 
-          <me permid="zyo">
+          or the same thing using <em>summation notation</em>:
+          <me>
             b_n = \sum_{i=1}^n a_i
-            </me>.
-	    <idx><h>summation notation</h></idx>
-            <idx><h>Sigma notation</h></idx>
+          </me>.
+          <idx> <h>summation notation</h> </idx>
+          <idx> <h>Sigma notation</h> </idx>
           However, note that these are not really closed formulas since even if we had a formula for <m>a_n</m>, we would still have an increasing number of computations to do as <m>n</m> increases.
         </p>
       </solution>
     </example>
 
-    <p permid="caX">
+    <p>
       Given any sequence <m>(a_n)_{n \in \N}</m>, we can always form a new sequence <m>(b_n)_{n \in \N}</m> by
-      <me permid="fFx">
+      <me>
         b_n = a_0 + a_1 + a_2 + \cdots + a_n
       </me>.
-       Since the terms of <m>(b_n)</m> are the sums of the initial
-       part of the sequence <m>(a_n)</m> ways call <m>(b_n)</m> the
-       <term>sequence of partial sums of <m>(a_n)</m></term>.
-       <idx><h>sequence of partial sums</h></idx>
-       <idx><h>partial sums</h><see>sequence of partial sums</see></idx>
-       Soon we will see that it is sometimes possible to find a closed formula for <m>(b_n)</m> from the closed formula for <m>(a_n)</m>.
-    </p>
-    
-    <p permid="Iig">
-      To simplify writing out these sums,
-      we will often use notation like <m>\d\sum_{k=1}^n a_k</m>.
-      This means add up the <m>a_k</m>'s where <m>k</m> changes from 1 to <m>n</m>.
-          <idx><h>summation notation</h></idx>
-          <idx><h>Sigma notation</h></idx>
+      Since the terms of <m>(b_n)</m> are the sums of the initial part of the sequence <m>(a_n)</m>, we call <m>(b_n)</m> the <term>sequence of partial sums of <m>(a_n)</m></term>.
+      <idx> <h>sequence of partial sums</h> </idx>
+      <idx> <h>partial sums</h> <see>sequence of partial sums</see> </idx>
+      Soon we will see that it is sometimes possible to find a closed formula for <m>(b_n)</m> from the closed formula for <m>(a_n)</m>.
     </p>
 
-    <example permid="dXo">
+    <p>
+      To simplify writing out these sums, we will often use notation like <m>\d\sum_{k=1}^n a_k</m>.
+      This means add up the <m>a_k</m>'s where <m>k</m> changes from 1 to <m>n</m>.
+      <idx> <h>summation notation</h> </idx>
+      <idx> <h>Sigma notation</h> </idx>
+    </p>
+
+    <example>
       <statement>
-        <p permid="Dyn">
+        <p>
           Use <m>\sum</m> notation to rewrite the sums:
         </p>
 
-        <p permid="jFw">
-          <ol permid="kwu">
-            <li permid="zjT"><m>1 + 2 + 3 + 4 + \cdots + 100</m></li>
+        <p>
+          <ol>
+            <li>
+              <m>1 + 2 + 3 + 4 + \cdots + 100</m>
+            </li>
 
-            <li permid="frc"><m>1 + 2 + 4 + 8 + \cdots + 2^{50}</m></li>
+            <li>
+              <m>1 + 2 + 4 + 8 + \cdots + 2^{50}</m>
+            </li>
 
-            <li permid="Lyl"><m>6 + 10 + 14 + \cdots + (4n - 2)</m>.</li>
+            <li>
+              <m>6 + 10 + 14 + \cdots + (4n - 2)</m>.
+            </li>
           </ol>
         </p>
       </statement>
-      <solution permid="nra">
-        <p permid="ueB">
-          <ol cols="3" permid="fMB">
-            <li permid="rFu"><m>\d\sum_{k=1}^{100} k</m></li>
 
-            <li permid="XMD"><m>\d\sum_{k=0}^{50} 2^k</m></li>
+      <solution>
+        <p>
+          <ol cols="3">
+            <li>
+              <m>\d\sum_{k=1}^{100} k</m>
+            </li>
 
-            <li permid="DTM"><m>\d\sum_{k=2}^{n} (4k -2)</m></li>
+            <li>
+              <m>\d\sum_{k=0}^{50} 2^k</m>
+            </li>
+
+            <li>
+              <m>\d\sum_{k=2}^{n} (4k -2)</m>
+            </li>
           </ol>
         </p>
       </solution>
     </example>
 
-    <p permid="opp">
-      If we want to multiply the <m>a_k</m> instead,
-      we could write <m>\d\prod_{k=1}^n a_k</m>.
+    <!-- <p>
+      If we want to multiply the <m>a_k</m> instead, we could write <m>\d\prod_{k=1}^n a_k</m>.
       For example, <m>\d\prod_{k=1}^n k = n!</m>.
-          <idx><h>product notation</h></idx>
+      <idx> <h>product notation</h> </idx>
+    </p> -->
+
+    <p>
+      It is also often useful to look at the <term>sequence of difference</term> of a sequence <m>(a_{n})</m>.  By this we just mean the sequence <m>(d_n)</m> where 
+      <me>
+        d_n = a_{n+1} - a_{n}
+      </me>.
+      For example, if <m>(a_n) = (1, 4, 9, 16, 25, \ldots)</m> (the square numbers, so <m>a_n = n^2</m>), then the sequence of differences is <m>(d_n) = (3, 5, 7, 9, \ldots)</m> since <m>4-1 = 3</m>, <m>9-4 = 5</m>, and so on.  We could also find a closed formula for the sequence of differences here since we have a closed formula for <m>a_n</m>.  We would have
+      <me>
+        d_n = a_{n+1} - a_n = (n+1)^2 - n^2 = n^2 + 2n + 1 - n^2 = 2n+1
+      </me>.
     </p>
-  </paragraphs>
 
-  <xi:include href="exercises/seq-basics.ptx"/>
+    <p>
+      In general, it is easy to go from a closed formula for a sequence to a closed formula for the sequence of differences.  It is not always easy to go the other way around.  In fact, what would it look like to start with a sequence of differences and get the <q>original</q> sequence?  
+    </p>
+    <p>
+      Thinking about a recurrence relation is helpful here.  Since <me>d_n = a_{n+1} - a_n</me>,
+      we have that <me>a_{n+1} = a_n + d_n</me>.  This makes sense: to get from one term of a sequence to the next, you add the difference between those terms.  Ah!  You add the differences.  So the <alert>original sequence is the sequence of partial sums of the sequence of differences!</alert>
+    </p>
+
+    <p>
+      In upcoming sections we will see that understanding the sequence of differences can tell us exactly where to look for a closed formula.  The differences also suggest how to create a recursive definition.
+    </p>
+    
+    <example>
+      <idx><h>recurrence relation</h><h>finding for sequence</h></idx>
+      <statement>
+        <p>
+          Find a recurrence relation and initial conditions that agree with the terms of this sequence: <m>1, 5, 17, 53, 161, 485\ldots</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Finding the recurrence relation would be easier if we had some context for the problem
+          (like the Tower of Hanoi, for example).
+          Alas, we have only the sequence.
+          Remember, the recurrence relation tells you how to get from previous terms to future terms.
+          What is going on here?
+          We could look at the differences between terms:
+          <m>4, 12, 36, 108, \ldots</m>.
+          Notice that these are growing by a factor of 3.
+          Is the original sequence as well? <m>1\cdot 3 = 3</m>,
+          <m>5 \cdot 3 = 15</m>, <m>17 \cdot 3 = 51</m> and so on.
+          It appears that we always end up with 2 less than the next term.
+          Aha!
+        </p>
+  
+        <p>
+          So <m>a_n = 3a_{n-1} + 2</m> is our recurrence relation and the initial condition is <m>a_0 = 1</m>.
+        </p>
+      </solution>
+    </example>
+  </subsection>
+
+
+  <subsection xml:id="subsec-seq-python">
+    <title>Sequences in python</title>
+
+    <p>
+      Checking that a closed formula agrees with the initial terms in a sequence is easy with a calculator, or better yet, a programming language like python.
+      One way you can do this is to define a function that returns the <m>n</m>th term of the sequence.
+    </p>
+
+    <p>
+      Here is an example: Suppose you wanted to check whether a formula you found for the sequence <m>(a_n)_{n \in \N} = (1, 3, 7, 15, 31,\ldots)</m> is correct.
+      Perhaps you guess that <m>a_n = 2^n-1</m>.
+      Try running the code below.
+      (Note: In python, the <c>^</c> symbol means something else, so to do exponentiation, we use <c>**</c>.)
+    </p>
+
+
+    <program interactive="activecode" language="python" label="a-n-seq1">
+      <input>
+def a(n):
+  return 2**n-1
+print(a(3))
+      </input>
+    </program>
+
+    <p>
+      Looks promising, but we should be careful: Our sequence started with <m>a_0 = 1</m>, which makes <m>a_3 = 15</m>.
+      Now try modifying the definition of <c>a(n)</c> (by changing the return value) to get the correct closed formula.
+    </p>
+
+    <p>
+      Perhaps you want to print out the first 20 terms of the sequence? This is easy to do with python, by putting the terms in a list:
+    </p>
+
+
+    <program interactive="activecode" language="python" label="a-n-seq1-list">
+      <input>
+def a(n):
+  return 2**(n+1) - 1
+sequence = []
+for n in range(20):
+  sequence.append(a(n))
+print(sequence)
+      </input>
+    </program>
+
+    <p>
+      Note that <c>range(20)</c> starts at 0 and stops at 19 (it is the list <c>[0,1,2,...,19]</c>).
+    </p>
+
+    <p>
+      We can also use python to generate terms for a sequence given a recursive definition.
+      Suppose we wanted to explore the sequence <m>a_n = 2a_{n-1}+1</m> with initial condition <m>a_0 = 1</m>.
+      In python, we could generate the sequence as follows.
+    </p>
+
+
+    <program interactive="activecode" language="python" label="req-a-n">
+      <input>
+def a(n):
+  if n == 0:
+    return 1
+  else:
+    return 2*a(n-1)+1
+# just print out the first 10 terms
+for i in range(10):
+  print(a(i))
+      </input>
+    </program>
+
+    <p>
+      Do you see how to translate a recurrence relation into a recursive python function? Try playing around with the code above to explore other sequences.
+    </p>
+  </subsection>
+
+  <reading-questions xml:id="rqs-seq-basics">
+    <exercise label="rq-seq-basics-closed-vs-recursive">
+      <statement>
+        <p>
+          For the formulas for sequences below, select all that are <em>closed</em> formulas (as opposed to <em>recursive</em> formulas).
+        </p>
+      </statement>
+
+
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>a_n = 3(n-1) + 2</m>
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              Correct.
+              You can compute the value of <m>a_n</m> for any specified <m>n</m> directly (in a fixed, finite number of steps).
+            </p>
+          </feedback>
+        </choice>
+
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>a_n = \frac{n^2 + 2n + 3}{4n}</m>
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              Correct.
+              Computing <m>a_n</m> can be done directly from the definition, not relying on knowing other terms in the sequence.
+            </p>
+          </feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>
+              <m>a_n = 3a_{n-1}+2</m>
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              This is a recursive formula: to find <m>a_8</m> for example, you need to know <m>a_7</m>.
+            </p>
+          </feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>
+              <m>a_n = a_{n-1} + a_{n-2} + a_{n-3}</m>
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              Can you find <m>a_9</m> just from the number 9? Or do you need to know other terms in the sequence?
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise label="rq-seq-basics-match">
+      <statement>
+        <p>
+          Drag each sequence on the left to a recurrence relation that agrees with the sequence.
+        </p>
+      </statement>
+      <matches> 
+        <match order="3">
+      <premise>
+      <m>1, 2, 3, 4, 5, \ldots</m> </premise> <response> <m>a_n = a_{n-1}+1</m> </response> </match> 
+      <match order="1">
+      <premise>
+      <m>5,5,5,5,5, \ldots</m> </premise> <response> <m>a_n = 2a_{n-1}-a_{n-2}</m> </response> </match> <match order="2">
+      <premise>
+      <m>2,3,5,9,17, \ldots</m> </premise> <response> <m>a_n = 2a_{n-1}-1</m> </response> </match> <match order="4">
+      <premise>
+      <m>3, 4, 7, 11, 18, \ldots</m> </premise> <response> <m>a_n = a_{n-1}+a_{n-2}</m> </response> </match> </matches>
+    </exercise>
+
+    <exercise label="rq-seq-basic-q">
+      <statement>
+        <p>
+          What questions do you have? Write at least one question about the content of this section that you or a classmate might be curious about after reading this section.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+
+  <xi:include href="practice/seq-basics.ptx" />
+  <xi:include href="exercises/seq-basics.ptx" />
 </section>
-

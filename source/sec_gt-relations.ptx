@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec_gt-relations" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<title>Relations and Graphs</title>
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+          Explain the relationship between a graph and a relation.
+				</p>
+			</li>
+
+			<li>
+				<p>
+          Determine whether a relation is reflexive, symmetric, or transitive.
+				</p>
+			</li> 
+			<li>
+				<p>
+          Use an equivalence relation to partition a set and use a partition to define an equivalence relation.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+  <subsection xml:id="gt-relations-section-previw">
+    <title>Section Preview</title>
+    <investigation>
+      <statement>
+        <p>
+          Consider the three spinners below.
+        </p>
+        <!-- TODO: make this picture more pretty -->
+        <image width="100%">
+          <shortdescription>Three spinners</shortdescription>
+          <latex-image label="spinners">
+          <xi:include href="assets/spinners.tex" parse="text"/>
+          </latex-image>
+        </image>
+        <p>
+          If you and a friend each pick a different spinner and spin them, we can consider the nine possible outcomes.  For example, between spinners <m>A</m> and <m>B</m>, the outcomes are <me>(2,1), (2,6), (2,8), (4,1), (4,6), (4,8), (9,1), (9,6), (9,8)</me>.  This suggests that spinner <m>A</m> will win five out of nine times.  
+        </p>
+
+        <p>
+          Compare the other combinations of spinners.  Which spinner is best?
+        </p>
+      </statement>
+    </investigation>
+    <p>
+      In this section, we will explore a generalization of a graph, called a <term>relation</term>.  We will see how a relation can be represented by a graph and how a graph can be used to represent a relation.  We will also consider some properties that a relation might have, and how these properties can be used to classify relations into different types.
+    </p>
+    <worksheet xml:id="PA-gt-relations">
+      <title>Preview Activity</title>
+      <introduction>
+        <p>
+          In a given month, some days are more similar than others.  For example, the 3rd of the month is more like the 24th than it is like the 15th.  What does this possibly mean?  We will explore two ways in which this is true.
+        </p>
+      </introduction>
+      <exercise label="pa-gt-relations-1">
+        <webwork>
+          <pg-code>
+            $relationChkBx = CheckboxList(
+              [
+              "\(4\sim 14\)",
+              "\(7\sim 14\)",
+              "\(10 \sim 17\)",
+              "\(17\sim 24\)",
+              "\(10\sim 24\)",
+              "\(20 \sim 10\)",
+              "\(31 \sim 3\)",
+              "\(25 \sim 25\)"
+              ],
+              [1, 2, 3, 4, 6, 7]
+              );
+              $relationProps = CheckboxList(
+                [
+                "\(a \sim a\) for every number \(a\)",
+                "\(a \not\sim a\) for any number \(a\)",
+                "For any numbers \(a\) and \(b\), if \(a \sim b\), then \(b \sim a\)",
+                "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim a\), then \(a = b\)",
+                "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim c\), then \(a \sim c\)",
+                ],
+                [0, 2, 4]
+                );
+                $no = PopUp(["?","Yes", "No"], "No");
+            </pg-code>
+            <introduction>
+              <p>
+                We will say that two numbers between 1 and 31 are <term>related</term>, written <m>a \sim b</m> if their difference is a multiple of 7.  So for example, <m>3 \sim 24</m>, since <m>24-3 = 3\cdot 7</m>, but <m>3 \not\sim 15</m> since <m>15-3 = 12</m> which is not a multiple of 7.  
+              </p>
+            </introduction>
+            
+            <task>
+              <statement>
+                <p>
+                  Which of the following are true?  That is, which of the following pairs of numbers are related as we have defined above?
+                </p>
+                <p>
+                  <var name="$relationChkBx" form="checkboxes" />
+                </p>
+              </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Which of the following statements are true about the <m>\sim</m> relation in this case?
+              </p>
+              <p>
+                <var name="$relationProps" form="checkboxes" />
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                We will write <m>[a]</m> for the set of all numbers related to <m>a</m>.  For example, <m>[7] = \{7, 14, 21, 28\}</m>.  Find each of the following:
+              </p>
+              <p>
+                <ul>
+                  <li>
+                    <p>
+                      <m>[1] = </m> <var name="List(1, 8, 15, 22, 29)" width="25"/>;      
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[2] = </m> <var name="List(2, 9, 16, 23, 30)" width="25"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[3] = </m> <var name="List(3, 10, 17, 24, 31)" width="25"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[4] = </m> <var name="List(4, 11, 18, 25)"  width="25"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[5] = </m> <var name="List(5, 12, 19, 26)" width="25" />; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <m>[6] = </m> <var name="List(6, 13, 20, 27)" width="25" />.
+                    </p>
+                  </li>
+                </ul>
+                
+              </p>
+              
+              <p>
+                Are there any numbers that are in more than one of the sets <m>[a]</m> above? <var name="$no" form="popup" component="interactive"/>
+  
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+      
+      <exercise label="pa-gt-relations-2">
+        <introduction component="interactive">
+
+          <p>
+            When you divide a multiple of 7 by 7, you get a whole number.  If you divide another number by 7, you can either write the result as a decimal or as a quotient and a remainder.  For example, <m>19 \div 7</m> is <m>2</m> with a remainder of 5, since we can write <m>19 = 2\cdot 7 + 5</m>.  The remainder is also called the <term>modulus</term>.  When programming in python (and many other languages), the modulus operator is written as <c>%</c>.  For example, <c>19 % 7</c> is <c>5</c>.  Try this out for a few numbers.
+          </p>
+          <program interactive="activecode" language="python" label="mod7">
+            <input>
+              a = 19
+              print(a % 7)
+            </input>
+          </program>
+        </introduction>
+        <webwork>
+          <pg-code>
+            $relationChkBx = CheckboxList(
+              [
+              "\(4\sim 14\)",
+              "\(7\sim 14\)",
+              "\(10 \sim 17\)",
+              "\(17\sim 24\)",
+              "\(10\sim 24\)",
+              "\(20 \sim 10\)",
+              "\(31 \sim 3\)",
+              "\(25 \sim 25\)"
+              ],
+              [1, 2, 3, 4, 6, 7]
+              );
+          </pg-code>
+          <introduction component="static">
+            <p>
+                When you divide a multiple of 7 by 7, you get a whole number.  If you divide another number by 7, you can either write the result as a decimal or as a quotient and a remainder.  For example, <m>19 \div 7</m> is <m>2</m> with a remainder of 5, since we can write <m>19 = 2\cdot 7 + 5</m>.  The remainder is also called the <term>modulus</term>.  When programming in python (and many other languages), the modulus operator is written as <c>%</c>.  For example, <c>19 % 7</c> is <c>5</c>.  Try this out for a few numbers.
+            </p>
+          </introduction>
+          <task>
+          <statement>
+            <p>
+              Find all the numbers <m>a</m> between 1 and 31 that are <m>5 \mod 7</m>.  That is, find all <m>a</m> such that <c>a % 7 = 5</c>.
+            </p>
+            <p>
+            <var name="List(5,12,19,26)" width="15"/>
+            </p>
+          </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Since the modulus is a function, each number has exactly one modulus when divided by 7.  This means that the moduli <term>partition</term> the numbers from 1 to 31: every number belongs to exactly one of the sets of numbers with a particular modulus.  We have already found the set for modulus 5.  Find the other sets.
+              </p>
+              <p>
+                <ul>
+                  <li>
+                    <p>
+                      <c>a % 7 = 0</c>: <var name="List(7,14,21,28)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 1</c>: <var name="List(1,8,15,22,29)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 2</c>: <var name="List(2,9,16,23,30)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 3</c>: <var name="List(3,10,17,24,31)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 4</c>: <var name="List(4,11,18,25)" width="15"/>; 
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <c>a % 7 = 6</c>: <var name="List(6,13,20,27)" width="15"/>.
+                    </p>
+                  </li>
+                </ul>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                We can use the moduli to define a relation on the numbers from 1 to 31.  We will say that <m>a \sim b</m> if <c>a % 7 = b % 7</c>.  In other words, two numbers are related if they belong to the same set of the partition we found above.
+              </p>
+              <p>
+                Which of the following are true?  That is, which of the following pairs of numbers are related by this modulus relation?
+              </p>
+              <p>
+                <var name="$relationChkBx" form="checkboxes" />
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+    </worksheet>
+  </subsection>
+	<subsection xml:id="subsec-relations-generally">
+		<title>Relations Generally</title>
+		<p>
+			A graph is a way to represent some ways that different objects are related.
+			We have seen how to use graphs to represent which people are friends, or which classes have time conflicts, or which radio stations are too close to have the same frequency.
+			Not all ways in which things can be related can be represented by a graph, however.
+			In this section, we will consider the more general concept of a relation and see how those might be related to graphs.
+		</p>
+
+		<p>
+			Consider the example of the relation between students and classes that holds when a student is in that class (in a particular semester).
+			This is a relation between two different sets (the students and the classes).
+			If we used a graph to illustrate this relation, the graph would be <em>bipartite</em>, since two students are never related to each other, and two classes are never related to each other.
+		</p>
+
+		<p>
+			A graph is really a set of vertices and a set of edges: <m>G = (V, E)</m>; each element of the set <m>E</m> is a two-element subset of <m>V</m>.
+			If we want to draw attention to the bipartiteness of the graph, we can split up <m>V</m> into its two sets and write <m>G = ((A, B), E)</m>.
+			In this notation, for the graph to be bipartite, we want each edge to be a pair <m>(a,b)</m> where <m>a</m> is an element of <m>A</m> and <m>b</m> is an element of <m>B</m>.
+			In other words, each edge is an element of the <term>Cartesian product</term> of <m>A</m> and <m>B</m>, written,
+			<me>
+				A \times B = \{(a,b) \st a \in A,~b \in B\}.
+			</me>
+			(Another way to say this is that <m>A \times B</m> is <q>the set of all ordered pairs of elements from <m>A</m> and <m>B</m>.</q>)
+		</p>
+
+		<note>
+			<p>
+				There is one subtlety here we should point out: the bipartite graph we have described really has <em>directed edges</em> from <m>A</m> to <m>B</m> since we are considering <em>ordered</em> pairs.
+				Our definition of a graph has edges as two-element <em>subsets</em> of vertices, and subsets are not ordered.
+				As long as <m>A</m> and <m>B</m> are disjoint sets, there is no confusion here, but we see relations in which <m>A</m> and <m>B</m> share some elements, but we still care about the order.
+				More on that soon.
+			</p>
+		</note>
+
+		<p>
+			This example exactly illustrates what a general binary relation is.
+			Here is the careful definition.
+		</p>
+
+		<definition xml:id="def-binary-relation">
+			<statement>
+				<p>
+					A <term>binary relation</term> is a set of ordered pairs.
+					We say the binary relation is a <term>relation on sets <m>A</m> and <m>B</m></term> provided the ordered pairs are a subset of <m>A \times B</m>.
+					We say a binary relation is a <term>relation on a set <m>A</m></term> provided the ordered pairs are a subset of <m>A \times A</m>.
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			Note that <m>A \times A</m> is just the set of all ordered pairs where both coordinates are elements from <m>A</m>.
+		</p>
+
+		<example xml:id="rel-in-class">
+			<statement>
+				<p>
+					Consider a set <m>A</m> of students and a set <m>B</m> of classes.
+					Say <m>A = \{\text{Al, Bob, Cat, Dirk, Eva}\}</m> and <m>B = \{\text{Calculus, Discrete, Statistics}\}</m>.
+					Everyone except Dirk is in Calculus, Bob and Eva are in Discrete, and Al, Cat, and Dirk are in Statistics.
+				</p>
+
+				<p>
+					We can define a relation <m>T</m> of <q>is taking</q> <m>A</m> and <m>B</m> that holds of a student and class precisely if that student is taking that class.
+					Write this relation as a subset of <m>A\times B</m> and draw its bipartite graph.
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					To write the relation precisely, we just give the set of ordered pairs:
+					<md>
+						<mrow>T = \{\amp (\text{Al}, \text{Calculus}), (\text{Al}, \text{Statistics}),</mrow>
+						<mrow>  \amp (\text{Bob}, \text{Calculus}), (\text{Bob}, \text{Discrete})</mrow>
+						<mrow> \amp (\text{Cat}, \text{Calculus}), (\text{Cat}, \text{Statistics})</mrow>
+						<mrow> \amp (\text{Dirk}, \text{Statistics})</mrow>
+						<mrow> \amp (\text{Eva}, \text{Calculus}), (\text{Eva}, \text{Discrete})\}</mrow>
+					</md>
+					We can draw this relation as a bipartite graph:
+				</p>
+
+				<image width="50%">
+					<shortdescription>A bipartite graph representing the "is taking" relation.</shortdescription>
+					<latex-image label="class-relation">
+					<xi:include href="assets/class-relation.tex" parse="text"/>
+					</latex-image>
+				</image>
+			</solution>
+		</example>
+
+		<example xml:id="rel-multiple-of">
+			<statement>
+				<p>
+					Consider the relation <m>M</m> for <q>is a multiple of</q> on the set <m>A = \{1,2,3,4,5,6\}</m>.
+					Write this as a set of ordered pairs.
+					Does this relation create a graph?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					First, let's think about which elements should be related and which should not.
+					We know that <m>6</m> is a multiple of <m>2</m>, so the relation is true of the pair <m>(6,2)</m>, but <m>6</m> is not a multiple of <m>4</m>, so the pair <m>(6,4)</m> does not satisfy the relation.
+					More precisely, we say that <m>(6,2) \in M</m> but <m>(6,4) \notin M</m>.
+				</p>
+
+				<p>
+					Let's list all the elements of <m>M</m>:
+					<md>
+						<mrow>M =  \{\amp(1,1), (2,1), (2,2), (3,1), (3,3), (4,1), (4,2), (4,4), </mrow>
+						<mrow> \amp (5,1), (5,5), (6,1), (6,2) (6,3), (6,6)\}</mrow>
+					</md>.
+					This relation is not a graph for two reasons: first, elements are related to themselves, and second, the order of elements in the relation is not symmetric (<m>6</m> is related to <m>2</m>, but <m>2</m> is not related to <m>6</m>, for example).
+				</p>
+
+				<p>
+					We can, however, still draw something like a graph to illustrate this relation: Since the direction of the relation matters, we will have <em>directed</em> edges.
+					This alone would create a <term>directed graph</term>.
+					Since vertices can have edges going to themselves, we would call the structure a <term>multigraph</term>, so the relation can be thought of as a <term>directed multigraph</term>.
+				</p>
+
+				<image width="35%">
+					<shortdescription>A directed multigraph for the relation "is a multiple of" on the set 1, 2, 3, 4, 5, 6</shortdescription>
+					<latex-image label="dir-multigraph-relation">
+					<xi:include href="assets/dir-multigraph-relation.tex" parse="text" />
+					</latex-image>
+				</image>
+			</solution>
+		</example>
+
+		<p>
+			A binary relation <m>R</m> on sets <m>A</m> and <m>B</m> can always be <q>turned around</q> to give a relation on sets <m>B</m> and <m>A</m>.
+			That is, <m>R</m> says how things in <m>A</m> are related to things in <m>B</m>; those things in <m>B</m> are related to things in <m>A</m>, just in an <em>inverse</em> (backward) way.
+			We will call this new relation the <term>inverse</term> of <m>R</m>.
+		</p>
+
+		<definition xml:id="def-relation-inverse">
+			<statement>
+				<p>
+					Given a binary relation <m>R</m>, define <m>R\inv</m> to be the <term>inverse</term> of <m>R</m> as the set
+					<me>
+						R\inv = \{(b,a) \st (a,b) \in R\}
+					</me>.
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			The relation <m>T</m> from <xref ref="rel-in-class"/> said that a given student was in a particular class.
+			The inverse relation <m>T\inv</m> says that a given class has a particular student in it.
+			For example, <m>(\text{Calculus}, \text{Al})</m> is an element of <m>T\inv</m>.
+			Graphically, there won't be any difference in the picture, although we could put the set of classes on top and students on bottom.
+		</p>
+
+		<p>
+			The relation <m>M</m> from <xref ref="rel-multiple-of"/> gave us that, for example, <m>6</m> is a multiple of <m>2</m>, since <m>(6,2) \in M</m>.
+			For the inverse, we have <m>(2,6) \in M\inv</m>, which means that <m>2</m> is a factor of <m>6</m>.
+			For this example, we have represented a relation as a directed multigraph.
+			The graph of the inverse will look exactly the same, but all the arrows will point in the opposite direction.
+		</p>
+
+		<p>
+			Another way to create a new relation is to combine two relations.
+			Suppose in addition to the <q>is taking</q> relation from <xref ref="rel-in-class"/>, we define a relation <q>is taught by</q> that matches up each course with its instructor.
+			Perhaps Professor X teaches Calculus.
+			In that case, since Al is taking Calculus, and Calculus is taught by Professor X, we can conclude that Al is taking a class with Professor X.
+		</p>
+
+		<definition xml:id="def-relation-composition">
+			<statement>
+				<p>
+					Let <m>R</m> be a relation from set <m>A</m> to <m>B</m> and <m>S</m> be a relation from <m>B</m> to <m>C</m>.
+					The <term>composition</term> of <m>R</m> and <m>S</m> is
+					<me>
+						S \circ R = \{(a,c) \in A \times C \st (a,b) \in R \text{ and } (b,c) \in S \text{ for some } b \in B\}
+					</me>
+				</p>
+			</statement>
+		</definition>
+
+		<p>
+			Note the order in which we wrote the two relations: it's <m>S \circ R</m>, not <m>R \circ S</m>.
+			The reason we do this (which might seem backward) is that it agrees with the usual notation for composition of <em>functions</em>.
+			In fact, functions are nothing but a specific type of relation!
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Write out the relation <m>P \circ T</m>, composing the relations of <xref ref="rel-in-class"/> and <m>P = \{(\text{Calculus}, \text{Prof X}), (\text{Discrete}, \text{Prof L}), (\text{Statistics}, \text{Prof X}), (\text{Statistics}, \text{Prof S})\} </m>.
+					Note that here we are saying the statistic course is co-taught by professors X and S.
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					The relation we are looking for is a relation between students and professors.
+					We can start with each element of <m>T</m> and <em>extend</em> it by following the course to the professor(s) via <m>P</m>.
+					So for example, start with Cat, and notice that <m>(\text{Cat}, \text{Calculus}) \in T</m>.
+					Now look at what Calculus is related to via <m>P</m>: <m>(\text{Calculus}, \text{Prof X}) \in P </m>.
+					Thus we can push these together to conclude that <m>(\text{Cat}, \text{Prof X}) \in P \circ T</m>.
+				</p>
+
+				<p>
+					An alternative approach would be to simply consider which pairs of students and professors are linked by a common class.
+					Should the pair <m>(\text{Al}, \text{Prof L})</m> be an element of the composition?  No, because there is no class that is both taken by Al and taught by Professor L.
+					On the other hand, we can conclude the <m>(\text{Al}, \text{Prof X}) \in P \circ T</m> since there is a common course.
+					In fact, the common course could be Calculus or Statistics (it doesn't matter how many common middle steps there are, as long as there is at least one).
+				</p>
+
+				<p>
+					Here is the complete relation:
+					<md>
+						<mrow>P \circ T = \{\amp (\text{Al}, \text{Prof X}), (\text{Al}, \text{Prof S}), (\text{Bob}, \text{Prof X}), (\text{Bob}, \text{Prof L}), </mrow>
+						<mrow> \amp (\text{Cat}, \text{Prof X}), (\text{Cat}, \text{Prof S}), (\text{Dirk}, \text{Prof X}), (\text{Dirk}, \text{Prof S}),</mrow>
+						<mrow> \amp (\text{Eva}, \text{Prof X}), (\text{Eva}, \text{Prof L})\}</mrow>
+					</md>
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			Something interesting often happens when you compose a relation with its inverse.
+			You might have seen something like this for <em>functions</em>
+			in calculus or algebra: <m>f(x) = e^x</m> has an inverse function <m>f\inv(x) = \ln(x)</m>, and we know that <m>f(f\inv(x)) = e^{\ln(x)} = x</m>.
+			But functions are relations in which every <q>input</q> has exactly one <q>output</q>, so perhaps it is not surprising that composing with an inverse just gives you the identity function.
+			When inputs can have multiple outputs, and outputs can have multiple inputs, then we get something more.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Describe the relation <m>T\inv \circ T</m> (using our familiar relation <m>T</m> from <xref ref="rel-in-class"/>).
+					What does this tell us about students and classes?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					By following the relation, we could start by saying Al is in Calculus, and Calculus is taken by Al, so Al is related to Al.
+					But also , Calculus is taken by Bob, so now Al is also related to Bob.
+					Is Bob related to Al as well?  Yes, since Bob is taking Calculus and Calculus is taken by Al.
+				</p>
+
+				<p>
+					The composition is telling us which pairs of students have at least one class in common.
+					That's almost all pairs of students, except that Dirk is not related to Bob or Eva, since they don't take Statistics, and that is the only class he takes.
+				</p>
+
+				<p>
+					Instead of writing out the relation (which will almost be all of <m>A \times A</m>), here is the graph representation.
+				</p>
+
+				<image width="35%">
+					<shortdescription>The graph representing the composition of T and its inverse.</shortdescription>
+					<latex-image label="inv-relation">
+					<xi:include href="assets/dir-class-inv-relation.tex" parse="text"/>
+					</latex-image>
+				</image>
+
+				<p>
+					While we drew a directed multigraph here, the arrows going both ways mean that we really could have drawn just a multigraph.
+				</p>
+			</solution>
+		</example>
+	</subsection>
+
+	<subsection xml:id="subsec-properties-of-relations">
+		<title>Properties of Relations</title>
+		<p>
+			From this point on, we will just consider relations on a single set (so from a set to itself).
+			To help understand these relations, let's consider some basic properties a relation might or might not have.
+		</p>
+
+    <definition xml:id="def-relation-properties">
+      <title>Reflexive, Symmetric, and Transitive</title>
+      
+      <statement>
+        <p>
+          Ler <m>R</m> be a relation on the set <m>A</m>.  We say,
+          <ul>
+            <li>
+              <p>
+                <m>R</m> is <term>reflexive</term> provided <m>(a,a) \in A</m> for all <m>a \in A</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>R</m> is <term>symmetric</term> provided, for all <m>a, b \in A</m>, if <m>(a,b) \in R</m> then <m>(b,a) \in R</m>.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>R</m> is <term>transitive</term> provided, for all <m>a, b,c \in A</m>, if <m>(a,b) \in R</m> and <m>(b,c) \in R</m>, then <m>(a,c)\in R</m>. 
+              </p>
+            </li>
+          </ul>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Let's examine each of these properties carefully.  
+      
+    </p>
+    
+    <p>
+      It will be helpful to consider a few standard examples of relations on sets as we go.  Most relations we consider here will be written using <em>infix</em> notation, just meaning that we put the relation symbol between the two things it is relating.  For example, the <em>less than</em> relation is almost always written as <m>2 \lt 6</m> rather than writing <m>(2,6) \in \lt</m>.  
+    </p>
+
+    <example>
+      <title>Reflexive and non-reflexive relations</title>
+      <p>
+        A relation is reflexive when every element is related to itself.  The following are reflexive relations:
+        <ul>
+          <li>
+            <p>
+              The <q>less-than-or-equal-to</q> relation on any set of numbers.  Is it the case that <m>3 \le 3</m>?  More importantly, is every number no greater than itself?  Since the answer is yes, this relation is reflexive.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>within 3</q> relation, that holds of two numbers <m>a</m> and <m>b</m> provided <m>|a-b| \le 3</m>.  To prove that this is reflexive, we simply note that <m>|a-a| = 0 \le 3</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>is a multiple of</q> relation from <xref ref="rel-multiple-of"/>.  Note that the directed multigraph for this relation had loops at every vertex.
+            </p>
+          </li>
+        </ul>
+      </p>
+
+      <p>
+        However, these relations are not reflexive:
+        <ul>
+          <li>
+            <p>
+              The <q>sums to zero</q> relation, that holds on numbers <m>a</m> and <m>b</m> if <m>a+b = 0</m>.  Note that while <m>0 + 0 = 0</m>, so <m>(0,0)</m> is an element of the relation, every other number is not related to itself.
+            </p>
+          </li>
+          <li>
+            <p>
+              Any relation that is described by a graph.  Remember, graphs cannot have edges looping back to a single vertex, so the edge relation on a graph is not reflexive.  (A multigraph could be reflexive or not).
+            </p>
+          </li>
+        </ul>
+      </p>
+    </example>
+
+    <p>
+      If no element is related to itself (such as in the edge relation for a graph), then we call the relation <term>irreflexive</term>.  Of course, some relations are neither reflexive nor irreflexive.
+    </p>
+
+    <p>
+      Checking that a relation is reflexive is relatively easy.  The other two properties are phrased as implications, which makes them a little more complex.
+    </p>
+
+    <example>
+      <title>Symmetric and non-symmetric relations</title>
+      <p>
+        Essentially, symmetric relations are the ones that work <q>both ways.</q>  More precisely, if <m>a</m> is related to <m>b</m>, then <m>b</m> is also related to <m>a</m>.
+      </p>
+
+      <p>
+        The following relations are symmetric.
+        <ul>
+          <li>
+            <p>
+              The <q>within 3</q> relation: if <m>|a-b| \le 3</m> then <m>|b-a| \le 3</m>.  
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>sums to zero</q> relation: if <m>a+b = 0</m>, then certainly <m>b + a = 0</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              For any graph, the edge relation is symmetric.  Of course, for <em>directed</em> graphs this is usually not true.
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        On the other hand, these relations are not symmetric.
+        <ul>
+          <li>
+            <p>
+              <m>\le</m> is not symmetric.  All we need to do to prove that a relation is not symmetric is to find some <m>a</m> and <m>b</m> such that <m>a \le b</m> but <m>b \not\le a</m>.  Well, <m>3 \le 4</m>, but <m>4 \not\le 3</m>.  QED.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>is a multiple of</q> relation is not symmetric.  <m>6</m> is a multiple of <m>2</m> but <m>2</m> is not a multiple of <m>6</m>.
+            </p>
+          </li>
+        </ul>
+      </p>
+    </example>
+
+    <p>
+      Relations that are not symmetric could in fact be <term>antisymmetric</term>, meaning the <em>only</em> elements for which both <m>(a,b)</m> and <m>(b,a)</m> are in the relation is when <m>a = b</m>.  Note that there are relations that are neither symmetric nor antisymmetric.
+    </p>
+
+    <p>
+      Using the language of inverse relations, a relation is symmetric if and only if the relation is equal to its inverse.
+    </p>
+
+    <example>
+      <title>Transitive and non-transitive relations</title>
+      <p>
+        If <m>a</m> is related to <m>b</m>, and <m>b</m> is related to <m>c</m>, does that mean <m>a</m> is related to <m>c</m>?  If this is true no matter what <m>a</m>, <m>b</m>, and <m>c</m> are, then we say the relation is transitive.
+      </p>
+
+      <p>
+        Here are some transitive relations.
+        <ul>
+          <li>
+            <p>
+              <m>\le</m>.  Suppose <m>a \le b</m> and <m>b \le c</m>.  Then clearly <m>a \le c</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>is a multiple of</q> relation.  This is a good one to write a proof for: Suppose <m>a</m> is a multiple of <m>b</m> and that <m>b</m> is a multiple of <m>c</m>.  Then <m>a = bk</m> for some integer <m>k</m> and <m>b = cj</m> for some integer <m>j</m>.  By substitution, <m>a = cjk</m>, so <m>a</m> is a multiple of <m>c</m>. 
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        However, the following relations are not transitive.
+        <ul>
+          <li>
+            <p>
+              The <q>within 3</q> relation is not transitive.  All we need to do is find three numbers that fail to meet the condition.  How about <m>1</m>, <m>3</m>, and <m>5</m>?  Here <m>1</m> is within 3 of <m>3</m>, and <m>3</m> is within 3 of <m>5</m>, but <m>|1 - 5| = 4</m> so the relation does not hold of <m>(1,5)</m>.
+            </p>
+          </li>
+          <li>
+            <p>
+              The <q>sums to zero</q> relation is not transitive.  Notice that we never claimed that <m>a</m>, <m>b</m>, and <m>c</m> need to be different numbers.  Let <m>a = 5</m>, <m>b = -5</m>, and <m>c = 5</m>.  Then <m>a+b = 0</m> and <m>b + c = 0</m>, so the relation holds of <m>(a,b)</m> and <m>(b,c)</m>.  But <m>a + c = 10</m> so the relation does not hold of <m>(a,c)</m>.
+            </p>
+          </li>
+        </ul>
+      </p>
+      <p>
+        The edge relation for a graph might or might not be transitive.  What would a graph look like if its edge relation was transitive?
+      </p>
+    </example>
+  </subsection>
+    <subsection xml:id="subsec_equivalence-relations">
+      <title>Equivalence Relations</title>
+      <p>
+        Now we will do something very typical for mathematics: 
+        We will look at our most common types of relations, consider what properties these have, and then classify other relations that also have these properties as a specific class of relations.
+      </p>
+
+      <p>
+        The relation we are all most familiar with is <term>equality</term>.  Which properties of relations does the equality relation possess?  Certainly everything is equal to itself, so equality is <em>reflexive</em>.  If <m>a = b</m>, then <m>b = a</m>, so equality is <em>symmetric</em>.  If <m>a = b</m> and <m>b = c</m>, then <m>a = c</m>, so equality is <em>transitive</em>.
+      </p>
+
+      <p>
+        What other relations are <em>reflexive</em>, <em>symmetric</em>, and <em>transitive</em>?  Exactly those relations that behave like equality.  We call such relations <term>equivalence relations</term>.  
+      </p>
+
+      <definition xml:id="def-equivalence-relation">
+        <title>Equivalence Relation</title>
+        <statement>
+          <p>
+            A relation that is reflexive, symmetric, and transitive is called an <term>equivalence relation</term>.            
+          </p>
+        </statement>
+      </definition>
+
+      <remark>
+        <p>
+          Another example of a type of relation that is modeled after a classic relation is a <term>partial order</term>.  This is a relation that is reflexive, <em>antisymmetric</em>, and transitive, just like less-than-or-equal-to.  Perhaps you noticed already that the subset relation, written <m>\subseteq</m>, feels a lot like <m>\le</m>.  This is because <m>\subseteq</m> is also a partial order.  So is the <q>is a multiple of</q> relation we saw above.  
+        </p>
+        <p>
+          There are lots of interesting things we can say about partial orders and the sets they partially order, called <term>partially ordered sets</term> or <term>PoSets</term>.  Another time.
+        </p>  
+      </remark>
+
+      <p>
+        None of the examples we have considered so far in this section have been equivalence relations, but they are ubiquitous in mathematics.  They are so common that it is easy to overlook them as anything worth saying something about at all.  Let's see some examples.
+      </p>
+
+      <example xml:id="eg_cong-mod-2">
+        <statement>
+          <p>
+            Prove that the relation <m>\equiv_2</m>, which holds of two integers if their difference is even, is an equivalence relation.  That is, <m>a \equiv_2 b</m> if and only if <m>b-a = 2k</m> for some integer <m>k</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            We simply check the three required properties.
+            <ol>
+              <li>
+                <p>
+                  <m>\equiv_2</m> is reflexive: for any integer <m>a</m>, we have <m>a - a = 0</m> and <m>0 = 2k</m> for <m>k = 0</m>, so <m>a \equiv_2 a</m>.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <m>\equiv_2</m> is symmetric: Fix arbitrary integers <m>a</m> and <m>b</m>, and assume <m>a \equiv_2 b</m>.  That means that <m>b-a = 2k</m> for some integer <m>k</m>.  What about <m>a - b</m>?  Well, we will have <m>a-b = 2(-k)</m>, and <m>-k</m> is an integer, so we have <m>b \equiv_2 a</m>.
+                </p>
+              </li>
+              <li>
+                <p>
+                  <m>\equiv_2</m> is transitive: Fix arbitrary integers <m>a</m>, <m>b</m>, and <m>c</m> and assume <m>a \equiv_2 b</m> and <m>b \equiv_2 c</m>.  This means that <m>b-a = 2k</m> and <m>c-b = 2j</m> for some integers <m>k</m> and <m>j</m>.  What about <m>c - a</m>?  Well, <me>c - a = (c- b) + (b - a) = 2k+2j = 2(k+j)</me>.
+                  Since <m>k+j</m> is an integer, we see that <m>a \equiv_2 c</m> as required.
+                </p>
+              </li>
+            </ol>
+          </p>
+        </solution>
+      </example>
+
+      <example>
+        <statement>
+          <p>
+            Let's call two graphs <q>degree-sequence-equivalent</q> if they have the same degree sequence.  Is this an equivalence relation?
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Yes it is.  Clearly every graph has the same degree sequence as itself, so the relation is reflexive.  If <m>G_1</m> has the same degree sequence as <m>G_2</m>, then <m>G_2</m> has the same degree sequence as <m>G_1</m>, so the relation is transitive.  Finally, if <m>G_1</m> has the same degree sequence as <m>G_2</m>, which has the same degree sequence as <m>G_3</m>, then they all have the same degree sequence, so <m>G_1</m> has the same degree sequence as <m>G_3</m> (i.e., the relation is transitive).
+          </p>
+
+        </solution>
+      </example>
+      
+      <p>
+        This example is almost too obvious.  That's because we said that two things are related if a well-defined property of those things was <em>equal</em>, and equality satisfies the properties of an equivalence relation.  Our next goal is to try to make better sense of this and see that it is exactly what gives us an equivalence relation.
+      </p>
+
+    </subsection>
+    
+
+    <subsection xml:id="subsec-equivalence-classes-and-partitions">
+      <title>Equivalence Classes and Partitions</title>
+      
+      <p>
+        Given <em>any</em> relation <m>R</m>, we can look at the <em>set</em> of elements that are related to a particular element.  For the <q>is taking</q> relation, we can ask what classes Al is taking (i.e., the classes related to Al).  For the <q>is a multiple of</q>, we can ask which numbers 6 a multiple of.  One way to study the relation is to study the sets of things related to each element.
+      </p>
+
+      <definition xml:id="def-relation-classes">
+        <statement>
+          <p>
+            Let <m>R</m> be a relation on the set <m>A</m>, and let <m>a</m> be an element of <m>A</m>.  The <term>relation class</term> of <m>a</m>, written <m>[a]</m> is the set of all elements <m>b</m> such that <m>(a,b) \in R</m> (the set of <m>b</m> that are related to <m>a</m> by <m>R</m>).  That is,
+            <me>
+              [a] = \{b \in A \st (a,b) \in R\}
+            </me>.
+          </p>
+
+          <p>
+            When <m>R</m> is an equivalence relation, we call relation classes <term>equivalence classes</term>.
+          </p>
+        </statement>
+      </definition>
+
+      <example>
+        <statement>
+          <p>
+            Find the relation classes for the <q>is a multiple of</q> relation on the set <m>A = \{1,2,3,4,5,6\}</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            There will be six relation classes since each element has a relation class.  They are:
+            <md>
+              <mrow>[1] =  \amp \{1\}</mrow>
+              <mrow>[2] =  \amp \{1,2\}</mrow>
+              <mrow>[3] = \amp \{1,3\}</mrow>
+              <mrow>[4] = \amp \{1,2,4\}</mrow>
+              <mrow>[5] = \amp \{1,5\}</mrow>
+              <mrow>[6] = \amp \{1,2,3,6\}.</mrow>
+            </md>
+            For example, we found <m>[4]</m> by considering all pairs <m>(4,b)</m> that satisfied the relation: 4 is a multiple of 1, 2, and 4, so those are the possible values of <m>b</m> that we find.
+          </p>
+
+          <p>
+            Look back at the directed multigraph for this relation shown in the solution to <xref ref="rel-multiple-of"/>.  What are the relation classes?  They are nothing but the neighbors of each vertex (where neighbor means you follow the arrows in the correct direction).
+          </p>
+        </solution>
+      </example>
+
+      <example>
+        <statement>
+          <p>
+            Find the equivalence classes for the <m>\equiv_2</m> relation on the integers.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            On no!  Our set is infinite, so we will have infinitely many relation classes? Well, we better get started...
+          </p>
+
+          <p>
+            What numbers are related to 1?  Remember, we want integers whose difference with 1 is a multiple of 2.  So 3 for sure.  Also 5, and 7, and -1, and -3, and... all the odds?  Yes, because the difference of any two odd numbers is even.  We can also say that the difference between any two even numbers is even, so the equivalence class of 2 will contain all the even numbers.  So far we have:
+            <md>
+              <mrow>[1] =  \amp \{\ldots, -3, -1, 1, 3, 5, \ldots\}</mrow>
+              <mrow>[2] =  \amp \{\ldots, -4, -2, 2, 4, 6, \ldots\}</mrow>
+            </md>
+          </p>
+
+          <p>
+            Actually, I think we are done.  While <m>[3]</m>, <m>[4]</m>, <m>[5]</m>, and so on are all completely valid equivalence classes, the elements that are related to <m>3</m> will be exactly the elements related to <m>1</m>, since <m>1 \equiv_2 3</m>.  This is because the relation is transitive!  If <m>3 \equiv_2 b</m>, then we know <m>1 \equiv_2 b</m>.  
+          </p>
+
+          <p>
+            So we have exactly two equivalence classes.  Every integer is in exactly one of these two equivalence classes, and the equivalence class of any integer is exactly the class it belongs to.
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        Examine the two examples above carefully.  For the <q>is a multiple of</q> relation, which is NOT an equivalence relation, some elements belong to more than one (different) relation class.  But for <m>\equiv_2</m>, which is an equivalence relation, every element is in exactly one equivalence class.  This is no accident.  To make sense of this, we will define a new term.
+      </p>
+
+      <definition xml:id="def-partition">
+        <statement>
+          <p>
+            Given a non-empty set <m>A</m>, a <term>partition</term> of <m>A</m> is a set <m>P</m> of non-empty subsets of <m>A</m> such that every element of <m>A</m> is in exactly one element of <m>P</m>. 
+          </p>
+        </statement>
+      </definition>
+
+      <p>
+        That definition has a lot of symbols and sets involved.  It's really not complicated though: A partition is a way to break up a set into <em>disjoint</em> subsets that <em>cover</em> the whole set.  That the subsets are disjoint means no element is in <em>more than one</em> subset.  That the subsets cover the set means every element is in <em>at least one</em> subset. 
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            Give a few different partitions of the set <m>A = \{1,2,3,4,5\}</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            There are so many choices here! One choice is:
+            <me>
+              P_1 = \{\{1,2,3\}, \{4,5\}\}
+            </me>.
+            That's a partition of <m>A</m> into two subsets.
+            Another partition:
+            <me>
+              P_2 = \{\{1\}, \{2\}, \{3\}, \{4\}, \{5\}\}
+            </me>.
+            Another:
+            <me>P_3 = \{\{1,3,5\}, \{2,4\}\}</me>, which happens to be a partition into even and odd numbers.  We also have the trivial partition:
+            <me>P_4 = \{\{1,2,3,4,5\}\}</me>.  
+            Note: that is a single set inside the set <m>P_4</m>.  
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        It is sometimes a little confusing to think of the elements of a partition as subsets since the partition is a set, and a set of sets can be difficult to talk about.  We sometimes call the partition a <em>collection</em> and each of the elements of the partition <em>parts</em> or <em>blocks</em>.
+      </p>
+
+      <p>
+        Now the big idea: For any equivalence relation, the equivalence classes form a partition, and for any partition, we can define a relation <q>are in the same subset</q> which will be an equivalence relation.  We have already seen that the equivalence classes of <m>\equiv_2</m> form a partition.  Let's go the other direction.
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            Define an equivalence relation <m>\sim</m> on the set <m>A = \{1,2,3,4,5\}</m> from the partition <m>P = \{\{1,4\}, \{2,3,5\}\}</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Say two elements of <m>A</m> are equivalent provided they belong to the same element of <m>P</m>.  That is, <m>1 \sim 4</m> and <m>4\sim 1</m>, and <m>2 \sim 3</m>, <m>2 \sim 5</m>, <m>3 \sim 5</m>, <m>3\sim 2</m>, <m>5\sim 2</m>, and <m>5\sim 3</m>.  Wait. We also have <m>1\sim 1</m>, <m>2\sim 2</m>, and so on, since every number is in the same subset as itself.
+          </p>
+          <p>
+            It is clear from looking that this relation is reflexive, symmetric, and transitive, so is an equivalence relation.
+          </p>
+        </solution>
+      </example>
+
+      <theorem xml:id="thm-equivalence-partition">
+        <statement>
+          <p>
+            Given any equivalence relation <m>R</m> on a set <m>A</m>, the equivalence classes form a partition of <m>A</m>.
+          </p>
+
+          <p>
+            Given any partition <m>P = \{B_1, B_2, \ldots, \}</m> of a set <m>A</m>, the relation <m>\equiv_P</m> defined by <m>a \equiv_P b</m> if and only if <m>a</m> and <m>b</m> belong to the same block of <m>P</m>, is an equivalence relation.
+          </p>
+
+          <p>
+            Further, the equivalence classes for the equivalence relation formed by a partition are exactly the original partition, and the equivalence relation built by the partition of its equivalence classes is exactly the original equivalence relation.
+          </p>
+        </statement>
+      </theorem>
+      
+    </subsection>
+
+    <reading-questions xml:id="rqs-gt-relations">
+      <exercise label="rq-gt-rel-prop">
+        <statement>
+          <p>
+            Consider the relation <m>R</m> defined on the integers that holds of <m>a</m> and <m>b</m> precisely if <m>b-a \ge 4</m>.  So for example, <m>(2,7) \in R</m> but <m>(8,6) \notin R</m>.  Which of the following properties of relations does <m>R</m> have?
+          </p>
+        </statement>
+        <choices>
+          <choice>
+            <statement>
+              <p>
+                <m>R</m> is reflexive.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                If <m>R</m> were reflexive, then then in particular (2,2) would be in <m>R</m>.  But <m>2-2 = 0</m>, which is not greater than or equal to 4.
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="yes">
+            <statement>
+              <p>
+                <m>R</m> is irreflexive.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct.  Since no integer is four or more greater than itself, the relation does not hold of any element with itself.
+              </p>
+            </feedback>
+          </choice>
+          <choice>
+            <statement>
+              <p>
+                <m>R</m> is symmetric.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                If <m>R</m> were symmetric, then for any <m>a</m> and <m>b</m> such that <m>b-a \ge 4</m>, we would also have <m>a-b \ge 4</m>.  But this is not true.  For example, <m>(2,10)</m> is in <m>R</m> but <m>(10,2)</m> is not.  (We are not using the <em>absolute</em> difference.)
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="yes">
+            <statement>
+              <p>
+                <m>R</m> is antisymmetric.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct.  There are no numbers <m>a</m> and <m>b</m> such that both <m>b-a \ge 4</m> and <m>a-b \ge 4</m>, so the hypothesis of the definition of antisemetric is always false, making the entire statement in the definition true.
+              </p>
+            </feedback>
+          </choice>
+
+          <choice correct="yes">
+            <statement>
+              <p>
+                <m>R</m> is transitive.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                Correct.  If <m>b-a \ge 4</m> and <m>c-b \ge 4</m>, then <m>c-a = (c-b) + (b-a) \ge 4+4 = 8</m>, so <m>c-a \ge 4</m>.
+              </p>
+            </feedback>
+          </choice>
+        </choices>
+      </exercise>
+
+      <exercise label="rq-gt-rel-transgraph">
+        <statement>
+        <p>
+          Not all graphs have a transitive edge relation.  But do some of them?  If so, give an example and explain why it is transitive.  If not, explain why.
+        </p>
+      </statement>
+        <response />
+        
+      </exercise>
+
+      <exercise label="rq-gt-rel-q">
+        <statement>
+          <p>
+            After reading this section, what questions do you have?  Ask at least one question about this section that you are curious about.
+          </p>
+        </statement>
+        <response />
+        
+      </exercise>
+    </reading-questions>
+
+    <xi:include href="practice/gt-relations.ptx" />
+    <xi:include href="exercises/gt-relations.ptx" />
+
+</section>

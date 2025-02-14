@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_seq-strong-induction">
+
+  <title>Additional Exercises</title>
+ 
+
+  <exercise>
+    <idx><h>football (American)</h></idx>
+    <statement>
+      <p>
+        Suppose a football team only scores 3-point field goals and 7-point touchdowns
+        (ignore the possibilities of safeties,
+        missed extra points, and two-point conversions).
+        Prove, using <em>strong</em> induction, that the team can get any number of points, 12 points or greater. 
+      </p>
+    </statement>
+    <hint>
+      <p>
+        If you have three base cases, can you always be sure you can get three points more?
+      </p>
+    </hint>
+  </exercise>
+
+
+  <exercise>
+    <idx><h>interior angles</h></idx>
+    <statement>
+      <p>
+        Prove using <em>strong</em> induction that the sum of the interior angles of a convex <m>n</m>-gon is
+        <m>(n-2)\cdot 180^\circ</m>. (A convex <m>n</m>-gon is a polygon with <m>n</m> sides for which each interior angle is less than <m>180^\circ</m>.)
+      </p>
+    </statement>
+    <hint>
+      <p>
+        Start with a <m>(k+1)</m>-gon, and divide it into two smaller polygons.
+      </p>
+    </hint>
+    
+  </exercise>
+
+
+  <exercise>
+    <idx><h>binary representation</h></idx>
+    <statement>
+      <p>
+        Prove that every positive integer is either a power of 2 or can be written as the sum of distinct powers of 2.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        The proof will be by strong induction.
+      </p>
+
+      <proof>
+        <p>
+          Let <m>P(n)</m> be the statement,
+          <q><m>n</m> is either a power of 2 or can be written as the sum of distinct powers of 2.</q>
+          We will show that <m>P(n)</m> is true for all <m>n \ge 1</m>.
+        </p>
+
+        <p>
+          Base case: <m>1 = 2^0</m> is a power of 2, so <m>P(1)</m> is true.
+        </p>
+
+        <p>
+          Inductive case: Suppose <m>P(k)</m> is true for all <m>k \lt n</m>.
+          Now if <m>n</m> is a power of 2, we are done.
+          If not, let <m>2^x</m> be the largest power of 2 strictly less than <m>n</m>.
+          Consider <m>n - 2^x</m>,
+          which is a smaller number, in fact smaller than both <m>n</m> and <m>2^x</m>.
+          Thus <m>n-2^x</m> is either a power of 2 or can be written as the sum of distinct powers of 2, but none of them are going to be <m>2^x</m>,
+          so together with <m>2^x</m> we have written <m>n</m> as the sum of distinct powers of 2.
+        </p>
+
+        <p>
+          Therefore, by the principle of (strong) mathematical induction,
+          <m>P(n)</m> is true for all <m>n \ge 1</m>.
+        </p>
+      </proof>
+
+    </solution>
+  </exercise>
+
+  <exercise>
+    <idx><h>Fibonacci sequence</h></idx>
+    <statement>
+      <p>
+        Prove, using strong induction,
+        that every natural number is either a Fibonacci number or can be written as the <em>sum</em>
+        of <em>distinct</em> Fibonacci numbers.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        As with the previous question, we will want to subtract something from <m>n</m> in the inductive step.  There we subtracted the largest power of 2 less than <m>n</m>.  So what should you subtract here?
+      </p>
+      <p>
+        Note that you will still need to take care here that the sum you get from the inductive hypothesis, together with the number you subtracted, will be a sum of <em>distinct</em> Fibonacci numbers.  In fact, you could prove that the Fibonacci numbers in the sum are non-consecutive!
+      </p>
+    </hint>
+  </exercise>
+
+
+  <exercise>
+    <statement>
+      <p>
+        We have previously proved that for any tree, the number of edges is always one less than the number of vertices.  That is, a tree with <m>v</m> vertices and <m>e</m> edges satisfies <m>v = e+1</m>.
+      </p>
+
+      <p>
+        Give an alternate proof of this fact using strong induction on the number of vertices.  Do so by taking a non-leaf vertex and <q>splitting</q> it into two vertices, each belonging to a separate tree.
+      </p>
+    </statement>
+  </exercise>
+
+
+  <exercise>
+    <statement>
+      <p>
+        Suppose that a particular real number <m>x</m> has the property that <m>x + \frac{1}{x}</m> is an integer.
+        Prove that <m>x^n + \frac{1}{x^n}</m> is an integer for all natural numbers <m>n</m>.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        You will need to use strong induction.
+        For the inductive case, try multiplying <m>\left (x^k + \frac{1}{x^{k}}\right)\left(x+\frac{1}{x}\right)</m>, and collect which terms together are integers.
+      </p>
+    </hint>
+    
+  </exercise>
+
+
+    <!-- This is a nice problem, to include here, as an example, or save for homework.  It requires some double induction.-->
+  <exercise>
+    <idx><h>double induction</h><see>induction, double</see></idx>
+    <idx><h>induction</h><h>double</h></idx>
+    <idx><h>Fibonacci sequence</h><h>identity</h></idx>
+    <introduction>
+      <p>
+        Here is an example of a more complicated induction technique called
+        <term>double induction</term>.
+      </p>
+      
+        <p>
+          You will prove that the Fibonacci numbers satisfy the identity <m>F_n^2 + F_{n+1}^2 = F_{2n+1}</m>.
+          One way to do this is to prove the more general identity,
+          <me>
+            F_mF_n + F_{m+1}F_{n+1} = F_{m+n+1}
+          </me>,
+          and realize that when <m>m = n</m> we get our desired result.
+        </p>
+        
+        <p>
+          Note that we now have two variables,
+          so we want to prove this for all <m>m \ge 0</m> <em>and</em>
+          all <m>n \ge 0</m> at the same time.
+          For each such pair <m>(m,n)</m>,
+          let <m>P(m,n)</m> be the statement <m>F_mF_n + F_{m+1}F_{n+1} = F_{m+n+1}</m>
+        </p>
+        </introduction>
+          
+        <task>
+          <statement>
+            <p>
+              First fix <m>m = 0</m>, and give a proof by mathematical induction that <m>P(0,n)</m> holds for all <m>n \ge 0</m>.
+              Note that this proof will be very easy.
+            </p>
+          </statement>
+        </task>
+
+          <task>
+            <statement>
+            <p>
+              Now fix an arbitrary <m>n</m>, and give a proof by <em>strong</em>
+              mathematical induction that <m>P(m,n)</m> holds for all <m>m \ge 0</m>.
+            </p>
+          </statement>
+        </task>
+
+          <task>
+            <statement>
+            <p>
+              You can now conclude that <m>P(m,n)</m> holds for all <m>m,n\ge 0</m>.
+              Do you believe that?
+              Explain why this sort of induction is valid.
+              For example,
+              why do your proofs above guarantee that <m>P(2,3)</m> is true?
+            </p>
+          </statement>
+          </task>
+  </exercise>
+<!-- The previous problem can be done with simultaneous induction, which could also make a nice problem -->
+<!-- Maybe one more double induction problem, without the scafolding? -->
+  <exercise>
+    <idx><h>puzzle</h><h>square division</h></idx>
+    <statement>
+      <p>
+        Given a square,
+        you can cut the square into smaller squares by cutting along lines parallel to the sides of the original square
+        (these lines do not need to travel the entire side length of the original square).
+        For example, by cutting along the lines below,
+        you will divide a square into 6 smaller squares:
+      </p>
+
+      <sidebyside width="35%">
+
+        <image>
+
+        <latex-image>
+          \begin{tikzpicture}[scale=.75]
+          \draw (0,0) rectangle (3,3) (0,0) rectangle (2,2) (1,2) -- (1,3) (2,2) -- (2,3) (2,2) -- (3,2) (2,1)-- (3,1);
+          \end{tikzpicture}
+        </latex-image>
+        <description>One large square with five squares of half the side length wrapping around the top and right side, forming an even larger square.</description>
+        </image>
+
+      </sidebyside>
+
+      <p>
+        Prove, using strong induction,
+        that it is possible to cut a square into <m>n</m> smaller squares for any <m>n \ge 6</m>.
+      </p>
+    </statement>
+    <hint>
+      <p>
+        You will need three base cases.  This is a very good hint actually, as it suggests that to prove <m>P(n)</m> is true, you would want to use the fact that <m>P(n-3)</m> is true.  So somehow you need to increase the number of squares by 3.        
+      </p>
+    </hint>
+  </exercise>
+
+
+
+</exercises>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<worksheet xmlns:xi="http://www.w3.org/2001/XInclude" margin="1in" bottom="1.25cm" xml:id="PA-coloring-vertices">
+	<title>Preview Activity</title>
+
+	<introduction>
+		<p>
+			For each graph below:
+			<ul>
+				<li>
+					<p>
+						Find a proper vertex coloring using some number of colors.
+						That is, color vertices using any number of colors but in such a way that no pair of adjacent vertices have the same color.
+					</p>
+				</li>
+
+				<li>
+					<p>
+						Find the <em>fewest</em> number of colors you need to properly color the vertices of the graph.
+						This is called the <term>chromatic number</term> of the graph.
+						Think about how you know your answer is correct.
+					</p>
+				</li>
+
+				<li>
+					<p>
+						Can you generalize?  Can you conclude anything about the chromatic number for particular sorts of graphs?
+					</p>
+				</li>
+			</ul>
+		</p>
+	</introduction>
+
+	<sbsgroup widths="40% 40%">
+		<sidebyside>
+			<exercise workspace=".1in" label="pa-gt-coloring-1">
+				<webwork>
+					<pg-code>
+					</pg-code>
+
+					<statement>
+						<image>
+							<description>
+								A copy of the complete graph on 6 vertices to be colored
+							</description>
+							<latex-image >
+								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+						\begin{tikzpicture}[scale=2]
+						\foreach \x in {0,...,5}{
+							\coordinate (a\x) at (\x*60:1);
+						}
+						\foreach \x in {0,...,4}{
+							\foreach \y in {\x,...,5}{
+								\draw[thick] (a\x) -- (a\y);
+							}
+							\draw (a\x) \vo;
+						}
+						\draw (a5) \vo;
+						\end{tikzpicture}
+							</latex-image>
+						</image>
+
+						<p component="interactive">
+							<m>\chi(G) = </m><var name="6" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+
+			<exercise workspace=".1in" label="pa-gt-coloring-2">
+				<webwork>
+					<statement>
+						<image>
+							<latex-image>
+								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+\begin{tikzpicture}[xscale=2]
+								\foreach \x in {0,...,4}{
+									\coordinate (l\x) at (0,\x);
+									\coordinate (r\x) at (2,\x);
+								}
+								\foreach \x in {0,...,4}{
+									\draw[very thick] (l\x) -- (r0) (l\x) -- (r2) (l\x) -- (r4);
+									\draw (l\x) \vo;
+								}
+								\draw (r0) \vo (r2) \vo (r4) \vo;
+								\end{tikzpicture}
+
+							</latex-image>
+						</image>
+
+						<p component="interactive">
+							<m>\chi(G) = </m> <var name="2" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+		</sidebyside>
+
+		<sidebyside>
+			<exercise workspace=".1in" label="pa-gt-coloring-3">
+				<webwork>
+					<pg-code>
+					</pg-code>
+
+					<statement>
+						<image>
+							<latex-image>
+								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+
+					\begin{tikzpicture}
+					\foreach \x in {0,...,7}{
+					\coordinate (a\x) at (\x*360/8:2);
+					}
+					\draw[thick] (a7) -- (a0);
+					\foreach \x in {0,...,6}{
+						\pgfmathtruncatemacro{\next}{\x + 1}
+						\draw[very thick] (a\x) -- (a\next);
+						\draw (a\x) \vo;
+					}
+					\draw (a7) \vo;
+					\end{tikzpicture}
+				
+							</latex-image>
+						</image>
+
+						<p component="interactive">
+							<m>\chi(G) = </m><var name="2" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+
+			<exercise workspace=".1in" label="pa-gt-coloring-4">
+				<webwork>
+					<statement>
+						<image>
+							<latex-image>
+								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+
+					\begin{tikzpicture}
+					\foreach \x in {0,...,6}{
+						\coordinate (a\x) at (\x*360/7:2);
+					}
+					\draw[very thick] (a6) -- (a0);
+					\foreach \x in {0,...,5}{
+						\pgfmathtruncatemacro{\next}{\x + 1}
+						\draw[very thick] (a\x) -- (a\next);
+						\draw (a\x) \vo;
+					}
+					\draw (a6) \vo;
+					\end{tikzpicture}
+
+							</latex-image>
+						</image>
+
+						<p component="interactive">
+							<m>\chi(G) = </m><var name="3" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+		</sidebyside>
+
+		<sidebyside>
+			<exercise workspace=".1in" label="pa-gt-coloring-5">
+				<webwork>
+					<statement>
+						<image>
+							<latex-image>
+								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+					\begin{tikzpicture}[xscale=1.25]
+					\coordinate (a) at (0,0);
+					\coordinate (b) at (-2,0);
+					\coordinate (c) at (2,0);
+					\coordinate (d) at (0,-1);
+					\coordinate (e) at (0,-2);
+					\coordinate (f) at (-1.5,-1.5);
+					\coordinate (g) at (-1,3);
+					\coordinate (h) at (0.5,2);
+					\coordinate (i) at (-1,1);
+					\coordinate (j) at (1,.75);
+					\coordinate (k) at (2,1.25);
+					\coordinate (l) at (0.5,3);
+					\coordinate (m) at (1.5,-2);
+					\draw[very thick] (f) -- (e) -- (m) (e) -- (c) -- (a) -- (b) -- (d) (b) -- (g) -- (h) (a) -- (j) (a) -- (i) -- (k) -- (l);
+					\foreach \x in {a,...,m}{
+						\draw (\x) \vo;
+					}
+					\end{tikzpicture}
+				
+							</latex-image>
+						</image>
+
+						<p component="interactive">
+							<m>\chi(G) = </m><var name="2" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+
+			<exercise workspace=".1in" label="pa-gt-coloring-6">
+				<webwork>
+					<statement>
+						<image>
+							<latex-image>
+								\def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
+					\begin{tikzpicture}[xscale=1.25]
+					\coordinate (a) at (0,0);
+					\coordinate (b) at (-2,0);
+					\coordinate (c) at (2,0);
+					\coordinate (d) at (0,-1);
+					\coordinate (e) at (0,-2);
+					\coordinate (f) at (-1.5,-1.5);
+					\coordinate (g) at (-1,3);
+					\coordinate (h) at (0.5,2);
+					\coordinate (i) at (-1,1);
+					\coordinate (j) at (1,.75);
+					\coordinate (k) at (2,1.25);
+					\coordinate (l) at (0.5,3);
+					\coordinate (m) at (1.5,-2);
+					\draw[very thick] (f) -- (e) -- (m) (e) -- (c) -- (a) -- (b) -- (d) (b) -- (g) -- (h) (a) -- (j) (a) -- (i) -- (k) -- (l);
+					\draw[very thick] (a) -- (d) -- (c) -- (m) (d) -- (e) (d) -- (f) -- (b) -- (i) -- (g) -- (l) -- (h) -- (k) -- (c) -- (j) -- (i) -- (a) (i) -- (h);
+					\foreach \x in {a,...,m}{
+					\draw (\x) \vo;
+					}
+					\end{tikzpicture}
+					
+							</latex-image>
+						</image>
+
+						<p component="interactive">
+							<m>\chi(G) = </m><var name="4" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+		</sidebyside>
+	</sbsgroup>
+</worksheet>

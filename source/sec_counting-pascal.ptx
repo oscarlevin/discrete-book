@@ -1,0 +1,1050 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_counting-pascal">
+	<title>Pascal's Arithmetical Triangle</title>
+	<objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+					Use Pascal's triangle to answer counting questions about lattice paths, bit strings, and subsets.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Explain how Pascal's triangle is generated and how it relates to counting questions.
+				</p>
+			</li> 
+			<li>
+				<p>
+					Explain why Pascal's triangle is related to so many different types of counting problems.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+	
+<clearpage/>
+	<subsection>
+		<title>Section Preview</title>
+		<investigation>
+		<idx><h>rook paths</h></idx>
+		<idx><h>chessboard</h><h>rook paths</h></idx>
+		<statement>
+			<p>
+				In chess, a rook can move only in straight lines
+				(not diagonally).
+				How many ways can the rook in the top-left corner travel to the bottom-right corner of the board, moving only down and to the right?
+			</p>
+
+				<image width="50%" xml:id="chessboard">
+					<shortdescription>
+						An 8x8 checkerboard containing an image of a rook chess piece in the top left corner.
+					</shortdescription>
+					<description>
+						<p>
+					An 8x8 checkerboard containing an image of a rook chess piece in the top left corner.
+					The square in the third row, third column contains the number 6.
+				</p>
+			</description>
+				<latex-image label="rook-chessboard">
+				\begin{tikzpicture}[scale=.6]
+				\foreach \row in {0, 2, 4,6}{
+					\foreach \col in {0,2,4,6}{
+						\draw[fill=gray!30] (\row,\col) rectangle (\row+1, \col+1) rectangle (\row+2, \col+2);
+					}
+				}
+				\draw[thick] (0,0) rectangle (8,8);
+				\node at (0.5,7.5) {\Large \symrook};
+				\node at (2.5,5.5) {$6$};
+				\node at (7.5,0.5) {\Large ?};
+				\end{tikzpicture}
+			</latex-image>
+		</image>
+
+			<p>
+				Also, what does this have to do with counting how many pizzas you can order if you use half of the 14 available toppings?
+			</p>
+		</statement>
+		
+		
+
+		</investigation>
+
+
+		<worksheet xml:id="PA-counting-pascal">
+			<title>Preview Activity</title>
+			<introduction>
+				<p>
+					Let's find some of the numbers of paths that the rook can take to get to various squares in the chessboard.
+				</p>
+			</introduction>
+			<exercise label="pa-counting-pascal-1">
+				<webwork>
+					<pg-code>
+						loadMacros("parserAutoStrings.pl");
+						AutoStrings();
+						$paths1 = List(String(DRDR), String(DRRD), String(RDDR), String(RRDD), String(RDRD), String(DDRR));
+
+					</pg-code>
+							
+					<statement>
+						<p>
+							The 6 in the square in the 3rd row and column represents that there are 6 different paths to that square, even though there are only four squares the rook must move through to get there.
+							One path is DDRR (down down right right).
+							List all 6 paths.
+						</p>
+						<p>
+							<var name="$paths1" width="20" />
+						</p>
+						<instruction>(separate paths with commas)</instruction>
+	
+					</statement>
+				</webwork>
+			</exercise>
+	
+	
+			<exercise label="pa-counting-pascal-2">
+				<webwork>
+					<pg-code>
+						loadMacros("parserAutoStrings.pl");
+						AutoStrings();
+						$paths2 = List(String("DDDR"), String("DDRD"), String("DRDD"), String("RDDD"));
+
+						</pg-code>
+					<statement>
+					<p>
+						How many paths are there to the square in row 4, column 2 (diagonally down and to the left of the 6)?  
+						List out all the paths as D/R strings.
+					</p>
+					<p>
+						<var name="$paths2" width="20" />
+					</p>
+					<p>
+						How many paths is this?  That is, what number goes in that square of the chessboard?
+					</p>
+					<p>
+						<var name="4" width="5"/>
+					</p>
+				</statement>
+				</webwork>
+			</exercise>
+	
+	
+			<exercise label="pa-counting-pascal-3">
+				<webwork>
+					<pg-code>
+						loadMacros("parserAutoStrings.pl");
+						AutoStrings();
+
+						$paths1 = List(String(DRDRD), String(DRRDD), String(RDDRD), String(RRDDD), String(RDRDD), String(DDRRD));
+						$paths2 = List(String("DDDRR"), String("DDRDR"), String("DRDDR"), String("RDDDR"));
+					</pg-code>
+				
+
+					<statement>
+						<p>
+							Now let's find the paths to the square in row 4, column 3 (directly below the 6).
+						</p>
+						<p>
+							First, list all the paths that end with an R.
+						</p>
+						<p>
+							<var name="$paths2" width="30"/>
+						</p>
+						<p>
+							Next, list all the paths that end with a D.
+						</p>
+						<p>
+							<var name="$paths1" width="30"/>
+						</p>
+						<p>
+							Are there any other paths?  In total, how many paths are there to this square?
+						</p>
+						<p>
+							<var name="10" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+
+	
+			<exercise label="pa-counting-pascal-4">
+				<webwork>
+					<pg-code>
+						Context("LimitedNumeric");
+					</pg-code>
+				
+					<statement>
+						<p>
+							Continue filling in the chessboard, either counting D/R strings directly or using your observation from the previous task.  What is the number in the lower right corner of the chessboard?
+						</p>
+						<p>
+							<var name="3432" width="5"/>
+						</p>
+					</statement>
+				</webwork>
+			
+
+			</exercise>
+			
+		</worksheet>
+<clearpage/>
+		<p>
+			In 1653, Blaise Pascal, concerned with questions that would lay the foundation of probability theory, collected several facts about a triangular array of numbers in his <pubtitle>Treatise on Arithmetical Triangle</pubtitle>.
+			This arrangement of numbers appeared as early as the 10th century in China, India, and Persia.
+			The Chinese and Persian treatment of the triangle was in service of what we would now consider algebra: finding <m>n</m>th roots, essentially solving polynomial equations.
+			The numbers in the triangle appear as solutions to counting problems in Indian texts: from six <em>tastes</em>, how many combinations of one, or two, or three,...
+			can you make?  European mathematicians in the 14th century presented the triangle as a table of <term>figurate numbers</term> (numbers that can be arranged in a geometric shape), which were themselves the centerpiece of the work of Pythagoras and his followers.
+		</p>
+
+		<p>
+			<idx><h>Pascal's triangle</h></idx>
+			So what is this remarkable triangle that holds the secrets of so many different mathematical problems?  Behold, Pascal's triangle:
+		</p>
+		<figure xml:id="fig-pascal-large">
+			<caption>Pascal's triangle.</caption>
+		<image xml:id="pascal-large">
+			<latex-image label="pascal-large">
+			\begin{tikzpicture}
+			\def\r{.55}
+			\foreach \row in {0,...,16} {
+			\hexbox{\row}{0}{\large 1}
+			}
+			%fill in the rest of the triangle:
+			\foreach \row in {1,...,16} {
+			\pgfmathsetmacro{\entry}{1};
+			\foreach \col in {1,...,\row} {
+			% iterative formula : val = precval * (row-col+1)/col
+			% (+ 0.5 to bypass rounding errors)
+			\pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
+			\global\let\entry=\entry
+			\ifnum \entry&lt;100
+			\hexbox{\row}{\col}{\large \entry}
+			\else \ifnum \entry&lt;1000
+			\hexbox{\row}{\col}{\entry}
+			\else \ifnum \entry&lt;10000
+			\hexbox{\row}{\col}{\footnotesize \entry}
+			\else
+			\hexbox{\row}{\col}{\scriptsize \entry}
+			\fi
+			\fi
+			\fi
+			}
+			}
+			\end{tikzpicture}
+			</latex-image>
+			<shortdescription>The first 17 rows of Pascal's triangle.</shortdescription>
+			<description>
+			<p>
+				The first 17 rows of Pascal's triangle.
+				A triangular array of hexagons, each row containing one more hexagon that the row above it.
+				In each hexagon is an integer: 1's on the border of the triangle, and every integer inside the triangle the sum of the two integers above it.
+			</p>
+			</description>
+		</image>
+</figure>
+
+	<p>
+		Spend some time gazing at the beauty of this triangle.
+		What do you notice?  What do you wonder?  Look specifically at the 5th row (we call the 1 on the top row 0, so row 5 is 1, 5, 10, 10, 5, 1).
+		How do the numbers in this row relate to the numbers above them?  Notice that <m>5 = 1+4</m> and <m>10 = 4+6</m>.
+		Does this occur anywhere else in the triangle?
+	</p>
+
+	<p>
+		Indeed, every number in the triangle is the <em>sum of the two numbers above it</em>.
+		Let's take this as our <em>definition</em> of Pascal's triangle.
+		We can then generate as many rows of the triangle as we like.
+		It is this additive definition that was used in China and Persia to find <m>n</m>th roots, and we will briefly mention this use at the end of this section.
+		However, we are interested in counting questions, so our main goal now is to observe how the numbers of Pascal's triangle are answers to a variety of counting questions.
+	</p>
+
+	<p>
+		Here are some apparently different discrete objects we can count:
+		lattice paths, bit strings, subsets, and pizzas.
+		We will give an example of each type of counting problem
+		(and say what these things even are).
+		As we will see, the numbers in Pascal's triangle are the answers to all of these questions.
+	</p>
+
+	<p>
+		Before we jump in, a little bit of notation.  Let's give each number in Pascal's triangle a name, based on its position.  Think of each number as being in a row and a column: rows are counted down, starting at 0, and columns are counted in from the left, also starting at 0.  The entry in row <m>n</m> and column <m>k</m> will be denoted <m>\binom{n}{k}</m>.  For example, the <m>\binom{6}{3} = 20</m>, since that is the value in row 6, column 3.  For reasons that will become clear soon, we pronounce <m>\binom{n}{k}</m> as <q><m>n</m> <term>choose</term> <m>k</m>.</q>  We can rewrite the triangle with these names:
+	</p>
+	<image width="70%">
+		<latex-image label="pascal-nCk">
+		\begin{tikzpicture}
+		\foreach \n in {0,...,4}
+		\foreach \k in {0,...,\n}
+		\draw (-\n+2*\k, -\n) node {\(\displaystyle{\n \choose \k}\)};
+		\end{tikzpicture}
+		</latex-image>
+		<description>
+		Triangular array of binomial coefficients.
+		Each lower row extends equally on both sides beyond the row above.
+		Top row contains 0 choose 0.
+		Second row contains 1 choose 0 and 1 choose 1 (from left to right).
+		Third row contains 2 choose 0, 2 choose 1, and 2 choose 2.
+		Below that the row contains 3 choose 0, 3 choose 1, 3 choose 2, and 3 choose 3.
+		The bottom row contains 4 choose 0 through 4 choose 4.
+		</description>
+	</image>
+	
+</subsection>
+
+<subsection>
+	<title>Lattice Paths</title>
+	<p>
+		<idx>integer lattice</idx>
+		<idx><h>lattice, integer</h><see>integer lattice</see></idx>
+		The <term>integer lattice</term> is the set of all points in the Cartesian plane for which both the <m>x</m> and <m>y</m> coordinates are integers.
+		If you like to draw graphs on graph paper,
+		the lattice is the set of all the intersections of the grid lines.
+	</p>
+
+	<p>
+		A <term>lattice path</term>
+		<idx><h>lattice path</h></idx>
+		is one of the shortest possible paths connecting two points on the lattice,
+		moving only horizontally and vertically.
+		For example,
+		here are three possible lattice paths from the point <m>(0,0)</m> to <m>(3,2)</m>:
+	</p>
+
+	<sidebyside width="30%" margins="auto">
+		<image>
+			<latex-image label="lattice-path-1">
+			\begin{tikzpicture}
+			\draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+			\foreach \x in {0,...,3}
+			\foreach \y in {0,...,2}
+			\fill (\x,\y) circle (1.5pt);
+			\draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+			\draw[very thick] (0,0) -- (2,0) -- (2,2) -- (3,2);
+			\end{tikzpicture}
+			</latex-image>
+			<description>
+			A grid of 12 dots arranged in a 4-wide by 3-high rectangle.
+			The lower-left dot is labeled (0,0).
+			The top right dot is labeled (3,2).
+			A bold line runs from the bottom left dot to the third dot on the bottom row, then turns up and runs to the top dot in that column, then turns right and runs to the top-right dot.
+			</description>
+		</image>
+
+		<image>
+			<latex-image label="lattice-path-2">
+			\begin{tikzpicture}
+			\draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+			\foreach \x in {0,...,3}
+			\foreach \y in {0,...,2}
+			\fill (\x,\y) circle (1.5pt);
+			\draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+			\draw[very thick] (0,0) -- (0,2) -- (3,2);
+			\end{tikzpicture}
+			</latex-image>
+			<description>
+			A grid of 12 dots arranged in a 4-wide by 3-high rectangle.
+			The lower-left dot is labeled (0,0).
+			The top right dot is labeled (3,2).
+			A bold line runs from the bottom up to the top left dot, and then to the top-right dot.
+			</description>
+		</image>
+
+		<image>
+			<latex-image label="lattice-path-3">
+			\begin{tikzpicture}
+			\draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+			\foreach \x in {0,...,3}
+			\foreach \y in {0,...,2}
+			\fill (\x,\y) circle (1.5pt);
+			\draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+			\draw[very thick] (0,0) -- (1,0) -- (1,1) -- (3,1) -- (3,2);
+			\end{tikzpicture}
+			</latex-image>
+			<description>
+			A grid of 12 dots arranged in a 4-wide by 3-high rectangle.
+			The lower-left dot is labeled (0,0).
+			The top right dot is labeled (3,2).
+			A bold line runs from the bottom left dot to the second dot on the bottom row, then turns up and runs to the next dot above it, then turns right and runs to the middle right dot, and finally turns up and runs to the top-right dot.
+			</description>
+		</image>
+	</sidebyside>
+
+	<p>
+		Notice that to ensure the path is the <em>shortest</em> possible, each move must be either to the right or up.
+		Additionally, in this case, no matter what path we take, we must make three steps right and two steps up.
+		No matter in what order we make these steps, there will always be five steps.
+		Thus each path has <term>length</term> five.
+		<idx><h>lattice path</h><h>length of</h></idx>
+	</p>
+	<!-- TODO: add checkpoint asking for the length of each path between two points. -->
+	<p>
+		The counting question we will ask is this: <em>how many</em> lattice paths are there between <m>(0,0)</m> and <m>(3,2)</m>?  In this case, drawing all the paths wouldn't take too long.
+		Or we could list each path as a string of <q>directions</q> such as <m>xxyyx</m>, <m>yyxxx</m>, or <m>xyxxy</m>, which correspond to the three paths drawn above, where an <m>x</m> means travel one unit in the <m>x</m> direction, and similarly for <m>y</m>.
+		We would get the following ten paths:
+		<md>
+			<mrow>xxxyy \qquad xxyxy \qquad xyxxy \qquad yxxxy</mrow>
+			<mrow>xxyyx \qquad xyxyx \qquad yxxyx \qquad xyyxx \qquad yxyxx \qquad yyxxx</mrow>
+		</md>.
+		When the distance between starting and stopping points is larger, we will want to find a more efficient way to count the paths.
+	</p>
+	<!--
+	<p>
+		<idx><h>lattice path</h><h>correspondence with bit string</h></idx> <idx><h>bit string</h><h>correspondence with lattice path</h></idx> Notice that each of these strings must contain 5 symbols.
+		Exactly 3 of them must be R's (since our destination is 3 units to the right).
+		This seems awfully familiar.
+		In fact, what if we used <m>1</m>'s instead of R's and 0's instead of U's? Then we would just have 5-bit strings of weight 3.
+		There are 10 of those, so there are 10 lattice paths from (0,0) to (3,2).
+	</p>-->
+	<p>
+		Let's take what we learned from the rook paths (which are, gasp, actually lattice paths).
+		Consider the lattice shown below:
+	</p>
+
+	<sidebyside width="40%">
+		<image xml:id="lattice-ab">
+			<latex-image>
+			\begin{tikzpicture}
+			\draw[very thin, color=gray!50] (-.5,-.5) grid (3.5, 2.5);
+			\foreach \x in {0,...,3}
+			\foreach \y in {0,...,2}
+			\fill (\x,\y) circle (1.5pt);
+			\draw (0,0) node[below left] { (0,0)} (3,2) node[above right] { (3,2)};
+			\draw (3,1) node[above right] { \(B\)} (2,2) node[above right]{ \(A\)};
+			\end{tikzpicture}
+			</latex-image>
+			<description>
+			A grid of 12 dots arranged in a 4-wide by 3-high rectangle.
+			The lower-left dot is labeled (0,0).
+			The top right dot is labeled (3,2).
+			The dot on the top row directly to the left of (3,2) is labeled A; the dot directly below (3,2) is labeled B.
+			</description>
+		</image>
+	</sidebyside>
+
+	<p>
+		Any lattice path from (0,0) to (3,2) must pass through exactly one of <m>A</m> and <m>B</m>.
+		The point <m>A</m> is 4 steps away from (0,0) and two of them are in the <m>x</m> direction.
+		The last step is also in the <m>x</m> direction, so the paths from (0,0) to (3,2) that pass through <m>A</m> are exactly the six strings we listed above that end in an <m>x</m>.
+		For the paths that pass through point <m>B</m>, the last step will be in the <m>y</m> direction, so the paths from (0,0) to (3,2) that pass through <m>B</m> are exactly the four strings we listed above that end in a <m>y</m>.
+		So the total number of paths to (3,2) is just <m>6+4</m>.
+	</p>
+
+	<p>
+		The general observation here is that to find the number of paths that start at <m>(0,0)</m> and end at <m>(m,n)</m>, we can find the number of paths to the point directly to the left of the endpoint, <m>(m-1,n)</m> and add the number of paths to the point directly below the endpoint, <m>(m,n-1)</m>.
+		This is exactly the same way that Pascal's triangle is generated!  Indeed, if we rotate the lattice appropriately, so the point <m>(0,0)</m> is at the top of the triangle and the axes along the sides of the triangle, we see that the numbers in Pascal's triangle give us exactly the number of paths to each lattice point.
+	</p>
+
+	<image width="50%" xml:id="img-pascal-lattice">
+		<shortdescription>Integer lattice overlayed on Pascal's triangle</shortdescription>
+		<latex-image label="pascal-and-lattice">
+			\begin{tikzpicture}
+			% lattice, transformed. x and y coordinates are from hexbox.
+			\begin{scope}[x={(-0.476314cm, -.825cm)},y={(.476314cm, -.825cm)},xshift=.2cm]
+			\draw  (-.5,0) -- (3.5, 0) (0,-.5) -- (0,2.5);
+			\draw[very thin, color=gray] (-.5,1) -- (3.5,1) (-.5,2) -- (3.5,2)  (1,-.5) -- (1,2.5) (2,-.5) -- (2,2.5) (3,-.5) -- (3,2.5);
+			\foreach \x in {0,...,3}
+			\foreach \y in {0,...,2}
+			\fill (\x,\y) circle (1.5pt);
+			\draw (0,0) node[above right] { (0,0)} (3,2) node[below right] { (3,2)};
+			\draw (3,1) node[right] { \(B\)} (2,2) node[right]{ \(A\)};
+			\end{scope}
+			\begin{scope}[opacity=.25]
+			\def\r{.55}
+			\foreach \row in {0,...,5} {
+			\hexbox{\row}{0}{\large 1}
+			}
+			%fill in the rest of the triangle:
+			\foreach \row in {1,...,5} {
+			\pgfmathsetmacro{\entry}{1};
+			\foreach \col in {1,...,\row} {
+			% iterative formula : val = precval * (row-col+1)/col
+			% (+ 0.5 to bypass rounding errors)
+			\pgfmathtruncatemacro{\entry}{\entry*((\row-\col+1)/\col)+0.5};
+			\global\let\entry=\entry
+			\ifnum \entry&lt;100
+			\hexbox{\row}{\col}{\large \entry}
+			\else \ifnum \entry&lt;1000
+			\hexbox{\row}{\col}{\entry}
+			\else \ifnum \entry&lt;10000
+			\hexbox{\row}{\col}{\footnotesize \entry}
+			\else
+			\hexbox{\row}{\col}{\scriptsize \entry}
+			\fi
+			\fi
+			\fi
+			}
+			}
+			\end{scope}
+			\end{tikzpicture}
+		</latex-image>
+		
+	</image>
+
+	<p>
+		To make this observation helpful for actually finding the number of paths from the origin to a given point, we note that it is the <em>length</em> of the path that determines the <em>row</em> of Pascal's triangle, and the number of steps in the <m>y</m> direction that says how far into the triangle we are -- the <em>column</em> of Pascal's triangle.
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				How many lattice paths are there from <m>(0,0)</m> to <m>(4,7)</m>?
+			</p>
+		</statement>
+		<solution>
+			<p>
+				The length of these paths is <m>4+7 = 11</m>.  Look at the 11th row of Pascal's triangle: <me>1, 11, 55, 165, 330, 462, 462, 330, 165, 55, 11, 1</me>.  Count to the 7th position (remembering that the 1 is in position 0) which gives us <m>\binom{11}{7} = 330</m> different paths.
+			</p>
+		</solution>
+	</example>
+</subsection>
+
+<subsection xml:id="subsec-counting-binom-bitstrings">
+	<title>Bit Strings</title>
+	<idx>bit string</idx>
+	<p>
+		<idx>bit string</idx>
+		<idx>bit</idx>
+		<idx><h>binary digit</h><see>bit</see></idx>
+		<q>Bit</q> is short for <q>binary digit,</q>
+		so a <term>bit string</term>
+		is a string of binary digits.
+		The <term>binary digits</term> are simply the numbers 0 and 1.
+		All of the following are bit strings:
+		<me>
+			1001 \quad 0 \quad 1111 \quad 1010101010
+		</me>.
+	</p>
+
+	<p>
+		<idx><h>bit string</h><h>length</h></idx>
+		<idx><h>bit string</h><h>weight</h></idx>
+		<idx><h>length of a bit string</h></idx>
+		<idx><h>weight of a bit string</h></idx>
+		The number of bits (0's or 1's) in the string is the
+		<term>length</term> of the string;
+		the strings above have lengths 4, 1, 4, and 10 respectively.
+		We also can ask how many of the bits are 1's.
+		The number of 1's in a bit string is the
+		<term>weight</term> of the string;
+		the weights of the above strings are 2, 0, 4, and 5 respectively.
+	</p>
+
+	<definition>
+		<title>Bit Strings</title>
+		<idx>bit string</idx>
+		<idx><h>string</h><h>binary</h><see>bit string</see></idx>
+		<idx><h>bit string</h><h>length</h></idx>
+		<idx><h>bit string</h><h>weight</h></idx>
+		<idx><h>length of a bit string</h></idx>
+		<idx><h>weight of a bit string</h></idx>
+		<statement><p>
+			<ul>
+				<li>
+					<p>
+						An <term><m>n</m>-bit string</term>
+						is a bit string of length <m>n</m>.
+						That is, it is a string containing <m>n</m> symbols,
+						each of which is a bit, either 0 or 1.
+					</p>
+				</li>
+
+				<li>
+					<p>
+						The <term>weight</term>
+						<idx><h>weight (bit string)</h></idx>
+						of a bit string is the number of 1's in it.
+					</p>
+				</li>
+
+				<!-- <li>
+					<m>\B^n</m>
+					<notation>
+					<usage><m>\B^n</m></usage>
+					<description>the set of length <m>n</m> bit strings</description>
+					</notation>
+					is the <em>set</em> of all <m>n</m>-bit strings.
+				</li> -->
+
+				<li>
+					<m>\B^n_k</m>
+					<notation>
+					<usage><m>\B^n_k</m></usage>
+					<description>the set of length <m>n</m> bit strings with weight <m>k</m>.</description>
+					</notation>
+					is the set of all <m>n</m>-bit strings of weight <m>k</m>.
+				</li>
+			</ul>
+		</p>
+	</statement>
+	</definition>
+
+	<p>
+		For example,
+		the elements of the set <m>\B^3_2</m> are the bit strings 011, 101, and 110.
+		Those are the only strings containing three bits, exactly two of which are 1's.
+	</p>
+
+	<p>
+		The counting questions: How many 5-bit strings have weight 3?
+		In other words,
+		we are asking for the cardinality <m>|\B^5_3|</m>.
+	</p>
+
+	<p>
+		Let's just list them and see how many there are.  
+		<md>
+			<mrow>11100 \qquad 11010 \qquad 10110 \qquad 01110</mrow>
+			<mrow>11001 \qquad 10101 \qquad 01101 \qquad 10011 \qquad 01011 \qquad 00111</mrow>
+		</md>.
+		Great.  Ten of them. Actually, I have a confession: I didn't type all of these from scratch.  Instead I just modified the list of 10 lattice paths from (0,0) to (3,2) that we found earlier.  Each <m>x</m> became a 1 and each <m>y</m> became a 0.  After all, any lattice path with length <m>n</m> that requires <m>k</m> steps in the <m>x</m> direction can be represented by a string of <m>n</m> symbols of two types, with <m>k</m> of those symbols being of one type.  Whether we call the two symbols <m>x</m> and <m>y</m> or we call them <m>1</m> and <m>0</m> will not change <em>how many</em> strings we get. 
+	</p>
+
+	<p> 
+		It is not surprising then that the same relationship between Pascal's triangle and lattice paths holds for bit strings.  Look at the 10 strings above.  The first row contains all the bit strings of <m>\B^5_3</m> that end in a 0.  Before that ending 0, we have a string in <m>\B^4_3</m>, since it must have length 4 and weight 3 (the ending 0 increases the length, but not the weight).  The second row contains all the bit strings of <m>\B^5_3</m> that end in a 1.  Before that ending 1, we have a string in <m>\B^4_2</m>, since it must have length 4 and weight 2 (the ending 1 increases the length and the weight).  So the number of 5-bit strings of weight 3 is the sum of the number of 4-bit strings of weight 3 and the number of 4-bit strings of weight 2.  In symbols: 
+		<me>|\B^5_3| = |\B^4_3| + |\B^4_2|</me>.
+	<idx><h>recurrence relation</h><h>for number of bit strings</h></idx>
+	</p>
+
+	<p>
+		Now we have two good reasons to believe that Pascal's triangle tells us the number of bit strings of a given weight: There is a one-to-one correspondence between lattice paths and bit strings, and the same recursive relationship holds for bit strings as it does for generating Pascal's triangle.  So we can now use the triangle to count bit strings.
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				How many 11-bit strings have weight 5?
+			</p>
+		</statement>
+		<solution>
+			<p>
+				There will be <m>\binom{11}{5}</m> such strings.  From Pascal's triangle, we see that <m>\binom{11}{5} = 462</m>
+			</p>
+			</solution>
+	</example>
+
+<!-- 
+	<p>
+		<idx><h>bit string</h><h>as code for a subset</h></idx>
+		<idx><h>subset</h><h>encoding as bit string</h></idx>
+		But wait
+		<mdash/>32 and 10 were the answers to the counting questions about subsets.
+		Coincidence?
+		Not at all.
+		Each bit string can be thought of as a
+		<em>code</em> for a subset.
+		To represent the subsets of <m>A = \{1,2,3,4,5\}</m>,
+		we can use 5-bit strings, one bit for each element of <m>A</m>.
+		Each bit in the string is a 0 if its corresponding element of <m>A</m> is not in the subset,
+		and a 1 if the element of <m>A</m> is in the subset.
+		Remember, deciding the subset amounted to a sequence of five yes/no votes for the elements of <m>A</m>.
+		Instead of yes, we put a 1; instead of no, we put a 0.
+	</p> -->
+
+	<!-- <p>
+		For example,
+		the bit string <m>11001</m> represents the subset <m>\{1,2,5\}</m> since the first,
+		second and fifth bits are 1's.
+		The subset <m>\{3,5\}</m> would be coded by the string <m>00101</m>.
+		What we really have here is a bijection from <m>\pow(A)</m> to <m>\B^5</m>.
+	</p>
+
+	<p>
+		Now for a subset to contain exactly three elements,
+		the corresponding bit string must contain exactly three 1's.
+		In other words, the weight must be 3.
+		Thus counting the number of 3-element subsets of <m>A</m> is the same as counting the number 5-bit strings of weight 3.
+	</p> -->
+</subsection>
+
+<subsection>
+	<title>Subsets and Pizzas</title>
+	<idx>subset</idx>
+	<idx><h>subset</h><h>counting</h></idx>
+	<p>
+		A <term>subset</term> of a set <m>A</m> is any set all of whose elements are also in <m>A</m>.  Think of starting with the set <m>A</m> and removing some (or none or all) of its elements: the resulting set is a subset of <m>A</m>.
+		(More information about sets can be found in <xref ref="sec_intro-structures"/> and <xref ref="sec_structures-sets"/>.)
+  </p>
+  <p>
+		Suppose we look at the set <m>A = \{1,2,3,4,5\}</m>.
+		How many subsets of <m>A</m> contain exactly 3 elements?
+		Let's list them all:
+		
+		<md>
+			<mrow>\{1,2,3\} \qquad \{1,2,4\} \qquad \{1,3,4\} \qquad \{2,3,4\}</mrow>
+			<mrow>\{1,2,5\} \qquad \{1,3,5\} \qquad \{2,3,5\} \qquad \{1,4,5\} \qquad \{2,4,5\} \qquad \{3,4,5\}</mrow>
+		</md>.
+	</p>
+		
+	<p>
+		Again, we see there are ten.  In fact, we have listed them in the same order as we listed the ten 5-bit strings of weight 3 and the ten lattice paths from (0,0) to (3,2).  Wait, does this even make sense?  In what way is a subset the same as a bit-string?
+	</p>
+
+	<p>
+		Think of each bit in a bit string as representing one of the elements in a set.  The set <m>A</m> has five elements, so we need five bits to represent a subset of <m>A</m>.  If the bit in position <m>n</m> is a 0, that means we do <em>not</em> include <m>n</m> in our subset, while a 1 in that position tells us that <m>n</m> is in the subset.  Three 1's means we have said, <q>yes</q> to three elements.  
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				Which subsets of <m>\{1,2,3,4,5,6\}</m> correspond to the bit strings below?
+				<me>
+					101011 \quad 001000 \quad 111111 \quad 000000
+				</me>
+			</p>
+		</statement>
+		<solution>
+			<p>
+				Here we are not fixing the weight of the strings, so our subsets will not all have the same size.  Here is the correspondence:
+			</p>
+				<tabular>
+					<col right="minor"/><col/>
+					<row>
+						<cell><m>101011</m></cell> <cell><m>\{1,3,5,6\}</m></cell>
+					</row>
+					<row>
+						<cell><m>001000</m></cell> <cell><m>\{3\}</m></cell>
+					</row>
+					<row>
+						<cell><m>111111</m></cell> <cell><m>\{1,2,3,4,5,6\}</m></cell>
+					</row>
+					<row>
+						<cell><m>000000</m></cell> <cell><m>\emptyset</m></cell>
+					</row>
+				</tabular>
+			<p>
+				The last subset is the <term>empty set</term>: the set that contains no elements (we could have also written <m>\{\}</m>).  This is a subset of <em>every</em> set!
+			</p>
+		</solution>
+	</example>
+
+	<remark>
+		<statement>
+			<p>
+				What we have done here is give a <em>bijection</em> between the set of 5-bit strings of weight 3 and the set of 3-element subsets of <m>A</m>.  A <term>bijection</term> is a function <m>f: X \to Y</m> such that each element of <m>Y</m> is the image of exactly one element from <m>X</m>.  You can prove that if there is a bijection between two sets, then they have the same number of elements.  This is a common counting technique we will use in the upcoming sections.
+			</p>
+		</statement>
+	</remark>
+
+	<p>
+		This example illustrates that, once again, Pascal's triangle can give us the answer to a counting question.  The number of <m>k</m>-element subsets of a set with <m>n</m> elements is the same as the number of <m>n</m>-bit strings of weight <m>k</m>, and that is the number in row <m>n</m>, column <m>k</m> of the triangle: <m>\binom{n}{k}</m>.
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				How many subsets of the set <m>\{a,b,c,d,e,f,g\}</m> have exactly 4 elements?
+			</p>
+		</statement>
+		<solution>
+			<p>
+				The set contains 7 elements, so the number of 4-element subsets is the same as the number of 7-bit strings of weight 4, namely <m>\binom{7}{4} = 35</m>.
+			</p>
+		</solution>
+	</example>
+
+	<p>
+		At this point I'm sure we are all getting pretty hungry, so let's get some pizza.  But which pizza shall we order?  Let's not overdo it and just choose three toppings from the ten available.  How many different pizzas can we order? 
+	</p>
+
+	<p>
+		Aha!  So that's why we care about counting subsets!!  Each pizza choice is nothing more than a 3-element subset of the set of 10 toppings.  We now know how to count this: <m>\binom{10}{3} = 120</m> different pizzas.
+	</p>
+
+	<p>
+		What if we want an Italian soda with dinner?  Let's say we want to add two different flavored syrups from the 13 available.  How many different sodas are possible?  This is just the number of 2-element subsets of a set with 13 elements: <m>\binom{13}{2} = 78</m>.
+	</p>
+
+  <p>
+    This is why we pronounce <m>\binom{n}{k}</m> as <q><m>n</m> choose <m>k</m></q>.  It is the number of ways to choose <m>k</m> items from a collection of <m>n</m> items, since choosing <m>k</m> elements is exactly how you build a <m>k</m>-element subset.
+  </p>
+
+	<p>
+		We can view counting lattice paths as choosing <m>k</m> out of <m>n</m> things: Of the <m>n</m> steps on the path, we choose <m>k</m> of them to be in the <m>x</m> direction.  Bit strings can also be thought of in this way: Of the <m>n</m> bits in the string, we choose <m>k</m> of them to be 1's.  
+	</p>
+
+
+	<p>
+		We can now answer all sorts of real-world counting problems, as long as they are really nothing more than asking for the number of subsets of a set.  Pascal's triangle contains all these answers.
+	</p>
+
+	<assemblage xml:id="assemblage-subset-counting">
+		<title>Counting Subsets</title>
+		<p>
+			The number of <m>k</m>-element subsets of a set with <m>n</m> elements is the number in row <m>n</m>, column <m>k</m> of Pascal's triangle: <m>\binom{n}{k}</m>,
+			which we read as <q><m>n</m> choose <m>k</m>.</q>  This is the number of ways to choose <m>k</m> items from a collection of <m>n</m> items.
+		</p>
+	</assemblage>
+
+<!-- 
+	<p>
+		First, a simpler question: How many subsets of <m>A</m> are there total? We call the set of all subsets of a set <m>A</m> the <term>power set</term> of <m>A</m>, written <m>\pow(A)</m>.
+		So we are now asking for
+		for the cardinality of the power set: <m>|\pow(A)|</m>.
+	</p>
+
+	<p>
+		Think about how we would build a subset.
+		We need to decide, for each of the elements of <m>A</m>,
+		whether or not to include the element in our subset.
+		So we need to decide <q>yes</q>
+		or <q>no</q> for the element 1.
+		And for each choice we make,
+		we need to decide <q>yes</q> or
+		<q>no</q> for the element 2.
+		And so on.
+		For each of the 5 elements, we have 2 choices.
+		Therefore the number of subsets is simply <m>2\cdot 2\cdot 2 \cdot 2\cdot 2 = 2^5</m>.
+		(We will make this sort of reasoning more precise in <xref ref="sec_counting-addmult"/>.)
+	</p>
+
+	<p>
+		Of those 32 subsets, how many have 3 elements? This is not obvious. Note that we cannot just use the multiplicative principle. Maybe we want to say we have 2 choices (yes/no) for the first element, 2 choices for the second, 2 choices for the third, and then only 1 choice for the other two. But what if we said <q>no</q> to one of the first three elements? Then we would have two choices for the 4th element. What a mess!
+	</p>
+
+	<p>
+		Another idea: we need to pick three elements to be in our subset. There are 5 elements to choose from. So there are 5 choices for the first element, and for each of those 4 choices for the second, and then 3 for the third (last) element. The multiplicative principle would say then that there are a total of <m>5 \cdot 4 \cdot 3 = 60</m> ways to select the 3-element subset. But this cannot be correct (<m>60 &gt; 32</m> for one thing). One of the outcomes we would get from these choices would be the set <m>\{3,2,5\}</m>, by choosing the element 3 first, then the element 2, then the element 5. Another outcome would be <m>\{5,2,3\}</m> by choosing the element 5 first, then the element 2, then the element 3. But these are the same set! We can correct this by dividing: for each set of three elements, there are 6 outcomes counted among our 60 (since there are 3 choices for which element we list first, 2 for which we list second, and 1 for which we list last). So we expect there to be 10 3-element subsets of <m>A</m>.
+	</p> -->
+
+	<!-- <p>
+		Is this right? Well, we could list out all 10 of them, being very systematic in doing so, to make sure we don't miss any or list any twice. Or we could try to count how many subsets of <m>A</m> <em>don't</em> have 3 elements in them. How many have no elements? Just 1 (the empty set). How many have 5? Again, just 1. These are the cases in which we say <q>no</q> to all elements, or <q>yes</q> to all elements. Okay, what about the subsets which contain a single element? There are 5 of these. We must say <q>yes</q> to exactly one element, and there are 5 to choose from. This is also the number of subsets containing 4 elements. Those are the ones for which we must say <q>no</q> to exactly one element.
+	</p> -->
+
+	<!-- <p>
+		So far we have counted 12 of the 32 subsets. We have not yet counted the subsets with cardinality 2 and with cardinality 3. There are a total of 20 subsets left to split up between these two groups. But the number of each must be the same! If we say <q>yes</q> to exactly two elements, that can be accomplished in exactly the same number of ways as the number of ways we can say <q>no</q> to exactly two elements. So the number of 2-element subsets is equal to the number of 3-element subsets. Together there are 20 of these subsets, so 10 each.
+	</p> -->
+
+	<!-- <sidebyside>
+		<tabular>
+			<row bottom="minor" halign="center">
+			<cell>Number of elements:</cell>
+			<cell>0</cell>
+			<cell>1</cell>
+			<cell>2</cell>
+			<cell>3</cell>
+			<cell>4</cell>
+			<cell>5</cell>
+			</row>
+			<row halign="center">
+			<cell>Number of subsets:</cell>
+			<cell>1</cell>
+			<cell>5</cell>
+			<cell>10</cell>
+			<cell>10</cell>
+			<cell>5</cell>
+			<cell>1</cell>
+			</row>
+		</tabular>
+	</sidebyside> -->
+</subsection>
+
+<subsection>
+	<title>Algebra?</title>
+	<idx>binomial coefficient</idx>
+	<p>
+		Earlier we said that one of the original uses for Pascal's triangle was to solve problems in <em>algebra</em>.  What does counting subsets (or bit strings or lattice paths) have to do with algebra?
+	</p>
+
+	<p>
+		Suppose you expand the binomial expression <m>(x+1)^6</m> (i.e., multiply the binomial <m>x+1</m> by itself six times).  This can be tedious to do by hand, but a computer algebra system such as SageMath can do this easily.  
+	</p>
+
+	<sage>
+		<input>
+			expand((x+1)^6)
+		</input>
+		<output>
+			x^6 + 6*x^5 + 15*x^4 + 20*x^3 + 15*x^2 + 6*x + 1
+		</output>
+	</sage>
+
+	<p>
+		Do the coefficients look familiar?  Consider the 6th row of Pascal's triangle:
+		<me>
+			1 \quad 6 \quad 15 \quad 20 \quad 15 \quad 6 \quad 1
+		</me>.
+		Why are these the coefficients?
+	</p>
+
+	<exercise label="chkpt-counting-pascal-1">
+		<statement>
+			<p>
+				Modify the SageMath code above to expand <m>(x+1)^{10}</m>.  What is the coefficient of <m>x^6</m>?
+			</p>
+			<p component="interactive">
+				<var width="5"/>.
+			</p>
+		</statement>
+		<setup>
+			<var>
+				<condition number="210">
+					<feedback>
+						<p>
+							Correct.  The coefficient of <m>x^6</m> is 210, which also happens to be <m>\binom{10}{6}</m>.
+						</p>
+					</feedback>
+				</condition>
+				<condition string=".*">
+					<feedback>
+						<p>
+							No, that is not the coefficient of <m>x^6</m>.  Try executing the SageMath cell above after changing the exponent to 10.
+						</p>
+					</feedback>
+				</condition>
+			</var>
+		</setup>
+	</exercise>
+
+	<p>
+		To see why this is more than just a coincidence, let's look at the expansion of <m>(x+y)^3</m> and do it very carefully.  We are really multiplying out <me>(x+y)(x+y)(x+y)</me>.  This means we must distribute the binomials, which looks like the following. (We will use a different typeface for each version of the <m>x</m> and <m>y</m> to keep track of where everything comes from.)
+		
+		<md>
+			<mrow>(x+y)^3 = \amp (x+y)(\x+\y)(\X+\Y)</mrow>
+			<mrow> = \amp [(x+y)(\x+\y)]\X + [(x+y)(\x+\y)]\Y</mrow>
+			<mrow>= \amp [(x+y)\x + (x+y)\y]\X + [(x+y)\x+ (x+y)\y] \Y</mrow>
+			<mrow>= \amp [x\x + y\x + x\y + y\y]\X + [x\x + y\x + x\y + y\y]\Y </mrow>
+			<mrow>= \amp x\x\X + y\x\X + x\y\X + y\y\X + x\x\Y + y\x\Y + x\y\Y + y\y\Y</mrow>
+		</md>.
+		This repeated distribution results in a sum of terms, each the product of three variables.  We see that each term is the result of <em>choosing</em> either the <m>x</m> or the <m>y</m> from each of the binomials.  For example, the term <m>x\y\X</m> is the result of choosing the <m>x</m> from the first binomial, the <m>\y</m> from the second, and the <m>\X</m> from the third.  
+	</p>
+
+	<p>
+		Say we want to find the coefficient of the <m>x^2y</m> therm.  We collect like terms, collecting all the terms in which we have chosen <m>x</m> two times (and <m>y</m> the other one time).  Alternatively, the <m>x^2y</m> term comes from all the strings with two <m>x</m> and one <m>y</m>, just like a bit string or lattice path.  No matter how you think of it, the result is that we have <m>\binom{3}{2} = 3</m> terms with the form <m>x^2y</m>.  
+	</p>
+
+	<p>
+		Hopefully it is clear that this generalizes to the expansion of <m>(x+y)^n</m> for any positive integer <m>n</m>.  This is known as the <em>binomial theorem.</em>
+	</p>
+
+	<theorem xml:id="thm-binomial">
+		<title>Binomial Theorem</title>
+		<idx><h>binomial theorem</h></idx>
+		<statement>
+			<p>
+				The <m>n</m>th row of Pascal's triangle gives the coefficients of the expansion of <m>(x+y)^n</m>.  That is, for any positive integer <m>n</m>,
+				<me>
+					(x+y)^n = \binom{n}{0}x^n + \binom{n}{1}x^{n-1}y + \cdots + \binom{n}{n-1}xy^{n-1} + \binom{n}{n}y^n.
+				</me>,
+				so the coefficient of <m>x^ky^{n-k}</m> is <m>\binom{n}{k}</m>.
+			</p>
+		</statement>
+	</theorem>
+
+	<p>
+		<idx><h>binomial coefficient</h></idx>
+		For this reason, the numbers in Pascal's triangle are often called <term>binomial coefficients</term>.
+	</p>
+
+	<example>
+		<statement>
+			<p>
+				Without multiplying out the binomial, give the expansion of <m>(x+y)^5</m>.
+			</p>
+		</statement>
+		<solution>
+			<p>
+				We take the 5th row of Pascal's triangle: <m>1, 5, 10, 10, 5, 1</m>.  The expansion is then,
+				<me>
+					(x+y)^5 = x^5 + 5x^4y + 10x^3y^2 + 10x^2y^3 + 5xy^4 + y^5.
+				</me>
+			</p>
+		</solution>
+	</example>
+
+</subsection>
+
+
+<reading-questions xml:id="rqs-counting-pascal">
+<exercise label="rq-counting-pascal-equiv">
+	<statement>
+		<p>
+			Why is the number of lattice paths from <m>(0,0)</m> to <m>(3,5)</m> the same as the number of <m>8</m>-bit strings with weight 5?
+		</p>
+	</statement>
+	<response/>
+</exercise>
+
+<exercise label="rq-counting-pascal-not">
+	<statement>
+		<p>
+			Which of the following counting questions have the answer <m>\binom{11}{5}</m>?  Select all that apply.
+		</p>
+	</statement>
+	<choices randomize="yes">
+		<choice correct="no">
+			<statement>
+				<p>
+					How many lattice paths are there from <m>(0,0)</m> to <m>(11,5)</m>?
+				</p>
+			</statement>
+			<feedback>
+				<p>
+					Careful, paths from <m>(0,0)</m> to <m>(11,5)</m> will have length <m>11+5 = 16</m>, so the answer to this question would be <m>\binom{16}{5}</m>.
+				</p>
+			</feedback>
+		</choice>
+		<choice correct="yes">
+			<statement>
+				<p>
+					How many subsets of <m>\{1,2,\ldots, 11\}</m> contain exactly 5 elements?
+				</p>
+			</statement>
+			<feedback>
+				<p>
+					Correct.  We must choose 5 out of 11 elements.
+				</p>
+			</feedback>
+		</choice>
+		<choice correct="yes">
+			<statement>
+				<p>
+					How many 11-bit strings have weight 5?
+				</p>
+			</statement>
+			<feedback>
+				<p>
+					Exactly.  Of the 11 bits in the string, we must choose 5 to be 1's.
+				</p>
+			</feedback>
+		</choice>
+		<choice correct="yes">
+			<statement>
+				<p>
+					How many ways can you select 5 flavors of ice cream for a giant sundae from 11 available flavors?
+				</p>
+			</statement>
+			<feedback>
+				<p>
+					Yes.  This is the same as choosing 5 elements from a set of 11.
+				</p>
+			</feedback>
+		</choice>
+	</choices>
+	</exercise>
+
+<exercise label="rq-counting-pascal-recurrence">
+	<statement>
+		<p>
+			The number of subsets of <m>\{1,2,\ldots, 8\}</m> of size 3 is the same as the number of subsets of <m>\{1,2,\ldots, 7\}</m> of size either <m>2</m> or <m>3</m>.
+			Explain why this makes sense.
+		</p>
+	</statement>
+	<response />
+</exercise>
+
+<exercise label="rq-counting-pascal-q" component="runestone">
+	<statement>
+		<p>
+			What questions do you have after reading this section? Write at least one question about
+			the content of this section that you are curious about.
+		</p>
+	</statement>
+	<response />
+</exercise>
+</reading-questions>
+<xi:include href="practice/counting-pascal.ptx"/>
+<xi:include href="exercises/counting-pascal.ptx"/>
+</section>

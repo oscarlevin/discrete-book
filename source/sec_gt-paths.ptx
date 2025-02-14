@@ -1,146 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_paths" permid="tPg">
-  <title>Euler Paths and Circuits</title>
-  <idx><h>path</h><h>Euler</h></idx>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_gt-paths">
+  <title>Euler Trails and Circuits</title>
+  <idx><h>trail</h><h>Euler</h></idx>
   <idx><h>path</h><h>Hamilton</h></idx>
   <idx><h>circuit</h><h>Euler</h></idx>
   <idx><h>cycle</h><h>Hamilton</h></idx>
-  <idx><h>Euler path</h></idx>
+  <idx><h>Euler trail</h></idx>
   <idx><h>Euler circuit</h></idx>
   <idx><h>Hamilton path</h></idx>
   <idx><h>Hamilton cycle</h></idx>
-  <idx><h>trail</h><h>Euler</h><see>Euler path</see></idx>
-  <idx><h>walk</h><h>Euler</h><see>Euler path</see></idx>
+  <idx><h>path</h><h>Euler</h><see>Euler trail</see></idx>
+  <idx><h>walk</h><h>Euler</h><see>Euler trail</see></idx>
   <idx><h>tour, Euler</h><see>Euler circuit</see></idx>
-  <introduction permid="DiS">
-    <investigation permid="jqb">
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+          Identify whether a graph or multigraph has an Euler trail or circuit.
+				</p>
+			</li>
 
-      <p permid="ikI">
-        An <term>Euler path</term>, in a graph or multigraph,
-        is a walk through the graph which uses every edge exactly once.
-        An <term>Euler circuit</term> is an Euler path which starts and stops at the same vertex.
-        Our goal is to find a quick way to check whether a graph
-        (or multigraph)
-        has an Euler path or circuit.
+			<li>
+				<p>
+          Justify why the necessary condition for a graph having an Euler trail is necessary.
+				</p>
+			</li> 
+			<li>
+				<p>
+          Distinguish between Euler trails and Hamilton paths, and decide which is more appropriate to use for a given problem.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+  <subsection>
+    <title>Section Preview</title>
+    
+    
+    <investigation>
+      <statement>
+        <p>
+          A spider is standing on one face of an octahedron (a polyhedron with eight triangular faces).  She wants to crawl along the solid from face to face so that she crosses each edge exactly once.  Is this possible?  If so, how?
+        </p>
 
-        <ol permid="bLC">
-          <li permid="Uhd">
-            <p permid="YQW">
-              Which of the graphs below have Euler paths?
-              Which have Euler circuits?
-            </p>
-
-            <sidebyside widths="18% 18% 36% 22%" margins="auto" valign="middle" permid="eGi">
-
-              <image permid="jZV">
-                <latex-image>
-                  \begin{tikzpicture}[scale=0.9]
-                    \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                    \draw (-1,2) -- (0,3) \v -- (1,2);
-                  \end{tikzpicture}
-                </latex-image>
-                <description>
-                  A graph with six vertices.  Four vertices form a square, with another vertex centered inside the square, and the last vertex centered above the square.  Edges connect the corners of the square, and connect each corner to the center vertex.  The top two vertices of the square is adjacent to the vertex above the square.
-                </description>
-              </image>
-
-              <image permid="Qhe">
-                <latex-image>
-                  \begin{tikzpicture}[scale=0.9]
-                    \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                  \end{tikzpicture}
-                </latex-image>
-                <description>
-                  A graph with five vertices: four arranged in a square with the last one at the center of the square.  Edges connect neighboring vertices of the square, and the center vertex is adjacent to each vertex of the square.
-                </description>
-              </image>
-
-              <image permid="won">
-                <latex-image>
-                  \begin{tikzpicture}[scale=0.9]
-                    \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
-                    \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
-                  \end{tikzpicture}
-                </latex-image>
-                <description>
-                  A graph with seven vertices.  Four vertices form the corners of a square, the remaining three are in a middle row, with one to the left, one in the center, and one to the right of the square.  Edges form the sides of the square.  Each vertex in the square is adjacent to the two middle-row vertices closest to it.
-                </description>
-              </image>
-
-              <image permid="cvw">
-                <latex-image>
-                  \begin{tikzpicture}[yscale=.45]
-                    \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
-                      \draw (1,0) \v -- (-1,2) (-1,0) -- (1,0) -- (-1,-2);
-                  \end{tikzpicture}
-                </latex-image>
-                <description>
-                  Three vertices aligned in a vertical column left of a single vertex on the right.  Edges connect the vertex on the right to each vertex on the left.  Among the vertices on the left, two arced edges connect the bottom vertex to the center vertex, and two more connect the center vertex to the top vertex.
-                </description>
-              </image>
-            </sidebyside>
-
-          </li>
-
-          <li permid="Aom">
-            <p permid="EYf">
-              List the degrees of each vertex of the graphs above.
-              Is there a connection between degrees and the existence of Euler paths and circuits?
-            </p>
-          </li>
-
-          <li permid="gvv">
-            <p permid="lfo">
-              Is it possible for a graph with a degree 1 vertex to have an Euler circuit?
-              If so, draw one.
-              If not, explain why not.
-              What about an Euler path?
-            </p>
-          </li>
-
-          <li permid="MCE">
-            <p permid="Rmx">
-              What if every vertex of the graph has degree 2.
-              Is there an Euler path?
-              An Euler circuit?
-              Draw some graphs.
-            </p>
-          </li>
-
-          <li permid="sJN">
-            <p permid="xtG">
-              Below is <em>part</em> of a graph.
-              Even though you can only see some of the vertices,
-              can you deduce whether the graph will have an Euler path or circuit?
-            </p>
-
-
-              <image width="54%" permid="ICF">
-                <latex-image>
-                  \begin{tikzpicture}[scale=0.9]
-                    \draw (-2,0) \v -- (0,1) \v -- (2,0) \v;
-                    \draw (-2,0) -- (-2.5, -.5) (-2,0) -- (-2, -.5) (-2,0) -- (-1.5,-.5);
-                    \draw[dashed] (-2.5, -.5) -- (-3, -1) (-2,-.5) -- (-2,-1) (-1.5,-.5) -- (-1,-1);
-                      \draw (2,0) -- (2.5, -.5) (2,0) -- (2, -.5) (2,0) -- (1.5,-.5);
-                    \draw[dashed] (2.5, -.5) -- (3, -1) (2,-.5) -- (2,-1) (1.5,-.5) -- (1,-1);
-                      \draw (0,1) -- (-.25, 0) (0,1) -- (0, 0) (0,1) -- (.25,0);
-                    \draw[dashed] (-.25, 0) -- (-.5, -1) (0,0) -- (0,-1) (.25,0) -- (.5,-1);
-                  \end{tikzpicture}
-                </latex-image>
-                <description>
-                  Three vertices.  The center vertex is adjacent to the two on either side of it.  Each vertex has three dashed edges emanating downward (to illustrate that they go somewhere, but their other endpoints are not shown). 
-                </description>
-              </image>
-
-          </li>
-        </ol>
-      </p>
+            <image width="30%">
+              <shortdescription>An octahedron</shortdescription>
+              <latex-image>
+                \begin{tikzpicture}[line join=bevel,z=-3]
+                \coordinate (A1) at (0,0,-1);
+                \coordinate (A2) at (-1,0,0);
+                \coordinate (A3) at (0,0,1);
+                \coordinate (A4) at (1,0,0);
+                \coordinate (B1) at (0,1,0);
+                \coordinate (C1) at (0,-1,0);
+                
+                \draw (A1) -- (A2) -- (B1) -- cycle;
+                \draw (A4) -- (A1) -- (B1) -- cycle;
+                \draw (A1) -- (A2) -- (C1) -- cycle;
+                \draw (A4) -- (A1) -- (C1) -- cycle;
+                \draw [fill opacity=0.7,fill=blue!5!pink] (A2) -- (A3) -- (B1) -- cycle;
+                \draw [fill opacity=0.7,fill=pink!80!blue] (A3) -- (A4) -- (B1) -- cycle;
+                \draw [fill opacity=0.7,fill=blue!25!black] (A2) -- (A3) -- (C1) -- cycle;
+                \draw [fill opacity=0.7,fill=purple!75!black] (A3) -- (A4) -- (C1) -- cycle;
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+      </statement>
     </investigation>
-    <p permid="OrR">
+    <p>
       <idx><h>walk</h></idx>
-      <idx><h>Euler path</h></idx>
-      <idx><h>path</h><h>Euler</h></idx>
+      <idx><h>Euler trail</h></idx>
+      <idx><h>trail</h><h>Euler</h></idx>
       <idx><h>Euler circuit</h></idx>
       <idx><h>circuit</h>Euler</idx>
       If we start at a vertex and trace along edges to get to other vertices,
@@ -148,27 +83,27 @@
       More precisely, a <term>walk</term>
       in a graph is a sequence of vertices such that every vertex in the sequence is adjacent to the vertices before and after it in the sequence.
       If the walk travels along every edge exactly once,
-      then the walk is called an <term>Euler path</term>
-      (or <term>Euler walk</term>).
+      then the walk is called an <term>Euler trail</term>
+      (or <term>Euler walk</term> or <term>Euler path</term>).
       If, in addition, the starting and ending vertices are the same
       (so you trace along every edge exactly once and end up where you started),
       then the walk is called an <term>Euler circuit</term>
       (or <term>Euler tour</term>).
       Of course if a graph is not connected,
-      there is no hope of finding such a path or circuit.
+      there is no hope of finding such a trail or circuit.
       For the rest of this section,
       assume all the graphs discussed are connected.
     </p>
 
-    <p permid="uza">
+    <p>
       <idx><h>Königsberg, Seven Bridges of</h></idx>
       <idx><h>Seven Bridges of Königsberg</h></idx>
-      The bridges of Königsberg problem is really a question about the existence of Euler paths.
-      There will be a route that crosses every bridge exactly once if and only if the graph below has an Euler path:
+      The bridges of Königsberg problem is really a question about the existence of Euler trails.
+      There will be a route that crosses every bridge exactly once if and only if the multigraph below has an Euler trail:
     </p>
 
 
-    <image width="22%" permid="oJO">
+    <image width="22%">
       <latex-image>
         \begin{tikzpicture}[scale=1, yscale=.5]
           \draw (-1,-2) \v to [out=120, in=240] (-1,0) \v to [out=120, in=240] (-1,2) \v to [out=300, in=60] (-1,0) to [out=300, in=60] (-1,-2);
@@ -181,24 +116,304 @@
     </image>
 
 
-    <p permid="aGj">
+    <p>
       This graph is small enough that we could actually check every possible walk that does not reuse edges,
-      and in doing so convince ourselves that there is no Euler path
+      and in doing so convince ourselves that there is no Euler trail
       (let alone an Euler circuit).
-      On small graphs which do have an Euler path,
+      On small graphs that do have an Euler trail,
       it is usually not difficult to find one.
-      Our goal is to find a quick way to check whether a graph has an Euler path or circuit,
+      Our goal is to find a quick way to check whether a graph has an Euler trail or circuit,
       even if the graph is quite large.
     </p>
 
-    <p permid="GNs">
+
+    <worksheet xml:id="PA-gt-paths">
+      <title>Preview Activity</title>
+      <introduction>
+        <p>
+          Which of the graphs below have an Euler trail?
+          Which have an Euler circuit?
+        </p>
+
+        <sbsgroup widths="30% 30% 30%" valign="bottom">
+          <sidebyside>
+            <image>
+              <shortdescription>A graph</shortdescription>
+              <latex-image>
+                \begin{tikzpicture}
+                  \draw (0,0) \v -- (-1,1) \v -- (-1.5,2) \v (-1,1) -- (-.5,2) \v (0,0) -- (1,1) \v -- (.5,2) \v (1,1) -- (1.5,2) \v;
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+
+
+            <image>
+              <shortdescription></shortdescription>
+              <latex-image>
+                \usetikzlibrary{calc}                  
+                \begin{tikzpicture}
+
+                \coordinate (A) at (-30:2);
+                \coordinate (B) at (90:2);
+                \coordinate (C) at (210:2);
+                \coordinate (a) at ($(B)!.5!(C) $);
+                \coordinate (b) at ($ (A)!.5!(C) $);
+                \coordinate (c) at ($ (A)!.5!(B) $);
+                
+                \draw (A) \v -- (B) \v -- (C) \v -- (A);
+                \draw (b) \v -- (B);
+                \draw (a) \v -- (b) \v -- (c) \v -- (a);
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+
+            <image>
+              <shortdescription></shortdescription>
+              <latex-image>
+                \begin{tikzpicture}
+                \draw (0,0) \v -- (60:2) \v -- (120:2) \v -- (0,0) -- (0:2) \v -- (-60:2) \v -- (0,0) -- (180:2) \v -- (240:2) \v -- (0,0);
+            \end{tikzpicture}
+              </latex-image>
+            </image>
+          </sidebyside>
+
+        
+
+          <sidebyside>
+            <p>
+              <me>G_1</me>
+            </p>
+
+            <p>
+              <me>G_2</me>
+            </p>
+
+            <p>
+              <me>G_3</me>
+            </p>
+          </sidebyside>
+        </sbsgroup>
+
+        <sbsgroup widths="20% 40% 30%" margins="auto" valign="bottom">
+
+  
+        <sidebyside >
+
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,2) -- (0,3) \v -- (1,2);
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with six vertices.  Four vertices form a square, with another vertex centered inside the square, and the last vertex centered above the square.  Edges connect the corners of the square, and connect each corner to the center vertex.  The top two vertices of the square is adjacent to the vertex above the square.
+            </description>
+          </image>
+
+
+          <image>
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw (-1,0) \v -- (1,0)\v -- (1,2) \v -- (-1, 2) \v -- (-1,0) -- (1,2) (-1,2) -- (1,0) (0,1) \v;
+                \draw (-1,0) -- (-2,1) \v -- (-1,2) (1,2) -- (2,1) \v -- (1,0);
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              A graph with seven vertices.  Four vertices form the corners of a square, the remaining three are in a middle row, with one to the left, one in the center, and one to the right of the square.  Edges form the sides of the square.  Each vertex in the square is adjacent to the two middle-row vertices closest to it.
+            </description>
+          </image>
+
+          <image>
+            <description>A drawing of a cube</description>
+            <latex-image label="planar-cube">
+              \begin{tikzpicture}
+                \draw (0,0) \v -- (1,0) \v -- (1,1) \v -- (0,1) \v -- (0,0);
+                \draw (-.5,-.5) \v -- (-.5,1.5) \v -- (1.5,1.5) \v -- (1.5,-.5) \v -- (-.5,-.5);
+                \draw (0,0) -- (-.5,-.5) (1,0) -- (1.5,-.5) (1,1) -- (1.5,1.5) (0,1) -- (-.5,1.5);
+              \end{tikzpicture}
+            </latex-image>
+            </image>
+        </sidebyside>
+        
+        <sidebyside>
+          <p>
+            <me>G_4</me>
+          </p>
+
+          <p>
+            <me>G_5</me>
+          </p>
+
+          <p>
+            <me>G_6</me>
+          </p>
+        </sidebyside>
+      </sbsgroup>
+
+      </introduction>
+      <exercise workspace=".25in" label="pa-gt-paths-1" component="interactive">
+
+        <webwork>
+          <pg-code>
+            $eCirc = PopUp(["?", "an Euler trail", "an Euler circuit and trail", "Neither"],2);
+            $eTrail = PopUp(["?", "an Euler trail", "an Euler circuit and trail", "Neither"],1);
+            $Neither = PopUp(["?", "an Euler trail", "an Euler circuit and trail", "Neither"],3);
+          </pg-code>
+
+          <statement>
+            <p>
+              <m>G_1</m> has <var name="$Neither" form="popup"/>.  <m>G_2</m> has <var name="$eTrail" form="popup"/>.  <m>G_3</m> has <var name="$eCirc" form="popup"/>
+            </p>
+            <p>
+              <m>G_4</m> has <var name="$eTrail" form="popup"/>.  <m>G_5</m> has <var name="$eCirc" form="popup"/>.  <m>G_6</m> has <var name="$Neither" form="popup"/>
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
+      <exercise label="pa-gt-paths-2">
+        <webwork>
+
+        <statement>
+          <p>
+              Write down the degree sequence of the graphs above.
+          </p>
+          <p component="interactive">
+            <m>G_1</m>: <var name="List(3,3,2,1,1,1,1)" width="15"/>
+          </p>
+          <p component="interactive">
+            <m>G_2</m>: <var name="List(5,4,4,3,2,2)" width="15"/>
+          </p>
+          <p component="interactive">
+            <m>G_3</m>: <var name="List(6,2,2,2,2,2,2)" width="15"/>
+          </p>
+          <p component="interactive">
+            <m>G_4</m>: <var name="List(4,4,4,3,3,2)" width="15"/>
+          </p>
+          <p component="interactive">
+            <m>G_5</m>: <var name="List(4,4,4,4,4,2,2)" width="15"/>
+          </p>
+          <p component="interactive">
+            <m>G_6</m>: <var name="List(3,3,3,3,3,3,3,3)" width="15"/>
+          </p>
+          <p>
+            What might the connection be between the degree sequence and the existence of an Euler trail or circuit?
+          </p>
+        </statement>
+        </webwork>
+      </exercise>
+
+      <exercise label="pa-gt-paths-3">
+        <webwork>
+          <pg-code>
+            $oddChoices = CheckboxList([
+            "The vertex could appear at the start and end of the Euler trail.",
+            "The vertex could appear at the start or end of the Euler trail, but not both.", 
+            "The vertex could appear only in the middle of the Euler trail.",
+            "The vertex cannot appear in the Euler trail at all.", 
+            "There must be another vertex with odd degree that also appears at the start or end of the Euler trail."
+            ],
+            [1,4]);
+          </pg-code>
+        
+          <introduction>
+            <p>
+              One way to write down an Euler trail or circuit is to list the <em>edges</em> in order.  Each edge will be a pair of vertices, and to indicate what direction we travel over that edge, we can write it as an ordered pair rather than a set.  For example, consider this graph:
+            </p>
+            <image width="30%">
+              <shortdescription>a short path</shortdescription>
+              <latex-image>
+                \begin{tikzpicture}
+                  \draw (0,0) \vb{\(a\)} -- (1,1) \vb{\(b\)} -- (2,0) \vb{\(c\)} -- (3,1) \vb{\(d\)};
+                \end{tikzpicture}
+              </latex-image>
+            </image>
+            <p>
+              There are two Euler trails we could write:
+              <me>
+                (a,b), (b,c), (c,d) \qquad \text{or} \qquad (d,c), (c,b), (b,a)
+              </me>.
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                Write down an Euler trail for the graph below.
+              </p>
+              <image width="40%">
+                <shortdescription></shortdescription>
+                <latex-image>
+                  \begin{tikzpicture}
+
+                    \draw (0,0) \vb{\(a\)} -- (1,0) \vb{\(b\)} -- (2,1) \vb{\(c\)} -- (3,0) \vb{\(e\)} -- (2,-1) \vb{\(d\)} -- (1,0) -- (3,0) -- (4,0)\vb{\(f\)};
+                  \end{tikzpicture}
+                </latex-image>
+              </image>
+              <p>
+                For each vertex, write down its degree and the number of times it appears in your list of edges.
+              </p>
+              <tabular component="interactive">
+                <row header="yes">
+                  <cell>vertex </cell><cell>degree</cell><cell>times listed</cell>
+                </row>
+                <row>
+                  <cell><m>a</m></cell><cell><var name="1" width="5"/></cell><cell><var name="1" width="5"/></cell>
+                </row>
+                <row>
+                  <cell><m>b</m></cell><cell><var name="4" width="5"/></cell><cell><var name="4" width="5"/></cell>
+                </row>
+                <row>
+                  <cell><m>c</m></cell><cell><var name="2" width="5"/></cell><cell><var name="2" width="5"/></cell>
+                </row>
+                <row>
+                  <cell><m>d</m></cell><cell><var name="2" width="5"/></cell><cell><var name="2" width="5"/></cell>
+                </row>
+                <row>
+                  <cell><m>e</m></cell><cell><var name="4" width="5"/></cell><cell><var name="4" width="5"/></cell>
+                </row>
+                <row>
+                  <cell><m>f</m></cell><cell><var name="1" width="5"/></cell><cell><var name="1" width="5"/></cell>
+                </row>
+              </tabular>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Suppose you have a graph with degree sequence <m>(4,2,2,2,2)</m> that has an Euler trail.  How many times will the name of the degree 4 vertex appear in your list of edges?
+              </p>
+              <p>
+                <var name="4" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Suppose you have a graph with an Euler trail written as a list of edges.  What can you conclude about a vertex that appears exactly 3 times in the list?  Select all the choices that could be true.
+              </p>
+              <p component="interactive">
+                <var name="$oddChoices" form="checkboxes"/>
+              </p>
+            </statement>
+          </task>
+        </webwork>
+
+      </exercise>
+    </worksheet>
+  </subsection>
+
+    <subsection>
+      <title>Conditions for Euler Trails</title>
+      
+    <p>
       One way to guarantee that a graph does <em>not</em>
       have an Euler circuit is to include a
       <q>spike,</q> a vertex of degree 1.
     </p>
 
 
-      <image width="23%" permid="UQX">
+      <image width="23%">
         <latex-image>
           \begin{tikzpicture}
             \draw (-1,0) \v -- (0,1) \v -- (1,0) \v -- cycle;
@@ -211,123 +426,69 @@
       </image>
 
 
-    <p permid="mUB">
-      The vertex <m>a</m> has degree 1, and if you try to make an Euler circuit,
-      you see that you will get stuck at the vertex.
-      It is a dead end.
-      That is, unless you start there.
-      But then there is no way to return,
-      so there is no hope of finding an Euler circuit.
-      There is however an Euler path.
-      It starts at the vertex <m>a</m>,
-      then loops around the triangle.
-      You will end at the vertex of degree 3.
+    <p>
+      The vertex <m>a</m> has degree 1, and if you try to make an Euler circuit, you see that you will get stuck at the vertex. It is a dead end. That is, unless you start there. But then there is no way to return, so there is no hope of finding an Euler circuit. There is however an Euler trail. It starts at the vertex <m>a</m>, then loops around the triangle. You will end at the vertex of degree 3.
     </p>
 
-    <p permid="TbK">
-      You run into a similar problem whenever you have a vertex of any odd degree.
-      If you start at such a vertex,
-      you will not be able to end there
-      (after traversing every edge exactly once).
-      After using one edge to leave the starting vertex,
-      you will be left with an even number of edges emanating from the vertex.
-      Half of these could be used for returning to the vertex,
-      the other half for leaving.
-      So you return, then leave.
-      Return, then leave.
-      The only way to use up all the edges is to use the last one by leaving the vertex.
-      On the other hand,
-      if you have a vertex with odd degree that you do not start a path at,
-      then you will eventually get stuck at that vertex.
-      The path will use pairs of edges incident to the vertex to arrive and leave again.
-      Eventually all but one of these edges will be used up,
-      leaving only an edge to arrive by, and none to leave again.
+    <p>
+      You run into a similar problem whenever you have a vertex of any odd degree. If you start at such a vertex, you will not be able to end there (after traversing every edge exactly once). After using one edge to leave the starting vertex, you will be left with an even number of edges emanating from the vertex. Half of these could be used for returning to the vertex, the other half for leaving. So you return, then leave. Return, then leave. The only way to use up all the edges is to use the last one by leaving the vertex. On the other hand, if you have a vertex with odd degree at which you do not start a trail, then you will eventually get stuck at that vertex. The trail will use pairs of edges incident to the vertex to arrive and leave again. Eventually all but one of these edges will be used up, leaving only an edge to arrive by, and none to leave again.
     </p>
 
-    <p permid="ziT">
-      What all this says is that if a graph has an Euler path and two vertices with odd degree,
-      then the Euler path must start at one of the odd degree vertices and end at the other.
-      In such a situation, every other vertex <em>must</em>
-      have an even degree since we need an equal number of edges to get to those vertices as to leave them.
-      How could we have an Euler circuit?
-      The graph could not have any odd degree vertex as an Euler path would have to start there or end there,
-      but not both.
-      Thus for a graph to have an Euler circuit,
-      all vertices must have even degree.
+    <p>
+      What all this says is that if a graph has an Euler trail and two vertices with odd degree, then the Euler trail must start at one of the odd-degree vertices and end at the other. In such a situation, every other vertex <em>must</em> have an even degree since we need an equal number of edges to get to those vertices as to leave them. How could we have an Euler circuit? The graph could not have any odd-degree vertex as an Euler trail would have to start there or end there, but not both. Thus for a graph to have an Euler circuit, all vertices must have even degree.
     </p>
 
-    <p permid="fqc">
-      The converse is also true:
-      if all the vertices of a graph have even degree,
-      then the graph has an Euler circuit,
-      and if there are exactly two vertices with odd degree,
-      the graph has an Euler path.
-      To prove this is a little tricky,
-      but the basic idea is that you will never get stuck because there is an <q>outbound</q>
-      edge for every <q>inbound</q> edge at every vertex.
-      If you try to make an Euler path and miss some edges,
-      you will always be able to <q>splice in</q>
-      a circuit using the edges you previously missed.
+    <p>
+      The converse is also true: if all the vertices of a graph have even degree, then the graph has an Euler circuit, and if there are exactly two vertices with odd degree, the graph has an Euler trail. To prove this is a little tricky, but the basic idea is that you will never get stuck because there is an <q>outbound</q> edge for every <q>inbound</q> edge at every vertex. If you try to make an Euler trail and miss some edges, you will always be able to <q>splice in</q> a circuit using the edges you previously missed.
     </p>
 
-    <assemblage permid="Gdy">
-      <title>Euler Paths and Circuits</title>
-      <idx><h>Euler path</h></idx>
-      <idx><h>path</h><h>Euler</h></idx>
+    <assemblage>
+      <title>Euler Trails and Circuits</title>
+      <idx><h>Euler trail</h></idx>
+      <idx><h>trail</h><h>Euler</h></idx>
       <idx><h>Euler circuit</h></idx>
       <idx><h>circuit</h>Euler</idx>
-      <p permid="Lxl">
-        <ul permid="vEt">
-          <li permid="HSL">
-            <p permid="dAP">
+      <p>
+        <ul>
+          <li>
+            <p>
               A graph has an Euler circuit if and only if the degree of every vertex is even.
             </p>
           </li>
 
-          <li permid="nZU">
-            <p permid="JHY">
-              A graph has an Euler path if and only if there are at most two vertices with odd degree.
+          <li>
+            <p>
+              A graph has an Euler trail if and only if there are at most two vertices with odd degree.
             </p>
           </li>
         </ul>
       </p>
     </assemblage>
 
-    <p permid="rEu">
-      Since the bridges of Königsberg graph has all four vertices with odd degree,
-      there is no Euler path through the graph.
-      Thus there is no way for the townspeople to cross every bridge exactly once.
+    <p>
+      Since the bridges of Königsberg graph has all four vertices with odd degree, there is no Euler trail through the graph. Thus there is no way for the townspeople to cross every bridge exactly once.
     </p>
-  </introduction>
+  </subsection>
 
-  <subsection permid="ZWp">
+  <subsection xml:id="gt-ham-paths">
     <title>Hamilton Paths</title>
-    <p permid="XLD">
+    <p>
       <idx><h>Hamilton path</h></idx>
       <idx><h>path</h><h>Hamilton</h></idx>
       <idx><h>Hamilton cycle</h></idx>
       <idx><h>cycle</h><h>Hamilton</h></idx>
-      Suppose you wanted to tour Königsberg in such a way that you visit each land mass
-      (the two islands and both banks)
-      exactly once.
-      This can be done.
-      In graph theory terms,
-      we are asking whether there is a path which visits every vertex exactly once.
-      Such a path is called a <term>Hamilton path</term>
-      (or <term>Hamiltonian path</term>).
-      We could also consider <term>Hamilton cycles</term>,
-      which are Hamilton paths which start and stop at the same vertex.
+      Suppose you wanted to tour Königsberg in such a way that you visit each land mass (the two islands and both banks) exactly once. This can be done. In graph theory terms, we are asking whether there is a path that visits every vertex exactly once. Such a path is called a <term>Hamilton path</term> (or <term>Hamiltonian path</term>). We could also consider <term>Hamilton cycles</term>, which are Hamilton paths that start and stop at the same vertex.
     </p>
 
-    <example permid="mkH">
+    <example>
       <statement>
-        <p permid="Cdz">
+        <p>
           Determine whether the graphs below have a Hamilton path.
         </p>
 
-        <sidebyside widths="20% 20%" margins="auto" permid="SrQ">
-          <image permid="AYg">
-            <latex-image>
+        <sidebyside widths="20% 20%" margins="auto">
+          <image>
+            <latex-image label="img-petersen-for-hp">
               \begin{tikzpicture}[scale=.5]
                 \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
                 \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
@@ -340,7 +501,7 @@
             </description>
           </image>
 
-          <image permid="hfp">
+          <image>
             <latex-image>
               \begin{tikzpicture}{scale=.5}
                 \draw  (18:1) -- (90:1) -- (162:1)  -- (234:1) -- (306:1) -- cycle;
@@ -355,20 +516,21 @@
           </image>
         </sidebyside>
       </statement>
-      <solution permid="Pxk">
-        <p permid="pPh">
+      <solution>
+        <p>
           The graph on the left has a Hamilton path
           (many different ones, actually),
           as shown here:
         </p>
 
 
-          <image width="20%" permid="Nmy">
+          <image width="20%" label="gt-ham-path-petersen">
             <latex-image>
               \begin{tikzpicture}[scale=.5]
-                \draw[very thick, -&gt;-] (90:2) -- (90:1) (90:1) -- (234:1) (234:1)  -- (234:2) -- (162:2) -- (162:1) -- (18:1) -- (18:2) -- (306:2) -- (306:1);
+                \draw[very thick] (90:2) -- (90:1) (90:1) -- (234:1) (234:1)  -- (234:2) -- (162:2) -- (162:1) -- (18:1) -- (18:2) -- (306:2) -- (306:1);
                 \draw  (18:2) -- (90:2) -- (162:2)  -- (234:2) -- (306:2) -- cycle;
                 \draw  (18:1) --  (162:1)  -- (306:1) -- (90:1) -- (234:1) --cycle;
+                \draw[very thick, -&gt;] (162:2) -- (162:1.5);
                 \foreach \x in {18, 90, 162, 234, 306}
                 \draw  (\x:1) \v -- (\x:2) \v;
               \end{tikzpicture}
@@ -378,18 +540,18 @@
             </description>
           </image>
 
-        <p permid="VWq">
+        <p>
           The graph on the right does not have a Hamilton path.
           You would need to visit each of the
           <q>outside</q> vertices,
           but as soon as you visit one, you get stuck.
-          Note that this graph does not have an Euler path,
-          although there are graphs with Euler paths but no Hamilton paths.
+          Note that this graph does not have an Euler trail,
+          although there are graphs with Euler trails but no Hamilton paths.
         </p>
       </solution>
     </example>
 
-    <p permid="DSM">
+    <p>
       <idx><h>NP-complete</h></idx>
       It appears that finding Hamilton paths would be easier because graphs often have more edges than vertices,
       so there are fewer requirements to be met.
@@ -397,12 +559,40 @@
       There is no known simple test for whether a graph has a Hamilton path.
       For small graphs this is not a problem,
       but as the size of the graph grows,
-      it gets harder and harder to check wither there is a Hamilton path.
-      In fact, this is an example of a question which as far as we know is too difficult for computers to solve;
-      it is an example of a problem which is NP-complete.
+      it gets harder and harder to check whether there is a Hamilton path.
+      In fact, this is an example of a question which as far as we know is too difficult for computers to solve in general, as
+      it is an example of a problem that is NP-complete.
     </p>
   </subsection>
 
+  <reading-questions xml:id="rqs-gt-paths">
+    <exercise label="rq-gt-paths-vs-circuits">
+      <statement>
+        <p>
+          Is there a graph that has an Euler circuit but not an Euler trail?  Explain your answer.
+        </p>
+      </statement>
+      <response/>
+    </exercise>
+
+    <exercise label="rq-gt-paths-trees">
+      <statement>
+        <p>
+          Can a tree have an Euler tour?  Can a tree have an Euler circuit?  Explain your answers.
+        </p>
+      </statement>
+      <response/>
+    </exercise>
+
+    <exercise label="rq-gt-paths-q" component="runestone">
+      <statement>
+        <p> What questions do you have after reading this section? Write at least one question about the content of this section that you are curious about.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+  <xi:include href="practice/gt-paths.ptx"/>
   <xi:include href="exercises/gt-paths.ptx"/>
 </section>
 

@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_counting-non-disjoint">
+  <title>Non-Disjoint Outcomes</title>
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+          Use Venn diagrams to count the number of outcomes in the union of non-disjoint sets.
+				</p>
+			</li>
+
+			<li>
+				<p>
+          Apply the principle of inclusion/exclusion for two and three sets.
+				</p>
+			</li> 
+			<li>
+				<p>
+          Explain why the principle of inclusion/exclusion works.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+  <subsection>
+    <title>Section Preview</title>
+        <investigation>
+      <p>
+        A recent buzz marketing campaign for <em>The Pie Hole</em>
+        surveyed patrons on their pie preferences.
+        People were asked whether they enjoyed (A) Apple, (B) Blueberry, or (C) Cherry pie
+        (respondents answered yes or no to each type of pie,
+        and could say yes to more than one type).
+        The following table shows the results of the survey.
+      </p>
+
+
+        <tabular halign="center">
+          <row bottom="minor">
+            <cell right="minor" halign="right">Pies enjoyed:</cell>
+            <cell>A</cell>
+            <cell>B</cell>
+            <cell>C</cell>
+            <cell>AB</cell>
+            <cell>AC</cell>
+            <cell>BC</cell>
+            <cell>ABC</cell>
+          </row>
+          <row>
+            <cell right="minor" halign="right">Number of people:</cell>
+            <cell>20</cell>
+            <cell>13</cell>
+            <cell>26</cell>
+            <cell>9</cell>
+            <cell>15</cell>
+            <cell>7</cell>
+            <cell>5</cell>
+          </row>
+        </tabular>
+
+
+      <p>
+        How many of those surveyed enjoy at least one of the types of pie?
+        Also, explain why the answer is not 95.
+      </p>
+    </investigation>
+    
+    <p>
+      In <xref ref="sec_counting-combine-outcomes"/> we explored the <xref ref="principle-sum" text="custom">sum principle</xref> as a way of combining two (or more) sets of <em>disjoint</em> outcomes.  What happens if the outcomes are not disjoint?     
+    </p>
+
+    <p>
+      Something different needs to be done.  For example, when counting the number of playing cards that are either face cards or red cards, we cannot apply the sum principle to claim there are <m>12 + 26 = 38</m> cards.  The problem is exactly that six cards are both face cards and red cards.  There are a few different ways we can handle this that we will explore in this section.
+    </p>
+    <worksheet xml:id="PA-counting-non-disjoint">
+      <title>Preview Activity</title>
+      <exercise label="pa-counting-non-disjoint-1">
+        <webwork>
+          <pg-code>
+            Context()->strings->add(111 => {}, 110 => {}, 101 => {}, 100 => {},'011' => {}, '001' => {}, '010' => {}, '000' => {});
+            $start1 = List(String(111), String(110), String(101), String(100));
+            $weight2 = List(String(110), String(101), String('011'));
+            $either = List(String(111), String(110), String(101), String(100), String('011')); 
+          </pg-code>
+        
+          <introduction>
+            <p>
+              Consider the eight bit strings of length 3.  Let's find the number of strings that start with 1 or have weight 2 (i.e., contain exactly two 1s).
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                List all the 3-bit strings that start with 1.
+              </p>
+              <p>
+                <var name="$start1" width="40"/>
+              </p>
+              <instruction>(separate strings with commas)</instruction>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                List all the 3-bit strings that have weight 2. 
+              </p>
+              <p>
+              <var name="$weight2" width="40"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Now list all the 3-bit strings that start with 1 or have weight 2.  But be lazy: Don't list them from scratch. Use your lists from the two tasks above.
+              </p>
+              <p>
+                <var name="$either" width="50"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many strings are there in the lists?
+                <ul>
+                  <li>
+                    <p>
+                      Strings that start with 1: <var name="4" width="5"/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Strings of weight 2: <var name="3" width="5"/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Strings that start with 1 or have weight 2: <var name="5" width="5"/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Strings that both start with a 1 <em>and</em> have weight 2: <var name="2" width="5"/>
+                    </p>
+                  </li>
+                </ul>
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+      <exercise label="pa-counting-non-disjoint-2">
+        <statement>
+          <p>
+            How did you combine your two lists above?  Explain how you did it.  Then think of another method you could have used, and explain how that would be different.
+          </p>
+        </statement>
+        <response />
+      </exercise>
+      <exercise label="pa-counting-non-disjoint-3">
+        <webwork>
+       
+          <statement>
+            <p>
+              Xiang and Omari are discussing their favorite mathematicians throughout history.  Xiang has a list of 7 favorites, while Omari has a list of 5.  They discover that they have 3 mathematicians in common.  How many mathematicians are on their combined list?
+            </p>
+            <p>
+              <var name="9" width="5"/>
+            </p>
+          </statement>
+        </webwork>
+      </exercise>
+    </worksheet>
+  </subsection>
+
+  <subsection xml:id="subsec_counting-venn">
+    <title>Counting with Venn Diagrams</title>
+    <idx><h>Venn diagram</h><h>for counting</h></idx>
+    <idx><h>principle of inclusion/exclusion</h></idx>
+    <idx><h>PIE</h><see>principle of inclusion/exclusion</see></idx>
+    <idx><h>inclusion/exclusion</h><see>principle of inclusion/exclusion</see></idx>
+
+    <p>
+      To understand how to deal with combining sets of outcomes that are not disjoint, it will be helpful to use some notation from set theory, which we will briefly review here.  
+    </p>  
+    
+    <p>
+      <idx><h>union</h></idx>
+      Let <m>A</m> be the set of outcomes for the first event and <m>B</m> be the set of outcomes for the second event.  When we ask for the number of ways either event can happen, the new set of outcomes consists of all outcomes that are in <m>A</m>, or <m>B</m>, or both.  This is nothing more than the <term>union</term> of the set <m>A</m> and <m>B</m>, written <m>A \cup B</m>.
+    </p>
+
+    <p>
+      <idx><h>intersection</h></idx>
+      <idx><h>disjoint</h></idx>
+      <idx><h>empty set</h></idx>
+      The sum principle only applies when no outcome belongs to both events.  The elements that are common to sets <m>A</m> and <m>B</m> are the sets in their <term>intersection</term>, written <m>A \cap B</m>.  The intersection of two sets is itself a set.  If sets <m>A</m> and <m>B</m> are <term>disjoint</term>, then there are <em>no</em> elements in the intersection, so the intersection is the <term>empty set</term>, written <m>\emptyset</m>.
+    </p>
+
+    <p>
+      <idx><h>cardinality</h></idx>
+      We are counting the <em>number</em> of outcomes, so what we are really interested in is the <term>size</term> (or <term>cardinality</term>) of the sets.  We write the size of a set <m>X</m> as <m>\card{X}</m>.
+    </p>
+
+    <p>
+      With this notation in hand, we can restate the sum principle as follows.
+    </p>
+
+    <principle>
+			<title>Sum Principle (with sets)</title>
+			<idx><h>sum principle</h><h>using sets</h></idx>
+			<idx><h>cardinality</h><h>of a union</h></idx>
+			<idx><h>union of sets</h><h>cardinality of</h></idx>
+			<statement>
+				<p>
+					Given two sets <m>A</m> and <m>B</m>, if <m>A \cap B = \emptyset</m>,
+					then
+					<me>
+						\card{A \cup B} = \card{A} + \card{B}
+					</me>.
+				</p>
+			</statement>
+		</principle>
+
+
+    <p>
+      Now consider what happens to the sum principle when the sets are NOT disjoint.
+      Suppose we want to find <m>\card{A \cup B}</m> and know that
+      <m>\card{A} = 10</m> and <m>\card{B} = 8</m>.  If we knew that the sets were disjoint, then <m>\card{A \cup B}</m> would be 18.  But if we don't have that the sets are disjoint, we need more information
+      We must know how many of the 8 elements in <m>B</m> are also elements of <m>A</m>.
+      Suppose we also know that <m>\card{A \cap B} = 6</m>.
+      Now we can say exactly how many elements are in <m>A</m>, and,
+      of those,
+      how many are in <m>B</m> and how many are not (6 of the 10 elements are in <m>B</m>,
+      so 4 are in <m>A</m> but not in <m>B</m>).
+      We could fill in a Venn diagram 
+      as follows:
+    </p>
+
+      <image width="40%">
+
+        <latex-image>
+          \begin{tikzpicture}
+            \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+            \draw (0,0) node{6} (-1,0) node{4} (1,0) node{2};
+          \end{tikzpicture}
+        </latex-image>
+        <description>Intersecting circles labeled A and B.  Inside the region enclosed by both circles is the number 6.  The number 4 is in the region inside A but outside B.  The number 2 is in the region inside B but outside A.</description>
+      </image>
+
+
+    <p>
+      This says there are 6 elements in <m>A \cap B</m>, 4 elements in <m>A</m> but not <m>B</m> (which we can write as <m>\card{A \setminus B} = 4</m>), and 2 elements in <m>B</m> but not <m>A</m> (written <m>\card{B \setminus A} = 2</m>).
+      Now <em>these</em> three sets <em>are</em> disjoint,
+      so we can use the sum principle to find the number of elements in <m>A \cup B</m>.
+      It is <m>6 + 4 + 2 = 12</m>.
+    </p>
+    
+<!-- Example? -->
+ <example xml:id="eg-2-set-bit-string-venn">
+  <statement>
+    <p>
+      How many <m>7</m>-bit strings of weight <m>4</m> start with <m>11</m> or end with <m>00</m>, or both?
+    </p>
+  </statement>
+  <solution>
+    <p>
+      Let <m>A</m> be the set of <m>7</m>-bit strings of weight <m>4</m> that start with <m>11</m>.  We have <m>\card{A} = \binom{5}{2} = 10</m>.  Let <m>B</m> be the set of <m>7</m>-bit strings of weight <m>4</m> that end with <m>00</m>.  We have <m>\card{B} = \binom{5}{4} = 5</m>.
+    </p>
+    <p>
+      But it is not true that <m>\card{A \cup B} = 10 + 5 = 15</m>, since strings like 1101100 both start with <m>11</m> and end with <m>00</m>. That is included in the 10 strings starting with <m>11</m> and the five strings ending with <m>00</m>.  We must find the number of strings that belong to both <m>A</m> and <m>B</m>.  We have <me>\card{A \cap B} = \binom{3}{2} = 3</me> (and indeed, there are three strings in the intersection: 1111000, 1110100, and 1101100).
+    </p>
+
+    <p>
+      We can now fill in a Venn diagram:
+    </p>
+    <image width="40%">
+      <latex-image>
+        \begin{tikzpicture}
+          \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \twosetbox;
+          \draw (0,0) node{3} (-1,0) node{7} (1,0) node{2};
+        \end{tikzpicture}
+      </latex-image>
+      <description>Intersecting circles labeled A and B.  Inside the region enclosed by both circles is the number 3.  The number 7 is in the region inside A but outside B.  The number 2 is in the region inside B but outside A.</description>
+    </image>
+    <p>
+      The circle for <m>A</m> contains a total of 10 elements, the 3 that also belong to <m>B</m> and 7 more that belong to just <m>A</m>.  The circle for <m>B</m> contains a total of 5 elements, the 3 that also belong to <m>A</m> and 2 more that belong to just <m>B</m>.  The number of elements in <m>A \cup B</m> is the sum of the elements in each region <me>|\card{A \cup B} = 7+3+2 = 12</me>.
+    </p>
+  </solution>
+ </example>
+
+    <p>
+      We can do something similar with three sets.
+    </p>
+
+    <example xml:id="eg-3set-venn">
+      <statement>
+        <p>
+          An examination in three subjects, Algebra, Biology,
+          and Chemistry, was taken by 41 students.
+          The following table shows how many students failed in each single subject and in their various combinations:
+        </p>
+
+
+          <tabular halign="center">
+            <row bottom="minor">
+              <cell right="minor" halign="right">Subject:</cell>
+              <cell>A</cell>
+              <cell>B</cell>
+              <cell>C</cell>
+              <cell>AB</cell>
+              <cell>AC</cell>
+              <cell>BC</cell>
+              <cell>ABC</cell>
+            </row>
+            <row>
+              <cell right="minor" halign="right">Failed:</cell>
+              <cell>12</cell>
+              <cell>5</cell>
+              <cell>8</cell>
+              <cell>2</cell>
+              <cell>6</cell>
+              <cell>3</cell>
+              <cell>1</cell>
+            </row>
+          </tabular>
+
+
+        <p>
+          How many students failed at least one subject?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The answer is not 37, even though the sum of the numbers above is 37.
+          For example,
+          while 12 students failed Algebra, 2 of those students also failed Biology, 6 also failed Chemistry,
+          and 1 of those failed all three subjects.
+          In fact, that 1 student who failed all three subjects is counted a total of 7 times in the total 37.
+          To clarify things,
+          let us think of the students who failed Algebra as the elements of the set <m>A</m>,
+          and similarly for sets <m>B</m> and <m>C</m>.
+          The one student who failed all three subjects is the lone element of the set <m>A \cap B \cap C</m>.
+          Thus, in Venn diagrams:
+        </p>
+
+        <sidebyside width="36%">
+
+          <image>
+
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+                \draw (0,-.35) node{1};
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              Three intersecting circles labeled A, B, and C.  The center region inside all three circles contains the number 1.
+            </description>
+          </image>
+
+        </sidebyside>
+
+        <p>
+          Now let's fill in the other intersections.
+          We know <m>A\cap B</m> contains 2 elements,
+          but 1 element has already been counted.
+          So we should put a 1 in the region where <m>A</m> and <m>B</m> intersect
+          (but <m>C</m> does not).
+          Similarly, we calculate the cardinality of <m>(A\cap C) \setminus B</m>,
+          and <m>(B \cap C) \setminus A</m>:
+        </p>
+
+        <sidebyside width="36%">
+
+          <image>
+
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+                \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
+              \end{tikzpicture}
+            </latex-image>
+              <description>
+              Three intersecting circles labeled A, B, and C.  The center region inside all three circles contains the number 1.  The region above this, inside both A and B but outside C, contains the number 1.  The region inside both A and C but outside B contains the number 5.  The region inside B and C but outside A contains the number 2.
+            </description>
+          </image>
+
+        </sidebyside>
+
+        <p>
+          Next, we determine the numbers that should go in the remaining regions, including outside of all three circles.
+          This last number is the number of students who did not fail any subject:
+        </p>
+
+        <sidebyside width="36%">
+
+          <image>
+
+            <latex-image>
+              \begin{tikzpicture}[scale=0.9]
+                \draw[thick] \circleA \circleAlabel \circleB \circleBlabel \circleC \circleClabel \threesetbox;
+                \draw (0,-.35) node{1} (0,.4) node{1} (-.6,-.65) node{5} (.6,-.65) node{2};
+                \draw (-1,.3) node{5} (1,.3) node{1} (0,-1.5) node{0} (-1.5,-1.75) node{26};
+              \end{tikzpicture}
+            </latex-image>
+            <description>
+              Three intersecting circles labeled A, B, and C.  The center region inside all three circles contains the number 1.  The region above this, inside both A and B but outside C, contains the number 1.  The region inside both A and C but outside B contains the number 5.  The region inside B and C but outside A contains the number 2.  The region just inside A contains the number 5; the region just inside B contains the number 1; the region just inside C contains the number 0.  The number 26 is outside all three circles.
+            </description>
+          </image>
+
+        </sidebyside>
+
+        <p>
+          We found 5 goes in the <q><m>A</m> only</q>
+          region because the entire circle for <m>A</m> needed to have a total of 12,
+          and 7 were already accounted for.
+          Similarly, we calculate the <q><m>B</m> only</q>
+          region to contain only 1 student and the <q><m>C</m> only</q>
+          region to contain no students.
+        </p>
+
+        <p>
+          Thus the number of students who failed at least one class is 15
+          (the sum of the numbers in each of the eight disjoint regions).
+          The number of students who passed all three classes is 26:
+          the total number of students, 41,
+          less the 15 who failed at least one class.
+        </p>
+
+        <p>
+          Note that we can also answer other questions.
+          For example, how many students failed just Chemistry?
+          None.
+          How many passed Algebra but failed both Biology and Chemistry?
+          This corresponds to the region inside both <m>B</m> and <m>C</m> but outside of <m>A</m>,
+          containing 2 students.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Here is an interesting math fact.
+      <me>
+        12 + 5 + 8 - 2 - 6 - 3 + 1 = 15
+      </me>.
+      Is it a coincidence that this way of combining the numbers of students who failed each subject in the example above gives the same number of students who failed at least one subject?  This suggests that there might be a simpler way to find the size of a union of non-disjoint sets.
+    </p>
+  </subsection>
+
+<subsection xml:id="subsec-pie">
+  <title>The Principle of Inclusion/Exclusion</title>
+  <p>
+    It would be nice to write an algebraic formula that captures what we have done in the previous examples.
+    Even better would be for this algebraic formula to be a generalization of the case where the sets <em>are</em> disjoint.
+  </p>
+
+  <p>
+    Consider again the example where <m>\card{A} = 10</m>, <m>\card{B} = 8</m> and <m>\card{A \cap B} = 6</m>.  We said that <m>\card{A \cup B} = 12</m>, found by adding <m>4 + 6 + 2</m>.
+  </p>    
+  
+  <p>
+    If <m>A</m> and <m>B</m> had been disjoint, then <m>\card{A \cup B}</m> would have been <m>\card{A} + \card{B} = 10 + 8 = 18</m>.
+    We see that is off by exactly 6, which just so happens to be <m>\card{A \cap B}</m>.
+    So perhaps we guess,
+    <me>
+      \card{A \cup B} = \card{A} + \card{B} - \card{A \cap B}
+    </me>.
+    This makes sense!  When we add the number of elements in <m>A</m> to the number of elements in <m>B</m>, we have counted the six elements that belong to both sets exactly twice.  So if we subtract them out, we have counted them exactly once.
+  </p>
+
+
+  <p>
+    In other words, we have:
+  </p>
+
+  <theorem xml:id="thm-pie-2">
+    <title>Cardinality of a Union (2 Sets)</title>
+    <idx><h>principle of inclusion/exclusion</h><h>for 2 sets</h></idx>
+    <idx><h>cardinality</h><h>of a union</h></idx>
+    <p>
+      For any finite sets <m>A</m> and <m>B</m>,
+      <me>
+        \card{A \cup B} = \card{A} + \card{B} - \card{A \cap B}
+      </me>.
+    </p>
+  </theorem>
+
+  <example>
+    <statement>
+      <p>
+        How many <m>7</m>-bit strings of weight <m>4</m> start with <m>11</m> or end with <m>00</m>, or both?  Use <xref ref="thm-pie-2"/> and compare to <xref ref="eg-2-set-bit-string-venn"/>.
+      </p>
+    </statement>
+    <solution>
+      <p>
+        We have <m>\card{A} = \binom{5}{2} = 10</m>, <m>\card{B} = \binom{5}{4} = 5</m>, and <m>\card{A \cap B} = \binom{3}{2} = 3</m>.  Therefore:
+        <me>
+          \card{A \cup B} = 10 + 5 - 3 = 12
+        </me>.
+        This makes sense since the three bit strings that start with <m>11</m> and end with <m>00</m> are counted in the 10 strings starting with <m>11</m> and again among the 5 strings ending with <m>00</m>, so we have over-counted these exactly one time before we subtract them out.
+      </p>
+    </solution>
+  </example>
+
+    <p>
+      For three sets, we can also count the elements in the union by carefully removing elements we have counted multiple times.  Since there are more ways for the sets to overlap, the formula is more complicated.
+    </p>
+
+    <theorem xml:id="thm-pie-3">
+      <title>Cardinality of a Union (3 Sets)</title>
+      <idx>
+        <h>principle of inclusion/exclusion</h>
+        <h>for 3 sets</h>
+      </idx>
+      <idx>
+        <h>cardinality</h>
+        <h>of a union</h>
+      </idx>
+    <statement>
+      <p>
+        For any finite sets <m>A</m>, <m>B</m>, and <m>C</m>,
+        <md>
+          <mrow>\card{A \cup B \cup C} = \amp \card{A} + \card{B} + \card{C} </mrow>
+            <mrow> - \amp \card{A \cap B} - \card{A \cap C} - \card{B \cap C} </mrow> 
+            <mrow> + \amp \card{A \cap B \cap C} </mrow>
+        </md>.
+      </p>
+    </statement>
+    </theorem>
+
+    <p>
+      To determine how many elements are in at least one of <m>A</m>,
+      <m>B</m>,
+      or <m>C</m> we add up all the elements in each of those sets.
+      However, when we do that,
+      any element in both <m>A</m> and <m>B</m> is counted twice.
+      Also, each element in both <m>A</m> and <m>C</m> is counted twice,
+      as are elements in <m>B</m> and <m>C</m>,
+      so we take each of those out of our sum once.
+      But now what about the elements which are in <m>A \cap B \cap C</m> (in all three sets)?
+      We added them in three times,
+      but also removed them three times.
+      They have not yet been counted.
+      Thus we add those elements back in at the end.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          How many of the numbers in <m>\{1, 2, \ldots, 50\}</m> are multiples of 2, 3, or 5?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Of the numbers in <m>\{1, 2, \ldots, 50\}</m>, let <m>A</m> be the set of multiples of 2, <m>B</m> be the set of  multiples of 3, and <m>C</m> be the set of multiples of 5.  
+          We have <m>\card{A} = 25</m>, <m>\card{B} = 16</m>, and <m>\card{C} = 10</m>.  (These numbers can be found by division; for example, since a third of the numbers are multiples of three, we can compute <m>50/3 = 16.66</m>, so there are 16 multiples of 3 in the set.) 
+          
+          Some of the numbers in the set are multiples of both 2 and 3, such as <m>6, 12, 18,\ldots</m> all the multiples of 6.  There are <m>\card{A \cap B} = 8</m> such numbers.  Similarly, there are <m>\card{A \cap C} = 5</m> multiples of both 2 and 5 (multiples of 10), and <m>\card{B \cap C} = 3</m> multiples of both 3 and 5 (multiples of 15).  There is <m>\card{A \cap B \cap C} = 1</m> multiples of all three (just the number 30).  
+        </p>
+
+        <p>
+          Using <xref ref="thm-pie-3"/>, we have:
+          <me>
+            \card{A \cup B \cup C} = 25 + 16 + 10 - 8 - 5 - 3 + 1 = 36
+          </me>.
+        </p>
+
+        <p>
+          Let's use this example to understand the theorem better.  Consider the number <m>21</m>.  In which sets is it counted?  It is in <m>B</m>, but not <m>A</m> or <m>C</m>, so it is counting among the 16 multiples of <m>3</m> and not counted in any of the other sets, so it is included exactly once in our complete count.  Similarly for all other numbers that are multiples of just one of <m>2</m>, <m>3</m>, or <m>5</m>.
+        </p>
+
+        <p>
+          The number <m>18</m> is in sets <m>A</m> and <m>B</m>, and so also in <m>A \cap B</m>.  It is counted in the 25 multiples of <m>2</m>, the 16 multiples of <m>3</m>, and the 8 multiples of <m>6</m>.  So it is added twice in our total and subtracted once, meaning it is counted exactly one time.  The same will be true of all numbers that belong to exactly two of the individual sets.
+        </p>
+
+        <p>
+          What about <m>30</m>?  It belongs to all the sets.  It is therefore added to our total three times, when we add the multiples of <m>2</m>, <m>3</m>, and <m>5</m>.  But it is also subtracted three times, once for each of the three pairs of sets.  So it is not counted at all in our total... until we add it back in in the last step, after which it is counted exactly once.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      This process of adding in, then subtracting out, then adding back in,
+      and so on is called the <term>Principle of Inclusion/Exclusion</term>,
+      or simply <term>PIE</term>. This principle can be applied to any number of sets, but the formula becomes more and more complicated the more sets you have.  For example, this is what PIE looks like for four sets.  
+      <md>
+        <mrow>\card{A \cup B \cup C \cup D} = \amp \card{A} + \card{B} + \card{C} + \card{D} </mrow>
+        <mrow> - \amp \card{A \cap B} - \card{A \cap C} - \card {A \cap D} - \card{B \cap C} - \card{B \cap D} - \card{C \cap D}</mrow>
+        <mrow> + \amp \card{A \cap B \cap C} + \card{A \cap B \cap D} + \card{A \cap C \cap D} + \card{B \cap C \cap D}</mrow>
+        <mrow> - \amp  \card{A \cap B \cap C \cap D} </mrow>
+      </md>.
+      Phew!  And for five sets it is... just kidding.  But even if we don't write it down, hopefully we all see what you <em>would</em> have to write down.  In practice, PIE for more than three sets is only used when we can simplify the computation by recognizing that, for example, all the intersections of two sets will have the same size.  Some examples of this are explored in <xref ref="sec_advPIE"/>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-overlaps-and-the-product-principle">
+    <title>Overlaps and the Product Principle</title>
+    <p>
+      Everything we have considered so far in this section has been about how the sum principle applies when the sets of outcomes are not disjoint.  Do we need to be similarly worried about overlaps when applying the product principle?
+    </p>
+
+    <p>
+      Not really.  
+    </p>
+    <p>
+      One use of the product principle is to compute probabilities, and in that context, we do make a distinction between events being <term>independent</term> or <term>dependent</term>.  We will explore this more in <xref ref="sec-counting-probability"/>.  Essentially, to find the probability of two events occuring, we can multiply their respective probabilities if and only if the two events are <em>independent</em>: if the outcome of one event does not affect the outcome of the other. 
+    </p>
+
+    <p>
+      While finding probability is closely related to counting outcomes, the product principle itself does not require that sets of outcomes be disjoint or make a distinction between dependent or independent events.  What <em>does</em> matter is that the number of outcomes for the second event does not change based on which outcome was the result of the first event.
+    </p>
+
+    <p>
+      A distinction we <em>do</em> often make when applying the product principle is whether the outcomes of events can be <q>repeated.</q>  Consider the following example.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          How many 3-letter words (sequences of three letters) are there when,
+          <ol>
+            <li>repeats are allowed?</li>
+            <li>repeats are not allowed?</li>
+          </ol> 
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Being careful with the product principle, we are combining three events: <m>A</m> is the event of selecting the first letter, <m>B</m> is the event of selecting the second letter, and <m>C</m> is the event of selecting the third letter.  If we want to count the number of words when letters in the word can be repeated, then each event contains 26 outcomes.  So the number of 3-letter words is <m>26^3 = 17,576</m> when repeats are allowed.
+        </p>
+
+        <p>
+          When repeats are not allowed, then the number of outcomes for event <m>A</m> is still 26, but the number of outcomes for <m>B</m> is only 25, since no matter what the outcome of event <m>A</m> is, that letter cannot be selected for the second position in the word. Similarly, no matter what the outcomes of event <m>A</m> and <m>B</m> are, the number of outcomes for event <m>C</m> is always 24: any letter not selected in the first two events.   Thus the number of 3-letter words containing no repeated letters is <m>26\cdot 25\cdot 24 = 15,600</m>.
+        </p>
+        
+        <p>
+          It's a little strange that the actual set of outcomes for event <m>B</m> is different for each possible outcome of event <m>A</m>.  This doesn't matter though, as long as the <em>size</em> of the outcome set doesn't change. 
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      We will explore problems such as the previous example in much more depth next in <xref ref="sec_counting-combperm"/>.  Before that though, here is a final example of where the product principle does NOT easily work.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Explain why the product principle does NOT apply to the following counting question: How many 3-letter words have their letters in alphabetical order?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The first thing we might try is to make event <m>A</m> be selecting the first letter, <m>B</m> be selecting the second letter, and <m>C</m> be selecting the third letter.  There are 26 outcomes to event <m>A</m>.  How many outcomes are there for event <m>B</m>?  If we selected <m>w</m> as the first letter, then we can select a letter in the set <m>\{w, x, y, z\}</m> as our second letter, so it appears there are <m>4</m> outcomes for event <m>B</m>.  However, if we selected <m>a</m> as our first letter, then any letter could be used for the second letter, so event <m>B</m> has <m>26</m> outcomes.  Oh no!
+        </p>
+
+        <p>
+          The problem is that the number of outcomes for the second (and third) letter in the word changes depending on the outcome of the previous event.  The events are not independent, but more than that, their <em>size</em> is not independent, so the product principle does not apply.
+        </p>
+
+      </solution>
+    </example>
+    <p>
+      We will see how to answer the counting problem above in the case that letters can be repeated in <xref ref="sec_counting-multisets"/>.  If we restricted the question further and required that the letters be distinct (and in alphabetical order), we already know how to answer the question.  Since for any <em>set</em> of three letters, there is exactly one 3-letter word that has those letters in alphabetical order, we can simply count the number of sets of three letters.  This is <m>\binom{26}{3}</m>.  Then we just look at <xref ref="fig-pascal-large" text="custom">Pascal's triangle</xref> to find the value... oh shoot.  Our triangle doesn't go down that far.  I guess we should think of a way to compute the value without the triangle.  Read on!
+    </p>
+  </subsection>
+  <reading-questions xml:id="rqs-counting-non-disjoint">
+   
+    <exercise label="rq-counting-non-disjoint-pie">
+      <statement>
+        <p>
+          Which of the following best describes what the Principle of Inclusion/Exclusion is used for?
+        </p>
+      </statement>
+      <choices>
+        <choice correct="yes">
+          <statement>
+            <p>
+              To count the size of a union of two or more not-necessarily disjoint sets.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              That is correct.  Note that the Principle of Inclusion/Exclusion works just great even if the sets are disjoint; all the intersections just have size 0.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              To count the size of the union of two or more sets, as long as they are disjoint.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              If the sets are disjoint, you do not need to use the Principle of Inclusion/Exclusion.  You can just add the sizes of the sets.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              To count the size of the intersection of two or more independent sets of outcomes.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              The Principle of Inclusion/Exclusion includes intersections of sets, but it is not used to find the size of the intersections.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              To find the size of the intersection of dependent sets of outcomes.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              The Principle of Inclusion/Exclusion includes intersections of sets, but it is not used to find the size of the intersections.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise label="rq-counting-non-disjoint-3set">
+      <statement>
+        <p>
+          Why does the Principle of Inclusion/Exclusion <em>add</em> the size of the intersection of three sets, rather than subtract?  Explain in your own words.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+
+    <exercise label="rq-counting-non-disjoint-q" component="runestone">
+      <statement>
+        <p> What questions do you have after reading this section? Write at least one question about
+          the section you are curious about.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+
+  <xi:include href="practice/counting-non-disjoint.ptx"/>
+  <xi:include href="exercises/counting-non-disjoint.ptx"/>
+</section>
+

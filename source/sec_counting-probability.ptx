@@ -1,0 +1,1006 @@
+<?xml version='1.0' encoding='utf-8'?>
+<section xml:id="sec-counting-probability" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<title>Applications to Probability</title>
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+          Use counting techniques to compute probabilities of events.
+				</p>
+			</li>
+
+			<li>
+				<p>
+          Understand the basic rules of probability.
+				</p>
+			</li> 
+			<li>
+				<p>
+          Compute probabilities of compound events, both independent and dependent.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+	
+	<subsection>
+    <title>Section Preview</title>
+
+
+
+		<investigation>
+      <statement>
+        <p>
+          Suppose you, like the 17th-century French nobleman Chevalier de Mere, liked gambling on the outcome of rolling fair 6-sided dice (each numbered 1 to 6). Would you bet him that he couldn't roll at least one 6 in four rolls of a single die?  What about betting that he couldn't roll at least one double-6 in 24 rolls of both dice?  
+        </p>
+
+        <p>
+          To make these decisions, we should decide
+          <ol>
+            <li>
+              <p>
+                How likely is it that in four rolls of a single die, there will be at least one 6?
+              </p>
+            </li>
+            <li>
+              <p>
+                How likely is it that in 24 rolls of two dice, there will be at least one double-6?
+              </p>
+            </li>
+            <li>
+              <p>
+                Since the ratio <m>4:6</m> is equal to the ratio <m>24:36</m>, should the probability of these events be the same?  That's what the Chevalier de Mere thought.  Do you?
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </investigation>
+
+    <p>
+      Here is a python script that can help you get a feel for the questions above. You can switch between the two questions by commenting and uncommenting out the appropriate lines (lines that start with a <c>#</c> are comments).  See how lucky you are!
+    </p>
+
+    <program interactive="activecode" language="python" label="ac-prob-investigate-dice">
+      <input>
+import random
+
+for i in range(4):
+    die = random.randint(1,6)
+    print(f"You rolled a {die}")
+
+#for i in range(24):
+#    die1 = random.randint(1,6)
+#    die2 = random.randint(1,6)
+#    print(f"You rolled a {die1} and a {die2}")
+      </input>
+      </program>
+
+    <p>
+      If you know some python, you might want to modify the script to run the experiment 1000 times and see how many of those are <q>wins</q>.    
+    </p>
+
+    <p>
+      We can get a feel for probability <em>empirically</em> by observing how frequently events occur when an experiment is repeated many times.  It often happens, as it did with the Chevalier de Mere, that our intuition about probability is not quite right.  Using the counting techniques we have studied, we can explain why our intuition is off and what the true probabilities are.
+    </p>
+    
+    <p>
+			Most of the questions about counting we have considered in this chapter can also be asked as a question about probability.
+			For example: How many passwords of length 8 can you make using just lower-case letters?  What is the probability that randomly selecting 8 lower-case letters will give you your password?
+		</p>
+
+		<p>
+			While the subject of probability is vast and complex, the basics of discrete probability are little more than counting.
+			So here we will take a brief look at how our study of counting can help us understand probability.
+		</p>
+
+    <worksheet xml:id="PA-counting-probability">
+      <title>Preview Activity</title>
+      <idx><h>puzzle</h><h>birthday</h></idx>
+      <idx><h>birthday paradox</h></idx>
+      <introduction>
+        <p>
+          Suppose you were in a class of 30 students.  How likely is it that at least two of the students were born on the same day of the year?
+        </p>
+
+        <p>
+          Assume that all days are equally likely and that nobody was born on February 29th.  Would you believe the answer is more than 25%?  More than 50%?  More than 70%???  Let's find the answer.
+        </p>
+      </introduction>
+      <exercise label="pa-counting-probability-1">
+        <webwork>
+          <pg-code>
+            
+          </pg-code>
+        
+          <statement>
+            <p>
+              First, what should we mean by probability?  If you roll a fair six-sided die, what is the probability of rolling a 6?  
+            </p>
+            <p>
+              <var name="Compute(1/6)" width="5"/>
+            </p>
+          <p>
+            What is the probability of rolling an even number?
+          </p>            
+
+          <p>
+            <var name="Compute(1/2)" width="5"/>
+          </p>
+          </statement>
+        </webwork>
+      </exercise>
+      <exercise label="pa-counting-probability-2">
+        <webwork>
+          <pg-code>
+            
+          </pg-code>
+        
+          <introduction>
+            <p>
+              We will define the probability of an event as the number of ways the event can happen divided by the total number of things that can happen.  
+            </p>
+          </introduction>
+          <task>
+            <statement>
+
+              <p>
+                Suppose you roll two dice (one red and one green).  How many total outcomes are there?
+              </p>
+              <p>
+                <var name="Compute(6*6)" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+            <p>
+              Of those outcomes, how many have <em>different</em> numbers on the two dice?
+            </p>
+            <p>
+              <var name="Compute(6*5)" width="5"/>
+            </p>
+            </statement>
+            <hint>
+              <p>
+                How many sequences of two different numbers can you make using the numbers 1 to 6?
+              </p>
+            </hint>
+          </task>
+            <task>
+              <statement>
+                <p>
+                  Combining the two numbers your found above, what is the probability that two dice will show different numbers?
+                </p>
+                <p>
+                  <var name="Compute(30/36)" width="5"/>
+                </p>
+              </statement>
+            </task>
+            <task>
+              <statement>
+                <p>
+                  What is the probability that you will get three different numbers when rolling three dice?  (Assume the dice are different colors).
+                </p>
+                <p>
+                  <var name="Compute((6*5*4)/(6**3))" width="5"/>
+                </p>
+              </statement>
+            </task>
+        </webwork>
+      </exercise>
+
+
+      <exercise label="pa-counting-probability-3">
+        <webwork>
+          <pg-code>
+            Context("IntegerFunctions");
+            $ans1 = Compute("365**30");
+            $ans2 = Compute("P(365,30)");
+            $prob = Compute($ans2/$ans1);
+          </pg-code>
+        
+          <introduction>
+            <p>
+              Now to birthdays.  There are 365 days in a year.
+            </p>
+          </introduction>
+          <task>
+            <statement>
+              <p>
+                How many possible sequences of 30 birthdays are there?
+              </p>
+              <p>
+                <var name="$ans1" width="10"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many possible sequences of 30 birthdays contain no repeats?
+              </p>
+              <p>
+                <var name="$ans2" width="10"/>
+              </p>
+              <instruction>You can enter P(n,k) for a permutation on this problem.</instruction>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                What is the probability that 30 people have no repeated birthdays?
+              </p>
+              <p>
+                <var name="$prob" width="10"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Among the 30 people, either they all have different birthdays or at least two share a birthday.  Since this is certain, its probability is 1.  So what is the probability that at least two people (out of the 30) share a birthday? 
+              </p>
+              <p>
+                <var name="Compute(1-$prob)" width="10"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                What is the smallest number of people you would need to have a greater than 90% chance that at least two share a birthday?
+              </p>
+              <p>
+                <var name="41" width="10"/>
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+    </worksheet>
+	</subsection>
+
+	<subsection xml:id="subsec-computing-probabilities">
+		<title>Computing Probabilities</title>
+
+    
+		<p>
+			Think about how we use the language of probability in our everyday lives.
+			We might say that tossing a coin has a 50% chance of coming up heads.
+			Or that when rolling two dice, having the sum of the dice result in a 7 is more likely than having the sum be a 2.
+			Casinos certainly rely on certain pairs of cards being consistently more likely than others when setting payouts for Blackjack.
+			All of this assumes that there is some <em>randomness</em> to events, and that even in this randomness, there is some <em>consistency</em> to what can happen.
+			We will assume this model of reality.
+		</p>
+
+		<p>
+      <idx><h>random experiment</h></idx>
+      <idx><h>outcome (probability)</h></idx>
+      <idx><h>sample space</h></idx>
+			The things we can assign probabilities to are called <term>random experiments</term>.
+			These can have different possible <term>outcomes</term>.
+			We will call the (finite) <em>set</em> of possible outcomes to a random experiment the <term>sample space</term> (we will usually denote this set as <m>S</m>).
+			By definition, performing a random experiment will always result in exactly one outcome from the sample space.
+		</p>
+
+		<p>
+      <idx><h>uniform probability distribution</h></idx>
+			Throughout this section, we will always assume the <term>uniform probability distribution</term>, which means that we insist that each outcome in the sample space is equally likely.
+			Then the probability of any particular outcome in the sample space <m>S</m> is exactly <m>\frac{1}{\card{S}}</m>.
+		</p>
+
+		<note>
+			<p>
+				The uniform probability distribution is a common and reasonable assumption to make, but it does preclude us from asking some questions.
+				For example, throwing a dart at a dartboard is not uniformly distributed, and similarly, rolling weighted dice would not be.
+				What is the probability that a thumbtack lands point up?  But how would we even start to answer these questions?  We would have to make some assumptions about what the probabilities of the outcomes actually are (perhaps via some repeated experiments).
+			</p>
+
+			<p>
+				There are other reasons to study different probability distributions, and this is a major topic of study in a course in probability theory.
+			</p>
+		</note>
+
+		<example>
+			<statement>
+				<p>
+					Suppose you flip two fair coins (a penny and a nickel).
+					What is the sample space of possible outcomes?  What is the probability of getting two heads?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					The same space is the set of all possible outcomes of the experiment, which in this case is the set <m>\{HH, HT, TH, TT\}</m>.
+					The probability of getting two heads is then <m>\frac{1}{4}</m>.
+					In fact, every outcome has probability <m>\frac{1}{4}</m> since there are 4 outcomes in the sample space.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+      <idx><h>event (probability)</h></idx>
+			Finding probabilities of <em>outcomes</em> really is this easy.
+			Where things get more fun is if we look for the probability of an <term>event</term>: a subset of the sample space.
+			For a particular random experiment, there might be lots of different events we ask about, and they do not need to be mutually exclusive.
+			An event can also be a set containing just a single outcome or might contain no outcomes.
+		</p>
+
+		<p>
+			For example, suppose you roll a fair 6-side die.
+			The sample space contains six outcomes <m>\{1,2,3,4,5,6\}</m>.
+			Some events we might care about include rolling an even number (the subset <m>\{2,4,6\}</m>), rolling a number less than <m>3</m> (the set <m>\{1,2\}</m>), or rolling a number less than <m>10</m> (the subset <m>\{1,2,3,4,5,6\}</m>).
+			In fact, we now know that there are exactly <m>2^6 = 64</m> different events we could ask about, since there are <m>64</m> subsets of the sample space.
+		</p>
+
+		<p>
+			What does our intuition suggest about the example events described above?  Rolling an even number should be just as likely as rolling an odd number, so we hope that the probability of rolling an even number is <m>\frac{1}{2}</m>.
+			Similarly, the probability of rolling a number less than <m>3</m> should be <m>\frac{1}{3}</m> since a third of the possible outcomes are less than 3.
+			What about rolling a number less than <m>10</m>?  Well, this <em>must</em> happen, so it would be <m>100\%</m>, which as a fraction is just <m>1</m>.
+		</p>
+
+		<p>
+			Consistent with our intuition, we define the probability of an event as follows.
+		</p>
+
+		<definition xml:id="def-probability">
+      <idx><h>probability</h></idx>
+			<statement>
+				<p>
+					Suppose a random experiment has sample space <m>S</m>.
+					The <term>probability</term> of an event <m>E</m> is the number of outcomes in <m>E</m> divided by the number of outcomes in <m>S</m>.
+					We write this as <m>P(E) = \frac{\card{E}}{\card{S}}</m>.
+				</p>
+			</statement>
+		</definition>
+
+		<example>
+			<statement>
+				<p>
+					Suppose you roll a regular 6-sided die (each side contains a number from 1 to 6).
+					What is the probability that you will roll an even number?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					The sample space is the set <m>\{1,2,3,4,5,6\}</m> of possible rolls.
+					The event, call it <m>E</m> for even, is the set of outcomes <m>\{2, 4, 6\}</m>.
+					Thus the probability of <m>E</m> occurring is
+					<me>
+						P(E) = \frac{3}{6} = \frac{1}{2}
+					</me>.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			We have spent a lot of effort learning how to count the size of sets.
+			We can then use this to compute probabilities by counting the size of the sample space (set) and the size of the event (set).
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					If you draw 5 cards from a regular deck of 52 cards, what is the probability that you will draw 4-of-a-kind?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					First, let's count the sample space, which will consist of all 5-card hands.
+					The order of the cards in a hand is not important, so we will just count 5-element subsets of the 52 cards.
+					The sample space therefore contains <m>\binom{52}{5}</m> elements.
+					(This number is just under 2.6 million: <m>2,598,960</m> to be exact.)
+				</p>
+
+				<p>
+					Now, how many of those will be 4-of-a-kind?  One way we could count this would be to first select which of the 13 values will be the 4-of-a-kind, which can be done in <m>\binom{13}{1} = 13</m> ways.
+					What about the other card in the hand?  Well, there are 48 other cards it could be, so the number of 4-of-a-kind hands is <m>13\cdot 48 = 624</m>.
+				</p>
+
+				<p>
+					This makes the probability of getting 4-of-a-kind,
+					<me>
+						P(\text{4-of-a-kind}) = \frac{13\cdot 48}{\binom{52}{5}} \approx 0.00024.
+					</me>
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			An important subtlety: Whenever counting the size of the sample space and the event, we must make sure that we are really counting the number of elements <em>of</em> the sample space that are in the event.
+			In particular, if we count <em>subsets</em> of cards in the sample space (using a combination instead of using a permutation to count sequences of cards) then we must count the number of <em>subsets</em> of cards in the event.
+		</p>
+
+		<p>
+			Interestingly, we can find the probability of getting 4-of-a-kind using permutations too: The number of 5-card sequences is <m>P(52,5) = 311,875,200</m>.
+			Finding the number of 4-of-a-kind sequences is a little more complicated.
+			There are 13 possible values for the 4-of-a-kind, and 48 remaining cards for the fifth card.
+			But those five cards can be arranged in <m>5!</m> different ways.
+			So the number of 4-of-a-kind sequences is <m>13\cdot 48\cdot 5!</m>.
+			This gives,
+			<me>
+				P(\text{4-of-a-kind}) = \frac{13\cdot 48\cdot 5!}{P(52,5)} \approx 0.00024
+			</me>.
+			Is this close to the same answer we had before?  It is <em>exactly</em> the same (we can verify this by noticing the extra <m>5!</m> in both the numerator and denominator).
+		</p>
+
+		<p>
+			While picking between combinations and permutations (as long as you pick the same for both the sample space and the event) will give you the same probability, this is not always true, as you are asked to explore in some of the additional exercises.
+		</p>
+	</subsection>
+
+	<subsection xml:id="subsec-probability-rules">
+		<title>Probability Rules</title>
+		<p>
+			Here are a few basic probability facts that follow easily from our definition of probability and understanding of counting.
+			While we are still under the assumption that the outcomes in the sample space are equally likely (the uniform probability distribution), these rules will hold for all probability distributions.
+		</p>
+
+		<p>
+      <idx><h>complement (of an event)</h></idx>
+			First, we often are interested in the probability that an event <em>does not</em> occur.
+			We call this the <term>complement</term> of the event.
+			Remember, events are subsets of the sample space, and not being <q>in</q> the event means you are in the complement of that subset.
+			Using the same notation we have for sets, the complement of an event <m>E</m> will be written <m>\bar{E}</m>.
+			Here is the relationship between the probability of an event and its complement.
+		</p>
+
+		<theorem xml:id="thm-prob-complement">
+      <idx><h>complement, probability of</h></idx>
+			<statement>
+				<p>
+					The probability of the complement of an event <m>E</m> is
+					<me>
+						P(\bar{E}) = 1 - P(E)
+					</me>.
+				</p>
+			</statement>
+
+
+			<proof>
+				<p>
+					Remember that <m>P(E) = \frac{\card{E}}{\card{S}}</m>, the number of outcomes in the event <m>E</m> divided by the total number of outcomes.
+					But how many outcomes are <em>not</em> in <m>E</m>?  All the others.
+					That is,
+					<me>
+						\card{\bar{E}} = \card{S} - \card{E}
+					</me>.
+					So for sure, we have
+					<me>
+						P(\bar{E}) = \frac{\card{\bar{E}}}{\card{S}} = \frac{\card{S} - \card{E}}{\card{S}} = \frac{\card{S}}{\card{S}} - \frac{\card{E}}{\card{S}} = 1 - P(E)
+					</me>.
+				</p>
+			</proof>
+		</theorem>
+
+		<p>
+			Let's illustrate this proof with an example.
+		</p>
+
+		<example xml:id="eg-ten-flips">
+			<statement>
+				<p>
+					Suppose you flip a fair coin 10 times.
+					What is the probability that you will get at least one heads?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					There are lots of ways you can get at least one head, but only one way you can get no heads (that is, get all tails).
+					So it makes sense to try to compute the requested probability as the complement of a probability easier to compute.
+				</p>
+
+				<p>
+					The sample space here is the set of all 10-toss sequences.
+					How many are there?  For each term in the sequence, it could be a head (H) or tail (T), so there are <m>2^{10} = 1024</m> possible sequences.
+				</p>
+
+				<p>
+					We want to find the probability of getting at least one head.
+					Let's think of this just as a counting question: How many 10-toss sequences have at least one head?  All <m>1024</m> of them, except the one all tails sequence.
+					So there are <m>1023</m> sequences with at least one head.
+					Thus the probability of getting at least one head is <m>\frac{1023}{1024}</m>.
+				</p>
+
+				<p>
+					Wait, did we use <xref ref="thm-prob-complement"/>?  Not explicitly, but essentially we have.
+					Using the theorem, we would have said that the probability of getting at least one head is
+					<me>
+						1 - P(\text{all tails}) = 1 - \frac{1}{1024} = \frac{1023}{1024}
+					</me>.
+				</p>
+
+        <p>
+          Note that the calculation we did required subtracting fractions:
+          <me>
+            1 - \frac{1}{1024} = \frac{1024}{1024} - \frac{1}{1024} = \frac{1024-1}{1024} = \frac{1023}{1024}
+          </me>.
+          So whether we do the subtraction to calculate the size of the complement, or use the complement formula and subtract fractions, we get the same answer.
+        </p>
+			</solution>
+		</example>
+
+    <p>
+      Complementary probabilities are very useful when answering historical questions about dice.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          What is the probability that you will roll at least one 6 in four rolls of a fair 6-sided die?
+        </p>
+
+        <p>
+          Is this the same as the probability that you will roll at least one double 6 in 24 rolls of two dice?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The complementary event is rolling a die four times and <em>never</em> getting a 6.  Of the <m>6^4</m> possible rolls, there are <m>5^4</m> that contain no 6.  So the probability of getting at least one 6 in four rolls is 
+          <me>
+            P(\text{at least one 6}) = 1 - P(\text{no 6}) = 1 - \frac{5^4}{6^4} \approx 0.5177
+          </me>.
+        </p>
+        <p>
+          For the double 6 in 24 rolls variant, we use the complementary event as well: what is the probability of not getting double 6s?  That means on every roll you get one of the 35 other pairs.
+          <me>
+            P(\text{at least one double 6}) = 1 - P(\text{no double 6}) = 1 - \frac{35^{24}}{36^{24}} \approx 0.4914
+          </me>.
+        </p>
+        <p>
+          Indeed, the Chevalier de Mere noticed that when playing the game with two dice, he tended to lose money in the long run.  Who did he turn to to ask for help?  Blaise Pascal, of course!
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Another way to think about complementary probabilities is to say that <me>P(E) + P(\bar{E}) = 1</me>.  A probability of 1 means the event is certain, so perhaps we should think of this as giving the probability that event <m>E</m> either happened or didn't happen.  This is exactly what we want to mean by adding probabilities.
+    </p>
+
+    <theorem xml:id="thm-prob-sum">
+      <idx><h>sum principle (probability)</h></idx>
+      <statement>
+        <p>
+          Suppose <m>A</m> and <m>B</m> are two <em>disjoint</em> events.  Then the probability of either <m>A</m> or <m>B</m> happening is,
+          <me>
+            P(A\cup B) = P(A) + P(B)
+          </me>.
+          If <m>A</m> and <m>B</m> are not disjoint, then the probability of <m>A</m> or <m>B</m> occurring is,
+          <me>
+            P(A\cup B) = P(A) + P(B) - P(A\cap B)
+          </me>.
+        </p>
+      </statement>
+    </theorem>
+    
+    <p>
+      The proof of this fact is one of the exercises in this section.  However, it should become clear how this works with an example.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Suppose you roll a fair 6-sided die.  What is the probability of rolling a number that is even or less than 3 ?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We don't need a theorem to answer this.  The sample space is <m>\{1,2,3,4,5,6\}</m> and the event is the subset <m>E = \{1,2,4,6\}</m>.  So <m>P(E) = \frac{4}{6}</m>.  
+        </p>
+
+        <p>
+          To see where the <m>4</m> comes from, let <m>A</m> be the event of rolling an even number (so <m>A = \{2,4,6\}</m>) and <m>B</m> be the event of rolling a number less than 3 (so <m>B = \{1,2\}</m>).  Notice that the notation <m>P(E) = P(A \cup B)</m> makes sense, since as sets, we really do have <m>E = A \cup B</m>.  
+        </p>
+
+        <p>
+          If we go back to the definition of the probability of an event, we have,
+          <me>
+            P(E) = \frac{\card{E}}{\card{S}} = \frac{\card{A \cup B}}{\card{S}}
+          </me>.
+          We must find the size of the set <m>A \cup B</m>.  But we know how to find the size of the union of non-disjoint sets: use PIE!  So <m>\card{A \cup B} = 3 + 2 - 1 = 4</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      As the example demonstrates, we have basically translated the <xref ref="principle-sum" text="custom">sum principle</xref> into the language of probability.  Can we do the same for the <xref ref="principle-product" text="custom">product principle</xref>?  
+    </p>
+
+    <p>
+      We use the product principle to find the number of ways two events can both happen, one after the other.  Many probability questions ask for the probability of such <term>compound</term> events.  Let's consider an example to see what is going on.
+    </p>
+
+
+    <example xml:id="eg-prob-die-coin-indep">
+      <statement>
+        <p>
+          What is the probability of getting an even number when rolling a 6-sided die and a heads when flipping a coin?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First we will find the probability directly from the definition.  The sample space consists of all pairs of outcomes from the die and the coin, so <m>S = \{(1,H), (1,T), (2,H), (2,T), (3,H), (3,T), (4,H), (4,T), (5,H), (5,T), (6,H), (6,T)\}</m>.  Without listing these, we could have calculated the size of the sample space using the product principle: <m>\card{S} = 6\cdot 2 = 12</m>.  The event we are interested in is the set of outcomes <m>E = \{(2,H), (4,H), (6,H)\}</m>.  Obviously that is size <m>3</m>, which we could have also found as <m>3 \cdot 1</m>.  So the probability of this event is <m>P(E) = \frac{3}{12} = \frac{1}{4}</m>.
+        </p>
+
+        <p>
+          Now consider the two events separately.  Say <m>A</m> is rolling an even number, and <m>B</m> flipping the coin and getting heads. The probability of the first event is <m>P(A) = \frac{3}{6}</m>.  The probability of the second event is <m>P(B) = \frac{1}{2}</m>.  It appears that the correct way to combine these probabilities is to multiply them: 
+          <me>
+            P(E) = (A \text{ and } B) = P(A)P(B) = \frac{3}{6}\frac{1}{2} = \frac{1}{4}
+          </me>.
+          How convenient that multiplying fractions is done by multiplying the numerators and denominators separately, and this is the same as applying the product principle to the numerator and denominator of the fraction.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      The reason the above example worked out was that the events were <term>independent</term>.  Intuitively, this means that the outcome of the first event has no influence on the outcome of the second event.  Actually, we use this principle like the product principle to <em>define</em> independence.
+    </p>
+
+    <definition xml:id="def-prob-independence">
+      <idx><h>independence</h></idx>
+      <statement>
+        <p>
+          Given two events <m>A</m> and <m>B</m>, we say that they are <term>independent</term> provided the probability of both events happening is the product of the probabilities of each event happening:
+          <me>
+            P(A \cap B) = P(A)P(B)
+          </me>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Notice that in the definition we describe the event that both <m>A</m> and <m>B</m> happen as the intersection <m>A \cap B</m>.  Since events are sets, it makes sense to take an intersection.  The intersection of two sets contains all the elements that are in both sets, which is exactly what we want here.
+    </p>
+
+    <p>
+      This shines a light on a key difference between this definition and the product principle.  We use the product principle to construct a new set of outcomes by combining the outcomes in two sets.  This creates new sorts of outcomes.  For example, the product principle would combine the sets
+      <me>
+        \{1,2,3\} \text{ and } \{H,T\} \text{ into } \{1H, 1T, 2H, 2T, 3H, 3T\}
+      </me>.
+      This is <em>not</em> the intersection of two sets (it is actually the Cartesian product: <m>A \times B = \{(a,b) \st a \in A; b \in B\}</m>).
+      The definition of independence involves probabilities relative to a fixed set of outcomes.   So the elements in <m>A</m> and <m>B</m> in the definition of independence are already sequences like we would have created using the product principle.
+    </p>
+
+    <p>
+      If we are more careful in <xref ref="eg-prob-die-coin-indep"/> where we rolled a die and flipped a coin, we should describe the event <m>A</m> of first rolling an even number as the set 
+      <me>
+        A = \{(2,H), (2,T), (4,H), (4,T), (6,H), (6,T)\}
+      </me>
+      and the event <m>B</m> of then flipping heads as the set
+      <me>
+        B = \{(1,H), (2,H), (3,H), (4,H), (5,H), (6,H)\}
+      </me>.
+      We then have <m>P(A) = \frac{6}{12}</m> and <m>P(B) = \frac{6}{12}</m>, with product <m>P(A)P(B) = \frac{6}{12}\frac{6}{12} = \frac{36}{144} = \frac{1}{4}</m>.  So our solution in the example was correct but misleading.  The events <m>A</m> and <m>B</m> are indeed independent since 
+      <me>
+        A \cap B = \{(2,H), (4,H), (6,H)\}
+      </me>
+      so <m>P(A \cap B) = \frac{3}{12} = \frac{1}{4}</m>.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Suppose you roll a 12-sided die (numbered 1 to 12).  Consider the events:
+          <ul>
+            <li>
+              <p>
+                <m>A</m> is the event of rolling a number that is a multiple of 3.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>B</m> is the event of rolling a number that is a multiple of 4.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>C</m> is the event of rolling a number less than 7.
+              </p>
+            </li>
+          </ul>
+          Are the events <m>A</m> and <m>B</m> independent?  What about <m>A</m> and <m>C</m>?  What about <m>B</m> and <m>C</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The sample space is the set <m>\{1,2,3,4,5,6,7,8,9,10,11,12\}</m>.  The event <m>A</m> is the set <m>\{3,6,9,12\}</m>, <m>B</m> is the set <m>\{4,8,12\}</m>, and <m>C</m> is the set <m>\{1,2,3,4,5,6\}</m>.  Thus the probabilities for each of these events are
+          <me>
+            P(A) = \frac{4}{12} = \frac{1}{3}, \quad P(B) = \frac{3}{12}= \frac{1}{4}, \quad P(C) = \frac{6}{12}= \frac{1}{2}
+          </me>.
+          </p>
+
+          <p>
+            To decide whether events <m>A</m> and <m>B</m> are independent, we find <m>P(A \cap B)</m>.  The intersection of events <m>A</m> and <m>B</m> (meaning the number rolled is both a multiple of 3 and 4) is <m>\frac{1}{12}</m> (the only element of the intersection is 12).  We compare this to <m>P(A)P(B) = \frac{1}{3}\frac{1}{4} = \frac{1}{12}</m>.  Since these are equal, the events are independent.
+          </p>
+
+          <p>
+            Events <m>B</m> and <m>C</m> are <em>not</em> independent though.  Since <m>B \cap C = \{4\}</m>, we have <m>P(B \cap C) = \frac{1}{12}</m>.  But <m>P(B)P(C) = \frac{1}{4}\frac{1}{2} = \frac{1}{8}</m>.  Since these are not equal, the events are not independent.  This makes sense since there are fewer multiples of 4 less than 7 than not.
+          </p>
+
+          <p>
+            Finally, <m>A</m> and <m>C</m> are independent: <m>P(A \cap C) = \frac{2}{12} = \frac{1}{6}</m> and <m>P(A)P(C) = \frac{1}{3}\frac{1}{2} = \frac{1}{6}</m>.
+          </p>
+      </solution>
+    </example>
+
+    <p>
+      When events are not independent, we get a new interesting question we can ask: What is the probability of one event <em>given</em> that another event has occurred?  This is called ...
+    </p>
+
+	</subsection>
+
+	<subsection>
+		<title>Conditional Probability</title>
+    <idx><h>conditional probability</h></idx>
+    <p>
+      <idx><h>Monty Hall problem</h></idx>
+      The famous probability problem, known as the Monty Hall problem, presents the following conundrum.  You are on the game show <em>Let's Make a Deal</em> and will win whatever is behind one of three doors you decide to open.  Behind one door is a car; behind the other two are goats.  You pick a door, but before opening it, the host (Monty Hall) reveals one of the other doors that has a goat behind it.  You then have the opportunity to switch doors.  Should you switch?  What is the probability of getting the car if you do? 
+    </p>
+
+    <aside>
+      <p>
+        This problem was perhaps one of the first math problems to <q>go viral,</q> although it did so when it appeared in the Sunday newspaper magazine <pubtitle>Parade</pubtitle>.  After its publication, around 10,000 readers (including close to 1000 with PhDs) wrote in complaining that the author, Marilyn vos Savant, was wrong.  She wasn't.
+      </p>
+    </aside>
+
+    <p>
+      You might be tempted to say that the probability of getting the car when you switch is <m>\frac{1}{2}</m>.  After all, there are two doors left, and the car is behind one of them.  However, we must ask what the probability of getting the car is <em>given</em> that Monty has revealed a goat behind another, unpicked door.  
+    </p>
+
+    <definition xml:id="def-conditional-probability">
+      <idx><h>conditional probability</h></idx>
+      <statement>
+        <p>
+          Given two events <m>A</m> and <m>B</m>, the <term>conditional probability</term> of <m>A</m> given <m>B</m> is,
+          <me>
+            P(A|B) = \frac{P(A \cap B)}{P(B)}
+          </me>.
+        </p>
+      </statement>
+    </definition>
+
+		<p>
+			Does this definition agree with our intuition for what conditional probability should mean?  Let's think about the sample space.  We want to know the chances of <m>A</m> occurring under the assumption that <m>B</m> has already occurred.  In other words, we only care about the elements of the sample space that belong to <m>B</m>.
+    </p>
+    <p>
+      If <m>B</m> becomes the sample space, then the only outcomes from <m>A</m> that can possibly occur are the outcomes that are in <m>A</m> <em>and</em> <m>B</m>.  So perhaps the definition of conditional probability really should be,
+      <me>
+        P(A | B) = \frac{\card{A \cap B}}{\card{B}}
+      </me>.
+    </p>
+      <p>
+      Unfortunately, I'm not in charge of probability definitions.  It turns out that the standard definition is just as good though. This is because,
+      <me>
+        P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{\frac{\card{A \cap B}}{\card{S}}}{\frac{\card{B}}{\card{S}}} = \frac{\card{A \cap B}}{\card{B}}
+      </me>.
+      Phew. Another crisis averted.
+		</p>
+
+    <example>
+      <statement>
+        <p>
+          Suppose you roll two 6-sided dice with your eyes closed.  Your friend says, <q>Hey look, at least one of your dice is a 4.</q>  What is the probability that you rolled a sum of 7?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          First note that the probability of rolling a sum of 7 is <m>\frac{6}{36} = \frac{1}{6}</m>, since of the 36 pairs of numbers that can appear, there are six pairs that sum to 7: <m>\{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}</m>.  However, we are now in a situation where at least one die is a 4.  This limits the sample space to the 11 pairs that contain a 4 (we can count this using PIE as <m>6 + 6 - 1</m>).  Of these, only two sum to 7: <m>\{(3,4), (4,3)\}</m>.  So the probability of rolling a sum of 7 given that one die is a 4 is <m>\frac{2}{11}</m>.
+        </p>
+
+        <p>
+          If we use the definition of conditional probability, we would compute this slightly differently but arrive at the same answer.  We have events <m>A</m> (the sum is 7) and <m>B</m> (at least one die is a 4).  Then <m>P(B) = \frac{11}{36}</m> and <m>P(A \cap B) = \frac{2}{36}</m>.  So <m>P(A|B) = \frac{2}{11}</m>.
+        </p>
+
+        <p>
+          Notice that the probability of rolling a sum of 7 given that <em>the red</em> die is a 4 (say they are different colors) will be different!  That would be <m>\frac{1}{6}</m>, since we are really just asking for the probability that the other die is a 3.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>
+          Suppose you draw two cards from a standard deck of 52 cards.  What is the probability that the second card is a face card given that the first card is red?
+        </p>
+
+        <p>
+          What is the probability that the first card is red given that the second card is a face card?
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          We have a sample space consisting of the <m>52\cdot 51</m> sequences of two cards.  Event <m>A</m> will be those pairs that have a red card as the first in the sequence.  Event <m>B</m> will be those pairs that have a face card second in the sequence.
+        </p>
+
+        <p>
+          We are looking for both <m>P(A | B)</m> and <m>P(B | A)</m>, so we will need to find  <m>P(A)</m>, <m>P(B)</m>, and <m>P(A \cap B)</m>.  There are <m>26 \cdot 51</m> pairs in <m>A</m> (select one of the 26 red cards, and then any of the remaining 51 cards), so 
+          <me>
+            P(A) = \frac{26\cdot 51}{52\cdot 51} = \frac{26}{52} = \frac{1}{2}
+          </me>.
+          There are <m>12\cdot 51</m> pairs in <m>B</m> (select one of the 12 face cards, and then any of the remaining 51 cards), so
+          <me>
+            P(B) = \frac{12\cdot 51}{52\cdot 51} = \frac{12}{52} = \frac{3}{13}
+          </me>.
+          Finding the size of the intersection is a little more challenging (we did so in the subsection <xref ref="subsec-sum-product" text="title"/>).  There are <m>20\cdot 12</m> pairs that start with a red, non-face card, and end with a face card, and another <m>6 \cdot 11</m> pairs that start with a red face card and end with a face card.  So 
+          <me>P(A \cap B) = \frac{20\cdot 12 + 6\cdot 11}{52\cdot 51} = \frac{306}{2652} = \frac{3}{26}</me>.
+          
+        </p>
+
+        <p>
+          So the probability that the second card is a face card given that the first card is red is,
+          <me>
+            P(B | A) = \frac{P(A \cap B)}{P(A)} = \frac{\frac{3}{26}}{\frac{1}{2}} = \frac{3}{13}
+          </me>.
+          The probability that the first card is red given that the second card is a face card is,
+          <me>
+            P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{\frac{3}{26}}{\frac{3}{13}} = \frac{1}{2}
+          </me>.
+        </p>
+
+        <p>
+          Wait a second!  What?  The probability that the first card is red given that the second card is a face card is the same as the probability that the first card is red??  It seems that <m>P(A | B) = P(A)</m>, and that <m>P(B | A) = P(B)</m>.  What could that mean?
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Look what happens when you clear the denominator in the definition of conditional probability
+      <me>
+        P(A | B) = \frac{P(A \cap B)}{P(B)}
+      </me>
+      becomes
+      <me>
+        P(A \cap B) = P(B)P(A | B)
+      </me>.
+      This looks almost like the definition of events being independent, except that instead of <m>P(A)</m> in the product we now have <m>P(A | B)</m>.  But what does <m>P(A | B)</m> even mean if <m>A</m> and <m>B</m> are independent?  If the events are independent, then it should be no more or less likely that <m>A</m> occurs given that <m>B</m> has occurred.  So we should have <m>P(A | B) = P(A)</m>.  This is exactly what we saw in the last example.
+    </p>
+
+
+    <!-- <p>
+      To finish this subsection, let's solve the Monty Hall problem.  Suppose you first pick door A and Monty reveals that behind door C is a goat. We want to find the probability that the car is behind door B, given that door C hid a goat.  Let <m>A</m> be the event that the car is behind door A, <m>B</m> the event that the car is behind door B, and <m>C</m> the event that the car is behind door C.  We want to find <m>P(B | \bar{C})</m> (where <m>\bar{C}</m> is the complement of <m>C</m>, i.e., there is a goat behind door C).
+    </p>
+    
+    <p>
+      Assuming that each door is equally likely to hide the car, we have <m>P(\bar{C}) = \frac{2}{3}</m>.  So all we need to find is <m>P(B \cap \bar{C})</m>.  
+      We know that <m>P(A) = P(B) = P(C) = \frac{1}{3}</m>.  We also know that <m>P(A \cap B) = P(A \cap C) = P(B \cap C) = 0</m>.  So we have, <m>P(B | \bar{C}) = \frac{P(B \cap \bar{C})}{P(\bar{C})} = \frac{P(B)}{P(\bar{C})} = \frac{\frac{1}{3}}{\frac{2}{3}} = \frac{1}{2}</m>.  So you should... it doesn't matter?  But that is not the answer you expect (and is in fact wrong).  
+    </p> -->
+	</subsection>
+
+	<!-- <subsection>
+		<title>Expected Value</title>
+		<p>
+			We can use probability to guide our decisions.
+			This relies on the principle of probability that if an experiment is performed many times, then the proportion of times an event occurs will be close to the probability of that event occurring.
+			Here we using <em>probability</em> to mean <term>theoretical probability</term>, which is just what we have defined above.
+			This is in contrast to <term>empirical probability</term> which is exactly the proportion of times an event occurs to the number of times the experiment was performed.
+		</p>
+
+		<p>
+			Suppose we assign value to events, set of outcomes from our sample space.
+			For example, when rolling a die, we might assign $2 to even rolls and $1 to odd rolls.
+			We can then ask, what should we <em>expect</em> to earn each time we roll the die?  This is a little silly, since sometimes we will earn $2, and sometimes only $1.
+			So what do we mean by this?
+		</p>
+
+		<p>
+			If you performed the experiment 100 times, how much money would be a reasonable <em>expectation</em> for your earnings?  Well, half of the time you would earn $2, the other half $1 (since the empirical probability will be close to the theoretical probability; maybe not exactly half, but close to it).
+			So you could expect to earn $150.
+			That comes to, on average, $1.50 per roll.
+			We would say that $1.50 is the <term>expected value</term> of the experiment.
+		</p>
+	</subsection> -->
+
+  <reading-questions xml:id="rqs-counting-probability">
+    <exercise label="rq-counting-probability-union">
+      <statement>
+        <p>
+          Which of the following are true about the equation <m>P(A \cup B) = P(A) + P(B)</m>?
+        </p>
+      </statement>
+      <choices randomize="yes" multiple-correct="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              This is true as long as the events <m>A</m> and <m>B</m> are disjoint.
+            </p>
+          </statement>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              This is true as long as the events <m>A</m> and <m>B</m> are independent.
+            </p>
+          </statement>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              This is always true. 
+            </p>
+          </statement>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              This is never true.
+            </p>
+          </statement>
+        </choice>
+      </choices>
+    </exercise>
+    <exercise label="rq-counting-probability-intersection">
+      <statement>
+        <p>
+          Which of the following relationships hold for any two events <m>A</m> and <m>B</m>?
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice>
+          <statement>
+            <p>
+              <m>P(A\cap B) = P(A)P(B)</m>.
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              This is only true if <m>A</m> and <m>B</m> are independent.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>P(A \cap B) = P(A)P(B|A)</m>
+            </p>
+          </statement>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>P(A \cap B) = P(B)P(A|B)</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Right. Since <m>P(A \cap B) = P(B \cap A)</m>.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              <m>P(A \cap B) = P(A)P(A|B)</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              <m>P(A|B)</m> is read, <q>the probability of <m>A</m> given <m>B</m>.</q>
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise label="rq-counting-probability-q">
+      <statement>
+        <p>
+          What questions do you have after reading this section?  Ask at least one question about the material that you are curious about.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+
+  <xi:include href="practice/counting-probability.ptx" />
+  <xi:include href="exercises/counting-probability.ptx" />
+
+</section>

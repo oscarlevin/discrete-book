@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="practice-sec-recurrence">
+<title>Practice Problems</title>
+
+<exercise label="ww-arithgeom-geom-sm">
+  <webwork source="Contrib/DMOI/2-Sequences/2_2-Arithmetic_and_Geometric_Sequences/2_2_6.pg" />
+  </exercise>
+
+  <exercise label="ww-arithgeom-goem-fraction-sum">
+    <webwork source="Contrib/DMOI/2-Sequences/2_2-Arithmetic_and_Geometric_Sequences/2_2_7.pg" />
+    </exercise>
+
+    <exercise label="ww-rec-tel-itr">
+      <webwork>
+        <pg-code>
+        Context()->variables->are(n => "Real");
+        do {$a0 = random(-2,9); } until ($a0 !=5); #choose an initial value
+        $b = -2 + $a0;
+        $ans = Formula("$b + 2^{n+1}");
+        </pg-code>
+
+        <statement>
+          <p>
+            Solve the recurrence relation <m>a_n = a_{n-1} + 2^n</m> with <m>a_0 = <var name="$a0"/></m>.
+          </p>
+          <p>
+            <m>a_n = </m><var name="$ans" width="20" />
+          </p>
+        </statement>
+
+        <hint>
+          <p>
+            Use telescoping or iteration.
+          </p>
+        </hint>
+
+        <solution>
+          <p>
+            <m>a_n = <var name="$b"/> + 2^{n+1}</m>.  We should use telescoping or iteration here.  For example, telescoping gives
+            <me>
+              \begin{aligned} a_1 - a_0 \amp = 2^1\\ a_2 - a_1 \amp = 2^2\\ a_3 - a_2 \amp = 2^3\\ \vdots\amp \vdots \\ a_n - a_{n-1} \amp = 2^n \end{aligned}
+            </me>
+            which sums to <m>a_n - a_0 = 2^{n+1} - 2</m> (using the multiply-shift-subtract technique for the geometric series on the right-hand side).
+            Substituting <m>a_0 =<var name="$a0"/></m> and solving for <m>a_n</m> completes the solution.
+          </p>
+        </solution>
+      </webwork>
+    </exercise>
+
+    <exercise label="ww-rec-croots1">
+      <webwork source="Contrib/DMOI/2-Sequences/2_4-Solving_Recurrence_Relations/2_4_5.pg" />
+      </exercise>
+
+      <exercise label="ww-rec-croots-diff-inits">
+        <webwork source="Contrib/DMOI/2-Sequences/2_4-Solving_Recurrence_Relations/2_4_6.pg" />
+        </exercise>
+
+        <exercise label="ww-rec-croots2">
+          <webwork source="Contrib/DMOI/2-Sequences/2_4-Solving_Recurrence_Relations/2_4_7.pg" />
+          </exercise>
+          </exercises>

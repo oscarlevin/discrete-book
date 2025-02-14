@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_counting-combine-outcomes">
+	<title>Combining Outcomes</title>
+	<idx><h>sum principle</h></idx>
+	<idx><h>product principle</h></idx>
+	<idx><h>additive principle</h><see>sum principle</see></idx>
+	<idx><h>multiplicative principle</h><see>product principle</see></idx>
+	<objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+					Apply the sum and product principles to count the number of outcomes of an event.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Solve counting problems using a combination of the sum and product principles.
+				</p>
+			</li> 
+			<li>
+				<p>
+					Justify the product principle in terms of the sum principle.
+				</p>
+			</li>
+		</ol>
+	</objectives>
+	<subsection>
+		<title>Section Preview</title>
+		<investigation>
+			<idx><h>cards</h></idx>
+			<idx><h>playing cards</h></idx>
+			<statement>
+				<p>
+					A standard deck of playing cards contains 52 cards.  There are four suits: clubs, diamonds, hearts, and spades.  Each suit contains cards of 13 values: Ace, 2, 3,..., 10, Jack, Queen, and King.  
+				</p>
+				<p>
+					We call the hearts and diamonds <term>red cards</term> (with clubs and spades the <term>black cards</term>).  In each suit, the Jack, Queen, and King are called <term>face cards</term> (the others are call <term>number cards</term>).
+				</p>
+
+				<p>
+					Suppose you pick two cards from a deck.  How many different combinations will have the first card be a red card and the second card be a face card?
+				</p>
+			</statement>
+	
+		</investigation>
+
+		<p>
+			<em>Combinatorics</em> is about counting, but looking at the word, we see it really deals with how things <em>combine</em>.
+			In this section, we will consider two very different ways that we can combine the outcomes we count in combinatorics problems.
+		</p>
+		<worksheet xml:id="PA-counting-combine">
+			<title>Preview Activity</title>
+			<exercise label="pa-counting-combine-1">
+				<webwork>
+					<statement>
+						<p>
+							A restaurant offers 8 appetizers and 14 entrées.
+							How many choices do you have if:
+							<ol>
+								<li>
+									<p>
+										you will eat one dish, either an appetizer or an entrée? 
+									</p>
+									<p>
+										<var name="22" width="5"/>
+									</p>
+								</li>
+								<li>
+									<p>
+										you are extra hungry and want to eat both an appetizer and an entrée?  
+									</p>
+									<p>
+										<var name="Compute(8*14)" width="7"/>
+									</p>
+								</li>
+							</ol>
+						</p>
+					</statement>
+				</webwork>
+			</exercise>
+
+			<exercise label="pa-counting-combine-2">
+				<statement>
+					<p>
+						Think about the methods you used to solve the questions about appetizers and entrées.  Can you frame these as rules for how to combine two numbers of things when counting?
+						Write down the rules for these methods.
+					</p>
+				</statement>
+				<response />
+			</exercise>
+			<exercise label="pa-counting-combine-3">
+				<webwork>
+			
+					<introduction>
+						<p>
+							Do your rules work?  Let's apply them to another counting problem to check.  Given that a standard deck of playing cards has 12 face cards and 26 red cards, answer the following.
+							
+						</p>
+					</introduction>
+					<task>
+						<statement>
+							<p>
+								How many ways can you select a card which is either a face card <em>or</em> a red card?
+							</p>
+							
+							<p>
+								<var name="32" width="5"/>
+							</p>
+						</statement>
+					</task>
+					<task>
+						<statement>
+							<p>
+								How many ways can you select a card which is both a face card <em>and</em> a red card?
+							</p>
+							<p>
+								<var name="6" width="5"/>
+							</p>
+						</statement>
+					</task>
+				</webwork>
+			</exercise>
+		</worksheet>
+	</subsection>
+
+		<subsection>
+			<title>What are <em>Outcomes</em>?</title>
+			
+		<p>
+			<idx><h>event (counting)</h></idx>
+			<idx><h>outcome (counting)</h></idx>
+			Before we start counting, a quick note about how we ask counting problems.
+			Often counting problems are asked terms of how many ways something can happen.
+			That is, there is some <term>event</term> that can result in different <term>outcomes</term>, and it is the different outcomes that are counted.
+			Alternatively, we can take a less <q>active</q> view by asking for the number of elements in a set, such as the set of bit strings of a particular length and weight.
+			However, this too could be rephrased as a question about an event: if you randomly select one of the bit strings (from the set of bit strings), how many things can happen?
+		</p>
+
+		<p>
+			So counting the elements in a set or counting the number of outcomes of an event is not really different.  Let's think of every counting problem as asking for the number of elements in a <em>set</em> of <em>outcomes</em>.
+		</p>
+			
+		<p>
+			At the most basic level, counting is not hard at all: Just write all the outcomes in a numbered list and see how many numbers you use.
+			Let me tell you about my bow tie collection.
+			I have,
+			<ol>
+				<li>
+					<p>
+						A purple bow tie.
+					</p>
+				</li>
+
+				<li>
+					<p>
+						A green bow tie.
+					</p>
+				</li>
+
+				<li>
+					<p>
+						A striped bow tie.
+					</p>
+				</li>
+
+				<li>
+					<p>
+						A paisley bow tie.
+					</p>
+				</li>
+			</ol>
+			How many bow ties do I have (how many ways can I select a bow tie)?  Well, the largest number in my numbered list is 4, so I have four bow ties.<fn>Obviously this example is quite outdated; only four bow ties?  What sort of mathematician do you take me for?</fn> Of course, as we saw in the previous section, we can use shortcuts to avoid listing out all of the outcomes, such as using Pascal's triangle to find the number of items in our list.
+		</p>
+
+		<p>
+			Where counting begins to get interesting is when we want to make a new list that combines two or more lists we have already counted.
+			For example, suppose that in addition to my list of four bow ties, I had a list of seven pairs of novelty socks. I could ask how many choices I have if I wanted to wear either a cool bow tie or a pair of novelty socks.
+			Okay, combine my two lists to make a new list with 11 items: Perhaps first list the four bow ties and then keep counting (starting with 5 for the first pair of socks) until you have listed the seven additional items, ending at 11.
+		</p>
+
+		<p>
+			In this example, we have combined our two sets of outcomes (picking a bow tie and picking a pair of socks) to get a new set of outcomes (picking a bow tie or pair of socks).
+			That resulting set of outcomes contained 11 elements.
+		</p>
+
+		<p>
+			Now consider the question: How many choices do I have if I want to wear both a bow tie and a pair of novelty socks?  Again, I need to combine my two sets of outcomes to get a new set of outcomes.
+			But this new set of outcomes will contain 28 elements.
+			How did I know that I should multiply the number of elements in each of my original sets, instead of adding them?  We are once again combining outcomes: The resulting set of outcomes that contains 28 elements that are all outcomes consisting of a bow tie and a pair of socks.
+			Now read the previous paragraph!  They sound very close to each other!
+		</p>
+
+		<p>
+		  The difference between the two scenarios is subtle.
+			There are two ways we can think of combining outcomes:
+			<ol>
+				<li>
+					<p>
+						We can combine the <em>sets</em> of outcomes.
+					</p>
+				</li>
+				<li>
+					<p>
+						We can combine the <em>outcomes</em> in the sets.
+					</p>
+				</li>
+			</ol> 
+			Being able to distinguish between these operations is a key skill in combinatorics.
+		</p>
+
+		<example xml:id="eg-counting-magnets">
+			<statement>
+				<p>
+					Suppose your refrigerator door has some magnetic letters and numerals on it: There are five letters (A, B, C, D, and E) and three numerals (1, 2, and 3).
+					Your brother says that if you combine these sets of magnets, you will get a collection of 8 magnets.
+					Your sister says that you can combine these magnets in 15 ways.
+				</p>
+        <p>
+          What sets of outcomes are your siblings thinking of?
+        </p>
+			</statement>
+
+			<solution>
+				<p>
+					Your brother is thinking of combining the sets of outcomes.
+					The set of outcomes for the letters is <m>\{A, B, C, D, E\}</m> and the set of outcomes for the numerals is <m>\{1, 2, 3\}</m>.
+					The set of outcomes for the combined set of magnets is <m>\{A, B, C, D, E, 1, 2, 3\}</m>, which contains 8 elements.
+        </p>
+        
+        <p>
+					Your sister is thinking of combining the outcomes themselves.
+					The set of outcomes is <m>\{A1, A2, A3, B1, B2, B3, C1, C2, C3, D1, D2, D3, E1, E2, E3\}</m>, which contains 15 elements.
+				</p>
+			</solution>
+		</example>
+	</subsection>
+
+	<subsection>
+		<title>The Sum and Product Principles</title>
+		<p>
+			Let's carefully write down the rules we can use to combine sets of outcomes and outcomes in sets.
+		</p>
+
+
+		<principle xml:id="principle-sum">
+			<title>Sum Principle</title>
+			<idx><h>sum principle</h></idx>
+			<statement>
+				<p>
+					If an event <m>A</m> results in <m>m</m> outcomes, and event <m>B</m> results in <m>n</m> <em>disjoint</em> outcomes, then the event <q><m>A</m> or <m>B</m></q> results in <m>m + n</m> outcomes.
+				</p>
+			</statement>
+		</principle>
+
+		<p>
+			<idx><h>disjoint events</h></idx>
+			It is important that the events be <term>disjoint</term>:
+			i.e., that there is no way for <m>A</m> and <m>B</m> to both happen at the same time.
+			For example,
+			a standard deck of 52 cards contains <m>26</m> red cards and <m>12</m> face cards.
+			However, the number of ways to select a card which is either red or a face card is not <m>26 + 12 = 38</m>.
+			This is because there are 6 cards which are both red and face cards.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					<idx><h>word (counting)</h></idx>
+					How many two-letter <q>words</q>
+					start with either A or B? (A <term>word</term>
+					is just a sequence of letters;
+					it doesn't have to be English, or even pronounceable.)
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					First, how many two-letter words start with A? We just need to select the second letter,
+					which can be accomplished in 26 ways.
+					So there are 26 words starting with A.
+					There are also 26 words that start with B.
+					To select a word that starts with either A or B, we can pick the word from the first 26 or the second 26, for a total of 52 words.
+				</p>
+
+				<p>
+					We have two sets of outcomes: the words starting with A and the words starting with B.
+					We create a new set of outcomes by combining the sets to get the set of words that start with either A or B, and by the sum principle, this new set contains 52 outcomes.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			We often use the principle when the sets of outcomes need to be counted using other counting techniques.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many <m>10</m>-bit strings of weight <m>6</m> start with either <m>11</m> or <m>00</m>?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					We learned how to count bit strings with a fixed length and weight in <xref ref="sec_counting-pascal"/>.  The total number of <m>10</m>-bit strings of weight <m>6</m> is <m>\binom{10}{6} = 210</m> (where that value was found using <xref ref="fig-pascal-large" text="custom">Pascal's triangle</xref>).  However, we want to count just those that start with <m>11</m> or <m>00</m> (and not those that start with <m>10</m> or <m>01</m>).
+				</p>
+
+				<p>
+					Since there are no bit strings that start with both <m>11</m> and <m>00</m>, we can apply the sum principle.  We will compute the size of each set of outcomes and then add the results.  
+				</p>
+
+				<p>
+					How many <m>10</m>-bit strings of weight <m>6</m> start with <m>11</m>?  If the string starts with <m>11</m>, then of the remaining eight bits, there must be four 1's, so that the total weight is <m>6</m>.  This is just like asking for the number of <m>8</m>-bit strings with weight 4, so there are <m>\binom{8}{4} = 70</m> such strings.	Similarly, there are <m>\binom{8}{6} = 28</m> strings that start with <m>00</m> (all six 1's must be in the remaining 8 bits).  By the sum principle, the total number of strings we want to count is <m>70 + 28 = 98</m>. 
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			We can also use the sum principle <em>indirectly</em> in a way that might be called the <em>subtraction principle</em> (but isn't).
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many <m>10</m>-bit strings of weight <m>6</m> have at least one 1 in their first three bits?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					There are lots of different ways a string can have at least one 1 in its first three bits: It could start with 100, 010, 001, 101, 110, 011, or 111.  We could count the number of strings that start with each of them and then apply the sum principle a bunch of times.  But let's not.
+				</p>
+
+				<p>
+					Suppose the number of strings we want to count is <m>x</m>.  Let <m>y</m> be the number of <m>10</m>-bit strings of weight 6 that <em>do not</em> have a 1 in any of their first three bits.  What is <m>x + y</m>?  This is the number of <m>10</m>-bit strings of weight 6 in total, which is <m>\binom{10}{6} = 210</m>.  It is also easy to find <m>y</m>: Bit strings with length 10 and weight 6 that start with 000 must end in a bit string with length 7 and weight 6.  There are <m>\binom{7}{6} = 7</m> of these.
+				</p>
+
+				<p>
+					Thus, we have
+					<me>
+						x + 7 = 210
+					</me>,
+					so <m>x = 210 - 7 = 203</m>.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			While we didn't want to use the sum principle multiple times in the previous example, we could have.  The sum principle works with more than two events.
+			Say, in addition to your four bow ties and seven pairs of socks,
+			you could also pick one of five belt buckles.
+			How many choices do you have now?
+			You would have <m>4+7+5 = 16</m> options.
+		</p>
+
+		<example xml:id="eg-vowel-word-sum">
+			<statement>
+				<p>
+					How many two-letter words start with one of the 5 vowels?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					There are 26 two-letter words starting with A, another 26 starting with E, and so on.
+					By the sum principle, the total number of words will then be <m>26+26+26+26+26 = 130</m>
+					Of course it would be easier to just multiply <m>5\cdot 26</m>.
+				</p>
+			</solution>
+		</example>
+
+		<!-- <example>
+			<statement>
+				<p>
+					Suppose you are going for some fro-yo.
+					You can pick one of 6 yogurt choices, and one of 4 toppings.
+					How many choices do you have?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					Break your choices up into disjoint sets of outcomes:
+					<m>A</m> are outcomes with the first topping,
+					<m>B</m> the outcomes featuring the second topping, and so on.
+					Each set of outcomes contain six desserts
+					(one for each yogurt flavor).
+					The events are disjoint,
+					so the total number of outcomes is <m>6 + 6 + 6 + 6 = 24</m>.
+				</p>
+			</solution>
+		</example> -->
+
+		<p>
+			Note that in the previous example,
+			when using the sum principle on a bunch of outcome sets of the same size, it is quicker to multiply.
+			Let's take advantage of this observation and state it as a new principle.
+		</p>
+
+
+		<principle xml:id="principle-product">
+			<title>Product Principle</title>
+			<idx><h>product principle</h></idx>
+			<statement>
+				<p>
+					If event <m>A</m> can occur in <m>m</m> ways,
+					and each possibility for <m>A</m> allows for exactly <m>n</m> ways for event <m>B</m>,
+					then the event <q><m>A</m> and <m>B</m></q>
+					can occur in <m>m \cdot n</m> ways.
+				</p>
+			</statement>
+		</principle>
+
+    <p>
+      A nice way to picture the product principle is to think of the outcomes as <q>levels</q> in a tree. To illustrate this, consider the counting question of <xref ref="eg-counting-magnets"/>: How many ways can you select a letter from <m>\{A, B, C, D, E\}</m> followed by a numeral from <m>\{1, 2, 3\}</m>? Here is a tree picture that shows what is going on.
+    </p>
+
+    <image width="30%">
+      <shortdescription>Tree of outcomes for two symbol sequences where the first symbol is A-E and the second is 1-3.</shortdescription>
+      <latex-image label="img-counting-tree-strings">
+        \begin{tikzpicture}
+          \draw (0,0) \v -- (1,2) \vl{\tiny $A$} (0,0) -- (1,1) \vl{\tiny $B$} (0,0) -- (1,0) \vl{\tiny $C$} (0,0) -- (1,-1) \vl{\tiny $D$} (0,0) -- (1,-2) \vl{\tiny $E$};
+          \draw (1,2) -- (2,2.3) \vl{\tiny $1$} (1,2) -- (2,2) \vl{\tiny $2$} (1,2) -- (2,1.7) \vl{\tiny $3$};
+          \draw (1,1) -- (2,1.3) \vl{\tiny $1$} (1,1) -- (2,1) \vl{\tiny $2$} (1,1) -- (2,0.7) \vl{\tiny $3$};
+          \draw (1,0) -- (2,0.3) \vl{\tiny $1$} (1,0) -- (2,0) \vl{\tiny $2$} (1,0) -- (2,-0.3) \vl{\tiny $3$};
+          \draw (1,-1) -- (2,-0.7) \vl{\tiny $1$} (1,-1) -- (2,-1) \vl{\tiny $2$} (1,-1) -- (2,-1.3) \vl{\tiny $3$};
+          \draw (1,-2) -- (2,-1.7) \vl{\tiny $1$} (1,-2) -- (2,-2) \vl{\tiny $2$} (1,-2) -- (2,-2.3) \vl{\tiny $3$};
+          \draw (2.1,2.3) node[right]{\tiny $A1$} (2.1,2) node[right]{\tiny $A2$} (2.1,1.7) node[right]{\tiny $A3$} (2.1, 1.3) node[right]{\tiny $B1$} (2.1,1) node[right]{\tiny $B2$} (2.1,0.7) node[right]{\tiny $B3$} (2.1,0.3) node[right]{\tiny $C1$} (2.1,0) node[right]{\tiny $C2$} (2.1,-0.3) node[right]{\tiny $C3$} (2.1,-0.7) node[right]{\tiny $D1$} (2.1,-1) node[right]{\tiny $D2$} (2.1,-1.3) node[right]{\tiny $D3$} (2.1,-1.7) node[right]{\tiny $E1$} (2.1,-2) node[right]{\tiny $E2$} (2.1,-2.3) node[right]{\tiny $E3$};
+        \end{tikzpicture}
+      </latex-image>
+    </image>
+
+    <p>
+      Each leaf of the tree corresponds to an outcome.  The tree shows that the three outcomes of the second level are repeated five times, once for each outcome of the first level.
+    </p>
+
+		<example xml:id="eg-vowel-word-product">
+			<statement>
+				<p>
+					How many two-letter words start with one of the 5 vowels?  This time use the product principle to answer the question.
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					How can we think of selecting a two-letter word as a sequence of two events that both happen?  Event <m>A</m> is <q>selecting the vowel that starts the word.</q>  Event <m>B</m> is <q>selecting the second letter for the word.</q>  By the product principle, there are <m>5 \cdot 26 = 130</m> ways for the event <q><m>A</m> and <m>B</m></q> to occur.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			Of course the solutions to <xref ref="eg-vowel-word-sum"/> and <xref ref="eg-vowel-word-product"/> are the same, but the outcomes we are combining and the ways we are combining them are different.
+		</p>
+
+		<p>
+			When applying the sum principle, we combined five disjoint sets of outcomes.
+			One such set of outcomes was,
+			<me>
+				\{AA, AB, AC, AD,\ldots, AZ\}
+			</me>
+			and another was,
+			<me>
+				\{EA, EB, EC, ED, \ldots, EZ\}
+			</me>.
+			That is, each set of outcomes was a set of 2-letter words, starting with a different vowel.
+			The sum principle combined these five sets to create a new set that contained exactly the same elements in the original sets, just all together in one set.
+		</p>
+
+		<p>
+			On the other hand, when we applied the product principle, we combined the outcomes in two sets.
+			The first set was,
+			<me>
+				\{A, E, I, O, U\}
+			</me>
+			and the second set was,
+			<me>
+				\{A, B, C, D, \ldots, Z\}
+			</me>.
+			The product principle combines the elements in those sets to make a set of new outcomes (outcomes not present in any of the sets being combined).
+		</p>
+
+		<p>
+			As with the sum principle, we often use the product principle to define sets of outcomes that first need to be counted carefully.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many lattice paths from <m>(0,0)</m> to <m>(10,10)</m> pass through the point <m>(4,7)</m>?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					We can count lattice paths with <xref ref="fig-pascal-large" text="custom">Pascal's triangle</xref>, but how do we ensure that the path passes through a particular point?  Well, any path that passes through <m>(4,7)</m> must first go from <m>(0,0)</m> to <m>(4,7)</m>, and then complete its journey with a path from <m>(4,7)</m> to <m>(10,10)</m>. 
+				</p>
+				<p>
+					The number of paths from <m>(0,0)</m> to <m>(4,7)</m> is <m>\binom{11}{4} = 330</m>.
+				</p>
+
+				<p>
+					The number of paths from <m>(4,7)</m> to <m>(10,10)</m> is <m>\binom{9}{3} = 84</m>.  (The paths have length 9 and with 6 steps in the <m>x</m> direction.)
+				</p>
+
+				<p>
+					Now combine these with the... wait, what principle?  To get a path from <m>(0,0)</m> to <m>(10,10)</m> that passes through <m>(4,7)</m>, we need to first select a path from <m>(0,0)</m> to <m>(4,7)</m> and then <em>add on</em> a path from <m>(4,7)</m> to <m>(10,10)</m>.  So is this the sum principle???
+				</p>
+
+				<p>
+					No!  Remember that the sum principle combines the two sets of outcomes.  If we applied the sum principle, we would get a larger set containing the <m>330 + 84</m> paths that are contained in each individual set.  None of these are paths we want to count.  We want to combine the different elements in our sets of outcomes in every possible combination.  That is why the product principle is correct here.
+				</p>
+
+				<p>
+					Thus, the total number of paths we want to count is <m>330 \cdot 84 = 27720</m>.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			The product principle generalizes to more than two events as well.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many license plates can you make out of three letters followed by three numerical digits?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					Here we have six events: the first letter, the second letter, the third letter, the first digit, the second digit, and the third digit.
+					The first three events can each happen in 26 ways; the last three can each happen in 10 ways.
+					So the total number of license plates will be <m>26\cdot 26\cdot 26 \cdot 10 \cdot 10 \cdot 10</m>, using the product principle.
+				</p>
+
+				<p>
+					Does this make sense? Think about how we would pick a license plate.
+					How many choices would we have? First, we need to pick the first letter.
+					There are 26 choices.
+					Now for each of those, there are 26 choices for the second letter: 26 second letters with first letter A, 26 second letters with first letter B, and so on.
+					We add 26 to itself 26 times.
+					Or quicker: there are <m>26 \cdot 26</m> choices for the first two letters.
+				</p>
+
+				<p>
+					Now for each choice of the first two letters, we have 26 choices for the third letter.
+					That is, 26 third letters for the first two letters AA, 26 choices for the third letter after starting AB, and so on.
+					There are <m>26 \cdot 26</m> of these <m>26</m> third letter choices, for a total of <m>(26\cdot26)\cdot 26</m> choices for the first three letters.
+					And for each of these <m>26\cdot26\cdot26</m> choices of letters, we have a bunch of choices for the remaining digits.
+				</p>
+
+				<p>
+					In fact, there are going to be exactly 1000 choices for the numbers.
+					We can see this because there are 1000 three-digit numbers (000 through 999).
+					This is 10 choices for the first digit, 10 for the second, and 10 for the third.
+					The product principle says we multiply: <m>10\cdot 10 \cdot 10 = 1000</m>.
+				</p>
+
+				<p>
+					All together, there were <m>26^3</m> choices for the three letters and <m>10^3</m> choices for the numbers, so we have a total of <m>26^3 \cdot 10^3</m> choices of license plates.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			The previous example had an answer that used exponents.  So is there an <term>exponential principle</term> we should learn?  We don't separate one out as there really isn't anything different in the way we think of constructing our outcome sets.  But we will often see the product principle applied to the same event repeated multiple times.  Here are two examples.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Suppose you roll a 12-sided die seven times, recording the number that appears after each roll.  How many sequences of seven rolls are possible?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					Each roll can result in 12 different outcomes, so by the product principle, the total number of sequences is <m>12^7</m>.
+				</p>
+			</solution>
+		</example>
+
+		<example>
+			<statement>
+				<p>
+					How many different pizzas can you make if you can choose from 10 toppings and you can have any number of toppings on your pizza?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					If we want to apply the product principle, we must think of the compound event of picking a pizza as the result of combining some number of individual events in every possible combination.  What are those events?  There are multiple answers to this question, but the following is the most useful.
+				</p>
+
+				<p>
+					First, decide whether you want to include anchovies on your pizza or not.  This event could result in two outcomes (yes or no to the anchovies).  Second, decide whether you want black olives.  Then Canadian bacon, then diced tomatoes, etc.  Each event has two outcomes, and we must combine all ten of these outcomes to create a single outcome corresponding to a single pizza.  Thus, by the product principle, there are <m>2^{10}</m> possible pizzas.
+				</p>
+
+				<p>
+					By the way, another approach to this problem is to <q>code</q> each pizza as a bit-string, where a 1 means the topping is included and a 0 means it is not.  Then the number of pizzas is the number of bit-strings of length 10.  Each bit in the string has two possible values, so there are <m>2^{10}</m> 10-bit strings.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			Careful: <q>and</q> doesn't mean <q>times.</q> For example, how many playing cards are both red and a face card? Not <m>26 \cdot 12</m>.
+			The answer is 6, and we needed to know something about cards to answer that question.
+		</p>
+
+
+
+		<example xml:id="example-counting-functions-all">
+			<title>Counting functions</title>
+			<idx><h>function</h><h>counting</h></idx>
+			<idx><h>counting</h><h>functions</h></idx>
+			<statement>
+				<p>
+					How many functions <m>f:\{1,2,3,4,5\} \to \{a,b,c,d\}</m> are there?
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					Remember that a function sends each element of the domain to exactly one element of the codomain.
+					To determine a function,
+					we just need to specify the image of each element in the domain.
+					Where can we send 1?
+					There are 4 choices.
+					Where can we send 2?
+					Again, 4 choices.
+					What we have here is 5 <q>events</q>
+					(picking the image of an element in the domain)
+					each of which can happen in 4 ways
+					(the choices for that image).
+					Thus there are <m>4 \cdot 4 \cdot 4 \cdot 4 \cdot 4 = 4^5</m> functions.
+				</p>
+
+				<p>
+					This is more than just an example of how we can use the product principle in a particular counting question.
+					What we have here is a general interpretation of certain applications of the product principle using rigorously defined mathematical objects:
+					functions.
+					Whenever we have a counting question that asks for the number of outcomes of a repeated event,
+					we can interpret that as asking for the number of functions from <m>\{1,2,\ldots, n\}</m>
+					(where <m>n</m> is the number of times the event is repeated)
+					to <m>\{1,2,\ldots,k\}</m>
+					(where <m>k</m> is the number of ways that event can occur).
+				</p>
+			</solution>
+		</example>
+	</subsection>
+
+	<subsection xml:id="subsec-sum-product">
+		<title>Combining Principles</title>
+		
+		<p>
+			Let's return to this section's <em>Investigate!</em> question: How many ways can you select two cards from a standard deck of 52, so that the first one is a red card and the second one is a face card? 
+		</p>
+			
+		<p>
+			This looks a little like the product principle since the outcomes consist of pairs of cards.  There are 26 red cards that are outcomes for the first event, and 12 face cards that are outcomes for the second event.  However, the answer is not <m>26 \cdot 12</m>.
+			The problem is that while there are 26 ways for the first card to be selected, it is not the case that <em>for each</em> of those, there are 12 ways to select the second card.
+			If the first card was both red and a face card, then there would be only 11 choices for the second card.  			
+		</p>
+
+		<p>
+			In <xref ref="sec_counting-non-disjoint"/> we will explore some ways to adjust for counting problems when events are not disjoint, but we can solve our card problem now if we are careful.  Think about the entire set of two-card outcomes.  Can we split these outcomes into two disjoint sets (as to apply the sum principle) such that each set can be formed using the product principle?
+		</p>
+
+		<p>
+			Of all the outcomes, we first count those that start with a red, non-face card.  Of the 26 red cards, there are 6 that are face cards, so there are 20 red, non-face cards.  For each of these, there are 12 face cards that can be selected as the second card.  By the product principle, the number of two-card outcomes starting with a red, non-face card is <m>20 \cdot 12 = 240</m>.
+		</p>
+
+		<p>
+			Now, what outcomes have we not yet counted?  It is exactly the two-card outcomes that start with a red face card.  There are 6 cards we could start with, and for each there are 11 choices for the second card.  So the number of two-card outcomes starting with a red face card is <m>6 \cdot 11 = 66</m>.
+		</p>
+
+		<p>
+			Finally, apply the sum principle to these two disjoint sets of outcomes to see that the total number of two-card outcomes is <m>240 + 66 = 306</m>.
+		</p>
+		
+		<p>
+			We conclude this section with two more examples of how you can use both the sum and product principles in a single counting problem.
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					How many lattice paths from <m>(0,0)</m> to <m>(9,9)</m> pass through either <m>(2,6)</m> or <m>(6,2)</m>?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					We are quite fortunate that no paths from <m>(0,0)</m> to <m>(9,9)</m> pass through both <m>(2,6)</m> and <m>(6,2)</m>.  This means we can apply the sum principle to the two sets of outcomes: the paths that pass through <m>(2,6)</m> and the paths that pass through <m>(6,2)</m>.  We will apply the product principle to determine the number of paths in each of these disjoint sets of outcomes.
+				</p>
+
+				<p>
+					The paths from <m>(0,0)</m> to <m>(9,9)</m> that pass through <m>(2,6)</m> are each the concatenation of paths from <m>(0,0)</m> to <m>(2,6)</m> and paths from <m>(2,6)</m> to <m>(9,9)</m>.  There are <m>\binom{8}{2} = 28</m> paths for the first part and <m>\binom{10}{7} = 120</m> paths for the second part, so applying the product principle gives us <m>28 \cdot 120 = 3360</m> paths that pass through <m>(2,6)</m>.
+				</p>
+
+				<p>
+					The paths from <m>(0,0)</m> to <m>(9,9)</m> that pass through <m>(6,2)</m> can similarly be calculated as
+					<me>
+						\binom{8}{6} \cdot \binom{10}{3} = 28 \cdot 120 = 3360
+					</me>
+					(and upon reflection, it is not surprising that the two numbers are the same, since each path that passes through <m>(2,6)</m> can be reflected to create a path that passes through <m>(6,2)</m>).
+				</p>
+				<p>
+					Thus, the total number of paths that pass through either <m>(2,6)</m> or <m>(6,2)</m> is <m>3360 + 3360 = 6720</m>.
+				</p>
+			</solution>
+		</example>
+
+		<example>
+			<statement>
+				<p>
+					How many two-digit numbers, using only the digits <m>\{1,2,3,4,5\}</m> have the <em>sum</em> of their digits even?
+				</p>
+			</statement>
+			<solution>
+				<p>
+					First think about the set of outcomes.  Some two-digit numbers that have the sum of their digits even are <m>11, 13, 15, 22, 24, 31, \ldots</m>.  Okay, maybe it isn't all that difficult to just list them all (and this would be a nice way to check our work).  Let's try to use the sum and product principles anyway.
+				</p>
+
+				<p>
+					What do we notice about all these numbers?  It looks like both digits must be even or both digits must be odd, to make the sum even.  We can consider these two cases, counting each case with the product principle.
+				</p>
+
+				<p>
+					Counting <q>odd-odd</q> numbers: three choices for the first digit and three choices for the second digit.  So there are <m>3 \cdot 3 = 9</m> odd-odd numbers.
+				</p>
+
+				<p>
+					Counting <q>even-even</q> numbers: two choices for the first digit and two choices for the second digit.  So there are <m>2 \cdot 2 = 4</m> even-even numbers.
+				</p>
+
+				<p>
+					Combined, there are <m>9 + 4 = 13</m> two-digit numbers with an even sum of digits.
+				</p>
+			</solution>
+		</example>
+	</subsection>
+
+	<!-- <subsection xml:id="subsec_countingWithSets">
+		<title>Counting With Sets</title>
+		<p>
+			Do you believe the sum and product principles? How would you convince someone they are correct? This is surprisingly difficult.
+			They seem so simple, so obvious.
+			But why do they work?
+		</p>
+
+		<p>
+			To make things clearer, and more mathematically rigorous, we will use  sets.
+			Do not skip this section! It might seem like we are just trying to give a proof of these principles, but we are doing a lot more.
+			If we understand the sum and product principles rigorously, we will be better at applying them, and knowing when and when not to apply them at all.
+		</p>
+
+		<p>
+			We will look at the sum and product principles in a slightly different way.
+			Instead of thinking about event <m>A</m> and event <m>B</m>, we want to think of a set <m>A</m> and a set <m>B</m>.
+			The sets will contain all the different ways the event can happen.
+			(It will be helpful to be able to switch back and forth between these two models when checking that we have counted correctly.) Here's what we mean:
+		</p>
+
+		<example>
+			<statement>
+				<p>
+					Suppose you own 9 shirts and 5 pairs of pants.
+					<ol>
+						<li>
+							<p>
+								How many outfits can you make?
+							</p>
+						</li>
+
+						<li>
+							<p>
+								If today is half-naked-day, and you will wear only a shirt or only a pair of pants, how many choices do you have?
+							</p>
+						</li>
+					</ol>
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					By now you should agree that the answer to the first question is <m>9 \cdot 5 = 45</m> and the answer to the second question is <m>9 + 5 = 14</m>.
+					These are the product and sum principles.
+					There are two events: picking a shirt and picking a pair of pants.
+					The first event can happen in 9 ways and the second event can happen in 5 ways.
+					To get both a shirt and a pair of pants, you multiply.
+					To get just one article of clothing, you add.
+				</p>
+
+				<p>
+					Now look at this using sets.
+					There are two sets, call them <m>S</m> and <m>P</m>.
+					The set <m>S</m> contains all 9 shirts so <m>|S| = 9</m> while <m>|P| = 5</m>, since there are 5 elements in the set <m>P</m> (namely your 5 pairs of pants).
+					What are we asking in terms of these sets? Well in question 2, we really want <m>|S \cup P|</m>, the number of elements in the union of shirts and pants.
+					This is just <m>|S| + |P|</m> (since there is no overlap; <m>|S \cap P| = 0</m>).
+					Question 1 is slightly more complicated.
+					Your first guess might be to find <m>|S \cap P|</m>, but this is not right (there is nothing in the intersection).
+					We are not asking for how many clothing items are both a shirt and a pair of pants.
+					Instead, we want one of each.
+					We could think of this as asking how many pairs <m>(x,y)</m> there are, where <m>x</m> is a shirt and <m>y</m> is a pair of pants.
+					As we will soon verify, this number is <m>|S| \cdot |P|</m>.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			From this example we can see right away how to rephrase our sum principle in terms of sets:
+		</p>
+
+
+		<principle>
+			<title>Sum Principle (with sets)</title>
+			<idx><h>sum principle</h><h>using sets</h></idx>
+			<idx><h>cardinality</h><h>of a union</h></idx>
+			<idx><h>union of sets</h><h>cardinality of</h></idx>
+			<statement>
+				<p>
+					Given two sets <m>A</m> and <m>B</m>, if <m>A \cap B = \emptyset</m>
+					(that is, if there is no element in common to both <m>A</m> and <m>B</m>),
+					then
+					<me>
+						\card{A \cup B} = \card{A} + \card{B}
+					</me>.
+				</p>
+			</statement>
+		</principle>
+
+		<p>
+			This hardly needs a proof.
+			To find <m>A \cup B</m>, you take everything in <m>A</m> and throw in everything in <m>B</m>.
+			Since there is no element in both sets already, you will have <m>\card{A}</m> things and add <m>\card{B}</m> new things to it.
+			This is what adding does! Of course, we can easily extend this to any number of disjoint sets.
+		</p>
+
+		<p>
+			From the example above, we see that in order to investigate the product principle carefully, we need to consider ordered pairs.
+			We should define this carefully:
+		</p>
+
+		<definition>
+			<title>Cartesian Product</title>
+			<idx><h>Cartesian product</h></idx>
+			<statement>
+				<p>
+					Given sets <m>A</m> and <m>B</m>, we can form the <em>set</em>
+					<me>
+						A \times B = \{(x,y) \st x \in A \wedge y \in B\}
+					</me>
+					to be the set of all ordered pairs <m>(x,y)</m> where <m>x</m> is an element of <m>A</m> and <m>y</m> is an element of <m>B</m>.
+					We call <m>A \times B</m> the <term>Cartesian product</term> of <m>A</m> and <m>B</m>.
+				</p>
+			</statement>
+		</definition>
+
+		<example>
+			<statement>
+				<p>
+					Let <m>A = \{1,2\}</m> and <m>B=\{3,4,5\}</m>.
+					Find <m>A \times B</m>.
+				</p>
+			</statement>
+
+			<solution>
+				<p>
+					We want to find ordered pairs <m>(a,b)</m> where <m>a</m> can be either <m>1</m> or <m>2</m> and <m>b</m> can be either 3, 4, or 5.
+					<m>A \times B</m> is the set of all of these pairs:
+					<me>
+						A \times B = \{(1,3), (1,4), (1,5), (2,3), (2,4), (2,5)\}
+					</me>.
+				</p>
+			</solution>
+		</example>
+
+		<p>
+			The question is, what is <m>\card{A \times B}</m>? To figure this out, write out <m>A \times B</m>.
+			Let <m>A = \{a_1,a_2, a_3, \ldots, a_m\}</m> and <m>B = \{b_1,b_2, b_3, \ldots, b_n\}</m> (so <m>\card{A} = m</m> and <m>\card{B} = n</m>).
+			The set <m>A \times B</m> contains all pairs with the first half of the pair being some <m>a_i \in A</m> and the second being one of the <m>b_j \in B</m>.
+			In other words:
+			<md>
+				<mrow>A \times B = \{ \amp (a_1, b_1), (a_1, b_2), (a_1, b_3), \ldots (a_1, b_n),</mrow>
+				<mrow>\amp (a_2, b_1), (a_2, b_2), (a_2, b_3), \ldots, (a_2, b_n),</mrow>
+				<mrow>\amp (a_3, b_1), (a_3, b_2), (a_3, b_3), \ldots, (a_3, b_n),</mrow>
+				<mrow>\amp \vdots</mrow>
+				<mrow>\amp (a_m, b_1), (a_m, b_2), (a_m, b_3), \ldots, (a_m, b_n)\}</mrow>
+			</md>.
+		</p>
+
+		<p>
+			Notice what we have done here: we made <m>m</m> rows of <m>n</m> pairs, for a total of <m>m \cdot n</m> pairs.
+		</p>
+
+		<p>
+			Each row above is really <m>\{a_i\} \times B</m> for some <m>a_i \in A</m>.
+			That is, we fixed the <m>A</m>-element.
+			Broken up this way, we have
+			<me>
+				A \times B = (\{a_1\} \times B) \cup (\{a_2\} \times B) \cup (\{a_3\}\times B) \cup \cdots \cup (\{a_m\} \times B)
+			</me>.
+		</p>
+
+		<p>
+			So <m>A \times B</m> is really the union of <m>m</m> disjoint sets.
+			Each of those sets has <m>n</m> elements in them.
+			The total (using the sum principle) is <m>n + n + n + \cdots + n = m \cdot n</m>.
+		</p>
+
+		<p>
+			To summarize:
+		</p>
+
+
+		<principle>
+			<title>Product Principle (with sets)</title>
+			<idx><h>product principle</h><h>using sets</h></idx>
+			<idx><h>cardinality</h><h>of Cartesian product</h></idx>
+			<idx><h>Cartesian product</h><h>cardinality of</h></idx>
+			<statement>
+				<p>
+					Given two sets <m>A</m> and <m>B</m>,
+					we have <m>\card{A \times B} = \card{A} \cdot \card{B}</m>.
+				</p>
+			</statement>
+		</principle>
+
+		<p>
+			Again, we can easily extend this to any number of sets.
+		</p>
+	</subsection> -->
+
+	<reading-questions xml:id="rqs-counting-addmult">
+	<exercise label="rq-counting-addmult-vs">
+		<statement>
+			<p>
+				How will you decide if you should add or multiply when combining numbers in a counting
+				problem? Explain how you are currently thinking about this.
+			</p>
+		</statement>
+		<response />
+	</exercise>
+
+	<exercise label="rq-counting-addmult-wrong">
+		<statement>
+			<p>
+				Your cousin is trying to solve a counting problem about how many different routes he can take between his dorm and his classroom.
+				He has 9 routes that make sense, and similarly, there are 9 routes to go back from his classroom to his dorm.
+			</p>
+
+			<p>
+				How many round trips are possible?  Your cousin says 18, because after going from his dorm to the classroom, he has to add on a route back to the dorm.
+				Is he right?  Why or why not?
+			</p>
+		</statement>
+		<response/>
+	</exercise>
+
+	<exercise label="rq-counting-addmult-q">
+		<statement>
+			<p>
+				What questions do you have after reading this section? Write at least one question about
+				the content of this section that you are curious about.
+			</p>
+		</statement>
+		<response />
+	</exercise>
+	</reading-questions>
+	<xi:include href="practice/counting-combine-outcomes.ptx"/>
+	<xi:include href="exercises/counting-combine-outcomes.ptx"/>
+</section>

@@ -1,197 +1,423 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_intro-sets" permid="DAA">
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="exercises_intro-sets">
 
-  <exercise label="ww-sets-ops" permid="AUc">
+  <exercise label="ww-sets-ops">
     <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_1.pg"/>
   </exercise>
 
-  <exercise label="ww-sets-least" permid="hbl">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_2.pg" />
+  <exercise label="ww-sets-least">
+    <webwork>
+      <pg-code>
+        Context('Interval');
+        #define variables for problem parts a and b
+        $a=random(1,5,1);
+        $b= random(1,5,1);
+        $aplusb = $a+$b;
+
+        $sr = Compute(sqrt($a+$b));
+        $ans1high = ceil($sr);
+        #define variables to be used in printing the solutions
+        $ans1plus1 = $ans1high+1;
+        $ans1plus2 = $ans1high+2;
+        $ans1hs = $ans1high*$ans1high - $a;
+        $ans1low = ceil($sr-1);
+        $ans1ls = $ans1low*$ans1low-$a;
+
+        #define variables for problem parts c and d
+        $c= random(1,5,1);
+        $cplus1 = $c +1 ;
+        $cplus4 = $c +4 ;
+        $cplus9 = $c +9;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Find the least element of the following sets, if there is one.
+          <ol>
+            <li>
+              <p>
+                <m>\{n \in \N \st n^2 - <var name="$a"/> \ge <var name="$b" />\}</m>
+              </p>
+              <p>
+                <var name="$ans1high" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{n \in \N \st n^2 - <var name="$aplusb" /> \in \N\}</m>
+              </p>
+              <p>
+                <var name="$ans1high" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{n^2+<var name="$c" /> \st n \in \N\}</m>
+              </p>
+              <p>
+                <var name="$c" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{n \in \N \st n = k^2 + <var name="$c" /> \text{ for some } k \in \N\}</m>
+              </p>
+              <p>
+                <var name="$c" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+        <instruction>(if there is no least element, enter 'none')</instruction>
+      </statement>
+      <solution>
+        <p>
+          <ol>
+            <li>
+              <p>
+                This is the set <m>\{<var name="$ans1high"/>, <var name="$ans1plus1"/>, <var name="$ans1plus2"/>, \ldots\}</m> since we need each element to be a natural number whose square is at least <var name="$a"/> more than <var name="$b"/>. Since <m><var name="$ans1high"/>^2 - <var name="$a"/> = <var name="$ans1hs"/></m> but <m><var name="$ans1low"/>^2 - <var name="$a"/> = <var name="$ans1ls"/></m> we see that the first such natural number is <var name="$ans1high"/>.
+              </p>
+            </li>
+            <li>
+              <p>
+                We get the same set as the previous part, and the smallest non-negative number for which <m>n^2 - <var name="$aplusb"/></m> is a natural number is <var name="$ans1high"/>.
+              </p>
+              <p>
+                Note that if we didn't specify <m>n \ge 0</m> by saying that <m>n \in \mathbb N</m> then any integer less than <m>-<var name="$ans1high"/></m> would also be in the set, so there would not be a least element.
+              </p>
+            </li>
+            <li>
+              <p>
+                This is the set <m>\{<var name="$c"/>, <var name="$cplus1"/>, <var name="$cplus4"/>, <var name="$cplus9"/>, \ldots\}</m>, namely the set of numbers that are the <em>result</em> of squaring and adding <var name="$c"/> to a natural number. (<m>0^2 + <var name="$c"/> = <var name="$c"/></m>, <m>1^2 + <var name="$c"/> = <var name="$cplus1"/></m>, <m>2^2 + <var name="$c"/> = <var name="$cplus4"/></m> and so on.) Thus the least element of the set is <var name="$c"/>.  
+              </p>
+            </li>
+            <li>
+              <p>
+                Now we are looking for natural numbers that are equal to taking some natural number, squaring it and adding <var name="$c"/>. That is, <m>\{<var name="$c"/>, <var name="$cplus1"/>, <var name="$cplus4"/>, <var name="$cplus9"/>, \ldots\}</m>, the same set as the previous part. So again, the least element is <var name="$c"/>.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </webwork>
   </exercise>
 
-  <exercise label="ww-sets-cards" permid="Niu">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_3.pg" />
+  <exercise label="ww-sets-cards">
+    <webwork>
+      <pg-code>
+        # part a
+$a1 = random(2,6); 
+do {$an = random(29,43);} until ($an !=37);
+$a11 = $a1+1;
+$a12 = $a1+2;
+$a13 = $a1+3;
+$ans1 = $an-$a1 + 1;
+
+#part b
+$b1 = random(-7,-1);
+do {$bn = random(90,100); } until ($bn !=100);
+$ans2 = $bn-$b1 + 1; 
+
+#part c
+
+$B =
+Set(2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97);
+do {$b = random(20,40);} until ($b !=20);
+
+$A = Set(1..$b);
+$int= $A->intersect($B);
+
+if (20 &lt;= $b &amp;&amp; $b &lt;= 22)
+{
+$ans3 = 8;
+}
+elsif (23 &lt;=$b &amp;&amp; $b &lt;=28)
+{
+$ans3 = 9;
+}
+elsif (29 &lt;=$b &amp;&amp; $b &lt;=30)
+{
+$ans3 = 10;
+}
+elsif (31 &lt;=$b &amp;&amp; $b &lt;=36)
+{
+$ans3 = 11;
+}
+elsif (37 &lt;=$b &amp;&amp; $b &lt;=40)
+{
+$ans3 = 12;
+}
+      </pg-code>
+    
+      <statement>
+        <p>
+          Find the following cardinalities.
+          <ol>
+            <li>
+              <p>
+                <m>\card{A}</m> when <m>A = \{<var name="$a1"/>, <var name="$a11"/>, <var name="$a12"/>, <var name="$a13"/>,\ldots, <var name="$an"/>\}</m>.
+              </p>
+              <p>
+                <var name="$ans1" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\card{A}</m> when <m>A = \{x \in \Z \st <var name="$b1"/> \le x \le <var name="$bn"/>"\}</m>.
+              </p>
+              <p>
+                <var name="$ans2" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\card{A \cap B}</m> when <m>A = \{x \in \N \st x \le <var name="$b"/>\}</m> and <m>B = \{x \in \N \st x \text{ is prime }\}</m>.
+              </p>
+              <p>
+                <var name="$ans3" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
-  <exercise label="ww-sets-large-common-subset" permid="tpD">
+  <exercise label="ww-sets-large-common-subset">
     <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_4.pg" />
   </exercise>
 
-  <exercise label="ww-sets-smallest-superset" permid="ZwM">
+  <exercise label="ww-sets-smallest-superset">
     <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_5.pg" />
   </exercise>
 
-  <exercise label="ww-sets-subset-card" permid="FDV">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_6.pg" />
+  <exercise label="ww-sets-subset-card">
+    <webwork>
+      <pg-code>
+        $amin = random(20,40);
+        $amax = random(50,70);
+        do {$bmin = random(10,30); } until ($bmin &lt; $amin);
+        $bmax = random($amin+1, $amax - 1);
+        $size = $bmax - $amin + 1;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Let <m>A = \{n \in \N \st <var name="$amin"/> \le n \lt <var name="$amax"/>\}</m> and <m>B = \{n \in \N \st <var name="$bmin"/> \lt n \le <var name="$bmax"/>\}</m>.  Suppose <m>C</m> is a set such that <m>C \subseteq A</m> and <m>C \subseteq B</m>.  What is the largest possible cardinality of <m>C</m>?
+        </p>
+        <p>
+          <var name="$size" width="10"/>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
-  <exercise label="ww-sets-number-of-between" permid="lLe">
+  <exercise label="ww-sets-number-of-between">
     <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_7.pg" />
   </exercise>
 
-  <exercise label="ww-sets-ops2" permid="RSn">
+  <exercise label="ww-sets-ops2">
     <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_8.pg" />
   </exercise>
 
-  <exercise label="ww-sets-ops-builder" permid="xZw">
-    <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_9.pg" />
+  <exercise label="ww-sets-ops-builder">
+    <webwork>
+      <pg-code>
+        Context("Interval");
+        #$A = Set(4,5,6,7,8,9,10,11);
+        #$ans1 = Set(4,6,8,10);
+        #$ans2 = Set(5,7,9,11);
+
+        $amin = random(1,5,1);
+        $amax = random(12,20,1);
+        $A = Set($amin .. $amax-1);
+
+        $B = Set(2,4,6,8,10,12,14,16,18,20);   #B is the set of all evens, but for this problem we only care about those less than 20, since the max value of A is less than 20
+        $Int = $A->intersect($B);
+        $C = $A -$Int;
+      </pg-code>
+    
+      <statement>
+        <p>
+          Let <m>A = \{x \in \N \st <var name="$amin"/> \le x \lt <var name="$amax"/>\}</m> and <m>B = \{x \in \N \st x \text{ is even}\}</m>.
+          <ol>
+            <li>
+              <p>
+                Find <m>A \cap B</m>.
+              </p>
+              <p>
+                <var name="$Int" width="10"/>
+              </p>
+            </li>
+            <li>
+              <p>
+                Find <m>A \setminus B</m>.
+              </p>
+              <p>
+                <var name="$C" width="10"/>
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </webwork>
   </exercise>
 
-  <exercise permid="egF">
+  <exercise>
     <statement>
-      <p permid="iXP">
+      <p>
         Let <m>A = \{x \in \N \st 3 \le x \le 13\}</m>, <m>B = \{x \in \N \st x \mbox{ is even} \}</m>,
-        and <m>C = \{x \in \N \st x \mbox{ is odd} \}</m>. <ol permid="xDX">
-          <li permid="jeT">
-            <p permid="yCm"> Find <m>A \cap B</m>. </p>
+        and <m>C = \{x \in \N \st x \mbox{ is odd} \}</m>. <ol>
+          <li>
+            <p> Find <m>A \cap B</m>. </p>
           </li>
 
-          <li permid="Pmc">
-            <p permid="eJv"> Find <m>A
+          <li>
+            <p> Find <m>A
         \cup B</m>. </p>
           </li>
 
-          <li permid="vtl">
-            <p permid="KQE"> Find <m>B \cap C</m>. </p>
+          <li>
+            <p> Find <m>B \cap C</m>. </p>
           </li>
 
-          <li permid="bAu">
-            <p permid="qXN"> Find <m>B \cup C</m>. </p>
+          <li>
+            <p> Find <m>B \cup C</m>. </p>
           </li>
         </ol>
       </p>
     </statement>
   </exercise>
 
-  <exercise permid="KnO">
+  <exercise>
     <statement>
-      <p permid="PeY">
+      <p>
         Find an example of sets <m>A</m> and <m>B</m> such that <m>A\cap B = \{3, 5\}</m> and <m>A \cup B = \{2,
         3, 5, 7, 8\}</m>. </p>
     </statement>
-    <solution permid="muY">
-      <p permid="ftp"> For example, <m>A = \{2,3,5,7,8\}</m> and <m>B = \{3,5\}</m>
+    <solution>
+      <p> For example, <m>A = \{2,3,5,7,8\}</m> and <m>B = \{3,5\}</m>
         . </p>
     </solution>
   </exercise>
 
-  <exercise permid="quX">
+  <exercise>
     <statement>
-      <p permid="vmh"> Find an example of sets <m>A</m> and <m>B</m> such that <m>A
+      <p> Find an example of sets <m>A</m> and <m>B</m> such that <m>A
         \subseteq B</m> and <m>A \in B</m>. </p>
     </statement>
-    <solution permid="SCh">
-      <p permid="rHH"> For example, <m>A = \{1,2,3\}</m> and <m>B =
+    <solution>
+      <p> For example, <m>A = \{1,2,3\}</m> and <m>B =
         \{1,2,3,4,5,\{1,2,3\}\}</m>
       </p>
     </solution>
   </exercise>
 
-  <exercise permid="WCg">
+  <exercise>
     <statement>
-      <p permid="btq"> Recall <m>\Z =
+      <p> Recall <m>\Z =
         \{\ldots,-2,-1,0, 1,2,\ldots\}</m> (the integers). Let <m>\Z^+ = \{1, 2, 3, \ldots\}</m> be the
         positive integers. Let <m>2\Z</m> be the even integers, <m>3\Z</m> be the multiples of 3, and so
-        on. <ol permid="dLg">
-          <li permid="HHD">
-            <p permid="XeW"> Is <m>\Z^+ \subseteq 2\Z</m>? Explain. </p>
+        on. <ol>
+          <li>
+            <p> Is <m>\Z^+ \subseteq 2\Z</m>? Explain. </p>
           </li>
 
-          <li permid="nOM">
-            <p permid="Dmf"> Is <m>2\Z \subseteq \Z^+</m>?
+          <li>
+            <p> Is <m>2\Z \subseteq \Z^+</m>?
         Explain. </p>
           </li>
 
-          <li permid="TVV">
-            <p permid="jto"> Find <m>2\Z \cap 3\Z</m>. Describe the set in words, and using set
+          <li>
+            <p> Find <m>2\Z \cap 3\Z</m>. Describe the set in words, and using set
         notation. </p>
           </li>
 
-          <li permid="Ade">
-            <p permid="PAx"> Express <m>\{x \in \Z \st \exists y\in \Z (x = 2y \vee x = 3y)\}</m>
+          <li>
+            <p> Express <m>\{x \in \Z \st \exists y\in \Z (x = 2y \vee x = 3y)\}</m>
         as a union or intersection of two sets already described in this problem. </p>
           </li>
         </ol>
       </p>
     </statement>
-    <solution permid="yJq">
-      <p permid="XOQ">
-        <ol permid="gFM">
-          <li permid="gkn">
-            <p permid="vHG">
+    <solution>
+      <p>
+        <ol>
+          <li>
+            <p>
               No.
             </p>
           </li>
 
-          <li permid="Mrw">
-            <p permid="bOP">
+          <li>
+            <p>
               No.
             </p>
           </li>
 
-          <li permid="syF">
+          <li>
             <m>2\Z \cap 3\Z</m> is the set of all
             integers which are multiples of both 2 and 3 (so multiples of 6). Therefore <m>2\Z \cap 3\Z
             = \{x \in \Z \st \exists y\in \Z(x = 6y)\}</m>. </li>
 
-          <li permid="YFO"><m>2\Z \cup 3\Z</m>.</li>
+          <li><m>2\Z \cup 3\Z</m>.</li>
         </ol>
       </p>
     </solution>
   </exercise>
 
-  <exercise permid="CJp">
+  <exercise>
     <statement>
-      <p permid="HAz">
+      <p>
         Let <m>A_2</m> be the set of all multiples of 2 except for <m>2</m>. Let <m>A_3</m> be the set of all
         multiples of 3 except for 3. And so on, so that <m>A_n</m> is the set of all multiples of <m>n</m>
         except for <m>n</m>, for any <m>n \ge 2</m>. Describe (in words) the set <m>\bar{A_2 \cup A_3 \cup
           A_4 \cup \cdots}</m>. </p>
     </statement>
-    <hint permid="eQz">
-      <p permid="oNb"> It might help to think about what the union <m>A_2
+    <hint>
+      <p> It might help to think about what the union <m>A_2
         \cup A_3</m> is first. Then think about what numbers are <em>not</em> in that union. What will
         happen when you also include <m>A_5</m>? </p>
     </hint>
   </exercise>
 
-  <exercise permid="iQy">
+  <exercise>
     <statement>
-      <p permid="nHI"> Draw a Venn diagram to
-        represent each of the following: <ol permid="JSp">
-          <li permid="EMX"><m>A \cup \bar B</m>
+      <p> Draw a Venn diagram to
+        represent each of the following: <ol>
+          <li><m>A \cup \bar B</m>
           </li>
 
-          <li permid="kUg"><m>\bar{(A \cup B)}</m>
+          <li><m>\bar{(A \cup B)}</m>
           </li>
 
-          <li permid="Rbp"><m>A
+          <li><m>A
         \cap (B \cup C)</m>
           </li>
 
-          <li permid="xiy"><m>(A \cap B) \cup C</m>
+          <li><m>(A \cap B) \cup C</m>
           </li>
 
-          <li permid="dpH"><m>\bar A \cap B \cap
+          <li><m>\bar A \cap B \cap
               \bar C</m>
           </li>
 
-          <li permid="JwQ"><m>(A \cup B) \setminus C</m>
+          <li><m>(A \cup B) \setminus C</m>
           </li>
         </ol>
       </p>
     </statement>
-    <solution permid="KXI">
-      <p permid="DVZ">
-        <ol cols="2" permid="MMV">
-          <li permid="pDZ">
-            <p permid="HVY">
+    <solution>
+      <p>
+        <ol cols="2">
+          <li>
+            <p>
               <m>A
               \cup \bar B</m>: </p>
 
-            <sidebyside width="20%" permid="jVR">
+            <sidebyside width="20%">
 
-              <image xml:id="A-or-not-B" permid="mCp">
+              <image xml:id="A-or-not-B">
 
             <latex-image>
                   \begin{tikzpicture}[fill=gray!50, scale=.5]
@@ -209,14 +435,14 @@
 
           </li>
 
-          <li permid="VLi">
-            <p permid="odh">
+          <li>
+            <p>
               <m>\bar{(A
               \cup B)}</m>: </p>
 
-            <sidebyside width="20%" permid="Qda">
+            <sidebyside width="20%">
 
-              <image xml:id="not-A-or-B" permid="SJy">
+              <image xml:id="not-A-or-B">
 
                     <latex-image>
                   \begin{tikzpicture}[scale=.5, fill=gray!50]
@@ -231,14 +457,14 @@
 
           </li>
 
-          <li permid="BSr">
-            <p permid="Ukq">
+          <li>
+            <p>
               <m>A
               \cap (B \cup C)</m>: </p>
 
-            <sidebyside width="20%" permid="wkj">
+            <sidebyside width="20%">
 
-              <image xml:id="A-and-B-or-C" permid="yQH">
+              <image xml:id="A-and-B-or-C">
 
                     <latex-image>
                   \begin{tikzpicture}[fill=gray!50, scale=.5]
@@ -256,14 +482,14 @@
 
           </li>
 
-          <li permid="hZA">
-            <p permid="Arz">
+          <li>
+            <p>
               <m>(A
               \cap B) \cup C</m>: </p>
 
-            <sidebyside width="20%" permid="crs">
+            <sidebyside width="20%">
 
-              <image xml:id="A-and-B-cup-C" permid="eXQ">
+              <image xml:id="A-and-B-cup-C">
 
             <latex-image>
                   \begin{tikzpicture}[fill=gray!50, scale=.5]
@@ -282,14 +508,14 @@
 
           </li>
 
-          <li permid="OgJ">
-            <p permid="gyI">
+          <li>
+            <p>
               <m>\bar
               A \cap B \cap \bar C</m>: </p>
 
-            <sidebyside width="20%" permid="IyB">
+            <sidebyside width="20%">
 
-              <image xml:id="not-A-cap-B-cap-not-C" permid="LeZ">
+              <image xml:id="not-A-cap-B-cap-not-C">
 
             <latex-image>
                   \begin{tikzpicture}[fill=gray!50, scale=.5]
@@ -309,14 +535,14 @@
 
           </li>
 
-          <li permid="unS">
-            <p permid="MFR">
+          <li>
+            <p>
               <m>(A
               \cup B) \setminus C</m>: </p>
 
-            <sidebyside width="20%" permid="oFK">
+            <sidebyside width="20%">
 
-              <image xml:id="A-or-B-less-C" permid="rmi">
+              <image xml:id="A-or-B-less-C">
 
             <latex-image>
                   \begin{tikzpicture}[fill=gray!50, scale=.5]
@@ -337,15 +563,15 @@
     </solution>
   </exercise>
 
-  <exercise permid="OXH">
+  <exercise>
     <statement>
-      <p permid="TOR">
+      <p>
         Describe a set in terms of <m>A</m> and <m>B</m> (using set notation) which has the following Venn
         diagram: </p>
 
-      <sidebyside width="20%" permid="UMT">
+      <sidebyside width="20%">
 
-        <image xml:id="not-A-and-B" permid="Xtr">
+        <image xml:id="not-A-and-B">
 
             <latex-image>
             \begin{tikzpicture}[fill=gray!50, scale=0.5]
@@ -370,19 +596,19 @@
     </statement>
   </exercise>
 
-  <exercise permid="veQ">
+  <exercise>
     <statement>
-      <p permid="zWa">
+      <p>
         Let <m>A = \{a, b, c, d\}</m>. Find <m>\pow(A)</m>. </p>
     </statement>
-    <hint permid="Xma">
-      <p permid="UUk">
+    <hint>
+      <p>
         We are looking for a set containing 16 sets.
       </p>
     </hint>
-    <solution permid="reR">
-      <p permid="kdi">
-        <md permid="anX">
+    <solution>
+      <p>
+        <md>
           <mrow>\pow(A) = \{\amp
         \emptyset, \{a\}, \{b\}, \{c\}, \{d\}, \{a,b\}, \{a,c\}, \{a,d\}, \{b,c\}, \{b,d\},</mrow>
           <mrow>\amp
@@ -391,60 +617,60 @@
     </solution>
   </exercise>
 
-  <exercise label="ww-sets-singles-doubles" permid="blZ">
+  <exercise label="ww-sets-singles-doubles">
     <webwork source="Contrib/DMOI/0-Introduction_and_Preliminaries/0_3-Sets/0_3_18.pg" />
   </exercise>
   <!-- TODO: write a multiple-select WW problem like this: -->
-  <exercise permid="Hti">
+  <exercise>
     <statement>
-      <p permid="EFT">
+      <p>
         Let <m>A = \{1,2,3,4,5,6\}</m>. Find all sets <m>B \in \pow(A)</m> which have the property <m>\{2,3,5\}
         \subseteq B</m>. </p>
     </statement>
   </exercise>
 
-  <exercise permid="nAr">
+  <exercise>
     <statement>
-      <p permid="kNc"> Find an example of sets <m>A</m> and <m>B</m>
+      <p> Find an example of sets <m>A</m> and <m>B</m>
         such that <m>|A| = 4</m>, <m>|B| = 5</m>, and <m>|A \cup B| = 9</m>. </p>
     </statement>
-    <solution permid="jAs">
-      <p permid="Qkr"> For
+    <solution>
+      <p> For
         example, <m>A = \{1,2,3,4\}</m> and <m>B = \{5,6,7,8,9\}</m> gives <m>A \cup B =
           \{1,2,3,4,5,6,7,8,9\}</m>. </p>
     </solution>
   </exercise>
 
-  <exercise permid="THA">
+  <exercise>
     <statement>
-      <p permid="QUl"> Find an example of sets <m>A</m>
+      <p> Find an example of sets <m>A</m>
         and <m>B</m> such that <m>|A| = 3</m>, <m>|B| = 4</m>, and <m>|A \cup B| = 5</m>. </p>
     </statement>
   </exercise>
 
-  <exercise permid="zOJ">
+  <exercise>
     <statement>
-      <p permid="xbu">
+      <p>
         Are there sets <m>A</m> and <m>B</m> such that <m>|A| = |B|</m>, <m>|A\cup B| = 10</m>, and <m>|A\cap B| =
           5</m>? Explain. </p>
     </statement>
   </exercise>
 
-  <exercise label="ww-sets-possible-sizes" permid="fVS">
+  <exercise label="ww-sets-possible-sizes">
     <webwork>
         <statement>
-          <p permid="diD"> Let <m>A = \{2, 4, 6, 8\}</m>. Suppose <m>B</m>
-          is a set with <m>|B| = 5</m>. <ol permid="pZy">
-              <li permid="avb">
-                <p permid="sNa"> What are the smallest and largest possible values of <m>|A \cup
+          <p> Let <m>A = \{2, 4, 6, 8\}</m>. Suppose <m>B</m>
+          is a set with <m>|B| = 5</m>. <ol>
+              <li>
+                <p> What are the smallest and largest possible values of <m>|A \cup
                   B|</m>? Explain. </p>
                 <instruction>
                   <var name="5" width="5"/> <m> \le |A \cup B| \le </m> <var name="9" width="5"/>
               </instruction>
             </li>
 
-              <li permid="GCk">
-                <p permid="YUj">
+              <li>
+                <p>
           What are the smallest and largest possible values of <m>|A \cap B|</m>? Explain. </p>
                 <instruction>
                   <var name="0" width="5"/> <m> \le |A
@@ -452,8 +678,8 @@
               </instruction>
             </li>
 
-              <li permid="mJt">
-                <p permid="Fbs"> What are the smallest and
+              <li>
+                <p> What are the smallest and
           largest possible values of <m>|A \times B|</m>? Explain. </p>
                 <instruction>
                   <var name="20" width="5"/> <m> \le |A \times B| \le </m> <var name="20" width="5"/>
@@ -466,33 +692,33 @@
     </webwork>
   </exercise>
 
-  <exercise permid="Mdb">
+  <exercise>
     <statement>
-      <p permid="JpM">
+      <p>
         Let <m>X = \{n \in \N \st 10 \le n \lt 20\}</m>. Find examples of sets with the properties
-        below and very briefly explain why your examples work. <ol permid="WgH">
-          <li permid="SQC">
-            <p permid="liB"> A set <m>A \subseteq \N</m> with <m>|A| =
+        below and very briefly explain why your examples work. <ol>
+          <li>
+            <p> A set <m>A \subseteq \N</m> with <m>|A| =
         10</m> such that <m>X \setminus A = \{10, 12, 14\}</m>. </p>
           </li>
 
-          <li permid="yXL">
-            <p permid="RpK"> A set <m>B \in \pow(X)</m>
+          <li>
+            <p> A set <m>B \in \pow(X)</m>
         with <m>|B| = 5</m>. </p>
           </li>
 
-          <li permid="feU">
-            <p permid="xwT"> A set <m>C \subseteq \pow(X)</m> with <m>|C| = 5</m>. </p>
+          <li>
+            <p> A set <m>C \subseteq \pow(X)</m> with <m>|C| = 5</m>. </p>
           </li>
 
-          <li permid="Lmd">
-            <p permid="dEc">
+          <li>
+            <p>
         A set <m>D \subseteq X \times X</m> with <m>|D| = 5</m>
             </p>
           </li>
 
-          <li permid="rtm">
-            <p permid="JLl"> A set <m>E
+          <li>
+            <p> A set <m>E
         \subseteq X</m> such that <m>|E| \in E</m>. </p>
           </li>
         </ol>
@@ -500,19 +726,19 @@
     </statement>
   </exercise>
 
-  <exercise permid="skk">
+  <exercise>
     <statement>
-      <p permid="pwV">
-        Let <m>A</m>, <m>B</m> and <m>C</m> be sets. <ol permid="CnQ">
-          <li permid="XAv">
-            <p permid="pSu"> Suppose that <m>A \subseteq B</m> and <m>B \subseteq C</m>.
-        Does this mean that <m>A \subseteq C</m>? Prove your answer. Hint: to prove that <m>A \subseteq C</m>
-        you must prove the implication, <q>for all <m>x</m>, if <m>x \in A</m> then <m>x \in C</m>.</q>
+      <p>
+        Let <m>A</m>, <m>B</m>, and <m>C</m> be sets. <ol>
+          <li>
+            <p> Suppose that <m>A \subseteq B</m> and <m>B \subseteq C</m>.
+        Does this mean that <m>A \subseteq C</m>? Prove your answer. Hint: To prove that <m>A \subseteq C</m>,
+        you must prove the implication, <q>For all <m>x</m>, if <m>x \in A</m>, then <m>x \in C</m>.</q>
             </p>
           </li>
 
-          <li permid="DHE">
-            <p permid="VZD">
+          <li>
+            <p>
         Suppose that <m>A \in B</m> and <m>B \in C</m>. Does this mean that <m>A \in C</m>? Give an example
         to prove that this does NOT always happen (and explain why your example works). You should
         be able to give an example where <m>|A| = |B| = |C| = 2</m>. </p>
@@ -522,9 +748,9 @@
     </statement>
   </exercise>
 
-  <exercise permid="Yrt">
+  <exercise>
     <statement>
-      <p permid="VEe">
+      <p>
         In a regular deck of playing cards there are 26 red cards and 12 face cards.
         Explain, using sets and what you have learned about cardinalities,
         why there are only 32 cards which are either red or a face card.
@@ -532,55 +758,55 @@
     </statement>
   </exercise>
 
-  <exercise permid="EyC">
+  <exercise>
     <statement category="bonus">
-      <p permid="BLn">
+      <p>
         Find an example of a set <m>A</m> with <m>|A| = 3</m> which contains only other sets and has the
-        following property: for all sets <m>B \in A</m>, we also have <m>B \subseteq A</m>. Explain why
-        your example works. (FYI: sets that have this property are called <term>transitive</term>.) <idx><h>transitive
+        following property: For all sets <m>B \in A</m>, we also have <m>B \subseteq A</m>. Explain why
+        your example works. (FYI: Sets that have this property are called <term>transitive</term>.) <idx><h>transitive
         sets</h>
         </idx>
       </p>
     </statement>
   </exercise>
 
-  <exercise permid="kFL">
+  <exercise>
   <idx><h>puzzle</h><h>cardinality</h>
     </idx>
     <statement>
-      <p permid="hSw">
+      <p>
         Consider the sets <m>A</m> and <m>B</m>, where <m>A = \{3, |B|\}</m> and <m>B = \{1, |A|, |B|\}</m>.
         What are the sets? </p>
     </statement>
-    <solution permid="PHB">
-      <p permid="wrA"> We need to be a little careful here. If <m>B</m>
+    <solution>
+      <p> We need to be a little careful here. If <m>B</m>
         contains 3 elements, then <m>A</m> contains just the number 3 (listed twice). So that would
         make <m>|A| = 1</m>, which would make <m>B = \{1, 3\}</m>, which only has 2 elements. Thus <m>|B| \ne
         3</m>. This means that <m>|A| = 2</m>, so <m>B</m> contains at least the elements 1 and 2. Since <m>\card{B}
         \ne 3</m>, we must have <m>\card{B} = 2</m>, which agrees with the definition of <m>B</m>. </p>
       
-      <p permid="cyJ">
+      <p>
         Therefore it must be that <m>A = \{2,3\}</m> and <m>B = \{1, 2\}</m>
       </p>
     </solution>
   </exercise>
   
-  <exercise permid="QMU">
+  <exercise>
     <statement>
-      <p permid="NZF">
+      <p>
         Explain why there is no set <m>A</m> which satisfies <m>A = \{2, \card{A}\}</m>. </p>
     </statement>
-    <hint permid="vOK">
-      <p permid="hiC">
+    <hint>
+      <p>
         It looks like you should be able to define the set <m>A</m> like this. But consider the two
         possible values for <m>\card{A}</m>. </p>
     </hint>
   </exercise>
   
-  <exercise permid="wUd">
+  <exercise>
     <statement>
-      <p permid="ugO"> Find all sets <m>A</m>, <m>B</m>,
-        and <m>C</m> which satisfy the following. <md permid="Gvg">
+      <p> Find all sets <m>A</m>, <m>B</m>,
+        and <m>C</m> which satisfy the following. <md>
           <mrow>A = \amp \{1, \card{B}, \card{C}\}</mrow>
           <mrow>B = \amp
             \{2, \card{A}, \card{C}\}</mrow>

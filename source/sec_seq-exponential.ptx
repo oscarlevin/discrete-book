@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_seq-exponential">
+  <title>Exponential Sequences</title>
+  <idx><h>recurrence relation</h><h>solving</h></idx>
+  <objectives>
+		<introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+		<ol>
+			<li>
+				<p>
+					Identify a sequence as exponential based on its recurrence relation.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Apply the characteristic root technique to solve appropriate recurrence relations.
+				</p>
+			</li> 
+		</ol>
+	</objectives>
+	
+  <subsection>
+    <title>Section Preview</title>
+    
+    
+    <investigation>
+      <idx>domino</idx>
+      <statement>
+        <p>
+          You have a large collection of <m>1\times 1</m> squares and <m>1\times 2</m> dominoes.
+          You want to arrange these to make a <m>1 \times 15</m> strip.
+          How many ways can you do this?
+         
+        </p>
+          
+        <p>
+          What if the squares come in three different colors and the dominos come in four different colors?  And why is this second question easier than the first?
+        </p>
+      </statement>
+      <hint>
+        <p>
+          Start by creating a recurrence relation.  How are the different <m>1\times 3</m> strips and <m>1 \times 4</m> strips related to the <m>1 \times 5</m> strips?
+        </p>
+      </hint>
+    </investigation>
+
+    <p>
+      In <xref ref="sec_seq-polynomial"/> we saw that if a sequence has some sequence of differences that is constant, then the sequence has a polynomial closed formula.  Are there sequences that never have constant differences?  And what would their closed formulas look like?
+    </p>
+
+    <p>
+      Consider the Fibonacci sequence:
+      <me>
+        0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots
+      </me>.
+      If we look at the first differences, we get this sequence:
+      <me>
+        1, 1, 2, 3, 5, 8, 13, 21, 34, \ldots
+      </me>,
+      which is the Fibonacci sequence itself.  This is not surprising, since the Fibonacci sequence is defined by the recurrence relation <m>F_n = F_{n-1} + F_{n-2}</m>.  That is saying precisely that to get the next turn of the sequence, we take the current term and add... a term in the sequence!  
+    </p>
+
+    <p>
+      Of course, if we take another difference, we will get the same sequence back, and again and again, so no <m>n</m>th differences will be constant.
+    </p>
+
+    <p>
+      Another sequence that has this behavior is the powers of 2:
+      <me>
+        1, 2, 4, 8, 16, 32, 64, 128, 256, 512, \ldots
+      </me>
+      which has differences
+      <me>
+        1, 2, 4, 8, 16, 32, 64, 128, 256, \ldots
+      </me>.
+      We can also see this from the recurrence relation, since <me>a_n = 2a_{n-1} = a_{n-1} + a_{n-1}</me>.  The rate of growth for this, and in fact any geometric sequence, is the sequence itself.
+    </p>
+
+    <p>
+      If you have studied calculus, you may recall that the functions that have themselves (or close) as their rate of change (derivative, in the calculus context) are exactly the exponential functions.  Here too, geometric sequences, which have exponential closed formulas, have themselves as their rate of change.
+    </p>
+
+    <p>
+      In this section, we will explore sequences that are changing at a rate proportional to the sequence itself, and see how these all have an exponential closed formula, or some variation of that.
+    </p>
+
+    <worksheet xml:id="PA-seq-exponential">
+      <title>Preview Activity</title>
+      
+      
+      <exercise label="pa-seq-exponential">
+        <webwork>
+          <pg-code>
+            Context()->variables->add(n => "Real");
+            $list1 = List(1, 2, 4, 8, 16)->cmp(
+              ordered=>1, showLengthHint=>1
+            );
+            $formula1 = Compute("2^n");
+            $list2 = List(1,3,9,27,81)->cmp(
+              ordered=>1, showLengthHint=>1
+            );
+            $formula2 = Compute("3^n");
+            $list3 = List(2, 5, 13, 35, 97)->cmp(
+              ordered=>1, showLengthHint=>1
+            );
+            $formula3 = Compute("2^n+3^n");
+          </pg-code>
+          <introduction>
+            <p>
+              Consider the recurrence relation
+              <me>
+                a_n = 5a_{n-1} - 6a_{n-2}
+              </me>.
+              Since the <m>n</m>th term is given as a combination of the two previous terms, we will need two initial terms to determine the sequence.  Different initial terms will give different sequences.
+            </p>
+          </introduction>
+
+        <task>
+          <statement>
+            <p>
+              What sequence do you get if the initial conditions are <m>a_0 = 1</m>, <m>a_1 = 2</m>?  Give the first five terms (including 1 and 2).
+            </p>
+            <p>
+              <var name="$list1" width="25"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              Based on the first few terms, what is a closed formula for this sequence?
+            </p>
+            <p component="interactive">
+              <m>a_n = </m><var name="$formula1" width="15"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              What sequence do you get if the initial conditions are <m>a_0 = 1</m>, <m>a_1 = 3</m>?  Give the first five terms.
+            </p>
+            <p>
+              <var name="$list2" width="25"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              Based on the first few terms, what is a closed formula for this sequence?
+            </p>
+            <p component="interactive">
+              <m>a_n = </m><var name="$formula2" width="15"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              What sequence do you get if the initial conditions are <m>a_0 = 2</m>, <m>a_1 = 5</m>?  Give the first five terms.
+            </p>
+            <p>
+              <var name="$list3" width="25"/>
+            </p>
+          </statement>
+        </task>
+        <task>
+          <statement>
+            <p>
+              Based on the first few terms, what is a closed formula for this sequence?
+            </p>
+            <p component="interactive">
+              <m>a_n = </m><var name="$formula3" width="15"/>
+            </p>
+          </statement>
+          <hint>
+            <p>
+              How do the terms in this sequence relate to the terms in the previous two sequences?
+            </p>
+          </hint>
+          </task>
+        </webwork>
+      </exercise>
+    </worksheet>
+  </subsection>
+
+    <subsection xml:id="subsec-sum-geometric">
+      <title>Summing Geometric Sequences: Multiply, Shift, and
+      Subtract</title>
+      <idx><h>geometric sequence</h><h>summing</h></idx>
+
+      <p>
+        Suppose a candy machine dispenses candy in a geometric sequence by first giving 1 candy, then 2 candies, then 4, then 8, and so on.  How many candies will you have received in total after 10 turns of the machine?
+      </p>
+
+      <p>
+        We can create the sequence of partials sum as <m>1, 1+2, 1+2+4, 1+2+4+8, \ldots</m> that gives
+        <me>
+           1, 3, 7, 15, 31, 63, \ldots
+        </me>
+        This is not a geometric sequence, but is almost.  In fact, if we add 1 to each term, we get what sure looks like the geometric sequence <m>2, 4, 8, 16, 32, 64,\ldots</m>, so we might guess that the closed formula for the sequence of sums is <m>2^{n+1} - 1</m>.  If this is correct, then the answer to the candy question would be <m>2^{11} - 1 = 2047</m>.
+      </p>
+
+      <p>
+        More intriguing though is the observation that the sequence of partial sums of a geometric sequence is again geometric-ish.  Let's consider how to find the sum of a geometric sequence in general. 
+      </p>
+
+      <p>
+        We cannot just reverse and add as we did for the sum of an arithmetic sequence.
+        Do you see why?
+        The reason we got the same term added to itself many times is because there was a constant difference.
+        So as we added that difference in one direction,
+        we subtracted the difference going the other way, leaving a constant total.
+        For geometric sums; we have a different technique.
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            What is <m>3 + 6 + 12 + 24 + \cdots + 12288</m>?
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Multiply each term by 2, the common ratio.
+            We get <m>2S = 6 + 12 + 24 + \cdots + 24576</m>.
+            Now subtract: <m>2S - S = -3 + 24576 = 24573</m>.
+            Since <m>2S - S = S</m>, we have our answer.
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        To better see what happened in the above example, we can write it this way:
+      </p>
+
+
+        <tabular>
+          <col halign="right"/>
+          <col/>
+          <col halign="left"/>
+          <col/>
+          <row>
+            <cell><m>S=</m></cell>
+            <cell><m>3 \, +</m></cell>
+            <cell><m>6 + 12 + 24 + \cdots + 12288</m></cell>
+            <cell/>
+          </row>
+          <row bottom="minor">
+            <cell><m>- \qquad 2S=</m></cell>
+            <cell/>
+            <cell><m>6 + 12 + 24 + \cdots + 12288</m></cell>
+            <cell><m> + 24576</m></cell>
+          </row>
+          <row>
+            <cell><m>-S = </m></cell>
+            <cell><m>3 \, +</m></cell>
+            <cell><m>0 + 0 + 0 +  \cdots + 0 </m></cell>
+            <cell><m>-24576</m></cell>
+          </row>
+        </tabular>
+
+
+      <p>
+        Then divide both sides by <m>-1</m> and we have the same result for <m>S</m>.
+        The idea is, by multiplying the sum by the common ratio,
+        each term becomes the next term.
+        We shift over the sum to get the subtraction to mostly cancel out,
+        leaving just the first term and the new last term.
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            Find a closed formula for <m>S(n) = 2 + 10 + 50 + \cdots + 2\cdot 5^n</m>.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            The common ratio is 5.
+            So we have
+          </p>
+
+
+            <tabular>
+              <col halign="right"/>
+              <col/>
+              <row>
+                <cell><m>S</m></cell>
+                <cell><m>= 2 + 10 + 50 + \cdots + 2\cdot 5^n</m></cell>
+              </row>
+              <row bottom="minor">
+                <cell><m>- \qquad 5S</m></cell>
+                <cell><m>= ~~~~~~10 + 50 + \cdots + 2\cdot 5^n + 2\cdot5^{n+1}</m></cell>
+              </row>
+              <row>
+                <cell><m>-4S</m></cell>
+                <cell><m>= 2  - 2\cdot5^{n+1}</m></cell>
+              </row>
+            </tabular>
+
+
+          <p>
+            Thus <m>S = \dfrac{2-2\cdot 5^{n+1}}{-4}</m>
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        Even though this might seem like a new technique,
+        you have probably used it before.
+      </p>
+
+      <example>
+        <statement>
+          <p>
+            Express <m>0.464646\ldots</m> as a fraction.
+          </p>
+        </statement>
+        <solution>
+          <p>
+            Let <m>N = 0.46464646\ldots</m>.
+            Consider <m>0.01N</m>.
+            We get:
+          </p>
+
+
+            <tabular>
+              <col halign="right"/>
+              <col/>
+              <row>
+                <cell><m>N =</m></cell>
+                <cell><m>0.4646464\ldots</m></cell>
+              </row>
+              <row bottom="minor">
+                <cell><m>- \qquad 0.01N =</m></cell>
+                <cell><m>0.00464646\ldots</m></cell>
+              </row>
+              <row>
+                <cell><m>0.99N =</m></cell>
+                <cell><m>0.46</m></cell>
+              </row>
+            </tabular>
+
+
+          <p>
+            So <m>N = \frac{46}{99}</m>.
+            What have we done?
+            We viewed the repeating decimal
+            <m>0.464646\ldots</m> as a sum of the geometric sequence
+            <m>0.46, 0.0046, 0.000046, \ldots</m> The common ratio is <m>0.01</m>.
+            The only real difference is that we are now computing an
+            <em>infinite</em> geometric sum,
+            we do not have the extra <q>last</q> term to consider.
+            Really, this is the result of taking a limit as we would in calculus when we compute
+            <em>infinite</em> geometric sums.
+          </p>
+        </solution>
+      </example>
+
+      <p>
+        To summarize, we now can find a closed formula for a sequence <m>a_n</m> that has a rate of growth that is an exponential function: <m>a_n - a_{n-1} = b_n</m>, where <m>b_n</m> is a geometric sequence (i.e., an exponential function).  What sort of closed formula do we get here?  It's <em>another</em> exponential function!  
+      </p>
+    </subsection>
+
+
+  <subsection>
+    <title>The Characteristic Root Technique</title>
+    <idx><h>characteristic roots</h></idx>
+
+    <p>
+      Suppose we want to solve a recurrence relation expressed as a combination of the two previous terms,
+      such as <m>a_n = a_{n-1} + 6a_{n-2}</m>.
+      In other words,
+      we want to find a function of <m>n</m> which satisfies <m>a_n - a_{n-1} - 6a_{n-2} = 0</m>.
+      Think about how we build up this sequence iteratively.
+      <md>
+        <mrow> a_2 \amp = a_1 + 6a_0 </mrow>
+        <mrow>a_3 \amp = a_2 + 6a_1 = a_1 + 6a_0 + 6a_1</mrow>
+        <mrow>a_4 \amp = a_3 + 6a_2 = a_1 + 6a_0 + 6a_1 + 6^2a_0 +6^2a_1</mrow>
+      </md>
+      Let's stop there and agree this is getting very complicated.  However, we do notice that in each step, we would, among other things,
+      multiply a previous iteration by 6.
+      So our closed formula would include <m>6</m> multiplied some number of times.
+      Thus it is reasonable to guess the solution will contain parts that look geometric.
+      Perhaps the solution will take the form <m>r^n</m> for some constant <m>r</m>.
+    </p>
+
+    <p>
+      The nice thing is,
+      we know how to check whether a formula is actually a solution to a recurrence relation:
+      plug it in.
+      What happens if we plug in <m>r^n</m> into the recursion above?
+      We get
+      <me>
+        r^n - r^{n-1} - 6r^{n-2} = 0
+      </me>.
+    </p>
+
+    <p>
+      Now solve for <m>r</m>:
+      <me>
+        r^{n-2}(r^2 - r - 6) = 0
+      </me>,
+      so by factoring, <m>r = -2</m> or <m>r = 3</m>
+      (or <m>r = 0</m>, although this does not help us).
+      This tells us that <m>a_n = (-2)^n</m> is a solution to the recurrence relation,
+      as is <m>a_n = 3^n</m>.
+      Which one is correct?
+      They both are, unless we specify initial conditions.
+      Notice we could also have <m>a_n = (-2)^n + 3^n</m>.
+      Or <m>a_n = 7(-2)^n + 4\cdot 3^n</m>.
+      In fact, for any <m>a</m> and <m>b</m>,
+      <m>a_n = a(-2)^n + b 3^n</m> is a solution
+      (try plugging this into the recurrence relation).
+      To find the values of <m>a</m> and <m>b</m>,
+      use the initial conditions.
+    </p>
+
+    <p>
+      This points us in the direction of a more general technique for solving recurrence relations.
+      Notice we will always be able to factor out the <m>r^{n-2}</m> as we did above.
+      So we really only care about the other part.
+      We call this other part the
+      <term>characteristic equation</term>
+          <idx><h>characteristic equation</h></idx>
+      for the recurrence relation.
+      We are interested in finding the roots of the characteristic equation,
+      which are called (surprise) the
+      <term>characteristic roots</term>.
+    </p>
+
+    <assemblage>
+      <title>Characteristic Roots</title>
+      <p>
+            <idx><h>characteristic roots</h></idx>
+        Given a recurrence relation <m>a_n + \alpha a_{n-1} + \beta a_{n-2} = 0</m>, the
+        <term>characteristic polynomial</term> is
+	<idx><h>characteristic polynomial</h></idx>
+        <me>
+          x^2 + \alpha x + \beta
+        </me>
+        giving the
+        <term>characteristic equation</term>:
+	<idx><h>characteristic equation</h></idx>
+        <me>
+          x^2 + \alpha x + \beta = 0
+        </me>.
+      </p>
+
+      <p>
+	<idx><h>recurrence relation</h><h>solving</h></idx>
+        If <m>r_1</m> and <m>r_2</m> are two distinct roots of the characteristic polynomial (i.e., solutions to the characteristic equation),
+        then the solution to the recurrence relation is
+        <me>
+          a_n = ar_1^n + br_2^n
+        </me>,
+        where <m>a</m> and <m>b</m> are constants determined by the initial conditions.
+      </p>
+    </assemblage>
+
+    <example>
+      <statement>
+        <p>
+          Solve the recurrence relation
+          <m>a_n = 7a_{n-1} - 10 a_{n-2}</m> with <m>a_0 = 2</m> and <m>a_1 = 3</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Rewrite the recurrence relation <m>a_n - 7a_{n-1} + 10a_{n-2} = 0</m>.
+          Now form the characteristic equation:
+          <me>
+            x^2 - 7x + 10 = 0
+          </me>
+          and solve for <m>x</m>:
+          <me>
+            (x - 2) (x - 5) = 0
+          </me>,
+          so <m>x = 2</m> and <m>x = 5</m> are the characteristic roots.
+          We therefore know that the solution to the recurrence relation will have the form
+          <me>
+            a_n = a 2^n + b 5^n
+          </me>.
+        </p>
+
+        <p>
+          To find <m>a</m> and <m>b</m>,
+          plug in <m>n =0</m> and <m>n = 1</m> to get a system of two equations with two unknowns:
+          <md>
+            <mrow>2 \amp = a 2^0 + b 5^0 = a + b</mrow>
+            <mrow>3 \amp = a 2^1 + b 5^1 = 2a + 5b</mrow>
+          </md>.
+        </p>
+
+        <p>
+          Solving this system gives <m>a = \frac{7}{3}</m> and
+          <m>b = -\frac{1}{3}</m>, so the solution to the recurrence relation is
+          <me>
+            a_n = \frac{7}{3}2^n - \frac{1}{3} 5^n
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Perhaps the most famous recurrence relation is <m>F_n = F_{n-1} + F_{n-2}</m>,
+      which together with the initial conditions <m>F_0 = 0</m> and <m>F_1= 1</m> defines the Fibonacci sequence.
+          <idx><h>Fibonacci sequence</h><h>recurrence relation</h></idx>
+      But notice that this is precisely the type of recurrence relation on which we can use the characteristic root technique.
+      When we do,
+      the only thing that changes is that the characteristic equation does not factor,
+      so we must use the quadratic formula to find the characteristic roots.
+      In fact, doing so gives the third most famous irrational number,
+      <m>\varphi</m>, the <term>golden ratio</term>.
+      <idx><h>golden ratio</h></idx>
+    </p>
+
+    <p>
+      Before leaving the characteristic root technique,
+      we should think about what might happen when solving the characteristic equation.
+      We have an example above in which the characteristic polynomial has two distinct roots.
+      These roots can be integers, or perhaps irrational numbers
+      (requiring the quadratic formula to find them).
+      In these cases,
+      we know what the solution to the recurrence relation looks like.
+    </p>
+
+    <p>
+      However, it is possible for the characteristic polynomial to have only one root.
+      This can happen if the characteristic polynomial factors as <m>(x - r)^2</m>.
+      It is still the case that <m>r^n</m> would be a solution to the recurrence relation,
+      but we won't be able to find solutions for all initial conditions using the general form <m>a_n = ar_1^n + br_2^n</m>,
+      since we can't distinguish between <m>r_1^n</m> and <m>r_2^n</m>.
+      We are in luck though:
+    </p>
+
+    <assemblage xml:id="asmb-char-rep-roots">
+      <title>Characteristic Root Technique for Repeated Roots</title>
+      <idx><h>characteristic roots</h><h>repeated</h></idx>
+      <idx><h>recurrence relation</h><h>solving</h></idx>
+      <p>
+        Suppose the recurrence relation
+        <m>a_n = \alpha a_{n-1} + \beta a_{n-2}</m> has a characteristic polynomial with only one root <m>r</m>.
+        Then the solution to the recurrence relation is
+        <me>
+          a_n = ar^n + bnr^n
+        </me>
+        where <m>a</m> and <m>b</m> are constants determined by the initial conditions.
+      </p>
+    </assemblage>
+
+    <p>
+      Notice the extra <m>n</m> in <m>bnr^n</m>.
+      This allows us to solve for the constants <m>a</m> and <m>b</m> from the initial conditions.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Solve the recurrence relation
+          <m>a_n = 6a_{n-1} - 9a_{n-2}</m> with initial conditions <m>a_0 = 1</m> and <m>a_1 = 4</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The characteristic polynomial is <m>x^2 - 6x + 9</m>.
+          We solve the characteristic equation
+          <me>
+            x^2 - 6x + 9 = 0
+          </me>
+          by factoring:
+          <me>
+            (x - 3)^2 = 0,
+          </me>
+          so <m>x =3</m> is the only characteristic root.
+          Therefore we know that the solution to the recurrence relation has the form
+          <me>
+            a_n = a 3^n + bn3^n
+          </me>
+          for some constants <m>a</m> and <m>b</m>.
+          Now use the initial conditions:
+          <md>
+            <mrow>a_0 = 1 \amp = a 3^0 + b\cdot 0 \cdot 3^0 = a</mrow>
+            <mrow>a_1 = 4 \amp = a\cdot 3 + b\cdot 1 \cdot3 = 3a + 3b</mrow>
+          </md>.
+          Since <m>a = 1</m>, we find that <m>b = \frac{1}{3}</m>.
+          Therefore the solution to the recurrence relation is
+          <me>
+            a_n = 3^n + \frac{1}{3}n3^n
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Although we will not consider examples more complicated than these,
+      this characteristic root technique can be applied to much more complicated recurrence relations.
+      <idx><h>characteristic roots</h></idx>
+      For example,
+      <m>a_n = 2a_{n-1} + a_{n-2} - 3a_{n-3}</m> has characteristic polynomial <m>x^3 - 2 x^2 - x + 3</m>.
+      Assuming we see how to factor such a degree 3
+      (or more)
+      polynomial, we can easily find the characteristic roots and as such solve the recurrence relation
+      (the solution would look like
+      <m>a_n = ar_1^n + br_2^n + cr_3^n</m> if there were 3 distinct roots).  It is also possible that the characteristic roots are complex numbers.
+      <idx><h>recurrence relation</h><h>solving</h></idx>
+      <idx><h>complex numbers (as characteristic roots)</h></idx>
+    </p>
+    
+    <p>
+      However, the characteristic root technique is only useful for solving recurrence relations in a particular form: <m>a_n</m> is given as a linear combination of some number of previous terms.  These recurrence relations are called <term>linear homogeneous recurrence relations with constant coefficients</term>.
+      <idx><h>homogeneous</h><h>recurrence relation</h></idx>
+      The <q>homogeneous</q> refers to the fact that there is no additional term in the recurrence relation other than a multiple of <m>a_j</m> terms.  For example, <m>a_n = 2a_{n-1} + 1</m> is <em>non-homogeneous</em> because of the additional constant 1.  There are general methods of solving such things, but we will not consider them here, other than through the use of telescoping or iteration described above.
+    </p>
+  </subsection>
+  <reading-questions xml:id="rqs-seq-recurrence">
+
+    
+    <exercise label="rq-seq-recurrence-mc">
+      <statement>
+        <p>
+          Which of the following recurrence relations would be good candidates to try the characteristic root technique on?  Select all that apply
+        </p>
+      </statement>
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>a_n = 3a_{n-1} + a_{n-2}</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              Correct: <m>a_n</m> is written in terms of only multiple of previous terms.
+            </p>
+          </feedback>
+        </choice>
+        <choice correct="yes">
+          <statement>
+            <p>
+              <m>a_n = a_{n-1}+2a_{n-2} + 3a_{n-3}</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              This works too, although the characteristic polynomial will have degree 3, so finding characteristic roots will be difficult.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              <m>a_{n} = \frac{1}{3}\cdot 2^n + \frac{2}{3}(-1)^n</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              This looks like it is the closed formula that would result from a characteristic root technique application, but isn't a recursive formula.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              <m>a_n = a_{n-1} + 3a_{n-2} + 5</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              The addition of the constant makes it so we cannot use the characteristic root technique directly.  While there are methods for dealing with this, we have not considered them in this section.
+            </p>
+          </feedback>
+        </choice>
+        <choice>
+          <statement>
+            <p>
+              <m>x^2 -3x - 1 = 0</m>
+            </p>
+          </statement>
+          <feedback>
+            <p>
+              This might be a characteristic polynomial (in fact, it is for the sequence given by <m>a_n = 3a_{n-1} + a_n</m>), but it is not a recursive definition itself.
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+    <exercise label="rq-seq-recurrence-fr">
+      <statement>
+        <p>
+          At what step do you need to refer to the initial conditions when completing the characteristic root technique?  What would happen if you didn't use these? Explain. 
+        </p>
+      </statement>
+      <response/>
+    </exercise>
+    <exercise label="rq-seq-recurrence-q" component="runestone">
+      <statement>
+        <p> What questions do you have? Write at
+          least one question about the content of this section that you or a classmate might be curious about.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+  <xi:include href="practice/seq-exponential.ptx"/>
+  <xi:include href="exercises/seq-exponential.ptx"/>
+</section>
+

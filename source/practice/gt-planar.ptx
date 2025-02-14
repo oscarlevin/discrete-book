@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exercises xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="practice_gt-planar">
+<title>Practice Problems</title>
+
+
+
+  <exercise label="ww-gt-planar-tf">
+    <webwork source="Library/NUIG/DiscreteMaths/PlanarTrueFalse_OPL.pg" />
+  </exercise>
+
+  <!-- <exercise label="ww-gt-planar-euler">
+    <webwork source="Library/NUIG/DiscreteMaths/Graph_Theory_EulersFormula_OPL.pg" />
+  </exercise> -->
+
+  <exercise label="ww-gt-planar-v">
+    <webwork>
+      <pg-code>
+        $f1 = random(5,10);
+        $e1 = random(ceil(3/2*$f1),3*$f1);
+        $v1 = Compute("2+$e1-$f1");
+      </pg-code>
+
+      <statement>
+        <p>
+          Suppose <m>G</m> is a planar connected graph. It has <var name="$e1"/> edges, and <var name="$f1"/> faces. How many vertices does <m>G</m> have?
+        </p>
+        <p component="interactive">
+          <m>v = </m> <var name="$v1" width="5"/>.
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-gt-planar-degrees">
+    <webwork>
+      <pg-code>
+        $deg = random(2,5);
+        $v = random($deg+1,20);
+        $e = Compute("$deg*$v/2");
+        $f = Compute("2+$e-$v");
+      </pg-code>
+    
+      <statement>
+        <p>
+          Suppose a connected graph has <var name="$v"/> vertices, and every vertex has degree <var name="$deg"/>. 
+          <ol>
+            <li>
+              <p>
+                How many edges does the graph have?  
+              </p>
+              <p component="interactive">
+                <m>e = </m> <var name="$e" width="10"/>.
+              </p>
+            </li>
+            <li>
+              <p>
+                If the graph were planar, how many faces would it have?
+              </p>
+              <p component="interactive">
+                <m>f = </m> <var name="$f" width="10"/>.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+    </webwork>
+
+  </exercise>
+
+  <exercise label="ww-gt-planar-proof">
+    <webwork>
+      
+        <pg-code>
+          $v = random(6,15);
+          $e = $v*($v-1)/2;
+          $f = 2-$v + $e;
+          $fbound = Compute("2*$e/3");
+        </pg-code>
+      
+      <statement>
+        <p>
+          Let's prove that <m>K_{<var name="$v"/>}</m> is not planar:
+        </p>
+        <p>
+          First, how many vertices and how many edges does <m>K_{<var name="$v"/>}</m> have?
+        </p>
+
+        <p component="interactive">
+          <m>v = </m> <var name="$v" width="5"/> and <m>e = </m> <var name="$e" width="5"/>.
+        </p>
+
+        <p>
+          If we assume that <m>K_{<var name="$v"/>}</m> were planar, then how many faces <em>would</em> it have?
+        </p>
+
+        <p component="interactive">
+          <m>f = </m> <var name="$f" width="5"/>.
+        </p>
+
+        <p>
+          However, since every face is bounded by at least <var name="'3'" width="5"/> edges, and every edge borders exactly <var name="'2'" width="5"/> faces, we can get a bound on the number of faces.  What is the largest number of faces possible based on this line of reasoning?
+        </p>
+
+        <p>
+          <m>f \le </m> <var name="$fbound" width="10"/>.
+        </p>
+
+        <p>
+          This is a contradiction, so <m>K_{<var name="$v"/>}</m> is not planar.  QED.
+        </p>
+      </statement>
+  </webwork>
+</exercise>
+
+  <exercise label="ww-gt-planar-euler-gen">
+    <webwork>
+      <pg-code>
+        $C = random(2,9);
+        $ans = Compute("1+$C");
+      </pg-code>
+    
+      <statement>
+        <p>
+          Suppose the graph is planar but not connected, and has <m><var name="$C"/></m> components. Draw enough examples to derive a variant of Euler's formula for this case.
+        </p>
+        <p>
+          <m>v-e+f=</m> <var name="$ans" width="10"/>.
+        </p>
+      </statement>
+    </webwork>
+  </exercise>
+
+</exercises>

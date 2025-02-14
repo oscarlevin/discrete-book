@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec_counting-multisets">
+  <title>Counting Multisets</title>
+
+  <idx> <h>sticks and stones</h> </idx>
+  <idx><h>multisets (counting)</h></idx>
+  <idx><h>balls and bins</h><see>sticks and stones</see></idx>
+  <idx><h>stars and bars</h><see>sticks and stones</see></idx>
+  <idx>distribution (counting)</idx>
+  <objectives>
+    <introduction>
+      <p>
+        After completing this section, you should be able to do the following.
+      </p>
+    </introduction>
+
+    <ol>
+      <li>
+        <p>
+          Identify counting problems whose outcomes can be represented by multisets.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          Represent outcomes of counting problems using multisets and sticks and stones diagrams.
+        </p>
+      </li>
+
+      <li>
+        <p>
+          Solve counting problems using sticks and stones.
+        </p>
+      </li>
+    </ol>
+  </objectives>
+
+
+  <subsection>
+    <title>Section Preview</title>
+
+    <investigation xml:id="investigate-counting-multisets">
+      <p>
+        Skittles come in five <q>flavors</q>.
+        How many different handfuls of 8 skittles are possible?
+      </p>
+
+      <p>
+        Suppose you have baked 8 identical cupcakes to give to your top five favorite discrete math teachers.
+        How many ways can you distribute the cupcakes?
+      </p>
+
+      <p>
+        Why are the answers to the two counting questions above the same?
+      </p>
+    </investigation>
+
+    <p>
+      We know how to solve lots of types of counting problems now.
+      If each outcome in a set of outcomes we are counting can be represented by a sequence, we count it as a permutation (if the terms in the sequence don't repeat) or use the product principle (if they do).
+      If we are counting outcomes for which we don't distinguish between different arrangements of the terms (if order doesn't matter) then we think of the outcome as a set and count it as a combination.
+      However, sets never allow an element to be repeated; each element is either in a set or not.
+    </p>
+
+    <p>
+      So we have a glaring hole in our counting repertoire.
+      What if we want to count outcomes that are collections of terms for which we do not distinguish between the order the terms appear in, but can contain terms more than once?  In other words, how can we complete the following table?
+    </p>
+
+    <tabular halign="center" valign="middle">
+      <col right="medium"/><col right="minor"/><col/>
+      <row>
+        <cell></cell>
+        <cell colspan="2">Distinguished Arrangements?</cell>
+      </row>
+
+      <row bottom="medium">
+        <cell></cell>
+        <cell>Yes</cell>
+        <cell>No</cell>
+      </row>
+
+      <row bottom="minor">
+        <cell>Repeats OK</cell>
+        <cell>
+        <line>
+        Sequences</line>
+        <line>
+        Prod.
+        Principle</line>
+        <line>
+        <m>n^k</m></line>
+        </cell>
+        <cell></cell>
+      </row>
+
+      <row>
+        <cell>No repeats</cell>
+        <cell>
+        <line>
+        Sequences</line>
+        <line>
+        Permutations</line>
+        <line>
+        <m>P(n,k)</m></line>
+        </cell>
+        <cell>
+        <line>
+        Sets</line>
+        <line>
+        Combinations</line>
+        <line>
+        <m>\binom{n}{k}</m></line>
+        </cell>
+      </row>
+    </tabular>
+
+    <p>
+      What we want to count are some sort of set-like structure but one that <em>does</em> permit elements in the set to appear more than once.
+      Such structures are called <term>multisets</term>.
+    </p>
+
+    <definition xml:id="def-multiset">
+      <statement>
+        <p>
+          A <term>multiset</term> is an unordered collection of elements, each of which can appear any number of times.
+          The number of times an element appears is called its <term>multiplicity</term>.
+        </p>
+
+        <p>
+          Multisets are written using the same notation as sets: a comma-separated list in braces, such as <m>\{1, 2, 2, 5\}</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In this section, we will explore how multisets can be used to represent a wide range of counting problems.
+      We will then develop a way to translate multisets into a special type of bit-string so that we can use the numbers in Pascal's triangle to count the number of multisets.
+    </p>
+
+    <worksheet xml:id="PA-couting-multisets">
+      <title>Preview Activity</title>
+
+      <exercise label="pa-counting-multisets">        
+        <webwork>
+        <introduction>
+          <p>
+            Find a collection of identical objects, perhaps pennies or sugar cubes.  Also grab a few dividers, which could be toothpicks,  matches, or pens. 
+            </p>
+
+            <p>
+              Line up the pennies in a single row.  We will divide the row into some number of groups by placing the toothpicks in the spaces between the pennies.  We will distinguish between which order the groups come in. For example, two different ways to divide 7 pennies into 4 groups would look like this:
+            </p>
+
+            <image width="50%">
+              <shortdescription>two rows of 7 pennies separated into 4 groups with 3 sticks</shortdescription>
+              <latex-image label="img-penny-sticks">
+                <xi:include href="assets/penny-sticks.tex" parse="text" />
+              </latex-image>
+            </image>
+          <p>
+            We will allow for one or more groups to contain no pennies (by having two toothpicks next to each other or before or after all of the pennies).
+          </p>
+          <p>
+            By lining up the correct number of pennies and sticks, count the number of ways you can divide a row of pennies into the given number of groups.
+          </p>
+          </introduction>
+
+          <task>
+            <statement>
+              <p>
+                If you want to divide a row of pennies into 4 groups, how many toothpicks will you need?
+              </p>
+              <p>
+              <var name="3" width="5"/>
+              </p>
+            </statement>
+          </task>
+
+          <task>
+            <statement>
+              <p>
+                How many ways are there to separate a row of three pennies into two groups?
+              </p>
+              <p>
+              <var name="4" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many ways are there to separate a row of four pennies into two groups?
+              </p>
+              <p>
+              <var name="5" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many ways are there to separate a row of five pennies into two groups?
+              </p>
+              <p>
+              <var name="6" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many ways are there to separate a row of three pennies into three groups?
+              </p>
+              <p>
+                <var name="10" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many ways are there to separate a row of four pennies into three groups?
+              </p>
+              <p>
+                <var name="15" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                How many ways are there to separate a row of five pennies into three groups?
+              </p>
+              <p>
+                <var name="21" width="5"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Based on your answers above, make a conjecture about how many ways you could separate a row of seven pennies into four groups.
+              </p>
+              <p>
+                <var name="120" width="5"/>
+              </p>
+            </statement>
+            <hint>
+              <p>
+                Look for the numbers you found in the previous questions in <xref ref="fig-pascal-large" text="custom">Pascal's triangle</xref>.
+              </p>
+            </hint>
+          </task>
+        </webwork>
+      </exercise>
+    </worksheet>
+  </subsection>
+
+
+  <subsection xml:id="subsec-cookies-kids">
+    <title>Have Some Cookies</title>
+
+    <p>
+      Consider the following counting problem:
+    </p>
+
+    <blockquote>
+      <p>
+        You have 7 cookies to give to 4 kids.
+        How many ways can you do this?
+      </p>
+    </blockquote>
+
+    <p>
+      Take a moment to think about how you might solve this problem.
+      You may assume that it is acceptable to give a kid no cookies.
+      Also, the cookies are all identical and the order in which you give out the cookies does not matter (so giving cookies to the second kid before the first kid does not count as a separate outcome as the other way around).
+    </p>
+
+    <p>
+      Before solving the problem, here is a wrong answer: You might guess that the answer should be <m>4^7</m> because, for each of the 7 cookies, there are 4 choices of kids to which you can give the cookie.
+      This is reasonable, but wrong.
+      To see why, consider a few possible outcomes: We could assign the first six cookies to kid A, and the seventh cookie to kid B.
+      Another outcome would assign the first cookie to kid B and the six remaining cookies to kid A.
+      Both outcomes are included in the <m>4^7</m> answer.
+      But for our counting problem, both outcomes are really the same <ndash/> kid A gets six cookies and kid B gets one cookie.
+      This would have been the correct answer if the cookies were all different, but they are not.
+    </p>
+
+    <p>
+      What do outcomes actually look like? How can we represent them? One approach would be to write an outcome as a string of four numbers like this:
+      <me>
+        3112
+      </me>,
+      which represents the outcome in which the first kid gets 3 cookies, the second and third kids each get 1 cookie, and the fourth kid gets 2 cookies.
+      Represented this way, the order in which the numbers occur matters.
+      1312 is a different outcome, because the first kid gets one cookie instead of 3.
+      Each number in the string can be any integer between 0 and 7.
+      But the answer is not <m>7^4</m>.
+      We need the <em>sum</em> of the numbers to be 7.
+    </p>
+
+    <p>
+      Another way we might represent outcomes is to write a string of seven letters:
+      <me>
+        \text{ABAADCD}
+      </me>,
+      which represents that the first cookie goes to kid A, the second cookie goes to kid B, the third and fourth cookies go to kid A, and so on.
+      In fact, this outcome is identical to the previous one<mdash/>A gets 3 cookies, B and C get 1 each, and D gets 2.
+      Each of the seven letters in the string can be any of the 4 possible letters (one for each kid), but the number of such strings is not <m>4^7</m>, because here order does <em>not</em> matter.
+      In fact, another way to write the same outcome is
+      <me>
+        \text{AAABCDD}
+      </me>.
+    </p>
+
+    <p>
+      This will be the preferred representation of the outcome.
+      Since we can write the letters in any order, we might as well write them in <em>alphabetical</em> order for the purposes of counting.
+      So we will write all the A's first, then all the B's, and so on.
+      In fact, since we do not distinguish between the different arrangements, it is like we are writing a set, just that this <term>multiset</term> can contain an element more than one time.
+    </p>
+
+    <p>
+      So we now have two useful ways to think of the outcomes.
+      <ol>
+        <li>
+          <p>
+            As a multiset containing 7 elements, each of which is one of the four kids (or letter representing their names).
+            For example,
+            <me>
+              \{A, A, A, B, C, D, D\}
+            </me>.
+            Each time a kid is in the multiset, it means that kid gets a cookie, so the <term>multiplicity</term> of the kid in the multiset is the number of cookies the kid gets.
+          </p>
+        </li>
+
+        <li>
+          <p>
+            As a string of 4 non-negative numbers with a sum of 7.
+            For example,
+            <me>
+              3112
+            </me>.
+            The position of the number in the string represents the kid, and the number itself represents the number of cookies that kid gets.
+          </p>
+        </li>
+      </ol>
+    </p>
+
+    <p>
+      Before we think about how to count the number of outcomes represented this way, here are a couple more examples of counting problems we can represent in these ways.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          You grab a handful of ten jelly beans from a bag that contains six flavors.  Write down three possible outcomes using both multisets and strings of numbers.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Multisets are the more natural way to think of this problem since each handful is a multiset of flavors.  So for example we could have,
+          <me>
+            \{R, R, G, G, G, B, B, B, B, Y\}
+          </me>
+          meaning you got two red, three green, four blue, and one yellow jelly bean (and no purple or orange), or
+          <me>
+            \{R, R, R, R, R, R, R, R, R, R\}
+          </me>
+          which means you got ten red jelly beans.  You could also have
+          <me>
+            \{R, G, B, Y, P, O, O, O, O, O\}
+          </me>
+          meaning you have one each of red, green, blue, and yellow, and five orange jelly beans.
+        </p>
+        
+        <p>
+          The corresponding sequences of six numbers summing to 10 are
+          <me>
+            2,3,4,1,0,0; \qquad 10,0,0,0,0,0; \qquad 1,1,1,1,1,5
+          </me>.
+          (We added commas between numbers since not every number is a single digit.)  Notice that for this representation we need to agree on a fixed order of the flavors, which was not alphabetical in this case, but the same order we used when listing the multisets.  
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>
+          You have 12 identical copies of your favorite Discrete Math book that you want to put on 5 bookshelves.  Write down three possible outcomes using both multisets and strings of numbers.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Here the sequences of numbers are more natural, since we can just say how many books go on each shelf.  We will need 5 numbers that add up to 12.  For example, we could have
+          <ol>
+            <li>
+              <p>
+              <m>3,3,3,2,1</m>, meaning 3 books on the first shelf, 3 on the second, 3 on the third, 2 on the fourth, and 1 on the fifth.
+              </p>
+            </li>
+            <li>
+              <p>
+              <m>0,0,12,0,0</m>, meaning all 12 books are on the middle shelf.
+              </p>
+            </li>
+            <li>
+              <p>
+              <m>1,1,1,1,8</m>, meaning one book on each of the first four shelves and 8 on the last.
+              </p>
+            </li>
+          </ol>
+        </p>
+        <p>
+          The corresponding multisets are
+          <ol>
+            <li>
+              <p>
+                <m>\{1,1,1,2,2,2,3,3,3,4,4,5\}</m>, meaning shelf 1 is assigned a book three times, shelf 2 is assigned a book three times, etc.  Notice that there are 12 elements in the multiset, one for each book.  The numbers here represent the shelves; the multiplicity of the number is the number of books on that shelf.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{3,3,3,3,3,3,3,3,3,3,3,3\}</m>.  The only shelf in the multiset is shelf 3, with multiplicity 12, meaning that shelf 3 gets 12 books.
+              </p>
+            </li>
+            <li>
+              <p>
+                <m>\{1,2,3,4,5,5,5,5,5,5,5,5\}</m>.  Here shelf 1 gets one book, shelf 2 gets one book, shelf 3 gets one book, shelf 4 gets one book, and shelf 5 gets the rest.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </example>
+    <p>
+      This last example could also have been asked as a question about solving equations with non-negative integer solutions.  In particular, we could have asked for solutions to the equation <m>a+b+c+d+e = 12</m>.  Think of each variable as saying how many books go on each shelf.  We will ask questions directly like this, but realizing how to represent other questions as such an equation can be useful.
+    </p>
+  </subsection>
+
+    <subsection xml:id="subsec-representing-multisets-with-bit-strings">
+      <title>Representing Multisets with Bit Strings</title>
+      
+      <p>
+        Now let's return to the original problem of distributing 7 cookies to 4 kids and actually count the number of outcomes.
+      </p>
+
+      <p>
+        When we were counting plain old sets, we saw that the numbers in Pascal's triangle gave us the counts.  In fact, we saw this was true because we could represent each set as a bit string.  Whenever an element was in the set, we would denote that with a 1, and if the element was not in the set, we would mark its absence with a 0.
+      </p>
+
+      <p>
+        This is essentially what we did with multisets but had to use strings of non-negative numbers beyond just 0 and 1, since an element in a multiset can appear more than 0 or 1 times.  But if we could translate those strings of numbers into some other sort of bit string, then we could use Pascal's triangle to count the number of multisets.
+      </p>
+
+      <p>
+        Here is how we can do this.  Given a multiset such as 
+        <me>
+          \{A, A, A, B, C, D, D\}
+        </me>
+        we have a number sequence representation as <me>3,1,1,2</me>.  Well, instead of individual numbers, write each as a sequence of that many 1s.  So this example becomes <me>111,1,1,11</me>.  This is slightly awkward since we are using commas to separate the numbers.  To make this clearer, let's switch to two different symbols.  We will call them <term>sticks and stones</term>, where the stone represents a 1 and the stick represents a comma.  So the sequence <me>111,1,1,11</me> becomes <me>\o\o\o|\o|\o|\o\o</me>.  This is a string of ten symbols, 7 of which are stones and 3 of which are sticks.  
+      </p>
+
+      <p>
+        This is fantastic!  Whatever two symbols we use (you might also see these called <term>stars and bars</term> or <term>balls and bins</term>), we can use Pascal's triangle to count the number of ways to arrange them.  The number of 10-bit strings of weight 3 (or weight 7) is <m>\binom{10}{3} = 120</m>.
+      </p>
+      <p>
+      In terms of cookies, we can view this sticks and stones diagram as saying after how many cookies we stop giving cookies to the first kid and start giving cookies to the second kid.
+      And then after how many do we switch to the third kid? And after how many do we switch to the fourth? So
+      <me>
+        \o\o\o|\o|\o|\o\o
+      </me>
+      means three cookies go to the first kid; then we switch and give one cookie to the second kid, then switch, one to the third kid, switch, two to the fourth kid.
+      Notice that we need 7 stones and 3 sticks <ndash/> one stone for each cookie, and one stick for each switch between kids, so one fewer sticks than there are kids (we don't need to switch after the last kid <ndash/> we are done).
+    </p>
+
+
+    <p>
+      While we are at it, we can also answer a related question: How many ways are there to distribute 7 cookies to 4 kids so that each kid gets at least one cookie? What can you say about the corresponding sticks and stones charts? The charts must start and end with at least one stone (so that kids A and D) get cookies, and also no two sticks can be adjacent (so that kids B and C are not skipped).
+      One way to ensure this is to place sticks only in the spaces <em>between</em> the stones.
+      With 7 stones, there are 6 spots between the stones, so we must choose 3 of those 6 spots to fill with bars.
+      Thus there are <m>{6 \choose 3}</m> ways to distribute 7 cookies to 4 kids giving at least one cookie to each kid.
+    </p>
+
+    <p>
+      Another (and more general) way to approach this modified problem is to first give each kid one cookie.
+      Now the remaining 3 cookies can be distributed to the 4 kids without restrictions.
+      So we have 3 stones and 3 sticks for a total of 6 symbols, 3 of which must be bars.
+      So again we see that there are <m>{6 \choose 3}</m> ways to distribute the cookies.
+    </p>
+
+    <p>
+      Sticks and stones can be used in counting problems other than kids and cookies.
+      Here are a few examples:
+    </p>
+
+    <example>
+      <idx>distribution (counting)</idx>
+      <statement>
+        <p>
+          Your favorite mathematical ice cream parlor offers 10 flavors.
+          How many milkshakes could you create using exactly 6, not necessarily distinct scoops? The order you add the flavors does not matter (they will be blended up anyway), but you are allowed repeats.
+          So one possible shake is triple chocolate, double cherry, and mint chocolate chip.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          We get six scoops, each of which could be one of ten possible flavors.
+          Represent each scoop as a star.
+          Think of going down the counter one flavor at a time: You see vanilla first, and skip to the next, chocolate.
+          You say yes to chocolate three times (use three stones), then switch to the next flavor.
+          You keep skipping until you get to cherry, which you say yes to twice.
+          Another switch and you are at mint chocolate chip.
+          You say yes once.
+          Then you keep switching until you get past the last flavor, never saying yes again (since you already have said yes six times).
+          There are ten flavors to choose from, so we must switch from considering one flavor to the next nine times.
+          These are the nine bars.
+        </p>
+
+        <p>
+          Now that we are confident that we have the right number of sticks and stones, we answer the question simply: There are 6 stones and 9 bars, so 15 symbols.
+          We need to pick 9 of them to be bars, so the number of milkshakes possible is
+          <me>
+            \binom{15}{9}
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <example>
+      <statement>
+        <p>
+          How many 7 digit phone numbers are there in which the digits are non-increasing? That is, every digit is less than or equal to the previous one.
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          We need to decide on 7 digits, so we will use 7 stones.
+          The sticks will represent a switch from each possible single-digit number down to the next smaller one.
+          So the phone number 866-5221 is represented by the sticks and stones chart
+          <me>
+            |\o||\o\o|\o|||\o\o|\o|
+          </me>.
+        </p>
+
+        <p>
+          There are 10 choices for each digit (0-9), so we must switch between choices 9 times.
+          We have 7 stones and 9 bars, so the total number of phone numbers is
+          <me>
+            {16 \choose 9}
+          </me>.
+        </p>
+      </solution>
+    </example>
+
+    <example xml:id="example-multisets-int-sol">
+      <idx>integer solutions to equation (counting)</idx>
+      <statement>
+        <p>
+          How many integer solutions are there to the equation
+          <me>
+            x_1 + x_2 + x_3 + x_4 + x_5 = 13
+          </me>.
+        </p>
+
+        <p>
+          (An <term>integer solution</term> to an equation is a solution in which the unknown must have an integer value.)
+        </p>
+
+        <p>
+          <ol>
+            <li>
+              <p>
+                where <m>x_i \ge 0</m> for each <m>x_i</m>?
+              </p>
+            </li>
+
+            <li>
+              <p>
+                where <m>x_i &gt; 0</m> for each <m>x_i</m>?
+              </p>
+            </li>
+
+            <li>
+              <p>
+                where <m>x_i \ge 2</m> for each <m>x_i</m>?
+              </p>
+            </li>
+          </ol>
+        </p>
+      </statement>
+
+      <solution>
+        <p>
+          This problem is just like giving 13 cookies to 5 kids.
+          We need to say how many of the 13 units go to each of the 5 variables.
+          In other words, we have 13 stones and 4 bars (the sticks are like the <q>+</q> signs in the equation).
+        </p>
+
+        <p>
+          <ol>
+            <li>
+              <p>
+                If <m>x_i</m> can be 0 or greater, we are in the standard case with no restrictions.
+                So 13 stones and 4 sticks can be arranged in <m>{17 \choose 4}</m> ways.
+              </p>
+            </li>
+
+            <li>
+              <p>
+                Now each variable must be at least 1.
+                So give one unit to each variable to satisfy that restriction.
+                Now there are 8 stones left, and still 4 bars, so the number of solutions is <m>{12 \choose 4}</m>.
+              </p>
+            </li>
+
+            <li>
+              <p>
+                Now each variable must be 2 or greater.
+                So before any counting, give each variable 2 units.
+                We now have 3 remaining stones and 4 bars, so there are <m>{7 \choose 4}</m> solutions.
+              </p>
+            </li>
+          </ol>
+        </p>
+      </solution>
+    </example>
+
+
+    <paragraphs>
+      <title>Counting with Functions</title>
+
+      <idx><h>function</h><h>counting</h></idx>
+      <p>
+        Many of the counting problems in this section might at first appear to be examples of counting <em>functions</em>.
+        After all, when we try to count the number of ways to distribute cookies to kids, we are assigning each cookie to a kid, just like you assign elements of the domain of a function to elements in the codomain.
+        However, the number of ways to assign 7 cookies to 4 kids is <m>{10 \choose 7} = 120</m>, while the number of functions <m>f: \{1,2,3,4,5,6,7\} \to \{a,b,c,d\}</m> is <m>4^7 = 16384</m>.
+        What is going on here?
+      </p>
+
+      <p>
+        When we count functions, we consider the following two functions, for example, to be different:
+        <me>
+          f = \twoline{1 \amp 2 \amp 3 \amp 4\amp 5 \amp 6 \amp 7}{a \amp b \amp c \amp c \amp c \amp c \amp c} \qquad g = \twoline{1 \amp 2 \amp 3 \amp 4\amp 5 \amp 6 \amp 7}{b \amp a \amp c \amp c \amp c \amp c \amp c}
+        </me>.
+        But these two functions would correspond to the <em>same</em> cookie distribution: Kids <m>a</m> and <m>b</m> each get one cookie, and kid <m>c</m> gets the rest (and none for kid <m>d</m>).
+      </p>
+
+      <p>
+        The point: Elements of the domain are distinguished, but cookies are indistinguishable.
+        This is analogous to the distinction between permutations (like counting functions) and combinations (not).
+      </p>
+    </paragraphs>
+  </subsection>
+
+  <reading-questions xml:id="rqs-counting-multisets">
+    <exercise label="rq-counting-multisets-nonex">
+      <statement>
+        <p>
+          Which of the following counting questions are NOT an example of a question you would use sticks and stones to solve?
+        </p>
+      </statement>
+
+
+      <choices randomize="yes">
+        <choice correct="yes">
+          <statement>
+            <p>
+              How many ways can you distribute six unique gifts to three friends?
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              Correct.
+              Because the gifts are distinct, we have three choices for the first gift, three for the second, etc, making the answer <m>3^6</m>.
+            </p>
+          </feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>
+              How many ways can you distribute six identical gifts to three friends?
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              You can use sticks and stones here: use two sticks to separate your three friends, and use six stones for the gifts.
+            </p>
+          </feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>
+              How many different combinations of numbers can you get if you roll three identical 6-side dice?
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              Use five sticks to separate the six values on the dice.
+              Each stone represents one of the identical dice.
+            </p>
+          </feedback>
+        </choice>
+
+        <choice>
+          <statement>
+            <p>
+              How many different three-scoop milkshakes can you make when each scoop of ice cream can be one of six different flavors?
+            </p>
+          </statement>
+
+          <feedback>
+            <p>
+              Use five sticks and three stones!
+            </p>
+          </feedback>
+        </choice>
+      </choices>
+    </exercise>
+
+    <exercise label="rq-counting-multisets-order-repeats">
+      <statement>
+        <p>
+          When you count outcomes using sticks and stones, does order matter?  Do you allow repeats?  What do you mean by your answers (the order of what, the repeat of what)?
+        </p>
+      </statement>
+      <response/>
+    </exercise>
+
+    <exercise label="rq-counting-multisets-q" component="runestone">
+      <statement>
+        <p>
+          What questions do you have after reading this section? Write at least one question about the content of this section that you are curious about.
+        </p>
+      </statement>
+      <response />
+    </exercise>
+  </reading-questions>
+
+  <xi:include href="practice/counting-multisets.ptx"/>
+  <xi:include href="exercises/counting-multisets.ptx"/>
+</section>

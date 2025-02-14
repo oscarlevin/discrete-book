@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section xml:id="sec_logic-structures" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Proofs about Discrete Structures</title>
+
+  <objectives>
+    <introduction>
+			<p>
+				After completing this section, you should be able to do the following.
+			</p>
+		</introduction>
+
+		<ul>
+			<li>
+				<p>
+					Read and comprehend definitions related to discrete structures, so you can apply the definitions correctly.
+				</p>
+			</li>
+
+			<li>
+				<p>
+					Write proofs about discrete structures.
+				</p>
+			</li>
+		</ul>
+  </objectives>
+  
+  
+  <subsection xml:id="subsec-logic-structures-intro" label="logic-structures-intro">
+    <title>Section Preview</title>
+    <investigation>
+      <statement>
+        <p>
+          Suppose there are 15 people at a party.  Most people know each other already, but there are still some people who decide to shake hands.  Is it possible for everyone at the party to shake hands with exactly three other people?
+        </p>
+      </statement>
+    </investigation>
+
+    <p>
+      So far we have seen how the logical form of a statement can inform how to build the scaffolding of a proof.  This can only get us so far though: To flesh out the proof skeleton requires an understanding of the mathematical objects and structures the proofs are about.  Some of this can come from carefully reading definitions.  Yet there is also some less concrete understanding and intuition that comes from working with the objects and structures that can lead to that <q>ah-ha!</q> moment of inspiration that suggests how to proceed with a proof. 
+    </p>
+
+    <aside>
+      <p>
+        Why are we writing proofs?  Besides practice in becoming better reasoners, diving into careful proofs about discrete structures is a way to learn more about the structures themselves.  They are a playground for exploring mathematics, to help us build intuition for mathematical structures.  So we study structures to help us write proofs about them, and we write proofs about them to help understand the structures.  Bootstrapping!
+      </p>
+    </aside>
+
+    <p>
+      Another reason to shift our focus toward proofs about discrete structures is that doing so illustrates an important feature of mathematics: abstraction.  We have been proving particular facts about particular problems.  We might even start to notice similarities between the proofs for some statements.  This might be due to the underlying mathematical structures that the problems are (secretly) about.  If we prove the general facts about these structures, then we can apply these <q>theorems</q> to many different problems.
+    </p>
+
+    <p>
+      Some discrete structures lend themselves to particular styles of proof and some <q>standard</q> proof techniques can apply to particular structures.  We will see some of this here, but mostly we take this opportunity to remind ourselves of some of the basic definitions and properties for discrete structures, and use the proofs about them to help understand these better.
+    </p>
+    <worksheet xml:id="PA-logic-structures">
+      <title>Preview Activity</title>
+      <!-- Maybe some stuff with examples of particular structures that illustrate some facts, ask if they think these generalize? -->
+      <introduction>
+        <p>
+          In this preview activity, we will explore some basic properties of sets and functions.  Later in this section, we will write proofs about these ideas.
+        </p>
+      </introduction>
+      <exercise label="pa-logic-structure-1">
+        <webwork>
+          <pg-code>
+            $B1 = Set(1,3,5,7,9);
+            $A1 = Set(1,3,5) -> cmp(
+              list_checker => sub {
+                my ($correct, $student, $ansHash, $value) = @_;
+                my $stSet = $ansHash->{student_value};
+                my $size = $stSet->length();
+                my $test = $stSet->isSubsetOf($B1);
+                Value->Error("The set must have 3 elements") if $size != 3;
+                Value->Error("The set must be a subset of B") if !$test;
+                return $size;
+              }
+            );
+            $twosets = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+              singleResult => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                my $stSet1 = Set($student->[0]);
+                my $stSet2 = Set($student->[1]);
+                my $test = $stSet1->isSubsetOf($stSet2);
+                my $stSetUnion = Set($stSet1 + $stSet2);
+                Value->Error("The sets must be different") if $stSet1 == $stSet2;
+                $self->setMessage(2,"The union of \(A\) and \(B\) is $stSetUnion but must be \(B\)") if !test;
+                return $test;
+              }
+            );
+            $twosets2 = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+              singleResult => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                my $stSet1 = Set($student->[0]);
+                my $stSet2 = Set($student->[1]);
+                my $test = $stSet1->isSubsetOf($stSet2);
+                my $stSetUnion = Set($stSet1 + $stSet2);
+                Value->Error("The sets must be different") if $stSet1 == $stSet2;
+                $self->setMessage(2,"The union of \(A\) and \(B\) is $stSetUnion but should not be \(B\)") if $test;
+                return !$test;
+              }
+            );
+            $yes = PopUp(["?", "yes", "no"], "yes");
+            $no = PopUp(["?", "yes", "no"], "no");
+          </pg-code>
+          <introduction>
+              <p>
+                Remember that a set is just a collection of elements.  Here are two definitions about sets:
+                <ol>
+                  <li>
+                    <p>
+                      A set <m>A</m> is a <term>subset</term> of a set <m>B</m>, written <m>A \subseteq B</m>, provided every element in <m>A</m> is also an element of <m>B</m>.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Given sets <m>A</m> and <m>B</m>, the <term>union</term> of <m>A</m> and <m>B</m>, written <m>A \cup B</m>, is the set containing every element that is in <m>A</m> or <m>B</m> or both.
+                    </p>
+                  </li>
+                </ol>
+                Let's build some examples.
+              </p>
+            </introduction>
+        
+
+          <task>
+            <statement>
+              <p>
+                Let <m>B = \{1, 3, 5, 7, 9\}</m>.  Give an example of a set <m>A</m> containing <m>3</m> elements that is a subset of <m>B</m>.
+              </p>
+              <p>
+                <var name="$A1" width="10" />
+              </p>
+              <p>
+                What is <m>A \cup B</m> for the set <m>A</m> you gave as an example?
+              </p>
+              <p>
+                <var name="$B1" width="20"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Give an example of two distinct sets <m>A</m> and <m>B</m> such that <m>A \cup B = B</m>.
+              </p>
+              <p component="interactive">
+                <m>A = </m> <var name="$twosets" width="20"/>; <m>B = </m> <var name="$twosets" width="20"/>
+              </p>
+              <p>
+                For the example you gave, is <m>A \subseteq B</m>?  <var name="$yes" form="popup" component="interactive"/>
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Find examples, if they exist, of sets <m>A</m> and <m>B</m> such that <m>A \cup B \ne B</m>. 
+              </p>
+              <p component="interactive">
+                <m>A = </m> <var name="$twosets2" width="20"/>; <m>B = </m> <var name="$twosets2" width="20"/>.
+              </p>
+              <instruction>(if there are no such sets, enter DNE in both blanks)</instruction>
+              <p>
+                For the example you gave, is <m>A \subseteq B</m>?  <var name="$no" form="popup" component="interactive"/>
+              </p>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+
+      <exercise label="pa-logic-structure-2">
+        <statement>
+          <p>
+            Which of the following are always true?  
+          </p>
+        </statement>
+        <choices>
+          <choice>
+            <statement>
+              <p>
+                For any sets <m>A</m> and <m>B</m>, <m>A \cup B \subseteq B</m>.
+              </p>
+            </statement>
+            <feedback>
+              <p>
+                What if <m>A = \{1,2,3\}</m> and <m>B = \{1, 3, 5\}</m>?  
+              </p>
+            </feedback>
+          </choice>
+          <choice correct="yes">
+            <statement>
+              <p>
+                For any sets <m>A</m> and <m>B</m>, <m>B \subseteq A \cup B</m>.
+              </p>
+            </statement>
+            </choice>
+            <choice correct="yes">
+              <statement>
+                <p>
+                  For any sets <m>A</m> and <m>B</m>, if <m>A \subseteq B</m>, then <m>A \cup B \subseteq B</m>.
+                </p>
+              </statement>
+            </choice>
+            <choice correct="yes">
+              <statement>
+                <p>
+                  For any sets <m>A</m> and <m>B</m>, if <m>A \cup B = B</m>, then <m>A \subseteq B</m>.
+                </p>
+              </statement>
+            </choice>
+        </choices>
+      </exercise>
+
+      <exercise label="pa-logic-structure-3">
+        <webwork>
+                  <pg-code>
+            $fA = Set(6,8);
+            $fB = Set(6,12,26);
+            $fAuB = Set($fA + $fB);
+            $AuB = Set(1,2,3,4,6);
+            $twosets = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+              singleResult => 0,
+              checker => sub {
+                my ($correct, $student, $self) = @_;
+                my $stSet1 = Set($student->[0]);
+                my $stSet2 = Set($student->[1]);
+                my $test = $stSet1->isSubsetOf($stSet2);
+                Value->Error("The sets must be different") if $stSet1 == $stSet2;
+                $self->setMessage(2,"\(A\) is not a subset of \(B\)") if !test;
+                return $test;
+              }
+            );
+          </pg-code>
+        <introduction>
+          <p>
+            For any function <m>f: \mathbb{N} \to \mathbb{N}</m> and any set <m>A \subseteq \mathbb{N}</m>, we can define the <term>image</term> of <m>A</m> under <m>f</m> to be the set of all outputs of <m>f</m> when the input is an element of <m>A</m>.  We write this as <m>f(A) = \{f(x) ~:~ x \in A\}</m>.  
+          </p>
+          <p>
+            For the following tasks, let's explore the function <m>f: \mathbb{N} \to \mathbb{N}</m> defined by <m>f(x) = x^2 - 3x + 8</m>.
+          </p>
+        </introduction>
+
+
+          <task>
+            <statement>
+              <p>
+                Let <m>A = \{1,2,3\}</m> and <m>B = \{2, 4, 6\}</m>.  Find <m>f(A)</m> and <m>f(B)</m>. Then find <m>f(A) \cup f(B)</m>.
+              </p>
+              <p component="interactive">
+                <m>f(A) = </m> <var name="$fA" width="20"/>; <m>f(B) = </m> <var name="$fB" width="20"/>; <m>f(A) \cup f(b) = </m> <var name="$fAuB" width="20"/>.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Now find <m>A \cup B</m> and <m>f(A \cup B)</m>.
+              </p>
+              <p component="interactive">
+                <m>A \cup B = </m> <var name="$AuB" width="20"/>; <m>f(A \cup B) = </m> <var name="$fAuB" width="20"/>.
+              </p>
+            </statement>
+          </task>
+          <task>
+            <statement>
+              <p>
+                Give an example, if one exists, of two distinct sets <m>A</m> and <m>B</m> such that <m>A \subseteq B</m> and <m>f(A) \subseteq f(B)</m>.
+              </p>
+              <p component="interactive">
+                <m>A = </m><var name="$twosets" width="20"/>; <m>B = </m><var name="$twosets" width="20"/>.
+              </p>
+              <p>
+                Give an example, if one exists, of two distinct sets <m>A</m> and <m>B</m> such that <m>A \subseteq B</m> but <m>f(A) \not\subseteq f(B)</m>.
+              </p>
+              <p component="interactive">
+                <m>A = </m><var name="String('DNE')" width="20"/>; <m>B = </m><var name="String('DNE')" width="20"/>.
+              </p>
+              <instruction>(if there are no such sets, enter DNE in both blanks)</instruction>
+            </statement>
+          </task>
+        </webwork>
+      </exercise>
+    </worksheet>
+  </subsection>
+
+  <subsection>
+    <title>Proofs about Sets</title>
+    <p>
+      Recall that a set is an unordered collection of elements.  We can describe a set by listing these elements, or by specifying a property that all elements in the set satisfy.  For example, 
+      <me>
+        A = \{1,2,3,4,5\}
+      </me>,
+      or 
+      <me>
+        B = \{x \in \N \st x \lt 10 \}
+      </me>.
+      The second set here is the set of natural numbers (<m>0, 1, 2, \ldots</m>) less than 10.  Notice that every element in <m>A</m> is also an element of <m>B</m>.  Here is a definition that captures that idea.
+    </p>
+
+    <definition xml:id="def-subset" label="def-subset">
+      <statement>
+        <p>
+          A set <m>A</m> is a <term>subset</term> of a set <m>B</m>, written <m>A \subseteq B</m>, provided every element of <m>A</m> is also an element of <m>B</m>.  
+        </p>
+        <p>
+          The set <m>B</m> is sometimes called a <term>superset</term> of <m>A</m>.
+        </p>
+        <p>
+          We say <m>A</m> is a <term>proper subset</term> of <m>B</m>, written <m>A \subset B</m>, provided <m>A \subseteq B</m> and <m>A \neq B</m>.  In other words, if every element in <m>A</m> is an element in <m>B</m>, and there is at least one element in <m>B</m> that is <em>not</em> in <m>A</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <statement>
+        <p>
+          Let <m>A = \{x \in \N \st x \lt 5\}</m> and <m>B = \{ x \in \N \st x^2 \lt 10\}</m>.  Is <m>B \subseteq A</m>?  Is <m>B</m> a <em>proper</em> subset of <m>A</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We are asking whether every natural number less than 5 is also a natural number whose square is less than 10.  Okay, we could just write out the elements of the sets: <m>A = \{0,1,2,3,4\}</m> and <m>B = \{0,1,2,3\}</m> (since <m>3^2 = 9</m> and <m>4^2 = 16</m>).  So <m>B \subseteq A</m>.  But <m>B \neq A</m>, so in fact <m>B \subset A</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      The sets in the example above were small, and it is easy enough to write down the elements of the sets.  However, we can also prove subset relationships between sets if this isn't practical or even possible (perhaps the sets are infinite).  Let's look carefully at how we could have reasoned about the example above.
+    </p>
+
+    <p>
+      We claimed that every element of <m>B</m> was also an element of <m>A</m>.  Another way to say this: For all numbers <m>n</m>, <em>if</em> <m>n</m> is an element of <m>B</m>, <em>then</em> <m>n</m> is also an element of <m>A</m>. Recognizing this as a conditional statement, we can proceed to give a direct, contrapositive, or contradiction proof of the fact.  Here a direct proof would be perfectly acceptable.  Let's try it:
+    </p>
+
+    <proof>
+      <p>
+        Let <m>n</m> be an element of the set <m>B</m>.  Then <m>n^2 \lt 10</m>, by the definition of <m>B</m>.  Since <m>4^2 = 16</m>, we must have that <m>n \lt 4</m>.  By the definition of <m>A</m>, and the fact that <m>4 \lt 5</m>, we see that <m>n \in A</m>.
+      </p>
+    </proof>
+
+    <p>
+      To be clear, this proof is <em>way</em> more than we would normally do for this example, but its format should be illuminating.  Proving that one set is a subset of another is really the same as proving an implication!
+    </p>
+
+    <p>
+      To give an example of how we can apply the definition of <q>subset</q> in a more general setting, let's prove a basic fact about subsets.
+    </p>
+
+    <proposition xml:id="prop-subset-transitive">
+      <statement>
+        <p>
+          For any sets <m>A</m>, <m>B</m>, and <m>C</m>, if <m>A \subseteq B</m> and <m>B \subseteq C</m>, then <m>A \subseteq C</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will give a direct proof.  Let <m>A</m>, <m>B</m>, and <m>C</m> be sets, and assume that <m>A \subseteq B</m> and <m>B \subseteq C</m>.  We will prove that <m>A \subseteq C</m>.
+        </p>
+
+        <p>
+          Let <m>x</m> be an element of <m>A</m>.  Since <m>A \subseteq B</m>, we know that <m>x \in B</m>.  Since <m>B \subseteq C</m>, we know that <m>x \in C</m>.  Therefore, <m>A \subseteq C</m>.
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      Now let's prove a fact about numbers: Every multiple of 9100 is also a multiple of 13.  We could factor 9100, but here is an easier way.  The set of multiples of 9100 is a subset of the set of multiples of 91.  And the set of multiples of 91 is a subset of the set of multiples of 13.  Now apply the proposition above.
+    </p>
+
+    <p>
+      <idx><h>element chasing</h></idx>
+      The proof of <xref ref="prop-subset-transitive"/> is what is sometimes called an <term>element chasing</term> proof.  By the definition of subset, <m>A \subseteq B</m> means every element of <m>A</m> is an element of <m>B</m>, or equivalently, for all <m>x</m>, if <m>x</m> is an element of <m>A</m>, then <m>x</m> is an element of <m>B</m>.  One way to prove this is to <q>chase</q> the element <m>x</m> from <m>A</m> to <m>B</m>.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Prove that if <m>A \subseteq B</m>, then <m>A \cup B \subseteq B</m>.
+          Recall that <m>A \cup B</m> is the <term>union</term> of sets <m>A</m> and <m>B</m>, and contains all elements that are in <m>A</m> or <m>B</m> or both.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          We will write a direct proof.  So we will assume that <m>A \subseteq B</m> and prove that <m>A \cup B \subseteq B</m>.  Our desired conclusion is a statement about subsets, so let's do an element chasing proof for it.
+        </p>
+
+        <proof>
+          <p>
+            Let <m>A</m> and <m>B</m> be sets and assume <m>A \subseteq B</m>.  Now let <m>x</m> be an element in <m>A \cup B</m>.  This means that <m>x</m> is an element of <m>A</m>, or <m>x</m> is an element of <m>B</m>, or both.<fn>From the definition of <term>union</term>.</fn>
+          </p>
+          <p>
+            Consider the cases.  If <m>x</m> is an element of <m>A</m>, then since <m>A \subseteq B</m>, we know that <m>x</m> is an element of <m>B</m>.  On the other hand, if <m>x</m> is not an element of <m>A</m>, then <m>x</m> must be an element of <m>B</m> (since <m>x</m> is in <m>A \cup B</m>).  In either case, <m>x</m> is an element of <m>B</m>.  Therefore, <m>A \cup B \subseteq B</m>.
+          </p>
+        </proof>
+        <p>
+          We can actually prove a strong statement: <m>A \subseteq B</m> if and only if <m>A \cup B = B</m>.  You are asked to do this in the exercises.
+        </p>
+      </solution>
+    </example>
+
+  </subsection>
+  
+  <subsection xml:id="subsec-logic-proofs-functions">
+    <title>Proofs about Functions</title>
+    
+    <p>
+      A function <m>f:A \to B</m> is a rule that assigns each element of the set <m>A</m> (the domain) to exactly one element of the set <m>B</m> (the codomain). It is any rule: There doesn't have to be a formula or rationale for it; we just need to match up elements from <m>A</m> to elements in <m>B</m>.  For example, we could let <m>A</m> be the set of students enrolled in a particular Discrete Math course and let <m>B</m> be the set of months of the year.  Now define the function <m>f:A \to B</m> to be the rule that assigns to each student the month in which their birthday falls.  Since every student has an assigned month, and no more than one month, this is a function.
+    </p>
+
+    <p>
+      Here is a definition of a particular type of function.
+    </p>
+
+    <definition xml:id="def-func-inj">
+      <statement>
+        <p>
+          A function <m>f:A \to B</m> is <term>injective</term> (or <term>one-to-one</term>) provided every element in <m>B</m> is the image of at most one element in <m>A</m>.  In other words, no element in <m>B</m> is the <em>output</em> for more than one <em>input</em> from <m>A</m>. 
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In the example below, we use <em>two-line notation</em> to describe a function.  The top row contains the inputs, and the bottom row lists the corresponding outputs. So <m>f:\{1,2,3,4\} \to \{a,b,c,d\}</m> might be defined as,
+      <me>
+        f = \twoline{1 \amp 2 \amp 3 \amp 4}{a \amp b \amp c \amp d}
+      </me>,
+      which means that <m>f(1) = a</m>, <m>f(2) = b</m>, <m>f(3) = c</m>, and <m>f(4) = d</m>.
+    </p>
+    
+    <example>
+      <statement>
+        <p>
+          Let <m>A = \{1,2,3\}</m> and <m>B = \{2, 4, 6, 8\}</m>.  Consider the functions <m>f:A \to B</m> and <m>g:A \to B</m> defined by,
+          <me>
+            f = \twoline{1 \amp 2 \amp 3}{2 \amp 8 \amp 6}, \qquad g = \twoline{1 \amp 2 \amp 3}{4 \amp 6 \amp 4}.
+          </me>
+          Which of these functions is injective?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The function <m>f</m> is injective: Each element of <m>B</m> is the image of at most one element of <m>A</m>.  The function <m>g</m> is not injective: The element 4 in <m>B</m> is the image of both 1 and 3 in <m>A</m>.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      Consider the student-to-birth-month function again.  Could this possibly be injective?  Or put another way, must there be two students in the course with the same birth month (which would say the function is <em>not</em> injective)?  The answer seems to depend on how many students are in the class.  
+    </p>
+
+    <p>
+      But let's pause and think about the more general fact about functions we have here.  Let's prove the following fact.  Recall that <m>|A|</m> denotes the <term>cardinality</term> (size) of the set <m>A</m>: the number of elements in <m>A</m>.
+    </p>
+
+    <proposition xml:id="prop-non-injective">
+      <statement>
+        <p>
+          Suppose <m>f:A \to B</m> is a function with <m>A</m> and <m>B</m> both finite sets.  If <m>|A| \gt |B|</m>, then <m>f</m> is <em>not</em> injective.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will give a proof of the contrapositive: If <m>f</m> is injective, then <m>|A| \le |B|</m>.  Let <m>|B| = n</m>.  Since <m>f</m> is injective, each element of <m>B</m> must be the output for <em>at most</em> one element of <m>A</m>.  Thus there are at most <m>n</m> elements in <m>A</m> that get mapped to <m>B</m> by <m>f</m>.  But the definition of a function requires that every element of the domain is mapped to exactly one element of the codomain, so there must be at most <m>n</m> elements in <m>A</m>.
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      <idx><h>corollary</h></idx>
+      Does this proof remind you of our pigeonhole-like proofs?  It should, since this is precisely (one of) the careful formulations of the pigeonhole principle.  We could have proved the fact about students sharing a birth month, but now we can just apply the proposition above and be done.  When you apply a theorem or proposition to directly prove another result, we call the latter result a <term>corollary</term>.
+    </p>
+
+    <corollary xml:id="cor-birth-month">
+      <statement>
+        <p>
+          Suppose a class has 25 students.  Then at least two students share the same birth month.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Consider the function that maps each student to their birth month.  Since the domain has 25 elements and the codomain has 12 elements, the function is not injective, by <xref ref="prop-non-injective"/>.  Therefore, at least two students share the same birth month.
+        </p>
+      </proof>
+    </corollary>
+
+    <p>
+      Functions always have inputs from a <em>set</em> (called the <term>domain</term>) and outputs in a set as well (called the <term>codomain</term>).  This naturally leads to facts to consider about the interaction between sets and functions.
+    </p>
+
+    <definition xml:id="def-function-image">
+      <statement>
+        <p>
+          Given a function <m>f:X \to Y</m> and a set <m>A \subseteq X</m>, we define the <term>image of <m>A</m> under <m>f</m></term> to be the set <m>f(A) = \{f(a) \in Y \st a \in A\}</m>.  That is, <m>f(A)</m> is the set of all outputs of the function for inputs in <m>A</m>. 
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <statement>
+        <p>
+          Let <m>f: \N \to \N</m> be defined by <m>f(n) = 2n</m>.  Let <m>A = \{1,2,3\}</m>.  Find <m>f(A)</m>.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          Evaluate each element of <m>A</m> by <m>f</m>.
+          <me>
+            f(1) = 2;\qquad f(2) = 4; \qquad f(3) = 6
+          </me>.
+          We want the set of these outputs.  So <m>f(A) = \{2, 4, 6\}</m>.
+        </p>
+      </solution>
+    </example>
+    <p>
+      Now let's prove something.
+    </p>
+
+    <proposition xml:id="prop-subset-image">
+      <statement>
+        <p>
+          Let <m>f:X \to Y</m> be a function, and let <m>A</m> and <m>B</m> be subsets of <m>X</m>.  If <m>A \subseteq B</m>, then <m>f(A) \subseteq f(B)</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let <m>f</m>, <m>A</m>, and <m>B</m> be as in the proposition.  Assume that <m>A \subseteq B</m>.  Now consider an element <m>y \in f(A)</m>.  By definition, this means that there is some <m>a \in A</m> such that <m>f(a) = y</m>.  Since <m>a \in A</m> and <m>A \subseteq B</m>, we have that <m>a \in B</m>.  Then by definition, <me>y = f(a) \in f(B)</me>.
+          Since <m>y</m> was an arbitrary element of <m>f(A)</m>, we have proved that <m>f(A) \subseteq f(B)</m>.
+        </p>
+      </proof>
+    </proposition>
+
+    <p>
+      Notice that the proof above is an element chasing proof again.  This makes sense as soon as you remember that <m>f(A)</m> and <m>f(B)</m> are just the names of sets.  To prove one set is a subset of another, we chase elements from the subset to the superset.
+    </p>
+
+  </subsection>
+
+  <subsection xml:id="subsec-proofs-about-relations">
+    <title>Proofs about Relations</title>
+    <p>
+      A <term>relation</term> on a set <m>A</m> is a set of ordered pairs of elements from <m>A</m>.  We can think of a relation as a way to describe a type of relationship between elements of <m>A</m>.  For example, we might have a relation on the set of people at a party that describes who is friends with whom.  We might have a relation on the set of natural numbers that describes which pairs of numbers are related by the relation <m>x \lt y</m>.
+    </p>
+
+    <p>
+      Relations permeate all of mathematics, often without us even thinking of them.  Whenever we make a statement about two elements of a set, we are implicitly defining a relation.  The statement is true when the pair is in the relation.  For example, the statement, <q>3 is less than 5,</q> is true because the pair <m>(3,5)</m> is in the relation <m>\lt</m>.  In fact, using the language we developed in the subsection <xref ref="subsec_logic-statements-quant" text="title"/>, we can say that a relation is just a predicate, where the variables come from the same set.
+    </p>
+
+    <p>
+      Often relations have special symbols like <q><m>=</m></q> or <q><m>\le</m></q> or <q><m>\perp</m></q>.  When we talk about a general relation, we will either use <m>\sim</m> and write <m>x \sim y</m>, or use a capital letter like <m>R</m>, and write <m>R(x,y)</m> or <m>xRy</m> or even <m>(x,y) \in R</m> (these all mean the same thing).
+    </p>
+
+    <p>
+      When we study relations, we try to identify properties that relations might have.  Here is an example of a very common property.
+    </p>
+
+    <definition xml:id="def-transitive">
+      <statement>
+        <p>
+          A relation <m>R</m> on a set <m>A</m> is <term>transitive</term> provided for all <m>x,y,z \in A</m>, if <m>xRy</m> and <m>yRz</m>, then <m>xRz</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <statement>
+        <p>
+          Consider the relation <m>\sim</m> on the set of students in your Discrete Math course that holds of two students, provided they have some other class together.  Is this relation transitive?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          No, not necessarily (although for some sets of students it could be). For example, suppose Alice has another class with Bruce, say Introduction to Programming.  Carlos is not in Intro to Programming, but he and Bruce are both in Organic Chemistry.  So then Alice<m>\sim</m>Bruce and Bruce<m>\sim</m>Carlos, but it might not be the case that Alice<m>\sim</m>Carlos (since Alice need not be in Organic Chemistry with Carlos).  
+        </p>
+      </solution>
+    </example>
+    <p>
+      Proving that a relation is <em>not</em> transitive takes nothing more than finding a counterexample, which means finding three elements <m>a</m>, <m>b</m>, and <m>c</m> such that <m>a \sim b</m>, <m>b \sim c</m>, but <m>a \not\sim c</m> (remember, the only way for an implication to be false is for the hypothesis to be true and the conclusion to be false).
+    </p>
+
+    <p>
+      Perhaps slightly more interesting would be proof that a relation is transitive.
+    </p>
+
+    <example>
+      <statement>
+        <p>
+          Consider the set of all students in your Discrete Mathematics class, and define the relation <m>\sim</m> that holds of students <m>a</m> and <m>b</m> (so <m>a \sim b</m> is true), provided <m>a</m> is taller than <m>b</m>.  Prove that this relation is transitive.
+        </p>
+      </statement>
+      <solution>
+        <p>
+          The definition of transitive is an implication, so we can try a direct proof.
+        </p>
+
+        <proof>
+          <p>
+            Let <m>a</m>, <m>b</m>, and <m>c</m> be arbitrary students in your Discrete Math course.  Assume, <m>a \sim b</m> and <m>b \sim c</m>.  That means that <m>a</m> is taller than <m>b</m>, and that <m>b</m> is taller than <m>c</m>.  But then surely <m>a</m> must be even taller than <m>c</m> than they are taller than <m>b</m>, so we have that <m>a \sim c</m> is true as well.  Thus <m>\sim</m> is transitive on this set.
+          </p>
+        </proof>
+      </solution>
+    </example>
+  </subsection>
+
+  
+  <subsection xml:id="subsec-proofs-about-graphs">
+    <title>Proofs about Graphs</title>
+    
+    <p>
+      We will spend all of <xref ref="ch_graphtheory"/> studying proofs about graphs since this is such a rich area of mathematics.  As a preview, here is an example of how graph proofs can go.
+    </p>
+
+    <p>
+      A <term>graph</term> is a set <m>V</m> of <term>vertices</term> and a set <m>E</m> of <term>edges</term>.  The edges are two-element subsets of the vertices, and we can think of them as representing relationships between the vertices.  Note, this is an abstract definition of a graph using sets, but we often draw graphs using dots for the vertices connected by lines for the edges, as this gives us a nice picture of what is going on.
+    </p>
+
+    <p>
+      Since graphs represent a type of relationship between elements (vertices), we can use graphs to represent many real-world problems.  For example, the vertices of a graph might represent people at a party.  Each edge can represent a handshake between two people.  So if we wondered whether it is possible for the 15 people at a party to each shake hands with exactly 3 people there, we are really asking whether there is a graph with 15 vertices where each vertex belongs to 3 edges.  (<q>Belongs to</q>?? Yes, because an edge is a two-element subset of the vertices, so if an edge <q>touches</q> or <q>comes out of</q> a vertex, that means the vertex belongs to that particular two-element subset.)
+    </p>
+
+    <p>
+      Here is a definition related to this idea.      
+    </p>
+
+    <definition xml:id="def-degree">
+      <statement>
+        <p>
+          Let <m>v</m> be a vertex in a graph <m>G</m>.  The <term>degree</term> of <m>v</m>, written <m>d(v)</m>, is the number of edges that contain <m>v</m>,  i.e., the number of edges <term>incident</term> to <m>v</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example>
+      <statement>
+        <p>
+          Consider the graph <m>G</m> with vertices <m>V = \{1,2,3,4\}</m> and edges <m>E = \{\{1,2\}, \{1,3\}, \{1,4\}, \{2,3\}\}</m>.  What is the degree of each vertex in <m>G</m>?
+        </p>
+      </statement>
+      <solution>
+        <p>
+          It might be helpful to picture the graph:
+        </p>
+
+        <image width="20%">
+          <description>A graph with four vertices labeled 1 through 4. There are edges from vertex 1 to each of the other vertices, and an edge between vertices 2 and 3.</description>
+          <latex-image label="graph-for-degrees">
+            \begin{tikzpicture}[scale=2]
+              \draw (0,1) \vl{1} -- (1,1) \vr{2} -- (1,0) \vr{3}  (0,0) \vl{4} -- (0,1) -- (1,0);
+            \end{tikzpicture}
+          </latex-image>
+        </image>
+        <p>
+          We have <m>d(1) = 3</m>, <m>d(2) = 2</m>, <m>d(3) = 2</m>, and <m>d(4) = 1</m>.  You can see this by counting how many edges are incident to each vertex, or by counting how many edges (subsets) each vertex belongs to.
+        </p>
+      </solution>
+    </example>
+
+    <p>
+      So is it possible for 15 people to each shake hands with exactly three people in their group?  Well, is there a graph with 15 vertices, all of degree 3?  The answer is no!  
+    </p>
+    
+    <p>
+      One way you can see this is if you ask how many edges such a graph would have.  Each vertex is incident to three edges, so counting incidences, we get <m>15\cdot 3 = 45</m>.  But every edge is incident to two vertices, so we have counted each edge twice.  So the number of edges in such a graph would be <m>45/2 = 22.5</m>.  But the number of edges in a graph must be a whole number, so there is no such graph.
+    </p>
+
+    <p>
+      This suggests that we can say something more in general.  The following proposition is a simple consequence of the <xref ref="lem-handshake">Handshake Lemma</xref>, which we will prove in <xref ref="sec_gt-intro" />.  Here we give a complete proof of this particular formulation of it.
+    </p>
+
+    <proposition xml:id="prop-handshake-parity">
+      <statement>
+        <p>
+          In any graph, the number of vertices with odd degree must be even.       
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We will prove this by contradiction.  Suppose there was a graph with an odd number of vertices with odd degree.  Consider the sum of the degrees of all the vertices.  The sum for the odd-degree vertices would be odd (since the sum of an odd number of odd numbers is odd).  The sum of the even-degree vertices will be even (any sum of even numbers must be even).  The sum of an odd number and an even number is odd. Thus the sum of all the degrees will be odd.
+        </p>
+        <p>
+          However, the number of edges in a graph is half the sum of the degrees (by <xref ref="lem-handshake"/>, or simply because each edge contributes one to the count of the degree of two vertices).  Since the number of edges is a whole number, we see that the sum of the degrees must be even.  This contradicts what we found in the previous paragraph.
+        </p>
+
+        <p>
+          Therefore, in any graph, the number of vertices with odd degree must be even.
+        </p>
+      </proof>
+    </proposition>
+  </subsection>
+<reading-questions xml:id="rqs-logic-structures">
+  <exercise label="rq-logic-structures-injective">
+    <statement>
+      <p>
+        Which of the following is the definition of a function <m>f:A \to B</m> being injective?
+      </p>
+    </statement>
+    <choices randomize="yes">
+      <choice correct="yes">
+        <statement>
+          <p>
+            Every element of <m>B</m> is the image of at most one element of <m>A</m>.
+          </p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            The domain <m>A</m> is a larger set than the codomain <m>B</m>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            No, in fact, this can never happen if <m>f</m> is injective.
+          </p>
+        </feedback>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            Every element of <m>A</m> is sent to at most one element of <m>B</m>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            This is just part of the definition of a function.
+          </p>
+        </feedback>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            The codomain <m>B</m> is no smaller than the domain <m>A</m>.
+          </p>
+        </statement>
+        <feedback>
+          <p>
+            This must be true if <m>f</m> is injective, but it is not part of the definition of injective.
+          </p>
+        </feedback>
+      </choice>
+    </choices>
+  </exercise>
+
+  <exercise label="rq-logic-structures-chasing">
+    <statement>
+      <p>
+        When would you most likely use element chasing as part of a proof?
+      </p>
+    </statement>
+    <choices randomize="yes">
+      <choice correct="yes">
+        <statement>
+          <p>
+            When proving that one set is a subset of another.
+          </p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            When proving that a function is injective.
+          </p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            When proving that a relation is transitive.
+          </p>
+        </statement>
+      </choice>
+      <choice>
+        <statement>
+          <p>
+            When proving that a graph has an odd number of edges.
+          </p>
+        </statement>
+      </choice>
+    </choices>
+  </exercise>
+
+
+  <exercise label="rq-logic-structures-q">
+    <statement>
+      <p>
+        What questions do you have after reading this section? Write at least one question about the content of this section that you are curious about.
+      </p>
+    </statement>
+    <response />
+  </exercise>
+</reading-questions>
+
+<xi:include href="practice/logic-structures.ptx" />
+<xi:include href="exercises/logic-structures.ptx" />
+
+</section>

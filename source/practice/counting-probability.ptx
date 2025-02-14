@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<exercises xml:id="practice-counting-probability" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Practice Problems</title>
+
+  <exercise label="ww-probability-coins">
+    <webwork>
+      <pg-code>
+        loadMacros("parserAutoStrings.pl");
+        AutoStrings();
+        $samplespace = List(String(HHH), String(HHT), String(HTH), String(HTT), String(THH), String(THT), String(TTH), String(TTT));
+        $moreheads = List(String(HHH), String(HHT), String(HTH), String(THH));
+      </pg-code>
+    
+      <introduction>
+        <p>
+          You flip a fair coin three times and record whether it lands head (H) or tails (T).
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            List all the elements in the sample space.  For example, one outcome is HHT.
+          </p>
+          <p>
+            <var name="$samplespace" width="50" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Suppose you bet your friend that you would get more heads than tails.  List all elements in this event.
+          </p>
+          <p>
+            <var name="$moreheads" width="50" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability of getting more heads than tails?
+          </p>
+          <p>
+            <var name="Compute(4/8)" width="5" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability of getting exactly two heads?
+          </p>
+          <p>
+            <var name="Compute(3/8)" width="5" />
+          </p>
+          <p>
+            What is the probability of getting exactly three heads?
+          </p>
+            <p>
+              <var name="Compute(1/8)" width="5" />
+            </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-probability-manyflips-comp">
+    <webwork>
+      <pg-code>
+        Context("IntegerFunctions");
+        $a = random(8,19);
+        $b = random(3,$a-1);
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Suppose you flip a fair coin <var name="$a" /> times.  
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            What is the size of the sample space?
+          </p>
+          <p>
+            <var name="Compute(2**$a)" width="20" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the size of the event that you get exactly <var name="$b" /> heads?
+          </p>
+          <p>
+            <var name="Compute(C($a,$b))" width="20" />
+          </p>
+          <p>
+            So then what is the probability that you get exactly <var name="$b" /> heads?
+          </p>
+          <p>
+            <var name="Compute(C($a,$b)/2**$a)" width="20" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the size of the event that you do NOT get exactly <var name="$b" /> heads?
+          </p>
+          <p>
+            <var name="'2**$a-C($a,$c)'" width="20" />
+          </p>
+          <p>
+            What is the probability that you do NOT get exactly <var name="$b" /> heads?  Use the definition of probability and the previous answer.
+          </p>
+          <p>
+            <var name="Compute(1-C($a,$b)/2**$a)" width="20" />
+          </p>
+          <p>
+            What probability do you get for this same event if you use the fact that the probability of an event is 1 minus the probability of the complement of the event?
+          </p>
+          <p>
+            <var name="Compute(1-C($a,$c)/2**$a)" width="20" />
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-probability-manyflips-sum">
+    <webwork>
+      <pg-code>
+        Context("IntegerFunctions");
+        $a = random(8,19);
+        $b = random(3,$a-1);
+        do {
+          $c = random(3,$a-1);
+        } until ($c != $b);
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Suppose you flip a fair coin <var name="$a" /> times.  
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            What is the size of the sample space?
+          </p>
+          <p>
+            <var name="Compute(2**$a)" width="20" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the size of the event that you get exactly <var name="$b" /> heads?
+          </p>
+          <p>
+            <var name="Compute(C($a,$b))" width="20" />
+          </p>
+          <p>
+            What is the size of the event that you get exactly <var name="$c" /> heads?
+          </p>
+          <p>
+            <var name="Compute(C($a,$c))" width="20" />
+          </p>
+          <p>
+            What is the size of the event that you get exactly <var name="$b" /> heads OR exactly <var name="$c" /> heads?
+          </p>
+          <p>
+            <var name="Compute(C($a,$b)+C($a,$c))" width="20" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the sum of the probabilities of getting exactly <var name="$b" /> heads and getting exactly <var name="$c" /> heads?
+          </p>
+          <p>
+            <var name="'C($a,$b)/2**$a'" width="15" /> + <var name="'C($a,$c)/2**$a'" width="15" /> = <var name="Compute(C($a,$b)/2**$a + C($a,$c)/2**$a)" width="15" />
+          </p>
+          <p>
+            What is the probability of getting exactly <var name="$b" /> heads OR getting exactly <var name="$c" /> heads?  Compute this by finding the size of the event, divided by the size of the sample space.
+          </p>
+          <p>
+            <var name="Compute(C($a,$b)+C($a,$c))" width="15" /> <m>\div</m> <var name="Compute(2**$a)" width="15" /> <m> = </m> <var name="Compute((C($a,$b)+C($a,$c))/2**$a)" width="15" />.
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+
+  <exercise label="ww-probability-mms-conditional">
+    <webwork>
+      <pg-code>
+        do {
+          $bl = random(1,5);
+          $r = random(1,5);
+          $o = random(1,5);
+          $g = random(1,5);
+          $br = random(1,5);
+          $y = random(1,5);
+          $total = $bl+$r+$o+$g+$br+$y;
+        } until ($total &lt; 20 &amp;&amp; $total &gt; 12);
+        $ans1 = Compute(($bl+$y)/$total);
+        $ans2 = Compute(2*$bl*$y/($total*($total-1)));
+        $ans3 = Compute($bl*$y/($total*($total-1)));
+      </pg-code>
+    
+      <introduction>
+        <p>
+          You have a bag of special math-themed M&amp;M's.  The bag promises that inside there are <var name="$bl"/> blue, <var name="$r"/> red, <var name="$o"/> orange, <var name="$g"/> green, <var name="$br"/> brown, and <var name="$y"/> yellow M&amp;M's.  
+        </p>
+
+        <p>
+          Find the probabilities of the following events.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            What is the probability that if you pick a single M&amp;M, it is blue or yellow?
+          </p>
+          <p>
+            <var name="$ans1" width="25" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability that if you pick two M&amp;M's at the same time, you will get a blue and yellow?
+          </p>
+          <p>
+            <var name="$ans2" width="25" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability that if you pick two M&amp;M's one at a time, you will get a blue first and a yellow second?
+          </p>
+          <p>
+            <var name="$ans3" width="25" />
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <!-- TODO: ensure this problem only accepts numerical answers -->
+  <exercise label="ww-probability-cards-vs-coins">
+    <webwork>
+      <pg-code>
+        Context("IntegerFunctions");
+        $a = Compute(C(26,2)/C(52,2));
+        $b = Compute(1/4);
+        Context("LimitedNumeric");
+      </pg-code>
+    
+      <introduction>
+        <p>
+          In a standard deck of 52 cards, 26 cards are red and 26 cards are black.  Thus the probability of drawing a red card is <m>0.5</m>.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            What is the probability that when flipping a coin twice, you get tails both times?
+          </p>
+          <p>
+            <var name="$b" width="5" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability that if you are dealt two cards from a standard deck, both cards are red?
+          </p>
+          <p>
+            <var name="$a" width="5" />
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+
+  <exercise label="ww-probability-three-cards">
+    <webwork>
+      <pg-code>
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Suppose you take just eight playing cards, four red and four black. 
+          You also have a fair coin that you can flip as many times as you want.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            Compare the probability of getting tails when flipping a coin once to the probability of drawing a single red card.
+          </p>
+          <p>
+            <m>P(\text{tails}) =</m><var name="Compute(1/2)" width="10" />; <m>P(\text{red}) = </m> <var name="Compute(1/2)" width="10" />.  Difference: <var name="'0'" width="10" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Compare the probability of getting two tails when flipping a coin twice to the probability of drawing two red cards (without replacement).
+          </p>
+          <p>
+            <m>P(\text{2 tails}) =</m><var name="Compute(1/4)" width="10" />; <m>P(\text{2 reds}) = </m> <var name="Compute((4*3)/(8*7))" width="10" />.  Difference: <var name="Compute(1/28)" width="10" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Compare the probability of getting three tails when flipping a coin thrice to the probability of drawing three red cards (without replacement).
+          </p>
+          <p>
+            <m>P(\text{3 tails}) =</m><var name="Compute(1/8)" width="10" />; <m>P(\text{3 reds}) = </m> <var name="Compute((4*3*2)/(8*7*6))" width="10" />.  Difference: <var name="Compute(3/56)" width="10" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Compare the probability of getting four tails when flipping a coin four times to the probability of drawing four red cards (without replacement).
+          </p>
+          <p>
+            <m>P(\text{4 tails}) =</m><var name="Compute(1/16)" width="10" />; <m>P(\text{4 reds}) = </m> <var name="Compute((4*3*2*1)/(8*7*6*5))" width="10" />.  Difference: <var name="Compute(27/560)" width="10" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            Compare the probability of getting five tails when flipping a coin five times to the probability of drawing five red cards (without replacement).
+          </p>
+          <p>
+            <m>P(\text{5 tails}) =</m><var name="Compute(1/32)" width="10" />; <m>P(\text{5 reds}) = </m> <var name="Compute(0)" width="10" />.  Difference: <var name="Compute(1/32)" width="10" />
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+  <exercise label="ww-probability-different-dice">
+    <webwork>
+      <pg-code>
+        
+      </pg-code>
+    
+      <introduction>
+        <p>
+          Suppose you have three dice: a 4-sided die, a 6-sided die, and an 8-sided die.  Each die is fair and numbered from 1 to the number of sides it has.  You roll all three dice.
+        </p>
+      </introduction>
+      <task>
+        <statement>
+          <p>
+            What is the probability that the sum of the dice is 3?
+          </p>
+          <p>
+            <var name="'1/(4*6*8)'" width="5" />
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability that the sum of the dice is 6?
+          </p>
+          <p>
+            <var name="'10/(4*6*8)'" width="5" />
+          </p>
+        </statement>
+        <hint>
+          <p>
+            You could list out all the ways you can get a 6, or use sticks and stones.
+          </p>
+        </hint>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability all three dice have the same number when rolled?
+          </p>
+          <p>
+            <var name="'4/(4*6*8)'" width="5"/>
+          </p>
+        </statement>
+      </task>
+      <task>
+        <statement>
+          <p>
+            What is the probability all three dice have the same number when rolled <em>given</em> that the sum of the dice is 6?
+          </p>
+          <p>
+            <var name="'1/10'" width="5" />
+          </p>
+        </statement>
+      </task>
+    </webwork>
+  </exercise>
+
+
+  <exercise label="ww-probability-dice-no-repeats">
+    <webwork>
+      <pg-code>
+        
+      </pg-code>
+    
+      <statement>
+        <p>
+          You roll 3 fair 6-sided dice.  What is the probability that all three dice show different numbers?
+        </p>
+        <p>
+          <var name="'(6*5*4)/(6^3)'" width="5" />
+        </p>
+        <p>
+          What is the probability that all three dice show the same number?
+        </p>
+        <p>
+          <var name="'6/(6^3)'" width="5" />
+        </p>
+        <p>
+          Is it possible for the dice to show neither all the same nor all different numbers?  If so, the probability of this happening would be 0.  What is the probability?
+        </p>
+        <p>
+          <var name="'1-((6*5*4)/(6^3)+6/(6^3))'" width="5" />
+        </p>
+      </statement>
+    </webwork>
+    </exercise>
+
+
+
+</exercises>

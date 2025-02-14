@@ -2,7 +2,8 @@
 <publication>
     <!-- directories are relative to the main source PreTeXt file -->
     <source>
-        <directories external="../assets" generated="../generated-assets"/>
+        <directories external="../assets" generated="../generated-assets/web"/>
+        <version include="interactive runestone"/>
     </source>
     <webwork 
         server="https://webwork-ptx.aimath.org"  
@@ -35,19 +36,30 @@
 
     <common>
         <!-- <exercise-inline hint="yes"/> -->
-        <exercise-divisional hint="yes" answer="no" solution="yes"/>
+        <chunking level="2"/>
+        <tableofcontents level="3"/>
+        <exercise-reading hint="yes" answer="no" solution="no"/>
+        <exercise-inline hint="yes" answer="no" solution="no"/>
+        <exercise-divisional hint="yes" answer="no" solution="no"/>
+        <exercise-worksheet hint="yes" answer="no" solution="no"/>
+        <exercise-project hint="yes" answer="no" solution="no"/>
     </common>
 
     <!-- LaTeX specific options: set @print="yes" to get pdf set up   -->
     <!-- for printing; set @sides="two" if the printing woudl be two- -->
     <!-- sided.  The asymptote/@links set to "yes" would produce      -->
     <!-- links the html version of asymptote graphics.                -->
-    <latex print="no" sides="one">
+    <latex print="yes" sides="two" font-size="11" pageref="no">
+        <!-- <cover front="images/front" back="images/back" /> -->
         <asymptote links="no"/>
+        <worksheet formatted="no"/>
+        <page>
+            <geometry>papersize={7in,10in}, width=33pc, height=51pc, inner=.75in, outer=.75in, top=0.75in, twoside, ignoreheadfoot, </geometry>
+        </page>
     </latex>
 
     <!-- HTML-Specific Options -->
-    <html>
+    <html short-answer-responses="always">
         <!-- Set platform; @host="web" is default, @host="runestone" also possible -->
         <platform host="web"/>
         <!-- Whether to knowl a particular elements is set here    -->
@@ -65,15 +77,18 @@
             project="no" 
             proof="no"
         />
+        <webwork reading="dynamic" divisional="dynamic" inline="dynamic" worksheet="dynamic" />
+
         <!-- specify the style of the html by giving names to      -->
         <!-- override defaults.  Ex: to use "style_oscarlevin.css" -->
         <!-- put <css style="oscarlevin"/>                         -->
         <!-- @colors currently unimplementd.                       -->
-        <css style="oscarlevin"/>
+        <css theme="denver" color-main="#2e1657" color-do="#163c57" color-fact="#162957" color-meta="#571657" primary-color-dark="#9482b3"/>
         <!-- Magic IDs identify HTML pages to analytics services   -->
         <!-- Presence implies relevant Javascript will be added    -->
         <analytics google-gst="UA-66485406-1"/>
-
+        <tableofcontents focused="yes" preexpanded-levels="1"/>
         <search variant="default"/>
+        <feedback href="mailto:oscar.levin@unco.edu" />
     </html>
 </publication>

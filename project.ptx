@@ -1,64 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    This file provides the overall configuration for your PreTeXt
-    project. To edit the content of your document, open `source/main.ptx`
-    (default location).
--->
-<project>
+<!-- This file, the project manifest, provides the overall configuration for your PreTeXt project. To edit the content of your document, open `source/main.ptx`. See https://pretextbook.org/doc/guide/html/processing-CLI.html#cli-project-manifest. -->
+<project ptx-version="2">
   <targets>
-    <target name="html">
-      <format>html</format>
-      <source>source/dmoi.ptx</source>
-      <publication>publication/publication.ptx</publication>
-      <output-dir>output/html</output-dir>
-      <stringparam key="html.css.extra" value="external/custom-styles.css"/>
-      <xsl>xsl/dmoi-html.xsl</xsl>
+    <target 
+      name="web" 
+      format="html"
+      source="dmoi.ptx" 
+      publication="publication.ptx"
+      xsl="dmoi-html.xsl"
+    >
+      <stringparams html.css.extra="external/custom-styles.css" />
     </target>
-    <target name="runestone">
-      <format>html</format>
-      <source>source/dmoi.ptx</source>
-      <publication>publication/runestone.ptx</publication>
-      <output-dir>published/dmoi</output-dir>
-      <stringparam key="html.css.extra" value="external/custom-styles.css" />
-      <stringparam key="debug.fixwwid" value="yes" />
-      <xsl>xsl/dmoi-html.xsl</xsl>
+
+    <target
+      name="runestone" 
+      format="html" 
+      platform="runestone"
+      source="dmoi.ptx"
+      publication="runestone.ptx"
+      xsl="dmoi-html.xsl"
+    >
+      <stringparams html.css.extra="external/custom-styles.css" />
     </target>
-    <target name="latex">
-      <format>latex</format>
-      <source>source/dmoi.ptx</source>
-      <publication>publication/publication.ptx</publication>
-      <output-dir>output/latex</output-dir>
-      <xsl>xsl/dmoi-latex.xsl</xsl>
-    </target>
-    <target name="pdf" pdf-method="xelatex">
-      <format>pdf</format>
-      <source>source/dmoi.ptx</source>
-      <publication>publication/publication.ptx</publication>
-      <output-dir>output/pdf</output-dir>
-      <xsl>xsl/dmoi-latex.xsl</xsl>
-    </target>
-    <!-- To quickly build the html of a subset of your project, edit main-subset.ptx
-        and run `pretext build subset` (or `view` with watch option) -->
-    <target name="subset">
-      <format>html</format>
-      <source>source/main-subset.ptx</source>
-      <publication>publication/publication.ptx</publication>
-      <output-dir>output/subset</output-dir>
-      <stringparam key="debug.skip-knowls" value="yes"/>
-    </target>
+
+    <target 
+      name="print" 
+      format="pdf"
+      latex-engine="pdflatex"
+      source="dmoi.ptx"
+      publication="print.ptx"
+      xsl="dmoi-latex.xsl" 
+    />
+    <target 
+      name="latex"
+      format="latex"
+      source="dmoi.ptx"
+      publication="publication.ptx"
+      xsl="dmoi-latex.xsl"
+    />
+    <target 
+      name="crc-print" 
+      format="pdf"
+      latex-engine="pdflatex"
+      source="dmoi.ptx"
+      publication="crc.ptx"
+      xsl="dmoi-latex-crc.xsl"
+    />
+    <target 
+      name="subset" 
+      format="pdf"
+      latex-engine="pdflatex"
+      source="dmoi-sample.ptx"
+      publication="crc.ptx"
+      xsl="dmoi-latex-crc.xsl"
+    />
+    <target 
+      name="crc-latex"
+      format="latex"
+      source="dmoi.ptx"
+      publication="crc.ptx"
+      xsl="dmoi-latex-crc.xsl"
+    />
+    <target 
+      name="epub"
+      format="epub"
+      source="dmoi.ptx"
+      publication="publication.ptx"
+      xsl="dmoi-latex.xsl"
+    />
+    <target name="ww-sets" format="webwork" source="dmoi.ptx" />
   </targets>
-  <executables>
-      <latex>latex</latex>
-      <pdflatex>pdflatex</pdflatex>
-      <xelatex>xelatex</xelatex>
-      <pdfsvg>pdf2svg</pdfsvg>
-      <asy>asy</asy>
-      <sage>sage</sage>
-      <pdfpng>convert</pdfpng>
-      <pdfeps>pdftops</pdfeps>
-      <pdfcrop>pdf-crop-margins</pdfcrop>
-      <pageres>pageres</pageres>
-      <node>node</node>
-      <liblouis>file2brl</liblouis>
-    </executables>
 </project>
