@@ -1,0 +1,81 @@
+##DESCRIPTION
+## DBsubject(Set theory and logic)
+## DBchapter(Relations between sets)
+## DBsection(Properties of relations)
+## Institution(NAU)
+## Level(3)
+## KEYWORDS('relation')
+##ENDDESCRIPTION
+
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGchoicemacros.pl",
+  "PGgraphmacros.pl",
+  "PGnumericalmacros.pl",
+  "PGstatisticsmacros.pl",
+  "PGcourse.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+$tag_r = random(0,2,1);
+
+@yes1 = (' \( x \sim y \) if and only if \( x - y \) is positive.', 
+	 '\( x \sim y \) if and only if \( x + y \) is even.',
+	 '\( x \sim y \) if and only if \( x-y \) is a multiple of 10.',
+	 '\( x \sim y \) if and only if \( x - y \) is negative.',
+	 '\( x \sim y \) if and only if \( xy \) is positive.');
+ 
+@yes2 = ("\( (x,y) \sim (x',y') \) if and only if \( x+ y' = x' + y \).",
+	"\( (x,y) \sim (x',y') \) if and only if \( x-y = x'-y' \).");
+
+$tag1 = random(0,1,1);
+
+@choice1=NchooseK(5,2);
+@y = (@yes1[@choice1], $yes2[$tag1]);
+
+# @slice1 = NchooseK(4,4);
+
+@sy=@y;
+
+# @sy = @y[@slice1];
+
+@no1 = ('\( x \sim y \) if and only if \( x + y \) is positive.',
+      '\( x \sim y \) if and only if \( x + y \) is odd.',
+      '\( x \sim y \) if and only if \( xy \) is negative.',
+      '\( x \sim y \) if and only if \( x + y \) is positive.');	
+
+@no2 = ("\( (x,y) \sim (x',y') \) if and only if \( xy' = x' y \).",
+	'\( x \sim y \) if and only if \( xy \geq 0 \) .');
+
+$tag2 = random(0,1,1);
+@choice2=NchooseK(4,2);
+@n = (@no1[@choice2], $no2[$tag2]);
+
+# @slice2 = NchooseK(3,3);
+@sn=@n;
+# @sn = @n[@slice2];
+
+$cmc = new_checkbox_multiple_choice();
+
+$cmc -> qa ("Determine which of these relations are transitive. The variables \(x\), \(y\), \(x'\), \(y'\) represent integers.", 
+            $sy[0], $sy[1], $sy[2]);
+
+$cmc-> extra ($sn[0], $sn[1], $sn[2]);
+
+BEGIN_TEXT
+
+\{ $cmc -> print_q \}
+$BR
+\{ $cmc -> print_a \}
+
+END_TEXT
+
+ANS( checkbox_cmp( $cmc->correct_ans )   ) ;
+               
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

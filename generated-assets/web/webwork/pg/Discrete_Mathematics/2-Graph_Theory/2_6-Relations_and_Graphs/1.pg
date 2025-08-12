@@ -1,149 +1,80 @@
-#############################################
-###       Generated from PreTeXt source      
-###       on 2025-08-11T17:54:17-06:00       
-###   A recent stable commit (2022-07-01):   
-### 6c761d3dba23af92cba35001c852aac04ae99a5f 
-###                                          
-###         https://pretextbook.org          
-###                                          
-#############################################
-## DBsubject()
-## DBchapter()
-## DBsection()
-## Level()
-## KEYWORDS()
-## TitleText1()
-## EditionText1()
-## AuthorText1()
-## Section1(not reported)
-## Problem1(1)
-## Author()
-## Institution()
-## Language(en-US)
+##DESCRIPTION
+## DBsubject(Set theory and logic)
+## DBchapter(Relations between sets)
+## DBsection(Properties of relations)
+## Institution(NAU)
+## Level(3)
+## KEYWORDS('relation')
+##ENDDESCRIPTION
 
-DOCUMENT();
 
-############################################################
-# Load Macros
-############################################################
+DOCUMENT();        # This should be the first executable line in the problem.
+
 loadMacros(
   "PGstandard.pl",
-  "PGML.pl",
-  "scaffold.pl",
-  "AnswerFormatHelp.pl",
-  "parserPopUp.pl",
-  "parserCheckboxList.pl",
-  "PGcourse.pl",
+  "PGchoicemacros.pl",
+  "PGgraphmacros.pl",
+  "PGnumericalmacros.pl",
+  "PGstatisticsmacros.pl",
+  "PGcourse.pl"
 );
-COMMENT('Authored in PreTeXt');
-COMMENT('This problem is scaffolded with multiple parts');
 
-############################################################
-# Header
-############################################################
 TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
 
-############################################################
-# PG Setup Code
-############################################################
-Context('Numeric');
-$relationChkBx = CheckboxList(
-  [
-  "\(4\sim 14\)",
-  "\(7\sim 14\)",
-  "\(10 \sim 17\)",
-  "\(17\sim 24\)",
-  "\(10\sim 24\)",
-  "\(20 \sim 10\)",
-  "\(31 \sim 3\)",
-  "\(25 \sim 25\)"
-  ],
-  [1, 2, 3, 4, 6, 7]
-  );
-  $relationProps = CheckboxList(
-    [
-    "\(a \sim a\) for every number \(a\)",
-    "\(a \not\sim a\) for any number \(a\)",
-    "For any numbers \(a\) and \(b\), if \(a \sim b\), then \(b \sim a\)",
-    "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim a\), then \(a = b\)",
-    "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim c\), then \(a \sim c\)",
-    ],
-    [0, 2, 4]
-    );
-    $no = PopUp(["?","Yes", "No"], "No");
+$rank = random(1,2,1);
+#$tag_r = random(0,2,1);
 
-############################################################
-# Body
-############################################################
+@yes1 = ( '\( x \sim y \) if and only if \( xy \geq 0 \) .',
+	 '\( x \sim y \) if and only if \( x + y \) is even.',
+	 '\( x \sim y \) if and only if \( x-y \) is a multiple of 10.'
+	 );
+ 
+@yes2 = ("\( (x,y) \sim (x',y') \) if and only if \( x+ y' = x' + y \).",
+	"\( (x,y) \sim (x',y') \) if and only if \( xy' = x' y \).");
 
-BEGIN_PGML
-We will say that two numbers between 1 and 31 are related, written [`a \sim b`] if their difference is a multiple of 7.  So for example, [`3 \sim 24\text{,}`] since [`24-3 = 3\cdot 7\text{,}`] but [`3 \not\sim 15`] since [`15-3 = 12`] which is not a multiple of 7.
+$tag1 = random(0,1,1);
 
-END_PGML
+@choice1=NchooseK(3,2);
+@y = (@yes1[@choice1], $yes2[$tag1]);
 
-############################################################
-# Scaffold
-############################################################
-Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+# @slice1 = NchooseK(4,4);
 
-############################################################
-# Section
-############################################################
-Section::Begin("");
+@sy=@y;
 
-BEGIN_PGML
-Which of the following are true?  That is, which of the following pairs of numbers are related as we have defined above?
+# @sy = @y[@slice1];
 
-[_]{$relationChkBx}{5}
+@no1 = (' \( x \sim y \) if and only if \( x - y \) is positive.',
+'\( x \sim y \) if and only if \( x + y \) is positive.',
+'\( x \sim y \) if and only if \( xy \) is positive.',
+      '\( x \sim y \) if and only if \( x + y \) is odd.',
+      '\( x \sim y \) if and only if \( xy \) is negative.',
+      );	
 
-END_PGML
 
-Section::End();
+@choice2=NchooseK(4,3);
+@n = @no1[@choice2];
 
-############################################################
-# Section
-############################################################
-Section::Begin("");
+# @slice2 = NchooseK(3,3);
+@sn=@n;
+# @sn = @n[@slice2];
 
-BEGIN_PGML
-Which of the following statements are true about the [`\sim`] relation in this case?
+$cmc = new_checkbox_multiple_choice();
 
-[_]{$relationProps}{5}
+$cmc -> qa ("Determine which of these relations are reflexive. The variables \(x\), \(y\), \(x'\), \(y'\) represent integers.", 
+            $sy[0], $sy[1]);
 
-END_PGML
+$cmc-> extra ($sn[0], $sn[1], $sn[2]);
 
-Section::End();
+BEGIN_TEXT
 
-############################################################
-# Section
-############################################################
-Section::Begin("");
+\{ $cmc -> print_q \}
+$BR
+\{ $cmc -> print_a \}
 
-BEGIN_PGML
-We will write [`[a]`] for the set of all numbers related to [`a\text{.}`]  For example, [`[7] = \{7, 14, 21, 28\}\text{.}`]  Find each of the following:
+END_TEXT
 
-* [`[1] = `] [_]{List(1, 8, 15, 22, 29)}{25};
+ANS( checkbox_cmp( $cmc->correct_ans )   ) ;
+               
 
-* [`[2] = `] [_]{List(2, 9, 16, 23, 30)}{25};
-
-* [`[3] = `] [_]{List(3, 10, 17, 24, 31)}{25};
-
-* [`[4] = `] [_]{List(4, 11, 18, 25)}{25};
-
-* [`[5] = `] [_]{List(5, 12, 19, 26)}{25};
-
-* [`[6] = `] [_]{List(6, 13, 20, 27)}{25}.
-
-Are there any numbers that are in more than one of the sets [`[a]`] above? [_]{$no}{5}
-
-END_PGML
-
-Section::End();
-
-Scaffold::End();
-
-############################################################
-# End Problem
-############################################################
-
-ENDDOCUMENT();
+ENDDOCUMENT();       # This should be the last executable line in the problem.
