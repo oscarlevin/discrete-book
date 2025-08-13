@@ -1,81 +1,132 @@
-##DESCRIPTION
-## DBsubject(Set theory and logic)
-## DBchapter(Relations between sets)
-## DBsection(Properties of relations)
-## Institution(NAU)
-## Level(3)
-## KEYWORDS('relation')
-##ENDDESCRIPTION
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-08-13T07:26:52-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
 
-DOCUMENT();        # This should be the first executable line in the problem.
+DOCUMENT();
 
+############################################################
+# Load Macros
+############################################################
 loadMacros(
   "PGstandard.pl",
-  "PGchoicemacros.pl",
-  "PGgraphmacros.pl",
-  "PGnumericalmacros.pl",
-  "PGstatisticsmacros.pl",
-  "PGcourse.pl"
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "parserCheckboxList.pl",
+  "PGcourse.pl",
 );
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
 
+############################################################
+# Header
+############################################################
 TEXT(beginproblem());
-$showPartialCorrectAnswers = 1;
 
-$rank = random(1,2,1);
-$tag_r = random(0,2,1);
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$relationChkBx = CheckboxList(
+  [
+  "\(4\sim 14\)",
+  "\(7\sim 14\)",
+  "\(10 \sim 17\)",
+  "\(17\sim 24\)",
+  "\(10\sim 24\)",
+  "\(20 \sim 10\)",
+  "\(31 \sim 3\)",
+  "\(25 \sim 25\)"
+  ],
+  [1, 2, 3, 4, 6, 7]
+  );
 
-@yes1 = ( '\( x \sim y \) if and only if \( xy \geq 0 \).',
-	 '\( x \sim y \) if and only if \( x + y \) is even.',
-	 '\( x \sim y \) if and only if \( x-y \) is a multiple of 10.',
-'\( x \sim y \) if and only if \( xy \) is positive.',
-'\( x \sim y \) if and only if \( x + y \) is positive.',
-'\( x \sim y \) if and only if \( x + y \) is odd.',
-'\( x \sim y \) if and only if \( xy \) is negative.'
-	 );
- 
-@yes2 = ("\( (x,y) \sim (x',y') \) if and only if \( x+ y' = x' + y \).",
-	"\( (x,y) \sim (x',y') \) if and only if \( xy' = x' y \).");
+############################################################
+# Body
+############################################################
 
-$tag1 = random(0,1,1);
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
 
-@choice1=NchooseK(7,3);
-@y = (@yes1[@choice1], $yes2[$tag1]);
+############################################################
+# Section
+############################################################
+Section::Begin("");
 
-# @slice1 = NchooseK(4,4);
+BEGIN_PGML
+Find all the numbers [`a`] between 1 and 31 that are [`5 \mod 7\text{.}`]  That is, find all [`a`] such that [|a % 7 = 5|]*.
 
-@sy=@y;
+[_]{List(5,12,19,26)}{15}
 
-# @sy = @y[@slice1];
+END_PGML
 
-@no1 = (' \( x \sim y \) if and only if \( x - y \) is positive.',
-' \( x \sim y \) if and only if \( x +2y \) is positive.',
-' \( x \sim y \) if and only if \( x = |y| \).'
-);	
+Section::End();
 
+############################################################
+# Section
+############################################################
+Section::Begin("");
 
-@choice2=NchooseK(3,2);
-@n = @no1[@choice2];
+BEGIN_PGML
+Since the modulus is a function, each number has exactly one modulus when divided by 7.  This means that the moduli partition the numbers from 1 to 31: every number belongs to exactly one of the sets of numbers with a particular modulus.  We have already found the set for modulus 5.  Find the other sets.
 
-# @slice2 = NchooseK(3,3);
-@sn=@n;
-# @sn = @n[@slice2];
+* [|a % 7 = 0|]*: [_]{List(7,14,21,28)}{15};
 
-$cmc = new_checkbox_multiple_choice();
+* [|a % 7 = 1|]*: [_]{List(1,8,15,22,29)}{15};
 
-$cmc -> qa ("Determine which of these relations are symmetric. The variables \(x\), \(y\), \(x'\), \(y'\) represent integers.", 
-            $sy[0], $sy[1],$sy[2]);
+* [|a % 7 = 2|]*: [_]{List(2,9,16,23,30)}{15};
 
-$cmc-> extra ($sn[0], $sn[1]);
+* [|a % 7 = 3|]*: [_]{List(3,10,17,24,31)}{15};
 
-BEGIN_TEXT
+* [|a % 7 = 4|]*: [_]{List(4,11,18,25)}{15};
 
-\{ $cmc -> print_q \}
-$BR
-\{ $cmc -> print_a \}
+* [|a % 7 = 6|]*: [_]{List(6,13,20,27)}{15}.
 
-END_TEXT
+END_PGML
 
-ANS( checkbox_cmp( $cmc->correct_ans )   ) ;
-               
+Section::End();
 
-ENDDOCUMENT();       # This should be the last executable line in the problem.
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+We can use the moduli to define a relation on the numbers from 1 to 31.  We will say that [`a \sim b`] if [|a % 7 = b % 7|]*.  In other words, two numbers are related if they belong to the same set of the partition we found above.
+
+Which of the following are true?  That is, which of the following pairs of numbers are related by this modulus relation?
+
+[_]{$relationChkBx}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
