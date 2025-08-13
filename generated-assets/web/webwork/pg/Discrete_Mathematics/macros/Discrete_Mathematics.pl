@@ -10,30 +10,16 @@
 
 sub latexImagePreamble {
 return <<'END_LATEX_IMAGE_PREAMBLE'
-  	\usepackage{adjustbox}
-    \usepackage{tikz} 
-    \usepackage{pgfplots}
-    \usepackage{skak} 
-    \pgfplotsset{
-        every axis/.append style={
-            axis lines=middle,
-            xlabel={\(x\)},
-            ylabel={\(y\)},
-            grid = both,
-        }
-    }
-    \usetikzlibrary{positioning,matrix,arrows} 
-    \usetikzlibrary{shapes,decorations,shadows,fadings,patterns} 
-    \usetikzlibrary{decorations.markings} 
-    \usetikzlibrary{calc}
-    \newcommand{\vtx}[2]{node[fill,circle,inner sep=0pt, minimum size=4pt,label=#1:#2]{}} 
-    \newcommand{\va}[1]{\vtx{above}{#1}} 
-    \newcommand{\vb}[1]{\vtx{below}{#1}} 
-    \newcommand{\vr}[1]{\vtx{right}{#1}} 
-    \newcommand{\vl}[1]{\vtx{left}{#1}} 
-    \renewcommand{\v}{\vtx{above}{}} 
-    \def\vo{node[circle, color=black, fill=white, inner sep=2pt, minimum size = 17pt, draw]{}}
-    \def\circleA{(-.5,0) circle (1)}
+\usepackage{tikz, pgfplots}
+
+\usetikzlibrary{positioning,matrix,arrows}
+
+\usetikzlibrary{shapes,decorations,shadows,fadings,patterns}
+\usetikzlibrary{decorations.markings}
+
+\usepackage{skak} %for chessboards etc.
+
+\def\circleA{(-.5,0) circle (1)}
 \def\circleAlabel{(-1.5,.6) node[above]{$A$}}
 \def\circleB{(.5,0) circle (1)}
 \def\circleBlabel{(1.5,.6) node[above]{$B$}}
@@ -41,49 +27,51 @@ return <<'END_LATEX_IMAGE_PREAMBLE'
 \def\circleClabel{(.5,-2) node[right]{$C$}}
 \def\twosetbox{(-2,-1.4) rectangle (2,1.4)}
 \def\threesetbox{(-2.5,-2.4) rectangle (2.5,1.4)}
-
 \newcommand{\hexbox}[3]{
-\def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
-\def\y{-\r*#1-sin{30}*\r*#1} \draw (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle; \draw (\x,\y) node{#3}; }
-
-\tikzset{-&gt;-/.style={decoration={ markings, mark=at position .5 with {\arrow{&gt;}}},postaction={decorate}}}
-
-\newcommand{\onedot}{ +(.5,.5) \v }
-\newcommand{\twodots}{ +(.25,.25) \v +(.75,.75) \v }
-\newcommand{\threedots}{ +(.25,.25) \v +(.5, .5) \v +(.75,.75) \v }
-\newcommand{\fourdots}{ +(.25,.25) \v +(.25,.75) \v +(.75,.25) \v +(.75,.75) \v }
-\newcommand{\fivedots}{ +(.5,.5) \v +(.25,.25) \v +(.25,.75) \v +(.75,.25) \v +(.75,.75) \v }
-\newcommand{\sixdots}{ +(.25,.5) \v +(.75,.5) \v +(.25,.25) \v +(.25,.75) \v +(.75,.25) \v +(.75,.75) \v }
-\newcommand{\dominoborder}{ \draw[thick, rounded corners] (0,0) rectangle (1,2); \draw[thin] (0,1) -- (1,1); }
-
-
-% Sudoku commands
-
-\newcommand{\sudokuFour}[1]{%
-\draw[line width=.25pt] (0,0) grid (4,4);
-\draw[line width=2pt, line cap=rect] (0,0) grid[step=2] (4,4);
-
-
-  \foreach \n [count=\i from 0] in {#1}
-    {
-      \pgfmathtruncatemacro{\x}{Mod(\i,4)}
-      \pgfmathtruncatemacro{\y}{(\i/4)}
-      \node at (\x+.5, 3.5-\y) {\Large\n};
-    }
+  \def\x{-cos{30}*\r*#1+cos{30}*#2*\r*2}
+  \def\y{-\r*#1-sin{30}*\r*#1}
+  \draw (\x,\y) +(90:\r) -- +(30:\r) -- +(-30:\r) -- +(-90:\r) -- +(-150:\r) -- +(150:\r) -- cycle;
+  \draw (\x,\y) node{#3};
 }
 
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position .5 with {\arrow{>}}},postaction={decorate}}}
 
+  \newcommand{\onedot}{
+    +(.5,.5) \v
+  }
+  \newcommand{\twodots}{
+    +(.25,.25) \v +(.75,.75) \v
+  }
+  \newcommand{\threedots}{
+  +(.25,.25) \v +(.5, .5) \v +(.75,.75) \v
+  }
+  \newcommand{\fourdots}{
+    +(.25,.25) \v +(.25,.75) \v +(.75,.25) \v +(.75,.75) \v
+  }
+  \newcommand{\fivedots}{
+    +(.5,.5) \v +(.25,.25) \v +(.25,.75) \v +(.75,.25) \v +(.75,.75) \v
+  }
+  \newcommand{\sixdots}{
+    +(.25,.5) \v +(.75,.5) \v +(.25,.25) \v +(.25,.75) \v +(.75,.25) \v +(.75,.75) \v
+  }
+  \newcommand{\dominoborder}{
+    \draw[thick, rounded corners] (0,0) rectangle (1,2);
+    \draw[thin] (0,1) -- (1,1);
+  }
 
 %% Imported from https://upload.wikimedia.org/wikipedia/commons/3/32/Blank_US_Map.svg
 %% Translated to TikZ using Inkscape 0.48
+%% From https://gist.github.com/bordaigorl/fce575813ff943f47505
 
 \tikzset{USA map/.cd,
 state/.style={fill, draw=white, ultra thick},
-HI/.style={}, AK/.style={}, FL/.style={}, NH/.style={}, MI/.style={}, MI/.style={}, VT/.style={}, ME/.style={}, RI/.style={}, NY/.style={}, PA/.style={}, NJ/.style={}, DE/.style={}, MD/.style={}, VA/.style={}, WV/.style={}, OH/.style={}, IN/.style={}, IL/.style={}, CT/.style={}, WI/.style={}, NC/.style={}, DC/.style={}, MA/.style={}, TN/.style={}, AR/.style={}, MO/.style={}, GA/.style={}, SC/.style={}, KY/.style={}, AL/.style={}, LA/.style={}, MS/.style={}, IA/.style={}, MN/.style={}, OK/.style={}, TX/.style={}, NM/.style={}, KS/.style={}, NE/.style={}, SD/.style={}, ND/.style={}, WY/.style={}, MT/.style={}, CO/.style={}, ID/.style={}, UT/.style={}, AZ/.style={}, NV/.style={}, OR/.style={}, WA/.style={}, CA/.style={}}
+HI/.style={}, AK/.style={}, FL/.style={}, NH/.style={}, MI/.style={}, MI/.style={}, SP/.style={}, VT/.style={}, ME/.style={}, RI/.style={}, NY/.style={}, PA/.style={}, NJ/.style={}, DE/.style={}, MD/.style={}, VA/.style={}, WV/.style={}, OH/.style={}, IN/.style={}, IL/.style={}, CT/.style={}, WI/.style={}, NC/.style={}, DC/.style={}, MA/.style={}, TN/.style={}, AR/.style={}, MO/.style={}, GA/.style={}, SC/.style={}, KY/.style={}, AL/.style={}, LA/.style={}, MS/.style={}, IA/.style={}, MN/.style={}, OK/.style={}, TX/.style={}, NM/.style={}, KS/.style={}, NE/.style={}, SD/.style={}, ND/.style={}, WY/.style={}, MT/.style={}, CO/.style={}, ID/.style={}, UT/.style={}, AZ/.style={}, NV/.style={}, OR/.style={}, WA/.style={}, CA/.style={}}
 
 \tikzset{
 every state/.style={USA map/state/.style={#1}},
-HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.style={USA map/FL/.style={#1}}, NH/.style={USA map/NH/.style={#1}}, MI/.style={USA map/MI/.style={#1}}, VT/.style={USA map/VT/.style={#1}}, ME/.style={USA map/ME/.style={#1}}, RI/.style={USA map/RI/.style={#1}}, NY/.style={USA map/NY/.style={#1}}, PA/.style={USA map/PA/.style={#1}}, NJ/.style={USA map/NJ/.style={#1}}, DE/.style={USA map/DE/.style={#1}}, MD/.style={USA map/MD/.style={#1}}, VA/.style={USA map/VA/.style={#1}}, WV/.style={USA map/WV/.style={#1}}, OH/.style={USA map/OH/.style={#1}}, IN/.style={USA map/IN/.style={#1}}, IL/.style={USA map/IL/.style={#1}}, CT/.style={USA map/CT/.style={#1}}, WI/.style={USA map/WI/.style={#1}}, NC/.style={USA map/NC/.style={#1}}, DC/.style={USA map/DC/.style={#1}}, MA/.style={USA map/MA/.style={#1}}, TN/.style={USA map/TN/.style={#1}}, AR/.style={USA map/AR/.style={#1}}, MO/.style={USA map/MO/.style={#1}}, GA/.style={USA map/GA/.style={#1}}, SC/.style={USA map/SC/.style={#1}}, KY/.style={USA map/KY/.style={#1}}, AL/.style={USA map/AL/.style={#1}}, LA/.style={USA map/LA/.style={#1}}, MS/.style={USA map/MS/.style={#1}}, IA/.style={USA map/IA/.style={#1}}, MN/.style={USA map/MN/.style={#1}}, OK/.style={USA map/OK/.style={#1}}, TX/.style={USA map/TX/.style={#1}}, NM/.style={USA map/NM/.style={#1}}, KS/.style={USA map/KS/.style={#1}}, NE/.style={USA map/NE/.style={#1}}, SD/.style={USA map/SD/.style={#1}}, ND/.style={USA map/ND/.style={#1}}, WY/.style={USA map/WY/.style={#1}}, MT/.style={USA map/MT/.style={#1}}, CO/.style={USA map/CO/.style={#1}}, ID/.style={USA map/ID/.style={#1}}, UT/.style={USA map/UT/.style={#1}}, AZ/.style={USA map/AZ/.style={#1}}, NV/.style={USA map/NV/.style={#1}}, OR/.style={USA map/OR/.style={#1}}, WA/.style={USA map/WA/.style={#1}}, CA/.style={USA map/CA/.style={#1}}
+HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.style={USA map/FL/.style={#1}}, NH/.style={USA map/NH/.style={#1}}, MI/.style={USA map/MI/.style={#1}}, SP/.style={USA map/SP/.style={#1}}, VT/.style={USA map/VT/.style={#1}}, ME/.style={USA map/ME/.style={#1}}, RI/.style={USA map/RI/.style={#1}}, NY/.style={USA map/NY/.style={#1}}, PA/.style={USA map/PA/.style={#1}}, NJ/.style={USA map/NJ/.style={#1}}, DE/.style={USA map/DE/.style={#1}}, MD/.style={USA map/MD/.style={#1}}, VA/.style={USA map/VA/.style={#1}}, WV/.style={USA map/WV/.style={#1}}, OH/.style={USA map/OH/.style={#1}}, IN/.style={USA map/IN/.style={#1}}, IL/.style={USA map/IL/.style={#1}}, CT/.style={USA map/CT/.style={#1}}, WI/.style={USA map/WI/.style={#1}}, NC/.style={USA map/NC/.style={#1}}, DC/.style={USA map/DC/.style={#1}}, MA/.style={USA map/MA/.style={#1}}, TN/.style={USA map/TN/.style={#1}}, AR/.style={USA map/AR/.style={#1}}, MO/.style={USA map/MO/.style={#1}}, GA/.style={USA map/GA/.style={#1}}, SC/.style={USA map/SC/.style={#1}}, KY/.style={USA map/KY/.style={#1}}, AL/.style={USA map/AL/.style={#1}}, LA/.style={USA map/LA/.style={#1}}, MS/.style={USA map/MS/.style={#1}}, IA/.style={USA map/IA/.style={#1}}, MN/.style={USA map/MN/.style={#1}}, OK/.style={USA map/OK/.style={#1}}, TX/.style={USA map/TX/.style={#1}}, NM/.style={USA map/NM/.style={#1}}, KS/.style={USA map/KS/.style={#1}}, NE/.style={USA map/NE/.style={#1}}, SD/.style={USA map/SD/.style={#1}}, ND/.style={USA map/ND/.style={#1}}, WY/.style={USA map/WY/.style={#1}}, MT/.style={USA map/MT/.style={#1}}, CO/.style={USA map/CO/.style={#1}}, ID/.style={USA map/ID/.style={#1}}, UT/.style={USA map/UT/.style={#1}}, AZ/.style={USA map/AZ/.style={#1}}, NV/.style={USA map/NV/.style={#1}}, OR/.style={USA map/OR/.style={#1}}, WA/.style={USA map/WA/.style={#1}}, CA/.style={USA map/CA/.style={#1}}
 }
 
 \newcommand{\USA}[1][]{
@@ -357,7 +345,7 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
         (696.2435,187.7448) -- (698.1834,186.7749) -- (697.8601,177.2369) -- cycle;
 
       % SP-
-      \path[USA map/state, USA map/MI, local bounding box=MI2] (581.6193,82.0590) -- (583.4483,80.0014) --
+      \path[USA map/state, USA map/SP, local bounding box=SP] (581.6193,82.0590) -- (583.4483,80.0014) --
         (585.6202,79.2012) -- (590.9929,75.3146) -- (593.2791,74.7431) --
         (593.7363,75.2003) -- (588.5923,80.3443) -- (585.2773,82.2876) --
         (583.2197,83.2021) -- (581.6193,82.0590) -- cycle(667.7937,114.1872) --
@@ -1391,7 +1379,6 @@ HI/.style={USA map/HI/.style={#1}}, AK/.style={USA map/AK/.style={#1}}, FL/.styl
       (79.2726,372.2686) -- (77.9793,371.0562) .. controls (77.9793,371.0562) and
       (77.2518,369.6012) .. (77.2518,369.1970) .. controls (77.2518,368.7929) and
       (77.2518,367.0146) .. (77.2518,367.0146) -- (77.7368,366.9338) -- cycle;
-
 
     \end{scope}
 }
