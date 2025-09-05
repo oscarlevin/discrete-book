@@ -1,0 +1,104 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(5)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("IntegerFunctions");
+$n = random(5,10); #define number of possible elements in set S
+$S = Set(1..$n);
+$c = ceil($n/2)+1; #cardinality is equal to 1 more than number of odd numbers in the set.
+# do {$c = random(4,7);} until ($c < $n) and ($n/2 < $c); #pick a value for subset cardinality
+$n3 = $n-3; #remaining elements other than {2,3,5} for part b 
+$c3 = $c-3; #remaining elements to be chosen for subset in part b
+$ans1 = C($n,$c);
+$ans2 = C($n3,$c3);
+$ev = int($n/2);
+$ans3 = C($ev,1);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Let [`S = [$S]\text{.}`]
+a.  How many subsets are there of cardinality [`[$c]\text{?}`]
+
+    [_]{$ans1}{10}
+
+    [@KeyboardInstructions('You can enter C(n,k) for \\(\\binom\{n\}\{k\}\\)')@]**
+
+a.  How many subsets of cardinality [`[$c]`] have [`>\{2,3,5\}`] as a subset?
+
+    [_]{$ans2}{10}
+
+a.  How many subsets of cardinality [`[$c]`] contain at least one odd number?
+
+    [_]{$ans1}{10}
+
+a.  How many subsets of cardinality [`[$c]`] contain exactly one even number?
+
+    [_]{$ans3}{10}
+
+END_PGML
+
+############################################################
+# Solution
+############################################################
+
+BEGIN_PGML_SOLUTION
+a.  [`\binom{[$n]}{[$c]} = [$ans1]`] subsets
+
+a.  [`\binom{[$n3]}{[$c3]} = [$ans2]`] subsets.  We need to select [$c3] of the [$n3] remaining elements of [`S`] to be in the subset.
+
+a.  [`\binom{[$n]}{[$c]} = [$ans1]`] subsets.  All subsets of cardinality [`[$c]`] must contain at least one odd number.
+
+a.  [`\binom{[$ev]}{1} = [$ev]`] subsets.  Select 1 of the [$ev] even numbers.  The remaining [$c-1] odd numbers of [`S`] must all be in the set.
+
+END_PGML_SOLUTION
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

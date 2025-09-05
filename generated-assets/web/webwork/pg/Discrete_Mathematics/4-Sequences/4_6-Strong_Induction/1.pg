@@ -1,0 +1,158 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(1)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context()->variables->add(n => "Real", a => "Real", b => "Real");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Consider the following puzzle:
+
+You have a rectangular chocolate bar, made up of [`n`] identical squares of chocolate. You can take such a bar and break it along any row or column. How many times will you have to break the bar to reduce it to [`n`] single chocolate squares?
+
+At first, this question might seem impossible. Perhaps we meant to ask for the _smallest_ number of breaks needed. Let's investigate.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Suppose you started with a [`1\times 3`] bar.  How many breaks would you need to reduce it to single squares?
+
+[_]{2}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+If you had a [`1\times 4`] bar, how many breaks are required?
+
+[_]{3}{5}
+
+If you had 4 squares arranged in a [`2\times 2`] square, your first break would require you to break the chocolate into two [`1 \times 2`] bars.  Then each of these would require [_]{1}{5} more break(s), for a total of [_]{3}{5} breaks to go from the [`2\times 2`] to single squares.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+A [`6`]-square bar could either be a [`1 \times 6`] bar, requiring [_]{5}{5} breaks, or a [`2 \times 3`] bar.
+
+There are two ways to proceed now.
+a.  Break the bar into two [`1 \times 3`] bars, each requiring [_]{2}{5} more breaks, for a total of [_]{5}{5} breaks.
+
+a.  Break the bar into a [`1\times 2`] bar and a [`2 \times 2`] bar.  The [`1 \times 2`] bar takes [_]{1}{5} more break(s) and the [`2 \times 2`] bar takes [_]{3}{5} more break(s), for a total of [_]{5}{5} breaks.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Based on the above data, what should our conjecture be for the number of breaks to reduce an [`n`]-square bar to single squares, in terms of [`n\text{?}`]
+
+It will take [_]{Compute('n-1')}{10} breaks to reduce an [`n`]-square bar to single squares.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Do we believe this?  Suppose you used one break to reduce the bar into two smaller bars, with [`a`] and [`b`] squares respectively.  If the conjecture is correct, how many more breaks will it take to reduce the size [`a`] bar?
+
+[_]{Compute('a-1')}{10}
+
+How many more breaks will it take to reduce the size [`b`] bar?
+
+[_]{Compute('b-1')}{10}
+
+How many breaks is this all together, in terms of [`a`] and [`b\text{,}`] including the initial break?
+
+[_]{Compute('1+a-1+b-1')}{10}
+
+But what is [`a+b\text{?}`]  We got [`a`] and [`b`] by breaking the [`n`] squares in two pieces, so [`a+b = `][_]{Compute('n')}{5}.  This gives us a total number of breaks as [_]{Compute('n-1')}{10}.
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

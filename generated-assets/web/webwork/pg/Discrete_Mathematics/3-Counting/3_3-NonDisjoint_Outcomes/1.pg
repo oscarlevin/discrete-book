@@ -1,0 +1,115 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(1)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+#set sizes of A and B
+$a = random(8, 15);
+do {$b = random(16,25);} until ($b > $a + 3); #ensure that |B| is in fact > |A|
+$ans3 = $b+$a;
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Suppose you have sets [`A`] and [`B`] with [`\card{A} = [$a]`] and [`\card{B} = [$b]\text{.}`]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the largest possible value for [`\card{A \cap B}\text{?}`]
+
+[_]{$a}{10}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the smallest possible value for [`\card{A \cap B}\text{?}`]
+
+[_]{0}{10}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What are the possible values for [`\card{A \cup B}\text{?}`]
+
+[_]{$b}{10}  [`\le \card{A \cup B} \le`] [_]{$ans3}{10}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

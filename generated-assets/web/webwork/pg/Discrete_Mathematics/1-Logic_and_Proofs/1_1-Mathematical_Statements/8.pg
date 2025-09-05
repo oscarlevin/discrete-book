@@ -1,0 +1,118 @@
+
+## DBsubject('Set theory and logic')
+## DBchapter('First order logic')
+## DBsection('Predicates')
+## Level(2)
+## KEYWORDS('predicates','statement','truth-value','implication','quantifier')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(0.2)
+## Problem1(13)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "parserPopUp.pl",
+  "parserRadioButtons.pl",
+  "PGcourse.pl",
+);
+
+############################################################
+# Header
+############################################################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+############################################################
+# PG Setup
+############################################################
+
+#SRAND($psvn);
+$x = random(1,10); #for witness (to be made odd)
+$n = random(3,21,2); #for coefficient.  
+
+$x = 2*$x+1; #Make n odd.
+
+$true = PopUp(
+["?","True","False","Neither (not a statement)"],
+"True",
+);
+$false = PopUp(
+["?","True","False","Neither (not a statement)"],
+"False",
+);
+$existsOdd = RadioButtons(
+["\(\exists x P(x)\) must be true.","\(\exists x P(x)\) must be false.","\(\exists x P(x)\) could be true or could be false."],
+"\(\exists x P(x)\) must be true.", # correct answer
+);
+$forallOdd = RadioButtons(
+["\(\forall x P(x)\) must be true.","\(\forall x P(x)\) must be false.","\(\forall x P(x)\) could be true or could be false."],
+"\(\forall x P(x)\) could be true or could be false." # correct answer
+);
+$existsEven = RadioButtons(
+["\(\exists x P(x)\) must be true.","\(\exists x P(x)\) must be false.","\(\exists x P(x)\) could be true or could be false."],
+"\(\exists x P(x)\) could be true or could be false.", # correct answer
+);
+$forallEven = RadioButtons(
+["\(\forall x P(x)\) must be true.","\(\forall x P(x)\) must be false.","\(\forall x P(x)\) could be true or could be false."],
+"\(\forall x P(x)\) must be false." # correct answer
+);
+
+# Decide which version of the problem we are in and set answers accordingly.
+if ( $n % 2 == 1 ) {
+  $ans1 = $true;
+  $ans2 = $existsOdd;
+  $ans3 = $forallOdd;
+} else {
+  $ans1 = $false;
+  $ans2 = $existsEven;
+  $ans3 = $forallEven;
+}
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Let [`P(x)`] be the predicate, "[`[$n]x+1`] is even."
+a.  Is [`P([$x])`] true or false? [_____]{$ans1}
+
+a.  What, if anything, can you conclude about [`\exists x P(x)`] from the truth value of [`P([$x])\text{?}`]
+
+    [_____]{$ans2}
+
+a.  What, if anything, can you conclude about [`\forall x P(x)`] from the truth value of [`P([$x])\text{?}`]
+
+    [_____]{$ans3}
+
+END_PGML
+
+############################################################
+# Solution
+############################################################
+if ($n % 2 == 1) {
+BEGIN_PGML_SOLUTION
+[`P([$x])`] is the statement "[`[$n]\cdot [$x] + 1`] is even", which is true. Thus the statement [`\exists x P(x)`] is true (for example, [$x] is such an [`x`]). However, we cannot tell anything about [`\forall x P(x)`] since we do not know the truth value of [`P(x)`] for _all_ elements of the domain of discourse. In this case, [`\forall x P(x)`] happens to be false (since [`P(4)`] is false, for example).
+END_PGML_SOLUTION
+} else {
+  BEGIN_PGML_SOLUTION
+[`P([$x])`] is the statement "[`[$n]\cdot [$x] + 1`] is even", which is false. Thus the statement [`\forall x P(x)`] is false (for example, [$x] is a counterexample). However, we cannot tell anything about [`\exists x P(x)`] since we do not know the truth value of [`P(x)`] for other elements of the domain of discourse. In this case, [`\exists x P(x)`] happens to be true (since [`P(1)`] is true, for example).
+END_PGML_SOLUTION
+}
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

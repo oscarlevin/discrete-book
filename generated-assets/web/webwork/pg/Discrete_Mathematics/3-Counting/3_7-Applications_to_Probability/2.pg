@@ -1,0 +1,126 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("IntegerFunctions");
+$a = random(8,19);
+$b = random(3,$a-1);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Suppose you flip a fair coin [$a] times.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the size of the sample space?
+
+[_]{Compute(2**$a)}{20}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the size of the event that you get exactly [$b] heads?
+
+[_]{Compute(C($a,$b))}{20}
+
+So then what is the probability that you get exactly [$b] heads?
+
+[_]{Compute(C($a,$b)/2**$a)}{20}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the size of the event that you do NOT get exactly [$b] heads?
+
+[_]{'2**$a-C($a,$c)'}{20}
+
+What is the probability that you do NOT get exactly [$b] heads?  Use the definition of probability and the previous answer.
+
+[_]{Compute(1-C($a,$b)/2**$a)}{20}
+
+What probability do you get for this same event if you use the fact that the probability of an event is 1 minus the probability of the complement of the event?
+
+[_]{Compute(1-C($a,$c)/2**$a)}{20}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

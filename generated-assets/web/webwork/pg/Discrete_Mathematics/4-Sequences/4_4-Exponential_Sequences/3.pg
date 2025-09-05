@@ -1,0 +1,91 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextForm.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context()->variables->are(n => "Real");
+do {$a0 = random(-2,9); } until ($a0 !=5); #choose an initial value
+$b = -2 + $a0;
+$ans = Formula("$b + 2^{n+1}");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Solve the recurrence relation [`a_n = a_{n-1} + 2^n`] with [`a_0 = [$a0]\text{.}`]
+
+[`a_n = `][_]{$ans}{20}
+
+END_PGML
+
+############################################################
+# Hint
+############################################################
+#Set value of $showHint in PGcourse.pl for course-wide attempt threshhold for revealing hints
+
+BEGIN_PGML_HINT
+Use telescoping or iteration.
+
+END_PGML_HINT
+
+############################################################
+# Solution
+############################################################
+
+BEGIN_PGML_SOLUTION
+[`a_n = [$b] + 2^{n+1}\text{.}`]  We should use telescoping or iteration here.  For example, telescoping gives
+
+[```\newcommand{\amp}{&}
+              \begin{aligned} a_1 - a_0 \amp = 2^1\\ a_2 - a_1 \amp = 2^2\\ a_3 - a_2 \amp = 2^3\\ \vdots\amp \vdots \\ a_n - a_{n-1} \amp = 2^n \end{aligned}
+            ```]
+
+which sums to [`a_n - a_0 = 2^{n+1} - 2`] (using the multiply-shift-subtract technique for the geometric series on the right-hand side). Substituting [`a_0 =[$a0]`] and solving for [`a_n`] completes the solution.
+
+END_PGML_SOLUTION
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

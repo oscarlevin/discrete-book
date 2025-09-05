@@ -1,0 +1,147 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("IntegerFunctions");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Let's again consider the 10 cookies we want to distribute to Albie, Bertie, and Charlie.  This time, we will impose some upper bound restrictions.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many ways can we distribute the cookies if Albie _does_ get more than 3 cookies (so at least 4)?
+
+[_]{Compute(C(8,2))}{5}
+
+[@KeyboardInstructions('(you can use C(n,k) for [`\binom{n}{k}`])')@]**
+
+How many ways can we distribute the cookies if Albie _does not_ get more than 3 cookies?
+
+[_]{Compute(C(12,2) - C(8,2))}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many ways can we distribute the cookies if Bertie _does_ get more than 3 cookies?
+
+[_]{Compute(C(8,2))}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many ways can we distribute the cookies if both Albie and Bertie _do_ get more than 3 cookies?
+
+[_]{Compute(C(4,2))}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Using the Principle of Inclusion/Exclusion for two sets, how many ways can we distribute the cookies if _at least one_ of Albie or Bertie gets more than 3 cookies?  So either Albie gets more than 3 cookies, Bertie gets more than 3 cookies, or both get more than 3 cookies.
+
+[_]{Compute(C(8,2) + C(8,2) - C(4,2))}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many ways can we distribute the cookies if _neither_ Albie nor Bertie gets more than 3 cookies?
+
+[_]{Compute(C(12,2) - (C(8,2) + C(8,2) - C(4,2)))}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

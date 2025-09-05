@@ -1,0 +1,125 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(4)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+do {
+  $bl = random(1,5);
+  $r = random(1,5);
+  $o = random(1,5);
+  $g = random(1,5);
+  $br = random(1,5);
+  $y = random(1,5);
+  $total = $bl+$r+$o+$g+$br+$y;
+} until ($total < 20 && $total > 12);
+$ans1 = Compute(($bl+$y)/$total);
+$ans2 = Compute(2*$bl*$y/($total*($total-1)));
+$ans3 = Compute($bl*$y/($total*($total-1)));
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+You have a bag of special math-themed M&M's.  The bag promises that inside there are [$bl] blue, [$r] red, [$o] orange, [$g] green, [$br] brown, and [$y] yellow M&M's.
+
+Find the probabilities of the following events.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the probability that if you pick a single M&M, it is blue or yellow?
+
+[_]{$ans1}{25}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the probability that if you pick two M&M's at the same time, you will get a blue and yellow?
+
+[_]{$ans2}{25}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the probability that if you pick two M&M's one at a time, you will get a blue first and a yellow second?
+
+[_]{$ans3}{25}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

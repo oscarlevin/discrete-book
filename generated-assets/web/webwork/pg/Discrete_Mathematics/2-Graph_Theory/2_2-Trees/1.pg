@@ -1,0 +1,148 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(1)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PGlateximage.pl",
+  "parserRadioButtons.pl",
+  "Discrete_Mathematics.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$tree = RadioButtons([
+"Yes, since the graph is connected and contains no cycles",
+"No, the graph contains a cycle",
+"No, the graph is not connected",
+"No, the graph is not connected and contains a cycle"
+], 0);
+
+$image_1 = createLaTeXImage();
+$image_1->addToPreamble(latexImagePreamble());
+$image_1->BEGIN_LATEX_IMAGE
+\begin{tikzpicture}
+  \foreach \x in {1,...,8}
+    \draw (360/8*\x:2) \v;
+\end{tikzpicture}
+
+END_LATEX_IMAGE
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Take out a piece of paper and draw 8 vertices in a circle.
+
+>> [@image(insertGraph($image_1), width=>120, alt=>qq"8 vertices in a circle with no edges")@]*  <<
+
+We are going to add edges to this graph following some requirements.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+First, add the fewest number of edges possible so that the resulting graph is connected.  That is, there must be a path between any pair of vertices (a path can use more than one edge, of course).
+
+How many edges are in the graph you drew?  [_]{7}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Was the resulting graph you found a tree?
+
+[_]{$tree}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Now start over with an empty graph again.  This time, add the largest number of edges possible so that the resulting graph contains no cycles.
+
+How many edges are in the graph you drew?  [_]{7}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Was the resulting graph you found a tree?
+
+[_]{$tree}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

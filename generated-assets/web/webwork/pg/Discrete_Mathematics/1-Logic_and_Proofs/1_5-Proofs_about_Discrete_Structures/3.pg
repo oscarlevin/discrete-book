@@ -1,0 +1,137 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "parserMultiAnswer.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$fA = Set(6,8);
+$fB = Set(6,12,26);
+$fAuB = Set($fA + $fB);
+$AuB = Set(1,2,3,4,6);
+$twosets = MultiAnswer(Set(1,2,3),Set(1,2,3,4))->with(
+  singleResult => 0,
+  checker => sub {
+    my ($correct, $student, $self) = @_;
+    my $stSet1 = Set($student->[0]);
+    my $stSet2 = Set($student->[1]);
+    my $test = $stSet1->isSubsetOf($stSet2);
+    Value->Error("The sets must be different") if $stSet1 == $stSet2;
+    $self->setMessage(2,"\(A\) is not a subset of \(B\)") if !test;
+    return $test;
+  }
+);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+For any function [`f: \mathbb{N} \to \mathbb{N}`] and any set [`A \subseteq \mathbb{N}\text{,}`] we can define the image of [`A`] under [`f`] to be the set of all outputs of [`f`] when the input is an element of [`A\text{.}`]  We write this as [`f(A) = \{f(x) ~:~ x \in A\}\text{.}`]
+
+For the following tasks, let's explore the function [`f: \mathbb{N} \to \mathbb{N}`] defined by [`f(x) = x^2 - 3x + 8\text{.}`]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Let [`A = \{1,2,3\}`] and [`B = \{2, 4, 6\}\text{.}`]  Find [`f(A)`] and [`f(B)\text{.}`] Then find [`f(A) \cup f(B)\text{.}`]
+
+[`f(A) = `] [_]{$fA}{20}; [`f(B) = `] [_]{$fB}{20}; [`f(A) \cup f(b) = `] [_]{$fAuB}{20}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Now find [`A \cup B`] and [`f(A \cup B)\text{.}`]
+
+[`A \cup B = `] [_]{$AuB}{20}; [`f(A \cup B) = `] [_]{$fAuB}{20}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Give an example, if one exists, of two distinct sets [`A`] and [`B`] such that [`A \subseteq B`] and [`f(A) \subseteq f(B)\text{.}`]
+
+[`A = `][_]{$twosets}{20}; [`B = `][_]{$twosets}{20}.
+
+Give an example, if one exists, of two distinct sets [`A`] and [`B`] such that [`A \subseteq B`] but [`f(A) \not\subseteq f(B)\text{.}`]
+
+[`A = `][_]{String('DNE')}{20}; [`B = `][_]{String('DNE')}{20}.
+
+[@KeyboardInstructions('(if there are no such sets, enter DNE in both blanks)')@]**
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

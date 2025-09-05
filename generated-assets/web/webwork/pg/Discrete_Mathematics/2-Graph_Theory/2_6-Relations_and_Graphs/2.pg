@@ -1,0 +1,132 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "parserCheckboxList.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$relationChkBx = CheckboxList(
+  [
+  "\(4\sim 14\)",
+  "\(7\sim 14\)",
+  "\(10 \sim 17\)",
+  "\(17\sim 24\)",
+  "\(10\sim 24\)",
+  "\(20 \sim 10\)",
+  "\(31 \sim 3\)",
+  "\(25 \sim 25\)"
+  ],
+  [1, 2, 3, 4, 6, 7]
+  );
+
+############################################################
+# Body
+############################################################
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Find all the numbers [`a`] between 1 and 31 that are [`5 \mod 7\text{.}`]  That is, find all [`a`] such that [|a % 7 = 5|]*.
+
+[_]{List(5,12,19,26)}{15}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Since the modulus is a function, each number has exactly one modulus when divided by 7.  This means that the moduli partition the numbers from 1 to 31: every number belongs to exactly one of the sets of numbers with a particular modulus.  We have already found the set for modulus 5.  Find the other sets.
+
+* [|a % 7 = 0|]*: [_]{List(7,14,21,28)}{15};
+
+* [|a % 7 = 1|]*: [_]{List(1,8,15,22,29)}{15};
+
+* [|a % 7 = 2|]*: [_]{List(2,9,16,23,30)}{15};
+
+* [|a % 7 = 3|]*: [_]{List(3,10,17,24,31)}{15};
+
+* [|a % 7 = 4|]*: [_]{List(4,11,18,25)}{15};
+
+* [|a % 7 = 6|]*: [_]{List(6,13,20,27)}{15}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+We can use the moduli to define a relation on the numbers from 1 to 31.  We will say that [`a \sim b`] if [|a % 7 = b % 7|]*.  In other words, two numbers are related if they belong to the same set of the partition we found above.
+
+Which of the following are true?  That is, which of the following pairs of numbers are related by this modulus relation?
+
+[_]{$relationChkBx}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

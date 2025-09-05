@@ -1,0 +1,198 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(1)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PGlateximage.pl",
+  "Discrete_Mathematics.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context()->variables->add('n'=>"Real");
+$nthodd = Compute("2*n-1");
+
+$image_1 = createLaTeXImage();
+$image_1->addToPreamble(latexImagePreamble());
+$image_1->BEGIN_LATEX_IMAGE
+              \begin{tikzpicture}
+  \foreach \x in {0,...,5} {
+    \foreach \y in {0,...,5}{
+    \fill (\x,\y) circle (5pt);
+    }
+  }
+  \begin{scope}[shift={(-.5,-.5)}]
+      \foreach \n in {1,...,5} {
+      \draw[very thick] (\n,0) -- (\n,\n) -- (0,\n);
+      }
+  \end{scope}
+\end{tikzpicture}
+
+END_LATEX_IMAGE
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+While wandering the halls of the math department, you find yourself staring at the captivating artwork shown below.
+
+>> [@image(insertGraph($image_1), width=>180, alt=>qq"A square array of dots with L-shaped lines separating collections of odd numbers of dots.")@]*  <<
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many dots are in the figure?
+
+The dots form a [_]{6}{5} by [_]{6}{5} square, for a total of [_]{36}{5} dots.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+We can also compute the total number of dots by summing each "hook" region, from smallest to largest:
+
+[_]{1}{3} \+ [_]{3}{3} \+ [_]{5}{3} \+ [_]{7}{3} \+ [_]{9}{3} \+ [_]{11}{4}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Yet another way to calculate the total number of dots is to group the terms of this sum.
+
+[`1+11 = `] [_]{12}{3}; [`3+9 = `] [_]{12}{3}; [`5+7 = `] [_]{12}{3}.
+
+Since there are three pairs of sums, the total is [`3 \cdot `][_]{12}{3} = [_]{36}{5}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+If we generalize the diagram, so it has [`n`] hooks, how many dots will be in the largest hook?
+
+[_]{$nthodd}{10}
+
+How many dots will be in the second largest hook?
+
+[_]{Compute($nthodd-2)}{10}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What will the sum of the smallest and largest hooks be?
+
+[_]{Compute('2n')}{5}
+
+What will the sum of the second smallest and second largest hooks be?
+
+[_]{Compute('2n')}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+If we continue adding pairs of hooks (next smallest plus next largest), how many pairs will we have?
+
+[_]{Compute('n/2')}{5}
+
+Multiplying then, the total number of dots will be: [_]{Compute('n/2*2n')}{10}.
+
+END_PGML
+
+############################################################
+# Hint
+############################################################
+#Set value of $showHint in PGcourse.pl for course-wide attempt threshhold for revealing hints
+
+BEGIN_PGML_HINT
+Let's assume that [`n`] is even. If it wasn't, then there would be a single "middle" hook that isn't added to anything, but this is counteracted by the fact that [`n/2`] would count a half hook sum.
+
+END_PGML_HINT
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

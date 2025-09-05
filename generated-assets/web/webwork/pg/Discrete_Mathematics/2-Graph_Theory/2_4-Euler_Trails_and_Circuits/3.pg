@@ -1,0 +1,186 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "niceTables.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PGlateximage.pl",
+  "parserCheckboxList.pl",
+  "Discrete_Mathematics.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$oddChoices = CheckboxList([
+"The vertex could appear at the start and end of the Euler trail.",
+"The vertex could appear at the start or end of the Euler trail, but not both.", 
+"The vertex could appear only in the middle of the Euler trail.",
+"The vertex cannot appear in the Euler trail at all.", 
+"There must be another vertex with odd degree that also appears at the start or end of the Euler trail."
+],
+[1,4]);
+
+$image_1 = createLaTeXImage();
+$image_1->addToPreamble(latexImagePreamble());
+$image_1->BEGIN_LATEX_IMAGE
+\begin{tikzpicture}
+  \draw (0,0) \vb{\(a\)} -- (1,1) \vb{\(b\)} -- (2,0) \vb{\(c\)} -- (3,1) \vb{\(d\)};
+\end{tikzpicture}
+
+END_LATEX_IMAGE
+
+$image_2 = createLaTeXImage();
+$image_2->addToPreamble(latexImagePreamble());
+$image_2->BEGIN_LATEX_IMAGE
+\begin{tikzpicture}
+
+  \draw (0,0) \vb{\(a\)} -- (1,0) \vb{\(b\)} -- (2,1) \vb{\(c\)} -- (3,0) \vb{\(e\)} -- (2,-1) \vb{\(d\)} -- (1,0) -- (3,0) -- (4,0)\vb{\(f\)};
+\end{tikzpicture}
+
+END_LATEX_IMAGE
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+One way to write down an Euler trail or circuit is to list the _edges_ in order.  Each edge will be a pair of vertices, and to indicate what direction we travel over that edge, we can write it as an ordered pair rather than a set.  For example, consider this graph:
+
+>> [@image(insertGraph($image_1), width=>180, alt=>qq"a path of 4 vertices labeled a, b, c, d connected in that order by three edges.")@]*  <<
+
+There are two Euler trails we could write:
+
+[```
+                (a,b), (b,c), (c,d) \qquad \text{or} \qquad (d,c), (c,b), (b,a)
+              \text{.}```]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Write down an Euler trail for the graph below.
+
+>> [@image(insertGraph($image_2), width=>240, alt=>qq"a graph with 6 vertices labeled a through f.  Vertices a and f have degree one and are drawn on the far left and right respectively.  The other vertices form a diamond.  edges: (a,b), (b,c), (b,e), (b,d), (c,e), (d,e) and (e,f).")@]*  <<
+
+For each vertex, write down its degree and the number of times it appears in your list of edges.
+
+>> [@DataTable(
+  [
+    [PGML('vertex'),
+     PGML('degree'),
+     PGML('times listed'),
+    ],
+    [PGML('[`a`]'),
+     PGML('[_]{1}{5}'),
+     PGML('[_]{1}{5}'),
+    ],
+    [PGML('[`b`]'),
+     PGML('[_]{4}{5}'),
+     PGML('[_]{4}{5}'),
+    ],
+    [PGML('[`c`]'),
+     PGML('[_]{2}{5}'),
+     PGML('[_]{2}{5}'),
+    ],
+    [PGML('[`d`]'),
+     PGML('[_]{2}{5}'),
+     PGML('[_]{2}{5}'),
+    ],
+    [PGML('[`e`]'),
+     PGML('[_]{4}{5}'),
+     PGML('[_]{4}{5}'),
+    ],
+    [PGML('[`f`]'),
+     PGML('[_]{1}{5}'),
+     PGML('[_]{1}{5}'),
+    ],
+  ],
+      align => '*{3}{l}',
+      valign => 'middle',);@]* <<
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Suppose you have a graph with degree sequence [`(4,2,2,2,2)`] that has an Euler trail.  How many times will the name of the degree 4 vertex appear in your list of edges?
+
+[_]{4}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Suppose you have a graph with an Euler trail written as a list of edges.  What can you conclude about a vertex that appears exactly 3 times in the list?  Select all the choices that could be true.
+
+[_]{$oddChoices}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

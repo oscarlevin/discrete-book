@@ -1,0 +1,133 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "contextForm.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context()->variables->add(n=>"Real");
+$d = random(2,9);
+$a = random(1,20);
+do {$b = random(1,20);} until ($b != $a);
+$seq1 = List($a, $a*$d, $a*$d**2, $a*$d**3, $a*$d**4);
+$seq2 = List($b, $b*$d, $b*$d**2, $b*$d**3, $b*$d**4);
+$formula1 = Formula("$a*$d**n");
+$formula2 = Formula("$b*$d**n");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Consider the recurrence relation [`a_n = [$d]a_{n-1}\text{.}`]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Find the first five terms of the sequence defined by the recurrence relation and initial condition [`a_0 = [$a]\text{.}`]
+
+[_]{$seq1}{25}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Find the closed formula for the sequence defined by the recurrence relation and initial condition [`a_0 = [$a]\text{.}`]
+
+[`a_n = `][_]{$formula1}{25}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Find the first five terms of another sequence, also defined by the same recurrence relation but this time with initial condition [`a_0 = [$b]\text{.}`]
+
+[_]{$seq2}{25}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Find the closed formula for this second sequence.
+
+[`a_n = `][_]{$formula2}{25}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

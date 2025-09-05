@@ -1,0 +1,114 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Interval');
+#define variables for problem parts a and b
+$a=random(1,5,1);
+$b= random(1,5,1);
+$aplusb = $a+$b;
+
+$sr = Compute(sqrt($a+$b));
+$ans1high = ceil($sr);
+#define variables to be used in printing the solutions
+$ans1plus1 = $ans1high+1;
+$ans1plus2 = $ans1high+2;
+$ans1hs = $ans1high*$ans1high - $a;
+$ans1low = ceil($sr-1);
+$ans1ls = $ans1low*$ans1low-$a;
+
+#define variables for problem parts c and d
+$c= random(1,5,1);
+$cplus1 = $c +1 ;
+$cplus4 = $c +4 ;
+$cplus9 = $c +9;
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Find the least element of the following sets, if there is one.
+a.  [`\{n \in \mathbb{N} : n^2 - [$a] \ge [$b]\}`]
+
+    [_]{$ans1high}{10}
+
+a.  [`\{n \in \mathbb{N} : n^2 - [$aplusb] \in \mathbb{N}\}`]
+
+    [_]{$ans1high}{10}
+
+a.  [`\{n^2+[$c] : n \in \mathbb{N}\}`]
+
+    [_]{$c}{10}
+
+a.  [`\{n \in \mathbb{N} : n = k^2 + [$c] \text{ for some } k \in \mathbb{N}\}`]
+
+    [_]{$c}{10}
+
+[@KeyboardInstructions(q"(if there is no least element, enter 'none')")@]**
+
+END_PGML
+
+############################################################
+# Solution
+############################################################
+
+BEGIN_PGML_SOLUTION
+a.  This is the set [`\{[$ans1high], [$ans1plus1], [$ans1plus2], \ldots\}`] since we need each element to be a natural number whose square is at least [$a] more than [$b]. Since [`[$ans1high]^2 - [$a] = [$ans1hs]`] but [`[$ans1low]^2 - [$a] = [$ans1ls]`] we see that the first such natural number is [$ans1high].
+
+a.  We get the same set as the previous part, and the smallest non-negative number for which [`n^2 - [$aplusb]`] is a natural number is [$ans1high].
+
+    Note that if we didn't specify [`n \ge 0`] by saying that [`n \in \mathbb N`] then any integer less than [`-[$ans1high]`] would also be in the set, so there would not be a least element.
+
+a.  This is the set [`\{[$c], [$cplus1], [$cplus4], [$cplus9], \ldots\}\text{,}`] namely the set of numbers that are the _result_ of squaring and adding [$c] to a natural number. ([`0^2 + [$c] = [$c]\text{,}`] [`1^2 + [$c] = [$cplus1]\text{,}`] [`2^2 + [$c] = [$cplus4]`] and so on.) Thus the least element of the set is [$c].
+
+a.  Now we are looking for natural numbers that are equal to taking some natural number, squaring it and adding [$c]. That is, [`\{[$c], [$cplus1], [$cplus4], [$cplus9], \ldots\}\text{,}`] the same set as the previous part. So again, the least element is [$c].
+
+END_PGML_SOLUTION
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

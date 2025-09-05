@@ -1,0 +1,149 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(1)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "parserPopUp.pl",
+  "parserCheckboxList.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$relationChkBx = CheckboxList(
+  [
+  "\(4\sim 14\)",
+  "\(7\sim 14\)",
+  "\(10 \sim 17\)",
+  "\(17\sim 24\)",
+  "\(10\sim 24\)",
+  "\(20 \sim 10\)",
+  "\(31 \sim 3\)",
+  "\(25 \sim 25\)"
+  ],
+  [1, 2, 3, 4, 6, 7]
+  );
+  $relationProps = CheckboxList(
+    [
+    "\(a \sim a\) for every number \(a\)",
+    "\(a \not\sim a\) for any number \(a\)",
+    "For any numbers \(a\) and \(b\), if \(a \sim b\), then \(b \sim a\)",
+    "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim a\), then \(a = b\)",
+    "For any numbers \(a\) and \(b\), if \(a \sim b\) and \(b \sim c\), then \(a \sim c\)",
+    ],
+    [0, 2, 4]
+    );
+    $no = PopUp(["?","Yes", "No"], "No");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+We will say that two numbers between 1 and 31 are related, written [`a \sim b`] if their difference is a multiple of 7.  So for example, [`3 \sim 24\text{,}`] since [`24-3 = 3\cdot 7\text{,}`] but [`3 \not\sim 15`] since [`15-3 = 12`] which is not a multiple of 7.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Which of the following are true?  That is, which of the following pairs of numbers are related as we have defined above?
+
+[_]{$relationChkBx}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Which of the following statements are true about the [`\sim`] relation in this case?
+
+[_]{$relationProps}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+We will write [`[a]`] for the set of all numbers related to [`a\text{.}`]  For example, [`[7] = \{7, 14, 21, 28\}\text{.}`]  Find each of the following:
+
+* [`[1] = `] [_]{List(1, 8, 15, 22, 29)}{25};
+
+* [`[2] = `] [_]{List(2, 9, 16, 23, 30)}{25};
+
+* [`[3] = `] [_]{List(3, 10, 17, 24, 31)}{25};
+
+* [`[4] = `] [_]{List(4, 11, 18, 25)}{25};
+
+* [`[5] = `] [_]{List(5, 12, 19, 26)}{25};
+
+* [`[6] = `] [_]{List(6, 13, 20, 27)}{25}.
+
+Are there any numbers that are in more than one of the sets [`[a]`] above? [_]{$no}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

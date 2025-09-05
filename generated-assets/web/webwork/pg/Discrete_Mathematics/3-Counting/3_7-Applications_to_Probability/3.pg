@@ -1,0 +1,129 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("IntegerFunctions");
+$a = random(8,19);
+$b = random(3,$a-1);
+do {
+  $c = random(3,$a-1);
+} until ($c != $b);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Suppose you flip a fair coin [$a] times.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the size of the sample space?
+
+[_]{Compute(2**$a)}{20}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the size of the event that you get exactly [$b] heads?
+
+[_]{Compute(C($a,$b))}{20}
+
+What is the size of the event that you get exactly [$c] heads?
+
+[_]{Compute(C($a,$c))}{20}
+
+What is the size of the event that you get exactly [$b] heads OR exactly [$c] heads?
+
+[_]{Compute(C($a,$b)+C($a,$c))}{20}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the sum of the probabilities of getting exactly [$b] heads and getting exactly [$c] heads?
+
+[_]{'C($a,$b)/2**$a'}{15} \+ [_]{'C($a,$c)/2**$a'}{15} = [_]{Compute(C($a,$b)/2**$a + C($a,$c)/2**$a)}{15}
+
+What is the probability of getting exactly [$b] heads OR getting exactly [$c] heads?  Compute this by finding the size of the event, divided by the size of the sample space.
+
+[_]{Compute(C($a,$b)+C($a,$c))}{15} [`\div`] [_]{Compute(2**$a)}{15} [` = `] [_]{Compute((C($a,$b)+C($a,$c))/2**$a)}{15}.
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

@@ -1,0 +1,150 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T11:56:31-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(5)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "parserCheckboxList.pl",
+  "contextForm.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context()->variables->are(n => "Real");
+#define sequence
+$a0 = random(1,10);  #choose a first term
+$rate = random(3,9); #choose the rate of change
+$a1 = $a0 + $rate;
+$a2 = $a0 + 2*$rate;
+$a3 = $a0 + 3*$rate;
+$a4 = $a0 + 4*$rate;
+$closed = Formula("$a0 + n*$rate");
+$n = random(130,150);
+$last = $closed->eval(n=>$n);
+$n = Real("$n");
+
+$n2 = random(501,519);
+$n3 = $n2-1;
+$large = $closed->eval(n=>$n2);
+$rh1 = $large-2;
+$rh2 = $rh1 + $rate;
+
+#Recursive question setup:
+$recChkBx = CheckboxList(
+  [["\(a_n = a_{n-1} + $rate\); \(a_0 = $a0\)",
+  "\(a_n = a_{n-1} + a_{n-2}\); \(a_0 = $a0\)",
+    "\(a_n = $rate \cdot a_{n-1}\); \(a_0 = $a0\)",
+    "\(a_n = $a0 \cdot $rate^n\)",
+  ],"None of the above"],[0]
+);
+
+#mc for third part:
+$elementChkBx = CheckboxList(
+  [[
+  "Yes, it is \(a_{$n3}\)", 
+  "Yes, it is \(a_{$large}\)", 
+  "Yes, it is \(a_{$n2}\)",
+  "No, it is between $rh1 and $rh2", 
+  "No, it is larger than $last",
+  ],"None of the above"],[2]
+);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Consider the sequence that starts [`[$a0], [$a1], [$a2], [$a3], [$a4],\ldots`] where [`a_0 = [$a0]\text{.}`]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Which of the following could be a recursive definition for the sequence?
+
+[_]{$recChkBx}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Find the closed formula for the sequence.
+
+[_]{$closed}{25}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Is [$large] a term of the sequence?
+
+[_]{$elementChkBx}{5}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

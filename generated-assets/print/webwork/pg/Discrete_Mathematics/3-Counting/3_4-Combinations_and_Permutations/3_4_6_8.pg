@@ -1,0 +1,101 @@
+## DBsubject(Combinatorics)
+## DBchapter(Counting)
+## DBsection(Combinations)
+## Level(5)
+## KEYWORDS('counting','combinations','multiple techniques')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(1.3)
+## Problem1(10)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context("IntegerFunctions");
+do {$total = random(24,40);} until ($total%4 ==0);
+$num= $total/4; 
+$ans1 =1;
+for ($i = 0; $i < $num; $i++) 
+{
+$ai = $total-$i*4;
+$ans1 = Compute("$ans1*C($ai,4)");
+}
+#Gives only the numerical value for the answer, rather than combination notation 
+
+#Second part: To change the problem, make sure the number of board members is equal to the number of total foursomes we get ($num)
+
+$ans2=1;
+$rem = $total - $num;
+for ($i = 0; $i < $num; $i++) 
+{
+$bi = $rem-$i*3;
+$ans2 = Compute("$ans2*C($bi,3)");
+}
+$ans3 =Compute("$num!*$ans2");
+
+$total1 = $total -4;
+$total2 = $total1 - 4;
+$rem1 = $rem - 3;
+$rem2 = $rem1-3;
+
+#$ans1 = Compute("C(20,4)*C(16,4)*C(12,4)*C(8,4)*C(4,4)");
+#$ans2 = Compute("5!*C(15,3)*C(12,3)*C(9,3)*C(6,3)*C(3,3)");
+
+####################
+# Body
+####################
+BEGIN_PGML
+On a business retreat, your company of [$total] businessmen and businesswomen goes golfing. 
+a.  You need to divide up into foursomes (groups of 4 people): a first foursome, a second foursome, and so on. How many ways can you do this?
+
+
+    [__________]{$ans1}
+
+
+a.  After all your hard work, you realize that in fact, you want each foursome to include one of the [$num] Board members (who are among the [$total] golfers already). How many ways can you do this?
+
+    [__________]{$ans3}   
+
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+a.  [`{[$total] \choose 4}\cdot {[$total1] \choose 4} \cdot {[$total2] \choose 4} \cdot \dots \cdot{4 \choose 4}`] ways. Pick 4 out of [$total] people to be in the first foursome, then 4 of the remaining [$total1] for the second foursome, and so on (use the multiplicative principle to combine).
+a.  [`[$num]!{[$rem] \choose 3}\cdot {[$rem1] \choose 3}\cdot {[$rem2] \choose 3} \cdot \dots \cdot {3 \choose 3}`] ways. First determine the tee time of the [$num] board members, then select 3 of the [$rem] non-board members to golf with the first board member, then 3 of the remaining [$rem1] to golf with the second, and so on.
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();

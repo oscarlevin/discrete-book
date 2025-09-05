@@ -1,0 +1,81 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-04T12:11:53-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2.3.1.3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextForm.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context()->variables->are(v => "Real", e => "Real", f => "Real");
+$expr = Formula("v-e+f")->cmp(
+  checker=>sub {
+    my ($correct, $student, $self) = @_;
+    return ($student == $correct || $student == -1*$correct);
+  }
+);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Do you notice any patterns?  What happens to the numbers if you add an edge between two non-adjacent vertices?  What happens if you add a new vertex and connect it to an existing vertex?
+
+Conjecture an expression that involves the number of vertices [`v\text{,}`] the number of edges [`e\text{,}`] and the number of faces [`f`] that remains constant for all connected planar graphs.  What is that constant?
+
+END_PGML
+
+############################################################
+# Hint
+############################################################
+#Set value of $showHint in PGcourse.pl for course-wide attempt threshhold for revealing hints
+
+BEGIN_PGML_HINT
+You might conjecture an expression like [`\frac{v+e}{f}\text{.}`]  But this is not right, because there is a planar graph for which this would be [`\frac{5+5}{2} = 5`] and another planar graph for which the expression would be [`\frac{6+7}{3} \ne 5\text{.}`]
+
+What sort of expression will stay constant if [`v`] and [`e`] both increase by 1?  And also stay constant if [`e`] and [`f`] both increase by 1?
+
+END_PGML_HINT
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
