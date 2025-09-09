@@ -1,71 +1,63 @@
-#############################################
-###       Generated from PreTeXt source      
-###       on 2025-09-04T11:56:31-06:00       
-###   A recent stable commit (2022-07-01):   
-### 6c761d3dba23af92cba35001c852aac04ae99a5f 
-###                                          
-###         https://pretextbook.org          
-###                                          
-#############################################
-## DBsubject()
-## DBchapter()
-## DBsection()
-## Level()
-## KEYWORDS()
-## TitleText1()
-## EditionText1()
-## AuthorText1()
-## Section1(not reported)
-## Problem1(4)
-## Author()
-## Institution()
+## DBsubject(Graph theory)
+## DBchapter(Terminology)
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(4.1)
+## Problem1()
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
 ## Language(en-US)
+## Level(3)
+## KEYWORDS('graph', 'degree')
+##ENDDESCRIPTION
+
+
 
 DOCUMENT();
 
-############################################################
-# Load Macros
-############################################################
 loadMacros(
   "PGstandard.pl",
-  "PGML.pl",
-  "AnswerFormatHelp.pl",
-  "parserCheckboxList.pl",
+  "PGnauGraphtheory.pl",
   "PGcourse.pl",
-);
-COMMENT('Authored in PreTeXt');
-
-############################################################
-# Header
-############################################################
-TEXT(beginproblem());
-
-############################################################
-# PG Setup Code
-############################################################
-Context('Numeric');
-  $cb234 = CheckboxList([
-  [
-      "\(G_1\)","\(G_2\)","\(G_3\)","\(G_4\)" 
-  ],
-  "None of the above"
-  ],
-  [1, 2, 3]
+  "PGML.pl"
 );
 
-############################################################
-# Body
-############################################################
 
+
+$showPartialCorrectAnswers = 1;
+
+@y = ("Which of the following degree sequences are possible for a graph?");
+@n = ();
+
+#Create a valid degree sequences
+
+  $size = random(7,10,1);
+  $rnd = random(.4,1,.07);
+  $graph = GRgraph_size_random($size,$rnd);
+  @deg = GRdegrees_graph($graph);
+  @deg = PGsort( sub {$_[0] > $_[1]} , @deg );
+  $A1 = join(',', @deg);
+  $degseq = "($A1)";
+  $degsum = join('+', @deg);
+  $degsumtot = Real($degsum);
+  $ans = Compute("($degsum)/2");
+  
+	    
 BEGIN_PGML
-For which of the graphs is it possible to draw the graph in such a way that no edges cross?
 
-[_]{$cb234}{5}
+I'm thinking of a graph which has degree sequence [$degseq].  How many edges must my graph have?
 
+[_______]{$ans}
+
+	    
 END_PGML
+	    
+BEGIN_PGML_SOLUTION
 
-############################################################
-# End Problem
-############################################################
+By the handshake lemma, the number of edges is twice the sum of the degrees of vertices in the graph.  
+The sum of the degrees is [`[$degsum] = [$degsumtot]`], so there are [`[$ans*1]`] edges.
+
+END_PGML_SOLUTION
 
 ENDDOCUMENT();
