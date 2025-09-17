@@ -1,0 +1,120 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-16T19:17:03-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "parserFunction.pl",
+  "contextForm.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("Numeric")->variables->are(n=>"Real");
+parserFunction(a => "cos(pi^n)+e");
+$an = Formula("a(n-1) + n");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Now look at the third sequence of dots from the _Investigate!_ activity.  We will let [`a_n`] represent the number of dots in figure [`n\text{.}`]  The sequence starts [`1, 3, 6, 10,\ldots`]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many dots would you expect in the next two figures in the sequence?
+
+Dots in [`n = 5`] figure: [`a_5 = `][_]{15}{5}.
+
+Dots in [`n = 6`] figure: [`a_6 = `][_]{21}{5}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Let [`a_n`] be the number of dots in figure [`n\text{.}`]  Write a recursive definition for [`a_n\text{.}`]
+
+[@KeyboardInstructions('Use [|a(n-1)|]* for [`a_{n-1}\text{.}`]')@]**
+
+[`a_n = `] [_]{$an}{20}; with [`a_1 = `] [_]{1}{5}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Guess a closed formula for the number of dots in the [`n`]th figure.
+
+[`a_n = `] [_]{Formula('(n*(n+1)/2)')}{20}.
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

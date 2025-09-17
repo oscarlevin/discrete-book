@@ -1,0 +1,121 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-16T19:17:01-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "niceTables.pl",
+  "AnswerFormatHelp.pl",
+  "parserMultiAnswer.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Numeric');
+$ans1 = MultiAnswer(6, 6, 2) -> with(
+  singleResult => 1,
+  allowBlankAnswers => 0,
+  checker => sub {
+    my ($correct, $student, $self) = @_;
+    if ($student->[0] - $student->[1] + $student->[2] == 2) {
+      $self->setMessage(3, "Yay!");
+      return 1;
+    } else {
+      if ($student->[0] - $student->[1] + $student->[2] == 1) {
+        $self->setMessage(2, "Did you forget to include the 'outside' face?");
+      }
+    return 0;
+    }
+  }
+);
+$ans2 = MultiAnswer(7, 10, 5) -> with(
+  singleResult => 1,
+  allowBlankAnswers => 0,
+  checker => sub {
+    my ($correct, $student, $self) = @_;
+    return ($student->[0] - $student->[1] + $student->[2] == 2);
+  }
+);
+$ans3 = MultiAnswer(6, 10, 6) -> with(
+  singleResult => 1,
+  allowBlankAnswers => 0,
+  checker => sub {
+    my ($correct, $student, $self) = @_;
+    if ($student->[0] - $student->[1] + $student->[2] == 2) {
+      $self->setMessage(1, "This appears to be a valid answer.");
+      return 1;
+    } 
+  }
+);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Now draw at least three more connected, planar graphs, each with at least six vertices.  Count the number of vertices [`v\text{,}`] edges [`e\text{,}`] and faces [`f`] for each graph and record your data in the table below.
+
+>> [@DataTable(
+  [
+    [[PGML('[`v`]'),
+      rowbottom => '1',
+      midrule => '1',],
+     PGML('[`e`]'),
+     PGML('[`f`]'),
+    ],
+    [PGML('[_]{$ans1}{5}'),
+     PGML('[_]{$ans1}{5}'),
+     PGML('[_]{$ans1}{5}'),
+    ],
+    [PGML('[_]{$ans2}{5}'),
+     PGML('[_]{$ans2}{5}'),
+     PGML('[_]{$ans2}{5}'),
+    ],
+    [PGML('[_]{$ans3}{5}'),
+     PGML('[_]{$ans3}{5}'),
+     PGML('[_]{$ans3}{5}'),
+    ],
+  ],
+      align => 'c|c|c',
+      valign => 'middle',);@]* <<
+
+END_PGML
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();

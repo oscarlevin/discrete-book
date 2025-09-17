@@ -1,0 +1,146 @@
+#############################################
+###       Generated from PreTeXt source      
+###       on 2025-09-16T19:17:02-06:00       
+###   A recent stable commit (2022-07-01):   
+### 6c761d3dba23af92cba35001c852aac04ae99a5f 
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(3)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "scaffold.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("IntegerFunctions");
+$ans1 = Compute("365**30");
+$ans2 = Compute("P(365,30)");
+$prob = Compute($ans2/$ans1);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Now to birthdays.  There are 365 days in a year.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many possible sequences of 30 birthdays are there?
+
+[_]{$ans1}{10}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many possible sequences of 30 birthdays contain no repeats?
+
+[_]{$ans2}{10}
+
+[@KeyboardInstructions('You can enter P(n,k) for a permutation on this problem.')@]**
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the probability that 30 people have no repeated birthdays?
+
+[_]{$prob}{10}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Among the 30 people, either they all have different birthdays or at least two share a birthday.  Since this is certain, its probability is 1.  So what is the probability that at least two people (out of the 30) share a birthday?
+
+[_]{Compute(1 - $prob)}{10}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+What is the smallest number of people you would need to have a greater than 90% chance that at least two share a birthday?
+
+[_]{41}{10}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
