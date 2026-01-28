@@ -1,0 +1,275 @@
+## DBsubject('Set theory and logic')
+## DBchapter('Propositional logic')
+## DBsection('Truth tables')
+## Level(2)
+## KEYWORDS('proposition','truth table','connectives')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(3.1)
+## Problem1(4)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "contextTF.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "niceTables.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl",
+);
+
+############################################################
+# Header
+############################################################
+COMMENT('Randomized (11 versions)');
+TEXT(beginproblem());
+
+############################################################
+# PG Setup
+############################################################
+Context('TF');
+$showPartialCorrectAnswers = 0;
+
+$q = random(0,10);
+
+if ($q == 0){
+    $a = "\neg P";
+    $b = "Q \wedge R";
+    $statement = "$a \rightarrow ($b)";
+    @ans = qw(
+        F T T 
+        F F T 
+        F F T 
+        F F T 
+        T T T 
+        T F F 
+        T F T 
+        T F F
+    );
+} elsif ($q == 1){
+    $a = "\neg R";
+    $b = "P \wedge \neg R";
+    $statement = "Q \rightarrow (P \wedge \neg R)";
+    @ans = qw(
+        F F F 
+        T T T 
+        F F T 
+        T T T 
+        F F F 
+        T F F 
+        F F T 
+        T F T
+    );
+} elsif ($q == 2){
+    $a = "\neg P";
+    $b = "Q \vee R";
+    $statement = "\neg P \rightarrow (Q \vee R)";
+    @ans = qw(
+        F T T 
+        F T T 
+        F T T 
+        F F T 
+        T T T 
+        T T T 
+        T T T 
+        T F F
+    );
+} elsif ($q == 3){
+    $a = "\neg P";
+    $b = "\neg P \vee R";
+    $statement = "Q \rightarrow (\neg P \vee R)";
+    @ans = qw(
+        F T T 
+        F F F 
+        F T T 
+        F F T 
+        T T T 
+        T T T 
+        T T T 
+        T T T
+    );
+} elsif ($q == 4){
+    $a = "\neg Q";
+    $b = "P \vee R";
+    $statement = "\neg Q \rightarrow (P \vee R)";
+    @ans = qw(
+        F T T 
+        F T T 
+        T T T 
+        T T T 
+        F T T 
+        F F T 
+        T T T 
+        T F F
+    );
+} elsif ($q == 5){
+    $a = "\neg P";
+    $b = "Q \rightarrow R";
+    $statement = "\neg P \vee (Q \rightarrow R)";
+    @ans = qw(
+        F T T 
+        F F F 
+        F T T 
+        F T T 
+        T T T 
+        T F T 
+        T T T 
+        T T T
+    );
+} elsif ($q == 6){
+    $a = "\neg P";
+    $b = "Q \rightarrow R";
+    $statement = "\neg P \wedge (Q \rightarrow R)";
+    @ans = qw(
+        F T F 
+        F F F 
+        F T F 
+        F T F 
+        T T T 
+        T F F 
+        T T T 
+        T T T
+    );
+} elsif ($q == 7){
+    $a = "\neg Q";
+    $b = "\neg Q \rightarrow R";
+    $statement = "P \vee (\neg Q \rightarrow R)";
+    @ans = qw(
+        F T T 
+        F T T 
+        T T T 
+        T F T 
+        F T T 
+        F T T 
+        T T T 
+        T F T
+    );
+} elsif ($q == 8){
+    $a = "\neg Q";
+    $b = "\neg Q \rightarrow R";
+    $statement = "P \wedge (\neg Q \rightarrow R)";
+    @ans = qw(
+        F T T 
+        F T T 
+        T T T 
+        T F F 
+        F T F 
+        F T F 
+        T T F 
+        T F F
+    );
+} elsif ($q == 9){
+    $a = "\neg Q";
+    $b = "R \rightarrow \neg Q";
+    $statement = "P \vee (R \rightarrow \neg Q)";
+    @ans = qw(
+        F F T
+        F T T 
+        T T T 
+        T T T 
+        F F F
+        F T T 
+        T T T 
+        T T T
+    );
+} elsif ($q == 10){
+    $a = "\neg Q";
+    $b = "R \rightarrow \neg Q";
+    $statement = "P \wedge (R \rightarrow \neg Q)";
+    @ans = qw(
+        F F F 
+        F T T 
+        T T T 
+        T T T 
+        F F F 
+        F T F 
+        T T F 
+        T T F
+    );
+}
+
+
+
+############################################################
+# Body
+############################################################
+
+BEGIN_TEXT
+Make a truth table for the statement 
+\($statement\)
+
+
+$BCENTER
+\{
+DataTable(
+  [
+    [['\(P\)', headrow => 1, midrule => 1], '\(Q\)', '\(R\)', '\($a\)', '\($b\)', '\($statement\)'],
+
+    ['T', 'T', 'T', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['T', 'T', 'F', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['T', 'F', 'T', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['T', 'F', 'F', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['F', 'T', 'T', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['F', 'T', 'F', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['F', 'F', 'T', ans_rule(1), ans_rule(1), ans_rule(1)],
+    ['F', 'F', 'F', ans_rule(1), ans_rule(1), ans_rule(1)],
+  ],
+  align => 'c|c|c||c|c|c'
+);
+
+\}
+$ECENTER
+
+
+END_TEXT
+
+foreach my $i (@ans) {
+  ANS(Compute($i)->cmp());
+}
+
+
+############################################################
+# Solution
+############################################################
+
+BEGIN_SOLUTION
+
+The complete truth table is:
+
+
+$BCENTER
+\{
+DataTable(
+  [
+    [['\(P\)', headrow => 1, midrule => 1], '\(Q\)', '\(R\)', '\($a\)', '\($b\)', '\($statement\)'],
+
+    ['T', 'T', 'T', $ans[0], $ans[1], $ans[2]],
+    ['T', 'T', 'F', $ans[3], $ans[4], $ans[5]],
+    ['T', 'F', 'T', $ans[6], $ans[7], $ans[8]],
+    ['T', 'F', 'F', $ans[9], $ans[10], $ans[11]],
+    ['F', 'T', 'T', $ans[12], $ans[13], $ans[14]],
+    ['F', 'T', 'F', $ans[15], $ans[16], $ans[17]],
+    ['F', 'F', 'T', $ans[18], $ans[19], $ans[20]],
+    ['F', 'F', 'F', $ans[21], $ans[22], $ans[23]],
+  ],
+  align => 'c|c|c||c|c|c'
+);\}
+$ECENTER
+
+
+END_SOLUTION
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
