@@ -1,0 +1,68 @@
+## DBsubject(Combinatorics)
+## DBchapter(Counting)
+## DBsection(Combinations)
+## Level(2)
+## KEYWORDS('counting','combinations','binomial coefficients')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(1.2)
+## Problem1(8)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context("IntegerFunctions");
+$a = random(13,19);
+do {$b = random(9, 18);} until ($b < $a - 1) and ($b !=12);
+$c = $a-$b;
+
+$ans = Compute("C($a,$b)*3^{$c}")->with(tolType => 'absolute', tolerance => '1');
+
+####################
+# Body
+####################
+BEGIN_PGML
+What is the coefficient of [`x^{[$b]}`] in [`(x+3)^{[$a]}\text{?}`]
+
+[_______]{$ans}
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+To get an [`x^{[$b]}\text{,}`] we must pick [$b] of the [$a] factors to contribute an [`x\text{,}`] leaving the other [$c] to contribute a 3. There are [`{[$a] \choose [$b]}`] ways to select these [$b] factors. So the term containing an [`x^{[$b]}`] will be [`{[$a] \choose [$b]}x^{[$b]}3^{[$c]}\text{.}`] In other words, the coefficient of [`x^{[$b]}`] is [`{[$a]\choose [$b]}3^[$c] = [$ans]\text{.}`]
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();

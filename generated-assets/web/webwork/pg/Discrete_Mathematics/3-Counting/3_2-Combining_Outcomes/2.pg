@@ -1,0 +1,100 @@
+#######################################
+###    Generated from PreTeXt source   
+###    on 2018-05-17T08:45:02-06:00    
+###                                    
+###   http://mathbook.pugetsound.edu   
+###                                    
+#######################################
+## DBsubject(Combinatorics)
+## DBchapter(Counting)
+## DBsection(Principles (addition, subtraction, multiplication))
+## Level(5)
+## KEYWORDS('counting',' multiplicative principle', 'additive principle','multiple techniques')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(1.1)
+## Problem1(2)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context('Numeric');
+
+#define random values for the number of ties you have
+do {$a = random(2,8);} until ($a !=3) and ($a != 5);
+do {$b = random(2,8);} until ($b != $a);
+$ans1 = Compute("[$a]+[$b]");
+$ans2 = Compute("[$a]*[$b]");
+
+#define random values for the number of shirts, pants, skirts, and dresses
+do {$c=random(2,8); } until ($c != 5) and ($c !=4) and ($c !=3);
+do {$d = random(2,8);} until ($d !=$c);
+do {$f = random(2,8);} until ($f !=$c) and ($f !=$d);
+do {$g = random(2,8);} until ($g !=$c) and ($g !=$d) and ($g !=$f);
+$ans3 = Compute("[$c]*[$d] + [$c]*[$f] + [$g] ");
+
+
+####################
+# Body
+####################
+BEGIN_PGML
+For your college interview, you must wear a tie. You own [$a] regular (boring) ties and [$b] (cool) bow ties. 
+a.  How many choices do you have for your neck-wear?
+
+    [_____]{$ans1}
+
+
+a.  You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
+
+    [_____]{$ans2}
+
+
+a.  For the rest of your outfit, you have [$c] shirts, [$d] skirts, [$f] pants, and [$g] dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from (not including the choice of ties)?
+
+    [_____]{$ans3}   
+
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+a.  [`[$a] + [$b] = [$ans1]`] ties.  Use the additive principle.
+
+
+a.  [`[$a] \cdot  [$b] = [$ans2]`]  ties. Use the multiplicative principle
+a.  [`[$c] \cdot ([$d]+[$f]) + [$g] = [$ans3]`] outfits.   
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();

@@ -1,0 +1,75 @@
+## DBsubject(Combinatorics)
+## DBchapter(Counting)
+## DBsection(Combinations)
+## Level(3)
+## KEYWORDS('counting','combinations', 'binomial coefficients')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(1.2)
+## Problem1(9)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context("IntegerFunctions")->flags->set(
+  tolerance => 0.1,
+  tolType => "absolute",
+);
+$a = random(12,19);
+do {$b = random(13,23); } until ($b > $a);
+$c = random(5,12);
+$d = $a-$c;
+$f = $c-4;
+$g = $b-$f;
+
+$ans = Compute("2^{[$d]}*C([$a],[$c])+3^{[$g]}*C([$b],[$f])");
+####################
+# Body
+####################
+BEGIN_PGML
+What is the coefficient of [`x^{[$c]}`] in the expansion of [`(x+2)^{[$a]} + x^4(x+3)^{[$b]}\text{?}`]
+
+[__________]{$ans}
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+
+To get an [`x^{[$c]}`] from the first term, we must pick [$c] of the [$a] factors to contribute an [`x\text{,}`] leaving the other [$d] to contribute a 2. There are [`{[$a] \choose [$c]}`] ways to select these [$c] factors, so the coefficient will be [`{[$a] \choose [$c]} *2^{[$d]}\text{.}`] Now we must choose [$f] of the factors in the second term to contribute an [`x\text{,}`] leaving the other [$g] terms to contribute a 3.  This gives us [`{[$b] \choose [$f]}*3^{[$g]}`] for the coefficient resulting from this term.  In total, the term containing an [`x^{[$c]}`] will be  [`{[$a] \choose [$c]} *2^{[$d]} + {[$b] \choose [$f]}*3^{[$g]}= [$ans]\text{.}`]  
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();
