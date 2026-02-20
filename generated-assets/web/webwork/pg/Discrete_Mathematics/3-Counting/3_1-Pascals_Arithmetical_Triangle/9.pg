@@ -35,12 +35,15 @@ TEXT(beginproblem());
 ####################
 # PG Setup
 ####################
-Context("IntegerFunctions");
+Context("IntegerFunctions")->flags->set(
+  tolerance => 0.1,
+  tolType => "absolute",
+);
 $a = random(13,19);
 do {$b = random(9, 18);} until ($b < $a - 1) and ($b !=12);
 $c = $a-$b;
 
-$ans = Compute("C($a,$b)*3^{$c}")->with(tolType => 'absolute', tolerance => '1');
+$ans = Compute("C($a,$b)*3^{$c}");
 
 ####################
 # Body
