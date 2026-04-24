@@ -10,7 +10,7 @@ This text is written in [PreTeXt](https://pretextbook.org), so the primary sourc
 
 ### Preliminaries
 
-The easiest way to build output formats from the source is to use the PreTeXt-CLI. To get this set up, follow the instructions in the [PreTeXt guide](https://pretextbook.org/doc/guide/html/quickstart-getting-pretext.html). You will need Python, LaTeX, and `pdf2svg` (if you wish to compile the html version; this requires an [extra step](https://pretextbook.org/doc/guide/html/section-installing-pdf2svg.html) on Windows).
+The easiest way to build output formats from the source is to use the PreTeXt-CLI. To get this set up, follow the instructions in the [PreTeXt guide](https://pretextbook.org/quick-start.html). You will need Python, LaTeX, and `pdf2svg` (if you wish to compile the html version; this requires an [extra step](https://pretextbook.org/doc/guide/html/section-installing-pdf2svg.html) on Windows).
 
 Open up a terminal and in your preferred directory, clone `discrete-book` repositories:
 
