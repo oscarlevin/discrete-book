@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='utf-8'?>
+<webwork-reps version="2" webwork2_major_version="2" webwork2_minor_version="20" xml:id="extracted-pa-sec-growth-1" assembly-id="pa-sec-growth-1">
+  <static seed="185">
+    <introduction><p>Explore the first sequence of dots from the <em>Investigate!</em> activity.  We will let <m>a_n</m> represent the number of dots in figure <m>n\text{.}</m>  The sequence starts <m>1, 5, 9,\ldots</m></p>
+</introduction>
+    <task>
+      <statement><p>How many dots would you expect in the next two figures in the sequence?</p>
+<p>Dots in <m>n = 3</m> figure: <m>a_3 =</m><fillin characters="5" name="AnSwEr0001"/>.</p>
+<p>Dots in <m>n = 4</m> figure: <m>a_4 =</m><fillin characters="5" name="AnSwEr0002"/>.</p>
+</statement>
+      <answer>
+        <p>
+          <m>13</m>
+        </p>
+      </answer>
+      <answer>
+        <p>
+          <m>17</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>How is the sequence growing?  To get the next figure, take the current figure and <ul form="popup" name="AnSwEr0003"><li>
+<p>?</p>
+</li><li>
+<p>add</p>
+</li><li>
+<p>multiply by</p>
+</li></ul> the constant <fillin characters="5" name="AnSwEr0004"/> dots.</p>
+</statement>
+      <answer>
+        <p>
+          <m>\text{add}</m>
+        </p>
+      </answer>
+      <answer>
+        <p>
+          <m>4</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>Let <m>a_n</m> be the number of dots in figure <m>n\text{.}</m>  Write a recursive definition for <m>a_n\text{.}</m></p>
+<p><m>a_n =</m> <fillin characters="20" name="AnSwEr0005"/>; with <m>a_0 =</m> <fillin characters="5" name="AnSwEr0006"/>.</p>
+</statement>
+      <answer>
+        <p>
+          <m>a\mathopen{}\left(n-1\right)+4</m>
+        </p>
+      </answer>
+      <answer>
+        <p>
+          <m>1</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>Guess a closed formula for the number of dots in the <m>n</m>th figure.</p>
+<p><m>a_n =</m> <fillin characters="20" name="AnSwEr0007"/>.</p>
+</statement>
+      <answer>
+        <p>
+          <m>1+4n</m>
+        </p>
+      </answer>
+    </task>
+  </static>
+  <rendering-data problemSource="Discrete_Mathematics/4-Sequences/4_2-Rate_of_Growth/1-Dots.pg" origin="generated" domain="https://webwork-ptx.aimath.org" course-id="anonymous" user-id="anonymous" passwd="anonymous" language="en-US"/>
+  <pg><![CDATA[
+#############################################
+###       Generated from PreTeXt source      
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(1)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "scaffold.pl",
+  "PCCmacros.pl",
+  "parserPopUp.pl",
+  "parserFunction.pl",
+  "contextForm.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("Numeric")->variables->are(n=>"Real");
+parserFunction(a => "cos(pi^n)+e");
+$an = Formula("a(n-1) + 4");
+$popup = PopUp(["?", "add", "multiply by"], "add",);
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Explore the first sequence of dots from the _Investigate!_ activity.  We will let [`a_n`] represent the number of dots in figure [`n\text{.}`]  The sequence starts [`1, 5, 9,\ldots`]
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many dots would you expect in the next two figures in the sequence?
+
+Dots in [`n = 3`] figure: [`a_3 = `][_]{13}{5}.
+
+Dots in [`n = 4`] figure: [`a_4 = `][_]{17}{5}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How is the sequence growing?  To get the next figure, take the current figure and [_]{$popup}{5} the constant [_]{4}{5} dots.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Let [`a_n`] be the number of dots in figure [`n\text{.}`]  Write a recursive definition for [`a_n\text{.}`]
+
+[@KeyboardInstructions('Use [|a(n-1)|]* for [`a_{n-1}\text{.}`]')@]**
+
+[`a_n = `] [_]{$an}{20}; with [`a_0 = `] [_]{1}{5}.
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Guess a closed formula for the number of dots in the [`n`]th figure.
+
+[`a_n = `] [_]{Formula('1+4*n')}{20}.
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
+]]></pg>
+</webwork-reps>

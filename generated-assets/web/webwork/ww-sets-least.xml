@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='utf-8'?>
+<webwork-reps version="2" webwork2_major_version="2" webwork2_minor_version="20" xml:id="extracted-ww-sets-least" assembly-id="ww-sets-least">
+  <static seed="225">
+    <statement><p>Find the least element of the following sets, if there is one.
+<ol label="a.">
+<li>
+<p><m>\{n \in \mathbb{N} : n^2 - 5 \ge 5\}</m></p>
+<p><fillin characters="10" name="AnSwEr0001"/></p>
+</li>
+<li>
+<p><m>\{n \in \mathbb{N} : n^2 - 10 \in \mathbb{N}\}</m></p>
+<p><fillin characters="10" name="AnSwEr0002"/></p>
+</li>
+<li>
+<p><m>\{n^2+3 : n \in \mathbb{N}\}</m></p>
+<p><fillin characters="10" name="AnSwEr0003"/></p>
+</li>
+<li>
+<p><m>\{n \in \mathbb{N} : n = k^2 + 3 \text{ for some } k \in \mathbb{N}\}</m></p>
+<p><fillin characters="10" name="AnSwEr0004"/></p>
+</li>
+</ol></p>
+</statement>
+    <answer>
+      <p>
+        <m>4</m>
+      </p>
+    </answer>
+    <answer>
+      <p>
+        <m>4</m>
+      </p>
+    </answer>
+    <answer>
+      <p>
+        <m>3</m>
+      </p>
+    </answer>
+    <answer>
+      <p>
+        <m>3</m>
+      </p>
+    </answer>
+    <solution><p><ol label="a.">
+<li>
+<p>This is the set <m>\{4, 5, 6, \ldots\}</m> since we need each element to be a natural number whose square is at least 5 more than 5. Since <m>4^2 - 5 = 11</m> but <m>3^2 - 5 = 4</m> we see that the first such natural number is 4.</p>
+</li>
+<li>
+<p>We get the same set as the previous part, and the smallest non-negative number for which <m>n^2 - 10</m> is a natural number is 4.</p>
+<p>Note that if we didn<rsq/>t specify <m>n \ge 0</m> by saying that <m>n \in \mathbb N</m> then any integer less than <m>-4</m> would also be in the set, so there would not be a least element.</p>
+</li>
+<li>
+<p>This is the set <m>\{3, 4, 7, 12, \ldots\}\text{,}</m> namely the set of numbers that are the <em>result</em> of squaring and adding 3 to a natural number. (<m>0^2 + 3 = 3\text{,}</m> <m>1^2 + 3 = 4\text{,}</m> <m>2^2 + 3 = 7</m> and so on.) Thus the least element of the set is 3.</p>
+</li>
+<li>
+<p>Now we are looking for natural numbers that are equal to taking some natural number, squaring it and adding 3. That is, <m>\{3, 4, 7, 12, \ldots\}\text{,}</m> the same set as the previous part. So again, the least element is 3.</p>
+</li>
+</ol></p>
+</solution>
+  </static>
+  <rendering-data problemSource="Discrete_Mathematics/5-Discrete_Structures_Revisited/5_1-Sets/2.pg" origin="generated" domain="https://webwork-ptx.aimath.org" course-id="anonymous" user-id="anonymous" passwd="anonymous" language="en-US"/>
+  <pg><![CDATA[
+#############################################
+###       Generated from PreTeXt source      
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "PCCmacros.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context('Interval');
+#define variables for problem parts a and b
+$a=random(1,5,1);
+$b= random(1,5,1);
+$aplusb = $a+$b;
+
+$sr = Compute(sqrt($a+$b));
+$ans1high = ceil($sr);
+#define variables to be used in printing the solutions
+$ans1plus1 = $ans1high+1;
+$ans1plus2 = $ans1high+2;
+$ans1hs = $ans1high*$ans1high - $a;
+$ans1low = ceil($sr-1);
+$ans1ls = $ans1low*$ans1low-$a;
+
+#define variables for problem parts c and d
+$c= random(1,5,1);
+$cplus1 = $c +1 ;
+$cplus4 = $c +4 ;
+$cplus9 = $c +9;
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Find the least element of the following sets, if there is one.
+a.  [`\{n \in \mathbb{N} : n^2 - [$a] \ge [$b]\}`]
+
+    [_]{$ans1high}{10}
+
+a.  [`\{n \in \mathbb{N} : n^2 - [$aplusb] \in \mathbb{N}\}`]
+
+    [_]{$ans1high}{10}
+
+a.  [`\{n^2+[$c] : n \in \mathbb{N}\}`]
+
+    [_]{$c}{10}
+
+a.  [`\{n \in \mathbb{N} : n = k^2 + [$c] \text{ for some } k \in \mathbb{N}\}`]
+
+    [_]{$c}{10}
+
+[@KeyboardInstructions(q"(if there is no least element, enter 'none')")@]**
+
+END_PGML
+
+############################################################
+# Solution
+############################################################
+
+BEGIN_PGML_SOLUTION
+a.  This is the set [`\{[$ans1high], [$ans1plus1], [$ans1plus2], \ldots\}`] since we need each element to be a natural number whose square is at least [$a] more than [$b]. Since [`[$ans1high]^2 - [$a] = [$ans1hs]`] but [`[$ans1low]^2 - [$a] = [$ans1ls]`] we see that the first such natural number is [$ans1high].
+
+a.  We get the same set as the previous part, and the smallest non-negative number for which [`n^2 - [$aplusb]`] is a natural number is [$ans1high].
+
+    Note that if we didn't specify [`n \ge 0`] by saying that [`n \in \mathbb N`] then any integer less than [`-[$ans1high]`] would also be in the set, so there would not be a least element.
+
+a.  This is the set [`\{[$c], [$cplus1], [$cplus4], [$cplus9], \ldots\}\text{,}`] namely the set of numbers that are the _result_ of squaring and adding [$c] to a natural number. ([`0^2 + [$c] = [$c]\text{,}`] [`1^2 + [$c] = [$cplus1]\text{,}`] [`2^2 + [$c] = [$cplus4]`] and so on.) Thus the least element of the set is [$c].
+
+a.  Now we are looking for natural numbers that are equal to taking some natural number, squaring it and adding [$c]. That is, [`\{[$c], [$cplus1], [$cplus4], [$cplus9], \ldots\}\text{,}`] the same set as the previous part. So again, the least element is [$c].
+
+END_PGML_SOLUTION
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
+]]></pg>
+</webwork-reps>

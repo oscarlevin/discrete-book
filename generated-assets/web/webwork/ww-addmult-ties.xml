@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8'?>
+<webwork-reps version="2" webwork2_major_version="2" webwork2_minor_version="20" xml:id="extracted-ww-addmult-ties" assembly-id="ww-addmult-ties">
+  <static seed="92">
+    <statement><p>For your college interview, you must wear a tie. You own 2 regular (boring) ties and 6 (cool) bow ties. 
+<ol label="a.">
+<li>
+<p>How many choices do you have for your neck-wear?</p>
+<p><fillin characters="5" name="AnSwEr0001"/></p>
+</li>
+<li>
+<p>You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?</p>
+<p><fillin characters="5" name="AnSwEr0002"/></p>
+</li>
+<li>
+<p>For the rest of your outfit, you have 6 shirts, 5 skirts, 7 pants, and 8 dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from (not including the choice of ties)?</p>
+<p><fillin characters="5" name="AnSwEr0003"/></p>
+</li>
+</ol></p>
+</statement>
+    <answer>
+      <p>
+        <m>2+6</m>
+      </p>
+    </answer>
+    <answer>
+      <p>
+        <m>2\cdot 6</m>
+      </p>
+    </answer>
+    <answer>
+      <p>
+        <m>6\cdot 5+6\cdot 7+8</m>
+      </p>
+    </answer>
+    <solution><p><ol label="a.">
+<li>
+<p><m>2 + 6 = {8}</m> ties.  Use the additive principle.</p>
+</li>
+<li>
+<p><m>2 \cdot  6 = {12}</m>  ties. Use the multiplicative principle</p>
+</li>
+<li>
+<p><m>6 \cdot (5+7) + 8 = {80}</m> outfits.</p>
+</li>
+</ol></p>
+</solution>
+  </static>
+  <rendering-data problemSource="Discrete_Mathematics/3-Counting/3_2-Combining_Outcomes/2.pg" origin="generated" domain="https://webwork-ptx.aimath.org" course-id="anonymous" user-id="anonymous" passwd="anonymous" language="en-US"/>
+  <pg><![CDATA[
+#######################################
+###    Generated from PreTeXt source   
+###    on 2018-05-17T08:45:02-06:00    
+###                                    
+###   http://mathbook.pugetsound.edu   
+###                                    
+#######################################
+## DBsubject(Combinatorics)
+## DBchapter(Counting)
+## DBsection(Principles (addition, subtraction, multiplication))
+## Level(5)
+## KEYWORDS('counting',' multiplicative principle', 'additive principle','multiple techniques')
+## TitleText1(Discrete Mathematics: an Open Introduction)
+## EditionText1(3)
+## AuthorText1(Oscar Levin)
+## Section1(1.1)
+## Problem1(2)
+## Author(Oscar Levin)
+## Institution(University of Northern Colorado)
+## Language(en-US)
+
+DOCUMENT();
+
+####################
+# Load Macros
+####################
+loadMacros(
+  "PGstandard.pl",
+  "MathObjects.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "PGcourse.pl",
+);
+
+####################
+# Header
+####################
+COMMENT('Authored in PreTeXt');
+TEXT(beginproblem());
+
+####################
+# PG Setup
+####################
+Context('Numeric');
+
+#define random values for the number of ties you have
+do {$a = random(2,8);} until ($a !=3) and ($a != 5);
+do {$b = random(2,8);} until ($b != $a);
+$ans1 = Compute("[$a]+[$b]");
+$ans2 = Compute("[$a]*[$b]");
+
+#define random values for the number of shirts, pants, skirts, and dresses
+do {$c=random(2,8); } until ($c != 5) and ($c !=4) and ($c !=3);
+do {$d = random(2,8);} until ($d !=$c);
+do {$f = random(2,8);} until ($f !=$c) and ($f !=$d);
+do {$g = random(2,8);} until ($g !=$c) and ($g !=$d) and ($g !=$f);
+$ans3 = Compute("[$c]*[$d] + [$c]*[$f] + [$g] ");
+
+
+####################
+# Body
+####################
+BEGIN_PGML
+For your college interview, you must wear a tie. You own [$a] regular (boring) ties and [$b] (cool) bow ties. 
+a.  How many choices do you have for your neck-wear?
+
+    [_____]{$ans1}
+
+
+a.  You realize that the interview is for clown college, so you should probably wear both a regular tie and a bow tie. How many choices do you have now?
+
+    [_____]{$ans2}
+
+
+a.  For the rest of your outfit, you have [$c] shirts, [$d] skirts, [$f] pants, and [$g] dresses. You want to select either a shirt to wear with a skirt or pants, or just a dress. How many outfits do you have to choose from (not including the choice of ties)?
+
+    [_____]{$ans3}   
+
+
+
+END_PGML
+
+####################
+# Solution
+####################
+BEGIN_PGML_SOLUTION
+a.  [`[$a] + [$b] = [$ans1]`] ties.  Use the additive principle.
+
+
+a.  [`[$a] \cdot  [$b] = [$ans2]`]  ties. Use the multiplicative principle
+a.  [`[$c] \cdot ([$d]+[$f]) + [$g] = [$ans3]`] outfits.   
+
+
+
+END_PGML_SOLUTION
+
+####################
+# End Problem
+####################
+ENDDOCUMENT();
+]]></pg>
+</webwork-reps>

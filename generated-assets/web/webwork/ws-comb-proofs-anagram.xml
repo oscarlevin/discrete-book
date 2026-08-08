@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='utf-8'?>
+<webwork-reps version="2" webwork2_major_version="2" webwork2_minor_version="20" xml:id="extracted-ws-comb-proofs-anagram" assembly-id="ws-comb-proofs-anagram">
+  <static seed="138">
+    <introduction><p>Consider the counting question <lq/>How many ways can you permute the letters of the word <em>STATISTICS</em>?<rq/>  Note that this is not just a permutation, since there are repeated letters.</p>
+</introduction>
+    <task>
+      <statement><p>How many ways can you select three of the ten positions in the anagram to be occupied by the letter <em>S</em>?</p>
+<p><fillin characters="5" name="AnSwEr0001"/></p>
+</statement>
+      <answer>
+        <p>
+          <m>\mathop{\rm C}\nolimits\mathopen{}\left(10,3\right)</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>How many ways can you select three of the remaining seven positions in the anagram to be occupied by the letter <em>T</em>?</p>
+<p><fillin characters="5" name="AnSwEr0002"/></p>
+</statement>
+      <answer>
+        <p>
+          <m>\mathop{\rm C}\nolimits\mathopen{}\left(7,3\right)</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>Continue with this approach until you have found an expression for the number of ways to permute the letters of <em>STATISTICS</em> as a product of binomial coefficients.  Write out this product.</p>
+<p><fillin characters="20" name="AnSwEr0003"/></p>
+</statement>
+      <answer>
+        <p>
+          <m>\mathop{\rm C}\nolimits\mathopen{}\left(10,3\right)\mathop{\rm C}\nolimits\mathopen{}\left(7,3\right)\mathop{\rm C}\nolimits\mathopen{}\left(4,2\right)\mathop{\rm C}\nolimits\mathopen{}\left(2,1\right)\mathop{\rm C}\nolimits\mathopen{}\left(1,1\right)</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>Now answer the counting question again, this time starting by asking how many ways you can select positions for the letter <em>A</em> first.  Continue in any way you like until you have found a different expression for the number of ways to permute the letters of <em>STATISTICS</em> as a product of binomial coefficients.  Write out this product.</p>
+<p><fillin characters="20" name="AnSwEr0004"/></p>
+</statement>
+      <answer>
+        <p>
+          <m>\mathop{\rm C}\nolimits\mathopen{}\left(10,1\right)\mathop{\rm C}\nolimits\mathopen{}\left(9,3\right)\mathop{\rm C}\nolimits\mathopen{}\left(6,2\right)\mathop{\rm C}\nolimits\mathopen{}\left(4,1\right)\mathop{\rm C}\nolimits\mathopen{}\left(3,3\right)</m>
+        </p>
+      </answer>
+    </task>
+    <task>
+      <statement><p>Try yet another approach.  What is wrong with saying the answer is <m>10!\text{?}</m>  This is too large, but we can correct it by dividing to account for outcomes that are equivalent.  What should you divide by?</p>
+<p>Write your answer as a quotient of factorials.  Do you get the same answer as before?</p>
+<p><fillin characters="20" name="AnSwEr0005"/></p>
+</statement>
+      <answer>
+        <p>
+          <m>\frac{10!}{3!\mathopen{}\left(3!\right)\mathopen{}\left(2!\right)}</m>
+        </p>
+      </answer>
+    </task>
+  </static>
+  <rendering-data problemSource="Discrete_Mathematics/3-Counting/3_6-Combinatorial_Proofs/2.pg" origin="generated" domain="https://webwork-ptx.aimath.org" course-id="anonymous" user-id="anonymous" passwd="anonymous" language="en-US"/>
+  <pg><![CDATA[
+#############################################
+###       Generated from PreTeXt source      
+###                                          
+###         https://pretextbook.org          
+###                                          
+#############################################
+## DBsubject()
+## DBchapter()
+## DBsection()
+## Level()
+## KEYWORDS()
+## TitleText1()
+## EditionText1()
+## AuthorText1()
+## Section1(not reported)
+## Problem1(2)
+## Author()
+## Institution()
+## Language(en-US)
+
+DOCUMENT();
+
+############################################################
+# Load Macros
+############################################################
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "AnswerFormatHelp.pl",
+  "scaffold.pl",
+  "contextIntegerFunctions.pl",
+  "PGcourse.pl",
+);
+COMMENT('Authored in PreTeXt');
+COMMENT('This problem is scaffolded with multiple parts');
+
+############################################################
+# Header
+############################################################
+TEXT(beginproblem());
+
+############################################################
+# PG Setup Code
+############################################################
+Context("IntegerFunctions");
+$ans1 = Compute("C(10,3)");
+$ans2 = Compute("C(7,3)");
+$ans3 = Compute("C(10,3)*C(7,3)*C(4,2)*C(2,1)*C(1,1)");
+$ans4 = Compute("C(10,1)*C(9,3)*C(6,2)*C(4,1)*C(3,3)");
+$ans5 = Compute("10!/(3!3!2!)");
+
+############################################################
+# Body
+############################################################
+
+BEGIN_PGML
+Consider the counting question "How many ways can you permute the letters of the word _STATISTICS_?"  Note that this is not just a permutation, since there are repeated letters.
+
+END_PGML
+
+############################################################
+# Scaffold
+############################################################
+Scaffold::Begin(numbered => 1,is_open => "correct_or_first_incorrect",can_open => when_previous_correct,);
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many ways can you select three of the ten positions in the anagram to be occupied by the letter _S_?
+
+[_]{$ans1}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+How many ways can you select three of the remaining seven positions in the anagram to be occupied by the letter _T_?
+
+[_]{$ans2}{5}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Continue with this approach until you have found an expression for the number of ways to permute the letters of _STATISTICS_ as a product of binomial coefficients.  Write out this product.
+
+[_]{$ans3}{20}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Now answer the counting question again, this time starting by asking how many ways you can select positions for the letter _A_ first.  Continue in any way you like until you have found a different expression for the number of ways to permute the letters of _STATISTICS_ as a product of binomial coefficients.  Write out this product.
+
+[_]{$ans4}{20}
+
+END_PGML
+
+Section::End();
+
+############################################################
+# Section
+############################################################
+Section::Begin("");
+
+BEGIN_PGML
+Try yet another approach.  What is wrong with saying the answer is [`10!\text{?}`]  This is too large, but we can correct it by dividing to account for outcomes that are equivalent.  What should you divide by?
+
+Write your answer as a quotient of factorials.  Do you get the same answer as before?
+
+[_]{$ans5}{20}
+
+END_PGML
+
+Section::End();
+
+Scaffold::End();
+
+############################################################
+# End Problem
+############################################################
+
+ENDDOCUMENT();
+]]></pg>
+</webwork-reps>
