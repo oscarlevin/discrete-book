@@ -10,8 +10,6 @@ This text is written in [PreTeXt](https://pretextbook.org), so the primary sourc
 
 ### Preliminaries
 
-### Preliminaries
-
 The easiest way to build output formats from the source is to use the
 PreTeXt-CLI. To get this set up, follow the instructions in the
 [PreTeXt Guide](https://pretextbook.org/guide.html).
