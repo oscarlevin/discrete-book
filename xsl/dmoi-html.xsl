@@ -214,45 +214,54 @@
     <xsl:text>exercise-like</xsl:text>
 </xsl:template> -->
 
-<!-- HACK 5/29/19: Remove codenumber and period from projects (Investigate!) -->
-<!-- h6, type name, number (if exists), title (if exists) -->
-<!-- REMARK-LIKE, COMPUTATION-LIKE, DEFINITION-LIKE, SOLUTION-LIKE, objectives (xref-content), outcomes (xref-content), EXAMPLE-LIKE, PROJECT-LIKE, exercise (inline), task (xref-content), fn (xref-content), biblio/note (xref-content)-->
+<!-- HACK 8/8/26: Remove codenumber and period from projects (Investigate!) -->
+
+<!-- REMARK-LIKE, COMPUTATION-LIKE, DEFINITION-LIKE, SOLUTION-LIKE, objectives (xref-content), outcomes (xref-content), EXAMPLE-LIKE, PROJECT-LIKE, OPENPROBLEM-LIKE, exercise (inline), task (xref-content), fn (xref-content), biblio/note (xref-content)-->
 <!-- E.g. Corollary 4.1 (Leibniz, Newton).  The fundamental theorem of calculus. -->
 <xsl:template match="&PROJECT-LIKE;" mode="heading-full">
-    <h6 class="heading">
-        <span class="type">
-            <xsl:apply-templates select="." mode="type-name"/>
-        </span>
-        <!--  -->
-        <xsl:variable name="the-number">
-            <xsl:apply-templates select="." mode="number" />
-        </xsl:variable>
-        <xsl:if test="not($the-number='')">
-            <xsl:text> </xsl:text>
-            <!-- <span class="codenumber">
-                <xsl:value-of select="$the-number"/>
-            </span> REMOVED -->
-        </xsl:if>
-        <!--  -->
-        <xsl:if test="creator and (&THEOREM-FILTER; or &AXIOM-FILTER;)">
-            <xsl:text> </xsl:text>
-            <span class="creator">
-                <xsl:text>(</xsl:text>
-                <xsl:apply-templates select="." mode="creator-full"/>
-                <xsl:text>)</xsl:text>
+    <xsl:param name="b-make-link" select="false()"/>
+    <xsl:param name="heading-level"/>
+    <xsl:apply-templates select="." mode="heading-generic">
+        <xsl:with-param name="b-make-link" select="$b-make-link"/>
+        <xsl:with-param name="heading-level" select="$heading-level"/>
+        <xsl:with-param name="heading-title">
+            <span class="type">
+                <xsl:apply-templates select="." mode="type-name"/>
             </span>
-        </xsl:if>
-        <!-- A period now, no matter which of 4 combinations we have above-->
-        <!-- <xsl:text>.</xsl:text> REMOVED -->
-        <!-- A title carries its own punctuation -->
-        <xsl:if test="title">
-            <xsl:text> </xsl:text>
-            <span class="title">
-                <xsl:apply-templates select="." mode="title-full"/>
-            </span>
-        </xsl:if>
-    </h6>
+            <!--  -->
+            <xsl:variable name="the-number">
+                <xsl:apply-templates select="." mode="number" />
+            </xsl:variable>
+            <xsl:if test="not($the-number='')">
+                <xsl:call-template name="space-styled"/>
+                <!-- REMOVED: -->
+                <!-- <span class="codenumber">
+                    <xsl:value-of select="$the-number"/>
+                </span> -->
+            </xsl:if>
+            <!--  -->
+            <xsl:if test="creator and (&THEOREM-FILTER; or &AXIOM-FILTER;)">
+                <xsl:call-template name="space-styled"/>
+                <span class="creator">
+                    <xsl:text>(</xsl:text>
+                    <xsl:apply-templates select="." mode="creator-full"/>
+                    <xsl:text>)</xsl:text>
+                </span>
+            </xsl:if>
+            <!-- A period now, no matter which of 4 combinations we have above-->
+             <!-- REMOVED: -->
+            <!-- <xsl:call-template name="period-styled"/> -->
+            <!-- A title carries its own punctuation -->
+            <xsl:if test="title">
+                <xsl:call-template name="space-styled"/>
+                <span class="title">
+                    <xsl:apply-templates select="." mode="title-full"/>
+                </span>
+            </xsl:if>
+        </xsl:with-param>
+    </xsl:apply-templates>
 </xsl:template>
+
 
 <!-- And its CSS class -->
 <!-- <xsl:template match="&PROJECT-LIKE;" mode="body-css-class">
