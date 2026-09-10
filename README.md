@@ -10,29 +10,43 @@ This text is written in [PreTeXt](https://pretextbook.org), so the primary sourc
 
 ### Preliminaries
 
-The easiest way to build output formats from the source is to use the PreTeXt-CLI. To get this set up, follow the instructions in the [PreTeXt guide](https://pretextbook.org/quick-start.html). You will need Python, and LaTeX.
+The easiest way to build output formats from the source is to use the
+PreTeXt-CLI. To get this set up, follow the instructions in the
+[PreTeXt Guide](https://pretextbook.org/guide.html).
+You will need Python and LaTeX (required for PDF output and for any
+`<latex-image>` elements; image conversion is now handled internally by
+the CLI, so `pdf2svg` is no longer required).
 
-Open up a terminal and in your preferred directory, clone `discrete-book` repositories:
+This repo pins a specific PreTeXt-CLI version in `requirements.txt`. Install
+it with:
 
-`git clone https://github.com/oscarlevin/discrete-book.git`
+    pip install -r requirements.txt
 
-(If you had previously done this, you will likely want to get the most recent versions of the repository by entering `git pull` from the discrete-book folder.)
-
-Then change to the `discrete-book` folder:
-
-`cd discrete-book`
+(Using a virtual environment is recommended, so this doesn't conflict with
+other CLI versions you may have installed globally: `python -m venv .venv`,
+activate it, then run the command above.)
 
 ### Compiling
 
-If everything has been set up properly above, you can now execute the following commands to build the book. To create a PDF, you can enter:
+PreTeXt build commands take a **target name** as an argument. Available
+targets are defined in `project.ptx` at the root of this repo — open that
+file and look for `<target name="...">` entries to see what's available and
+what each target produces.
 
-`pretext build pdf -w`
+As of this writing, the primary target for building the readable HTML
+version of the DMOI4 book is:
 
-To make the HTML version:
+    pretext build web4
 
-`pretext build html -w -d`
+To generate a PDF, use whichever target in `project.ptx` has
+`format="pdf"`.
 
-The `-w` and `-d` flags are only needed the first time you compile, to extract the WeBWorK exercises and create SVGs for the images. Use the flags again only if you edit these elements in the source.
+Asset generation (WeBWorK exercises, images/diagrams, etc.) now happens
+automatically as part of `pretext build` — you no longer need separate
+flags for this. If you want to force a full regeneration of assets (e.g.
+after editing a `<webwork>` or `<latex-image>` element), add `-g`:
+
+    pretext build web4 -g
 
 ## Contributing
 
