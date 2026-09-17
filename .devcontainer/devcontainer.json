@@ -1,4 +1,4 @@
-// This file was automatically generated with PreTeXt 2.27.0.
+// This file was automatically generated with PreTeXt 2.53.0.
 // If you modify this file, PreTeXt will no longer automatically update it.
 //
 //////////////////////////////////////////////////////////////
@@ -13,9 +13,9 @@
 //
 ///////////////////////////////////////////////////////////////
 {
-  "image": "pretextbook/pretext-full:1.3", // uses latest image from https://hub.docker.com/r/PreTeXtBook/pretext-full/tags
+  "image": "pretextbook/pretext-full:1.16", // uses latest image from https://hub.docker.com/r/PreTeXtBook/pretext-full/tags
   // If you don't need sagemath, you can use a smaller base image.  Comment out the line above and uncomment the line below to use a smaller image.
-  // "image": "pretextbook/pretext:1.3",
+  // "image": "pretextbook/pretext:1.16",
   "features": {"ghcr.io/devcontainers/features/github-cli": {}},
 
   // The pretext-full image above includes pretext, prefigure, and enough parts of latex and sagemath for most cases.  Here we install additional dependencies.
@@ -23,38 +23,6 @@
     "install pandoc": "bash ./.devcontainer/installPandoc.sh",
     "mark repo as safe": "git config --global --add safe.directory $(pwd)"
     },
-
-
-  // Port forwarding
-  // ---------------
-  // This is needed by the CodeChat Server.
-  "forwardPorts": [
-    // The port used for a Thrift connection between the VSCode CodeChat
-    // extension and the CodeChat Server.
-    27376,
-    // The port used for an HTTP connection from the CodeChat Client to
-    // the CodeChat Server.
-    27377,
-    // The port used by a websocket connection between the CodeChat
-    // Server and the CodeChat Client.
-    27378
-  ],
-  // See the [docs](https://containers.dev/implementors/json_reference/#port-attributes).
-  "portsAttributes": {
-    "27376": {
-      "label": "VSCode extension <-> CodeChat Server",
-      "requireLocalPort": true
-    },
-    "27377": {
-      "label": "CodeChat Client",
-      "requireLocalPort": true
-    },
-    "27378": {
-      "label": "CodeChat Client<->Server websocket",
-      "requireLocalPort": true
-      // This port needs to be public; however, there's no way to specify port visibility here. See `server.py` in the CodeChat Server for details.
-    }
-  },
 
 
   // Configure tool-specific properties.
@@ -67,15 +35,14 @@
         "editor.quickSuggestions": {
           "other": "off"
         },
-        "files.autoSave": "afterDelay",
+        "editor.suggest.showProperties": false,
         "editor.snippetSuggestions": "bottom",
+        "files.autoSave": "afterDelay",
         "xml.validation.enabled": true,
-        "redhat.telemetry.enabled": false,
-        "CodeChat.CodeChatServer.Command": "CodeChat_Server"
+        "redhat.telemetry.enabled": false
       },
       "extensions": [
         "oscarlevin.pretext-tools",
-        "CodeChat.codechat",
         "streetsidesoftware.code-spell-checker",
         "alpinebuster.vscode-latex-table-editor",
         "mathematic.vscode-pdf"
